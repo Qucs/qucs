@@ -145,7 +145,7 @@ SubcktProto::SubcktProto(Element const*)
 }
 /*--------------------------------------------------------------------------*/
 SchematicModel* SubcktProto::scope()
-{ untested();
+{
 	COMMON_COMPONENT* cc = mutable_common();
 	assert(cc);
 	auto cs = prechecked_cast<CommonSubckt*>(cc);

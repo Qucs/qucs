@@ -94,7 +94,7 @@ static void prepare_env()
 }
 /*--------------------------------------------------------------------------*/
 static void read_startup_files(void)
-{ untested();
+{
 #if 1
   CMD::command(std::string("load " "misc"), &static_model);
 #else
@@ -272,7 +272,7 @@ int main(int argc, const char *argv[])
 	try {
 	  if (OPT::language) {
 	    OPT::language->parse_top_item(cmd, &static_model);
-	  }else{untested();
+	  }else{
 	    CMD::cmdproc(cmd.get_line(I_PROMPT), &static_model);
 	  }
 	}catch (Exception_End_Of_Input& e) {
