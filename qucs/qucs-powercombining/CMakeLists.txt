@@ -43,7 +43,7 @@ if(NOT WIN32)
 endif()
 
 readVariable(MakeList SRCS QUCS-POWCOMB_SRCS)
-readVariable(MakeList RESOURCES RESOURCES_)
+readVariable(MakeList RESOURCES RESOURCES)
 
 if(APPLE)
   # set information on Info.plist file
@@ -70,7 +70,7 @@ endif(APPLE)
 
 add_executable(
   qucspowercombining MACOSX_BUNDLE WIN32
-  ${QUCS-POWCOMB_SRCS} ${RESOURCES_})
+  ${QUCS-POWCOMB_SRCS} ${RESOURCES})
 
 target_link_libraries(qucspowercombining
    Qt5::Core Qt5::Gui Qt5::Svg)
