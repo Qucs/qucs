@@ -92,21 +92,26 @@ void plugins::do_it(istream_t& cs, SchematicModel*)
 	cs.reset();
 	if(cs.umatch("attach") || cs.umatch("load")){
 		auto path = plugpath();
-		std::string what;
-		cs >> what;
+		std::string stem;
+		cs >> stem;
 
-		what += SOEXT;
+		std::string what = stem + SOEXT;
 
 		std::string full_file_name;
 		if(what.size()==0){ untested();
 		}else if(what[0]=='.'){
-			full_file_name=what;
+			full_file_name = what;
 		}else{
 			full_file_name = findfile(what, path, R_OK);
 		}
 
 		if (full_file_name != "") {
 			// found it, with search
+		}else{
+			full_file_name = findfile(stem + "/_", path, R_OK);
+		}
+
+		if (full_file_name != "") {
 		}else{untested();
 			std::cerr << "cannot find plugin " + what + " in " +path + "\n";
 			std::cerr << "(something wrong with installation?)\n";

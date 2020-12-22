@@ -1,3 +1,10 @@
+TARGET = legacy
+
+SUBDIRS = \
+	components \
+	libfiles \
+	paintings \
+	qucsator
 
 LEGACY_SRC = \
 	component.cpp \
@@ -39,10 +46,8 @@ NOTYET_SRC = \
 HDR = \
 	obsolete_paintings.h \
 	curvediagram.h \
-	dat.h \
 	markerdialog.h \
 	marker.h \
-	qucsator.h \
 	rect3ddiagram.h \
 	smithdiagram.h \
 	polardiagram.h \

@@ -16,9 +16,9 @@
 # Boston, MA 02110-1301, USA.
 #
 
-include ../../common.mk
+include ../../autotools/common.mk
 
-pkglib_LTLIBRARIES = verilog.la
+inst_LTLIBRARIES = verilog.la
 AM_DEFAULT_SOURCE_EXT = .cpp
 
 verilog_la_SOURCES = ${RAW_SRCS}
@@ -29,3 +29,5 @@ verilog_la_LDFLAGS = -module -avoid-version
 
 # BUG
 AM_CPPFLAGS += $(X11_INCLUDES) $(QT_CFLAGS)
+
+CLEANFILES = _

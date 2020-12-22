@@ -1,3 +1,5 @@
+TARGET = components
+
 DEFAULT_COMPONENTS = \
 	EKV26MOS.cpp \
 	MESFET.cpp \

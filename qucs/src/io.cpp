@@ -290,7 +290,7 @@ istream_t& istream_t::umatch(const std::string& s)
       while (*str2 != '}') { untested();
 			++str2;
       }
-    }else{ untested();
+    }else{
 		 trace3("mismatch", optional, str2, peek());
       // mismatch
       const char* bar = strchr(str2, '|');
@@ -304,12 +304,12 @@ istream_t& istream_t::umatch(const std::string& s)
     }
   }
 
-  if (_ok) { untested();
+  if (_ok) {
     _begin_match = begin_match;
     _end_match = cursor();
     skipcom();
     _ok = true;
-  }else{ untested();
+  }else{
     reset(start);
     _ok = false;
   }

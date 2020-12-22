@@ -176,7 +176,7 @@ inline void DISPATCHER_BASE::install(const std::string& s, CKT_BASE* p)
     trace2(name.c_str(), bss, ess);
     if (name == "") {untested();
       // quietly ignore empty string
-    }else if (_map[name]) {untested();
+    }else if (_map[name]) {
       // duplicate .. stash the old one so we can get it back
       error(bWARNING, name + ": already installed, replacing\n");
       std::string save_name = name + ":0";

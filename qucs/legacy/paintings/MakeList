@@ -1,3 +1,4 @@
+TARGET = paintings
 
 SRCS = \
 	arrow.cpp  \

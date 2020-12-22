@@ -19,8 +19,8 @@
 #include "globals.h"
 #include "settings.h" //??
 #include "schematic_doc.h"
-#include "qucsator.h"
-#include "dat.h"
+//#include "qucsator.h"
+//#include "dat.h"
 #include "painting.h"
 #include "components/component.h" // yikes
 /* -------------------------------------------------------------------------------- */
