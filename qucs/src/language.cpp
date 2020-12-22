@@ -98,7 +98,7 @@ Element const* DocumentLanguage::find_proto(const std::string& Name, const Eleme
 		}catch (ExceptionCantFind& e) {
 			assert(!p);
 		}
-	}else{ untested();
+	}else{
 		// top_level? not reachable from here.
 #if 0
     CARD_LIST::const_iterator i = CARD_LIST::card_list.find_(Name);

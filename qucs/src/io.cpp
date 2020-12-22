@@ -76,7 +76,7 @@ istream_t::istream_t(istream_t::STRING, const std::string&s )
 /*--------------------------------------------------------------------------*/
 istream_t::istream_t(istream_t::STDIN)
 	: _file(stdin), _cnt(0), _ok(true), _stream(nullptr)
-{ untested();
+{
 }
 /*--------------------------------------------------------------------------*/
 istream_t::istream_t(istream_t::WHOLE_FILE, const std::string& name)
