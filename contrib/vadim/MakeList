@@ -1,0 +1,3 @@
+TARGET = vadim
+
+EXTRA_DIST =

@@ -1,0 +1,13 @@
+
+include ../../autotools/common.mk
+
+inst_LTLIBRARIES = libfiles.la
+
+# need Qt for TextStream.
+libfiles_la_LDFLAGS = -module -avoid-version
+libfiles_la_CPPFLAGS = $(AM_CPPFLAGS)
+libfiles_la_CPPFLAGS += $(QT_INCLUDES)
+libfiles_la_SOURCES = libfiles.cpp
+
+# BUG
+AM_CPPFLAGS += $(X11_INCLUDES) $(QT_CFLAGS)

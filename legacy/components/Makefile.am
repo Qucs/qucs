@@ -24,19 +24,18 @@
 # Boston, MA 02110-1301, USA.
 #
 
-include ../../common.mk
+include ../../autotools/common.mk
 
-plugindir = ${pkglibdir}
-plugin_LTLIBRARIES = legacy-components.la
+inst_LTLIBRARIES = components.la
 
-legacy_components_la_LDFLAGS = -shared -module -avoid-version
+components_la_LDFLAGS = -shared -module -avoid-version
 
-legacy_components_la_SOURCES = $(DEFAULT_COMPONENTS)
-legacy_components_la_LIBADD = $(QT_LIBS)
-legacy_components_la_CXXFLAGS = ${AM_CXXFLAGS} -fPIC
+components_la_SOURCES = $(DEFAULT_COMPONENTS)
+components_la_LIBADD = $(QT_LIBS)
+components_la_CXXFLAGS = ${AM_CXXFLAGS} -fPIC
 
 # some stuff mostly related to legacy components
-legacy_components_la_SOURCES += \
+components_la_SOURCES += \
 	${TASK_ELEMENTS} \
 	${LUMPED_COMPONENTS} \
 	${RF_COMPONENTS} \

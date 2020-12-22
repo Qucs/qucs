@@ -1,0 +1,7 @@
+TARGET = qucsator
+
+EXTRA_DIST = \
+	qucsator.h \
+	dat.h
+
+RAW_SRC =

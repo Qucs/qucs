@@ -1,45 +1,35 @@
 ## Process this file with automake to produce Makefile.in
+# 
+# qucs/contrib/Makefile.am
 #
-# stuff.am
+# Automake input file.
 #
-# rules used in other makefiles
-#
-# Author: Felix
-# Copyright (C) 2017 QUCS team
+# Copyright (C) 2007, 2008 Stefan Jahn <stefan@lkcc.org>
+#               2020 Felix Salfelder
 #
 # This is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
-# the Free Software Foundation; either version 2, or (at your option)
+# the Free Software Foundation; either version 3, or (at your option)
 # any later version.
-#
+# 
 # This software is distributed in the hope that it will be useful,
 # but WITHOUT ANY WARRANTY; without even the implied warranty of
 # MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 # GNU General Public License for more details.
-#
+# 
 # You should have received a copy of the GNU General Public License
 # along with this package; see the file COPYING.  If not, write to
 # the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
-# Boston, MA 02110-1301, USA.
+# Boston, MA 02110-1301, USA.  
 #
 
-include MakeList
+include ../../autotools/common.mk
+AM_DEFAULT_SOURCE_EXT = .cpp
 
-SUFFIXES = .qrc
+inst_LTLIBRARIES = hidpi.la
 
-.qrc.cpp:
-	$(RCC) -o $@ $<
+hidpi_la_LDFLAGS = -shared -module -avoid-version
+hidpi_la_CXXFLAGS = ${AM_CXXFLAGS} -fPIC
+hidpi_la_CPPFLAGS = ${AM_CPPFLAGS} ${QT_CFLAGS}
 
-SUFFIXES += .moc.cpp
-
-.h.moc.cpp:
-	$(MOC) -DQT_MAJOR_VERSION=${QT_MAJOR_VERSION} -o $@ $<
-
-$(MOCFILES): $(top_builddir)/qt_version
-
-AM_CXXFLAGS = ${CXXFLAGS} -fPIC
-AM_CPPFLAGS = -I$(top_srcdir)/include
-
-# BUG
-AM_CPPFLAGS += -I$(top_srcdir)/src
-EXTRA_DIST += MakeList
+CLEANFILES = *~ Makefile.in *.rej *.orig

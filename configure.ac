@@ -18,7 +18,7 @@ AC_CONFIG_AUX_DIR([.])
 AC_CANONICAL_BUILD
 AC_CANONICAL_HOST
 AC_CANONICAL_TARGET
-AM_INIT_AUTOMAKE([no-define])
+AM_INIT_AUTOMAKE([no-define foreign])
 AM_PROG_AR
 AC_PREFIX_DEFAULT([/usr/local])
 AC_CONFIG_MACRO_DIR([m4])
@@ -827,11 +827,14 @@ AC_CONFIG_FILES([
     Makefile:autotools/top.in
     cli/Makefile:autotools/cli.in
     contrib/Makefile:autotools/contrib.in
-    contrib/vadim/Makefile
+    contrib/vadim/Makefile:autotools/vadim.in
+    contrib/hidpi/Makefile:autotools/hidpi.in
     include/Makefile:autotools/include.in
     legacy/Makefile:autotools/legacy.in
     legacy/components/Makefile
-    legacy/paintings/Makefile
+    legacy/libfiles/Makefile:autotools/libfiles.in
+    legacy/qucsator/Makefile:autotools/qucsator.in
+    legacy/paintings/Makefile:autotools/paintings.in
     main/Makefile:autotools/main.in
     man/Makefile
     autotools/Makefile

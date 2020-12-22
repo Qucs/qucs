@@ -24,7 +24,7 @@
 
 qucs_appledir = $(bindir)/qucs.app/Contents/MacOS/
 
-include ../common.mk
+include ../autotools/common.mk
 
 all-local: qucs # ${TGT_PROGRAM}
 

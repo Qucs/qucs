@@ -1,52 +1,58 @@
 ## Process this file with automake to produce Makefile.in
-# 
-# qucs/paintings/Makefile.am
 #
-# Automake input file.
+# stuff.am
 #
-# Copyright (C) 2004 Stefan Jahn <stefan@lkcc.org>
+# rules used in other makefiles
+#
+# Author: Felix
+# Copyright (C) 2017 QUCS team
 #
 # This is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
 # the Free Software Foundation; either version 2, or (at your option)
 # any later version.
-# 
+#
 # This software is distributed in the hope that it will be useful,
 # but WITHOUT ANY WARRANTY; without even the implied warranty of
 # MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 # GNU General Public License for more details.
-# 
+#
 # You should have received a copy of the GNU General Public License
 # along with this package; see the file COPYING.  If not, write to
 # the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
-# Boston, MA 02110-1301, USA.  
+# Boston, MA 02110-1301, USA.
 #
-#
 
-include ../../common.mk
+include MakeList
 
-pkglib_LTLIBRARIES = paintings.la
+all: ${TARGET:%=_}
 
-MOCHEADERS = arrowdialog.h graphictextdialog.h filldialog.h id_dialog.h
-MOCFILES = $(MOCHEADERS:.h=.moc.cpp)
+# FIXME: this is platform dependent.
+SOEXT=.so
 
-paintings_la_CXXFLAGS = ${AM_CXXFLAGS} -fPIC
-paintings_la_LDFLAGS = -module -avoid-version
+_: | ${TARGET}.la
+	test -L _ || ${LN_S} .libs/${TARGET}${SOEXT} $@
 
-paintings_la_SOURCES = ${SRCS}
 
-nodist_paintings_la_SOURCES = $(MOCFILES)
+SUFFIXES = .qrc
 
-#   paintings.h rectangle.h ellipsearc.h id_text.h
-noinst_HEADERS = $(MOCHEADERS) \
-	graphictext.h  \
-	graphictextdialog.h \
-	filldialog.h
+.qrc.cpp:
+	$(RCC) -o $@ $<
 
-AM_CPPFLAGS += $(X11_INCLUDES) $(QT_CFLAGS)
+SUFFIXES += .moc.cpp
+
+.h.moc.cpp:
+	$(MOC) -DQT_MAJOR_VERSION=${QT_MAJOR_VERSION} -o $@ $<
+
+$(MOCFILES): $(top_builddir)/qt_version
+
+AM_CXXFLAGS = ${CXXFLAGS} -fPIC
+AM_CPPFLAGS = -I$(top_srcdir)/include
 
 # BUG
 AM_CPPFLAGS += -I$(top_srcdir)/src
+EXTRA_DIST += MakeList
 
-CLEANFILES = *~ *.moc.cpp
-MAINTAINERCLEANFILES = Makefile.in
+# simplify paths
+here_rel = $(subst ${abs_top_srcdir},,${abs_srcdir})
+instdir = $(pkglibdir)/$(here_rel)/..

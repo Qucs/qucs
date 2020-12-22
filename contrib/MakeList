@@ -1,0 +1,4 @@
+
+SUBDIRS = vadim hidpi
+
+EXTRA_DIST =

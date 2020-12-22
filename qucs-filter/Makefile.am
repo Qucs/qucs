@@ -25,7 +25,7 @@
 MOCHEADERS = qucsfilter.h helpdialog.h
 MOCFILES = $(MOCHEADERS:.h=.moc.cpp)
 
-include ../common.mk
+include ../autotools/common.mk
 
 bin_PROGRAMS = qucsfilter
 

@@ -26,7 +26,7 @@ ACLOCAL_AMFLAGS=-Im4
 # TODO: why is this needed?
 check-recursive: all
 
-include common.mk
+include autotools/common.mk
 
 SUBDIRS += $(RELEASEDIRS)
 
@@ -36,8 +36,7 @@ subdirs:
 
 .PHONY: subdirs
 
-EXTRA_DIST += ar-lib bootstrap depcomp PLATFORMS RELEASE Info.plist \
-	common.mk
+EXTRA_DIST += ar-lib bootstrap depcomp PLATFORMS RELEASE Info.plist
 
 # MacOSX specific installation of applications
 # FIXME: don't install twice.

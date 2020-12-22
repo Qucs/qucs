@@ -16,7 +16,7 @@
 # Boston, MA 02110-1301, USA.
 #
 
-include ../../common.mk
+include ../../autotools/common.mk
 
 AM_CPPFLAGS += -I${srcdir}/.. -I${top_srcdir} ${QT_CFLAGS} ${QTest_CFLAGS} -DPIC
 AM_DEFAULT_SOURCE_EXT = .cpp

@@ -30,7 +30,7 @@ qucsdir=${pkglibdir}
 
 MOCFILES = $(MOCHEADERS:.h=.moc.cpp)
 
-include ../../common.mk
+include ../../autotools/common.mk
 
 
 libdialogs_la_CXXFLAGS = ${AM_CXXFLAGS} -fPIC

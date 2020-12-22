@@ -21,15 +21,10 @@
 # Boston, MA 02110-1301, USA.
 #
 
-include ../common.mk
+include ../autotools/common.mk
 
-SUBDIRS = \
-	components \
-	paintings
-
-pkglib_LTLIBRARIES = legacy.la legacylib.la qucsator.la
+inst_LTLIBRARIES = legacy.la # legacylib.la qucsator.la
 AM_CPPFLAGS += $(X11_INCLUDES) $(QT_CFLAGS)
-# AM_CXXFLAGS = ${CXXFLAGS} -fPIC # common?
 
 legacy_la_LDFLAGS = -module -avoid-version
 legacy_la_CPPFLAGS = $(AM_CPPFLAGS)
@@ -37,19 +32,6 @@ legacy_la_CPPFLAGS = $(AM_CPPFLAGS)
 legacy_la_CPPFLAGS += $(QT_INCLUDES)
 legacy_la_SOURCES = ${LEGACY_SRC}
 
-legacylib_la_LDFLAGS = -module -avoid-version
-legacylib_la_CPPFLAGS = $(AM_CPPFLAGS)
-# need Qt for TextStream.
-legacylib_la_CPPFLAGS += $(QT_INCLUDES)
-legacylib_la_SOURCES = \
-	libfiles.cpp
 
-qucsator_la_SOURCES = qucsator.cpp dat.cpp qucsator.moc.cpp
-
-qucsator_la_LDFLAGS = -module -avoid-version
-# qucsator_la_CPPFLAGS = $(AM_CPPFLAGS)
-# need Qt for TextStream. (BUG?)
-qucsator_la_CPPFLAGS = $(AM_CPPFLAGS) $(QT_INCLUDES)
-# qucsator_la_LIBADD = $(QT_LIBS)
 
 noinst_HEADERS = $(HDR)
