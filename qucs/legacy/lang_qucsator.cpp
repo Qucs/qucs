@@ -11,7 +11,7 @@
  *                                                                         *
  ***************************************************************************/
 
-// qucsator simulator "driver", legacy
+// qucsator "language".
 
 #include "sckt_base.h"
 #include "net.h"
@@ -22,10 +22,7 @@
 #include "qucsator.h"
 #include "dat.h"
 #include "painting.h"
-/* -------------------------------------------------------------------------------- */
-#include "components/component.h"
-//#include "component.cpp" // BUG. still needed?
-//#include "gatecomponent.cpp" // BUG
+#include "components/component.h" // yikes
 /* -------------------------------------------------------------------------------- */
 namespace {
 /* -------------------------------------------------------------------------------- */
@@ -145,6 +142,7 @@ private: // local
 static Dispatcher<DocumentFormat>::INSTALL p(&language_dispatcher, "qucsator", &qucslang);
 /* -------------------------------------------------------------------------------- */
 /* -------------------------------------------------------------------------------- */
+// non-callback print.
 static void printSymbol_(Symbol const* c, ostream_t& s)
 {
 	// todo: mfactor/active?
@@ -213,10 +211,12 @@ void QucsatorLang::printSymbol(Symbol const* d, ostream_t& s) const
 		// why is this a Symbol??
 		printtaskElement(c, s);
 	}else if(auto c=dynamic_cast<Component const*>(d)){
+		// HACK
 		printComponent(c, s);
 	}else if(dynamic_cast<Conductor const*>(d)){
 		// possibly a wire.
 	}else if(d){
+		// TODO. all symbols here.
 		printSymbol_(d, s);
 	}else{ untested();
 		assert(false);

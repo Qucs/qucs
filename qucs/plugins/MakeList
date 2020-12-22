@@ -5,7 +5,8 @@
 SUBDIRS = \
 	diagrams \
 	misc \
-	verilog
+	verilog \
+	spice
 
 RAW_SRCS =
 

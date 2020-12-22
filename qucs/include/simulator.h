@@ -27,7 +27,6 @@
 #include "data.h"
 
 class DocumentFormat;
-class NetLang;
 class Component;
 class QucsData;
 
@@ -95,11 +94,6 @@ private:
 }; // Simulator
 
 
-//obsolete?
-class NetLang : public DocumentLanguage {
-public:
-  virtual ~NetLang(){}
-};
 
 
 #endif

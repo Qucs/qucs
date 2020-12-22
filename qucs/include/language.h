@@ -41,4 +41,10 @@ private: //called by printItem
   virtual void printtaskElement(TaskElement const*, ostream_t&) const = 0;
 };
 
+// group netlist languages. needed? obsolete?
+class NetLang : public DocumentLanguage {
+public:
+  virtual ~NetLang(){}
+};
+
 #endif

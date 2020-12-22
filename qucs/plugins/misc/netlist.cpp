@@ -43,10 +43,15 @@ void Netlister::do_it(istream_t& cs, SchematicModel* m)
 	declmap declarations;
 	std::string fn, language;
 	bool emit_decl = false;
+	cs >> "netlist";
 
-	while(
-		Get(cs, "{l}ang", &language)
-		);
+	size_t here = cs.cursor();
+
+	do{
+		trace1("netlist", cs.tail());
+		Get(cs, "l{ang}", &language);
+	} while(cs.more() && !cs.stuck(&here));
+	trace2("netlist", language, cs.tail());
 
 	cs >> fn;
 

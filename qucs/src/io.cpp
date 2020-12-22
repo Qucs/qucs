@@ -40,6 +40,9 @@ ostream_t::ostream_t(QFile* /* BUG const */ file)
 
 std::string istream_t::read_line()
 {
+	get_line("incomplete");
+	return fullstring();
+
 	// _current_start = pos(); // really?
 
 	_ok = true;
@@ -258,6 +261,8 @@ istream_t& istream_t::umatch(const std::string& s)
   const char* str2 = s.c_str();
   bool optional = 0;
 
+  trace2("umatch", s, tail());
+
   for (;;) {
     if ((!*str2) || (*str2 == '|')) {
       _ok = true;
@@ -285,7 +290,8 @@ istream_t& istream_t::umatch(const std::string& s)
       while (*str2 != '}') { untested();
 			++str2;
       }
-    }else{
+    }else{ untested();
+		 trace3("mismatch", optional, str2, peek());
       // mismatch
       const char* bar = strchr(str2, '|');
       if (bar && (bar[-1] != '\\')) { untested();
@@ -298,12 +304,12 @@ istream_t& istream_t::umatch(const std::string& s)
     }
   }
 
-  if (_ok) {
+  if (_ok) { untested();
     _begin_match = begin_match;
     _end_match = cursor();
     skipcom();
     _ok = true;
-  }else{
+  }else{ untested();
     reset(start);
     _ok = false;
   }
@@ -493,14 +499,13 @@ CS& istream_t::get_line(std::string const& prompt)
 {
   ++_line_number;
 
-#if 0 // HACK
-	 std::cout << prompt;
-	 _cmd = _stream->readLine().toStdString();
-    _cnt = 0;
-    _length = _cmd.length();
-    _ok = true;
-#else
-  if (is_file()) {
+  if(_stream){
+    // yikes.
+      _cmd = _stream->readLine().toStdString();
+      _cnt = 0;
+      _length = _cmd.length();
+      _ok = true;
+  }else if (is_file()) {
     _cmd = getlines(_file);
     _cnt = 0;
     _length = _cmd.length();
@@ -519,14 +524,16 @@ CS& istream_t::get_line(std::string const& prompt)
 //    IO::mstdout << "\"" << fullstring() << "\"\n";
 //  }else{
 //  }
-#endif
   return *this;
 }
 /*--------------------------------------------------------------------------*/
 bool istream_t::atEnd() const
 {
-	assert(_stream);
-	return _stream->atEnd();
+	if(_stream){
+		return _stream->atEnd();
+	}else{
+		return true;
+	}
 }
 /*--------------------------------------------------------------------------*/
 /* getcmd: get a command.
