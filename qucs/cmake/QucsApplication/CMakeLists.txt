@@ -20,7 +20,7 @@ add_compile_definitions(PACKAGE_VERSION="${PROJECT_VERSION}")
 add_compile_definitions(QUCS_PREFIX="${prefix}")
 add_compile_definitions(QUCS_PLUGPATH="${pkglibdir}")
 
-add_subdirectory(${CMAKE_SOURCE_DIR}/../QucsSchematicLibrary QucsSchematicLibrary)
+add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/../QucsSchematicLibrary QucsSchematicLibrary)
 
 if (${CompileDependencies})
 	set(LIB_PATH_TEMP ${CMAKE_BINARY_DIR}/libraries)
@@ -31,7 +31,7 @@ if (${CompileDependencies})
 
 	# copy the library into a common folder for all dependencies of qucs
 	# so they can be used independently to the installed ones
-	add_subdirectory(${CMAKE_SOURCE_DIR}/../../legacy legacy)
+	add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/../../legacy legacy)
 	#set_target_properties(legacy PROPERTIES RUNTIME_OUTPUT_DIRECTORY_DEBUG ${LIB_PATH_TEMP}) # this does not work
 	if(EXISTS ${CMAKE_BINARY_DIR}/legacy/liblegacy.so)
 		file(COPY ${CMAKE_BINARY_DIR}/legacy/liblegacy.so DESTINATION ${LIB_PATH_TEMP})
@@ -39,21 +39,21 @@ if (${CompileDependencies})
 
 	add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/../../../qucsator qucsator)
 	#set_target_properties(libqucsator PROPERTIES RUNTIME_OUTPUT_DIRECTORY_DEBUG ${LIB_PATH_TEMP})
-	if(EXISTS ${CMAKE_BINARY_DIR}/qucsator/src/libqucsator.so)
-		file(COPY ${CMAKE_BINARY_DIR}/qucsator/src/libqucsator.so DESTINATION ${LIB_PATH_TEMP})
+	if(EXISTS ${CMAKE_CURRENT_BINARY_DIR}/qucsator/src/libqucsator.so)
+		file(COPY ${CMAKE_CURRENT_BINARY_DIR}/qucsator/src/libqucsator.so DESTINATION ${LIB_PATH_TEMP})
 	endif()
 
-	add_subdirectory(${CMAKE_SOURCE_DIR}/../../legacy/components legacy/components)
+	add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/../../legacy/components legacy/components)
 	#set_target_properties(components PROPERTIES RUNTIME_OUTPUT_DIRECTORY_DEBUG ${LIB_PATH_TEMP})
 	set_target_properties(components PROPERTIES OUTPUT_NAME legacy-components)
-	if(EXISTS ${CMAKE_BINARY_DIR}/legacy/components/liblegacy-components.so)
-		file(COPY ${CMAKE_BINARY_DIR}/legacy/components/liblegacy-components.so DESTINATION ${LIB_PATH_TEMP})
+	if(EXISTS ${CMAKE_CURRENT_BINARY_DIR}/legacy/components/liblegacy-components.so)
+		file(COPY ${CMAKE_CURRENT_BINARY_DIR}/legacy/components/liblegacy-components.so DESTINATION ${LIB_PATH_TEMP})
 	endif()
 
-	add_subdirectory(${CMAKE_SOURCE_DIR}/../../legacy/paintings legacy/paintings)
+	add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/../../legacy/paintings legacy/paintings)
 	#set_target_properties(paintings PROPERTIES RUNTIME_OUTPUT_DIRECTORY ${LIB_PATH_TEMP})
-	if(EXISTS ${CMAKE_BINARY_DIR}/legacy/paintings/libpaintings.so)
-		file(COPY ${CMAKE_BINARY_DIR}/legacy/paintings/libpaintings.so DESTINATION ${LIB_PATH_TEMP})
+	if(EXISTS ${CMAKE_CURRENT_BINARY_DIR}/legacy/paintings/libpaintings.so)
+		file(COPY ${CMAKE_CURRENT_BINARY_DIR}/legacy/paintings/libpaintings.so DESTINATION ${LIB_PATH_TEMP})
 	endif()
 endif()
 
@@ -168,10 +168,7 @@ find_package(
 ##
 ## CMake's way of creating an executable
 ##
-add_executable(qucs MACOSX_BUNDLE WIN32)
-target_sources(qucs PRIVATE
-	${CMAKE_SOURCE_DIR}/../../main/main.cpp
-	)
+add_executable(qucs MACOSX_BUNDLE WIN32 ${CMAKE_CURRENT_SOURCE_DIR}/../../main/main.cpp)
 target_link_libraries(qucs qucsschematic)
 target_link_libraries(qucs Qt5::Widgets)
 target_link_libraries(qucs Qt5::Svg)
