@@ -42,7 +42,7 @@ private: // internal
 private: // DocumentFormat
   void load(istream_t&, Object*) const override{ incomplete(); }
 private:
-  mutable std::map<std::string, Element*> declarations;
+//  mutable std::map<std::string, Element*> declarations;
   mutable std::vector<QString> netLabels;
   DocumentLanguage const* lang;
 //  mutable SchematicModel const* modelhack;
@@ -54,11 +54,6 @@ VerilogNetlister::VerilogNetlister() : DocumentFormat()
 	lang = language_dispatcher["verilog"];
 	// verilog = dynamic_cast<NetLang const*>(l);
 	assert(lang);
-}
-/*--------------------------------------------------------------------------*/
-void VerilogNetlister::clear() const
-{
-	declarations.clear();
 }
 /*--------------------------------------------------------------------------*/
 void VerilogNetlister::do_it(istream_t& cs, SchematicModel* o)
@@ -94,9 +89,10 @@ void VerilogNetlister::do_it(istream_t& cs, SchematicModel* o)
 /*--------------------------------------------------------------------------*/
 void VerilogNetlister::printDeclarations(ostream_t& stream) const
 {
-	for(auto si : declarations){
-		lang->printItem(si.second, stream);
-	}
+	incomplete();
+//	for(auto si : declarations){
+//		lang->printItem(si.second, stream);
+//	}
 }
 /*--------------------------------------------------------------------------*/
 void VerilogNetlister::createNetlist(ostream_t& stream,

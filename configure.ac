@@ -840,6 +840,7 @@ AC_CONFIG_FILES([
     plugins/diagrams/Makefile:autotools/diagrams.in
     plugins/misc/Makefile:autotools/misc.in
     plugins/verilog/Makefile:autotools/verilog.in
+    plugins/spice/Makefile:autotools/spice.in
     qucs-filter/Makefile
     qucs-activefilter/Makefile
     qucs-transcalc/Makefile
