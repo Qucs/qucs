@@ -2,23 +2,10 @@
 
 # possibly (c) 2014 Guilherme Brondani Torri
 #              2020 Martin Marmsoler
+#              2020 Felix Salfelder
 
-# TODO: move instructions to README...
-
-# To have CMake pick a Qt installation of your choice that won't be found
-# automatically, set the CMAKE_PREFIX_PATH environment variable. For example:
-# "export CMAKE_PREFIX_PATH=/usr/local/trolltech/qt4.3.5"
-#
-# You can change the install location by running cmake like this: mkdir build;
-# cd build cmake .. -DCMAKE_INSTALL_PREFIX=/new/install/prefix
-#
-# By default, the prefix is "/usr/local"
-#
-# Tests are enabled by default. To run the tests, try one of these: make test
-# env CTEST_OUTPUT_ON_FAILURE=1 make test    # for verbose output
 
 project(qucs_lib CXX)
-cmake_minimum_required(VERSION 3.16)
 
 # this is where the library source is.
 set(coreSchematicPath ../../src)
@@ -87,24 +74,17 @@ list(TRANSFORM QUCS_DIALOG_SRC PREPEND ${coreSchematicPath}/)
 #list(TRANSFORM QUCS_RESOURCES PREPEND ${coreSchematicPath}/)
 
 ## schematic library
-add_library(coreSchematic OBJECT ${QUCS_SRCS} ${QUCS_RESOURCES} ${QUCS_UI_FILES} ${QUCS_DIALOG_SRC})
-target_include_directories(coreSchematic PRIVATE ${PROJECT_SOURCE_DIR}/../../include)
-target_include_directories(coreSchematic PRIVATE ${coreSchematicPath})
+add_library(qucs SHARED ${QUCS_SRCS} ${QUCS_RESOURCES} ${QUCS_UI_FILES} ${QUCS_DIALOG_SRC})
+target_include_directories(qucs PRIVATE ${PROJECT_SOURCE_DIR}/../../include)
+target_include_directories(qucs PRIVATE ${coreSchematicPath})
 # the order of the links is important. At least the libraries without dependencies are added
 # here the Qt ones (https://stackoverflow.com/questions/51994603/cmake-qt5-undefined-reference-to-qprinterqprinterqprinterprintermode)
-target_link_libraries(coreSchematic Qt5::Core)
-target_link_libraries(coreSchematic Qt5::Gui)
-target_link_libraries(coreSchematic Qt5::Widgets)
-target_link_libraries(coreSchematic Qt5::Svg)
-target_link_libraries(coreSchematic Qt5::PrintSupport)
-target_link_libraries(coreSchematic Qt5::Script)
 
-## create shared library
-add_library(
-  qucsschematic SHARED
-  # must be done, because coreSchematic is not a shared or static library, but only an object
-  # for shared/ static libraries the target name is sufficent
-  #$<TARGET_OBJECTS:coreSchematic> #$<TARGET_OBJECTS:components>
-  ""
-  )
-target_link_libraries(qucsschematic PUBLIC coreSchematic)
+target_link_libraries(qucs Qt5::Core)
+target_link_libraries(qucs Qt5::Gui)
+target_link_libraries(qucs Qt5::Widgets)
+target_link_libraries(qucs Qt5::Svg)
+target_link_libraries(qucs Qt5::PrintSupport)
+target_link_libraries(qucs Qt5::Script)
+
+install(TARGETS qucs DESTINATION ${CMAKE_INSTALL_LIBDIR})
