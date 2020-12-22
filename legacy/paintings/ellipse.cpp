@@ -126,6 +126,7 @@ void Ellipse::setCenter(int x, int y, bool relative)
 }
 
 // --------------------------------------------------------------------------
+#if 0
 Element* Ellipse::info(QString& Name, char* &BitmapFile, bool getNewOne)
 { untested();
   Name = QObject::tr("Ellipse");
@@ -144,6 +145,7 @@ Element* Ellipse::info_filled(QString& Name, char* &BitmapFile, bool getNewOne)
   if(getNewOne)  return new Ellipse(true);
   return 0;
 }
+#endif
 
 // --------------------------------------------------------------------------
 bool Ellipse::load(const QString& s)

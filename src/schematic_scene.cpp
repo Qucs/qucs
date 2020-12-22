@@ -64,7 +64,6 @@ Component* component(QGraphicsItem* g)
 	if(!e) return nullptr;
 	return component(e->operator->());
 }
-#endif
 WireLabel* wireLabel(QGraphicsItem* g)
 {
 	auto e=dynamic_cast<ElementGraphics*>(g);
@@ -89,6 +88,7 @@ Marker* marker(QGraphicsItem* g)
 	if(!e) return nullptr;
 	return marker(e->operator->());
 }
+#endif
 /*--------------------------------------------------------------------------*/
 /*--------------------------------------------------------------------------*/
 /*--------------------------------------------------------------------------*/

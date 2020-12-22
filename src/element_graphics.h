@@ -108,22 +108,24 @@ private:
 }; // ElementGraphics
 /*--------------------------------------------------------------------------*/
 /*--------------------------------------------------------------------------*/
-// Component const* const_component(ElementGraphics const);
-WireLabel const* const_wireLabel(ElementGraphics const);
-Diagram const* const_diagram(ElementGraphics const);
-Painting const* const_painting(ElementGraphics const);
-
 Element* element(ElementGraphics*);
 Element const* element(ElementGraphics const*);
+#if 0
+// Component const* const_component(ElementGraphics const);
+WireLabel const* const_wireLabel(ElementGraphics const);
+//Diagram const* const_diagram(ElementGraphics const);
+Painting const* const_painting(ElementGraphics const);
+
 
 // obsolete stuff (historic attempt to rescue legacy code)
 // Component* component(QGraphicsItem*);
 WireLabel* wireLabel(QGraphicsItem*);
-Diagram* diagram(QGraphicsItem*);
+//Diagram* diagram(QGraphicsItem*);
 Painting* painting(QGraphicsItem*);
 Graph* graph(QGraphicsItem*);
 Marker* marker(QGraphicsItem*);
 Node* node(QGraphicsItem*);
+#endif
 // Label* label(QGraphicsItem*);
 /*--------------------------------------------------------------------------*/
 /*--------------------------------------------------------------------------*/

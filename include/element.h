@@ -207,6 +207,7 @@ inline SchematicModel const* Element::scope() const
 	return e->scope();
 }
 /*--------------------------------------------------------------------------*/
+#if 0
 // class Component;
 class TaskElement;
 class WireLabel;
@@ -226,6 +227,7 @@ inline Element*& element(Element*& x){return x;}
 WireLabel* wireLabel(Element*);
 Painting* painting(Element*);
 Marker* marker(Element*);
+#endif
 /*--------------------------------------------------------------------------*/
 /*--------------------------------------------------------------------------*/
 #endif

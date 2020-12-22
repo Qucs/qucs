@@ -1,0 +1,19 @@
+== Various types of tests
+
+- programs. compiled and linked against libqucs. return value (exit code)
+  determines success.
+- "sh". shell scripts, similar but no need to compile.
+- "prj" -- projects. create netlists from various schematics,
+  compare against reference.
+- "qx", qucs scripts. cli end-to-end tests.
+
+== Keeping track of test status
+
+(Borrowed from Gnucap) A test hook ('{' in a suitable context) that is not
+reached by the tests is followed by "untested();" or "itested();". This
+indicates that the tests are incomplete and need work (Please provide tests if
+you feel that an untested call is unjustified). An "itested();" call indicates
+that the hook has been reached during an interactive testing session. A normal
+debug build (--enable-debug) will report "untested();" hooks for better
+debugging. To see or refresh the other ones, pass -DTRACE_ITESTED to the
+preprocesor.
