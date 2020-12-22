@@ -829,7 +829,7 @@ AC_CONFIG_FILES([
     contrib/Makefile:autotools/contrib.in
     contrib/vadim/Makefile
     include/Makefile:autotools/include.in
-    legacy/Makefile
+    legacy/Makefile:autotools/legacy.in
     legacy/components/Makefile
     legacy/paintings/Makefile
     main/Makefile:autotools/main.in
