@@ -1,8 +1,11 @@
 # qucs-suite
 # whats the difference between it and the qucs subfolder?
-project(qucs-suite CXX)
+project(qucs CXX)
 cmake_minimum_required(VERSION 3.18)
 cmake_policy(VERSION 3.18)
+
+# Set standard installation paths.
+include(GNUInstallDirs)
 
 set(QUCS_URL "https://sf.net/p/qucs")
 set(QUCS_BUGREPORT "qucs-bugs@lists.sourceforge.net")
@@ -67,8 +70,7 @@ configure_file(../qucs-transcalc/qucstrans.1.cmake.in
                ../qucs-transcalc/qucstrans.1)
 
 add_subdirectory(src)
-
-# add_subdirectory(man)
+add_subdirectory(main)
 # add_subdirectory(plugins)
 # add_subdirectory(legacy)
 # add_subdirectory(qucs-activefilter)
