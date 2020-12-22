@@ -1,8 +1,5 @@
 /***************************************************************************
-                              globals.h
-                             --------------------
-    author               : 2018 Felix Salfelder
-    license              : GPLv3+
+    author               : 2018, 2020 Felix Salfelder
  ***************************************************************************/
 
 /***************************************************************************
@@ -23,7 +20,6 @@
 class TaskElement;
 class Diagram;
 class DocumentLanguage;
-class DocumentFormat;
 class Painting;
 class Simulator;
 class Symbol;

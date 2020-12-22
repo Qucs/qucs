@@ -14,6 +14,7 @@ LEGACY_SRC = \
 	portcmd.cpp \
 	modelcmd.cpp \
 	spicecmd.cpp \
+	signon.cc \
 	symbolcmd.cpp \
 	idcmd.cpp \
 	propertiescmd.cpp \
