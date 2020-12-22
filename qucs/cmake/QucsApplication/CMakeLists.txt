@@ -13,7 +13,7 @@ set(PROJECT_DOMAIN_FIRST "qucs")
 set(PROJECT_DOMAIN_SECOND "org")
 
 # when true, all the dependencies (Qucsator, legacy and so on are also compiled)
-option(CompileDependencies "Compile dependencies related to qucs (qucsator ...), default ON" ON)
+option(CompileDependencies "Compile dependencies related to qucs (qucsator ...), default ON" OFF)
 
 # add compiler definitions/symbols
 add_compile_definitions(PACKAGE_VERSION="${PROJECT_VERSION}")
@@ -22,41 +22,7 @@ add_compile_definitions(QUCS_PLUGPATH="${pkglibdir}")
 
 add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/../QucsSchematicLibrary QucsSchematicLibrary)
 
-if (${CompileDependencies})
-	set(LIB_PATH_TEMP ${CMAKE_BINARY_DIR}/libraries)
-	file(MAKE_DIRECTORY ${LIB_PATH_TEMP})
-
-	add_compile_definitions(QUCS_PLUGPATH="${CMAKE_BINARY_DIR}/libraries")
-	#message("QUCS_PLUGPATH: ${CMAKE_BINARY_DIR}/libraries")
-
-	# copy the library into a common folder for all dependencies of qucs
-	# so they can be used independently to the installed ones
-	add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/../../legacy legacy)
-	#set_target_properties(legacy PROPERTIES RUNTIME_OUTPUT_DIRECTORY_DEBUG ${LIB_PATH_TEMP}) # this does not work
-	if(EXISTS ${CMAKE_BINARY_DIR}/legacy/liblegacy.so)
-		file(COPY ${CMAKE_BINARY_DIR}/legacy/liblegacy.so DESTINATION ${LIB_PATH_TEMP})
-	endif()
-
-	add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/../../../qucsator qucsator)
-	#set_target_properties(libqucsator PROPERTIES RUNTIME_OUTPUT_DIRECTORY_DEBUG ${LIB_PATH_TEMP})
-	if(EXISTS ${CMAKE_CURRENT_BINARY_DIR}/qucsator/src/libqucsator.so)
-		file(COPY ${CMAKE_CURRENT_BINARY_DIR}/qucsator/src/libqucsator.so DESTINATION ${LIB_PATH_TEMP})
-	endif()
-
-	add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/../../legacy/components legacy/components)
-	#set_target_properties(components PROPERTIES RUNTIME_OUTPUT_DIRECTORY_DEBUG ${LIB_PATH_TEMP})
-	set_target_properties(components PROPERTIES OUTPUT_NAME legacy-components)
-	if(EXISTS ${CMAKE_CURRENT_BINARY_DIR}/legacy/components/liblegacy-components.so)
-		file(COPY ${CMAKE_CURRENT_BINARY_DIR}/legacy/components/liblegacy-components.so DESTINATION ${LIB_PATH_TEMP})
-	endif()
-
-	add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/../../legacy/paintings legacy/paintings)
-	#set_target_properties(paintings PROPERTIES RUNTIME_OUTPUT_DIRECTORY ${LIB_PATH_TEMP})
-	if(EXISTS ${CMAKE_CURRENT_BINARY_DIR}/legacy/paintings/libpaintings.so)
-		file(COPY ${CMAKE_CURRENT_BINARY_DIR}/legacy/paintings/libpaintings.so DESTINATION ${LIB_PATH_TEMP})
-	endif()
-endif()
-
+include(compileAndInstallDependencies.cmake)
 
 ## ------ WHY needed?
 # If Git hash not defined, try to define it
