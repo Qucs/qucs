@@ -181,7 +181,7 @@ public:
   virtual SchematicModel* scope();
 
 public: // friend ElementGraphics?
-  void attachToModel();
+//  void attachToModel();
   void detachFromModel();
 
 public:

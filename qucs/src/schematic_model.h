@@ -144,7 +144,6 @@ public: // not sure. leaves unconnected objects in the main container...
 
 public:
 	Element* detach(Element* c);
-	Element* attach(Element* c);
 
 public: // container
 	void clear();
