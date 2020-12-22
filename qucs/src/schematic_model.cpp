@@ -102,7 +102,7 @@ Element* SchematicModel::detach(Element* what)
 		trace1("erased", l);
 	}
 
-	if(auto d=diagram(what)){ untested();
+	if(auto d=dynamic_cast<Diagram*>(what)){ untested();
 		diagrams().removeRef(d);
 	}else if(auto c=dynamic_cast<Symbol*>(what)){
 		disconnect(c);
@@ -120,14 +120,14 @@ void SchematicModel::pushBack(Element* what)
 	_map.insert(std::make_pair(what->label(), what));
 
 	trace2("SchematicModel::attach", what->label(), this);
-	if(auto c=dynamic_cast<TaskElement*>(what)){
-		incomplete();
+	if(dynamic_cast<TaskElement*>(what)){ untested();
+		components().append(what);
 	}else if(auto c=dynamic_cast<Symbol*>(what)){
 		if(c->is_device()){
 			trace1("connect", what->label());
 			connect(c); // BUG. wrong place.
 		}else{
-			assert(!dynamic_cast<Conductor*>(element(what)));
+			assert(!dynamic_cast<Conductor*>(what));
 		}
 
 		components().append(c);

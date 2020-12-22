@@ -128,8 +128,6 @@ const Element* Element::find_looking_out(const std::string& name)const
 }
 /*--------------------------------------------------------------------------*/
 // borrowed/modified from e_card.h
-// BUG: finds in owner scope
-// BUG: finds recursively
 const Element* Element::find_in_parent_scope(const std::string& name)const
 {
   assert(name != "");
@@ -150,42 +148,6 @@ const Element* Element::find_in_parent_scope(const std::string& name)const
   return *i;
 
 }
-
-#if 0
-{
-	assert(name != "");
-	//  const CARD_LIST* p_scope = (scope()->parent()) ? scope()->parent() : scope();
-	//
-	if(!owner()){
-		return nullptr;
-		throw ExceptionCantFind(name, label());
-	}else{
-	}
-
-	SchematicModel const* p_scope = nullptr;
-	if(auto o = dynamic_cast<Element const*>(owner())){
-		p_scope = o->scope();
-	}else if(auto o = dynamic_cast<QucsDoc const*>(owner())){
-		return o->find_proto(name);
-	}else if(dynamic_cast<Object const*>(owner())){
-		incomplete();
-	}else{
-		unreachable();
-	}
-
-	if(p_scope){
-	}else{
-		throw ExceptionCantFind(name, label());
-	}
-
-	auto i = p_scope->find_(name);
-	if (i == p_scope->end()) {
-		throw ExceptionCantFind(name, label());
-	}else{
-	}
-	return *i;
-}
-#endif
 /*--------------------------------------------------------------------------*/
 /*--------------------------------------------------------------------------*/
 
