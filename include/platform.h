@@ -1,6 +1,4 @@
 /***************************************************************************
-                                platform.h
-                                ----------
     copyright            : QUCS team
     author               : 2016-2018 Felix Salfelder
                            2009 Albert Davis
@@ -24,6 +22,8 @@
 #include <string>
 #include <csignal>
 #include <csetjmp>
+#include <unistd.h>
+// #include <fcntl.h>	/* old style unix files (yikes?) */
 /*--------------------------------------------------------------------------*/
 /* autoconf stuff */
 #ifdef HAVE_CONFIG_H

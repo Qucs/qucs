@@ -153,7 +153,6 @@ HDR2 = \
 	mnemo.h \
 	module.h \
 	mouseactions.h \
-	platform.h \
 	printerwriter.h \
 	projectView.h \
 	schematic_lang.h \

@@ -97,7 +97,7 @@ public:
   bool	      more()		{skipbl(); return ns_more();}
   bool	      is_end()		{return !more();}
   bool atEnd() const;
-//  bool	      is_file()		{return (_file && !isatty(fileno(_file)));}
+  bool	      is_file() const;
   bool	      is_first_read()const {untested(); return (_line_number == 0);}
 
   // control
