@@ -177,8 +177,8 @@ target_link_libraries(qucs Qt5::Svg)
 target_link_libraries(qucs Qt5::PrintSupport)
 
 # Don't like to include them all here. TODO: find cleaner method. Included in qucsschematic already. So can it be reused?
-target_include_directories(qucs PRIVATE ${CMAKE_SOURCE_DIR}/../../include)
-target_include_directories(qucs PRIVATE ${CMAKE_SOURCE_DIR}/../../src)
+target_include_directories(qucs PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/../../include)
+target_include_directories(qucs PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/../../src)
 
 if(UNIX AND NOT APPLE)
 	set(DESKTOP qucs.desktop)
