@@ -67,12 +67,15 @@ rect_t Element::bounding_rect() const
 	return rect_t(0,0,0,0);
 }
 
+#if 0
 void Element::attachToModel()
 {itested();
+	assert(false); // obsolete, hopefully
 	trace1("attachToModel", label());
 	assert(scope());
-	scope()->attach(this);
+	scope()->push_back(this);
 }
+#endif
 
 void Element::detachFromModel()
 {

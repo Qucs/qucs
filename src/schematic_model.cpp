@@ -73,22 +73,6 @@ ElementList& SchematicModel::components()
 	return Components;
 }
 /*--------------------------------------------------------------------------*/
-// TODO: check relation to attach. maybe not here.
-void SchematicModel::pushBack(Element* what)
-{
-	attach(what);
-
-#if 0
-	// here?!
-	if(doc()){itested();
-		trace1("SchematicModel::pushBack doc", what->label());
-		doc()->addToScene(what);
-	}else{
-		trace1("SchematicModel::pushBack no doc", what->label());
-	}
-#endif
-} // pushBack
-/*--------------------------------------------------------------------------*/
 // called from schematic::erase only
 // // possibly not needed. all actions must be undoable anyway
 // -> use detach, store reference in UndoAction.
@@ -98,6 +82,7 @@ void SchematicModel::erase(Element* what)
 	delete(e);
 }
 /*--------------------------------------------------------------------------*/
+// supposedly equivalent to clone and erase.
 Element* SchematicModel::detach(Element* what)
 {
 	assert(what);
@@ -119,10 +104,6 @@ Element* SchematicModel::detach(Element* what)
 
 	if(auto d=diagram(what)){ untested();
 		diagrams().removeRef(d);
-// 	}else if(dynamic_cast<Conductor*>(element(what))){
-// 		auto s = dynamic_cast<Symbol*>(what);
-// 		disconnect(s);
-// 		wires().removeRef(s);
 	}else if(auto c=dynamic_cast<Symbol*>(what)){
 		disconnect(c);
 		components().removeRef(c);
@@ -134,29 +115,17 @@ Element* SchematicModel::detach(Element* what)
 	return what;
 }
 /*--------------------------------------------------------------------------*/
-Element* SchematicModel::attach(Element* what)
+void SchematicModel::pushBack(Element* what)
 {
 	_map.insert(std::make_pair(what->label(), what));
 
 	trace2("SchematicModel::attach", what->label(), this);
 	if(auto c=dynamic_cast<TaskElement*>(what)){
-#if 0
-		if(doc()){
-			trace1("SchematicModel::pushBack command", c->label());
-			doc()->commands().push_back(c);
-		}else{
-			trace1("SchematicModel::pushBack no command", c->label());
-			// possibly a subcircuit model? ignore commands.
-		}
-#endif
-//	}else if(auto d=dynamic_cast<Diagram*>(what)){
-//		components().append(d);
+		incomplete();
 	}else if(auto c=dynamic_cast<Symbol*>(what)){
-//		c->recreate(); // BUG: re? create symbol gfx and random other things. needs owner
-//		c->build(); // what's this?!
 		if(c->is_device()){
 			trace1("connect", what->label());
-			connect(c);
+			connect(c); // BUG. wrong place.
 		}else{
 			assert(!dynamic_cast<Conductor*>(element(what)));
 		}
@@ -168,7 +137,6 @@ Element* SchematicModel::attach(Element* what)
 //		unreachable?
 		incomplete();
 	}
-	return what;
 }
 /*--------------------------------------------------------------------------*/
 // QFileInfo const& SchematicModel::getFileInfo ()const
