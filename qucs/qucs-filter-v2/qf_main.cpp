@@ -3,7 +3,7 @@
 #endif
 
 #include <QBuffer>
-#include <Q3TextStream>
+#include <QTextStream>
 #include <QObject>
 #include <QApplication>
 #include <Q3TextEdit>
@@ -25,7 +25,7 @@
 //Added by qt3to4:
 #include <QTranslator>
 
-void compute_lumped (qf_spec* spec_p, Q3TextStream& out) {
+void compute_lumped (qf_spec* spec_p, QTextStream& out) {
 
   qf_tform* T = qf_tform_apis [spec_p -> tform] -> cons (spec_p);
 
@@ -105,7 +105,7 @@ int main (int argc, char * argv []) {
     spec_p = Filterbox. get_spec ();
 
     QByteArray	buf;
-    Q3TextStream s (buf, QIODevice::ReadWrite);
+    QTextStream s (buf, QIODevice::ReadWrite);
 
     compute_lumped (spec_p, s);
 // FIXME #warning s. device () -> flush ();

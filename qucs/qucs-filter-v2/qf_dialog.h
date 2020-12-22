@@ -20,16 +20,16 @@
 
 #include <QDialog>
 //Added by qt3to4:
-#include <Q3VBoxLayout>
+#include <QVBoxLayout>
 #include <QLabel>
 
-class Q3VBoxLayout;
+class QVBoxLayout;
 class QLineEdit;
 class QComboBox;
 class QLabel;
 class QCheckBox;
 class QRadioButton;
-class Q3VButtonGroup;
+class QGroupBox;
 class QPushButton;
 class QWidget;
 
@@ -48,10 +48,10 @@ private slots:
 private:
 
 public:
- QPushButton * okButton, * cancelButton; 
+ QPushButton * okButton, * cancelButton;
  QLineEdit * EnterCutoff, * EnterZin, * EnterZout, * EnterStopband,
   * EnterAngle, * EnterBandwidth, * EnterAttenuation, * EnterRipple;
- Q3VBoxLayout * all;
+ QVBoxLayout * all;
  QComboBox * CutoffCombo, * StopbandCombo, * FilterName, * TformName,
    * OrderCombo, * SubOrderCombo, * BandwidthCombo;
  QLabel * CutoffLabel, * ZinLabel, * OhmLabel, * ZoutLabel, * OhmLabel_2,
@@ -60,7 +60,7 @@ public:
  QCheckBox * OrderBox, * DualBox, * CauerPoleBox, * OptimizeCauerBox,
    * EqualInductorBox, * UseCrossBox;
  QRadioButton * Cmax, * Cmin, * NoC, * Lmin, * NoL, * Lmax;
- Q3VButtonGroup * Lboxes, * Cboxes;
+ QGroupBox * Lboxes, * Cboxes;
 };
 
 #endif
