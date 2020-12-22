@@ -16,7 +16,11 @@ enable_testing()
 # Descend into sub-directories
 #
 add_subdirectory(qucs/cmake)
-add_subdirectory(qucsator)
+# it might be also already created in qucs it self
+if (NOT TARGET qucsator)
+    add_subdirectory(qucsator)
+endif()
+
 if(BUILD_DOC)
 add_subdirectory(qucs-doc)
 endif()
