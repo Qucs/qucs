@@ -6,13 +6,14 @@ LEGACY_SRC = \
 	compcmd.cpp \
 	diagram.cpp \
 	equation.cpp \
+	lang_qucsator.cpp \
 	libcomp.cpp \
 	markerdialog.cpp \
+	modelcmd.cpp \
 	paramset.cpp \
 	polardiagram.cpp \
 	psdiagram.cpp \
 	portcmd.cpp \
-	modelcmd.cpp \
 	spicecmd.cpp \
 	signon.cc \
 	symbolcmd.cpp \

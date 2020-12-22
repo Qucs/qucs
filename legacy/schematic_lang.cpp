@@ -206,7 +206,7 @@ Element* LegacySchematicLanguage::loadElement_(const QString& _s, Element* e) co
 }
 /*--------------------------------------------------------------------------*/
 static std::list<Element*> implicit_hack;
-
+/*--------------------------------------------------------------------------*/
 static bool obsolete_wireload(Symbol* w, const QString& sc)
 {
 	trace1("ow", sc);
@@ -298,7 +298,7 @@ static bool obsolete_wireload(Symbol* w, const QString& sc)
 
 	return true;
 }
-
+/*--------------------------------------------------------------------------*/
 // somehow this does not work. (owner?)
 void LegacySchematicLanguage::parse_top_item(istream_t& stream, SchematicModel* sckt) const
 { untested();
@@ -433,7 +433,7 @@ void LegacySchematicLanguage::parse_top_item(istream_t& stream, SchematicModel* 
 		sckt->pushBack(cc);
 	}
 }
-
+/*--------------------------------------------------------------------------*/
 // some kind of parse_module_body
 // BUG: this is schematicFormat
 void LegacySchematicLanguage::parse(istream_t& stream, SubcktBase* owner) const
@@ -575,7 +575,7 @@ void LegacySchematicLanguage::parse(istream_t& stream, SubcktBase* owner) const
 		sckt->pushBack(cc);
 	}
 }
-
+/*--------------------------------------------------------------------------*/
 Diagram* LegacySchematicLanguage::loadDiagram(Diagram* d, istream_t& stream)const
 {
 	QString Line = QString::fromStdString(stream.fullString());
@@ -1618,6 +1618,6 @@ Dispatcher<Command>::INSTALL p3_(&command_dispatcher, "Diagrams", &d4);
 Dispatcher<Command>::INSTALL p4_(&command_dispatcher, "Diagrams>", &d4); // BUG
 Dispatcher<Command>::INSTALL p5_(&command_dispatcher, "<Diagrams>", &d4); // ...
 /*--------------------------------------------------------------------------*/
-/*--------------------------------------------------------------------------*/
-/*--------------------------------------------------------------------------*/
 } // namespace
+/*--------------------------------------------------------------------------*/
+/*--------------------------------------------------------------------------*/
