@@ -55,6 +55,7 @@ public:
     if (handle) {
       attach_list[what] = handle;
     }else{
+      std::string str(dlerror());
       std::cerr << "failed to attach " << what << " (" << errno << ")\n";
       std::cerr << dlerror() << "\n";
       exit(1); // temporary, should actually throw.
