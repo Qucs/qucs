@@ -1,5 +1,5 @@
 # python scripts
-include(../../cmake/readMakeList.txt)
+include(${CMAKE_CURRENT_SOURCE_DIR}/../../../cmake/readMakeList.txt)
 
 readVariable(MakeList BASICS BASICS_)
 

@@ -10,7 +10,7 @@ find_package(
   )
 
 # An object library compiles source files but does not archive or link their object files into a library.
-add_library(legacylib SHARED ${CMAKE_CURRENT_SOURCE_DIR}/../libfiles.cpp)
+add_library(legacylib SHARED ${CMAKE_CURRENT_SOURCE_DIR}/libfiles.cpp)
 target_include_directories(legacylib
 	PUBLIC
 	#${CMAKE_CURRENT_SOURCE_DIR}
