@@ -64,7 +64,7 @@ public:
     }else{
       std::string str(dlerror());
       std::cerr << "failed to attach " << what << " (" << errno << ")\n";
-      std::cerr << dlerror() << "\n";
+      std::cerr << "Error message: " <<dlerror() << "\n";
       exit(1); // temporary, should actually throw.
       //	throw Exception_something(dlerror());
     }
