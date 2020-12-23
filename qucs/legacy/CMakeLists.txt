@@ -18,7 +18,7 @@ find_package(
   Core
   )
 
-add_library(legacy SHARED ${SRCS} ${HDR})
+add_library(legacy SHARED ${SRCS})
 # TODO: get rid of all of this dependecies
 target_include_directories(legacy PRIVATE ${PROJECT_SOURCE_DIR}/../src)
 target_include_directories(legacy PRIVATE ${PROJECT_SOURCE_DIR}/../include)
