@@ -13,7 +13,7 @@ set(PROJECT_DOMAIN_FIRST "qucs")
 set(PROJECT_DOMAIN_SECOND "org")
 
 # when true, all the dependencies (Qucsator, legacy and so on are also compiled)
-option(CompileDependencies "Compile dependencies related to qucs (qucsator ...), default ON" OFF)
+option(CompileDependencies "Compile dependencies related to qucs (qucsator ...), default ON" ON)
 
 # add compiler definitions/symbols
 add_compile_definitions(PACKAGE_VERSION="${PROJECT_VERSION}")
