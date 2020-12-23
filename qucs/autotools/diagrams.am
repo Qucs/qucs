@@ -27,7 +27,7 @@ qucsdir = ${pkglibdir}
 
 qucs_LTLIBRARIES = diagrams.la
 
-include ../../common.mk
+include ../../autotools/common.mk
 
 # MOCHEADERS = diagramdialog.h  markerdialog.h
 MOCFILES = $(MOCHEADERS:.h=.moc.cpp)

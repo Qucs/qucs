@@ -11,11 +11,11 @@ void error(int, const char* fmt, ...)
   va_start(arg_ptr,fmt);
   vsprintf(buffer,fmt,arg_ptr);
   va_end(arg_ptr);
-  std::cerr << buffer;
+  std::cout << buffer;
 }
 /*--------------------------------------------------------------------------*/
 void error(int, const std::string& message)
 {
-       std::cerr << message;
+	std::cout << message;
 }
 

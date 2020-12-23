@@ -1,8 +1,11 @@
 # qucs-suite
 # whats the difference between it and the qucs subfolder?
-project(qucs-suite CXX)
-cmake_minimum_required(VERSION 3.16)
-cmake_policy(VERSION 3.16)
+project(qucs CXX)
+cmake_minimum_required(VERSION 3.18)
+cmake_policy(VERSION 3.18)
+
+# Set standard installation paths.
+include(GNUInstallDirs)
 
 set(QUCS_URL "https://sf.net/p/qucs")
 set(QUCS_BUGREPORT "qucs-bugs@lists.sourceforge.net")

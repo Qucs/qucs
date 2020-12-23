@@ -1,0 +1,9 @@
+load spice
+load legacy
+load misc
+
+<Components>
+</Components>
+
+netlist l=spice
+quit

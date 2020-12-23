@@ -12,7 +12,6 @@
  ***************************************************************************/
 
 #include "node.h"
-#include <QString>
 #include "globals.h"
 #include "docfmt.h"
 #include "task_element.h"
@@ -70,18 +69,18 @@ static Dispatcher<DocumentLanguage>::INSTALL p1(&language_dispatcher, "verilog_s
 /*--------------------------------------------------------------------------*/
 static void printArgs(Symbol const* sym, ostream_t& s)
 {
-		QString comma="";
-		s << "#(";
+	std::string comma="";
+	s << "#(";
 
-		for(unsigned i=0; i<sym->paramCount(); ++i) {
-			auto name = sym->paramName(i);
-			if(name.at(0) == '$'){
-			}else{
-				s << comma << "." << sym->paramName(i) << "(" << sym->paramValue(i) << ")";
-				comma = ", ";
-			}
+	for(unsigned i=0; i<sym->paramCount(); ++i) {
+		auto name = sym->paramName(i);
+		if(name.at(0) == '$'){
+		}else{
+			s << comma << "." << sym->paramName(i) << "(" << sym->paramValue(i) << ")";
+			comma = ", ";
 		}
-		s << ") ";
+	}
+	s << ") ";
 }
 /*--------------------------------------------------------------------------*/
 void VS::print_ports_short(ostream_t& o, const Symbol* x) const
@@ -319,7 +318,7 @@ void VS::printSubckt(SubcktBase const* x, ostream_t& o) const
 }
 /*--------------------------------------------------------------------------*/
 class VerilogSchematicFormat : public DocumentFormat{
-//  void save(DocumentStream& stream, Object const*) const;
+//  void save(ostream_t& stream, Object const*) const;
   void load(istream_t& stream, Object*) const;
 
 private: //command
@@ -368,7 +367,7 @@ void VerilogSchematicFormat::do_it(istream_t& cs, SchematicModel* o)
 		return; // throw?
 	}else{
 	}
-	DocumentStream stream(&NetlistFile);
+	ostream_t stream(&NetlistFile);
 
 	for(auto pc : *o){
 		if(dynamic_cast<TaskElement const*>(pc)){ untested();
@@ -385,7 +384,7 @@ void VerilogSchematicFormat::do_it(istream_t& cs, SchematicModel* o)
 /* -------------------------------------------------------------------------------- */
 // similar to Verilog::printSymbol, but with the actual node names and
 // coordinates.
-// // obsolete?
+#if 0// // obsolete?
 void VerilogSchematicFormat::printSymbol(Symbol const* sym, ostream_t& s) const
 { untested();
 #if 0
@@ -435,6 +434,7 @@ void VerilogSchematicFormat::printSymbol(Symbol const* sym, ostream_t& s) const
 		s << ");\n";
 	}
 }
+#endif
 /* -------------------------------------------------------------------------------- */
 } // namespace
 /* -------------------------------------------------------------------------------- */

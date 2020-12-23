@@ -44,6 +44,13 @@ public:
     }
   }
 
+  std::string compile(std::string what) const{
+	  // TODO: compile contents and return plugin name.
+	  //    better cache results...
+	  incomplete();
+	  return what;
+  }
+
   void attach(std::string what) const{
     // RTLD_NOW means to resolve symbols on loading
     // RTLD_LOCAL means symbols defined in a plugin are local
@@ -68,7 +75,7 @@ private:
 private:
   mutable std::map<std::string, void*> attach_list;
 } my_plugins;
-Dispatcher<Command>::INSTALL p(&command_dispatcher, "attach", &my_plugins);
+Dispatcher<Command>::INSTALL p(&command_dispatcher, "load|attach", &my_plugins);
 
 static std::string plugpath()
 {
@@ -84,37 +91,39 @@ static std::string plugpath()
 void plugins::do_it(istream_t& cs, SchematicModel*)
 {
 	cs.reset();
-	if(cs.umatch("attach")){
+	if(cs.umatch("attach") || cs.umatch("load")){
 		auto path = plugpath();
-		std::string what;
-		cs >> what;
+		std::string stem;
+		cs >> stem;
 
-#if 0		// does not work
-		const int n = strlen(SOEXT);
-		if(what.size()<=n){ untested();
-		}else if(what[what.size()-n]!='.'){
-		}else{
-		}
-#else
-		what += SOEXT;
-#endif
+		std::string what = stem + SOEXT;
 
 		std::string full_file_name;
 		if(what.size()==0){ untested();
 		}else if(what[0]=='.'){
-			full_file_name=what;
+			full_file_name = what;
 		}else{
 			full_file_name = findfile(what, path, R_OK);
 		}
 
 		if (full_file_name != "") {
 			// found it, with search
+		}else{
+			full_file_name = findfile(stem + "/_", path, R_OK);
+		}
+
+		if (full_file_name != "") {
 		}else{untested();
 			std::cerr << "cannot find plugin " + what + " in " +path + "\n";
 			std::cerr << "(something wrong with installation?)\n";
 			exit(1);
 		}
-		attach(full_file_name.c_str());
+
+		// if(is_directory){ untested();
+		// 	full_file_name = compile(full_file_name);
+		// }else{ untested();
+		// }
+		attach(full_file_name);
 
 	}else{ untested();
 		incomplete();

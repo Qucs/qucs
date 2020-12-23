@@ -1,6 +1,13 @@
+# MakeList for Qucs plugins
+# (c) 2020 Felix Salfelder
+# GPLV3+
 
-RAW_SRCS = \
-	listcompentry.cpp \
-	get.cpp
+SUBDIRS = \
+	diagrams \
+	misc \
+	verilog \
+	spice
+
+RAW_SRCS =
 
 EXTRA_DIST =

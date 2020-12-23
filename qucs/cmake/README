@@ -8,6 +8,17 @@ $ mkdir build
 $ cd build
 $ cmake ..
 
-TODO: cmake is hard to convince that the source is
-      somewhere else, but this is not a problem, it just needs fixing
-      (is there a better way?)
+*** this is under construction ***
+
+
+To have CMake pick a Qt installation of your choice that won't be found
+automatically, set the CMAKE_PREFIX_PATH environment variable. For example:
+"export CMAKE_PREFIX_PATH=/usr/local/trolltech/qt4.3.5"
+
+You can change the install location by running cmake like this: mkdir build;
+cd build cmake .. -DCMAKE_INSTALL_PREFIX=/new/install/prefix
+
+By default, the prefix is "/usr/local"
+
+Tests are enabled by default. To run the tests, try one of these: make test
+env CTEST_OUTPUT_ON_FAILURE=1 make test    # for verbose output

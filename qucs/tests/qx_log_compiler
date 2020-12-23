@@ -1,0 +1,16 @@
+#!/bin/bash
+
+[ x$1 = xSKIP ] && exit 77
+
+eval echo debug $srcdir ${REDIR}
+
+mkdir -p out
+
+refdir=${srcdir}/ref
+
+base=`basename $1`
+out=out/${base}.out
+ref=${refdir}/${base}.out
+make $out
+diff $out $ref
+# rm $out

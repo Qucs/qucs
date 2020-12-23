@@ -25,9 +25,6 @@
 #include "globals.h"
 #include "module.h"
 
-class DocumentStream;
-class QString;
-
 namespace{
 
 class Verilog_File : public MultiViewComponent  {
@@ -37,7 +34,7 @@ public:
   Component* newOne() ; // BUG {return new Verilog_File(*this);}
   static Element* info(QString&, char* &, bool getNewOne=false);
 
-  bool createSubNetlist(DocumentStream&); // BUG
+  bool createSubNetlist(ostream_t&); // BUG
   QString getErrorText() { return ErrText; }
   QString getSubcircuitFile() const;
 
@@ -215,7 +212,8 @@ QString Verilog_File::getSubcircuitFile() const
 }
 
 // -------------------------------------------------------
-bool Verilog_File::createSubNetlist(DocumentStream& stream)
+#if 0 // -> verilog netlister?
+bool Verilog_File::createSubNetlist(ostream_t& stream)
 {
   ErrText = "";
 
@@ -247,13 +245,16 @@ bool Verilog_File::createSubNetlist(DocumentStream& stream)
   stream << '\n';
   return true;
 }
+#endif
 
 // -------------------------------------------------------
+#if 0
 Verilog_File_Info::Verilog_File_Info()
 {
   ModuleName = "";
   PortNames = "";
 }
+#endif
 
 // -------------------------------------------------------
 Verilog_File_Info::Verilog_File_Info(QString File, bool isfile)

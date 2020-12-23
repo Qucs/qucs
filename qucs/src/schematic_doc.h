@@ -133,7 +133,7 @@ public:
   void    cut();
   void    copy();
   template<class SOME_LIST>
-  bool    paste(DocumentStream*, SOME_LIST*);
+  bool    paste(ostream_t*, SOME_LIST*);
   bool    load();
   int     save();
   int     saveSymbolCpp (void);
@@ -168,12 +168,6 @@ public:
   Element* detachFromModel(Element* e){
 	  assert(_model);
 	  return _model->detach(e);
-  }
-
-  void takeOwnership(Element* e){
-	  assert(false);
-	  // bit of a hack.
-//	  e->setOwner(_root);
   }
 
   void deselectElements();
@@ -281,8 +275,10 @@ public:
 
   /*! \brief Get (schematic) file reference */
   QFileInfo getFileInfo (void) {
+	  assert(false);
 	  assert(_model);
-	  return _model->getFileInfo();
+	  return QFileInfo();
+//	  return _model->getFileInfo();
   }
   /*! \brief Set reference to file (schematic) */
 
@@ -438,7 +434,7 @@ public: // not here.
   void highlightWireLabels (void);
 
 public:
-	bool loadDocument(QFile& /*BUG*/ file);
+	bool loadDocument(QString& filename);
 	bool load(QTextStream& stream);
 
 private: // probably wrong.
@@ -484,12 +480,12 @@ public: // for now
 //		assert(_model);
 //		return _model->loadComponent(_s, c);
 //	}
-   int  prepareNetlist(DocumentStream& a, QStringList& b, QPlainTextEdit* c,
+   int  prepareNetlist(ostream_t& a, QStringList& b, QPlainTextEdit* c,
 			bool creatingLib, NetLang const& nl){
 		assert(!creatingLib); // ?!
  	  return _model->prepareNetlist(a,b,c, creatingLib, nl);
    }
-  bool createLibNetlist(DocumentStream& a, QPlainTextEdit* b, int c, NetLang const& nl){
+  bool createLibNetlist(ostream_t& a, QPlainTextEdit* b, int c, NetLang const& nl){
 	  assert(_model);
 		return _model->createLibNetlist(a,b,c, nl);
   }
@@ -580,7 +576,7 @@ private:
 /* -------------------------------------------------------------------------------- */
 // Peeforms paste function from clipboard
 template<class SOME_LIST>
-inline bool SchematicDoc::paste(DocumentStream *stream, SOME_LIST *pe)
+inline bool SchematicDoc::paste(ostream_t *stream, SOME_LIST *pe)
 { untested();
   return pasteFromClipboard(stream, pe);
 }

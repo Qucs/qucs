@@ -22,7 +22,7 @@
 # Boston, MA 02110-1301, USA.
 #
 
-include ../common.mk
+include ../autotools/common.mk
 
 SUBDIRS = library
 

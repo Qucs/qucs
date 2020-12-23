@@ -1,2 +1,4 @@
 
+TARGET = diagrams
+
 EXTRA_DIST =

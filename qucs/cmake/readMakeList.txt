@@ -1,0 +1,76 @@
+# read variable from file.
+# (c) 2020 Felix Salfelder
+# (c) 2020 Martin Marmsoler
+#     GPLv3
+macro( conditionalPrintOfMessage condition message)
+
+if (${condition})
+		message("${message}")
+endif()
+
+endmacro()
+
+macro( readVariable FILENAME VARIABLE OUTVAR_NAME)
+	
+    # not sure about the scoping
+    unset(FILE_BUFFER)
+    unset(_RESULT)
+
+message("try ${FILENAME}")
+	file( READ ${FILENAME} FILE_BUFFER )
+	
+	set(debugPrint false) # set to true to see message output
+
+	conditionalPrintOfMessage(${debugPrint} "Read file from ${CMAKE_CURRENT_SOURCE_DIR}. Variable: ${VARIABLE}")
+    # foreach does not work with newlines.
+    # important that tabs are replaced first. Makes problems if not
+    # replace all tabs, because otherwise tabs are used in the filename and so
+    # the files are not recognized
+    string(REPLACE "\t" "    " BUFFER ${FILE_BUFFER})
+    string(REGEX REPLACE "\n" "${Esc} ;" BUFFER "${BUFFER}")
+    conditionalPrintOfMessage(${debugPrint} "STATE 1")
+
+    # CONT is the statemachine variable
+    foreach(LINE ${BUFFER})
+        string(REGEX MATCH "^[ ]*#" COMMENT_LINE ${LINE})
+        if (NOT "${COMMENT_LINE}" STREQUAL "")
+            conditionalPrintOfMessage(${debugPrint} "Skip comment line")
+            continue() # continue if it is a comment line
+        endif()
+        conditionalPrintOfMessage(${debugPrint} "LINE: ${LINE}")
+        if(CONT)
+            if("${LINE}" MATCHES "\\\\[ ]*${Esc}$")
+                conditionalPrintOfMessage(${debugPrint} "STATE 3")
+                set(CONT True)
+            else()
+                set(CONT False)
+                conditionalPrintOfMessage(${debugPrint} "STATE 1")
+            endif()
+            string(REGEX REPLACE "\\\\" "" LINE ${LINE})
+            list( APPEND _RESULT ${LINE})
+            conditionalPrintOfMessage(${debugPrint} "RESULT: ${_RESULT}")
+        endif()
+      # startline, where the variable was found
+      if("${LINE}" MATCHES "^[ ]*${VARIABLE}[ =]") # otherwise TEMPLATE_HDR will be recognized as TEMPLATE only if it will not be started from beginning
+           conditionalPrintOfMessage(${debugPrint} "Variable found")
+           conditionalPrintOfMessage(${debugPrint} "STATE 2")
+           conditionalPrintOfMessage(${debugPrint} "LINE: ${LINE}")
+           string(REGEX REPLACE "${VARIABLE}[ ]*=" "" _RESULT ${LINE})
+           conditionalPrintOfMessage(${debugPrint} "_RESULT: ${_RESULT}")
+           if("${LINE}" MATCHES "\\\\[ ]*${Esc}")
+               set(CONT True)
+           else()
+               set(CONT False)
+               conditionalPrintOfMessage(${debugPrint} "STATE 1")
+           endif()
+           string(REGEX REPLACE "\\\\" "" LINE ${LINE})
+           conditionalPrintOfMessage(${debugPrint} "RESULT: ${_RESULT}")
+       endif()
+    endforeach()
+    
+    string(REGEX REPLACE "\\\\" "" _RESULT ${_RESULT})
+    separate_arguments(_RESULT)
+	conditionalPrintOfMessage(${debugPrint} "END RESULT: ${_RESULT}")
+    # seems to be global
+    set(${OUTVAR_NAME} ${_RESULT})
+endmacro()

@@ -35,8 +35,8 @@ public:
 
 				{ // move to qInsert?
 					ctx.sceneAddItem(c);
-					c->hide();
-					ctx.takeOwnership(element(c)); // BUG?
+					c->setVisible(false);
+					// ctx.takeOwnership(element(c)); // BUG?
 				}
 
 				{ // dropTrailingDigits(c)
@@ -92,7 +92,7 @@ public:
 
 		QClipboard *cb = QApplication::clipboard();
 		QString s = cb->text(QClipboard::Clipboard);
-		istream_t stream(&s);
+		istream_t stream(istream_t::_STRING, s.toStdString());
 
 		fmt->load(stream, this);
 	}

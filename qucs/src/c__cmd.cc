@@ -110,8 +110,7 @@ void CMD::cmdproc(CS& cmd, CARD_LIST* scope)
     }else{untested();
       trace1("no such command", s);
       incomplete();
-      assert(false);
-//      cmd.warn(bWARNING, here, "what's this?");
+      cmd.warn(bWARNING, 0, "what's this?");
     }
   }else if (!didsomething) { untested();
     incomplete();

@@ -126,7 +126,7 @@ void LIB::loadLibFiles()
 			auto L = dynamic_cast<DocumentFormat const*>(C);
 			assert(L);
 
-			istream_t stream(&c.modelString);
+			istream_t stream(istream_t::_STRING, c.modelString.toStdString());
 			stream.read_line();
 			std::string type = L_->findType(stream); // BUG?
 
@@ -135,7 +135,7 @@ void LIB::loadLibFiles()
 				//
 				// // stuff should already be parsed in, but isn't
 				// BUG: parse c.definition. but not here.
-				istream_t stream(&c.definition);
+				istream_t stream(istream_t::_STRING, c.definition.toStdString());
 				Symbol* sym = symbol_dispatcher.clone("LegacyLibProto");
 				auto ssym = prechecked_cast<SubcktBase*>(sym);
 				std::string t = "Lib:" + parsedlib.name.toStdString() + ":" + c.name.toStdString();

@@ -1,3 +1,10 @@
+TARGET = legacy
+
+SUBDIRS = \
+	components \
+	libfiles \
+	paintings \
+	qucsator
 
 LEGACY_SRC = \
 	component.cpp \
@@ -6,14 +13,16 @@ LEGACY_SRC = \
 	compcmd.cpp \
 	diagram.cpp \
 	equation.cpp \
+	lang_qucsator.cpp \
 	libcomp.cpp \
 	markerdialog.cpp \
+	modelcmd.cpp \
 	paramset.cpp \
 	polardiagram.cpp \
 	psdiagram.cpp \
 	portcmd.cpp \
-	modelcmd.cpp \
 	spicecmd.cpp \
+	signon.cc \
 	symbolcmd.cpp \
 	idcmd.cpp \
 	propertiescmd.cpp \
@@ -37,10 +46,8 @@ NOTYET_SRC = \
 HDR = \
 	obsolete_paintings.h \
 	curvediagram.h \
-	dat.h \
 	markerdialog.h \
 	marker.h \
-	qucsator.h \
 	rect3ddiagram.h \
 	smithdiagram.h \
 	polardiagram.h \

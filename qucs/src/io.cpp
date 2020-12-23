@@ -10,12 +10,29 @@
  *   (at your option) any later version.                                   *
  *                                                                         *
  ***************************************************************************/
+#include "platform.h"
 #include "io.h"
 #include "io_error.h"
 #include <QFile>
 
+/*--------------------------------------------------------------------------*/
+enum {
+  BUFLEN = 256,
+  BIGBUFLEN = 4096
+};
+/*--------------------------------------------------------------------------*/
+static char* trim(char *string)
+{
+  size_t idx = strlen(string);
+  while (idx > 0  &&  !isgraph(string[--idx])) {
+    string[idx] = '\0' ;
+  }
+  return string;
+}
+/*--------------------------------------------------------------------------*/
+
 // BUG.
-DocumentStream::DocumentStream(QFile* /* BUG const */ file)
+ostream_t::ostream_t(QFile* /* BUG const */ file)
 	: QTextStream(file)
 {
 	incomplete(); // still used...?
@@ -23,11 +40,19 @@ DocumentStream::DocumentStream(QFile* /* BUG const */ file)
 
 std::string istream_t::read_line()
 {
+	get_line("incomplete");
+	return fullstring();
+
 	// _current_start = pos(); // really?
 
 	_ok = true;
 	_cnt = 0;
-	_cmd = QTextStream::readLine().toStdString();
+	if(_stream){
+		_cmd = _stream->readLine().toStdString();
+	}else{
+		unreachable();
+//		_file??
+	}
 	_length = _cmd.length();
 	return _cmd;
 }
@@ -46,18 +71,19 @@ istream_t::istream_t(QFile* t);
 #endif
 /*--------------------------------------------------------------------------*/
 istream_t::istream_t(istream_t::STRING, const std::string&s )
-	: _cmd(s), _cnt(0), _ok(true)
+	: _file(nullptr), _cmd(s), _cnt(0), _ok(true), _stream(nullptr)
 {
+	auto qs = new QString(QString::fromStdString(s)); // BUG: memory leak.
+	_stream = new QTextStream(qs);
 }
 /*--------------------------------------------------------------------------*/
 istream_t::istream_t(istream_t::STDIN)
-	: _cnt(0), _ok(true)
+	: _file(stdin), _cnt(0), _ok(true), _stream(nullptr)
 {
-  incomplete();
 }
 /*--------------------------------------------------------------------------*/
 istream_t::istream_t(istream_t::WHOLE_FILE, const std::string& name)
-	: _cnt(0), _ok(true)
+	: _file(nullptr), _cnt(0), _ok(true), _stream(nullptr)
 {
 	trace1("whole file", name);
 	auto qfn = QString::fromStdString(name);
@@ -66,7 +92,7 @@ istream_t::istream_t(istream_t::WHOLE_FILE, const std::string& name)
 	if(!d->isOpen()){ itested();
 		throw Exception_File_Open(name + ':' + " error"); // strerror(errno));
 	}else{
-		QTextStream::setDevice(d);
+		_stream = new QTextStream(d);
 	}
 }
 /*--------------------------------------------------------------------------*/
@@ -235,6 +261,8 @@ istream_t& istream_t::umatch(const std::string& s)
   const char* str2 = s.c_str();
   bool optional = 0;
 
+  trace2("umatch", s, tail());
+
   for (;;) {
     if ((!*str2) || (*str2 == '|')) {
       _ok = true;
@@ -263,6 +291,7 @@ istream_t& istream_t::umatch(const std::string& s)
 			++str2;
       }
     }else{
+		 trace3("mismatch", optional, str2, peek());
       // mismatch
       const char* bar = strchr(str2, '|');
       if (bar && (bar[-1] != '\\')) { untested();
@@ -411,9 +440,156 @@ CS & CS::check(int badness, const std::string& message)
   return *this;
 }
 /*--------------------------------------------------------------------------*/
-CS& istream_t::get_line(std::string const&)
+bool istream_t::is_file() const
 {
-	incomplete();
-	return *this;
+	if(_stream){
+		return true;
+	}else{
+		return (_file && !isatty(fileno(_file)));
+	}
 }
+/*--------------------------------------------------------------------------*/
+// looks a bit wonky..
+static std::string getlines(FILE *fileptr)
+{
+	assert(fileptr);
+	const int buffer_size = BIGBUFLEN;
+	std::string s;
+
+	bool need_to_get_more = true;  // get another line (extend)
+	while (need_to_get_more) {
+		char buffer[buffer_size+1];
+		char* got_something = fgets(buffer, buffer_size, fileptr);
+		if (!got_something) { // probably end of file
+			need_to_get_more = false;
+			if (s == "") {
+				throw Exception_End_Of_Input("");
+			}else{untested();
+			}
+		}else{
+			trim(buffer);
+			size_t count = strlen(buffer);
+			if (buffer[count-1] == '\\') {
+				buffer[count-1] = '\0';
+			}else{
+				// look ahead at next line
+				//int c = fgetc(fileptr);
+				int c;
+				while (isspace(c = fgetc(fileptr))) {
+					// skip
+				}
+				if (c == '+') {
+					need_to_get_more = true;
+				}else if (c == '\n') {unreachable();
+					need_to_get_more = true;
+					ungetc(c,fileptr);
+				}else{
+					need_to_get_more = false;
+					ungetc(c,fileptr);
+				}
+			}
+			s += buffer;
+			s += ' ';
+		}
+	}
+	return s;
+}
+/*--------------------------------------------------------------------------*/
+CS& istream_t::get_line(std::string const& prompt)
+{
+  ++_line_number;
+
+  if(_stream){
+    // yikes.
+      _cmd = _stream->readLine().toStdString();
+      _cnt = 0;
+      _length = _cmd.length();
+      _ok = true;
+  }else if (is_file()) {
+    _cmd = getlines(_file);
+    _cnt = 0;
+    _length = _cmd.length();
+    _ok = true;
+  }else{itested();
+    assert(_file == stdin);
+    char cmdbuf[BUFLEN];
+    getcmd(prompt.c_str(), cmdbuf, BUFLEN);
+    _cmd = cmdbuf;
+    _cnt = 0;
+    _length = _cmd.length();
+    _ok = true;
+  }
+
+//  if (OPT::listing) {
+//    IO::mstdout << "\"" << fullstring() << "\"\n";
+//  }else{
+//  }
+  return *this;
+}
+/*--------------------------------------------------------------------------*/
+bool istream_t::atEnd() const
+{
+	if(_stream){
+		return _stream->atEnd();
+	}else{
+		return true;
+	}
+}
+/*--------------------------------------------------------------------------*/
+/* getcmd: get a command.
+ * if "fin" is stdin, display a prompt first.
+ * Also, actually do logging, echo, etc.
+ */
+char *getcmd(const char *prompt, char *buffer, int buflen)
+{
+	assert(prompt);
+	assert(buffer);
+	if (isatty(fileno(stdin))) {
+		// stdin is keyboard
+#if defined(HAVE_LIBREADLINE)
+		if (OPT::edit) {
+			char* line_read = readline(prompt);
+			if (!line_read) {itested();
+				throw Exception_End_Of_Input("EOF on stdin");
+			}else{
+			}
+			// readline gets a new buffer every time, so copy it to where we want it
+			char* end_of_line = (char*)memccpy(buffer, line_read, 0, static_cast<size_t>(buflen-1));
+			if (!end_of_line) {
+				buffer[buflen-1] = '\0';
+			}else{
+				*end_of_line = '\0';
+			}
+			free(line_read);
+
+			if (*buffer) {
+				add_history(buffer);
+			}else{
+			}
+		}else
+#endif
+		{
+			// IO::mstdout << prompt;	/* prompt & flush buffer */
+			std::cout << prompt; // yikes.
+			if (!fgets(buffer, buflen, stdin)) {untested();	/* read line */
+				throw Exception_End_Of_Input("EOF on stdin");
+			}else{
+			}
+		}
+//		(IO::mstdout - mout) << '\r';	/* reset col counter */
+		trim(buffer);
+//		(mlog + mout) << buffer << '\n';
+		return buffer;
+	}else{
+		// stdin is file
+		if (!fgets(buffer, buflen, stdin)) {itested();	/* read line */
+			throw Exception_End_Of_Input("EOF on stdin");
+		}else{
+		}
+		trim(buffer);
+//		(mlog + mout) << buffer << '\n';
+		return buffer;
+	}
+}
+/*--------------------------------------------------------------------------*/
 /*--------------------------------------------------------------------------*/

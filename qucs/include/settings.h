@@ -33,7 +33,7 @@ struct tQucsSettings {
   QString const& libDir() const{ return _libDir;}
   void setLibDir(QString const& l){
 	  trace1("setLibDir", l);
-	  untested(); _libDir = l;
+	  _libDir = l;
   }
   QString OctaveDir;  // m-files location
   QString ExamplesDir;
@@ -70,5 +70,6 @@ private:
   Simulator const* _simulator;
 };
 extern tQucsSettings QucsSettings;
-
+/*--------------------------------------------------------------------------*/
+/*--------------------------------------------------------------------------*/
 #endif

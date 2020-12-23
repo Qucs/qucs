@@ -172,7 +172,7 @@ void LegacyNetlister::do_it(istream_t& cs, SchematicModel* m)
 		exit(1); // BUG
 	}else{
 	}
-	DocumentStream Stream(&NetlistFile);
+	ostream_t Stream(&NetlistFile);
 
 //	auto& m = *m_;
 

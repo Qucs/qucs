@@ -16,6 +16,7 @@ HDR = \
 	l_lib.h \
 	object.h \
 	output.h \
+	platform.h \
 	port.h \
 	qt_compat.h \
 	settings.h \

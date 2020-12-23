@@ -153,7 +153,6 @@ HDR2 = \
 	mnemo.h \
 	module.h \
 	mouseactions.h \
-	platform.h \
 	printerwriter.h \
 	projectView.h \
 	schematic_lang.h \
@@ -185,6 +184,8 @@ DIALOG_SRC= \
 	sweepdialog.cpp \
 	vasettingsdialog.cpp
 	
+UI_FILES = searchdialog.ui
+
 UI_FILES = searchdialog.ui
 
 EXTRA_DIST =

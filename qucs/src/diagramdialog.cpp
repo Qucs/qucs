@@ -107,7 +107,7 @@ DiagramDialog::DiagramDialog(QucsDoc* d)
 
 void DiagramDialog::attach(ElementGraphics* g)
 { untested();
-	auto d = diagram(g);
+	auto d = g->operator->();
 	assert(d);
   Diag = prechecked_cast<Diagram*>(d);
   assert(Diag);

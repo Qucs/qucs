@@ -32,17 +32,17 @@ class VerilogNetlister : public DocumentFormat{
 public:
 	explicit VerilogNetlister();
 private: // legacy implementation
-  void createNetlist(DocumentStream& stream, SchematicModel const* m) const;
-  void throughAllComps(DocumentStream& d, SubcktBase const& m) const;
+  void createNetlist(ostream_t& stream, SchematicModel const* m) const;
+  void throughAllComps(ostream_t& d, SubcktBase const& m) const;
   void clear() const;
 private: // Command
   void do_it(istream_t&, SchematicModel*) override;
 private: // internal
-  void printDeclarations(DocumentStream& d) const;
+  void printDeclarations(ostream_t& d) const;
 private: // DocumentFormat
   void load(istream_t&, Object*) const override{ incomplete(); }
 private:
-  mutable std::map<std::string, Element*> declarations;
+//  mutable std::map<std::string, Element*> declarations;
   mutable std::vector<QString> netLabels;
   DocumentLanguage const* lang;
 //  mutable SchematicModel const* modelhack;
@@ -54,11 +54,6 @@ VerilogNetlister::VerilogNetlister() : DocumentFormat()
 	lang = language_dispatcher["verilog"];
 	// verilog = dynamic_cast<NetLang const*>(l);
 	assert(lang);
-}
-/*--------------------------------------------------------------------------*/
-void VerilogNetlister::clear() const
-{
-	declarations.clear();
 }
 /*--------------------------------------------------------------------------*/
 void VerilogNetlister::do_it(istream_t& cs, SchematicModel* o)
@@ -92,14 +87,15 @@ void VerilogNetlister::do_it(istream_t& cs, SchematicModel* o)
 	createNetlist(Stream, sch);
 }
 /*--------------------------------------------------------------------------*/
-void VerilogNetlister::printDeclarations(DocumentStream& stream) const
+void VerilogNetlister::printDeclarations(ostream_t& stream) const
 {
-	for(auto si : declarations){
-		lang->printItem(si.second, stream);
-	}
+	incomplete();
+//	for(auto si : declarations){
+//		lang->printItem(si.second, stream);
+//	}
 }
 /*--------------------------------------------------------------------------*/
-void VerilogNetlister::createNetlist(DocumentStream& stream,
+void VerilogNetlister::createNetlist(ostream_t& stream,
 		SchematicModel const* m) const
 {
 	assert(m);
@@ -128,7 +124,7 @@ void VerilogNetlister::createNetlist(DocumentStream& stream,
 	}
 }
 /*--------------------------------------------------------------------------*/
-void VerilogNetlister::throughAllComps(DocumentStream& stream, SubcktBase const& m) const
+void VerilogNetlister::throughAllComps(ostream_t& stream, SubcktBase const& m) const
 { incomplete();
 	auto const& sckt = *m.subckt();
 
