@@ -42,3 +42,5 @@ target_include_directories(components
 	${qucs_app_SOURCE_DIR}/../../include
 	)
 target_link_libraries(components Qt5::Widgets Qt5::Script)
+set_property(TARGET components PROPERTY AUTOMOC ON)
+set_property(TARGET components PROPERTY AUTORCC ON)
