@@ -138,11 +138,11 @@ void attach_default_plugins()
 {
   attach_single("legacy"); // included
 //  attach_single("legacy-misc");
-  attach_single("legacy/qucsator");
+  attach_single("legacy/qucsator"); // included
 
   attach_single("legacy/components");
-  attach_single("legacy/paintings");
-  attach_single("legacy/libfiles");
+  attach_single("legacy/paintings"); // included
+  attach_single("legacy/libfiles"); // included
   attach_single("plugins/misc");
  // attach_single(pp, "libdialogs" SOEXT);
  //

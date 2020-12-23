@@ -1,0 +1,5 @@
+SRCS = \
+    c_comand.cc \
+    get.cpp \
+    listcompentry.cpp \
+    netlist.cpp
