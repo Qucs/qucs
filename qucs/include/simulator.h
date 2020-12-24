@@ -29,6 +29,7 @@
 class DocumentFormat;
 class Component;
 class QucsData;
+class QucsDoc;
 
 // simulator controller
 struct SimCtrl{
