@@ -133,8 +133,7 @@ void union2()
 
 int main()
 {
-	 // TODO: CMD:: attach
-	dlopen("../legacy/components/.libs/legacy-components.so", RTLD_NOW);
+	CMD::command("attach legacy/components", nullptr);
 	union0();
 	union1();
 	union2();
