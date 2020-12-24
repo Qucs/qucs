@@ -310,43 +310,8 @@ void SchematicDoc::parse(istream_t& s, SchematicLanguage const* L)
 void SchematicDoc::insertComponent(Component *)
 { untested();
 #if 0
-    assert(_model);
-	 assert(false); // obsolete?
-    _model->pushBack(c);
-    // connect every node of component to corresponding schematic node
-    _model->insertSymbolNodes(c, false);
-    return;
-
-    bool ok;
-    QString s;
-    int  max=1, len = c->name().length(), z;
-    if(c->name().isEmpty()) { // BUG
-        // a ground symbol erases an existing label on the wire line
-        if(c->obsolete_model_hack() == "GND") { // BUG
-            c->gnd_obsolete_model_override_hack("x");
-            Element *pe = getWireLabel(c->Ports.first()->Connection);
-            if(pe) if((pe->Type & isComponent) == 0)
-                { untested();
-                    delete ((Conductor*)pe)->Label;
-                    ((Conductor*)pe)->Label = 0;
-                }
-            c->gnd_obsolete_model_override_hack("GND");
-        }
-    }else{ untested();
-        // determines the name by looking for names with the same
-        // prefix and increment the number
-        for(auto pc : components()){ untested();
-            if(pc->label().left(len) == c->name())
-            { untested();
-                s = pc->label().right(pc->label().length()-len);
-                z = s.toInt(&ok);
-                if(ok) if(z >= max) max = z + 1;
-            }
-	}
-//        c->obsolete_name_override_hack(
-//	    c->name() + QString::number(max));  // create name with new number
-    }
-
+	[..]
+		// not sure where this belongs to.
     setComponentNumber(c); // important for power sources and subcircuit ports
 #endif
 

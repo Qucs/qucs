@@ -122,17 +122,18 @@ void SchematicEdit::do_it_first()
 	trace1("============ edit insert...", _ins.size());
 	while(_ins.size()){
 		ElementGraphics* gfx = _ins.front();
-		// find better name here? (no, too late)
 		trace1("try insert...", element(gfx)->label());
 		_ins.pop_front();
 
+		Element* e = element(gfx);
+		assert(e);
 		SchematicScene* scn = gfx->scene();
-		Element* e = gfx->operator->();
+		assert(scn);
 		scn->possiblyRename(e);
 		if(addmerge(gfx, done_del)){
 			trace0("merged");
 		}else{
-			trace1("done insert, show", element(gfx)->label());
+			trace2("done insert, show", e->label(), e->mutable_owner());
 			gfx->show();
 			gfx->setSelected(true); // really?
 			done_ins.push_back(gfx);
@@ -163,21 +164,21 @@ QList<ElementGraphics*> SchematicEdit::items(QRectF const& r) const
 // merge new item into existing.
 // return false if new item does not interfere with existing.
 template<class T>
-bool SchematicEdit::addmerge(ElementGraphics* s, T& del_done)
+bool SchematicEdit::addmerge(ElementGraphics* new_elt, T& del_done)
 {
 	bool collision = false;
-	assert(!s->isVisible());
-	assert(s->scene());
-	QRectF bb = s->absoluteBoundingRect();
+	assert(!new_elt->isVisible());
+	assert(new_elt->scene());
+	QRectF bb = new_elt->absoluteBoundingRect();
 	trace2("addmerge candidates??", bb.topLeft(), bb.bottomRight());
 	auto it = items(bb);
-	trace3("addmerge candidates", s, element(s)->label(), it.size());
+	trace3("addmerge candidates", new_elt, element(new_elt)->label(), it.size());
 	for(auto gfxi : it){itested();
-		assert(gfxi!=s); // s is invisible.
+		assert(gfxi!=new_elt); // new_elt is invisible.
 		trace1("addmerge coll?", element(gfxi)->label());
 
 		// gfxi is already on scene.
-		auto n = gfxi->newUnion(s);
+		auto n = gfxi->newUnion(new_elt);
 		if(n){itested();
 			collision = true;
 			trace1("hiding", element(gfxi)->label());

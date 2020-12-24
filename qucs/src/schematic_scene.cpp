@@ -505,7 +505,7 @@ void SchematicScene::attachToModel(Element* e)
 	Element const* ce = e;
 	
 	if(ce->owner()){ untested();
-		// really??
+		incomplete();
 	}else{ untested();
 		doc()->addElement(e);
 	}
