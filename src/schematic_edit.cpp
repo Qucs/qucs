@@ -201,8 +201,6 @@ bool SchematicEdit::addmerge(ElementGraphics* new_elt, T& del_done)
 					assert(!cc->isVisible());
 					assert(!element(cc)->scope());
 					c->setParentItem(nullptr);
-					element(cc)->setOwner(element(n)->mutable_owner()); // not here.
-					assert(element(cc)->scope());
 					_ins.push_front(cc); // BUG // need a different q for derived objects
 					++kk;
 				}else{
