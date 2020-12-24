@@ -14,7 +14,8 @@ add_library(paintings SHARED ${SRCS})
 target_include_directories(paintings
 	PRIVATE
 	${CMAKE_CURRENT_SOURCE_DIR}/../../src
-	${CMAKE_CURRENT_SOURCE_DIR}/../../include)
+	${CMAKE_CURRENT_SOURCE_DIR}/../../include
+	${qucs_app_BINARY_DIR})
 # qucsschematic is needed, because Element() is used
 target_link_libraries(paintings Qt5::Widgets qucsschematic)
 set_property(TARGET paintings PROPERTY AUTOMOC ON)

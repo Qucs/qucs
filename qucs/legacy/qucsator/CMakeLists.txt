@@ -18,6 +18,7 @@ target_include_directories(qucsatorInterface
 	PRIVATE
 	${CMAKE_CURRENT_SOURCE_DIR}/../../src # task_element.h
 	${CMAKE_CURRENT_SOURCE_DIR}/../../include #data.h
+	${qucs_app_BINARY_DIR}
 	)
 target_link_libraries(qucsatorInterface Qt5::Core Qt5::Widgets)
 target_link_libraries(qucsatorInterface qucsschematic) # why PRIVATE does not work?

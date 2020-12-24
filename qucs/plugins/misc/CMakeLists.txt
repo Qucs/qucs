@@ -20,6 +20,7 @@ target_include_directories(misc
 	PRIVATE
 	${CMAKE_CURRENT_SOURCE_DIR}/../../src # command.h
 	${CMAKE_CURRENT_SOURCE_DIR}/../../include # object.h
+	${qucs_app_BINARY_DIR} # config.h
 	)
 target_link_libraries(misc Qt5::Core Qt5::Widgets)
 #set_property(TARGET misc PROPERTY AUTOMOC ON)
