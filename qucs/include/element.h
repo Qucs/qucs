@@ -114,6 +114,8 @@ public:
   Element(int cx, int cy) : _position(cx, cy) { unreachable(); }
   virtual ~Element();
 
+  Object::Type type() const {return Object::Type::Element;}
+
 public: // make old variables accessible
 	int const& cx() const { return _position.first; }
 	int const& cy() const { return _position.second; }

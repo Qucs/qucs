@@ -51,6 +51,8 @@ public:
   TextDoc (QucsApp * /*BUG*/, const QString&, QWidget* owner);
  ~TextDoc ();
 
+  Object::Type type() const override {return Object::Type::TextDoc;}
+
   void  setName (const QString&);
   bool  load ();
   int   save ();

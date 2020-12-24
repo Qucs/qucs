@@ -21,6 +21,7 @@ private:
 	friend class Node; // TODO
 	explicit Net() : Object(), _size(0), _pos(0) {}
 	~Net(){ assert(_size==0); }
+	Object::Type type() const override {return Object::Type::Net;}
 private:
 	Net( const Net& ) = delete;
 

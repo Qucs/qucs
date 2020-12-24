@@ -44,6 +44,7 @@ protected:
 public:
   explicit QucsDoc(QucsApp*, const QString&, QWidget* owner);
   virtual ~QucsDoc();
+ Object::Type type() const override {return Object::Type::QucsDoc;}
 
 public:
   bool saveAs();

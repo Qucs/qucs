@@ -40,6 +40,7 @@ private: // managed by NodeMap
 public:
   void inc_ports(){ ++_ports; }
   void dec_ports(){ assert(_ports); --_ports; }
+  Object::Type type() const override {return Object::Type::Node;}
 
   // possibly wrong.
 //  void connect(Port&);

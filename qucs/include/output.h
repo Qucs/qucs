@@ -32,6 +32,7 @@ private:
 public:
 	explicit QucsData() : Object(), _attach_count(0){}
 	virtual ~QucsData() {}
+	Type type() {return Object::Type::QucsData;}
 public:
 	virtual QucsData* clone() { return NULL; }
 protected:
@@ -114,6 +115,7 @@ public:
 	QucsData* clone() override{return new SimOutputDir(*this);}
 	typedef std::map<std::string, QucsData*> container_t;
 	virtual ~SimOutputDir(){}
+	Type type() const override {return Object::Type::SimOutputDir;}
 
 public:
 	virtual void set_var(std::string, std::string) { untested(); }
@@ -176,6 +178,7 @@ private:
 	}
 public:
 	QucsData* clone(){return new SimOutputRoot(*this);}
+	Object::Type_T type() const override {return Object::Type_T::SimOutputRoot;}
 
 public:
 	SimOutputRoot(){ }

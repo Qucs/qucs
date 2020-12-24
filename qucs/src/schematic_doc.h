@@ -94,7 +94,7 @@ public:
 public:
   SchematicDoc(QucsApp* /*BUG?*/, const QString&, QWidget* owner);
  ~SchematicDoc();
-
+  Object::Type type() const override {return Object::Type::SchematicDoc;}
   void setName(const QString&);
   void setChanged(bool, bool fillStack=false, char Op='*');
   void paintGrid(ViewPainter*, int, int, int, int);

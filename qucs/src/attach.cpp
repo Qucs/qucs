@@ -43,6 +43,7 @@ public:
       }
     }
   }
+    Object::Type type() const {return Object::Type::Plugins;}
 
   std::string compile(std::string what) const{
 	  // TODO: compile contents and return plugin name.
