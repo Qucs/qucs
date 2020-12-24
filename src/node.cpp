@@ -69,10 +69,10 @@ void Node::paint(ViewPainter *)
 
 // BUG: does not set Name
 // what is a "Name"??
+#if 0
 void Node::setName(const QString& , const QString& , int, int )
 { untested();
   incomplete();
-#if 0
   if(Name_.isEmpty() && Value_.isEmpty()) { untested();
     if(Label) delete Label;
     Label = 0;
@@ -83,8 +83,8 @@ void Node::setName(const QString& , const QString& , int, int )
   else Label->setName(Name_);
   Label->pOwner = this;
   Label->initValue = Value_;
-#endif
 }
+#endif
 
 // ----------------------------------------------------------------
 #if 0

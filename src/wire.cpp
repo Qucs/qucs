@@ -242,6 +242,10 @@ Wire* Wire::extendTowards(pos_t const& other) const
 	auto n0 = nodePosition(0);
 	auto n1 = nodePosition(1);
 
+	// TODO: some connect call got lost.
+	assert(_port0.isConnected());
+	assert(_port1.isConnected());
+
 	if(in_order(n0, other, n1)){
 		return clone();
 	}else if(in_order(other, n1, n0) && _port1->numPorts()==1){

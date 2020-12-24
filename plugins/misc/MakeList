@@ -1,0 +1,10 @@
+TARGET = misc
+
+RAW_SRCS = \
+	c_comand.cc \
+	listcompentry.cpp \
+	netlist.cpp \
+	get.cpp \
+	signon.cc
+
+EXTRA_DIST =
