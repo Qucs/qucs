@@ -54,14 +54,14 @@ class QucsAttenuator : public QMainWindow
   void slotSetText_Zout(const QString &);
 
  private:
-  QComboBox *ComboTopology;
-  QLabel *LabelTopology, *LabelAtten, *LabelImp1, *LabelImp2;
-  QLabel *LabelR1, *LabelR2, *LabelR3, *pixTopology, *LabelResult;
-  QLabel *LabelR3_Ohm;
-  QLineEdit *lineEdit_Attvalue, *lineEdit_Zin, *lineEdit_Zout;
-  QLineEdit *lineEdit_R1, *lineEdit_R2, *lineEdit_R3, *lineEdit_Results;
-  QPushButton *Calculate;
-  QDoubleValidator *DoubleVal;
+  QComboBox *ComboTopology{nullptr};
+  QLabel *LabelTopology{nullptr}, *LabelAtten{nullptr}, *LabelImp1{nullptr}, *LabelImp2{nullptr};
+  QLabel *LabelR1{nullptr}, *LabelR2{nullptr}, *LabelR3{nullptr}, *pixTopology{nullptr}, *LabelResult{nullptr};
+  QLabel *LabelR3_Ohm{nullptr};
+  QLineEdit *lineEdit_Attvalue{nullptr}, *lineEdit_Zin{nullptr}, *lineEdit_Zout{nullptr};
+  QLineEdit *lineEdit_R1{nullptr}, *lineEdit_R2{nullptr}, *lineEdit_R3{nullptr}, *lineEdit_Results{nullptr};
+  QPushButton *Calculate{nullptr};
+  QDoubleValidator *DoubleVal{nullptr};
 
 };
 

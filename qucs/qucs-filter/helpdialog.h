@@ -39,8 +39,8 @@ private slots:
   void slotClose();
 
 private:
-  QVBoxLayout *vLayout;
-  QTextEdit *Text;
+  QVBoxLayout *vLayout{nullptr};
+  QTextEdit *Text{nullptr};
 };
 
 #endif

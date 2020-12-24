@@ -59,8 +59,8 @@ public:
   class INSTALL {
   private:
     const std::string _name;
-    DISPATCHER_BASE* _d;
-    CKT_BASE* _p;
+    DISPATCHER_BASE* _d{nullptr};
+    CKT_BASE* _p{nullptr};
   public:
     INSTALL(DISPATCHER_BASE* d, const std::string& name, CKT_BASE* p) :
       _name(name),
@@ -105,7 +105,7 @@ public: // forward to BASE
   }
 private:
   void check_init();
-  DISPATCHER_BASE* _base;
+  DISPATCHER_BASE* _base{nullptr};
 };
 /*--------------------------------------------------------------------------*/
 // not sure if this is needed, could be put wherever used.

@@ -77,7 +77,7 @@ public:
   QDateTime lastSaved;
 
 //  float Scale;
-  QucsApp* _app;
+  QucsApp* _app{nullptr};
   bool DocChanged;
   bool SimOpenDpl;   // open data display after simulation ?
   bool SimRunScript; // run script after simulation ?
@@ -176,7 +176,7 @@ private:
 	std::map<std::string, QucsData*> _data;
 	std::map<std::string, Simulator*> _simulators;
 
-	QWidget* _owner;
+	QWidget* _owner{nullptr};
 }; // QucsDoc
 
 #endif

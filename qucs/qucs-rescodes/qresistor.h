@@ -27,7 +27,7 @@
 
 class QResistor : public QWidget
 {
-	Resistor *res;
+	Resistor *res{nullptr};
 	float resistance;
 	float tolerance;
 	char modifier;

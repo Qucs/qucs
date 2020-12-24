@@ -38,18 +38,18 @@ public:
 
 public:
 
-  QDockWidget *msgDock;
+  QDockWidget *msgDock{nullptr};
 
-  QTabWidget *builderTabs;
+  QTabWidget *builderTabs{nullptr};
 
   /*!
    * \brief admsOutput holds the make output of running admsXml
    */
-  QPlainTextEdit *admsOutput;
+  QPlainTextEdit *admsOutput{nullptr};
   /*!
    * \brief cppOutput holds the make output of running a C++ compiler
    */
-  QPlainTextEdit *cppOutput;
+  QPlainTextEdit *cppOutput{nullptr};
 
   void reset();
 

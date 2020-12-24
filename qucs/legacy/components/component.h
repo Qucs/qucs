@@ -246,7 +246,7 @@ private:
 protected: // BUG
   QString Model;
 protected: // BUG => Element.
-  char* bitmap_file;
+  char* bitmap_file{nullptr};
 protected: // BUG
   QString  Description;
 protected:

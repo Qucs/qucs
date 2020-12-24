@@ -36,7 +36,7 @@ public: // only called from Graph. cleanup later.
 	}
 public: // ??
 	std::string Var;
-	double *Points;
+	double *Points{nullptr};
 	int     count;
 
 private:
@@ -113,7 +113,7 @@ public:
 // a sequence of double pairs (with a name on it)
 class SimOutputWave : public SimOutputData{
 private:
-	SimOutputSeq* dep;
+	SimOutputSeq* dep{nullptr};
 };
 #endif
 

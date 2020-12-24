@@ -127,8 +127,8 @@ public:
   QHash<QString,QString> schNameHash; // QHash for the schematic files lookup
   QHash<QString,QString> spiceNameHash; // QHash for the spice files lookup
 
-  QLineEdit *editText;  // for edit component properties on schematic
-  SearchDialog *SearchDia;  // global in order to keep values
+  QLineEdit *editText{nullptr};  // for edit component properties on schematic
+  SearchDialog *SearchDia{nullptr};  // global in order to keep values
 
   // current mouse methods
   void (MouseActions::*MouseMoveAction) (SchematicDoc*, QMouseEvent*);
@@ -220,48 +220,48 @@ public: // called directly from Schematic... bug?
 
 public:
 //  MouseActions *view;
-  QucsTabWidget *DocumentTab;
-  QListWidget *CompComps;
-  QTreeWidget *libTreeWidget;
+  QucsTabWidget *DocumentTab{nullptr};
+  QListWidget *CompComps{nullptr};
+  QTreeWidget *libTreeWidget{nullptr};
 
   // menu appearing by right mouse button click on content listview
-  QMenu *ContentMenu;
+  QMenu *ContentMenu{nullptr};
 
   // corresponding actions
-  QAction *ActionCMenuOpen, *ActionCMenuCopy, *ActionCMenuRename, *ActionCMenuDelete, *ActionCMenuInsert;
+  QAction *ActionCMenuOpen{nullptr}, *ActionCMenuCopy{nullptr}, *ActionCMenuRename{nullptr}, *ActionCMenuDelete{nullptr}, *ActionCMenuInsert{nullptr};
 
-  QAction *fileNew, *fileNewNoDD, *textNew, *fileNewDpl, *fileOpen, *fileSave, *fileSaveAs,
-          *fileSaveAll, *fileClose, *fileCloseOthers, *fileCloseAllLeft, *fileCloseAllRight,
-          *fileCloseAll, *fileExamples, *fileSettings, *filePrint, *fileQuit,
-          *projNew, *projOpen, *projDel, *projClose, *applSettings, *refreshSchPath,
-          *editCut, *editCopy, *magAll, *magOne, *magMinus, *filePrintFit,
-          *symEdit, *intoH, *popH, *simulate, *dpl_sch, *undo, *redo, *dcbias;
+  QAction *fileNew{nullptr}, *fileNewNoDD{nullptr}, *textNew{nullptr}, *fileNewDpl{nullptr}, *fileOpen{nullptr}, *fileSave{nullptr}, *fileSaveAs{nullptr},
+          *fileSaveAll{nullptr}, *fileClose{nullptr}, *fileCloseOthers{nullptr}, *fileCloseAllLeft{nullptr}, *fileCloseAllRight{nullptr},
+          *fileCloseAll{nullptr}, *fileExamples{nullptr}, *fileSettings{nullptr}, *filePrint{nullptr}, *fileQuit{nullptr},
+          *projNew{nullptr}, *projOpen{nullptr}, *projDel{nullptr}, *projClose{nullptr}, *applSettings{nullptr}, *refreshSchPath{nullptr},
+          *editCut{nullptr}, *editCopy{nullptr}, *magAll{nullptr}, *magOne{nullptr}, *magMinus{nullptr}, *filePrintFit{nullptr},
+          *symEdit{nullptr}, *intoH{nullptr}, *popH{nullptr}, *simulate{nullptr}, *dpl_sch{nullptr}, *undo{nullptr}, *redo{nullptr}, *dcbias{nullptr};
 
-  QAction *exportAsImage;
+  QAction *exportAsImage{nullptr};
 
-  QAction *activeAction;    // pointer to the action selected by the user
+  QAction *activeAction{nullptr};    // pointer to the action selected by the user
 
 private:
 // ********* Widgets on the main area **********************************
-  QDockWidget     *dock;
-  QTabWidget      *TabView;
-  QDockWidget     *octDock;
-  OctaveWindow    *octave;
-  MessageDock     *messageDock;
+  QDockWidget     *dock{nullptr};
+  QTabWidget      *TabView{nullptr};
+  QDockWidget     *octDock{nullptr};
+  OctaveWindow    *octave{nullptr};
+  MessageDock     *messageDock{nullptr};
 
-  QListView       *Projects;
-  ProjectView     *Content;
+  QListView       *Projects{nullptr};
+  ProjectView     *Content{nullptr};
 
-  QLineEdit       *CompSearch;
-  QPushButton     *CompSearchClear;
-  QComboBox       *CompChoose;
+  QLineEdit       *CompSearch{nullptr};
+  QPushButton     *CompSearchClear{nullptr};
+  QComboBox       *CompChoose{nullptr};
 
 // ********** Properties ************************************************
   QStack<QString> HierarchyHistory; // keeps track of "go into subcircuit"
   QString  QucsFileFilter;
-  QucsFileSystemModel *m_homeDirModel;
-  QucsSortFilterProxyModel *m_proxyModel;
-  QFileSystemModel *m_projModel;
+  QucsFileSystemModel *m_homeDirModel{nullptr};
+  QucsSortFilterProxyModel *m_proxyModel{nullptr};
+  QFileSystemModel *m_projModel{nullptr};
   int ccCurIdx; // CompChooser current index (used during search)
 
 // ********** Methods ***************************************************
@@ -320,39 +320,39 @@ private:
   void initToolBar();    // creates the toolbars
   void initStatusBar();  // setup the statusbar
 
-  QAction *helpAboutApp, *helpAboutQt, *viewToolBar, *viewStatusBar,
-          *viewBrowseDock, *viewOctaveDock;
+  QAction *helpAboutApp{nullptr}, *helpAboutQt{nullptr}, *viewToolBar{nullptr}, *viewStatusBar{nullptr},
+          *viewBrowseDock{nullptr}, *viewOctaveDock{nullptr};
 
   // menus contain the items of their menubar
   enum { MaxRecentFiles = 8 };
-  QMenu *fileMenu, *editMenu, *insMenu, *projMenu, *simMenu, *viewMenu,
-             *helpMenu, *alignMenu, *toolMenu, *recentFilesMenu;
-  QAction *fileRecentAction[MaxRecentFiles];
-  QAction *fileClearRecent;
+  QMenu *fileMenu{nullptr}, *editMenu{nullptr}, *insMenu{nullptr}, *projMenu{nullptr}, *simMenu{nullptr}, *viewMenu{nullptr},
+             *helpMenu{nullptr}, *alignMenu{nullptr}, *toolMenu{nullptr}, *recentFilesMenu{nullptr};
+  QAction *fileRecentAction[MaxRecentFiles]{nullptr};
+  QAction *fileClearRecent{nullptr};
 
   // submenus for the PDF documents
-  QMenu *helpTechnical, *helpReport, *helpTutorial;
+  QMenu *helpTechnical{nullptr}, *helpReport{nullptr}, *helpTutorial{nullptr};
 
-  QToolBar *fileToolbar, *editToolbar, *viewToolbar, *workToolbar;
+  QToolBar *fileToolbar{nullptr}, *editToolbar{nullptr}, *viewToolbar{nullptr}, *workToolbar{nullptr};
 
   // Shortcuts for scolling schematic / TextEdit
   // This is rather cumbersome -> Make this with a QScrollView instead??
-  QShortcut *cursorUp, *cursorLeft, *cursorRight, *cursorDown;
+  QShortcut *cursorUp{nullptr}, *cursorLeft{nullptr}, *cursorRight{nullptr}, *cursorDown{nullptr};
 
-  QLabel *WarningLabel, *PositionLabel;  // labels in status bar
+  QLabel *WarningLabel{nullptr}, *PositionLabel{nullptr};  // labels in status bar
 
 public: // Toolbar?
   void editFile(const QString&);
 
-  QAction *insWire, *insLabel, *insGround, *insPort, *insEquation, *magPlus,
-          *editRotate, *editMirror, *editMirrorY, *editPaste, *select,
-          *editActivate, *wire, *editDelete, *setMarker, *onGrid, *moveText,
-          *helpOnline, *callEditor, *callFilter, *callLine, *callActiveFilter,
-          *showMsg, *showNet, *alignTop, *alignBottom, *alignLeft, *alignRight,
-          *distrHor, *distrVert, *selectAll, *callLib, *callMatch, *changeProps,
-          *addToProj, *editFind, *insEntity, *selectMarker, *callPowerComb,
-          *createLib, *importData, *graph2csv, *createPkg, *extractPkg,
-          *callAtt, *callRes, *centerHor, *centerVert, *loadModule, *buildModule;
+  QAction *insWire{nullptr}, *insLabel{nullptr}, *insGround{nullptr}, *insPort{nullptr}, *insEquation{nullptr}, *magPlus{nullptr},
+          *editRotate{nullptr}, *editMirror{nullptr}, *editMirrorY{nullptr}, *editPaste{nullptr}, *select{nullptr},
+          *editActivate{nullptr}, *wire{nullptr}, *editDelete{nullptr}, *setMarker{nullptr}, *onGrid{nullptr}, *moveText{nullptr},
+          *helpOnline{nullptr}, *callEditor{nullptr}, *callFilter{nullptr}, *callLine{nullptr}, *callActiveFilter{nullptr},
+          *showMsg{nullptr}, *showNet{nullptr}, *alignTop{nullptr}, *alignBottom{nullptr}, *alignLeft{nullptr}, *alignRight{nullptr},
+          *distrHor{nullptr}, *distrVert{nullptr}, *selectAll{nullptr}, *callLib{nullptr}, *callMatch{nullptr}, *changeProps{nullptr},
+          *addToProj{nullptr}, *editFind{nullptr}, *insEntity{nullptr}, *selectMarker{nullptr}, *callPowerComb{nullptr},
+          *createLib{nullptr}, *importData{nullptr}, *graph2csv{nullptr}, *createPkg{nullptr}, *extractPkg{nullptr},
+          *callAtt{nullptr}, *callRes{nullptr}, *centerHor{nullptr}, *centerVert{nullptr}, *loadModule{nullptr}, *buildModule{nullptr};
 
   QAction* selectAction(){ return select; }
 

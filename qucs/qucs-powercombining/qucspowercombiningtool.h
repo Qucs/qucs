@@ -65,23 +65,23 @@ class QucsPowerCombiningTool : public QMainWindow
 public:
      QucsPowerCombiningTool();
     ~QucsPowerCombiningTool();
-     QLabel *NLabel,*RefImp,*FreqLabel,*K1Label, *K1LabeldB, *RelPermlabel, *SubstrateHeightlabel, *SubstrateMMlabel, *ThicknessLabel,
-            *ThicknessumLabel, *MinWidthLabel, *MinWidthmmLabel, *MaxWidthLabel, *MaxWidthmmLabel, *tanDLabel,
-            *ResistivityLabel, *RoughnessLabel,*TopoLabel, *OhmLabel, *NStagesLabel, *AlphaLabel, *AlphadBLabel, *UnitsLabel;
+     QLabel *NLabel{nullptr},*RefImp{nullptr},*FreqLabel{nullptr},*K1Label{nullptr}, *K1LabeldB{nullptr}, *RelPermlabel{nullptr}, *SubstrateHeightlabel{nullptr}, *SubstrateMMlabel{nullptr}, *ThicknessLabel{nullptr},
+            *ThicknessumLabel{nullptr}, *MinWidthLabel{nullptr}, *MinWidthmmLabel{nullptr}, *MaxWidthLabel{nullptr}, *MaxWidthmmLabel{nullptr}, *tanDLabel{nullptr},
+            *ResistivityLabel{nullptr}, *RoughnessLabel{nullptr},*TopoLabel{nullptr}, *OhmLabel{nullptr}, *NStagesLabel{nullptr}, *AlphaLabel{nullptr}, *AlphadBLabel{nullptr}, *UnitsLabel{nullptr};
 
-     QComboBox *TopoCombo, *BranchesCombo, *FreqScaleCombo, *RelPermcomboBox, *NStagesCombo, *UnitsCombo;
+     QComboBox *TopoCombo{nullptr}, *BranchesCombo{nullptr}, *FreqScaleCombo{nullptr}, *RelPermcomboBox{nullptr}, *NStagesCombo{nullptr}, *UnitsCombo{nullptr};
 
-     QLineEdit *RefImplineEdit, *FreqlineEdit, *K1lineEdit, *SubstrateHeightlineEdit, *ThicknesslineEdit, *MinWidthlineEdit,
-                 *MaxWidthlineEdit, *tanDlineEdit, *ResistivitylineEdit, *RoughnesslineEdit, *AlphalineEdit;
+     QLineEdit *RefImplineEdit{nullptr}, *FreqlineEdit{nullptr}, *K1lineEdit{nullptr}, *SubstrateHeightlineEdit{nullptr}, *ThicknesslineEdit{nullptr}, *MinWidthlineEdit{nullptr},
+                 *MaxWidthlineEdit{nullptr}, *tanDlineEdit{nullptr}, *ResistivitylineEdit{nullptr}, *RoughnesslineEdit{nullptr}, *AlphalineEdit{nullptr};
 
-     QCheckBox *AddSparcheckBox;
-     QRadioButton *IdealTLradioButton, *MicrostripradioButton, *LumpedElementsradioButton;
-     QPushButton *GenerateButton;
-     QGroupBox *SpecificationsgroupBox,*MicrostripgroupBox, *ImagegroupBox, *ImplementationgroupBox;
-     QWidget *centralWidget;
-     QStatusBar *statusBar;
-     QGridLayout *gboxImage;
-     QSvgWidget *imgWidget;
+     QCheckBox *AddSparcheckBox{nullptr};
+     QRadioButton *IdealTLradioButton{nullptr}, *MicrostripradioButton{nullptr}, *LumpedElementsradioButton{nullptr};
+     QPushButton *GenerateButton{nullptr};
+     QGroupBox *SpecificationsgroupBox{nullptr},*MicrostripgroupBox{nullptr}, *ImagegroupBox{nullptr}, *ImplementationgroupBox{nullptr};
+     QWidget *centralWidget{nullptr};
+     QStatusBar *statusBar{nullptr};
+     QGridLayout *gboxImage{nullptr};
+     QSvgWidget *imgWidget{nullptr};
 
 private slots:
      void on_TopoCombo_currentIndexChanged(int index);

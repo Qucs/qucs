@@ -45,57 +45,57 @@ private:
                        funcCauer = 3, funcBessel = 4, funcLegendre = 5, funcUser = 6};
     enum lstFiltType { tLowPass =0, tHiPass=1, tBandPass=2, tBandStop=3};
 
-    QLabel *lblInputData;
-    QLabel *lblA1;
-    QLabel *lblA2;
-    QLabel *lblF1;
-    QLabel *lblF2;
-    QLabel *lblTyp;
-    QLabel *lblKv;
-    QLabel *lblRpl1;
-    QLabel *lblRpl2;
-    QLabel *lblResp;
+    QLabel *lblInputData{nullptr};
+    QLabel *lblA1{nullptr};
+    QLabel *lblA2{nullptr};
+    QLabel *lblF1{nullptr};
+    QLabel *lblF2{nullptr};
+    QLabel *lblTyp{nullptr};
+    QLabel *lblKv{nullptr};
+    QLabel *lblRpl1{nullptr};
+    QLabel *lblRpl2{nullptr};
+    QLabel *lblResp{nullptr};
 
     QLabel *lblAFR;
     QLabel *lblTopology;
     QLabel *lblOrder;
 
-    QLineEdit *edtA1; // passband attenuation A1
-    QLineEdit *edtA2; // stopband attenuation A2
-    QLineEdit *edtF1; // passband cutoff frequency F1
-    QLineEdit *edtF2; // stopband cutoff frequency F2
-    QLineEdit *edtKv;
-    QLineEdit *edtPassbRpl;
-    QLineEdit *edtStopbRpl;
-    QLineEdit *edtOrder;
+    QLineEdit *edtA1{nullptr}; // passband attenuation A1
+    QLineEdit *edtA2{nullptr}; // stopband attenuation A2
+    QLineEdit *edtF1{nullptr}; // passband cutoff frequency F1
+    QLineEdit *edtF2{nullptr}; // stopband cutoff frequency F2
+    QLineEdit *edtKv{nullptr};
+    QLineEdit *edtPassbRpl{nullptr};
+    QLineEdit *edtStopbRpl{nullptr};
+    QLineEdit *edtOrder{nullptr};
 
-    QComboBox *cbxFilterFunc;
-    QPushButton *btnCalcSchematic;
-    QPushButton *btnDefineTransferFunc;
+    QComboBox *cbxFilterFunc{nullptr};
+    QPushButton *btnCalcSchematic{nullptr};
+    QPushButton *btnDefineTransferFunc{nullptr};
 
-    QGroupBox *gpbCons;
-    QAction *viewConsole;
-    QPlainTextEdit *txtResult;
+    QGroupBox *gpbCons{nullptr};
+    QAction *viewConsole{nullptr};
+    QPlainTextEdit *txtResult{nullptr};
 
-    QSvgWidget *imgAFR;
-    QLabel *lblSch;
+    QSvgWidget *imgAFR{nullptr};
+    QLabel *lblSch{nullptr};
 
     /*QRadioButton *btnLowPass;
     QRadioButton *btnHighPass;
     QRadioButton *btnBandPass;
     QRadioButton *btnBandStop;*/
 
-    QComboBox *cbxFilterType;
-    QComboBox *cbxResponse;
+    QComboBox *cbxFilterType{nullptr};
+    QComboBox *cbxResponse{nullptr};
 
-    QPushButton *btnElements;
+    QPushButton *btnElements{nullptr};
     //QPushButton *btnPassive;
 
-    QVBoxLayout *top1;
+    QVBoxLayout *top1{nullptr};
     
-    QSvgWidget *sch_pic;
+    QSvgWidget *sch_pic{nullptr};
 
-    QWidget *zenter;
+    QWidget *zenter{nullptr};
 
     void errorMessage(QString s);
 

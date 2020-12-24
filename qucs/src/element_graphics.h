@@ -102,8 +102,8 @@ public:
 	void setSelected(bool s);
 
 private:
-	Element* _e;
-	QGraphicsItem* _elementText;
+	Element* _e{nullptr};
+	QGraphicsItem* _elementText{nullptr};
 	bool _select__;
 }; // ElementGraphics
 /*--------------------------------------------------------------------------*/

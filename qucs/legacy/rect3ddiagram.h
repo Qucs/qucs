@@ -51,8 +51,8 @@ public:
   void createAxisLabels();
   bool insideDiagram(float, float) const;
 
-  tPoint3D *Mem;   // memory for all points during hidden line algorithm
-  tPoint3D *pMem;  // current position in "Mem"
+  tPoint3D *Mem{nullptr};   // memory for all points during hidden line algorithm
+  tPoint3D *pMem{nullptr};  // current position in "Mem"
 
 
 protected:

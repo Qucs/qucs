@@ -34,7 +34,7 @@ class qf_cauer : public qf_filter
   qf_double_t th;			// Modular angle
 
   // Zeros of transmission
-  qf_double_t * a;
+  qf_double_t * a{nullptr};
 
 public:
   qf_cauer (unsigned, qf_double_t, qf_double_t);

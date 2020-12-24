@@ -43,8 +43,8 @@ private slots:
   void slotDisconnect();
 
 private:
-  Ui::SearchDialog *ui;
-  QWidget *doc;
+  Ui::SearchDialog *ui{nullptr};
+  QWidget *doc{nullptr};
 };
 
 #endif

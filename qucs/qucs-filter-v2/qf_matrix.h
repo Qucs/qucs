@@ -12,7 +12,7 @@ class qf_matrix {
   protected:
 
     unsigned  n;
-    Rarray*   H;
+    Rarray*   H{nullptr};
 
     // Private functions used by operator *
 

@@ -329,7 +329,7 @@ protected slots:
   void printCursorPosition(int x_, int y_);
 
 private:
-  bool dragIsOkay;
+  bool dragIsOkay{true};
   /*! \brief hold system-independent information about a schematic file */
 
   void removeWire(Wire const* w);
@@ -603,7 +603,7 @@ public:
 private:
   bool performToggleAction(bool, QAction*, pToggleFunc, pMouseFunc, pMouseFunc2); // this is nuts.
 
-  SchematicActions* _mouseActions; //needed? no. FIXME
+  SchematicActions* _mouseActions{nullptr}; //needed? no. FIXME
   MouseActions* mouseActions() override { assert(_mouseActions); return _mouseActions; }
   SchematicActions& schematicActions() { assert(_mouseActions); return *_mouseActions; }
 //  MouseAction* mouseAction(); QucsDoc
@@ -619,12 +619,12 @@ public: // need access to SchematicModel. grr
   friend class ImageWriter;
 
 private:
-  SchematicSymbol* _root;
-  SchematicModel* _model;
+  SchematicSymbol* _root{nullptr};
+  SchematicModel* _model{nullptr};
 private:
   bool SymbolMode; // BUG
 
-  QUndoStack* _undoStack;
+  QUndoStack* _undoStack{nullptr};
 }; // SymbolDocument
 
 // ---------------------------------------------------

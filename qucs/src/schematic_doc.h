@@ -539,7 +539,7 @@ public:
 private:
   bool performToggleAction(bool, QAction*, pToggleFunc, pMouseFunc, pMouseFunc2); // this is nuts.
 
-  SchematicActions* _mouseActions; //needed? no. FIXME
+  SchematicActions* _mouseActions{nullptr}; //needed? no. FIXME
   MouseActions* mouseActions() override { assert(_mouseActions); return _mouseActions; }
   SchematicActions& schematicActions() { assert(_mouseActions); return *_mouseActions; }
 //  MouseAction* mouseAction(); QucsDoc
@@ -565,11 +565,11 @@ public: // need access to SchematicModel. grr
   friend class SchematicScene;
 
 private:
-  SubcktBase* _root;
-  SchematicModel* _model;
-  SubcktBase* _main;
+  SubcktBase* _root{nullptr};
+  SchematicModel* _model{nullptr};
+  SubcktBase* _main{nullptr};
   CmdEltList _commands;
-  QUndoStack* _undoStack;
+  QUndoStack* _undoStack{nullptr};
   std::map<std::string, SimProcess*> _simProcess; // QucsDoc?
 }; // SchematicDocument
 /* -------------------------------------------------------------------------------- */

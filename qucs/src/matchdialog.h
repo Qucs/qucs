@@ -135,26 +135,26 @@ public slots:
   void slotChebyCheck();
 
 private:
-  QHBoxLayout *all; // the mother of all widgets
-  QVBoxLayout *MethodLayout;
-  QDoubleValidator *DoubleVal;
-  QLabel *Port1Label, *Port2Label, *Ohm1Label, *Ohm2Label, *FormatLabel,
-      *FrequencyLabel, *TopoLabel, *OrderLabel, *RelPermLabel, *S11Label,
-      *S11sLabel, *S11uLabel, *S21Label, *S21sLabel, *S21uLabel, *S12Label,
-      *S12sLabel, *S12uLabel, *S22Label, *S22sLabel, *S22uLabel, *SubsHScale,
-      *ThicknessScale, *minWScale, *maxWScale, *ResistivityLabel,
-      *maxRippleLabel, *thicknessLabel, *subsHLabel, *minWLabel, *maxWLabel,
-      *tanDLabel, *WeightingLabel;
-  QComboBox *FormatCombo, *UnitCombo, *TopoCombo, *RelPermCombo;
+  QHBoxLayout *all{nullptr}; // the mother of all widgets
+  QVBoxLayout *MethodLayout{nullptr};
+  QDoubleValidator *DoubleVal{nullptr};
+  QLabel *Port1Label{nullptr}, *Port2Label{nullptr}, *Ohm1Label{nullptr}, *Ohm2Label{nullptr}, *FormatLabel{nullptr},
+      *FrequencyLabel{nullptr}, *TopoLabel{nullptr}, *OrderLabel{nullptr}, *RelPermLabel{nullptr}, *S11Label{nullptr},
+      *S11sLabel{nullptr}, *S11uLabel{nullptr}, *S21Label{nullptr}, *S21sLabel{nullptr}, *S21uLabel{nullptr}, *S12Label{nullptr},
+      *S12sLabel{nullptr}, *S12uLabel{nullptr}, *S22Label{nullptr}, *S22sLabel{nullptr}, *S22uLabel{nullptr}, *SubsHScale{nullptr},
+      *ThicknessScale{nullptr}, *minWScale{nullptr}, *maxWScale{nullptr}, *ResistivityLabel{nullptr},
+      *maxRippleLabel{nullptr}, *thicknessLabel{nullptr}, *subsHLabel{nullptr}, *minWLabel{nullptr}, *maxWLabel{nullptr},
+      *tanDLabel{nullptr}, *WeightingLabel{nullptr};
+  QComboBox *FormatCombo{nullptr}, *UnitCombo{nullptr}, *TopoCombo{nullptr}, *RelPermCombo{nullptr};
 
-  QLineEdit *Ref1Edit, *Ref2Edit, *FrequencyEdit, *OrderEdit, *ResistivityEdit,
-      *MaxRippleEdit, *SubHeightEdit, *thicknessEdit, *minWEdit, *maxWEdit,
-      *tanDEdit, *S11magEdit, *S11degEdit, *S21magEdit, *S21degEdit,
-      *S12magEdit, *S12degEdit, *S22magEdit, *S22degEdit;
+  QLineEdit *Ref1Edit{nullptr}, *Ref2Edit{nullptr}, *FrequencyEdit{nullptr}, *OrderEdit{nullptr}, *ResistivityEdit{nullptr},
+      *MaxRippleEdit{nullptr}, *SubHeightEdit{nullptr}, *thicknessEdit{nullptr}, *minWEdit{nullptr}, *maxWEdit{nullptr},
+      *tanDEdit{nullptr}, *S11magEdit{nullptr}, *S11degEdit{nullptr}, *S21magEdit{nullptr}, *S21degEdit{nullptr},
+      *S12magEdit{nullptr}, *S12degEdit{nullptr}, *S22magEdit{nullptr}, *S22degEdit{nullptr};
 
-  QCheckBox *TwoCheck, *MicrostripCheck, *AddSPBlock, *BalancedCheck;
-  QRadioButton *OpenRadioButton, *ShortRadioButton, *BinRadio, *ChebyRadio;
-  QGroupBox *SubstrateBox, *Weighting_groupBox, *MethodBox;
+  QCheckBox *TwoCheck{nullptr}, *MicrostripCheck{nullptr}, *AddSPBlock{nullptr}, *BalancedCheck{nullptr};
+  QRadioButton *OpenRadioButton{nullptr}, *ShortRadioButton{nullptr}, *BinRadio{nullptr}, *ChebyRadio{nullptr};
+  QGroupBox *SubstrateBox{nullptr}, *Weighting_groupBox{nullptr}, *MethodBox{nullptr};
 
   double tmpS21mag, tmpS21deg;
 

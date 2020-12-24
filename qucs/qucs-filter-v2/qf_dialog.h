@@ -48,19 +48,19 @@ private slots:
 private:
 
 public:
- QPushButton * okButton, * cancelButton;
- QLineEdit * EnterCutoff, * EnterZin, * EnterZout, * EnterStopband,
-  * EnterAngle, * EnterBandwidth, * EnterAttenuation, * EnterRipple;
- QVBoxLayout * all;
- QComboBox * CutoffCombo, * StopbandCombo, * FilterName, * TformName,
-   * OrderCombo, * SubOrderCombo, * BandwidthCombo;
- QLabel * CutoffLabel, * ZinLabel, * OhmLabel, * ZoutLabel, * OhmLabel_2,
-   * StopbandLabel, * AngleLabel, * AngleUnitLabel, * BandwidthLabel,
-   * AttenuationLabel, * dBLabel, * RippleLabel, * RippleUnitLabel;
- QCheckBox * OrderBox, * DualBox, * CauerPoleBox, * OptimizeCauerBox,
-   * EqualInductorBox, * UseCrossBox;
- QRadioButton * Cmax, * Cmin, * NoC, * Lmin, * NoL, * Lmax;
- QGroupBox * Lboxes, * Cboxes;
+ QPushButton * okButton{nullptr}, * cancelButton{nullptr};
+ QLineEdit * EnterCutoff{nullptr}, * EnterZin{nullptr}, * EnterZout{nullptr}, * EnterStopband{nullptr},
+  * EnterAngle{nullptr}, * EnterBandwidth{nullptr}, * EnterAttenuation{nullptr}, * EnterRipple{nullptr};
+ QVBoxLayout * all{nullptr};
+ QComboBox * CutoffCombo{nullptr}, * StopbandCombo{nullptr}, * FilterName{nullptr}, * TformName{nullptr},
+   * OrderCombo{nullptr}, * SubOrderCombo{nullptr}, * BandwidthCombo{nullptr};
+ QLabel * CutoffLabel{nullptr}, * ZinLabel{nullptr}, * OhmLabel{nullptr}, * ZoutLabel{nullptr}, * OhmLabel_2{nullptr},
+   * StopbandLabel{nullptr}, * AngleLabel{nullptr}, * AngleUnitLabel{nullptr}, * BandwidthLabel{nullptr},
+   * AttenuationLabel{nullptr}, * dBLabel{nullptr}, * RippleLabel{nullptr}, * RippleUnitLabel{nullptr};
+ QCheckBox * OrderBox{nullptr}, * DualBox{nullptr}, * CauerPoleBox{nullptr}, * OptimizeCauerBox{nullptr},
+   * EqualInductorBox{nullptr}, * UseCrossBox{nullptr};
+ QRadioButton * Cmax{nullptr}, * Cmin{nullptr}, * NoC{nullptr}, * Lmin{nullptr}, * NoL{nullptr}, * Lmax{nullptr};
+ QGroupBox * Lboxes{nullptr}, * Cboxes{nullptr};
 };
 
 #endif

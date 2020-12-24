@@ -38,9 +38,9 @@ private slots:
   void slotOkButton();
 
 public:
-  QLineEdit   *TextSize, *Angle;
-  QPushButton *ColorButt;
-  QTextEdit   *text;
+  QLineEdit   *TextSize{nullptr}, *Angle{nullptr};
+  QPushButton *ColorButt{nullptr};
+  QTextEdit   *text{nullptr};
 
 private:
   QVBoxLayout *vert;

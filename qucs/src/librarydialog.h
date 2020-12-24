@@ -74,28 +74,28 @@ private:
 
 private:
   int curDescr;
-  QVBoxLayout *all;   // the mother of all widgets
-  QVBoxLayout *checkBoxLayout;
-  QStackedWidget *stackedWidgets;
-  QLabel *theLabel;
-  QLabel *checkedCktName;
-  QLabel *libSaveName;
-  QLineEdit *NameEdit;
-  QPlainTextEdit *ErrText;
-  QTextEdit *textDescr;
-  QGroupBox *Group;
-  QPushButton *ButtCreateNext, *ButtCancel, *ButtSelectAll, *ButtSelectNone;
-  QPushButton *prevButt, *nextButt;
-  QPushButton *createButt;
+  QVBoxLayout *all{nullptr};   // the mother of all widgets
+  QVBoxLayout *checkBoxLayout{nullptr};
+  QStackedWidget *stackedWidgets{nullptr};
+  QLabel *theLabel{nullptr};
+  QLabel *checkedCktName{nullptr};
+  QLabel *libSaveName{nullptr};
+  QLineEdit *NameEdit{nullptr};
+  QPlainTextEdit *ErrText{nullptr};
+  QTextEdit *textDescr{nullptr};
+  QGroupBox *Group{nullptr};
+  QPushButton *ButtCreateNext{nullptr}, *ButtCancel{nullptr}, *ButtSelectAll{nullptr}, *ButtSelectNone{nullptr};
+  QPushButton *prevButt{nullptr}, *nextButt{nullptr};
+  QPushButton *createButt{nullptr};
   QList<QCheckBox *> BoxList;
   QStringList SelectedNames;
   QStringList Descriptions;
-  QCheckBox *checkDescr;
+  QCheckBox *checkDescr{nullptr};
 
   QFile LibFile;
   QDir LibDir;
   QRegExp Expr;
-  QRegExpValidator *Validator;
+  QRegExpValidator *Validator{nullptr};
 };
 
 #endif

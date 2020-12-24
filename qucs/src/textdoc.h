@@ -69,16 +69,16 @@ public:
 
   QFont TextFont;
 
-  bool simulation;   // simulation or module
+  bool simulation{false};   // simulation or module
   QString Library;   // library this document belongs to
   QString Libraries; // libraries to be linked with
   QString ShortDesc; // icon description
   QString LongDesc;  // component description
   QString Icon;      // icon file
-  bool recreate;     // recreate output file
+  bool recreate{false};     // recreate output file
   int devtype;       // device type
 
-  bool SetChanged;
+  bool SetChanged{false};
   int language;
 
   bool loadSettings (void);
@@ -101,8 +101,8 @@ public slots:
   void slotSetChanged ();
 
 private:
-  SyntaxHighlighter * syntaxHighlight;
-  QucsApp *App;
+  SyntaxHighlighter * syntaxHighlight{nullptr};
+  QucsApp *App{nullptr};
 
 private: // actions. here?
   void actionCopy(QAction*) override{

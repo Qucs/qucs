@@ -35,6 +35,6 @@ private:
 	 _gfx->setSelected(sel);
   }
 private:
-  ElementGraphics* _gfx;
-  Element* _elt;
+  ElementGraphics* _gfx{nullptr};
+  Element* _elt{nullptr};
 };

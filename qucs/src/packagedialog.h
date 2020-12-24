@@ -60,13 +60,13 @@ private:
   int extractDirectory(QFile&, Q_UINT32, QDir&);
   int extractLibrary(QFile&, Q_UINT32);
 
-  QVBoxLayout *all;   // the mother of all widgets
-  QLineEdit *NameEdit;
-  QTextEdit *MsgText;
-  QCheckBox *LibraryCheck;
-  QGroupBox *Group;
+  QVBoxLayout *all{nullptr};   // the mother of all widgets
+  QLineEdit *NameEdit{nullptr};
+  QTextEdit *MsgText{nullptr};
+  QCheckBox *LibraryCheck{nullptr};
+  QGroupBox *Group{nullptr};
   QList<QCheckBox *> BoxList;
-  QPushButton *ButtClose;
+  QPushButton *ButtClose{nullptr};
 };
 
 #endif

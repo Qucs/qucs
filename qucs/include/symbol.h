@@ -188,7 +188,7 @@ public: // graphics
 	//  virtual void draw(QPainter&)const=0;
 	//...  more to come
 protected: // maybe not here. but need to rebase MultiViewComponent to ScktProto first.
-	SchematicModel* _subckt; // stuff contained in this symbol.
+	SchematicModel* _subckt{nullptr}; // stuff contained in this symbol.
 	// such as subckt components. meta data or symbol gfx
 	int vflip() const{return _vflip;}
 	int hflip() const{return _hflip;}
@@ -201,7 +201,7 @@ private:
 	int _angle;
 	unsigned _param_display;
 	bool _label_display;
-	COMMON_COMPONENT* _common;
+	COMMON_COMPONENT* _common{nullptr};
 }; // symbol
 /*--------------------------------------------------------------------------*/
 /*--------------------------------------------------------------------------*/

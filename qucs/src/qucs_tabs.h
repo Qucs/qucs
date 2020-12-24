@@ -36,7 +36,7 @@ public slots:
 private:
   int contextTabIndex; // index of tab where context menu was opened
   QString docName; // name of the document where context menu was opened
-  QucsApp *App; // the main application - parent widget
+  QucsApp *App{nullptr}; // the main application - parent widget
 };
 
 #endif

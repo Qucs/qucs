@@ -96,7 +96,7 @@ protected: // UC
 
 private:
 	MouseActions& _ctx;
-	QAction* _sender;
+	QAction* _sender{nullptr};
 };
 
 
@@ -160,7 +160,7 @@ public:
 private:
 	int _action_type; // the legacy way.
 	                  //  might need cleanup
-  ElementGraphics* _e;
+	 ElementGraphics* _e{nullptr};
 };
 
 // enable access to attached elements.
@@ -237,7 +237,7 @@ public:
 #endif
 
   // menu appearing by right mouse button click on component
-  QMenu *ComponentMenu;
+  QMenu *ComponentMenu{nullptr};
 
 private:
   // former Schematic::select*
@@ -309,7 +309,7 @@ public:
   void redo();
 
 protected:
-	MouseAction* _maCurrent;
+	MouseAction* _maCurrent{nullptr};
 private:
 	// QUndoStack* _undoStack; // Doc
   bool _drawn;  // indicates whether the scheme element was drawn last time

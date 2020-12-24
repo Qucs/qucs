@@ -201,7 +201,7 @@ public:
   const Element* find_in_my_scope(const std::string& name)const;
 
 private:
-  Object* _owner; // should probably be const all the way
+  Object* _owner{nullptr}; // should probably be const all the way
 }; // Element
 
 inline SchematicModel const* Element::scope() const

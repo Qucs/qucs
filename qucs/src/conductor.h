@@ -49,7 +49,7 @@ public: //pair?
   virtual Symbol* newUnion(const Symbol*) const{ return nullptr; }
 
 public:
-  WireLabel *Label; // BUG
+  WireLabel *Label{nullptr}; // BUG
 
 public: // internal net stuff
 	Net* net() {assert(_net); return _net; }
@@ -82,7 +82,7 @@ public:
 private:
 	std::list<Conductor*> _adj;
 private:
-	Net* _net;
+	Net* _net{nullptr};
 	unsigned _visit; // keep track of what has been done
 };
 /*--------------------------------------------------------------------------*/

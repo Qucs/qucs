@@ -33,32 +33,32 @@ public:
     explicit ExportDialog(int w, int h, int wsel, int hsel, QString filename_, bool nosel_=true, QWidget *parent = 0);
     
 private:
-    QPushButton* ExportButt;
-    QPushButton* CancelButt;
-    QPushButton* SaveButt;
+    QPushButton* ExportButt{nullptr};
+    QPushButton* CancelButt{nullptr};
+    QPushButton* SaveButt{nullptr};
 
-    QLabel* lblFilename;
-    QLabel* lblResolutionX;
-    QLabel* lblResolutionY;
-    QLabel* lblRatio;
-    QLabel* lblFormat;
+    QLabel* lblFilename{nullptr};
+    QLabel* lblResolutionX{nullptr};
+    QLabel* lblResolutionY{nullptr};
+    QLabel* lblRatio{nullptr};
+    QLabel* lblFormat{nullptr};
 
-    QCheckBox* cbResolution;
-    QCheckBox* cbRatio;
-    QCheckBox* cbSelected;
+    QCheckBox* cbResolution{nullptr};
+    QCheckBox* cbRatio{nullptr};
+    QCheckBox* cbSelected{nullptr};
 
-    QLineEdit* editFilename;
-    QLineEdit* editResolutionX;
-    QLineEdit* editResolutionY;
-    QLineEdit* editScale;
+    QLineEdit* editFilename{nullptr};
+    QLineEdit* editResolutionX{nullptr};
+    QLineEdit* editResolutionY{nullptr};
+    QLineEdit* editScale{nullptr};
 
-    QComboBox* cbxImgType;
+    QComboBox* cbxImgType{nullptr};
 
-    QHBoxLayout* lower1;
-    QHBoxLayout* lower2;
-    QHBoxLayout* lower3;
-    QHBoxLayout* lower4;
-    QVBoxLayout* top;
+    QHBoxLayout* lower1{nullptr};
+    QHBoxLayout* lower2{nullptr};
+    QHBoxLayout* lower3{nullptr};
+    QHBoxLayout* lower4{nullptr};
+    QVBoxLayout* top{nullptr};
 
     int dwidth, dheight;
 

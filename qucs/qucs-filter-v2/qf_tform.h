@@ -18,7 +18,7 @@ class qf_tform {
   friend	      class	qf_plc;	      // To access Tspec in denorm
   friend	      class	qf_slc;	      // To access Tspec in denorm
 
-  qf_spec*	      Tspec;
+  qf_spec*	      Tspec{nullptr};
   qf_lcmp	      lcmp;
   virtual qf_double_t th	(void) = 0;
 

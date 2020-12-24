@@ -80,13 +80,13 @@ extern tQucsSettings QucsSettings;
 struct TransValue {
   const char * name;     // label
   double value;          // value
-  QString * tip;         // tool tip description
-  const char * units[8]; // unit choise
+  QString * tip{nullptr};         // tool tip description
+  const char * units[8]{nullptr}; // unit choise
   int unit;              // unit index
-  QLabel * label;        // Qt label widget
-  QLineEdit * lineedit;  // Qt value widget
-  QComboBox * combobox;  // Qt unit widget
-  QRadioButton * radio;  // Qt fixed widget
+  QLabel * label{nullptr};        // Qt label widget
+  QLineEdit * lineedit{nullptr};  // Qt value widget
+  QComboBox * combobox{nullptr};  // Qt unit widget
+  QRadioButton * radio{nullptr};  // Qt fixed widget
 };
 
 // Array of transmission line values.
@@ -116,18 +116,18 @@ enum TransMode {
 // A transmission line type structure.
 struct TransType {
   int type;                 // type of transmission line (see TransMode)
-  const char * description; // description
-  const char * bitmap;      // bitmap file name
-  transline * line;         // transmission line instance
+  const char * description{nullptr}; // description
+  const char * bitmap{nullptr};      // bitmap file name
+  transline * line{nullptr};         // transmission line instance
   struct TransArray array[MAX_TRANS_BOXES];
   int results;              // number of extraneous results
   struct TransResult result[MAX_TRANS_RESULTS];
-  int radio[4];
+  int radio[4]{nullptr};
 };
 
 struct TransUnit {
-  const char * description;
-  const char * units[8];
+  const char * description{nullptr};
+  const char * units[8]{nullptr};
 };
 
 /**
@@ -190,10 +190,10 @@ private:
   void closeEvent (QCloseEvent*);
 
 private:
-  QStatusBar * statBar;
-  QLabel * pix;
-  QComboBox * tranType;
-  QGroupBox * calculated;
+  QStatusBar * statBar{nullptr};
+  QLabel * pix{nullptr};
+  QComboBox * tranType{nullptr};
+  QGroupBox * calculated{nullptr};
   int mode;
 };
 

@@ -75,28 +75,28 @@ private slots:
     void slotPathSelectionChanged();
 
 public:
-    QucsApp *App;
+    QucsApp *App{nullptr};
 
     QFont Font;
-    QCheckBox *checkWiring, *checkLoadFromFutureVersions,
-              *checkAntiAliasing, *checkTextAntiAliasing,
-              *checkShowSchematicDescription;
-    QComboBox *LanguageCombo;
-    QPushButton *FontButton, *BGColorButton;
-    QLineEdit *LargeFontSizeEdit, *undoNumEdit, *editorEdit, *Input_Suffix,
-              *Input_Program, *homeEdit, *admsXmlEdit, *ascoEdit, *octaveEdit;
-    QTableWidget *fileTypesTableWidget, *pathsTableWidget;
-    QStandardItemModel *model;
-    QPushButton *ColorComment, *ColorString, *ColorInteger,
-                *ColorReal, *ColorCharacter, *ColorDataType, *ColorAttribute,
-                *ColorDirective, *ColorTask;
-    QPushButton *RemovePathButt;
+    QCheckBox *checkWiring{nullptr}, *checkLoadFromFutureVersions{nullptr},
+              *checkAntiAliasing{nullptr}, *checkTextAntiAliasing{nullptr},
+              *checkShowSchematicDescription{nullptr};
+    QComboBox *LanguageCombo{nullptr};
+    QPushButton *FontButton{nullptr}, *BGColorButton{nullptr};
+    QLineEdit *LargeFontSizeEdit{nullptr}, *undoNumEdit{nullptr}, *editorEdit{nullptr}, *Input_Suffix{nullptr},
+              *Input_Program{nullptr}, *homeEdit{nullptr}, *admsXmlEdit{nullptr}, *ascoEdit{nullptr}, *octaveEdit{nullptr};
+    QTableWidget *fileTypesTableWidget{nullptr}, *pathsTableWidget{nullptr};
+    QStandardItemModel *model{nullptr};
+    QPushButton *ColorComment{nullptr}, *ColorString{nullptr}, *ColorInteger{nullptr},
+                *ColorReal{nullptr}, *ColorCharacter{nullptr}, *ColorDataType{nullptr}, *ColorAttribute{nullptr},
+                *ColorDirective{nullptr}, *ColorTask{nullptr};
+    QPushButton *RemovePathButt{nullptr};
 
-    QVBoxLayout *all;
-    QIntValidator *val50;
-    QIntValidator *val200;
+    QVBoxLayout *all{nullptr};
+    QIntValidator *val50{nullptr};
+    QIntValidator *val200{nullptr};
     QRegExp Expr;
-    QRegExpValidator *Validator;
+    QRegExpValidator *Validator{nullptr};
 
 private:
     QStringList currentPaths;

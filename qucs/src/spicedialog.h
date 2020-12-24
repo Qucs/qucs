@@ -69,26 +69,26 @@ protected slots:
 private:
   bool loadSpiceNetList(const QString&);
 
-  QVBoxLayout *all;   // the mother of all widgets
-  QRegExpValidator  *Validator, *ValRestrict;
+  QVBoxLayout *all{nullptr};   // the mother of all widgets
+  QRegExpValidator  *Validator{nullptr}, *ValRestrict{nullptr};
   QRegExp     Expr;
-  QListWidget *NodesList, *PortsList;
-  QCheckBox   *FileCheck, *SimCheck;
-  QLineEdit   *FileEdit, *CompNameEdit;
-  QPushButton *ButtBrowse, *ButtEdit, *ButtAdd, *ButtRemove,
-              *ButtOK, *ButtApply, *ButtCancel;
-  QComboBox   *PrepCombo;
-  SpiceFile   *Comp;
-  SchematicDoc*Doc;
+  QListWidget *NodesList{nullptr}, *PortsList{nullptr};
+  QCheckBox   *FileCheck{nullptr}, *SimCheck{nullptr};
+  QLineEdit   *FileEdit{nullptr}, *CompNameEdit{nullptr};
+  QPushButton *ButtBrowse{nullptr}, *ButtEdit{nullptr}, *ButtAdd{nullptr}, *ButtRemove{nullptr},
+              *ButtOK{nullptr}, *ButtApply{nullptr}, *ButtCancel{nullptr};
+  QComboBox   *PrepCombo{nullptr};
+  SpiceFile   *Comp{nullptr};
+  SchematicDoc*Doc{nullptr};
   bool        changed;
   int         currentPrep;
 
-  QTextStream *prestream;
-  QProcess *QucsConv, *SpicePrep;
+  QTextStream *prestream{nullptr};
+  QProcess *QucsConv{nullptr}, *SpicePrep{nullptr};
   QString Line, Error;  // to store the text read from QucsConv
   int textStatus; // to store with text data QucsConv will sent next
 
-  QucsApp* App;
+  QucsApp* App{nullptr};
 };
 
 #endif

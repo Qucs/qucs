@@ -50,14 +50,14 @@ private:
   void startSimulator();
 
 public:
-  QGridLayout *all;
+  QGridLayout *all{nullptr};
 
-  QLabel *OutputLabel;
+  QLabel *OutputLabel{nullptr};
   QProcess Process;
-  QPlainTextEdit *MsgText;
-  QLineEdit *ImportEdit, *OutputEdit, *OutputData;
-  QPushButton *ImportButt, *CancelButt, *AbortButt;
-  QComboBox *OutType;
+  QPlainTextEdit *MsgText{nullptr};
+  QLineEdit *ImportEdit{nullptr}, *OutputEdit{nullptr}, *OutputData{nullptr};
+  QPushButton *ImportButt{nullptr}, *CancelButt{nullptr}, *AbortButt{nullptr};
+  QComboBox *OutType{nullptr};
 };
 
 #endif

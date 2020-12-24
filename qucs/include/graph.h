@@ -56,7 +56,7 @@ struct DataX {
        : Var(Var_), Points(Points_), count(count_), Min(INFINITY), Max(-INFINITY) {};
  ~DataX() { if(Points) delete[] Points; };
   QString Var;
-  double *Points;
+  double *Points{nullptr};
   int     count;
 
 public:
@@ -153,14 +153,14 @@ public:
 
   QDateTime lastLoaded;  // when it was loaded into memory
   int     yAxisNo;       // which y axis is used
-  double *cPointsY;
+  double *cPointsY{nullptr};
   int     countY;    // number of curves
   QString Var;
   QColor  Color;
   int     Thick;
   graphstyle_t Style;
   QList<Marker *> Markers;
-  double *gy;
+  double *gy{nullptr};
 
   // for tabular diagram
   int  Precision;   // number of digits to show

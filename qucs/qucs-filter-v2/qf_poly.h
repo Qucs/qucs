@@ -49,7 +49,7 @@ class qf_poly {
  private :
   unsigned	dg;			      // Current degree
   qf_double_t	k;			      // Constant k
-  qf_coeff	*cf;			      // Array of coefficients
+  qf_coeff	*cf{nullptr};			      // Array of coefficients
 
   // Functions used by solve
 

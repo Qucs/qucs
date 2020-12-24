@@ -82,7 +82,7 @@ protected:
 	void execute(QUndoCommand* c);
 
 private:
-	SchematicDoc* Doc;
+	SchematicDoc* Doc{nullptr};
 };
 
 #endif

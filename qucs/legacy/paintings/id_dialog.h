@@ -41,17 +41,17 @@ public:
  ~ID_Dialog();
 
 private:
-  Element *idText;
+  Element *idText{nullptr};
 
-  QVBoxLayout *all;
-  QLineEdit *Prefix;
+  QVBoxLayout *all{nullptr};
+  QLineEdit *Prefix{nullptr};
 
-  QTableWidget *ParamTable;
-  QCheckBox *showCheck;
-  QLineEdit *ParamNameEdit, *ValueEdit, *DescriptionEdit, *TypeEdit;
+  QTableWidget *ParamTable{nullptr};
+  QCheckBox *showCheck{nullptr};
+  QLineEdit *ParamNameEdit{nullptr}, *ValueEdit{nullptr}, *DescriptionEdit{nullptr}, *TypeEdit{nullptr};
 
   QRegExp Expr;
-  QRegExpValidator *SubVal, *NameVal, *ValueVal, *DescrVal, *TypeVal;
+  QRegExpValidator *SubVal{nullptr}, *NameVal{nullptr}, *ValueVal{nullptr}, *DescrVal{nullptr}, *TypeVal{nullptr};
 
 private slots:
   void slotOk();

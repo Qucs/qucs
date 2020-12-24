@@ -197,9 +197,9 @@ public:
 	void uninstall(QucsData*){ /* incomplete */ }
 	class INSTALL {
 	private:
-		SimOutputRoot* _d;
+		SimOutputRoot* _d{nullptr};
 		const std::string _name;
-		SimOutputDir* _p;
+		SimOutputDir* _p{nullptr};
 	public:
 		INSTALL(SimOutputRoot* d, const std::string& name, SimOutputDir* p) :
 			_d(d),
