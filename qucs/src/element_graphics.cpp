@@ -624,7 +624,7 @@ void ElementGraphics::hide()
 
 	if(_e->owner()){itested();
 		// detach(_e, model());
-		scene()->detachFromModel(_e);
+		_e = scene()->detachFromModel(_e);
 	}else{itested();
 	}
 	assert(!_e->owner());
