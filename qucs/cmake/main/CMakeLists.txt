@@ -16,7 +16,7 @@ set(PROJECT_DOMAIN_SECOND "org")
 option(CompileDependencies "Compile dependencies related to qucs (qucsator ...), default ON" ON)
 
 # add compiler definitions/symbols
-add_compile_definitions(PACKAGE_VERSION="${PROJECT_VERSION}")
+set(PACKAGE_VERSION "${PROJECT_VERSION}")
 add_compile_definitions(QUCS_PREFIX="${prefix}")
 add_compile_definitions(QUCS_PLUGPATH="${pkglibdir}")
 
@@ -46,11 +46,11 @@ add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/../src src)
 #endif()
 
 #
-#add_definitions(-DHAVE_CONFIG_H)
+add_definitions(-DHAVE_CONFIG_H)
 
-## configure the header config.h
-#configure_file("${PROJECT_SOURCE_DIR}/../config.h.cmake"
-#               "${PROJECT_BINARY_DIR}/config.h")
+# configure the header config.h
+configure_file("${PROJECT_SOURCE_DIR}/../../config.h.cmake"
+               "${PROJECT_BINARY_DIR}/config.h")
 
 #include_directories("${PROJECT_BINARY_DIR}")
 #include_directories(${CMAKE_SOURCE_DIR})
