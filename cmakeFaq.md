@@ -62,3 +62,7 @@ add diagrammdialog.cpp to MakeList as src
 ## /usr/bin/ld: QucsSchematicLibrary/libqucsschematic.so: undefined reference to `QPrinter::QPrinter(QPrinter::PrinterMode)'
 I have to link again Printsupport in qucs_app target. Don't understand why
 
+## Error message: /home/martin/GIT/QucsApplicationDebug/libraries/legacy/libqucsatorInterface.so: undefined symbol: _ZTV15QucsatorProcess
+Problem was that not all libraries where linkable correctly. For this testapplications can be created, so it is easier to find out why the library cannot be loaded.
+See commits: 9800732d32947296955166c88b32c6fe88372931, 18cd0dd65e703f29bf9d7e63d39d3b5184599165, be7e8d48d8c23e35e592d5b23d7a3d4c99d05791 and 45fb573bf19fbb75261aa6b7d9dddc701d228473
+
