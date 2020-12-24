@@ -1,0 +1,8 @@
+
+TARGET = verilog
+
+RAW_SRCS = \
+	verilog.cpp \
+	verilog_nl.cpp
+
+EXTRA_DIST =

@@ -45,4 +45,18 @@ void Port::disconnect(Node* n)
 	_node = nullptr;
 }
 /*--------------------------------------------------------------------------*/
+#if 0 // not yet
+void Port::new_node(const std::string& node_name, const Element* d)
+{
+  //assert(!_nnn); //BUG// fails on MUTUAL_L::expand after clone
+  assert(d);
+
+  NodeMap* Map = d->scope()->nodes();
+  assert(Map);
+  _nnn = Map->new_node(node_name);
+///  _ttt = _nnn->user_number();
+  assert(_nnn);
+}
+#endif
+/*--------------------------------------------------------------------------*/
 /*--------------------------------------------------------------------------*/

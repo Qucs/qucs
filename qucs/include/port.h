@@ -19,6 +19,8 @@
 #include <assert.h>
 /*--------------------------------------------------------------------------*/
 class Node;
+class Element;
+class pos_t;
 /*--------------------------------------------------------------------------*/
 class Port {
 private:
@@ -35,7 +37,9 @@ public:
 
 public: // perhaps not here
   Node* value() const{return _node;}
-  bool isConnected() const{return _node;}
+  bool isConnected() const{return _node;} // has_node()?
+  void new_node(const std::string&, const Element*);
+  void new_node(const pos_t&, const Element*);
 
 private:
   // "connections" are bidirectional, this is taken care of in Symbol::(dis)connectNode

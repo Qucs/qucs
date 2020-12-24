@@ -1,0 +1,5 @@
+TARGET = hidpi
+
+RAW_SRCS = hidpi.cpp
+
+EXTRA_DIST =

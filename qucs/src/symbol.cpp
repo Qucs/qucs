@@ -146,8 +146,27 @@ QString const& Symbol::netLabel(unsigned i) const
 }
 #endif
 /*--------------------------------------------------------------------------*/
+#if 0
+void Symbol::set_port_by_index(int i, std::string)
+{
+}
+void Symbol::set_port_by_index(int i, node* value)
+{
+  if (num < max_nodes()) {
+    _n[num].new_node(ext_name, this);
+    if (num+1 > _net_nodes) {
+      // make the list bigger
+      _net_nodes = num+1;
+    }else{
+      // it's already big enough, probably assigning out of order
+    }
+  }else{
+    throw Exception_Too_Many(num+1, max_nodes(), 0/*offset*/);
+  }
+}
+#endif
+/*--------------------------------------------------------------------------*/
 // connect to a node. (connectPort?)
-// is this a kind of mapNode?
 Node* Symbol::connectNode(unsigned i, NodeMap&nm)
 {
 	trace2("connectNode", label(), i);

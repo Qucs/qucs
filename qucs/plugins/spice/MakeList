@@ -1,0 +1,8 @@
+
+TARGET = spice
+
+RAW_SRCS = \
+	signon.cc \
+	lang_spice.cc
+
+EXTRA_DIST =

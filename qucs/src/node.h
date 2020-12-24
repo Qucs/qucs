@@ -16,7 +16,6 @@
 #define QUCS_NODE_H
 
 #include "conductor.h"
-// #include "qt_compat.h"
 #include "platform.h"
 #include "object.h"
 /*--------------------------------------------------------------------------*/
@@ -50,7 +49,7 @@ public:
   unsigned numPorts() const{ return _ports; }
 
   // BUG
-  void setName(const QString&, const QString&, int x_=0, int y_=0);
+//  void setName(const QString&, const QString&, int x_=0, int y_=0);
 
   pos_t const& position() const{
 	  return _position;
