@@ -38,9 +38,10 @@ target_include_directories(components
 	PUBLIC
 	${CMAKE_CURRENT_SOURCE_DIR}
 	PRIVATE
-	${qucs_app_SOURCE_DIR}/../../src
-	${qucs_app_SOURCE_DIR}/../../include
+	${CMAKE_CURRENT_SOURCE_DIR}/../../src
+	${CMAKE_CURRENT_SOURCE_DIR}/../../include
 	)
 target_link_libraries(components Qt5::Widgets Qt5::Script)
+target_link_libraries(components qucsschematic legacy)
 set_property(TARGET components PROPERTY AUTOMOC ON)
 set_property(TARGET components PROPERTY AUTORCC ON)
