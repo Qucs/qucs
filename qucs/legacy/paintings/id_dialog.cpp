@@ -15,6 +15,21 @@
  *                                                                         *
  ***************************************************************************/
 
+#include "id_dialog.h"
+#include "id_text.h"
+#include "platform.h"
+
+#include <QVBoxLayout>
+#include <QHBoxLayout>
+#include <QLabel>
+#include <QGroupBox>
+#include <QTableWidget>
+#include <QRegExpValidator>
+#include <QLineEdit>
+#include <QHeaderView>
+#include <QCheckBox>
+#include <QPushButton>
+#include <QMessageBox>
 
 ID_Dialog::ID_Dialog(Element *idText_)
 {

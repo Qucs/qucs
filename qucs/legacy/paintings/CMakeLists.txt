@@ -1,8 +1,6 @@
 # qucs/paintings library
 
-include_directories(${CMAKE_SOURCE_DIR} ${CMAKE_CURRENT_SOURCE_DIR})
-
-# INCLUDES = $(X11_INCLUDES) $(QT_INCLUDES) -I$(top_srcdir)/qucs
+include(../../../cmake/readMakeList.txt)
 
 find_package(
   Qt5
@@ -10,29 +8,13 @@ find_package(
   Widgets
   )
 
-set(PAINTINGS_HDRS
-    arrowdialog.h
-    filldialog.h
-    graphictext.h
-    graphictextdialog.h
-    )
+readVariable(MakeList SRCS SRCS)
 
-set(PAINTINGS_SRCS
-    arrow.cpp
-    arrowdialog.cpp
-    graphicline.cpp
-    graphictext.cpp
-    ellipse.cpp
-    graphictextdialog.cpp
-    portsymbol.cpp
-    ellipsearc.cpp
-    rectangle.cpp
-    filldialog.cpp)
-
-add_library(paintings SHARED ${PAINTINGS_HDRS} ${PAINTINGS_SRCS}
-                             ${PAINTINGS_MOC_SRCS})
+add_library(paintings SHARED ${SRCS})
 target_include_directories(paintings
 	PRIVATE
-	${qucs_app_SOURCE_DIR}/../../src
-	${qucs_app_SOURCE_DIR}/../../include)
-target_link_libraries(paintings Qt5::Widgets)
+	${CMAKE_CURRENT_SOURCE_DIR}/../../src
+	${CMAKE_CURRENT_SOURCE_DIR}/../../include)
+# qucsschematic is needed, because Element() is used
+target_link_libraries(paintings Qt5::Widgets qucsschematic)
+set_property(TARGET paintings PROPERTY AUTOMOC ON)
