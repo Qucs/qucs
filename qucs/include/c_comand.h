@@ -35,6 +35,7 @@ public:
   virtual ~CMD() {}
   static  void  cmdproc(CS&, CARD_LIST*);
   static  void	command(const std::string&, CARD_LIST*);
+  Object::Type type() const {return Object::Type::Command;}
 };
 /*--------------------------------------------------------------------------*/
 /*--------------------------------------------------------------------------*/
