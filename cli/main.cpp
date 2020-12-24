@@ -96,7 +96,7 @@ static void prepare_env()
 static void read_startup_files(void)
 {
 #if 1
-  CMD::command(std::string("load " "misc"), &static_model);
+  CMD::command(std::string("load plugins/misc"), &static_model);
 #else
   {
     std::string name = findfile(SYSTEMSTARTFILE, SYSTEMSTARTPATH, R_OK);
