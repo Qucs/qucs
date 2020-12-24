@@ -105,7 +105,7 @@ Element* SchematicModel::detach(Element* what)
 	if(auto d=dynamic_cast<Diagram*>(what)){ untested();
 		diagrams().removeRef(d);
 	}else if(auto c=dynamic_cast<Symbol*>(what)){
-		disconnect(c);
+		disconnect(c); // BUG: wrong place.
 		components().removeRef(c);
 	}else{ untested();
 		unreachable();
@@ -311,7 +311,7 @@ unsigned SchematicModel::nextIdx(std::string const& s) const
 				unsigned z;
 				if(sscanf(str.c_str(), "%d", &z) == 1){ itested();
 					r = std::max(z, r);
-				}else{ untested();
+				}else{ itested();
 				}
 
 				++j;
