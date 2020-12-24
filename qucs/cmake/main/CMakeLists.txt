@@ -20,6 +20,7 @@ add_compile_definitions(PACKAGE_VERSION="${PROJECT_VERSION}")
 add_compile_definitions(QUCS_PREFIX="${prefix}")
 add_compile_definitions(QUCS_PLUGPATH="${pkglibdir}")
 
+# qucsschematic
 add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/../src src)
 
 ## ------ WHY needed?

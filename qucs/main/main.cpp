@@ -136,13 +136,12 @@ void attach_single(std::string const& what)
 /*--------------------------------------------------------------------------*/
 void attach_default_plugins()
 {
-  attach_single("legacy"); // included
-  attach_single("legacy/libqucsatorInterface"); // included
-
+  attach_single("legacy");
+  attach_single("legacy/libqucsatorInterface");
   attach_single("legacy/libcomponents");
-  attach_single("legacy/libpaintings"); // included
-  attach_single("legacy/liblibfiles"); // included
-  attach_single("plugins/libmisc"); // included
+  attach_single("legacy/libpaintings");
+  attach_single("legacy/liblibfiles");
+  attach_single("plugins/libmisc");
  // attach_single(pp, "libdialogs" SOEXT);
  //
  //
