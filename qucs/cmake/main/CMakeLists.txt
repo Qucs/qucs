@@ -150,4 +150,4 @@ target_include_directories(qucs PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/../../includ
 include(compileAndInstallDependencies.cmake)
 
 # install Qucs application
-include(installQucsApplication.cmake)
+include(${CMAKE_CURRENT_SOURCE_DIR}/installQucsApplication.cmake)
