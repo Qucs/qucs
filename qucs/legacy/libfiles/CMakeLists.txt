@@ -17,6 +17,7 @@ target_include_directories(libfiles
 	PRIVATE
 	${CMAKE_CURRENT_SOURCE_DIR}/../../src # module.h
 	${CMAKE_CURRENT_SOURCE_DIR}/../../include # qt_compat.h
+	${qucs_app_BINARY_DIR} # config.h
 	)
 target_link_libraries(libfiles Qt5::Core Qt5::Widgets)
 set_property(TARGET libfiles PROPERTY AUTOMOC ON)

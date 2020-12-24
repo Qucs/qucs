@@ -20,8 +20,9 @@ find_package(
 
 add_library(legacy SHARED ${SRCS})
 # TODO: get rid of all of this dependecies
-target_include_directories(legacy PRIVATE ${PROJECT_SOURCE_DIR}/../src)
-target_include_directories(legacy PRIVATE ${PROJECT_SOURCE_DIR}/../include)
+target_include_directories(legacy PRIVATE ${PROJECT_SOURCE_DIR}/../src
+ ${PROJECT_SOURCE_DIR}/../include
+ ${qucs_app_BINARY_DIR})
 target_link_libraries(legacy Qt5::Core)
 target_link_libraries(legacy Qt5::Gui)
 target_link_libraries(legacy Qt5::Widgets)

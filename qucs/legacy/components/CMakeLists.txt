@@ -40,6 +40,7 @@ target_include_directories(components
 	PRIVATE
 	${CMAKE_CURRENT_SOURCE_DIR}/../../src
 	${CMAKE_CURRENT_SOURCE_DIR}/../../include
+	${qucs_app_BINARY_DIR}
 	)
 target_link_libraries(components Qt5::Widgets Qt5::Script)
 target_link_libraries(components qucsschematic legacy)
