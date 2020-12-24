@@ -20,6 +20,7 @@ public:
 	 : CPointsY(NULL),
 	   _var(QString::fromStdString(varname)),
 	   _fileName(fileName) {}
+    Object::Type type() const override {return Object::Type::SimOutputDatVar;}
 
 private:
 	void clear();

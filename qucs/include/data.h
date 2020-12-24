@@ -74,6 +74,8 @@ public:
 	SimOutputData() : QucsData() {}
 	virtual ~SimOutputData(){}
 
+	Object::Type type() const override {return Object::Type::SimOutputData;}
+
 public: // obsolete interface. don't use.
   virtual DataX const* axis(uint ) const { return nullptr; } // if (i<axis_count) return CPointsX.at(i); return NULL;}
 //	  double *cPointsY() const { return CPointsY; }

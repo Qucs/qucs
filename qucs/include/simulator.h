@@ -51,6 +51,7 @@ protected:
   explicit Simulator();
 public:
   virtual ~Simulator();
+ Object::Type type() const override {return Object::Type::Simulator;}
   virtual Simulator* clone() const = 0;
 
   virtual NetLang const* netLang() const{return nullptr;}

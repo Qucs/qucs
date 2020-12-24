@@ -52,13 +52,18 @@ public:
 		 QucsData = CreateType(4, 0, 0),
 		     SimOutputDir = CreateType(QucsData, 1, 0),
 		         SimOutputRoot = CreateType(QucsData, SimOutputDir, 1),
+		     SimOutputData = CreateType(QucsData, 2, 0),
+		         SimOutputDatVar = CreateType(QucsData, SimOutputData, 1),
+
 
 		 Command = CreateType(8, 0, 0),
 		     Plugins = CreateType(Command, 1, 0),
-		 Net					= CreateType(0x10, 0, 0),
+		 Net	= CreateType(0x10, 0, 0),
 		 Node = CreateType(0x11, 0, 0),
 		 CommonComponent = CreateType(0x12, 0, 0),
 		 Language = CreateType(0x14, 0, 0),
+		 Simulator = CreateType(0x18, 0, 0),
+		     LegacySimulator = CreateType(Simulator, 1, 0),
 
 	} Type;
 

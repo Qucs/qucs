@@ -71,6 +71,7 @@ public:
 	LegacySimulator(LegacySimulator const&) = delete;
 	~LegacySimulator(){}
 private: // Simulator
+    Object::Type type() const override {return Object::Type::LegacySimulator;}
 	virtual Simulator* clone() const override {return new LegacySimulator();}
 	NetLang const* netLang() const override;
 	DocumentFormat const* netLister() const override {return &LNL;}
