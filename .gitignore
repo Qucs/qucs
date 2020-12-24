@@ -182,7 +182,6 @@ qucsactivefilter
 
 CMakeFiles
 CMakeCache.txt
-*.cmake
 *.depends
 /qucs-doc/technical/octave-workspace
 *build*
