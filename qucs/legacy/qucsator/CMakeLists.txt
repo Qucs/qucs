@@ -3,7 +3,7 @@ include(../../../cmake/readMakeList.txt)
 find_package(
   Qt5
   REQUIRED
-  Core # QDateTime
+  Core # QDateTime, QProcess
   Widgets # QGraphicsItem
   )
 
@@ -20,5 +20,6 @@ target_include_directories(qucsatorInterface
 	${CMAKE_CURRENT_SOURCE_DIR}/../../include #data.h
 	)
 target_link_libraries(qucsatorInterface Qt5::Core Qt5::Widgets)
-#set_property(TARGET components PROPERTY AUTOMOC ON)
+target_link_libraries(qucsatorInterface qucsschematic) # why PRIVATE does not work?
+set_property(TARGET qucsatorInterface PROPERTY AUTOMOC ON)
 #set_property(TARGET components PROPERTY AUTORCC ON)
