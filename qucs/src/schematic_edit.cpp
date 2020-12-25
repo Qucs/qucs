@@ -134,6 +134,8 @@ void SchematicEdit::do_it_first()
 			trace0("merged");
 		}else{
 			trace2("done insert, show", e->label(), e->mutable_owner());
+			// scn->possiblyRename(e); here?
+			// scn->attachToModel(e); part of gfx->show()
 			gfx->show();
 			gfx->setSelected(true); // really?
 			done_ins.push_back(gfx);
@@ -179,10 +181,13 @@ bool SchematicEdit::addmerge(ElementGraphics* new_elt, T& del_done)
 
 		// gfxi is already on scene.
 		auto n = gfxi->newUnion(new_elt);
-		if(n){itested();
+		if(n){ untested();
 			collision = true;
 			trace1("hiding", element(gfxi)->label());
+
+			assert(element(gfxi)->mutable_owner());
 			gfxi->hide();
+			assert(!element(gfxi)->mutable_owner());
 
 			// collision delete.
 			del_done.push_back(gfxi);
