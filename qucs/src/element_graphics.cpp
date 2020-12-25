@@ -75,32 +75,6 @@ ElementGraphics::~ElementGraphics()
 	_elementText = nullptr;
 }
 /*--------------------------------------------------------------------------*/
-// almost ElementGraphics. could use ElementGraphics?
-class SymbolGraphics : public QGraphicsItem{
-	explicit SymbolGraphics();
-public:
-	explicit SymbolGraphics(Element const* e, QGraphicsItem* parent)
-	  : QGraphicsItem(parent){
-		_e = e;
-		setPos(makeQPointF(_e->center()));
-		setParentItem(parent);
-	}
-private: // QGraphicsItem override
-	void paint(QPainter *p, const QStyleOptionGraphicsItem *, QWidget *widget = nullptr) override{
-		(void) widget;
-		assert(_e);
-		ViewPainter v(p);
-		return _e->paint(&v);
-	}
-	QRectF boundingRect() const override {itested();
-		assert(_e);
-	  	rect_t r = _e->bounding_rect();
-		auto tl = r.tl();
-		return QRectF(getX(tl), getY(tl), r.w(), r.h());
-	}
-private:
-	Element const* _e;
-}; // SymbolGraphics
 // there is also QGraphicsSimpleTextItem, but is does not allow for edits.
 class ElementText : public QGraphicsItem{
 private:
@@ -192,6 +166,8 @@ void ElementGraphics::attachElement(Element* e)
 {itested();
 	assert(e);
 	trace1("attach", e->label());
+	assert(!_e);
+	assert(!e->owner());
 	QGraphicsItem::hide();
 	delete _elementText;
 	_elementText = nullptr;
@@ -218,38 +194,12 @@ void ElementGraphics::attachElement(Element* e)
 	}else{ itested();
 	}
 
-#if 0
-	if(auto c=dynamic_cast<Component*>(e)){itested();
-		trace2("attachElement", e->label(), c->Texts.size());
-		for(auto& i : c->Texts){itested();
-			//auto t=
-			//// what are texts?
-			new TextGraphics(*i, this);
-		}
-	}else{itested();
-	}
-#endif
 	if(0){
 		auto a = new QGraphicsTextItem(this);
 		a->setPlainText(QString::fromStdString(e->label()));
 	}else{
 	}
 	_elementText = new ElementText(this);
-	auto s = dynamic_cast<Symbol const*>(_e);
-
-	if(1){
-	}else if(!s){
-	}else if(auto sp = s->symbolPaintings()){
-		unsigned k = 0;
-		for(Element const* p : *sp){
-			assert(p);
-			new SymbolGraphics(p, this);
-			++k;
-		}
-		trace1("elementgraphics symbolpaints", k);
-	}else{
-	}
-
 	auto sym = dynamic_cast<Symbol const*>(_e);
 
 	if (auto w=_e->newWidget()){ untested();
@@ -261,14 +211,6 @@ void ElementGraphics::attachElement(Element* e)
 			QGraphicsItem* cg = new ElementGraphics(i->clone());
 			cg->setParentItem(this);
 		}
-
-#if 0		// BUG
-		for(auto i : s->wires()){itested();
-			QGraphicsItem* cg = new ElementGraphics(i->clone());
-			cg->setParentItem(this);
-		}
-		trace2("child gfx", s->wires().size(), s->components().size());
-#endif
 	}else{ untested();
 	}
 	trace1("ElementGraphics unpacked", childItems().size());

@@ -828,28 +828,20 @@ void SchematicDoc::sceneAddItem(ElementGraphics* x)
 	QGraphicsItem* g = x;
 	g->show();
 }
+/*--------------------------------------------------------------------------*/
 void SchematicDoc::sceneRemoveItem(ElementGraphics* x)
 {
 	assert(scene());
 	scene()->removeItem(x);
 }
-
+/*--------------------------------------------------------------------------*/
 void SchematicDoc::addElement(Element* x)
 {
 	assert(!x->mutable_owner());
 	x->setOwner(_main);
 	_model->pushBack(x);
 }
-
-#if 0
-QGraphicsItem& SchematicDoc::addToScene(Element* x)
-{itested();
-	unreachable(); // why?
-	assert(scene());
-	return scene()->addElement(x);
-}
-#endif
-
+/*--------------------------------------------------------------------------*/
 // questionable.
 Element* SchematicDoc::eraseFromScene(ElementGraphics* g)
 { untested();
