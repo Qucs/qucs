@@ -43,6 +43,7 @@ ElementGraphics::ElementGraphics(ElementGraphics const& e)
 {itested();
 	assert(e._e);
 	Element* el = e._e->clone();
+	assert(!el->owner());
 	assert(el);
 	attachElement(el);
 }
@@ -383,7 +384,7 @@ ElementGraphics* ElementGraphics::newUnion(ElementGraphics const* s) const
 			trace3("new union", u, symbol(s)->typeName(), symbol(s)->label());
 			ng = new ElementGraphics(u);
 			assert(_e->mutable_owner());
-			u->setOwner(_e->mutable_owner());
+//			u->setOwner(_e->mutable_owner());
 //			ng->setParentItem(scene());
 			scene()->addItem(ng);
 			return ng;
@@ -396,7 +397,7 @@ ElementGraphics* ElementGraphics::newUnion(ElementGraphics const* s) const
 			trace1("new union2", u);
 			ng = new ElementGraphics(u);
 			assert(_e->mutable_owner());
-			u->setOwner(_e->mutable_owner());
+//			u->setOwner(_e->mutable_owner());
 //			ng->setParentItem(scene());
 			scene()->addItem(ng);
 			return ng;
@@ -572,8 +573,11 @@ bool ElementGraphics::sceneEvent(QEvent* e)
 void ElementGraphics::show()
 {itested();
 
+	assert(!isVisible());
 	assert(scene());
+	assert(!_e->owner());
 	scene()->attachToModel(_e);
+	assert(_e->owner());
 
 #ifdef DO_TRACE
 	if(auto sym=dynamic_cast<Symbol const*>(_e)){
