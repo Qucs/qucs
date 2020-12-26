@@ -217,6 +217,18 @@ void Qucsator::run(istream_t& cs, SimCtrl* ctrl)
 	QString f = QucsSettings.QucsHomeDir.filePath("netlist.txt");
 
 	message(QucsMsgLog, "writing " + f.toStdString() + "...");
+	assert(doc());
+	auto d = dynamic_cast<SchematicDoc const*>(doc()); // BUG.
+
+#if 1
+	auto dl = command_dispatcher["legacy_nl"];
+	std::string s = "netlist mode=" + what + " " + f.toStdString();
+	trace1("qucsator nl?", s);
+	istream_t nlcmd(istream_t::_STRING, s);
+	auto hack = const_cast<SchematicModel*>(d->root()->subckt());
+	assert(hack);
+	dl->do_it(nlcmd, hack);
+#else
 	_netlistFile.setFileName(f);
 
 	if(!_netlistFile.open(QIODevice::WriteOnly | QFile::Truncate)){
@@ -226,17 +238,9 @@ void Qucsator::run(istream_t& cs, SimCtrl* ctrl)
 	}
 
 	ostream_t Stream(&_netlistFile);
-
-#if 0
-	auto dl = netLister();
-	DocumentFormat const* n = prechecked_cast<DocumentFormat const*>(dl);
-#else
 	auto n = netLang();
 	assert(n);
-#endif
 
-	assert(doc());
-	auto d = dynamic_cast<SchematicDoc const*>(doc()); // BUG.
 	assert(d);
 
 	SubcktBase const* m = d->root();
@@ -248,27 +252,13 @@ void Qucsator::run(istream_t& cs, SimCtrl* ctrl)
 		message(QucsMsgFatal, "Error writing netlist file.");
 		throw;
 	}
+	_netlistFile.close();
+#endif
 	//      ErrText->appendPlainText(tr("ERROR: Cannot write netlist file!"));
 	//      FinishSimulation(-1);
 	//      incomplete();
 	//      return false;
 
-	NetLang const* nl = netLang();
-
-	if(what=="all"){
-		for(auto c : d->commands()){
-			trace1("cmd", c->label());
-			nl->printItem(Stream, c);
-		}
-	}else if(what=="dcop"){
-		Element const* dc = element_dispatcher["DC"];
-		nl->printItem(Stream, dc);
-	}else{
-		assert(false);
-		throw Exception("nothing to do");
-	}
-
-	_netlistFile.close();
 
 #if 0
 	if(Info.suffix() == "m" || Info.suffix() == "oct") { untested();
