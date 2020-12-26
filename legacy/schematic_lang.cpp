@@ -307,131 +307,7 @@ void LegacySchematicLanguage::parse_top_item(istream_t& stream, SchematicModel* 
 	assert(sckt);
 	Symbol* owner = nullptr;
 
-	// mode: a throwback to the legacy format:
-	//       connect legacy "parsers".
-	// this is not needed in a proper SchematicLanguage (WIP)
-	char mode='?';
-	while(!stream.atEnd()) { untested();
-		Line = QString::fromStdString(stream.read_line());
-		Line = Line.trimmed();
-		if(Line.size()<2){ untested();
-		}else if(Line.at(0) == '<'
-				&& Line.at(1) == '/'){ untested();
-			qDebug() << "endtag?" << Line;
-			mode = 0;
-		}else if(Line.isEmpty()){ untested();
-		}else if(stream.umatch("<Components>")) { untested();
-			mode='C';
-			new__instance(stream, owner, sckt);
-		}else if(Line == "<Symbol>") { untested();
-			mode='S';
-			trace1("symbol??", stream.fullstring());
-			new__instance(stream, owner, sckt);
-			trace1("done symbol", stream.fullstring());
-		}else if(Line == "<Wires>") { untested();
-			mode='W';
-		}else if(stream.umatch("<Diagrams>")) { untested();
-			trace1("diag", stream.fullString());
-			new__instance(stream, owner, sckt);
-			mode='D';
-		}else if(Line == "<Properties>") { untested();
-			mode='Q';
-			trace1("model", stream.fullString());
-			new__instance(stream, owner, sckt);
-		}else if(Line == "<Paintings>") { untested();
-			trace1("paintings?", stream.fullString());
-			mode='P';
-		}else if(Line == "<Model>") { untested();
-			mode='M';
-			trace2("model", stream.fullString(), owner);
-			new__instance(stream, owner, sckt);
-		}else if(Line == "<Description>") { untested();
-			mode='X';
-		}else{ untested();
-
-			/// \todo enable user to load partial schematic, skip unknown components
-			Element*c = nullptr;
-			if(mode=='C'){ untested();
-				unreachable();
-				assert(false);
-				// new__instance(stream, &owner, owner.subckt());
-				c = getComponentFromName(Line);
-				if(c){ untested();
-					c->setOwner(owner); // owner->subckt()?
-				}else{ untested();
-				}
-				if(Symbol* sym=dynamic_cast<Symbol*>(c) ){ untested();
-					//always do this?
-
-//					assert(s.scope());
-					// what are those?! FIXME: do later.
-					Symbol const* cs = sym;
-					assert(cs->owner());
-					sym->recreate(); // BUG: re? create symbol gfx and random other things. needs owner
-					                 //  used in legacy/subcircuit.cpp
-					sym->build(); // what's this?!
-				}else{ untested();
-				}
-			}else if(mode=='S'){ untested();
-				std::string typeName = findType(stream);
-				trace2("modeS findtype", typeName, _lib_mod);
-				// incomplete();
-				try{ untested();
-					new__instance(stream, owner, sckt);
-					c = nullptr;
-				}catch(...){ untested();
-					incomplete();
-				}
-			}else if(mode=='W'){ untested();
-				std::string typeName = findType(stream);
-				assert(typeName=="Wire");
-				assert(owner->subckt());
-				auto main = owner->subckt()->find_("main");
-				assert(main != owner->subckt()->end());
-				assert(*main);
-				auto mm=dynamic_cast<SubcktBase*>(*main);
-				assert(mm);
-
-				new__instance(stream, mm, mm->subckt());
-			}else if(mode=='D'){ untested();
-				new__instance(stream, owner, sckt);
-			}else if(mode=='Q'){ untested();
-			}else if(mode=='M'){ untested();
-				// assert(false);
-				// incomplete();
-			}else if(mode=='X'){ untested();
-				trace1("legacy_lang description", Line);
-			}else{ untested();
-				trace2("LSL::parse", mode, Line);
-				new__instance(stream, owner, sckt);
-			}
-
-			if(c){ untested();
-				trace2("pushing back", c->label(), typeid(*c).name());
-				Element const* cc = c;
-				assert(cc->owner() == owner);
-
-
-				if(auto sym=dynamic_cast<Symbol*>(c)){ untested();
-					sym->build(); // here?!
-				}else{ untested();
-				}
-
-
-				sckt->pushBack(c);
-			}else{ untested();
-			}
-		}
-	}
-
-	/// some components are implicit, collect them here
-	while(implicit_hack.size()){ untested();
-		auto cc = implicit_hack.front();
-		cc->setOwner(owner);
-		implicit_hack.pop_front();
-		// c->precalc(); // here?!
-		sckt->pushBack(cc);
-	}
+	new__instance(stream, owner, sckt);
 }
 /*--------------------------------------------------------------------------*/
 // some kind of parse_module_body
@@ -447,7 +323,12 @@ void LegacySchematicLanguage::parse(istream_t& stream, SubcktBase* owner) const
 	}
 	assert(sckt);
 
-//	return parse_top_item(stream, sckt);
+	while(!stream.atEnd()) {
+		stream.get_line("legacy-schematic>");
+		parse_top_item(stream, sckt);
+	}
+	return;
+#if 0
 
 	// mode: a throwback to the legacy format:
 	//       connect legacy "parsers".
@@ -512,6 +393,7 @@ void LegacySchematicLanguage::parse(istream_t& stream, SubcktBase* owner) const
 		// c->precalc(); // here?!
 		sckt->pushBack(cc);
 	}
+#endif
 }
 /*--------------------------------------------------------------------------*/
 Diagram* LegacySchematicLanguage::loadDiagram(Diagram* d, istream_t& stream)const
