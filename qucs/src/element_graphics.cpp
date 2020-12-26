@@ -167,7 +167,11 @@ void ElementGraphics::attachElement(Element* e)
 	assert(e);
 	trace1("attach", e->label());
 	assert(!_e);
-	assert(!e->owner());
+	if(e->owner()){ untested();
+		// freshly parsed model?
+	}else{ untested();
+		// something else. text?
+	}
 	QGraphicsItem::hide();
 	delete _elementText;
 	_elementText = nullptr;
