@@ -158,7 +158,7 @@ private: // local/incomplete
 
 private:
 	void printSymbol(Symbol const*, ostream_t&) const override;
-	void printtaskElement(TaskElement const*, ostream_t&) const override;
+	void printTaskElement(TaskElement const*, ostream_t&) const override;
 	void printPainting(Painting const*, ostream_t&) const override;
 	void printSubckt(SubcktBase const*, ostream_t&) const override;
    void printDiagram(Symbol const*, ostream_t&) const override {incomplete();}
@@ -365,11 +365,14 @@ void LegacySchematicLanguage::printSubckt(SubcktBase const*, ostream_t&) const
 	unreachable();
 }
 /*--------------------------------------------------------------------------*/
-void LegacySchematicLanguage::printtaskElement(TaskElement const* c, ostream_t& s) const
+void LegacySchematicLanguage::printTaskElement(TaskElement const* c, ostream_t& s) const
 { untested();
 	s << "  <." << c->Name << " ";
 
-	{ untested();
+	if(c->label()==""){
+		s << "MISSING_LABEL";
+		unreachable();
+	}else{
 		s << c->label();
 	}
 	s << " ";
@@ -406,7 +409,7 @@ void LegacySchematicLanguage::printtaskElement(TaskElement const* c, ostream_t& 
 		}
 	}
 
-	s << ">";
+	s << ">\n";
 }
 /*--------------------------------------------------------------------------*/
 void LegacySchematicLanguage::printPainting(Painting const* pp, ostream_t& s) const
@@ -551,14 +554,15 @@ static TaskElement* loadtaskElement(const QString& _s, TaskElement* c)
 	QString s = _s;
 
 	if(s.at(0) != '<'){ untested();
-		return NULL;
 	}else if(s.at(s.length()-1) != '>'){ untested();
-		return NULL;
 	}else{ untested();
 		s = s.mid(1, s.length()-2);   // cut off start and end character
+	}
+
+	if(1){
 
 		QString label=s.section(' ',1,1);
-		trace1("NAME", label);
+		trace1("TASK NAME", label);
 ///		c->setName(label);//???
 		c->setLabel(label.toStdString());
 
@@ -1009,6 +1013,8 @@ Element* LegacySchematicLanguage::parseItem(istream_t& c, Element* e) const
 		}else{
 			parseSymbol(l, s);
 		}
+	}else if(auto t=dynamic_cast<TaskElement*>(e)){untested();
+		loadtaskElement(l, t);
 	}else if(auto d=dynamic_cast<Diagram*>(e)){
 		loadDiagram(d, c);
 	}else if(auto s=dynamic_cast<Painting*>(e)){
@@ -1068,15 +1074,28 @@ std::string LegacySchematicLanguage::findType(istream_t& c) const
 
 	QString type = Line.section (' ',0,0); // component type
 	type.remove (0,1);    // remove leading "<"
+	std::string typestring = type.toStdString();
 	if('0' <= type.at(0) && type.at(0) <= '9'){
 		return "Wire";
 	}else if('-' == type.at(0)){
 		return "Wire";
 	}else{
-		std::string typestring = type.toStdString();
 		trace3("findType", c.fullString(), typestring, type.at(0));
+	}
+
+	// untangle non-commands.
+	if(typestring == ".AC"){
+		return "AC";
+	}else if(typestring == ".DC"){
+		return "DC";
+	}else if(typestring == ".SP"){
+		return "SP";
+	}else if(typestring == ".SW"){
+		return "SW";
+	}else{
 		return typestring;
 	}
+
 }
 /*--------------------------------------------------------------------------*/
 // findProto??
@@ -1097,10 +1116,6 @@ Element* LegacySchematicLanguage::getComponentFromName(QString& Line) const
 	std::string typestring = type.toStdString();
 
 ///	// TODO: get rid of the exceptional cases.
-///	if (type == "Lib"){ untested();
-///		incomplete();
-///		// c = new LibComp ();
-///	}else
 	if (type == "Eqn"){ untested();
 		incomplete();
 		// c = new Equation ();

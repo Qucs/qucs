@@ -8,6 +8,7 @@ R #(.R(10 kOhm), .Temp(26.85), .Tc1(0.0), .Tc2(0.0), .Tnom(26.85), .Symbol(europ
 R #(.R(10 kOhm), .Temp(26.85), .Tc1(0.0), .Tc2(0.0), .Tnom(26.85), .Symbol(european)) R5(net_490_150, net_550_150);
 Sub$opa227 #(.File(opa227.sch)) OPA227_1(net_310_210, net_310_150, net_370_180);
 Sub$opa227 #(.File(opa227.sch)) OPA227_2(net_590_210, net_590_150, net_650_180);
+//AC1
 GND #() anonymous_gnd_hack_4(net_100_310);
 Vac #(.U(1 V), .f(1 kHz), .Phase(0), .Theta(0)) V1(net_100_230, net_100_290);
 Eqn #(.y1(dB(Vout.v)), .y2(phase(Vout.v)), .Export(yes)) Eqn1();

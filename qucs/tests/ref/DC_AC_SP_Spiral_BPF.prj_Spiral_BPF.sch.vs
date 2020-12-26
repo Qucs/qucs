@@ -9,6 +9,9 @@ GND #() anonymous_gnd_hack_3(net_730_410);
 C #(.C(320 fF), .V(), .Symbol(neutral)) C3(net_400_370, net_400_310);
 C #(.C(82 fF), .V(), .Symbol(neutral)) C5(net_620_370, net_620_310);
 C #(.C(600 fF), .V(), .Symbol(neutral)) C4(net_480_260, net_540_260);
+//SP1
+//AC1
+//DC1
 Eqn #(.S21_dB(dB(S[2,1])), .S11_dB(dB(S[1,1])), .Export(yes)) Eqn1();
 Pac #(.Num(2), .Z(50 Ohm), .P(0 W), .f(1 GHz), .Temp(-273.15)) P2(net_730_310, net_730_370);
 Pac #(.Num(1), .Z(50 Ohm), .P(0 dBm), .f(1 GHz), .Temp(-273.15)) P1(net_30_270, net_30_330);

@@ -24,6 +24,9 @@ R #(.R(10 Ohm), .Temp(26.85), .Tc1(0.0), .Tc2(0.0), .Tnom(26.85), .Symbol(europe
 GND #() *(gnd);
 R #(.R(20 kOhm), .Temp(26.85), .Tc1(0.0), .Tc2(0.0), .Tnom(26.85), .Symbol(european)) R1(gnd, _net10);
 Eqn #(.LoopGain(output.v / input.v), .LoopPhase(phase(output.v / input.v)), .Export(yes)) Eqn1();
+//SP1
+//DC1
+//AC1
 C #(.C(0.1 uF), .V(), .Symbol(neutral)) C1(_net25, gnd);
 C #(.C(5 uF), .V(), .Symbol(neutral)) C2(_net12, gnd);
 endmodule // main
