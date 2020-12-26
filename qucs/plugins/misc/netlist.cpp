@@ -125,7 +125,7 @@ void Netlister::printMain(ostream_t& stream,
 		}else if(pc->typeName()=="NodeLabel"){ untested();
 			// qucsator hack, just ignore.
 		}else{
-			lang->printItem(pc, stream);
+			lang->printItem(stream, pc);
 		}
 	} // components
 }

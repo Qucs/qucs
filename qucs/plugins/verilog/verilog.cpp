@@ -159,7 +159,7 @@ void Verilog::printSubckt(SubcktBase const* x, ostream_t& o) const
 //			o << "  "; later.
 			if(dynamic_cast<Conductor const*>(ci)){
 			}else{
-				printItem(ci, o);
+				printItem(o, ci);
 			}
 		}
 
@@ -290,11 +290,11 @@ void VS::printSubckt(SubcktBase const* x, ostream_t& o) const
 		for (auto ci : *scope){
 			if(dynamic_cast<Conductor const*>(ci)){
 				// TODO: defer
-				printItem(ci, o);
+				printItem(o, ci);
 			}else if(ci->label()[0] == ':'){ untested();
 			}else{
 				// o << "  ";
-				printItem(ci, o);
+				printItem(o, ci);
 			}
 		}
 
@@ -377,7 +377,7 @@ void VerilogSchematicFormat::do_it(istream_t& cs, SchematicModel* o)
 		}else if(pc->label()[0] == ':'){
 			stream << "// skip sckt " << pc->label() << "\n";
 		}else if(auto s=dynamic_cast<Symbol const*>(pc)){
-			V_.printItem(s, stream);
+			V_.printItem(stream, s);
 		}
 	}
 }

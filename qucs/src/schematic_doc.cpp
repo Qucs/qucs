@@ -1064,7 +1064,7 @@ QString SchematicDoc::createClipboardFile() const
 	QString buf;
 	ostream_t s(&buf);
 	for(auto i : *sym.subckt()){
-		fmt->printItem(i, s);
+		fmt->printItem(s, i);
 	}
 	s.flush();
 	return buf;
