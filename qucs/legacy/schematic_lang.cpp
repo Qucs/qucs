@@ -493,75 +493,13 @@ void LegacySchematicLanguage::parse(istream_t& stream, SubcktBase* owner) const
 
 			/// \todo enable user to load partial schematic, skip unknown components
 			Element*c = nullptr;
-			if(mode=='C'){ untested();
-#if 1
-				new__instance(stream, owner, sckt);
-#else
-				c = getComponentFromName(Line);
-				if(c){ untested();
-					c->setOwner(owner); // owner->subckt()?
-				}else{ untested();
-				}
-				if(Symbol* sym=dynamic_cast<Symbol*>(c) ){ untested();
-					//always do this?
-
-//					assert(s.scope());
-					// what are those?! FIXME: do later.
-					Symbol const* cs = sym;
-					assert(cs->owner());
-					sym->recreate(); // BUG: re? create symbol gfx and random other things. needs owner
-					                 //  used in legacy/subcircuit.cpp
-					sym->build(); // what's this?!
-				}else{ untested();
-				}
-#endif
-			}else if(mode=='S'){ untested();
-				std::string typeName = findType(stream);
-				trace2("modeS findtype", typeName, _lib_mod);
-				// incomplete();
-				try{ untested();
-					new__instance(stream, owner, sckt);
-					c = nullptr;
-				}catch(...){ untested();
-					incomplete();
-				}
-			}else if(mode=='W'){ untested();
-				std::string typeName = findType(stream);
-				assert(typeName=="Wire");
-				assert(owner->subckt());
-				auto main = owner->subckt()->find_("main");
-				assert(main != owner->subckt()->end());
-				assert(*main);
-				auto mm=dynamic_cast<SubcktBase*>(*main);
-				assert(mm);
-
-				new__instance(stream, mm, mm->subckt());
-			}else if(mode=='D'){ untested();
-				new__instance(stream, owner, sckt);
-			}else if(mode=='Q'){ untested();
-			}else if(mode=='M'){
-				// incomplete();
+			if(mode=='M'){
+				incomplete();
 			}else if(mode=='X'){
 				trace1("legacy_lang description", Line);
 			}else{
 				trace2("LSL::parse", mode, Line);
 				new__instance(stream, owner, sckt);
-			}
-
-			if(c){ untested();
-				trace2("pushing back", c->label(), typeid(*c).name());
-				Element const* cc = c;
-				assert(cc->owner() == owner);
-
-
-				if(auto sym=dynamic_cast<Symbol*>(c)){ untested();
-					sym->build(); // here?!
-				}else{ untested();
-				}
-
-
-				sckt->pushBack(c);
-			}else{
 			}
 		}
 	}
