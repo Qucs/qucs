@@ -17,7 +17,6 @@ protected:
 	SchematicLanguage() : DocumentLanguage() {}
 public:
 	virtual ~SchematicLanguage() {}
-	virtual void parse(istream_t& stream, SubcktBase*) const=0;
 };
 
 #if 0

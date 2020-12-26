@@ -145,9 +145,8 @@ private: // stuff from component.cc
 	void loadProperties(QTextStream& stream, SchematicSymbol& m) const;
 //	Component* parseComponentObsoleteCallback(const QString& _s, Component* c) const;
 	Element* getComponentFromName(QString& Line) const;
-private: // overrides
-	void parse(istream_t& stream, SubcktBase* s) const; // BUG
 
+private: // overrides
 	void parse_top_item(istream_t& stream, SchematicModel* sckt) const override;
 	std::string findType(istream_t&) const override;
 	Element* parseItem(istream_t&, Element*) const override;
@@ -299,101 +298,13 @@ static bool obsolete_wireload(Symbol* w, const QString& sc)
 	return true;
 }
 /*--------------------------------------------------------------------------*/
-// somehow this does not work. (owner?)
 void LegacySchematicLanguage::parse_top_item(istream_t& stream, SchematicModel* sckt) const
-{ untested();
-	assert(!implicit_hack.size());
+{
 	QString Line;
 	assert(sckt);
 	Symbol* owner = nullptr;
 
 	new__instance(stream, owner, sckt);
-}
-/*--------------------------------------------------------------------------*/
-// some kind of parse_module_body
-// BUG: this is schematicFormat
-void LegacySchematicLanguage::parse(istream_t& stream, SubcktBase* owner) const
-{
-	assert(!implicit_hack.size());
-	QString Line;
-	auto sckt = owner->subckt();
-	if(owner->makes_own_scope()){ untested();
-	  	sckt = owner->scope();
-	}else{
-	}
-	assert(sckt);
-
-	while(!stream.atEnd()) {
-		stream.get_line("legacy-schematic>");
-		parse_top_item(stream, sckt);
-	}
-	return;
-#if 0
-
-	// mode: a throwback to the legacy format:
-	//       connect legacy "parsers".
-	// this is not needed in a proper SchematicLanguage (WIP)
-	char mode='?';
-	while(!stream.atEnd()) {
-		Line = QString::fromStdString(stream.read_line());
-		Line = Line.trimmed();
-		if(Line.size()<2){ untested();
-		}else if(Line.at(0) == '<'
-				&& Line.at(1) == '/'){
-			qDebug() << "endtag?" << Line;
-			mode = 0;
-		}else if(Line.isEmpty()){ untested();
-		}else if(stream.umatch("<Components>")) { untested();
-			mode='C';
-			new__instance(stream, owner, sckt);
-		}else if(Line == "<Symbol>") {
-			mode='S';
-			trace1("symbol??", stream.fullstring());
-			new__instance(stream, owner, sckt);
-			trace1("done symbol", stream.fullstring());
-		}else if(Line == "<Wires>") { untested();
-			mode='W';
-			new__instance(stream, owner, sckt);
-		}else if(stream.umatch("<Diagrams>")) { untested();
-			new__instance(stream, owner, sckt);
-			mode='D';
-		}else if(Line == "<Properties>") { untested();
-			mode='Q';
-			trace1("model", stream.fullString());
-			new__instance(stream, owner, sckt);
-		}else if(Line == "<Paintings>") { untested();
-			trace1("paintings?", stream.fullString());
-			mode='P';
-		}else if(stream.umatch("<Model>")) {
-			mode='M';
-			trace3("model", Line, stream.fullString(), owner);
-			new__instance(stream, owner, sckt);
-		}else if(Line == "<Description>") {
-			mode='X';
-		}else{
-
-			/// \todo enable user to load partial schematic, skip unknown components
-			Element*c = nullptr;
-			if(mode=='M'){
-				incomplete();
-			}else if(mode=='X'){
-				trace1("legacy_lang description", Line);
-			}else{
-				trace2("LSL::parse", mode, Line);
-				new__instance(stream, owner, sckt);
-			}
-		}
-	}
-
-	/// some components are implicit, collect them here
-	while(implicit_hack.size()){ untested();
-		auto cc = implicit_hack.front();
-		cc->setOwner(owner);
-		implicit_hack.pop_front();
-		// c->precalc(); // here?!
-		sckt->pushBack(cc);
-	}
-#endif
 }
 /*--------------------------------------------------------------------------*/
 Diagram* LegacySchematicLanguage::loadDiagram(Diagram* d, istream_t& stream)const
