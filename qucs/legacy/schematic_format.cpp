@@ -28,6 +28,7 @@ namespace{
 
 SchematicModel empty;
 
+// TODO: use "get" command.
 class LegacySchematicFormat : public DocumentFormat{
 public:
 	explicit LegacySchematicFormat()
@@ -75,15 +76,18 @@ void LegacySchematicFormat::load(istream_t& s, Object* c) const
 	auto L=dynamic_cast<SchematicLanguage const*>(l);
 	assert(L);
 
-	if(auto cc=dynamic_cast<SubcktBase*>(c)){
-		while(!s.atEnd()){
-			L->parse(s, cc); // BUG BUG only pass SchematicModel
-			assert(s.atEnd()); // happens with legacy lang
-		}
+	auto cc=dynamic_cast<SubcktBase*>(c);
+	if(!cc){
+		unreachable(); // bug in libfiles?
+		return;
 	}else{
-		unreachable();
 	}
+	assert(cc->subckt());
 
+	while(!s.atEnd()){
+		s.get_line("legacy-schematic>");
+		L->parse_top_item(s, cc->subckt());
+	}
 }
 
 static QString QG(SubcktBase const& m, std::string const& key)
