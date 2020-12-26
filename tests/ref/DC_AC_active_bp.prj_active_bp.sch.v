@@ -9,6 +9,8 @@ R #(.R(5.6k), .Temp(26.85), .Tc1(0.0), .Tc2(0.0), .Tnom(26.85), .Symbol(european
 C #(.C(47n), .V(), .Symbol(neutral)) C1(_net8, _net11);
 C #(.C(47n), .V(), .Symbol(neutral)) C2(_net8, Output);
 R #(.R(3.9k), .Temp(26.85), .Tc1(0.0), .Tc2(0.0), .Tnom(26.85), .Symbol(european)) R1(_net11, Output);
+//AC1
+//DC1
 endmodule // main
 
 Sub #(.File()) Sub(_net0);

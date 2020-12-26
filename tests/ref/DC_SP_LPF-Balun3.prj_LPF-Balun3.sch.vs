@@ -6,6 +6,7 @@ C #(.C(270pF), .V(), .Symbol(neutral)) C1(net_440_190, net_440_130);
 C #(.C(270pF), .V(), .Symbol(neutral)) C2(net_580_190, net_580_130);
 L #(.L(470nH), .I()) L3(net_330_80, net_390_80);
 GND #() anonymous_gnd_hack_0(net_40_190);
+//SP1
 Eqn #(.dBS21(dB(S[2,1])), .dBS11(dB(S[1,1])), .Export(yes)) Eqn1();
 Pac #(.Num(2), .Z(100 Ohm), .P(0 dBm), .f(1 GHz), .Temp(26.85)) P2(net_960_100, net_960_160);
 GND #() anonymous_gnd_hack_1(net_960_200);
@@ -16,6 +17,7 @@ sTr #(.T1(0.5), .T2(0.5)) Tr5(net_230_80, net_170_120, net_170_180, net_230_220,
 sTr #(.T1(0.5), .T2(0.5)) Tr6(net_790_80, net_850_120, net_850_180, net_790_220, net_790_160, net_790_140);
 GND #() anonymous_gnd_hack_2(net_890_220);
 GND #() anonymous_gnd_hack_3(net_140_190);
+//DC1
 Vdc #(.U(1V)) V1(net_300_150, net_300_210);
 GND #() anonymous_gnd_hack_4(net_300_210);
 VProbe #() Pr1(net_920_290, net_940_290);

@@ -19,7 +19,9 @@ VProbe #() Pr1(_net36, gnd);
 GND #() *(gnd);
 Pac #(.Num(2), .Z(100 Ohm), .P(0 dBm), .f(1 GHz), .Temp(26.85)) P2(_net27, gnd);
 GND #() *(gnd);
+//SP1
 Eqn #(.dBS21(dB(S[2,1])), .dBS11(dB(S[1,1])), .Export(yes)) Eqn1();
+//DC1
 endmodule // main
 
 Sub #(.File()) Sub(_net0);

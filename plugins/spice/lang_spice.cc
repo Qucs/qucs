@@ -29,7 +29,7 @@ private: // NetLang
   std::string findType(istream_t&) const override {incomplete(); return "incomplete";}
 
 private: // local
-  void printtaskElement(TaskElement const*, ostream_t&) const { untested(); }
+  void printTaskElement(TaskElement const*, ostream_t&) const { untested(); }
   void printSymbol(Symbol const*, ostream_t&) const override;
   void printSubckt(SubcktBase const*, ostream_t&) const {untested(); }
   void printPainting(Painting const*, ostream_t&) const override { untested(); }

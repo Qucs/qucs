@@ -19,7 +19,9 @@ OpAmp #(.G(1e6), .Umax(15 V)) OP3(net_620_130, net_620_170, net_690_150);
 C #(.C(1n), .V(), .Symbol(neutral)) C6(net_610_270, net_610_210);
 GND #() anonymous_gnd_hack_3(net_610_270);
 C #(.C(256n), .V(), .Symbol(neutral)) C3(net_550_60, net_610_60);
+//AC1
 Eqn #(.Ampl(dB(Output.v)), .Phase(phase(Output.v)), .Export(yes)) Eqn1();
+//DC1
 wire #() noname(net_180_210, net_190_210);
 wire #() noname(net_190_210, net_200_210);
 wire #() noname(net_190_210, net_190_250);

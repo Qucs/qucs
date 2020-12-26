@@ -9,6 +9,7 @@ Pac #(.Num(3), .Z(50 Ohm), .P(0 dBm), .f(1 GHz), .Temp(26.85)) P3(net_410_140, n
 GND #() anonymous_gnd_hack_1(net_410_200);
 GND #() anonymous_gnd_hack_2(net_410_100);
 R #(.R(100 Ohm), .Temp(26.85), .Tc1(0.0), .Tc2(0.0), .Tnom(26.85), .Symbol(european)) R1(net_300_120, net_300_60);
+//SP1
 Eqn #(.Attenuation2(dB(S[2,1])), .Reflect(dB(S[1,1])), .Attenuation3(dB(S[3,1])), .Decoupling(dB(S[3,2])), .Export(yes)) Eqn1();
 wire #() noname(net_180_40, net_200_40);
 wire #() noname(net_180_40, net_180_80);

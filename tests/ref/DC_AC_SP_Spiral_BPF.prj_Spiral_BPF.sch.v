@@ -9,6 +9,9 @@ GND #() *(gnd);
 C #(.C(320 fF), .V(), .Symbol(neutral)) C3(gnd, _net3);
 C #(.C(82 fF), .V(), .Symbol(neutral)) C5(gnd, out);
 C #(.C(600 fF), .V(), .Symbol(neutral)) C4(_net3, out);
+//SP1
+//AC1
+//DC1
 Eqn #(.S21_dB(dB(S[2,1])), .S11_dB(dB(S[1,1])), .Export(yes)) Eqn1();
 Pac #(.Num(2), .Z(50 Ohm), .P(0 W), .f(1 GHz), .Temp(-273.15)) P2(out, gnd);
 Pac #(.Num(1), .Z(50 Ohm), .P(0 dBm), .f(1 GHz), .Temp(-273.15)) P1(_net21, _net17);

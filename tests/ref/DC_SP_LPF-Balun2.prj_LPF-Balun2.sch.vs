@@ -19,7 +19,9 @@ VProbe #() Pr1(net_910_150, net_930_150);
 GND #() anonymous_gnd_hack_4(net_930_170);
 Pac #(.Num(2), .Z(100 Ohm), .P(0 dBm), .f(1 GHz), .Temp(26.85)) P2(net_990_150, net_990_210);
 GND #() anonymous_gnd_hack_5(net_990_250);
+//SP1
 Eqn #(.dBS21(dB(S[2,1])), .dBS11(dB(S[1,1])), .Export(yes)) Eqn1();
+//DC1
 wire #() noname(net_440_90, net_440_140);
 wire #() noname(net_580_90, net_580_140);
 wire #() noname(net_440_90, net_480_90);

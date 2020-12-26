@@ -388,6 +388,7 @@ void LegacyNetlister::createNetlist(ostream_t& stream,
 		auto pc = dynamic_cast<Symbol const*>(it_);
 		if (auto t = dynamic_cast<TaskElement const*>(it_)){
 			tasks.push_back(t);
+			continue;
 		} else if(pc){
 		}else{
 			incomplete();

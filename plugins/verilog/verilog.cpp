@@ -47,7 +47,7 @@ static std::string netLabel(Node const* nn)
 }
 
 class Verilog : public DocumentLanguage {
-	void printtaskElement(TaskElement const*, ostream_t&) const override;
+	void printTaskElement(TaskElement const*, ostream_t&) const override;
 	void printSymbol(Symbol const*, ostream_t&) const override;
 	void printSubckt(SubcktBase const*, ostream_t&) const override;
 	void printPainting(Painting const*, ostream_t&) const override {incomplete();}
@@ -171,7 +171,7 @@ void Verilog::printSubckt(SubcktBase const* x, ostream_t& o) const
 /*!
  * verilog does not know about commands
  */
-void Verilog::printtaskElement(TaskElement const* c, ostream_t& s) const
+void Verilog::printTaskElement(TaskElement const* c, ostream_t& s) const
 {
   s << "//" << c->label() << "\n";
 }

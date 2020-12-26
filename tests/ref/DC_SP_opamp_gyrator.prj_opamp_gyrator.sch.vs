@@ -13,6 +13,8 @@ R #(.R(500k), .Temp(26.85), .Tc1(0.0), .Tc2(0.0), .Tnom(26.85), .Symbol(european
 R #(.R(10 Ohm), .Temp(26.85), .Tc1(0.0), .Tc2(0.0), .Tnom(26.85), .Symbol(european)) R3(net_640_160, net_640_100);
 GND #() anonymous_gnd_hack_4(net_640_250);
 L #(.L(5 H), .I()) L1(net_640_250, net_640_190);
+//SP1
+//DC1
 wire #() noname(net_240_110, net_260_110);
 wire #() noname(net_240_150, net_260_150);
 wire #() noname(net_260_70, net_260_110);
