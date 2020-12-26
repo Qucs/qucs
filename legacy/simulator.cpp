@@ -55,7 +55,6 @@ private: // legacy implementation
   void printDeclarations(ostream_t& d,
 		std::map<std::string, Element const*>& declarations) const;
 private: // overrides
-  void save(ostream_t& stream, Object const* m) const override;
   void load(istream_t&, Object*) const override;
 private:
   mutable SubMap FileList; // BUG (maybe not)
@@ -153,13 +152,6 @@ void LegacyNetlister::load(istream_t&, Object*) const
 	incomplete();
 }
 /* -------------------------------------------------------------------------------- */
-void LegacyNetlister::save(ostream_t&, Object const* o) const
-{
-	unreachable();
-	assert(false);
-//	do_it(Stream, m_->subckt());
-}
-/* -------------------------------------------------------------------------------- */
 void LegacyNetlister::do_it(istream_t& cs, SchematicModel* m)
 {
 	std::map<std::string, Element const*> declarations;
@@ -173,8 +165,6 @@ void LegacyNetlister::do_it(istream_t& cs, SchematicModel* m)
 	}else{
 	}
 	ostream_t Stream(&NetlistFile);
-
-//	auto& m = *m_;
 
    _qucslang = language_dispatcher["qucsator"];
 	clear();
@@ -229,7 +219,7 @@ void LegacyNetlister::printDeclarations(ostream_t& stream,
 			stream << "# unresolved symbol " << si.first << "\n";
 		}else if(dynamic_cast<SubcktBase const*>(si.second)){
 			stream << "### item " << si.first << "\n";
-			_qucslang->printItem(si.second, stream);
+			_qucslang->printItem(stream, si.second);
 		}else{
 			stream << "## " << si.first << "\n";
 		}
@@ -384,7 +374,7 @@ void LegacyNetlister::createNetlist(ostream_t& stream,
 		}else if(pc->typeName()=="NodeLabel"){ untested();
 			// qucsator hack, just ignore.
 		}else{
-			_qucslang->printItem(pc, stream);
+			_qucslang->printItem(stream, pc);
 		}
 
 		if(isAnalog) {

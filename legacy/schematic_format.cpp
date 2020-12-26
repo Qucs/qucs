@@ -250,7 +250,7 @@ void LegacySchematicFormat::do_it(istream_t& cs, SchematicModel* m)
 						paintings.push_back(pc);
 					}else{
 						stream << "  ";
-						L->printItem(pc, stream);
+						L->printItem(stream, pc);
 					}
 				}
 				stream << "</Components>\n";
@@ -274,8 +274,7 @@ void LegacySchematicFormat::do_it(istream_t& cs, SchematicModel* m)
 
 	stream << "<Wires>\n";
 	for(Element const* pw : wires){
-		L->printItem(pw, stream);
-//		stream << "  " << pw->save() << "\n";
+		L->printItem(stream, pw);
 	}
 
 #if 0
@@ -301,7 +300,8 @@ void LegacySchematicFormat::do_it(istream_t& cs, SchematicModel* m)
 
 	stream << "<Paintings>\n";
 	for(auto pp : section(m, ":Paintings:")){ // BUG?
-		L->printItem(pp, stream);
+		incomplete();
+		L->printItem(stream, pp);
 	}
 	stream << "</Paintings>\n";
 

@@ -112,13 +112,13 @@ void VerilogNetlister::createNetlist(ostream_t& stream,
 		auto sym = dynamic_cast<Symbol const*>(pc);
 
 		if(pc->label()=="main"){
-			lang->printItem(pc, stream);
+			lang->printItem(stream, pc);
 		}else if(!sym){
-			lang->printItem(pc, stream);
+			lang->printItem(stream, pc);
 		}else if(dynamic_cast<Conductor const*>(sym)){
 			// possibly a wire.
 		}else if(sym->is_device()){ // hack, here?
-			lang->printItem(pc, stream);
+			lang->printItem(stream, pc);
 		}else{
 		}
 	}
