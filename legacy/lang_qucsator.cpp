@@ -283,7 +283,7 @@ void QucsatorLang::printSubckt(SubcktBase const* p, ostream_t& s) const
 	// somehow parameters are stashed as paintings.
 	// let's see.
 	if(!p->symbolPaintings()){
-		s << "# Missing ID & params" << p->label() << "\n";
+		s << "# Missing ID & params " << p->label() << "\n";
 	}else{
 		for(auto pi : *p->symbolPaintings()){
 			incomplete();
