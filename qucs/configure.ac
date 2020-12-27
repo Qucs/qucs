@@ -844,17 +844,19 @@ AC_CONFIG_FILES([
     plugins/misc/Makefile:autotools/misc.in
     plugins/verilog/Makefile:autotools/verilog.in
     plugins/spice/Makefile:autotools/spice.in
-    qucs-filter/Makefile
-    qucs-activefilter/Makefile
-    qucs-transcalc/Makefile
-    qucs-transcalc/bitmaps/Makefile
-    qucs-transcalc/examples/Makefile
     qucs-lib/Makefile
     qucs-lib/library/Makefile
-    qucs-attenuator/Makefile
-    qucs-attenuator/bitmaps/Makefile
-    qucs-rescodes/Makefile
-    qucs-powercombining/Makefile
+    tools/Makefile:autotools/tools.in
+    tools/filter/Makefile
+    tools/filter-v2/Makefile
+    tools/activefilter/Makefile
+    tools/transcalc/Makefile
+    tools/transcalc/bitmaps/Makefile
+    tools/transcalc/examples/Makefile
+    tools/attenuator/Makefile
+    tools/attenuator/bitmaps/Makefile
+    tools/rescodes/Makefile
+    tools/powercombining/Makefile
     src/Makefile:autotools/src.in
     src/action/Makefile
     src/bitmaps/Makefile
@@ -866,13 +868,13 @@ AC_CONFIG_FILES([
     man/qucsdigi.1
     man/qucsdigilib.1
     man/qucsveri.1
-    qucs-activefilter/qucsactivefilter.1
-    qucs-attenuator/qucsattenuator.1
-    qucs-filter/qucsfilter.1
     qucs-lib/qucslib.1
-    qucs-rescodes/qucsrescodes.1
-    qucs-transcalc/qucstrans.1
-    qucs-powercombining/qucspowercombining.1])
+    tools/activefilter/qucsactivefilter.1
+    tools/attenuator/qucsattenuator.1
+    tools/filter/qucsfilter.1
+    tools/rescodes/qucsrescodes.1
+    tools/transcalc/qucstrans.1
+    tools/powercombining/qucspowercombining.1])
 
 AC_CONFIG_FILES([main/qucs], [chmod +x main/qucs])
 AC_CONFIG_FILES([cli/qucs], [chmod +x cli/qucs])

@@ -1,9 +1,10 @@
 ## Process this file with automake to produce Makefile.in
 #
-# qucs-powercombining/Makefile.am
+# qucs-rescodes/Makefile.am
 #
 # Automake input file.
 #
+# Copyright (C) 2012 Sudhakar M K <sudhakar.m.kumar@gamil.com>
 #
 # This is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -21,30 +22,39 @@
 # Boston, MA 02110-1301, USA.
 #
 
-bin_PROGRAMS = qucspowercombining
+include ../../autotools/common.mk
 
-MOCHEADERS = qucspowercombiningtool.h
+bin_PROGRAMS = qucsrescodes
+
+#dist_man_MANS = qucsattenuator.1
+
+MOCHEADERS = helpdialog.h mycolorbox.h myresistancebox.h mywidget.h qresistor.h
 MOCFILES = $(MOCHEADERS:.h=.moc.cpp)
 
-dist_man_MANS = qucspowercombining.1
+qucsrescodes_SOURCES = \
+	main.cpp \
+	helpdialog.cpp \
+	mycolorbox.cpp \
+	myresistancebox.cpp \
+	notation.cpp \
+	qresistor.cpp \
+	resistor.cpp \
+	qucsrescodes.qrc
+qucsrescodes_CXXFLAGS = ${AM_CXXFLAGS} -fPIC
 
-include ../autotools/common.mk
-
-qucspowercombining_SOURCES = main.cpp qucspowercombiningtool.cpp qrc_qucspowercombining.cpp
-qucspowercombining_CXXFLAGS = ${AM_CXXFLAGS} -fPIC
-
-EXTRA_DIST += qucspowercombining.qrc
-qrc_qucspowercombining.cpp: qucspowercombining.qrc
-	$(RCC) -o $@ $<
-
-nodist_qucspowercombining_SOURCES = $(MOCFILES)
+nodist_qucsrescodes_SOURCES = $(MOCFILES)
 
 AM_CPPFLAGS += $(X11_INCLUDES) $(QT_CFLAGS)
-qucspowercombining_LDFLAGS = $(X11_LDFLAGS) $(QT_LIBS)
-qucspowercombining_LDADD = $(X11_LIBS) $(QT_LIBS)
+qucsrescodes_LDFLAGS = $(X11_LDFLAGS) $(QT_LIBS)
+qucsrescodes_LDADD = $(X11_LIBS) $(QT_LIBS)
 
-noinst_HEADERS = $(MOCHEADERS)
+noinst_HEADERS = $(MOCHEADERS) classproto.h
 
-CLEANFILES = *~
+CLEANFILES = *~ qucsrescodes.cpp
 MAINTAINERCLEANFILES = Makefile.in *.moc.cpp
 DISTCLEANFILES = *.moc.cpp
+EXTRA_DIST += ${BITMAPS}
+BITMAPS = \
+	bitmaps/next.png \
+	bitmaps/previous.png \
+	bitmaps/big.qucs.xpm

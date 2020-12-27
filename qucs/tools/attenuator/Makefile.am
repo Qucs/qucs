@@ -1,10 +1,10 @@
 ## Process this file with automake to produce Makefile.in
 #
-# qucs-rescodes/Makefile.am
+# qucs-attenuator/Makefile.am
 #
 # Automake input file.
 #
-# Copyright (C) 2012 Sudhakar M K <sudhakar.m.kumar@gamil.com>
+# Copyright (C) 2006 Stefan Jahn <stefan@lkcc.org>
 #
 # This is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -22,39 +22,27 @@
 # Boston, MA 02110-1301, USA.
 #
 
-include ../autotools/common.mk
+include ../../autotools/common.mk
 
-bin_PROGRAMS = qucsrescodes
+bin_PROGRAMS = qucsattenuator
 
-#dist_man_MANS = qucsattenuator.1
+SUBDIRS = bitmaps
 
-MOCHEADERS = helpdialog.h mycolorbox.h myresistancebox.h mywidget.h qresistor.h
+dist_man_MANS = qucsattenuator.1
+
+MOCHEADERS = qucsattenuator.h
 MOCFILES = $(MOCHEADERS:.h=.moc.cpp)
 
-qucsrescodes_SOURCES = \
-	main.cpp \
-	helpdialog.cpp \
-	mycolorbox.cpp \
-	myresistancebox.cpp \
-	notation.cpp \
-	qresistor.cpp \
-	resistor.cpp \
-	qucsrescodes.qrc
-qucsrescodes_CXXFLAGS = ${AM_CXXFLAGS} -fPIC
+qucsattenuator_SOURCES = main.cpp qucsattenuator.cpp \
+  attenuatorfunc.cpp qucsattenuator_.qrc
+qucsattenuator_CXXFLAGS = ${AM_CXXFLAGS} -fPIC
 
-nodist_qucsrescodes_SOURCES = $(MOCFILES)
+nodist_qucsattenuator_SOURCES = $(MOCFILES)
 
 AM_CPPFLAGS += $(X11_INCLUDES) $(QT_CFLAGS)
-qucsrescodes_LDFLAGS = $(X11_LDFLAGS) $(QT_LIBS)
-qucsrescodes_LDADD = $(X11_LIBS) $(QT_LIBS)
+qucsattenuator_LDFLAGS = $(X11_LDFLAGS) $(QT_LIBS)
+qucsattenuator_LDADD = $(X11_LIBS) $(QT_LIBS)
 
-noinst_HEADERS = $(MOCHEADERS) classproto.h
+noinst_HEADERS = $(MOCHEADERS) attenuatorfunc.h
 
-CLEANFILES = *~ qucsrescodes.cpp
-MAINTAINERCLEANFILES = Makefile.in *.moc.cpp
-DISTCLEANFILES = *.moc.cpp
-EXTRA_DIST += ${BITMAPS}
-BITMAPS = \
-	bitmaps/next.png \
-	bitmaps/previous.png \
-	bitmaps/big.qucs.xpm
+CLEANFILES = *~ *_.cpp qucsattenuator.moc.cpp

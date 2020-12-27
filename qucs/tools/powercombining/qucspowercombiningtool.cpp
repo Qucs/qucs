@@ -27,7 +27,7 @@
 #include "qucspowercombiningtool.h"
 #include "qucs.h" // BUG?
 #include "misc.h"
-#include "../qucs-filter/material_props.h"
+#include "material_props.h"
 
 
 
