@@ -3,10 +3,10 @@
   "runtime": "org.kde.Platform",
   "runtime-version": "5.15",
   "sdk": "org.kde.Sdk",
-  "command": "net.sourceforge.qucs",
+  "command": "qucs",
   "rename-desktop-file": "qucs.desktop",
   "rename-appdata-file": "qucs.appdata.xml",
-  "rename-icon": "UDPLogger",
+  "rename-icon": "qucs",
   "finish-args": [
     "--socket=wayland",
 	"--socket=x11",
