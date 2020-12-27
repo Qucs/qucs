@@ -70,6 +70,8 @@ Module::INSTALL pp("paintings", &D);
 
 GraphicLine::GraphicLine()
 {
+	// setTypeName("Line");
+	Name = "Line"; //??
 }
 
 #if 0
@@ -202,7 +204,7 @@ QString GraphicLine::save()
 	 auto cx=Element::cx();
      auto cy=Element::cy();
 
-  QString s = Name+QString::number(cx)+" "+QString::number(cy)+" ";
+  QString s = Name+" "+QString::number(cx)+" "+QString::number(cy)+" ";
   s += QString::number(x2)+" "+QString::number(y2)+" ";
   s += Pen.color().name()+" "+QString::number(Pen.width())+" ";
   s += QString::number(Pen.style());
