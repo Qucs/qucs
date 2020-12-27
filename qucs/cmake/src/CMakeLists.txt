@@ -100,3 +100,11 @@ add_library(
   ""
   )
 target_link_libraries(qucsschematic PUBLIC coreSchematic)
+
+# set Windows runtime location for libqucschematic See:
+# http://www.cmake.org/pipermail/cmake/2010-June/037461.html
+install(
+  TARGETS qucsschematic
+  RUNTIME DESTINATION bin COMPONENT runtime
+  ARCHIVE DESTINATION lib/qucs COMPONENT devel
+  LIBRARY DESTINATION lib/qucs COMPONENT library)

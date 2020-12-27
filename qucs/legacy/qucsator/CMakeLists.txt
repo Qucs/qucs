@@ -24,3 +24,5 @@ target_link_libraries(qucsatorInterface Qt5::Core Qt5::Widgets)
 target_link_libraries(qucsatorInterface qucsschematic) # why PRIVATE does not work?
 set_property(TARGET qucsatorInterface PROPERTY AUTOMOC ON)
 #set_property(TARGET components PROPERTY AUTORCC ON)
+
+install(TARGETS qucsatorInterface DESTINATION lib/qucs)

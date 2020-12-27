@@ -22,3 +22,5 @@ target_include_directories(libfiles
 target_link_libraries(libfiles Qt5::Core Qt5::Widgets)
 set_property(TARGET libfiles PROPERTY AUTOMOC ON)
 set_property(TARGET libfiles PROPERTY AUTORCC ON)
+
+install(TARGETS libfiles DESTINATION lib/qucs)

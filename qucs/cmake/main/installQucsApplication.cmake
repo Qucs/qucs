@@ -1,28 +1,31 @@
 # everything related to install the qucs application
 # any dependencies are installed here
 if(UNIX AND NOT APPLE)
-	set(DESKTOP qucs.desktop)
+	set(DESKTOP ${CMAKE_CURRENT_SOURCE_DIR}/../../contrib/qucs.desktop)
 	install(FILES ${DESKTOP}
 		DESTINATION ${CMAKE_INSTALL_PREFIX}/share/applications)
+		
+    set(BITMAPS_HICOLOR_PATH ${CMAKE_CURRENT_SOURCE_DIR}/../../bitmaps/hicolor)
+    set(BITMAPS_HICOLOR_DESTINATION ${CMAKE_INSTALL_PREFIX}/share/icons/hicolor)
 
-	install(FILES bitmaps/hicolor/16x16/apps/qucs.png
-		DESTINATION ${CMAKE_INSTALL_PREFIX}/share/icons/hicolor/16x16/apps)
-	install(FILES bitmaps/hicolor/22x22/apps/qucs.png
-		DESTINATION ${CMAKE_INSTALL_PREFIX}/share/icons/hicolor/22x22/apps)
-	install(FILES bitmaps/hicolor/32x32/apps/qucs.png
-		DESTINATION ${CMAKE_INSTALL_PREFIX}/share/icons/hicolor/32x32/apps)
-	install(FILES bitmaps/hicolor/48x48/apps/qucs.png
-		DESTINATION ${CMAKE_INSTALL_PREFIX}/share/icons/hicolor/48x48/apps)
-	install(FILES bitmaps/hicolor/64x64/apps/qucs.png
-		DESTINATION ${CMAKE_INSTALL_PREFIX}/share/icons/hicolor/64x64/apps)
-	install(FILES bitmaps/hicolor/128x128/apps/qucs.png
-		DESTINATION ${CMAKE_INSTALL_PREFIX}/share/icons/hicolor/128x128/apps)
-	install(FILES bitmaps/hicolor/256x256/apps/qucs.png
-		DESTINATION ${CMAKE_INSTALL_PREFIX}/share/icons/hicolor/256x256/apps)
-	install(FILES bitmaps/hicolor/512x512/apps/qucs.png
-		DESTINATION ${CMAKE_INSTALL_PREFIX}/share/icons/hicolor/512x512/apps)
-	install(FILES bitmaps/hicolor/scalable/apps/qucs.svg
-		DESTINATION ${CMAKE_INSTALL_PREFIX}/share/icons/hicolor/scalable/apps)
+	install(FILES ${BITMAPS_HICOLOR_PATH}/16x16/apps/qucs.png
+		DESTINATION ${BITMAPS_HICOLOR_DESTINATION}/16x16/apps)
+	install(FILES ${BITMAPS_HICOLOR_PATH}/22x22/apps/qucs.png
+		DESTINATION ${BITMAPS_HICOLOR_DESTINATION}/22x22/apps)
+	install(FILES ${BITMAPS_HICOLOR_PATH}/32x32/apps/qucs.png
+		DESTINATION ${BITMAPS_HICOLOR_DESTINATION}/32x32/apps)
+	install(FILES ${BITMAPS_HICOLOR_PATH}/48x48/apps/qucs.png
+		DESTINATION ${BITMAPS_HICOLOR_DESTINATION}/48x48/apps)
+	install(FILES ${BITMAPS_HICOLOR_PATH}/64x64/apps/qucs.png
+		DESTINATION ${BITMAPS_HICOLOR_DESTINATION}/64x64/apps)
+	install(FILES ${BITMAPS_HICOLOR_PATH}/128x128/apps/qucs.png
+		DESTINATION ${BITMAPS_HICOLOR_DESTINATION}/128x128/apps)
+	install(FILES ${BITMAPS_HICOLOR_PATH}/256x256/apps/qucs.png
+		DESTINATION ${BITMAPS_HICOLOR_DESTINATION}/256x256/apps)
+	install(FILES ${BITMAPS_HICOLOR_PATH}/512x512/apps/qucs.png
+		DESTINATION ${BITMAPS_HICOLOR_DESTINATION}/512x512/apps)
+	install(FILES ${BITMAPS_HICOLOR_PATH}/scalable/apps/qucs.svg
+		DESTINATION ${BITMAPS_HICOLOR_DESTINATION}/scalable/apps)
 endif()
 
 
@@ -43,22 +46,14 @@ endif()
 #  set(APPS "${CMAKE_INSTALL_PREFIX}/bin/${PROJECT_NAME}.exe")
 #endif(WIN32)
 
-##
-## Install the Qucs application, on Apple, the bundle is installed as on other
-## platforms it'll go into the bin directory.
-##
-#install(
-#  TARGETS qucs
-#  BUNDLE DESTINATION bin COMPONENT Runtime
-#  RUNTIME DESTINATION bin COMPONENT Runtime)
-
-## set Windows runtime location for libqucschematic See:
-## http://www.cmake.org/pipermail/cmake/2010-June/037461.html
-#install(
-#  TARGETS qucsschematic
-#  RUNTIME DESTINATION bin COMPONENT runtime
-#  ARCHIVE DESTINATION lib COMPONENT devel
-#  LIBRARY DESTINATION lib COMPONENT library)
+#
+# Install the Qucs application, on Apple, the bundle is installed as on other
+# platforms it'll go into the bin directory.
+#
+install(
+  TARGETS qucs
+  BUNDLE DESTINATION bin COMPONENT Runtime
+  RUNTIME DESTINATION bin COMPONENT Runtime)
 
 ##
 ## Install needed Qt plugins by copying directories from the qt installation One

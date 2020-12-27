@@ -139,7 +139,7 @@ target_link_libraries(qucs Qt5::Widgets)
 target_link_libraries(qucs Qt5::Svg)
 # otherwise I'm getting /usr/bin/ld: QucsSchematicLibrary/libqucsschematic.so: undefined reference to `QPrinter::QPrinter(QPrinter::PrinterMode)'
 # why do I need the printersupport?
-target_link_libraries(qucs Qt5::PrintSupport)
+#target_link_libraries(qucs Qt5::PrintSupport)
 
 # Don't like to include them all here. TODO: find cleaner method. Included in qucsschematic already. So can it be reused?
 target_include_directories(qucs PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/../../include

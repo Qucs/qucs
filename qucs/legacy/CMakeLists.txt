@@ -26,3 +26,5 @@ target_include_directories(legacy PRIVATE ${PROJECT_SOURCE_DIR}/../src
 target_link_libraries(legacy Qt5::Core)
 target_link_libraries(legacy Qt5::Gui)
 target_link_libraries(legacy Qt5::Widgets)
+
+install(TARGETS legacy DESTINATION lib/qucs)

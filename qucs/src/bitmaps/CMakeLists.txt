@@ -8,6 +8,6 @@ readVariable(MakeList PNGS PNGS_)
 # application images
 readVariable(MakeList ICONS ICONS_)
 
-install(FILES ${XPMS_} DESTINATION share/qucs/bitmaps/)
-install(FILES ${PNGS_} DESTINATION share/qucs/bitmaps/)
-install(FILES ${ICONS_} DESTINATION share/qucs/bitmaps/)
+install(FILES ${CMAKE_CURRENT_SOURCE_DIR}/${XPMS_} DESTINATION share/qucs/bitmaps/)
+install(FILES ${CMAKE_CURRENT_SOURCE_DIR}/${PNGS_} DESTINATION share/qucs/bitmaps/)
+install(FILES ${CMAKE_CURRENT_SOURCE_DIR}/${ICONS_} DESTINATION share/qucs/bitmaps/)

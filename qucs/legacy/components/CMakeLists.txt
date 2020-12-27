@@ -28,12 +28,8 @@ set(COMPONENTS_SRCS ${COMPONENTS_SRCS} ${COMPONENT_SRCS_})
 # Headers
 readVariable(MakeList HEADERS_ HEADERS)
 
-set(COMPONENTS_MOC_HDRS spicedialog.h optimizedialog.h
-                        spicefile.h)
-
 # An object library compiles source files but does not archive or link their object files into a library.
-add_library(components SHARED ${HEADERS} ${COMPONENTS_SRCS}
-                              ${COMPONENTS_MOC_SRCS})
+add_library(components SHARED ${HEADERS} ${COMPONENTS_SRCS})
 target_include_directories(components
 	PUBLIC
 	${CMAKE_CURRENT_SOURCE_DIR}
@@ -46,3 +42,5 @@ target_link_libraries(components Qt5::Widgets Qt5::Script)
 target_link_libraries(components qucsschematic legacy)
 set_property(TARGET components PROPERTY AUTOMOC ON)
 set_property(TARGET components PROPERTY AUTORCC ON)
+
+install(TARGETS components DESTINATION lib/qucs)

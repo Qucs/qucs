@@ -25,3 +25,5 @@ target_include_directories(misc
 target_link_libraries(misc Qt5::Core Qt5::Widgets)
 #set_property(TARGET misc PROPERTY AUTOMOC ON)
 #set_property(TARGET misc PROPERTY AUTORCC ON)
+
+install(TARGETS misc DESTINATION lib/qucs/plugins)

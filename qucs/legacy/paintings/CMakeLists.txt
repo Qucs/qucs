@@ -19,3 +19,5 @@ target_include_directories(paintings
 # qucsschematic is needed, because Element() is used
 target_link_libraries(paintings Qt5::Widgets qucsschematic)
 set_property(TARGET paintings PROPERTY AUTOMOC ON)
+
+install(TARGETS paintings DESTINATION lib/qucs)
