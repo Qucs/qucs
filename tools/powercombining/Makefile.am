@@ -1,10 +1,9 @@
 ## Process this file with automake to produce Makefile.in
 #
-# qucs-attenuator/Makefile.am
+# qucs-powercombining/Makefile.am
 #
 # Automake input file.
 #
-# Copyright (C) 2006 Stefan Jahn <stefan@lkcc.org>
 #
 # This is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -22,27 +21,30 @@
 # Boston, MA 02110-1301, USA.
 #
 
-include ../autotools/common.mk
+bin_PROGRAMS = qucspowercombining
 
-bin_PROGRAMS = qucsattenuator
-
-SUBDIRS = bitmaps
-
-dist_man_MANS = qucsattenuator.1
-
-MOCHEADERS = qucsattenuator.h
+MOCHEADERS = qucspowercombiningtool.h
 MOCFILES = $(MOCHEADERS:.h=.moc.cpp)
 
-qucsattenuator_SOURCES = main.cpp qucsattenuator.cpp \
-  attenuatorfunc.cpp qucsattenuator_.qrc
-qucsattenuator_CXXFLAGS = ${AM_CXXFLAGS} -fPIC
+dist_man_MANS = qucspowercombining.1
 
-nodist_qucsattenuator_SOURCES = $(MOCFILES)
+include ../../autotools/common.mk
+
+qucspowercombining_SOURCES = main.cpp qucspowercombiningtool.cpp qrc_qucspowercombining.cpp
+qucspowercombining_CXXFLAGS = ${AM_CXXFLAGS} -fPIC
+
+EXTRA_DIST += qucspowercombining.qrc
+qrc_qucspowercombining.cpp: qucspowercombining.qrc
+	$(RCC) -o $@ $<
+
+nodist_qucspowercombining_SOURCES = $(MOCFILES)
 
 AM_CPPFLAGS += $(X11_INCLUDES) $(QT_CFLAGS)
-qucsattenuator_LDFLAGS = $(X11_LDFLAGS) $(QT_LIBS)
-qucsattenuator_LDADD = $(X11_LIBS) $(QT_LIBS)
+qucspowercombining_LDFLAGS = $(X11_LDFLAGS) $(QT_LIBS)
+qucspowercombining_LDADD = $(X11_LIBS) $(QT_LIBS)
 
-noinst_HEADERS = $(MOCHEADERS) attenuatorfunc.h
+noinst_HEADERS = $(MOCHEADERS)
 
-CLEANFILES = *~ *_.cpp qucsattenuator.moc.cpp
+CLEANFILES = *~
+MAINTAINERCLEANFILES = Makefile.in *.moc.cpp
+DISTCLEANFILES = *.moc.cpp

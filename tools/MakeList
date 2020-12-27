@@ -1,0 +1,12 @@
+SUBDIRS = \
+	activefilter \
+	attenuator \
+	filter \
+	powercombining \
+	rescodes \
+	transcalc
+
+DOES_NOT_WORK = \
+	filter-v2
+
+EXTRA_DIST =

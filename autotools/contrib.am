@@ -28,8 +28,4 @@ include ../autotools/common.mk
 dist_bin_SCRIPTS = ps2sp
 dist_man_MANS = ps2sp.1
 
-AM_CPPFLAGS = \
-	-I$(top_srcdir)/include \
-	-I$(top_srcdir)/qucs
-
 CLEANFILES = *~ Makefile.in *.rej *.orig

@@ -3,13 +3,8 @@ SUBDIRS = \
 	autotools \
 	man \
 	src \
-	qucs-activefilter \
-	qucs-attenuator \
-	qucs-filter \
 	qucs-lib \
-	qucs-rescodes \
-	qucs-transcalc \
-	qucs-powercombining \
+	tools \
 	translations \
 	examples \
 	include \

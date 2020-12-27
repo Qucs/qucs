@@ -22,7 +22,7 @@
 # Boston, MA 02110-1301, USA.
 #
 
-include ../autotools/common.mk
+include ../../autotools/common.mk
 
 noinst_PROGRAMS = qucsfilter
 
@@ -53,7 +53,7 @@ qucsfilter_SOURCES = qf_api.cpp\
 
 nodist_qucsfilter_SOURCES = $(MOCFILES)
 
-AM_CPPFLAGS = $(X11_INCLUDES) $(QT_CFLAGS)
+AM_CPPFLAGS += $(X11_INCLUDES) $(QT_CFLAGS)
 qucsfilter_LDFLAGS = $(X11_LDFLAGS) $(QT_LIBS)
 qucsfilter_LDADD = $(X11_LIBS) $(QT_LIBS)
 
