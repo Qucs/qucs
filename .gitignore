@@ -185,3 +185,8 @@ CMakeCache.txt
 *.depends
 /qucs-doc/technical/octave-workspace
 *build*
+
+# Flatpak #
+###########
+.flatpak-builder
+contrib/linux/flatpak/Qucs

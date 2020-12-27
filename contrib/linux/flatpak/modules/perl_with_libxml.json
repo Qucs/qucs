@@ -1,0 +1,47 @@
+{
+    "name": "perl-with-libxml",
+    "modules": [
+        {
+            "name": "perl",
+            "no-autogen": true,
+            "config-opts": [
+                "-des",
+                "-Duseshrplib"
+            ],
+            "build-options": {
+                "cflags": "-fPIC",
+                "ldflags": "-fpic"
+            },
+            "sources": [
+                {
+                    "type": "archive",
+                    "url": "https://www.cpan.org/src/5.0/perl-5.32.0.tar.gz",
+                    "sha256": "efeb1ce1f10824190ad1cadbcccf6fdb8a5d37007d0100d2d9ae5f2b5900c0b4"
+                },
+                {
+                    "type": "script",
+                    "dest-filename": "configure",
+                    "commands": [
+                        "exec ./configure.gnu $@"
+                    ]
+                }
+            ],
+            "post-install": [
+                "chmod -R u+w /app/lib/perl5"
+            ]
+        },
+        {
+            "name": "libxml",
+            "buildsystem": "simple",
+            "build-commands": [
+                "perl-libs/install.sh"
+            ],
+            "sources": [
+                "./perl_libxml_dependencies.json"
+            ],
+            "post-install": [
+                "chmod -Rf u+w /app/lib/perl5/site_perl"
+            ]
+        }
+    ]
+}

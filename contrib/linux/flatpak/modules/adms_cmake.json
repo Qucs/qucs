@@ -1,0 +1,17 @@
+{
+    "name": "adms",
+    "buildsystem": "cmake",
+    "builddir": true,
+    "sources": [
+        {
+            "type": "git",
+            "url": "https://github.com/Qucs/ADMS.git",
+            "branch": "master"
+        }
+    ],
+    "config-opts": [
+        "-DCMAKE_INSTALL_PREFIX=/app",
+        "-DPERL_FOUND:bool=true",
+        "-DPERL_EXECUTABLE:string=/app/bin/perl"
+    ]
+}
