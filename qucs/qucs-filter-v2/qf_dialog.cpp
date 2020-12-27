@@ -33,9 +33,9 @@
 #include <QHBoxLayout>
 #include <QMessageBox>
 #include <QGroupBox>
+#include <QGroupBox>
 
 #include "qf_dialog.h"
-//Added by qt3to4:
 #include <QGridLayout>
 #include <QVBoxLayout>
 
@@ -58,9 +58,9 @@ FilterDialog::FilterDialog (QWidget * parent) : QDialog (parent)
   helpMenu->addAction(tr("About Qt..."), this, SLOT(slotHelpAboutQt()), 0);
 
   QMenuBar *bar = new QMenuBar(this);
-  bar->addAction(tr("&File"), fileMenu);
+  bar->addAction(tr("&File")); //TODO: where these are connected?, fileMenu);
   bar->addSeparator();
-  bar->addAction(tr("&Help"), helpMenu);
+  bar->addAction(tr("&Help")); //TODO:, helpMenu);
   all->addWidget(bar);
 
   // reserve space for menubar
@@ -188,7 +188,7 @@ FilterDialog::FilterDialog (QWidget * parent) : QDialog (parent)
   NoC = new QRadioButton(tr("noC"),Cboxes);
   gp1->addWidget(Cboxes,11,11,0,2);
 
-  Lboxes = new Q3VButtonGroup(tr("Optimize L"),Tab1);
+  Lboxes = new QGroupBox(tr("Optimize L"),Tab1);
   Lmin = new QRadioButton(tr("Lmin"),Lboxes);
   Lmax = new QRadioButton(tr("Lmax"),Lboxes);
   NoL = new QRadioButton(tr("noL"),Lboxes);
@@ -212,11 +212,13 @@ FilterDialog::FilterDialog (QWidget * parent) : QDialog (parent)
   QHBoxLayout *Butts = new QHBoxLayout(this);
   Butts->setSpacing(3);
   Butts->setMargin(3);
-  all->addWidget(Butts);
+  all->addLayout(Butts);
 
-  cancelButton = new QPushButton(tr("Exit"),Butts);
-  okButton = new QPushButton(tr("Calculate"),Butts);
+  cancelButton = new QPushButton(tr("Exit"), this);
+  all->addWidget(cancelButton);
+  okButton = new QPushButton(tr("Calculate"),this);
   okButton->setEnabled(false);
+  all->addWidget(okButton);
 
   // signals and slots connections
   connect( cancelButton, SIGNAL( clicked() ), this, SLOT( reject() ) );

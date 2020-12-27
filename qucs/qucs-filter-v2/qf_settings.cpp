@@ -32,7 +32,7 @@ bool loadSettings (void)
 {
   bool result = true;
 
-  QFile file(QDir::homeDirPath()+QDir::toNativeSeparators ("/.qucs/filterrc"));
+  QFile file(QDir::homePath()+QDir::toNativeSeparators ("/.qucs/filterrc"));
   if(!file.open(QIODevice::ReadOnly))
     result = false; // settings file doesn't exist
   else {
@@ -56,7 +56,7 @@ bool loadSettings (void)
     file.close();
   }  
 
-  file.setName(QDir::homeDirPath()+QDir::toNativeSeparators ("/.qucs/qucsrc"));
+  file.setFileName(QDir::homePath()+QDir::toNativeSeparators ("/.qucs/qucsrc"));
   if(!file.open(QIODevice::ReadOnly))
     result = true; // qucs settings not necessary
   else {
@@ -65,7 +65,7 @@ bool loadSettings (void)
     while(!stream.atEnd()) {
       Line = stream.readLine();
       Setting = Line.section('=',0,0);
-      Line = Line.section('=',1,1).stripWhiteSpace();
+      Line = Line.section('=',1,1).simplified();
       if(Setting == "Font")
 	QucsSettings.font.fromString(Line);
       else if(Setting == "Language")
@@ -85,7 +85,7 @@ bool saveSettings(qf_box *qucs)
       return true;   // nothing has changed
 
 
-  QFile file(QDir::homeDirPath()+QDir::toNativeSeparators ("/.qucs/filterrc"));
+  QFile file(QDir::homePath()+QDir::toNativeSeparators ("/.qucs/filterrc"));
   if(!file.open(QIODevice::WriteOnly)) {
     QMessageBox::warning(0, QObject::tr("Warning"),
 			QObject::tr("Cannot save settings !"));
@@ -123,23 +123,23 @@ bool saveXmlSettings (qf_box * qucs)
 
   gr = doc.createElement ("LC");
   el = doc.createElement ("Type");
-  el.setAttribute ("Type", qucs->FilterName->currentItem ());
-  el.setAttribute ("Class", qucs->TformName->currentItem ());
+  el.setAttribute ("Type", qucs->FilterName->currentIndex());
+  el.setAttribute ("Class", qucs->TformName->currentIndex ());
   el.setAttribute ("SpecifyOrder", qucs->OrderBox->isChecked ());
-  el.setAttribute ("Order", qucs->OrderCombo->currentItem ());
-  el.setAttribute ("SubOrder", qucs->SubOrderCombo->currentItem ());  
+  el.setAttribute ("Order", qucs->OrderCombo->currentIndex ());
+  el.setAttribute ("SubOrder", qucs->SubOrderCombo->currentIndex ());
   gr.appendChild (el);
   el = doc.createElement ("Cutoff");
   el.setAttribute ("Value", qucs->EnterCutoff->text ());
-  el.setAttribute ("Unit", qucs->CutoffCombo->currentItem ());
+  el.setAttribute ("Unit", qucs->CutoffCombo->currentIndex ());
   gr.appendChild (el);
   el = doc.createElement ("Bandwidth");
   el.setAttribute ("Value", qucs->EnterBandwidth->text ());
-  el.setAttribute ("Unit", qucs->BandwidthCombo->currentItem ());
+  el.setAttribute ("Unit", qucs->BandwidthCombo->currentIndex ());
   gr.appendChild (el);
   el = doc.createElement ("Stopband");
   el.setAttribute ("Value", qucs->EnterStopband->text ());
-  el.setAttribute ("Unit", qucs->StopbandCombo->currentItem ());
+  el.setAttribute ("Unit", qucs->StopbandCombo->currentIndex ());
   gr.appendChild (el);
   el = doc.createElement ("Ripple");
   el.setAttribute ("Value", qucs->EnterRipple->text ());
@@ -156,7 +156,7 @@ bool saveXmlSettings (qf_box * qucs)
   gr.appendChild (el);
   rt.appendChild (gr);
 
-  QFile file (QDir::homeDirPath()+QDir::toNativeSeparators ("/.qucs/filterrc"));
+  QFile file (QDir::homePath()+QDir::toNativeSeparators ("/.qucs/filterrc"));
   if (!file.open (QIODevice::WriteOnly)) {
     QMessageBox::warning (0,
 			  QObject::tr("Warning"),
@@ -230,7 +230,7 @@ bool loadXmlSettings (void)
 {
   bool result = true;
 
-  QFile file (QDir::homeDirPath()+QDir::toNativeSeparators ("/.qucs/filterrc"));
+  QFile file (QDir::homePath()+QDir::toNativeSeparators ("/.qucs/filterrc"));
   if (!file.open(QIODevice::ReadOnly))
     result = false; // settings file doesn't exist
   else {
