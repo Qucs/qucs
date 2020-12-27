@@ -78,8 +78,8 @@ void Netlister::do_it(istream_t& cs, SchematicModel* m)
 		assert(language_dispatcher[language]);
 	}
 
-	if(lang){
-	}else{
+	if(lang){ untested();
+	}else{ untested();
 		throw Exception("no lang: " + language);
 	}
 
@@ -97,7 +97,7 @@ void Netlister::do_it(istream_t& cs, SchematicModel* m)
 /* -------------------------------------------------------------------------------- */
 void Netlister::printMain(ostream_t& stream,
 		SchematicModel const* scope_, DocumentLanguage const* lang) const
-{
+{ untested();
 	assert(scope_);
 	auto s = scope_->find_("main");
 	assert(s!=scope_->end());
@@ -108,9 +108,9 @@ void Netlister::printMain(ostream_t& stream,
 
 	QString Time;
 	assert(scope);
-	for(auto it_ : *scope){
+	for(auto it_ : *scope){ untested();
 		auto pc = dynamic_cast<Symbol const*>(it_);
-		if(pc){
+		if(pc){ untested();
 		}else{
 			incomplete();
 			continue;

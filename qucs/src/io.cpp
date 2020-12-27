@@ -527,12 +527,12 @@ CS& istream_t::get_line(std::string const& prompt)
   return *this;
 }
 /*--------------------------------------------------------------------------*/
-bool istream_t::atEnd() const
+bool istream_t::atEnd()
 {
 	if(_stream){
 		return _stream->atEnd();
 	}else{
-		return true;
+		return is_end();
 	}
 }
 /*--------------------------------------------------------------------------*/
