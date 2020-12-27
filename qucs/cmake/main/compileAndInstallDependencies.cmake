@@ -14,8 +14,8 @@ if (${CompileDependencies})
 	# so they can be used independently to the installed ones
 	add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/../../legacy legacy)
 	#set_target_properties(legacy PROPERTIES RUNTIME_OUTPUT_DIRECTORY_DEBUG ${LIB_PATH_TEMP}) # this does not work
-	if(EXISTS ${CMAKE_BINARY_DIR}/legacy/liblegacy.so)
-		file(COPY ${CMAKE_BINARY_DIR}/legacy/liblegacy.so DESTINATION ${LIB_PATH_TEMP})
+	if(EXISTS ${CMAKE_CURRENT_BINARY_DIR}/legacy/liblegacy.so)
+		file(COPY ${CMAKE_CURRENT_BINARY_DIR}/legacy/liblegacy.so DESTINATION ${LIB_PATH_TEMP})
 	endif()
 
 #	if (NOT TARGET qucsator)
