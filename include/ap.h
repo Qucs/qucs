@@ -96,7 +96,7 @@ public:
   bool	      ns_more()const	{return peek()!='\0';}
   bool	      more()		{skipbl(); return ns_more();}
   bool	      is_end()		{return !more();}
-  bool atEnd() const;
+  bool atEnd();
   bool	      is_file() const;
   bool	      is_first_read()const {untested(); return (_line_number == 0);}
 
