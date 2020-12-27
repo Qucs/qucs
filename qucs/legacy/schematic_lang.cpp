@@ -266,6 +266,7 @@ static bool obsolete_wireload(Symbol* w, const QString& sc)
 	sym->setParameter("deltay", std::to_string(y2 - y1));
 
 	assert(sym->nodePosition(0) == pos_t(x1, y1));
+	trace2("debug obsolete load", sym->nodePosition(1), pos_t(x2, y2));
 	assert(sym->nodePosition(1) == pos_t(x2, y2));
 
 	n = s.section('"',1,1);

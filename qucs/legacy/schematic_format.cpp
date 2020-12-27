@@ -177,6 +177,7 @@ static void printProperties(SchematicSymbol const& m, ostream_t& stream)
 
 void LegacySchematicFormat::do_it(istream_t& cs, SchematicModel* m)
 {
+	cs >> "save";
 	std::map<std::string, Element const*> declarations;
 	std::string fn;
 	cs >> fn;
@@ -194,7 +195,7 @@ void LegacySchematicFormat::do_it(istream_t& cs, SchematicModel* m)
 	std::vector<Element const*> paintings;
 	std::vector<Element const*> diagrams;
 
-	auto D=language_dispatcher["leg_sch"];
+	auto D = language_dispatcher["leg_sch"];
 	auto L = dynamic_cast<DocumentLanguage const*>(D);
 	assert(L);
 
