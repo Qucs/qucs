@@ -1070,4 +1070,17 @@ QString SchematicDoc::createClipboardFile() const
 	return buf;
 }
 /*--------------------------------------------------------------------------*/
+void SchematicDoc::saveDocument() const
+{
+  // TODO: provide selection GUI
+  auto d = command_dispatcher["leg_sch"];
+  assert(d);
+  assert(_root);
+
+  std::string command = "save " + docName().toStdString();
+
+  istream_t cs(istream_t::_STRING, command);
+  d->do_it(cs, _root->subckt());
+}
+/*--------------------------------------------------------------------------*/
 /*--------------------------------------------------------------------------*/
