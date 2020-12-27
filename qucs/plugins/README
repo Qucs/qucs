@@ -3,11 +3,14 @@ other plugins.
 
 Each plugin is compiled from the files contained in a single directory and
 listed in the MakeList file. The plugin name corresponds to the directory
-name, and will be installed to ${pkglibdir}.
+name, and will be installed to ${pkglibdir}/plugins/
 
 For example, a plugin that relates to my_stuff, will be compiled from files in
-plugins/my_stuff/ and its name will be my_stuff.so. it will be installed such
-that qucs will be able to load "my_stuff", e.g. by invoking qucs with the -a
-my_stuff option.
+plugins/my_stuff/ and its name will be plugins/my_stuff.so. It will be
+installed such that qucs will be able to "load plugins/my_stuff", e.g. by
+invoking qucs with the -a plugins/my_stuff option.
 
-TODO: more on how MakeList is meant to be used.
+MakeList files contain lists of files that relate to a plugin. Currently,
+these are read by standard build systems (autotools, cmake) that build the
+package. Future Qucs will be able to directly load a plugin from source code
+or compile/load a directory containing a MakeList.
