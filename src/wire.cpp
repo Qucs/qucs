@@ -522,7 +522,11 @@ Node* Wire::connectNode(unsigned i, NodeMap& nm)
 Node* Wire::disconnectNode(unsigned i, NodeMap& nm)
 {
 	trace3("Wire::disconnect", label(), i, degree());
-	assert(hasNet());
+	if(!hasNet()){
+		unreachable(); // happens after bogus connect calls
+		return nullptr;
+	}else{
+	}
 	Node* n = Symbol::disconnectNode(i, nm);
 	trace3("Wire::disconnect", i, n->degree(), degree());
 
