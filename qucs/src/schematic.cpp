@@ -2039,61 +2039,6 @@ Component* SchematicDoc::find_component(QString const&)
 // ---------------------------------------------------
 
 #if 0
-namespace{
-class ins : public SchematicSymbol{
-public:
-  ins(SchematicDoc* m) : _m(m) { untested();
-    assert(m);
-  }
-private:
-  void pushBack(Element* e){ untested();
-    _m->pushBack(e);
-  }
-  void setParameter(std::string const&, std::string){ untested();
-    incomplete();
-  }
-
-  PaintingList& symbolPaintings() { untested();
-    return _m->symbolPaints();
-  }
-
-private: // SchematicSymbol
-  SchematicModel const& schematicModel() const{ untested();
-    assert(_m);
-    return _m->DocModel;
-  }
-  SchematicModel* schematicModel() { untested();
-    assert(_m);
-    return &_m->DocModel;
-  }
-  std::string getParameter(std::string const&) const{ untested();
-    return "ins, incomplete";
-  }
-private:
-  SchematicDoc* _m;
-};
-}
-#endif
-
-
-#if 0 // transition. obsolete
-void SchematicDoc::parse(DocumentStream& s, SchematicLanguage const* L)
-{ untested();
-  if(!L){ untested();
-    auto D=language_dispatcher["leg_sch"];
-    L = dynamic_cast<SchematicLanguage const*>(D);
-  }else{ untested();
-  }
-  assert(L);
-  ins i(this);
-  while(!s.atEnd()){ untested();
-    qDebug() << "entering parse";
-    L->parse(s, i);
-    assert(s.atEnd()); // happens with legacy lang
-  }
-}
-#endif
-
 // pre qt5 kludge
 void SchematicDoc::pushBack(Element* what)
 { untested();
@@ -2123,6 +2068,7 @@ void SchematicDoc::pushBack(Element* what)
   }
 #endif
 }
+#endif
 
 // ----------------------------------------------------------------
 #if 0
