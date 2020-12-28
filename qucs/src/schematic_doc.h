@@ -390,10 +390,10 @@ public:
 
   void       setComponentNumber(Component*);
   void       insertRawComponent(Component*, bool noOptimize=true);
-  void       recreateSymbol(Symbol* s){
-	  assert(_model);
-	  _model->recreateSymbol(s);
-  }
+//  void       recreateSymbol(Symbol* s){
+//	  assert(_model);
+//	  _model->recreateSymbol(s);
+//  }
   void       insertElement(Element*);
 private: // old legacy stuff.
   void       insertComponent(Component*);
@@ -458,18 +458,17 @@ private:
   void updateViewport() override { viewport()->update(); }
 
 public:
-  void throughAllNodes(unsigned& count) const{
-	  assert(_model);
-	  return _model->throughAllNodes(count);
-  }
+//  void throughAllNodes(unsigned& count) const{
+//	  assert(_model);
+//	  return _model->throughAllNodes(count);
+//  }
 
 private:
-  void propagateNode(Node*) const;
-  void collectDigitalSignals(void);
-  bool giveNodeNames(QTextStream *, int&, QStringList&, QPlainTextEdit*,
-		  int, NetLang const&);
-
-  DigMap Signals; // collecting node names for VHDL signal declarations
+//  void propagateNode(Node*) const;
+//  void collectDigitalSignals(void);
+//  bool giveNodeNames(QTextStream *, int&, QStringList&, QPlainTextEdit*,
+//		  int, NetLang const&);
+//   DigMap Signals; // collecting node names for VHDL signal declarations
 
 public: // for now
 	TaskElement* loadtaskElement(const QString& _s, TaskElement* c) const{
@@ -480,15 +479,15 @@ public: // for now
 //		assert(_model);
 //		return _model->loadComponent(_s, c);
 //	}
-   int  prepareNetlist(ostream_t& a, QStringList& b, QPlainTextEdit* c,
-			bool creatingLib, NetLang const& nl){
-		assert(!creatingLib); // ?!
- 	  return _model->prepareNetlist(a,b,c, creatingLib, nl);
-   }
-  bool createLibNetlist(ostream_t& a, QPlainTextEdit* b, int c, NetLang const& nl){
-	  assert(_model);
-		return _model->createLibNetlist(a,b,c, nl);
-  }
+//   int  prepareNetlist(ostream_t& a, QStringList& b, QPlainTextEdit* c,
+//			bool creatingLib, NetLang const& nl){
+//		assert(!creatingLib); // ?!
+// 	  return _model->prepareNetlist(a,b,c, creatingLib, nl);
+//   }
+//  bool createLibNetlist(ostream_t& a, QPlainTextEdit* b, int c, NetLang const& nl){
+//	  assert(_model);
+//		return _model->createLibNetlist(a,b,c, nl);
+//  }
 
 	QString getParameter(std::string const& key) const;
 

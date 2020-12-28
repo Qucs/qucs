@@ -165,6 +165,7 @@ void SchematicModel::collectDigitalSignals(void)
 
 // ---------------------------------------------------
 // // what is this?
+#if 0
 bool SchematicModel::createLibNetlist(ostream_t& stream,
      QPlainTextEdit*, int, NetLang const&)
 { untested();
@@ -206,6 +207,7 @@ bool SchematicModel::createLibNetlist(ostream_t& stream,
   Signals.clear();  // was filled in "giveNodeNames()"
   return true;
 } // createLibNetlist
+#endif
 
 //#define VHDL_SIGNAL_TYPE "bit"
 //#define VHDL_LIBRARIES   ""
