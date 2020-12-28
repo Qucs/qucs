@@ -40,16 +40,13 @@ class NetLang;
 /*--------------------------------------------------------------------------*/
 class WireList;
 class NodeMap;
-class DiagramList;
 class CmdEltList;
 class ElementList;
 class Diagram;
 class Painting;
 /*--------------------------------------------------------------------------*/
 class NodeMap;
-// TODO: refactor here
-class DiagramList : public Q3PtrList<Diagram> {
-};
+#if 0
 // TODO: refactor here
 class ElementList : public std::list<Element*> {
 public:
@@ -70,15 +67,16 @@ public:
 	void pushBack(Element*s) {push_back(s);}
 	void append(Element*s) {push_back(s);}
 	bool isEmpty() const { return empty(); }
-	void removeRef(Symbol* s) { erase(std::find(begin(), end(), s)); }
 public:
 	const_iterator begin() const{return container::begin();}
 	const_iterator end() const{return container::end();}
 };
+#endif
 /*--------------------------------------------------------------------------*/
 // TODO: rename to ObjectList
 class SchematicModel{
 public: // stub
+	typedef std::list<Element*> ElementList;
 	typedef ElementList::iterator iterator;
 	typedef ElementList::const_iterator const_iterator;
 private:
@@ -91,6 +89,8 @@ public: // stuff saved from Schematic
 
 private:
 	void detachFromNode(Element* what, Node* from);
+	void removeRef(Element* s) { erase(std::find(begin(), end(), s)); }
+	void erase(const_iterator what){Components.erase(what);}
 
 public:
 	void collectDigitalSignals(void);
@@ -117,7 +117,7 @@ public: // container
 	void push_back(Element* what);
 	void pushBack(Element* what);
 	void erase(Element* what);
-	size_t size() const{ return components().size(); }
+	size_t size() const{ return Components.size(); }
 
 public: // compat? test? debug?
 	size_t nodeCount() const{ return nodes().size(); }
@@ -134,8 +134,7 @@ public: // scene interaction
 	void toScene(QGraphicsScene& s, QList<ElementGraphics*>* l=nullptr) const;
 
 private:
-	DiagramList& diagrams();
-	ElementList& components(); // possibly "devices". lets see.
+//	ElementList& components(); // possibly "devices". lets see.
 	CmdEltList& commands();
 
 public:
@@ -148,8 +147,7 @@ public:
 	}
 //	WireList const& wires() const;
 	NodeMap const& nodes() const;
-	DiagramList const& diagrams() const;
-	ElementList const& components() const;
+//	ElementList const& components() const;
 
 	Symbol const* findProto(QString const& what) const;
 	void cacheProto(Symbol const* what) const;
@@ -159,8 +157,8 @@ public:
 //	iterator find_again(const std::string& short_name, iterator);
   // return a const_iterator
 	SchematicModel const* parent() const;
-	const_iterator begin()const {return components().begin();}
-	const_iterator end()const {return components().end();}
+	const_iterator begin()const {return Components.begin();}
+	const_iterator end()const {return Components.end();}
 	const_iterator find_again(const std::string& short_name, const_iterator)const;
 	const_iterator find_(const std::string& short_name)const
 					{return find_again(short_name, begin());}
@@ -179,7 +177,6 @@ private:
 	ElementList Components;
 	NetList Nets;
 	NodeMap Nodes;
-	DiagramList Diagrams;
 //	SchematicSymbol* _symbol;
 	QStringList PortTypes; // obsolete.
 	std::vector<Node*> _ports; // -> symbol?

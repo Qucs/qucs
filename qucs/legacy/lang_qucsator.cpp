@@ -285,9 +285,9 @@ void QucsatorLang::printSubckt(SubcktBase const* p, ostream_t& s) const
 	if(!p->symbolPaintings()){
 		s << "# Missing ID & params " << p->label() << "\n";
 	}else{
+#if 0
 		for(auto pi : *p->symbolPaintings()){
 			incomplete();
-#if 0
 			if(pi->name() == ".ID ") {
 				incomplete();
 				s << "# TODO ID & params" << pi->label() << pi->name() << "\n";
@@ -299,9 +299,9 @@ void QucsatorLang::printSubckt(SubcktBase const* p, ostream_t& s) const
 		//			}
 			}else{
 			}
-#endif
 		//		break;
 		}
+#endif
 	}
 	//(*tstream) << '\n';
 	//

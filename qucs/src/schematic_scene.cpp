@@ -386,6 +386,7 @@ void SchematicScene::selectAll(bool v)
 	}
 }
 /*--------------------------------------------------------------------------*/
+#if 0
 static QList<ElementGraphics const*> filter(QList<QGraphicsItem const*> L)
 {
 	trace1("items raw mutable", L.size());
@@ -401,6 +402,7 @@ static QList<ElementGraphics const*> filter(QList<QGraphicsItem const*> L)
 	auto EL = reinterpret_cast<QList<ElementGraphics const*>* >(&L);
 	return *EL;
 }
+#endif
 /*--------------------------------------------------------------------------*/
 static QList<ElementGraphics*> filter(QList<QGraphicsItem*> L)
 {
