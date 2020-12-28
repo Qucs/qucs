@@ -46,7 +46,8 @@ private: // Command
 	void do_it(istream_t&, SchematicModel*) override;
 
 private: // legacy implementation
-  void createNetlist(ostream_t& stream, SchematicModel const*) const;
+  void createNetlist(ostream_t& stream, SchematicModel const*,
+		std::vector<Element const*>& tasks) const;
   void prepareSave(ostream_t& stream, SchematicModel const* m,
 		std::map<std::string, Element const*>& declarations) const;
   void throughAllComps(ostream_t& d, SchematicModel const* m,
@@ -55,7 +56,6 @@ private: // legacy implementation
   void printDeclarations(ostream_t& d,
 		std::map<std::string, Element const*>& declarations) const;
 private: // overrides
-  void save(ostream_t& stream, Object const* m) const override;
   void load(istream_t&, Object*) const override;
 private:
   mutable SubMap FileList; // BUG (maybe not)
@@ -154,16 +154,18 @@ void LegacyNetlister::load(istream_t&, Object*) const
 	incomplete();
 }
 /* -------------------------------------------------------------------------------- */
-void LegacyNetlister::save(ostream_t&, Object const* o) const
-{
-	unreachable();
-	assert(false);
-//	do_it(Stream, m_->subckt());
-}
-/* -------------------------------------------------------------------------------- */
 void LegacyNetlister::do_it(istream_t& cs, SchematicModel* m)
 {
 	std::map<std::string, Element const*> declarations;
+	std::vector<Element const*> tasks;
+	std::string simcmd;
+	cs >> "netlist";
+
+	size_t here = cs.cursor();
+	do{
+		Get(cs, "mode", &simcmd);
+	} while(cs.more() && !cs.stuck(&here));
+
 	std::string fn;
 	cs >> fn;
 
@@ -174,8 +176,6 @@ void LegacyNetlister::do_it(istream_t& cs, SchematicModel* m)
 	}else{
 	}
 	ostream_t Stream(&NetlistFile);
-
-//	auto& m = *m_;
 
    _qucslang = language_dispatcher["qucsator"];
 	clear();
@@ -206,7 +206,7 @@ void LegacyNetlister::do_it(istream_t& cs, SchematicModel* m)
 
 	printDeclarations(Stream, declarations);
 	Stream << '\n';
-	createNetlist(Stream, m);
+	createNetlist(Stream, m, tasks);
 
 #if 0
 	if(m.doc()){ untested();
@@ -215,6 +215,22 @@ void LegacyNetlister::do_it(istream_t& cs, SchematicModel* m)
 		Stream << "nodoc??\n";
 	}
 #endif
+	assert(_qucslang);
+	if(simcmd=="all"){
+		Stream << "# all tasks\n";
+		for(auto c : tasks){
+			trace1("cmd", c->label());
+			_qucslang->printItem(Stream, c);
+		}
+	}else if(simcmd=="dcop"){
+		Element const* dc = element_dispatcher["DC"];
+		_qucslang->printItem(Stream, dc);
+		Stream << "# just dcop\n";
+	}else{
+	//	assert(false);
+	//	throw Exception("nothing to do");
+	}
+
 }
 
 void LegacyNetlister::printDeclarations(ostream_t& stream,
@@ -230,7 +246,7 @@ void LegacyNetlister::printDeclarations(ostream_t& stream,
 			stream << "# unresolved symbol " << si.first << "\n";
 		}else if(dynamic_cast<SubcktBase const*>(si.second)){
 			stream << "### item " << si.first << "\n";
-			_qucslang->printItem(si.second, stream);
+			_qucslang->printItem(stream, si.second);
 		}else{
 			stream << "## " << si.first << "\n";
 		}
@@ -340,7 +356,8 @@ void LegacyNetlister::prepareSave(ostream_t& stream, SchematicModel const* m,
 
 // former Schematic::createNetlist
 void LegacyNetlister::createNetlist(ostream_t& stream,
-		SchematicModel const* scope_) const
+		SchematicModel const* scope_,
+		std::vector<Element const*>& tasks) const
 {
 	assert(scope_);
 	auto s = scope_->find_("main");
@@ -370,7 +387,10 @@ void LegacyNetlister::createNetlist(ostream_t& stream,
 	for(auto it_ : *scope){
 	//	stream << "...\n";
 		auto pc = dynamic_cast<Symbol const*>(it_);
-		if(pc){
+		if (auto t = dynamic_cast<TaskElement const*>(it_)){
+			tasks.push_back(t);
+			continue;
+		} else if(pc){
 		}else{
 			incomplete();
 			continue;
@@ -385,7 +405,7 @@ void LegacyNetlister::createNetlist(ostream_t& stream,
 		}else if(pc->typeName()=="NodeLabel"){ untested();
 			// qucsator hack, just ignore.
 		}else{
-			_qucslang->printItem(pc, stream);
+			_qucslang->printItem(stream, pc);
 		}
 
 		if(isAnalog) {

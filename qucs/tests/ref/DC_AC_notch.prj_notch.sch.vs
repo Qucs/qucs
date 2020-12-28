@@ -6,12 +6,14 @@ R #(.R(1k), .Temp(26.85), .Tc1(0.0), .Tc2(0.0), .Tnom(26.85), .Symbol(european))
 R #(.R(1k), .Temp(26.85), .Tc1(0.0), .Tc2(0.0), .Tnom(26.85), .Symbol(european)) R4(net_500_280, net_440_280);
 R #(.R(1k), .Temp(26.85), .Tc1(0.0), .Tc2(0.0), .Tnom(26.85), .Symbol(european)) R2(net_270_260, net_330_260);
 C #(.C(1u), .V(), .Symbol(neutral)) C2(net_500_200, net_500_140);
+//DC1
 OpAmp #(.G(1e6), .Umax(15 V)) OP1(net_180_280, net_180_240, net_250_260);
 OpAmp #(.G(1e6), .Umax(15 V)) OP2(net_350_300, net_350_260, net_420_280);
 Eqn #(.Gain(dB(Out.v/In.v)), .Export(yes)) Eqn1();
 R #(.R(10k), .Temp(26.85), .Tc1(0.0), .Tc2(0.0), .Tnom(26.85), .Symbol(european)) R1(net_130_370, net_130_310);
 GND #() anonymous_gnd_hack_1(net_40_250);
 Vac #(.U(1uV), .f(1 GHz), .Phase(0), .Theta(0)) V1(net_40_190, net_40_250);
+//AC1
 wire #() noname(net_420_280, net_430_280);
 wire #() noname(net_420_200, net_430_200);
 wire #() noname(net_430_280, net_440_280);

@@ -134,7 +134,7 @@ const Element* Element::find_in_parent_scope(const std::string& name)const
   auto const* p_scope = (scope()->parent()) ? scope()->parent() : scope();
 
   if(!p_scope){
-	  unreachable();
+	  // unreachable(); happens in some lib files
 	  trace2("no scope", name, label());
 	  throw ExceptionCantFind(label(), name);
   }else{

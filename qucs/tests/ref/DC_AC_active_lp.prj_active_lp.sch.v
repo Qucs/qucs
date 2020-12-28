@@ -19,7 +19,9 @@ OpAmp #(.G(1e6), .Umax(15 V)) OP3(Output, _net22, Output);
 C #(.C(1n), .V(), .Symbol(neutral)) C6(gnd, _net22);
 GND #() *(gnd);
 C #(.C(256n), .V(), .Symbol(neutral)) C3(_net27, Output);
+//AC1
 Eqn #(.Ampl(dB(Output.v)), .Phase(phase(Output.v)), .Export(yes)) Eqn1();
+//DC1
 endmodule // main
 
 Sub #(.File()) Sub(_net0);

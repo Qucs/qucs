@@ -217,6 +217,18 @@ void Qucsator::run(istream_t& cs, SimCtrl* ctrl)
 	QString f = QucsSettings.QucsHomeDir.filePath("netlist.txt");
 
 	message(QucsMsgLog, "writing " + f.toStdString() + "...");
+	assert(doc());
+	auto d = dynamic_cast<SchematicDoc const*>(doc()); // BUG.
+
+#if 1
+	auto dl = command_dispatcher["legacy_nl"];
+	std::string s = "netlist mode=" + what + " " + f.toStdString();
+	trace1("qucsator nl?", s);
+	istream_t nlcmd(istream_t::_STRING, s);
+	auto hack = const_cast<SchematicModel*>(d->root()->subckt());
+	assert(hack);
+	dl->do_it(nlcmd, hack);
+#else
 	_netlistFile.setFileName(f);
 
 	if(!_netlistFile.open(QIODevice::WriteOnly | QFile::Truncate)){
@@ -226,49 +238,27 @@ void Qucsator::run(istream_t& cs, SimCtrl* ctrl)
 	}
 
 	ostream_t Stream(&_netlistFile);
+	auto n = netLang();
+	assert(n);
 
-	auto dl = netLister();
-	// do_it?
-	DocumentFormat const* n = prechecked_cast<DocumentFormat const*>(dl);
+	assert(d);
 
-	assert(doc());
-	// n->save(Stream, d); // ??
-	// if doc is schematic_doc?
-	if(auto d = dynamic_cast<SchematicDoc const*>(doc())){
-		SubcktBase const* m = d->root();
-		assert(m);
-		try{
-			n->save(Stream, m);
-		}catch(...){
-			message(QucsMsgFatal, "Error writing netlist file.");
-			throw;
-		}
-		//      ErrText->appendPlainText(tr("ERROR: Cannot write netlist file!"));
-		//      FinishSimulation(-1);
-		//      incomplete();
-		//      return false;
-
-		NetLang const* nl = netLang();
-
-		if(what=="all"){
-			for(auto c : d->commands()){
-				trace1("cmd", c->label());
-				nl->printItem(c, Stream);
-			}
-		}else if(what=="dcop"){
-			Element const* dc = element_dispatcher["DC"];
-			nl->printItem(dc, Stream);
-		}else{
-			assert(false);
-			throw Exception("nothing to do");
-		}
+	SubcktBase const* m = d->root();
+	assert(m);
+	try{
 		incomplete();
-	}else{
-		incomplete();
-		assert(false);
+		n->printItem(Stream, m);
+	}catch(...){
+		message(QucsMsgFatal, "Error writing netlist file.");
+		throw;
 	}
-
 	_netlistFile.close();
+#endif
+	//      ErrText->appendPlainText(tr("ERROR: Cannot write netlist file!"));
+	//      FinishSimulation(-1);
+	//      incomplete();
+	//      return false;
+
 
 #if 0
 	if(Info.suffix() == "m" || Info.suffix() == "oct") { untested();

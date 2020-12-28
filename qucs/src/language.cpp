@@ -32,13 +32,13 @@ Element* DocumentLanguage::parseItem(istream_t& s, Element* c) const
   }
 }
 
-void DocumentLanguage::printItem(Element const* c, ostream_t& s) const
+void DocumentLanguage::printItem(ostream_t& s, Element const* c) const
 {
   if(!c){ untested();
 	  s << "unreachable, no item\n";
 	  // assert(c);
   }else if (auto C=dynamic_cast<const TaskElement*>(c)) {
-    printtaskElement(C, s);
+    printTaskElement(C, s);
   }else if (auto C=dynamic_cast<const SubcktBase*>(c)) {
 	  if(C->is_device()){
 		  printSymbol(C, s);

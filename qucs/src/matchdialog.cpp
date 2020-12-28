@@ -26,7 +26,7 @@
  *                                                                         *
  ***************************************************************************/
 
-#include "../qucs-filter/material_props.h"
+#include "material_props.h"
 #include "matchdialog.h"
 #include "qucs.h"
 #include "element.h"

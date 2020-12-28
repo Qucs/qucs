@@ -63,14 +63,14 @@ void createListComponentEntry::do_it(istream_t&, SchematicModel*)
 	// not sure.
       }
 
-      lang->printItem(ce, s);
+      lang->printItem(s, ce);
 
       if(verilog){
-	verilog->printItem(ce, s);
+			verilog->printItem(s, ce);
       }else{ untested();
       }
 
-      qucsatorlang->printItem(ce, s);
+      qucsatorlang->printItem(s, ce);
 
     } // module
   } // category

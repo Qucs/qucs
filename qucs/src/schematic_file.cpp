@@ -44,25 +44,6 @@
 #include "schematic_lang.h"
 #include "sckt_base.h"
 // -------------------------------------------------------------
-void SchematicDoc::saveDocument() const
-{
-  // QFile file(DocName);
-  // if(!file.open(QIODevice::ReadOnly)) {
-  //   return -1;
-  // }
-  QFile file(docName());
-  file.open(QIODevice::WriteOnly | QIODevice::Truncate);
-  ostream_t stream(&file); // BUG
-
-//  sda a(DocModel, *this);
-
-  // TODO: provide selection GUI
-  auto d = command_dispatcher["leg_sch"];
-  auto D = prechecked_cast<DocumentFormat const*>(d);
-  assert(D);
-  assert(_root);
-  D->save(stream, _root);
-}
 
 // -------------------------------------------------------------
 #if 0// moved

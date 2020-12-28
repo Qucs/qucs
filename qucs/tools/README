@@ -1,0 +1,3 @@
+tools: standalone applications that don't seem to be plugins right now.
+
+Some communicate with the main application, through the paste buffer.

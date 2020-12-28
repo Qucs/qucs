@@ -110,6 +110,7 @@ void plugins::do_it(istream_t& cs, SchematicModel*)
 		if (full_file_name != "") {
 			// found it, with search
 		}else{
+			trace2("try _", stem, path);
 			full_file_name = findfile(stem + "/_", path, R_OK);
 		}
 

@@ -10,4 +10,5 @@ EXTRA_DIST = \
 	plugins.am \
 	qucsator.am \
 	src.am \
+	tools.am \
 	top.am

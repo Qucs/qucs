@@ -9,6 +9,8 @@ R #(.R(5.6k), .Temp(26.85), .Tc1(0.0), .Tc2(0.0), .Tnom(26.85), .Symbol(european
 C #(.C(47n), .V(), .Symbol(neutral)) C1(net_200_140, net_260_140);
 C #(.C(47n), .V(), .Symbol(neutral)) C2(net_180_120, net_180_60);
 R #(.R(3.9k), .Temp(26.85), .Tc1(0.0), .Tc2(0.0), .Tnom(26.85), .Symbol(european)) R1(net_300_120, net_300_60);
+//AC1
+//DC1
 wire #() noname(net_160_140, net_180_140);
 wire #() noname(net_180_140, net_200_140);
 wire #() noname(net_180_120, net_180_140);

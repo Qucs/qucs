@@ -14,6 +14,7 @@ R #(.R(50 Ohm), .Temp(26.85), .Tc1(0.0), .Tc2(0.0), .Tnom(26.85), .Symbol(europe
 GND #() anonymous_gnd_hack_3(net_90_270);
 GND #() anonymous_gnd_hack_4(net_90_410);
 Vdc #(.U(10 V)) V2(net_90_40, net_90_100);
+//DC1
 Eqn #(.Output(pos.Vt-neg.Vt), .Export(yes)) Eqn1();
 Vac #(.U(0.5 V), .f(10 kHz), .Phase(0), .Theta(0)) LO(net_90_210, net_90_270);
 Idc #(.I(2 uA)) I2(net_320_350, net_320_410);

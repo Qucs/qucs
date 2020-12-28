@@ -32,6 +32,7 @@ element_la_CPPFLAGS = ${AM_CPPFLAGS} $(QT_CFLAGS) -I$(top_srcdir)/include
 
 AM_TESTS_ENVIRONMENT = \
     export PATH='../qucs:$(PATH)' \
+    export QUCS_PLUGPATH='../' \
 	 REDIRECT='exec 2>&9'\
     export QUCS='qucs' \
     _REDIR='1>&9 2>&10' \
@@ -138,3 +139,4 @@ CLEANFILES = \
 ${PRJ_TESTS:%.prj=%.log} : .P
 ${SH_TESTS:%.sh=%.log} : .P
 ${QX_TESTS:%.qx=%.log} : .P
+${check_PROGRAMS:%=%.log} : .P

@@ -132,7 +132,7 @@ private: // NetLang
   std::string findType(istream_t&) const override {incomplete(); return "incomplete";}
 
 private: // local
-  void printtaskElement(TaskElement const*, ostream_t&) const; // override?
+  void printTaskElement(TaskElement const*, ostream_t&) const; // override?
   void printSymbol(Symbol const*, ostream_t&) const override;
   void printSubckt(SubcktBase const*, ostream_t&) const;
   void printComponent(Component const*, ostream_t&) const;
@@ -209,7 +209,7 @@ void QucsatorLang::printSymbol(Symbol const* d, ostream_t& s) const
 //		printSubckt(c, s);
 	}else if(auto c=dynamic_cast<TaskElement const*>(d)){ untested();
 		// why is this a Symbol??
-		printtaskElement(c, s);
+		printTaskElement(c, s);
 	}else if(auto c=dynamic_cast<Component const*>(d)){
 		// HACK
 		printComponent(c, s);
@@ -283,7 +283,7 @@ void QucsatorLang::printSubckt(SubcktBase const* p, ostream_t& s) const
 	// somehow parameters are stashed as paintings.
 	// let's see.
 	if(!p->symbolPaintings()){
-		s << "# Missing ID & params" << p->label() << "\n";
+		s << "# Missing ID & params " << p->label() << "\n";
 	}else{
 		for(auto pi : *p->symbolPaintings()){
 			incomplete();
@@ -328,7 +328,7 @@ void QucsatorLang::printSubckt(SubcktBase const* p, ostream_t& s) const
 	s << ".Def:End\n"; //  << p->label() << "\n";
 }
 
-void QucsatorLang::printtaskElement(TaskElement const* c, ostream_t& s) const
+void QucsatorLang::printTaskElement(TaskElement const* c, ostream_t& s) const
 {
 	assert(c);
 	s << "." << c->typeName() << ":" << c->label();

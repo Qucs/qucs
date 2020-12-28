@@ -505,46 +505,24 @@ void SchematicScene::attachToModel(Element* e)
 	Element const* ce = e;
 	
 	if(ce->owner()){ untested();
-		// really??
+		incomplete();
 	}else{ untested();
 		doc()->addElement(e);
 	}
-
-// 	if(e->scope()){itested();
-// //		e->attachToModel();
-// 		scope()->attach(e);
-// 	}else{ untested();
-// 		trace0("no attachToModel");
-// 	}
 }
 /*--------------------------------------------------------------------------*/
 void SchematicScene::possiblyRename(Element* e) const
 {
-#if 0
-	assert(gfx);
-	Element const* e = element(gfx);
-	Element* ee = element(gfx);
-	assert(e);
-	auto s = e->scope();
-	assert(s);
-#endif
 	std::string label = e->label();
 
    int z = label.size();
 	if(!z){
 	}else if(std::isdigit(label[z-1])){
 	}else{
-		// auto scope = e->scope();
-		// unsigned i = nextIdx(label);
 		unsigned i = scope()->nextIdx(label);
 		e->setLabel(label + std::to_string(i));
 		// gfx->update();
 	}
 }
-/*--------------------------------------------------------------------------*/
-// unsigned SchematicScene::nextIdx(std::string const& s) const
-// {
-// 	return model()->nextIdx(s);
-// }
 /*--------------------------------------------------------------------------*/
 /*--------------------------------------------------------------------------*/

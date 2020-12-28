@@ -28,6 +28,7 @@ namespace{
 
 SchematicModel empty;
 
+// TODO: use "get" command.
 class LegacySchematicFormat : public DocumentFormat{
 public:
 	explicit LegacySchematicFormat()
@@ -75,15 +76,18 @@ void LegacySchematicFormat::load(istream_t& s, Object* c) const
 	auto L=dynamic_cast<SchematicLanguage const*>(l);
 	assert(L);
 
-	if(auto cc=dynamic_cast<SubcktBase*>(c)){
-		while(!s.atEnd()){
-			L->parse(s, cc); // BUG BUG only pass SchematicModel
-			assert(s.atEnd()); // happens with legacy lang
-		}
+	auto cc=dynamic_cast<SubcktBase*>(c);
+	if(!cc){
+		unreachable(); // bug in libfiles?
+		return;
 	}else{
-		unreachable();
 	}
+	assert(cc->subckt());
 
+	while(!s.atEnd()){
+		s.get_line("legacy-schematic>");
+		L->parse_top_item(s, cc->subckt());
+	}
 }
 
 static QString QG(SubcktBase const& m, std::string const& key)
@@ -173,6 +177,7 @@ static void printProperties(SchematicSymbol const& m, ostream_t& stream)
 
 void LegacySchematicFormat::do_it(istream_t& cs, SchematicModel* m)
 {
+	cs >> "save";
 	std::map<std::string, Element const*> declarations;
 	std::string fn;
 	cs >> fn;
@@ -190,7 +195,7 @@ void LegacySchematicFormat::do_it(istream_t& cs, SchematicModel* m)
 	std::vector<Element const*> paintings;
 	std::vector<Element const*> diagrams;
 
-	auto D=language_dispatcher["leg_sch"];
+	auto D = language_dispatcher["leg_sch"];
 	auto L = dynamic_cast<DocumentLanguage const*>(D);
 	assert(L);
 
@@ -246,7 +251,7 @@ void LegacySchematicFormat::do_it(istream_t& cs, SchematicModel* m)
 						paintings.push_back(pc);
 					}else{
 						stream << "  ";
-						L->printItem(pc, stream);
+						L->printItem(stream, pc);
 					}
 				}
 				stream << "</Components>\n";
@@ -270,8 +275,7 @@ void LegacySchematicFormat::do_it(istream_t& cs, SchematicModel* m)
 
 	stream << "<Wires>\n";
 	for(Element const* pw : wires){
-		L->printItem(pw, stream);
-//		stream << "  " << pw->save() << "\n";
+		L->printItem(stream, pw);
 	}
 
 #if 0
@@ -297,7 +301,8 @@ void LegacySchematicFormat::do_it(istream_t& cs, SchematicModel* m)
 
 	stream << "<Paintings>\n";
 	for(auto pp : section(m, ":Paintings:")){ // BUG?
-		L->printItem(pp, stream);
+		incomplete();
+		L->printItem(stream, pp);
 	}
 	stream << "</Paintings>\n";
 

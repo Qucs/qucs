@@ -23,7 +23,7 @@ public:
   virtual ~DocumentLanguage() {}
   Object::Type type() const override {return Object::Type::Language;}
 // virtual void parse(DocumentStream& stream, SchematicModel*) const=0;
-  virtual void printItem(Element const*, ostream_t&) const;
+  virtual void printItem(ostream_t&, Element const*) const;
 
   virtual void		parse_top_item(istream_t&, SchematicModel*) const {incomplete();}
   virtual Element* parseItem(istream_t&, Element*) const;
@@ -39,7 +39,7 @@ private: //called by printItem
   virtual void printDiagram(Symbol const*, ostream_t&) const = 0;
   virtual void printSymbol(Symbol const*, ostream_t&) const = 0;
   virtual void printSubckt(SubcktBase const*, ostream_t&) const = 0;
-  virtual void printtaskElement(TaskElement const*, ostream_t&) const = 0;
+  virtual void printTaskElement(TaskElement const*, ostream_t&) const = 0;
 };
 
 // group netlist languages. needed? obsolete?

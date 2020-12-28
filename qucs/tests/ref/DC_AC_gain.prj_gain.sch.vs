@@ -9,6 +9,8 @@ GND #() anonymous_gnd_hack_3(net_130_150);
 Vdc #(.U(2.5 V)) V3(net_130_90, net_130_150);
 GND #() anonymous_gnd_hack_4(net_210_400);
 Vdc #(.U(-2.5 V)) V6(net_210_340, net_210_400);
+//AC1
+//DC1
 Eqn #(.Gain(dB(Output.v/Input.v)), .Phase(phase(Output.v/Input.v)), .Export(yes)) Eqn1();
 Sub$singleOPV #(.File(singleOPV.sch)) OPV1(net_160_240, net_160_200, net_210_170, net_210_270, net_260_220);
 R #(.R(1.7k), .Temp(26.85), .Tc1(0.0), .Tc2(0.0), .Tnom(26.85), .Symbol(european)) R3(net_160_310, net_100_310);
