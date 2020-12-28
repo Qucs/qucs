@@ -41,12 +41,12 @@ private slots:
 private:
   bool matches(const QString&);
 
-  SchematicDoc *Doc;
-  QGridLayout *all;   // the mother of all widgets
-  QRegExpValidator  *Validator, *ValRestrict;
+  SchematicDoc *Doc{nullptr};
+  QGridLayout *all{nullptr};   // the mother of all widgets
+  QRegExpValidator  *Validator{nullptr}, *ValRestrict{nullptr};
   QRegExp     Expr;
-  QLineEdit   *CompNameEdit, *NewValueEdit;
-  QComboBox   *CompTypeEdit, *PropNameEdit;
+  QLineEdit   *CompNameEdit{nullptr}, *NewValueEdit{nullptr};
+  QComboBox   *CompTypeEdit{nullptr}, *PropNameEdit{nullptr};
 };
 
 #endif

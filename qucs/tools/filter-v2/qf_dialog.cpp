@@ -19,7 +19,7 @@
 # include <config.h>
 #endif
 
-#include <Q3PopupMenu>
+#include <QMenu>
 #include <QMenuBar>
 #include <QLayout>
 #include <QTabWidget>
@@ -28,37 +28,39 @@
 #include <QLabel>
 #include <QCheckBox>
 #include <QRadioButton>
-#include <Q3ButtonGroup>
+#include <QGroupBox>
 #include <QPushButton>
-#include <Q3HBox>
+#include <QHBoxLayout>
 #include <QMessageBox>
+#include <QGroupBox>
+#include <QGroupBox>
 
 #include "qf_dialog.h"
-//Added by qt3to4:
-#include <Q3GridLayout>
-#include <Q3VBoxLayout>
+#include <QGridLayout>
+#include <QVBoxLayout>
 
 FilterDialog::FilterDialog (QWidget * parent) : QDialog (parent)
 {
   // set application icon
-  setIcon (QPixmap(":/bitmaps/big.qucs.xpm"));
-  setCaption("Qucs Filter " PACKAGE_VERSION);
 
-  all = new Q3VBoxLayout(this);
+  setWindowIcon(QPixmap(":/bitmaps/big.qucs.xpm"));
+  setWindowTitle("Qucs Filter " PACKAGE_VERSION);
+
+  all = new QVBoxLayout(this);
 
   // --------  create menubar  -------------------
-  Q3PopupMenu *fileMenu = new Q3PopupMenu();
-  fileMenu->insertItem(tr("E&xit"), this, SLOT(slotQuit()), Qt::CTRL+Qt::Key_Q);
+  QMenu *fileMenu = new QMenu();
+  fileMenu->addAction(tr("E&xit"), this, SLOT(slotQuit()), Qt::CTRL+Qt::Key_Q);
 
-  Q3PopupMenu *helpMenu = new Q3PopupMenu();
-  helpMenu->insertItem(
+  QMenu *helpMenu = new QMenu();
+  helpMenu->addAction(
                 tr("&About Qucs Filter..."), this, SLOT(slotHelpAbout()), 0);
-  helpMenu->insertItem(tr("About Qt..."), this, SLOT(slotHelpAboutQt()), 0);
+  helpMenu->addAction(tr("About Qt..."), this, SLOT(slotHelpAboutQt()), 0);
 
   QMenuBar *bar = new QMenuBar(this);
-  bar->insertItem(tr("&File"), fileMenu);
-  bar->insertSeparator ();
-  bar->insertItem(tr("&Help"), helpMenu);
+  bar->addAction(tr("&File")); //TODO: where these are connected?, fileMenu);
+  bar->addSeparator();
+  bar->addAction(tr("&Help")); //TODO:, helpMenu);
   all->addWidget(bar);
 
   // reserve space for menubar
@@ -69,34 +71,38 @@ FilterDialog::FilterDialog (QWidget * parent) : QDialog (parent)
 
   // ...........................................................
   QWidget *Tab1 = new QWidget(t);
-  Q3GridLayout *gp1 = new Q3GridLayout(Tab1,12,6,5,5);
+  QGridLayout *gp1 = new QGridLayout(Tab1);
 
-  FilterName = new QComboBox(FALSE, Tab1);
+  FilterName = new QComboBox(Tab1);
+  FilterName->setEditable(false);
   gp1->addWidget(FilterName,0,0);
-  TformName = new QComboBox(FALSE, Tab1);
+  TformName = new QComboBox(Tab1);
+  TformName->setEditable(false);
   gp1->addWidget(TformName,0,1);
 
   OrderBox = new QCheckBox(tr("Specify order"), Tab1);
   gp1->addWidget(OrderBox,1,0);
-  Q3HBox *h1 = new Q3HBox(Tab1);
+  QHBoxLayout *h1 = new QHBoxLayout(Tab1);
   h1->setSpacing (5);
-  OrderCombo = new QComboBox(FALSE, h1);
-  OrderCombo->setEnabled(TRUE);
-  SubOrderCombo = new QComboBox(FALSE, h1);
-  SubOrderCombo->setEnabled(FALSE);
-  SubOrderCombo->insertItem( tr( "b" ) );
-  SubOrderCombo->insertItem( tr( "c" ) );
-  gp1->addWidget(h1,1,1);
+  OrderCombo = new QComboBox(this);
+  h1->addWidget(OrderCombo);
+  OrderCombo->setEnabled(true);
+  SubOrderCombo = new QComboBox(this);
+  h1->addWidget(SubOrderCombo);
+  SubOrderCombo->setEnabled(false);
+  SubOrderCombo->addAction(new QAction(tr( "b" )) );
+  SubOrderCombo->addAction(new QAction(tr( "c" )) );
+  gp1->addLayout(h1,1,1);
 
   CutoffLabel = new QLabel(tr("Cutoff/Center"),Tab1);
   gp1->addWidget(CutoffLabel,2,0);
   EnterCutoff = new QLineEdit(Tab1);
   gp1->addWidget(EnterCutoff,2,1);
   CutoffCombo = new QComboBox(Tab1);
-  CutoffCombo->insertItem( tr( "Hz" ) );
-  CutoffCombo->insertItem( tr( "kHz" ) );
-  CutoffCombo->insertItem( tr( "MHz" ) );
-  CutoffCombo->insertItem( tr( "GHz" ) );
+  CutoffCombo->addItem(tr( "Hz" ) );
+  CutoffCombo->addItem(tr( "kHz" ) );
+  CutoffCombo->addItem(tr( "MHz" ) );
+  CutoffCombo->addItem(tr( "GHz" ) );
   gp1->addWidget(CutoffCombo,2,2);
 
   RippleLabel = new QLabel(tr("Ripple"),Tab1);
@@ -132,24 +138,26 @@ FilterDialog::FilterDialog (QWidget * parent) : QDialog (parent)
   gp1->addWidget(StopbandLabel,5,0);
   EnterStopband = new QLineEdit(Tab1);
   gp1->addWidget(EnterStopband,5,1);
-  StopbandCombo = new QComboBox(FALSE, Tab1);
-  StopbandCombo->insertItem( tr( "Hz" ) );
-  StopbandCombo->insertItem( tr( "kHz" ) );
-  StopbandCombo->insertItem( tr( "MHz" ) );
-  StopbandCombo->insertItem( tr( "GHz" ) );
+  StopbandCombo = new QComboBox(Tab1);
+  StopbandCombo->setEditable(false);
+  StopbandCombo->addItem( tr( "Hz" ) );
+  StopbandCombo->addItem( tr( "kHz" ) );
+  StopbandCombo->addItem( tr( "MHz" ) );
+  StopbandCombo->addItem( tr( "GHz" ) );
   gp1->addWidget(StopbandCombo,5,2);
 
   BandwidthLabel = new QLabel(tr("Bandwidth"),Tab1);
-  BandwidthLabel->setEnabled(FALSE);
+  BandwidthLabel->setEnabled(false);
   gp1->addWidget(BandwidthLabel,4,0);
   EnterBandwidth = new QLineEdit(Tab1);
   gp1->addWidget(EnterBandwidth,4,1);
-  BandwidthCombo = new QComboBox(FALSE, Tab1);
-  BandwidthCombo->setEnabled(FALSE);
-  BandwidthCombo->insertItem( tr( "Hz" ) );
-  BandwidthCombo->insertItem( tr( "kHz" ) );
-  BandwidthCombo->insertItem( tr( "MHz" ) );
-  BandwidthCombo->insertItem( tr( "GHz" ) );
+  BandwidthCombo = new QComboBox(Tab1);
+  BandwidthCombo->setEditable(false);
+  BandwidthCombo->setEnabled(false);
+  BandwidthCombo->addItem( tr( "Hz" ) );
+  BandwidthCombo->addItem( tr( "kHz" ) );
+  BandwidthCombo->addItem( tr( "MHz" ) );
+  BandwidthCombo->addItem( tr( "GHz" ) );
   gp1->addWidget(BandwidthCombo,4,2);
 
   AttenuationLabel = new QLabel(tr("Attenuation"),Tab1);
@@ -160,31 +168,31 @@ FilterDialog::FilterDialog (QWidget * parent) : QDialog (parent)
   gp1->addWidget(dBLabel,6,2);
 
   DualBox = new QCheckBox(tr("dual"),Tab1);
-  gp1->addMultiCellWidget(DualBox,8,8,0,2);
+  gp1->addWidget(DualBox,8,8,0,2);
   CauerPoleBox = new QCheckBox(tr("Stopband is first pole"),Tab1);
-  CauerPoleBox->setEnabled(FALSE);
-  gp1->addMultiCellWidget(CauerPoleBox,9,9,0,2);
+  CauerPoleBox->setEnabled(false);
+  gp1->addWidget(CauerPoleBox,9,9,0,2);
   OptimizeCauerBox = new QCheckBox(tr("Optimize cauer"),Tab1);
-  OptimizeCauerBox->setEnabled(FALSE);
-  gp1->addMultiCellWidget(OptimizeCauerBox,10,10,0,2);
+  OptimizeCauerBox->setEnabled(false);
+  gp1->addWidget(OptimizeCauerBox,10,10,0,2);
   EqualInductorBox = new QCheckBox(tr("Equal inductors"),Tab1);
-  EqualInductorBox->setEnabled(FALSE);
-  gp1->addMultiCellWidget(EqualInductorBox,8,8,3,5);
+  EqualInductorBox->setEnabled(false);
+  gp1->addWidget(EqualInductorBox,8,8,3,5);
   UseCrossBox = new QCheckBox(tr("+ rather than T"),Tab1);
-  UseCrossBox->setEnabled(FALSE);
-  gp1->addMultiCellWidget(UseCrossBox,9,9,3,5);
+  UseCrossBox->setEnabled(false);
+  gp1->addWidget(UseCrossBox,9,9,3,5);
 
-  Cboxes = new Q3VButtonGroup(tr("Optimize C"),Tab1);
+  Cboxes = new QGroupBox(tr("Optimize C"),Tab1);
   Cmin = new QRadioButton(tr("Cmin"),Cboxes);
   Cmax = new QRadioButton(tr("Cmax"),Cboxes);
   NoC = new QRadioButton(tr("noC"),Cboxes);
-  gp1->addMultiCellWidget(Cboxes,11,11,0,2);
+  gp1->addWidget(Cboxes,11,11,0,2);
 
-  Lboxes = new Q3VButtonGroup(tr("Optimize L"),Tab1);
+  Lboxes = new QGroupBox(tr("Optimize L"),Tab1);
   Lmin = new QRadioButton(tr("Lmin"),Lboxes);
   Lmax = new QRadioButton(tr("Lmax"),Lboxes);
   NoL = new QRadioButton(tr("noL"),Lboxes);
-  gp1->addMultiCellWidget(Lboxes,11,11,3,5);
+  gp1->addWidget(Lboxes,11,11,3,5);
 
   t->addTab(Tab1, tr("LC Filters"));
 
@@ -201,14 +209,16 @@ FilterDialog::FilterDialog (QWidget * parent) : QDialog (parent)
 
   // ...........................................................
   // buttons on the bottom of the dialog (independent of the TabWidget)
-  Q3HBox *Butts = new Q3HBox(this);
+  QHBoxLayout *Butts = new QHBoxLayout(this);
   Butts->setSpacing(3);
   Butts->setMargin(3);
-  all->addWidget(Butts);
+  all->addLayout(Butts);
 
-  cancelButton = new QPushButton(tr("Exit"),Butts);
-  okButton = new QPushButton(tr("Calculate"),Butts);
-  okButton->setEnabled(FALSE);
+  cancelButton = new QPushButton(tr("Exit"), this);
+  all->addWidget(cancelButton);
+  okButton = new QPushButton(tr("Calculate"),this);
+  okButton->setEnabled(false);
+  all->addWidget(okButton);
 
   // signals and slots connections
   connect( cancelButton, SIGNAL( clicked() ), this, SLOT( reject() ) );

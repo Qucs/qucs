@@ -236,9 +236,9 @@ public:
 	PARAM_LIST const* params() const;
 
 private:
-	const SchematicModel* _parent;
+	const SchematicModel* _parent{nullptr};
 	std::multimap<std::string, Element*> _map;
-	mutable PARAM_LIST* _params;
+	mutable PARAM_LIST* _params{nullptr};
 
 public: // for now.
 	friend class SchematicDoc;

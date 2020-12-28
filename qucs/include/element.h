@@ -100,6 +100,7 @@ class Graph;
 class Marker;
 class Node;
 class ViewPainter;
+class QucsDoc;
 /*--------------------------------------------------------------------------*/
 class SchematicModel;
 /*--------------------------------------------------------------------------*/
@@ -113,6 +114,8 @@ public:
   Element();
   Element(int cx, int cy) : _position(cx, cy) { unreachable(); }
   virtual ~Element();
+
+  Object::Type type() const {return Object::Type::Element;}
 
 public: // make old variables accessible
 	int const& cx() const { return _position.first; }
@@ -198,7 +201,7 @@ public:
   const Element* find_in_my_scope(const std::string& name)const;
 
 private:
-  Object* _owner; // should probably be const all the way
+  Object* _owner{nullptr}; // should probably be const all the way
 }; // Element
 
 inline SchematicModel const* Element::scope() const

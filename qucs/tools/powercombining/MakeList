@@ -1,2 +1,12 @@
 
 EXTRA_DIST = 
+<<<<<<< HEAD
+=======
+
+SRCS = \
+    qucspowercombiningtool.cpp \
+    main.cpp
+    
+RESOURCES = \
+    qucspowercombining.qrc
+>>>>>>> 78f03df0a (Add CMake and flatpak build support)

@@ -44,7 +44,7 @@ public:
 
 private:
   int language;
-  TextDoc *Doc;
+  TextDoc *Doc{nullptr};
 
   struct HighlightingRule
      {

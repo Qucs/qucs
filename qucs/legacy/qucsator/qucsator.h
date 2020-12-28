@@ -31,7 +31,7 @@ protected slots:
 
 private:
 	QProcess::ProcessState oldState;
-	Qucsator* _simulator;
+	Qucsator* _simulator{nullptr};
 }; // QucsatorProcess
 
 #endif

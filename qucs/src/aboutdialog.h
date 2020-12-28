@@ -49,9 +49,9 @@ private:
   std::array<QString, 20> prevDevs; // previous Qucs developers
   std::array<QString, 18> trAuths; // Qucs translators
 
-  QVBoxLayout *all;
-  QTextBrowser *authorsBrowser; // to show authors
-  QTextBrowser *trBrowser; // to show translators
+  QVBoxLayout *all{nullptr};
+  QTextBrowser *authorsBrowser{nullptr}; // to show authors
+  QTextBrowser *trBrowser{nullptr}; // to show translators
 
   int prevTab; // previously selected tab
 

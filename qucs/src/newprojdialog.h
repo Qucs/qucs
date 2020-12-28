@@ -36,15 +36,15 @@ public:
 	NewProjDialog(QWidget *parent=0);
 	~NewProjDialog();
 
-  QLineEdit   *ProjName;
-  QCheckBox   *OpenProj;
+  QLineEdit   *ProjName{nullptr};
+  QCheckBox   *OpenProj{nullptr};
 
 private slots:
   void slotTextChanged(const QString &);
 
 private:
-  QPushButton *ButtonOk, *ButtonCancel;
-  QGridLayout *gbox;
+  QPushButton *ButtonOk{nullptr}, *ButtonCancel{nullptr};
+  QGridLayout *gbox{nullptr};
 };
 
 #endif

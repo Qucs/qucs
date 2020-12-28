@@ -37,22 +37,22 @@ public:
   VASettingsDialog (TextDoc *);
  ~VASettingsDialog ();
 
-  QLineEdit * IconEdit, * OutputEdit, * NameEdit, * ShortDescEdit,
-    * LongDescEdit;
-  QPushButton * BrowseButt;
-  QLabel * IconButt;
-  QCheckBox * RecreateCheck;
-  QButtonGroup * toggleGroupDev, * toggleGroupTyp;
+  QLineEdit * IconEdit{nullptr}, * OutputEdit{nullptr}, * NameEdit{nullptr}, * ShortDescEdit{nullptr},
+    * LongDescEdit{nullptr};
+  QPushButton * BrowseButt{nullptr};
+  QLabel * IconButt{nullptr};
+  QCheckBox * RecreateCheck{nullptr};
+  QButtonGroup * toggleGroupDev{nullptr}, * toggleGroupTyp{nullptr};
 
 private slots:
   void slotOk ();
   void slotBrowse ();
 
 private:
-  TextDoc * Doc;
+  TextDoc * Doc{nullptr};
   QRegExp Expr;
-  QRegExpValidator * Validator;
-  QVBoxLayout *vLayout;
+  QRegExpValidator * Validator{nullptr};
+  QVBoxLayout *vLayout{nullptr};
 };
 
 #endif

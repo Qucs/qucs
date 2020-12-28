@@ -94,36 +94,36 @@ protected slots:
 private:
   void SelectGraph(Graph*);
 
-  Diagram *Diag;
+  Diagram *Diag{nullptr};
   QString defaultDataSet;
   QString Var2;
   int loc;
   QString Name;
 
   QRegExp Expr;
-  QDoubleValidator *ValDouble;
-  QIntValidator    *ValInteger;
-  QRegExpValidator *Validator;
+  QDoubleValidator *ValDouble{nullptr};
+  QIntValidator    *ValInteger{nullptr};
+  QRegExpValidator *Validator{nullptr};
 
-  QComboBox *ChooseData;
-  QTableWidget *ChooseVars;
-  QListWidget  *GraphList;
+  QComboBox *ChooseData{nullptr};
+  QTableWidget *ChooseVars{nullptr};
+  QListWidget  *GraphList{nullptr};
 
-  QVBoxLayout *all;   // the mother of all widgets
-  QLineEdit   *GraphInput, *Property2, *xLabel, *ylLabel, *yrLabel;
-  QCheckBox   *GridOn, *GridLogX, *GridLogY, *GridLogZ;
-  QCheckBox   *manualX, *manualY, *manualZ, *hideInvisible;
-  QCheckBox   *inputV, *inputI, *inputP, *inputZ;
-  QLineEdit   *startX, *stepX, *stopX;
-  QLineEdit   *startY, *stepY, *stopY;
-  QLineEdit   *startZ, *stepZ, *stopZ;
-  QLineEdit   *rotationX, *rotationY, *rotationZ;
-  QLineEdit   *freq;
-  QLabel      *GridLabel1, *GridLabel2, *Label1, *Label2, *Label3, *Label4;
-  QComboBox   *PropertyBox, *GridStyleBox, *yAxisBox;
-  QPushButton *ColorButt, *GridColorButt;
-  QSlider     *SliderRotX, *SliderRotY, *SliderRotZ;
-  Cross3D     *DiagCross;
+  QVBoxLayout *all{nullptr};   // the mother of all widgets
+  QLineEdit   *GraphInput{nullptr}, *Property2{nullptr}, *xLabel{nullptr}, *ylLabel{nullptr}, *yrLabel{nullptr};
+  QCheckBox   *GridOn{nullptr}, *GridLogX{nullptr}, *GridLogY{nullptr}, *GridLogZ{nullptr};
+  QCheckBox   *manualX{nullptr}, *manualY{nullptr}, *manualZ{nullptr}, *hideInvisible{nullptr};
+  QCheckBox   *inputV{nullptr}, *inputI{nullptr}, *inputP{nullptr}, *inputZ{nullptr};
+  QLineEdit   *startX{nullptr}, *stepX{nullptr}, *stopX{nullptr};
+  QLineEdit   *startY{nullptr}, *stepY{nullptr}, *stopY{nullptr};
+  QLineEdit   *startZ{nullptr}, *stepZ{nullptr}, *stopZ{nullptr};
+  QLineEdit   *rotationX{nullptr}, *rotationY{nullptr}, *rotationZ{nullptr};
+  QLineEdit   *freq{nullptr};
+  QLabel      *GridLabel1{nullptr}, *GridLabel2{nullptr}, *Label1{nullptr}, *Label2{nullptr}, *Label3{nullptr}, *Label4{nullptr};
+  QComboBox   *PropertyBox{nullptr}, *GridStyleBox{nullptr}, *yAxisBox{nullptr};
+  QPushButton *ColorButt{nullptr}, *GridColorButt{nullptr};
+  QSlider     *SliderRotX{nullptr}, *SliderRotY{nullptr}, *SliderRotZ{nullptr};
+  Cross3D     *DiagCross{nullptr};
   bool changed, transfer, toTake;
   Q3PtrList<Graph>  Graphs;
 };

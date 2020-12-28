@@ -39,8 +39,8 @@ private slots:
   void slotSave();
 
 private:
-  QVBoxLayout *vLayout;
-  QComboBox *units[4];
+  QVBoxLayout *vLayout{nullptr};
+  QComboBox *units[4]{nullptr};
 };
 
 #endif

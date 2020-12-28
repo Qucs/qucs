@@ -28,10 +28,10 @@ class MyResistanceBox: public QGroupBox
 	QString closestRes;
 	QString modifier;
 	QString tol;
-	QLabel* stdRes;
-	QLineEdit *resValueEdit; 
-	QComboBox *resUnit; 
-	QComboBox *tolerance; 
+	QLabel* stdRes{nullptr};
+	QLineEdit *resValueEdit{nullptr};
+	QComboBox *resUnit{nullptr};
+	QComboBox *tolerance{nullptr};
 	public:
 		MyResistanceBox( QWidget *parent=0 );
 		float enteredValue();

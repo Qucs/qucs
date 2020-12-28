@@ -29,7 +29,7 @@ public:
 private:
 	unsigned axis_count;
 //	std::vector<DataX*>  CPointsX;
-	double *CPointsY;
+	double *CPointsY{nullptr};
 //	int CountY;    // number of curves
 	QString Var;
 	std::string _fileName;

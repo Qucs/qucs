@@ -41,7 +41,7 @@ protected:
   QValidator::State validate ( QString & text, int & pos ) const;
 
 private:
-  double *Values = NULL;
+  double *Values{nullptr};
   int ValueSize;
 };
 
@@ -57,11 +57,11 @@ private slots:
 private:
   Graph* setBiasPoints();
 
-  QGridLayout *all;   // the mother of all widgets
+  QGridLayout *all{nullptr};   // the mother of all widgets
   QList<mySpinBox *> BoxList;
 
-  Graph *pGraph;
-  SchematicDoc *Doc;
+  Graph *pGraph{nullptr};
+  SchematicDoc *Doc{nullptr};
   QList<Node *> NodeList;
   QList<double *> ValueList;
 };

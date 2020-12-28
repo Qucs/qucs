@@ -164,7 +164,7 @@ public: // obsolete?
   void restore() {return Painter->restore();}
 
 private:
-	QPainter *Painter;
+ QPainter *Painter{nullptr};
 public: // BUG, is accessed directly.
         // some of them are used in random places
 	float Scale;

@@ -3,4 +3,4 @@
 	url = https://github.com/Qucs/qucs-test.git
 [submodule "qucsator"]
 	path = qucsator
-	url = https://github.com/Qucs/qucsator
+	url = https://github.com/Murmele/qucsator.git

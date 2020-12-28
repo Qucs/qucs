@@ -53,7 +53,7 @@ public:
   enum WHOLE_FILE {_WHOLE_FILE};
   enum STRING {_STRING};
 private:
-  FILE* _file;
+  FILE* _file{nullptr};
   std::string _name;
   std::string _cmd;
   size_t  _cnt;
@@ -170,7 +170,7 @@ public:
   CS&	      operator>>(const char& x)	{return skip1b(x);}
   CS&	      operator>>(const char* x)	{return umatch(x);}
 private: // historical hack
-  QTextStream* _stream;
+  QTextStream* _stream{nullptr};
 };	
 /*--------------------------------------------------------------------------*/
 /*--------------------------------------------------------------------------*/

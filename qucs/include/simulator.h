@@ -29,6 +29,7 @@
 class DocumentFormat;
 class Component;
 class QucsData;
+class QucsDoc;
 
 // simulator controller
 struct SimCtrl{
@@ -51,6 +52,7 @@ protected:
   explicit Simulator();
 public:
   virtual ~Simulator();
+ Object::Type type() const override {return Object::Type::Simulator;}
   virtual Simulator* clone() const = 0;
 
   virtual NetLang const* netLang() const{return nullptr;}
@@ -87,10 +89,10 @@ private:
   virtual void init() = 0;
 
 private:
-  QucsDoc* _doc; // const?
-  QucsData** _data_p;
+  QucsDoc* _doc{nullptr}; // const?
+  QucsData** _data_p{nullptr};
   int _state;
-  SimCtrl* _ctrl;
+  SimCtrl* _ctrl{nullptr};
 }; // Simulator
 
 

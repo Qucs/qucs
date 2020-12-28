@@ -53,9 +53,9 @@ private:
   bool makeSubcircuit;
   bool insertSim;
   bool changed;
-  QProcess *QucsConv, *SpicePrep;
+  QProcess *QucsConv{nullptr}, *SpicePrep{nullptr};
   QString NetText, ErrText, NetLine, SimText;
-  QTextStream *outstream, *filstream, *prestream;
+  QTextStream *outstream{nullptr}, *filstream{nullptr}, *prestream{nullptr};
   QDateTime lastLoaded;
   bool recreateSubNetlist(QString *, QString *);
   pos_t portPosition(unsigned) const override{ incomplete(); return pos_t(0,0);}

@@ -24,8 +24,8 @@ public:
 	struct swap_t{
 		swap_t(ElementGraphics* gfx, Element* elt)
 			: _gfx(gfx), _elt(elt) {}
-		ElementGraphics* _gfx;
-		Element* _elt;
+		ElementGraphics* _gfx{nullptr};
+		Element* _elt{nullptr};
 		~swap_t(){
 			delete _elt;
 		}

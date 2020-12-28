@@ -1,6 +1,7 @@
 project(qucsactivefilter CXX C)
-cmake_minimum_required(VERSION 2.6)
-cmake_policy(VERSION 2.6)
+cmake_minimum_required(VERSION 3.16)
+
+include(${CMAKE_CURRENT_SOURCE_DIR}/../../cmake/readMakeList.txt)
 
 # use top VERSION file
 file(STRINGS ${PROJECT_SOURCE_DIR}/../VERSION QUCS_VERSION)
@@ -31,32 +32,12 @@ configure_file("${PROJECT_SOURCE_DIR}/../config.h.cmake"
 
 include_directories("${PROJECT_BINARY_DIR}")
 
-find_package(Qt4 REQUIRED)
-set(QT_USE_QTGUI TRUE)
-set(QT_USE_QTSVG TRUE)
-
-include(${QT_USE_FILE})
+find_package(Qt5 REQUIRED Widgets Gui Svg)
 
 add_definitions(${QT_DEFINITIONS})
 
-set(QUCS-ACTIVE-FILTER_SRCS
-    filter.cpp
-    mfbfilter.cpp
-    main.cpp
-    qf_poly.cpp
-    sallenkey.cpp
-    schcauer.cpp
-    transferfuncdialog.cpp
-    helpdialog.cpp
-    qucsactivefilter.cpp)
-
-set(QUCS-ACTIVE-FILTER_MOC_HDRS transferfuncdialog.h qucsactivefilter.h
-                                helpdialog.h)
-
-qt4_wrap_cpp(QUCS-ACTIVE-FILTER_MOC_SRCS ${QUCS-ACTIVE-FILTER_MOC_HDRS})
-
-set(RESOURCES qucsactivefilter_.qrc)
-qt4_add_resources(RESOURCES_SRCS ${RESOURCES})
+readVariable(MakeList SRCS QUCS-ACTIVE-FILTER_SRCS)
+readVariable(MakeList RESOURCES RESOURCES_)
 
 if(APPLE)
   # set information on Info.plist file
@@ -85,8 +66,11 @@ add_executable(
   qucsactivefilter MACOSX_BUNDLE WIN32
   ${QUCS-ACTIVE-FILTER_SRCS} ${QUCS-ACTIVE-FILTER_MOC_SRCS} ${RESOURCES_SRCS})
 
-target_link_libraries(qucsactivefilter ${QT_LIBRARIES})
-
+target_link_libraries(qucsactivefilter Qt5::Widgets Qt5::Svg Qt5::Gui)
+target_include_directories(qucsactivefilter
+     PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}
+     PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/../include)
+set_property(TARGET qucsactivefilter PROPERTY AUTOMOC ON)
 install(
   TARGETS qucsactivefilter
   BUNDLE DESTINATION bin COMPONENT Runtime

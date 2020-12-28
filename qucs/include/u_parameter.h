@@ -211,7 +211,7 @@ void e_val(T* p, const T& def, const CARD_LIST*)
 class INTERFACE PARAM_LIST {
 private:
   mutable std::map<std::string, PARAMETER<double> > _pl;
-  PARAM_LIST* _try_again; // if you don't find it, also look here
+  PARAM_LIST* _try_again{nullptr}; // if you don't find it, also look here
 public:
   typedef std::map<std::string, PARAMETER<double> >::const_iterator
 		const_iterator;

@@ -46,8 +46,8 @@ class qf_poly
   qpr rep;		        // Type of representation
   unsigned d;			// Current degree
   qf_double_t krts;		// Constant k
-  qf_double_t * p;		// Table of coefficients
-  qf_double_t * rts;		// Table of complex roots
+  qf_double_t * p{nullptr};		// Table of coefficients
+  qf_double_t * rts{nullptr};		// Table of complex roots
 
   // Functions used by solve
   void qf_bcm (qf_matrix &);

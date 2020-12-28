@@ -52,7 +52,7 @@ public:
 	  return new WireLabel(*this);
   }
 
-  Conductor *pOwner;  // Wire or Node where label belongs to
+  Conductor *pOwner{nullptr};  // Wire or Node where label belongs to
   QString initValue;
 
   void    paint(ViewPainter*) const;
@@ -71,7 +71,7 @@ public: // FIXME
 //	int & y2__() {incomplete(); return y2; }
 
 private:
-  bool isHighlighted;
+  bool isHighlighted{false};
 
 };
 

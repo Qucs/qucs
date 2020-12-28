@@ -46,11 +46,11 @@ private slots:
   void slotSetFillColor();
 
 public:
-  QLabel        *FillLabel1, *FillLabel2;
-  QCheckBox     *CheckFilled;
-  QLineEdit     *LineWidth;
-  QPushButton   *ColorButt, *FillColorButt;
-  QComboBox     *StyleBox, *FillStyleBox;
+  QLabel        *FillLabel1{nullptr}, *FillLabel2{nullptr};
+  QCheckBox     *CheckFilled{nullptr};
+  QLineEdit     *LineWidth{nullptr};
+  QPushButton   *ColorButt{nullptr}, *FillColorButt{nullptr};
+  QComboBox     *StyleBox{nullptr}, *FillStyleBox{nullptr};
 
   QVBoxLayout   *all;
   QIntValidator *val100;

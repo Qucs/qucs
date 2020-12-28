@@ -79,17 +79,17 @@ private:
 
   int ResultState;
 
-  QGridLayout *all, *gbox1, *gbox2, *gboxImage;
-  QGroupBox *box1, *box2, *boxImage;
-  QComboBox *ComboRealize, *ComboType, *ComboClass, *ComboCorner, *ComboStop, *ComboBandStop, *ComboEr;
-  QLineEdit *EditOrder, *EditCorner, *EditStop, *EditRipple, *EditImpedance, *EditThickness, *EditHeight, *EditMinWidth, *EditMaxWidth;
-  QLineEdit *EditAtten, *EditBandStop;
-  QLabel *LabelRipple, *LabelRipple_dB, *LabelStart, *LabelStop, *LabelResult;
-  QLabel *LabelAtten, *LabelAtten_dB, *LabelBandStop, *LabelOrder, *LabelImpedance, *LabelOhm;
-  QIntValidator *IntVal;
-  QDoubleValidator *DoubleVal;
-  QSvgWidget *imgLayout;
-  QCheckBox * MicrostripcheckBox;
+  QGridLayout *all{nullptr}, *gbox1{nullptr}, *gbox2{nullptr}, *gboxImage{nullptr};
+  QGroupBox *box1{nullptr}, *box2{nullptr}, *boxImage{nullptr};
+  QComboBox *ComboRealize{nullptr}, *ComboType{nullptr}, *ComboClass{nullptr}, *ComboCorner{nullptr}, *ComboStop{nullptr}, *ComboBandStop{nullptr}, *ComboEr;
+  QLineEdit *EditOrder{nullptr}, *EditCorner{nullptr}, *EditStop{nullptr}, *EditRipple{nullptr}, *EditImpedance{nullptr}, *EditThickness{nullptr}, *EditHeight{nullptr}, *EditMinWidth{nullptr}, *EditMaxWidth{nullptr};
+  QLineEdit *EditAtten{nullptr}, *EditBandStop{nullptr};
+  QLabel *LabelRipple{nullptr}, *LabelRipple_dB{nullptr}, *LabelStart{nullptr}, *LabelStop{nullptr}, *LabelResult{nullptr};
+  QLabel *LabelAtten{nullptr}, *LabelAtten_dB{nullptr}, *LabelBandStop{nullptr}, *LabelOrder{nullptr}, *LabelImpedance{nullptr}, *LabelOhm{nullptr};
+  QIntValidator *IntVal{nullptr};
+  QDoubleValidator *DoubleVal{nullptr};
+  QSvgWidget *imgLayout{nullptr};
+  QCheckBox * MicrostripcheckBox{nullptr};
 };
 
 #endif

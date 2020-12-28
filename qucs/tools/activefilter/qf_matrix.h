@@ -44,7 +44,7 @@ class qf_matrix
   unsigned int n;
 
  private:
-  qf_double_t * data;
+  qf_double_t * data{nullptr};
 };
 
 #endif // _QF_MATRIX_H

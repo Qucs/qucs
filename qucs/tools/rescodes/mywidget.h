@@ -37,9 +37,9 @@ struct tQucsSettings {
 class MyWidget: public QMainWindow
 {
 	Q_OBJECT
-	QResistor *res;
-	MyResistanceBox *resBox;
-	MyColorBox *colorBox;
+	QResistor *res{nullptr};
+	MyResistanceBox *resBox{nullptr};
+	MyColorBox *colorBox{nullptr};
 
 	public:
 		MyWidget();

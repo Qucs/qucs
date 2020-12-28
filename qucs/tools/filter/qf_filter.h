@@ -86,7 +86,7 @@ class qf_filter
   qf_poly BD;			// B(w) susceptance of filter
 
   unsigned ncomp;		// Number of components
-  qfc * Comp;			// Table of components
+  qfc * Comp{nullptr};			// Table of components
 
 public:
   qf_filter (void);		// Default init

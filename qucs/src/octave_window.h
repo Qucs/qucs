@@ -38,9 +38,9 @@ protected:
   bool eventFilter(QObject *obj, QEvent *event);
 
 private:
-  QTextEdit *output;
+  QTextEdit *output{nullptr};
   QProcess octProcess;
-  QLineEdit *input;
+  QLineEdit *input{nullptr};
   QStringList cmdHistory;
   int histPosition;
 };

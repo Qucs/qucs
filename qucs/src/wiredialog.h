@@ -44,13 +44,13 @@ protected slots:
     bool eventFilter(QObject *obj, QEvent *event);
 
 private:
-  QValidator* _labelValidator;
-  QVBoxLayout* _all;
-  QLineEdit *CompNameEdit;
+  QValidator* _labelValidator{nullptr};
+  QVBoxLayout* _all{nullptr};
+  QLineEdit *CompNameEdit{nullptr};
 //  QLineEdit   *edit, *NameEdit;
-  ElementGraphics* _gfx;
-  Symbol const* _comp;
-  bool _changed;
+  ElementGraphics* _gfx{nullptr};
+  Symbol const* _comp{nullptr};
+  bool _changed{false};
 };
 
 #endif

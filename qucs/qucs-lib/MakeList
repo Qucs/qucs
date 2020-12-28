@@ -1,2 +1,12 @@
 
 EXTRA_DIST = 
+
+SRCS = \
+	main.cpp \
+	qucslib.cpp \
+	displaydialog.cpp \
+	symbolwidget.cpp \
+	librarydialog.cpp
+	
+RESOURCES = \
+	qucslib_.qrc

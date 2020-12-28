@@ -4,4 +4,10 @@ EXTRA_DIST = \
 	qucsator.h \
 	dat.h
 
+<<<<<<< HEAD
 RAW_SRC =
+=======
+RAW_SRC = \
+    dat.cpp \
+    qucsator.cpp
+>>>>>>> 78f03df0a (Add CMake and flatpak build support)

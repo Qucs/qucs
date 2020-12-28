@@ -60,8 +60,8 @@ public:
   QucsLib();
   ~QucsLib();
 
-  QListWidget *CompList;
-  QComboBox    *Library;
+  QListWidget *CompList{nullptr};
+  QComboBox    *Library{nullptr};
 
 private slots:
   void slotAbout();
@@ -84,10 +84,10 @@ private:
 
   int UserLibCount;
   int libCurIdx;
-  SymbolWidget *Symbol;
-  QTextEdit    *CompDescr;
-  QVBoxLayout  *all;
-  QLineEdit *CompSearch;
+  SymbolWidget *Symbol{nullptr};
+  QTextEdit    *CompDescr{nullptr};
+  QVBoxLayout  *all{nullptr};
+  QLineEdit *CompSearch{nullptr};
 };
 
 #endif /* QUCSLIB_H */

@@ -46,7 +46,7 @@ public:
   void set_scope(SchematicModel* s){_scope = s;}
   const std::string& s()const {return _s;}
 private:
-  SchematicModel* _scope;
+  SchematicModel* _scope{nullptr};
 };
 /*--------------------------------------------------------------------------*/
 inline SchematicModel* DEV_DOT::scope()

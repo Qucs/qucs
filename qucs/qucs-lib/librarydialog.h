@@ -48,13 +48,13 @@ private:
 
   QList <QRadioButton*>  radioButton;
 
-  QVBoxLayout *all;   // the mother of all widgets
+  QVBoxLayout *all{nullptr};   // the mother of all widgets
   //Q3VBox *Dia_Box;
-  QLabel *theLabel;
-  QLineEdit *NameEdit;
+  QLabel *theLabel{nullptr};
+  QLineEdit *NameEdit{nullptr};
   //Q3VButtonGroup  *toggleGroup;
-  QGroupBox *Group;
-  QPushButton *ButtDelete, *ButtRename, *ButtClose;
+  QGroupBox *Group{nullptr};
+  QPushButton *ButtDelete{nullptr}, *ButtRename{nullptr}, *ButtClose{nullptr};
 
   QRegExp Expr;
   QRegExpValidator *Validator;

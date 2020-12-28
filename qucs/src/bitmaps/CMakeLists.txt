@@ -1,4 +1,4 @@
-include(../../cmake/readMakeList.txt)
+include(${CMAKE_CURRENT_SOURCE_DIR}/../../../cmake/readMakeList.txt)
 
 readVariable(MakeList XPMS XPMS_)
 
@@ -8,6 +8,6 @@ readVariable(MakeList PNGS PNGS_)
 # application images
 readVariable(MakeList ICONS ICONS_)
 
-# INSTALL(FILES ${XPMS_} DESTINATION share/qucs/bitmaps/) INSTALL(FILES ${PNGS_}
-# DESTINATION share/qucs/bitmaps/) INSTALL(FILES ${ICONS_} DESTINATION
-# share/qucs/bitmaps/)
+install(FILES ${CMAKE_CURRENT_SOURCE_DIR}/${XPMS_} DESTINATION share/qucs/bitmaps/)
+install(FILES ${CMAKE_CURRENT_SOURCE_DIR}/${PNGS_} DESTINATION share/qucs/bitmaps/)
+install(FILES ${CMAKE_CURRENT_SOURCE_DIR}/${ICONS_} DESTINATION share/qucs/bitmaps/)

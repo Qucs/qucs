@@ -67,25 +67,25 @@ private:
   void createASCOFiles();
 
 public:
-  Optimize_Sim *Comp;
-  SchematicDoc *Doc;
+  Optimize_Sim *Comp{nullptr};
+  SchematicDoc *Doc{nullptr};
   bool changed;
   int numPrec;
 
-  QVBoxLayout *all;
-  QLineEdit *NameEdit, *VarNameEdit,
-            *VarInitEdit, *VarMinEdit, *VarMaxEdit,
-            *IterEdit, *RefreshEdit, *ParentsEdit, *ConstEdit, *CrossEdit,
-            *SeedEdit, *CostVarEdit, *CostObjEdit, *CostConEdit,
-            *GoalNameEdit, *GoalNumEdit;
-  QCheckBox *VarActiveCheck;
-  QComboBox *SimEdit, *GoalTypeCombo, *MethodCombo, *VarTypeCombo;
-  QTableWidget *VarTable, *GoalTable;
+  QVBoxLayout *all{nullptr};
+  QLineEdit *NameEdit{nullptr}, *VarNameEdit{nullptr},
+            *VarInitEdit{nullptr}, *VarMinEdit{nullptr}, *VarMaxEdit{nullptr},
+            *IterEdit{nullptr}, *RefreshEdit{nullptr}, *ParentsEdit{nullptr}, *ConstEdit{nullptr}, *CrossEdit{nullptr},
+            *SeedEdit{nullptr}, *CostVarEdit{nullptr}, *CostObjEdit{nullptr}, *CostConEdit{nullptr},
+            *GoalNameEdit{nullptr}, *GoalNumEdit{nullptr};
+  QCheckBox *VarActiveCheck{nullptr};
+  QComboBox *SimEdit{nullptr}, *GoalTypeCombo{nullptr}, *MethodCombo{nullptr}, *VarTypeCombo{nullptr};
+  QTableWidget *VarTable{nullptr}, *GoalTable{nullptr};
 
   QRegExp Expr;
-  QRegExpValidator *Validator;
-  QDoubleValidator *numVal;
-  QIntValidator *intVal;
+  QRegExpValidator *Validator{nullptr};
+  QDoubleValidator *numVal{nullptr};
+  QIntValidator *intVal{nullptr};
 };
 
 #endif

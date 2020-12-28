@@ -26,7 +26,7 @@ class qf_cauer: public qf_filter {
   unsigned	      m;
   qf_double_t	      Ws;
   qf_double_t	      rho;
-  Rvector *	      zr;
+  Rvector *	      zr{nullptr};
 
 		      qf_cauer	    (qf_spec*);
 

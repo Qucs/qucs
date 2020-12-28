@@ -45,13 +45,13 @@ private slots:
   void slotCancel();
 
 private:
-  QPushButton *ButtonOk, *ButtonCancel, *ButtonMore;
-  QGridLayout *gbox;
-  QRegExpValidator *Validator1, *Validator2;
+  QPushButton *ButtonOk{nullptr}, *ButtonCancel{nullptr}, *ButtonMore{nullptr};
+  QGridLayout *gbox{nullptr};
+  QRegExpValidator *Validator1{nullptr}, *Validator2{nullptr};
   QRegExp      Expr1, Expr2;
-  QLabel      *Label2;
+  QLabel      *Label2{nullptr};
 
-  WireLabel *pLabel;
+  WireLabel *pLabel{nullptr};
 };
 
 #endif

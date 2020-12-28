@@ -46,17 +46,17 @@ private slots:
   void slotApply();
 
 public:
-  SchematicDoc *Doc;
+  SchematicDoc *Doc{nullptr};
 
-  QComboBox *Combo_Frame;
-  QTextEdit *Input_Frame0;
-  QLineEdit *Input_Frame1, *Input_Frame2, *Input_Frame3;
-  QLineEdit *Input_DataSet, *Input_DataDisplay, *Input_Script;
-  QLineEdit *Input_GridX, *Input_GridY;
-  QCheckBox *Check_OpenDpl, *Check_GridOn, *Check_RunScript;
+  QComboBox *Combo_Frame{nullptr};
+  QTextEdit *Input_Frame0{nullptr};
+  QLineEdit *Input_Frame1{nullptr}, *Input_Frame2{nullptr}, *Input_Frame3{nullptr};
+  QLineEdit *Input_DataSet{nullptr}, *Input_DataDisplay{nullptr}, *Input_Script{nullptr};
+  QLineEdit *Input_GridX{nullptr}, *Input_GridY{nullptr};
+  QCheckBox *Check_OpenDpl{nullptr}, *Check_GridOn{nullptr}, *Check_RunScript{nullptr};
 
-  QVBoxLayout *all;
-  QRegExpValidator *valExpr;
+  QVBoxLayout *all{nullptr};
+  QRegExpValidator *valExpr{nullptr};
 };
 
 class AuxFilesDialog : public QDialog {
@@ -71,8 +71,8 @@ private slots:
   void slotDoubleClick(const QModelIndex &);
 
 private:
-  QFileSystemModel *model;
-  QTreeView *tree;
+  QFileSystemModel *model{nullptr};
+  QTreeView *tree{nullptr};
 };
 
 #endif

@@ -68,15 +68,15 @@ class SaveDialog : public QDialog
       
       QMap<QucsDoc*,QListWidgetItem*> unsavedDocs;
             
-      QLabel* label;
-      QListWidget* fileView;
-      QPushButton* abortClosingButton;
-      QPushButton* dontSaveButton;
-      QPushButton* saveSelectedButton;
-      QBoxLayout* SaveDialogLayout;
-      QHBoxLayout* buttonsLayout;
-      QSpacerItem* spacer;
-      QucsApp *app;
+      QLabel* label{nullptr};
+      QListWidget* fileView{nullptr};
+      QPushButton* abortClosingButton{nullptr};
+      QPushButton* dontSaveButton{nullptr};
+      QPushButton* saveSelectedButton{nullptr};
+      QBoxLayout* SaveDialogLayout{nullptr};
+      QHBoxLayout* buttonsLayout{nullptr};
+      QSpacerItem* spacer{nullptr};
+      QucsApp *app{nullptr};
 };
 
 #endif // SAVEDIALOG_H

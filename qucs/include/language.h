@@ -20,7 +20,8 @@ class DocumentLanguage : public Object{
 protected:
         DocumentLanguage() : Object(){}
 public:
-        virtual ~DocumentLanguage() {}
+  virtual ~DocumentLanguage() {}
+  Object::Type type() const override {return Object::Type::Language;}
 // virtual void parse(DocumentStream& stream, SchematicModel*) const=0;
   virtual void printItem(ostream_t&, Element const*) const;
 

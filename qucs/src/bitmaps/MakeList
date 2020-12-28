@@ -161,7 +161,8 @@ PNGS = \
     forward.png \
     home.png \
     previous.png \
-    next.png # close_tab.png clearFilterText.png sub.png textbold.png
+    next.png \
+    # close_tab.png clearFilterText.png sub.png textbold.png
              # textitalic.png \
     # textleft.png textright.png super.png textcenter.png textjustify.png \
     text.png

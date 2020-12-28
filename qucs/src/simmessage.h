@@ -80,7 +80,7 @@ private:
 //  void nextSPICE();
   void startSimulator(std::string const& which);
 //  Component * findOptimization(SchematicDoc *);
-  QPlainTextEdit *ProgText, *ErrText;
+  QPlainTextEdit *ProgText{nullptr}, *ErrText{nullptr};
   bool           wasLF;   // linefeed for "ProgText"
   bool           simKilled; // true if simulation was aborted by the user
 
@@ -100,10 +100,10 @@ signals:
 private:
 	QString        ProgressText;
 
-	Component      *SimOpt;
+	Component      *SimOpt{nullptr};
 	int            SimPorts;
 	bool           makeSubcircuit, insertSim;
-	Simulator* _sim;
+	Simulator* _sim{nullptr};
 
 public:
   QWidget const* _docWidget;
@@ -112,15 +112,15 @@ public:
   bool SimRunScript;
   QString DocName, DataDisplay, Script;
 
-	QPushButton    *Display, *Abort;
-	QProgressBar   *SimProgress;
+	QPushButton    *Display{nullptr}, *Abort{nullptr};
+	QProgressBar   *SimProgress{nullptr};
 
-  QVBoxLayout  *all;
+	 QVBoxLayout  *all{nullptr};
 protected:
   QString Program;
 
 private:
-  Simulator* _simulator;
+  Simulator* _simulator{nullptr};
   Simulator::state_t oldState;
   // std::string _what;
 }; // SimMessage

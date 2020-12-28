@@ -137,13 +137,11 @@ void attach_single(std::string const& what)
 void attach_default_plugins()
 {
   attach_single("legacy");
-//  attach_single("legacy-misc");
-  attach_single("legacy/qucsator");
-
-  attach_single("legacy/components");
-  attach_single("legacy/paintings");
-  attach_single("legacy/libfiles");
-  attach_single("plugins/misc");
+  attach_single("legacy/libqucsatorInterface");
+  attach_single("legacy/libcomponents");
+  attach_single("legacy/libpaintings");
+  attach_single("legacy/liblibfiles");
+  attach_single("plugins/libmisc");
  // attach_single(pp, "libdialogs" SOEXT);
  //
  //
@@ -178,10 +176,10 @@ int main(int argc, char *argv[])
   qInstallMsgHandler(qucsMessageHandler);
   QucsVersion = VersionTriplet(PACKAGE_VERSION);
 
-  QFile qf(":/bitmaps/doesnotexist.png");
-  assert(!qf.exists());
-  QFile qfl(":/bitmaps/line.png");
-  assert(qfl.exists());
+//  QFile qf(":/bitmaps/doesnotexist.png");
+//  assert(!qf.exists());
+//  QFile qfl(":/bitmaps/line.png");
+//  assert(qfl.exists());
 
   loadSettings();
 

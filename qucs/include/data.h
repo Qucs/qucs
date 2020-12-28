@@ -36,7 +36,7 @@ public: // only called from Graph. cleanup later.
 	}
 public: // ??
 	std::string Var;
-	double *Points;
+	double *Points{nullptr};
 	int     count;
 
 private:
@@ -73,6 +73,8 @@ public:
 public:
 	SimOutputData() : QucsData() {}
 	virtual ~SimOutputData(){}
+
+	Object::Type type() const override {return Object::Type::SimOutputData;}
 
 public: // obsolete interface. don't use.
   virtual DataX const* axis(uint ) const { return nullptr; } // if (i<axis_count) return CPointsX.at(i); return NULL;}
@@ -111,7 +113,7 @@ public:
 // a sequence of double pairs (with a name on it)
 class SimOutputWave : public SimOutputData{
 private:
-	SimOutputSeq* dep;
+	SimOutputSeq* dep{nullptr};
 };
 #endif
 

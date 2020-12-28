@@ -68,7 +68,7 @@ public:
   mutable int  tx, ty;   // upper left corner of text (position)
   int  x2, y2;
 
-  bool showName;
+  bool showName{true};
   QString  Name;
   QString  Description;
 

@@ -78,17 +78,17 @@ protected:
     bool eventFilter(QObject *obj, QEvent *event);
 
 private:
-    QLabel *iconPixmap;
-    QLabel* label;
-    QListWidget* fileView;
-    QBoxLayout* LoadDialogLayout;
-    QHBoxLayout* buttonsLayout;
-    QSpacerItem* spacer;
-    QucsApp *app;
+    QLabel *iconPixmap{nullptr};
+    QLabel* label{nullptr};
+    QListWidget* fileView{nullptr};
+    QBoxLayout* LoadDialogLayout{nullptr};
+    QHBoxLayout* buttonsLayout{nullptr};
+    QSpacerItem* spacer{nullptr};
+    QucsApp *app{nullptr};
 
-    QPushButton *ButtOk, *ButtCancel,
-                *ButtSelectAll, *ButtSelectNone,
-                *ButtChangeIcon;
+    QPushButton *ButtOk{nullptr}, *ButtCancel{nullptr},
+                *ButtSelectAll{nullptr}, *ButtSelectNone{nullptr},
+                *ButtChangeIcon{nullptr};
 };
 
 #endif // LOADDIALOG_H

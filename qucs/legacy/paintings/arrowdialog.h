@@ -42,13 +42,13 @@ private slots:
 public:
   // TODO: I'm not sure whether declaring all this as public is really a good idea :-(
   // data encapsulation => make this stuff private & provide getter & setter methods...
-  QLineEdit    *LineWidth, *HeadWidth, *HeadLength;
-  QPushButton  *ColorButt;
-  QComboBox    *StyleBox, *ArrowStyleBox;
+  QLineEdit    *LineWidth{nullptr}, *HeadWidth{nullptr}, *HeadLength{nullptr};
+  QPushButton  *ColorButt{nullptr};
+  QComboBox    *StyleBox{nullptr}, *ArrowStyleBox{nullptr};
   Qt::PenStyle LineStyle;
 
-  QGridLayout   *all;
-  QIntValidator *val100;
+  QGridLayout   *all{nullptr};
+  QIntValidator *val100{nullptr};
 };
 
 #endif

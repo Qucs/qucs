@@ -182,6 +182,11 @@ qucsactivefilter
 
 CMakeFiles
 CMakeCache.txt
-*.cmake
 *.depends
 /qucs-doc/technical/octave-workspace
+*build*
+
+# Flatpak #
+###########
+.flatpak-builder
+contrib/linux/flatpak/Qucs

@@ -54,7 +54,7 @@ class transline {
   double skin_depth();
 
  private:
-  QucsTranscalc * app;
+  QucsTranscalc * app{nullptr};
 };
 
 #endif /* __TRANSLINE_H */

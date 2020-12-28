@@ -17,6 +17,9 @@
 #define QUCS_OBJECT_H
 #include "io_trace.h"
 
+#define CreateType(firstDerivative, secondDerivative, thirdDerivative) \
+	(unsigned long long)thirdDerivative << 7*8 | secondDerivative << 3*8 << firstDerivative
+
 // base object for qucs.
 class Object{
 public:
@@ -28,12 +31,49 @@ public:
 		QucsMsgCritical=4,
 		QucsMsgFatal=5
 	};
+
+	/*!
+		* \brief The ObjectType enum
+		* Defines which type of object it is.
+		* It is used to not have to use dynamic_cast, but only
+		* the type can be requested
+		* The type consists of four bytes.
+		* The lowest 3 bytes iare the base class which builds directly
+		* on Object class (maximum 24). The next 4 bytes are the objects which build
+		* on top of these first object and so on (maximum 32). And the highest byte is for a third inheritance.
+		* So a maximum inheritance of 3 is possible, but I think this should be enough
+		*/
+	typedef enum class Type_T: unsigned long long {
+		 QucsDoc = CreateType(1, 0, 0),
+		    TextDoc = CreateType(QucsDoc, 1, 0),
+		    SchematicDoc = CreateType(QucsDoc, 2, 0),
+		 Element = CreateType(2, 0, 0),
+		     Marker = CreateType(Element, 1, 0),
+		 QucsData = CreateType(4, 0, 0),
+		     SimOutputDir = CreateType(QucsData, 1, 0),
+		         SimOutputRoot = CreateType(QucsData, SimOutputDir, 1),
+		     SimOutputData = CreateType(QucsData, 2, 0),
+		         SimOutputDatVar = CreateType(QucsData, SimOutputData, 1),
+
+
+		 Command = CreateType(8, 0, 0),
+		     Plugins = CreateType(Command, 1, 0),
+		 Net	= CreateType(0x10, 0, 0),
+		 Node = CreateType(0x11, 0, 0),
+		 CommonComponent = CreateType(0x12, 0, 0),
+		 Language = CreateType(0x14, 0, 0),
+		 Simulator = CreateType(0x18, 0, 0),
+		     LegacySimulator = CreateType(Simulator, 1, 0),
+
+	} Type;
+
 protected:
 	explicit Object(){}
 	explicit Object(Object const&){}
 
 public:
 	virtual ~Object(){}
+	virtual Object::Type type() const = 0;
 
 	std::string const& label() const{ return _label;}
 //	void setLabel(QString const& l) {_label = l.toStdString();}

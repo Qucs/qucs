@@ -1,0 +1,36 @@
+{
+  "app-id": "net.sourceforge.qucs.qucs",
+  "runtime": "org.kde.Platform",
+  "runtime-version": "5.15",
+  "sdk": "org.kde.Sdk",
+  "command": "qucs",
+  "rename-desktop-file": "qucs.desktop",
+  "rename-appdata-file": "qucs.appdata.xml",
+  "rename-icon": "qucs",
+  "finish-args": [
+    "--socket=wayland",
+	"--socket=x11",
+    "--filesystem=home",
+	"--filesystem=xdg-config/kdeglobals:ro"],	
+    "modules": [
+        "modules/perl_with_libxml.json",
+        "modules/adms_cmake.json",
+		{
+		"name": "qucs",
+		"buildsystem": "cmake",
+		"builddir": true,
+		"sources": [
+		  {
+			"type": "git",
+			"url": "/home/martin/GIT/qucs/",
+			"branch": "Cmake_rebase_2"
+		  }
+		],
+		"config-opts": [
+		    "-DCMAKE_INSTALL_PREFIX=/app",
+		    "-DBUILD_DOC:bool=false"
+		]
+		}
+    ]
+}
+

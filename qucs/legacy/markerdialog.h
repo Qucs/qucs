@@ -35,14 +35,14 @@ private slots:
   void slotAcceptValues();
 
 public:
-  Marker *pMarker;
+  Marker *pMarker{nullptr};
 
-  QComboBox  *NumberBox;
-  QLineEdit  *Precision;
-  QLineEdit  *SourceImpedance;
-  QCheckBox  *TransBox;
-  QWidget *ZYSelectBox;
-  QCheckBox *ZCheckBox, *YCheckBox, *ZSCheckBox, *ZPCheckBox;
+  QComboBox  *NumberBox{nullptr};
+  QLineEdit  *Precision{nullptr};
+  QLineEdit  *SourceImpedance{nullptr};
+  QCheckBox  *TransBox{nullptr};
+  QWidget *ZYSelectBox{nullptr};
+  QCheckBox *ZCheckBox{nullptr}, *YCheckBox{nullptr}, *ZSCheckBox{nullptr}, *ZPCheckBox{nullptr};
 };
 
 #endif

@@ -41,7 +41,7 @@ public:
   void setFitToPage(bool _fitToPage) { fitToPage = _fitToPage; };
 private:
   bool fitToPage;
-  QPrinter *Printer;
+  QPrinter *Printer{nullptr};
 };
 
 #endif

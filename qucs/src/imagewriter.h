@@ -26,6 +26,8 @@
 #include <QString>
 
 class QWidget;
+class QucsDoc;
+class SchematicDoc;
 
 class ImageWriter
 {

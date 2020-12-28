@@ -43,6 +43,7 @@ public:
       }
     }
   }
+    Object::Type type() const override {return Object::Type::Plugins;}
 
   std::string compile(std::string what) const{
 	  // TODO: compile contents and return plugin name.
@@ -62,8 +63,9 @@ public:
     if (handle) {
       attach_list[what] = handle;
     }else{
+      std::string str(dlerror());
       std::cerr << "failed to attach " << what << " (" << errno << ")\n";
-      std::cerr << dlerror() << "\n";
+      std::cerr << "Error message: " <<dlerror() << "\n";
       exit(1); // temporary, should actually throw.
       //	throw Exception_something(dlerror());
     }

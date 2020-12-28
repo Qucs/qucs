@@ -53,8 +53,8 @@ public:
   void refresh();
   QStringList exportSchematic();
 private:
-  QStandardItemModel *m_model;
-  QFileSystemWatcher *watcher;
+  QStandardItemModel *m_model{nullptr};
+  QFileSystemWatcher *watcher{nullptr};
 
   bool m_valid;
   QString m_projPath;

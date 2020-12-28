@@ -32,20 +32,20 @@ class TransferFuncDialog : public QDialog
     Q_OBJECT
 
 private:
-    QLabel *lblA;
-    QLabel *lblB;
-    QLabel *imgTrfuncEq;
-    QTableWidget *tblA;
-    QTableWidget *tblB;
+    QLabel *lblA{nullptr};
+    QLabel *lblB{nullptr};
+    QLabel *imgTrfuncEq{nullptr};
+    QTableWidget *tblA{nullptr};
+    QTableWidget *tblB{nullptr};
 
-    QPushButton *btnAccept;
-    QPushButton *btnCancel;
+    QPushButton *btnAccept{nullptr};
+    QPushButton *btnCancel{nullptr};
 
-    QHBoxLayout *top;
-    QVBoxLayout *top1;
-    QVBoxLayout *low1;
-    QVBoxLayout *low2;
-    QHBoxLayout *low3;
+    QHBoxLayout *top{nullptr};
+    QVBoxLayout *top1{nullptr};
+    QVBoxLayout *low1{nullptr};
+    QVBoxLayout *low2{nullptr};
+    QHBoxLayout *low3{nullptr};
 
 public:
     explicit TransferFuncDialog(QVector<long double> &a, QVector<long double> &b, QWidget *parent = 0);

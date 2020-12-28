@@ -80,35 +80,35 @@ protected slots:
     bool eventFilter(QObject *obj, QEvent *event);
 
 private:
-  QVBoxLayout *_all;
-  QValidator  *Validator, *ValRestrict, *Validator2;
+  QVBoxLayout *_all{nullptr};
+  QValidator  *Validator{nullptr}, *ValRestrict{nullptr}, *Validator2{nullptr};
   QRegExp     Expr;
-  QIntValidator *ValInteger;
-  QTableWidget  *prop;
-  QLineEdit   *edit, *NameEdit, *CompNameEdit;
-  QComboBox   *ComboEdit;
-  QLabel      *Name, *Description;
-  QPushButton *BrowseButt, *EditButt, *ButtAdd, *ButtRem;
-  QPushButton *ButtUp, *ButtDown;
-  QCheckBox   *disp;
+  QIntValidator *ValInteger{nullptr};
+  QTableWidget  *prop{nullptr};
+  QLineEdit   *edit{nullptr}, *NameEdit{nullptr}, *CompNameEdit{nullptr};
+  QComboBox   *ComboEdit{nullptr};
+  QLabel      *Name{nullptr}, *Description{nullptr};
+  QPushButton *BrowseButt{nullptr}, *EditButt{nullptr}, *ButtAdd{nullptr}, *ButtRem{nullptr};
+  QPushButton *ButtUp{nullptr}, *ButtDown{nullptr};
+  QCheckBox   *disp{nullptr};
   bool        changed;
   int         tx_Dist, ty_Dist;   // remember the text position
   bool        setAllVisible; // used for toggling visibility of properties
  
-  QLabel    *textType;
-  QLabel    *textSim, *textParam, *textValues, *textStart, *textStop,
-            *textStep, *textNumber;
-  QLineEdit *editParam, *editValues, *editStart, *editStop,
-            *editStep, *editNumber;
-  QCheckBox *checkSim, *checkParam, *checkValues, *checkStart, *checkStop,
-            *checkNumber, *checkType, *showName;
-  QComboBox *comboSim, *comboType;
+  QLabel    *textType{nullptr};
+  QLabel    *textSim{nullptr}, *textParam{nullptr}, *textValues{nullptr}, *textStart{nullptr}, *textStop{nullptr},
+            *textStep{nullptr}, *textNumber{nullptr};
+  QLineEdit *editParam{nullptr}, *editValues{nullptr}, *editStart{nullptr}, *editStop{nullptr},
+            *editStep{nullptr}, *editNumber{nullptr};
+  QCheckBox *checkSim{nullptr}, *checkParam{nullptr}, *checkValues{nullptr}, *checkStart{nullptr}, *checkStop{nullptr},
+            *checkNumber{nullptr}, *checkType{nullptr}, *showName{nullptr};
+  QComboBox *comboSim{nullptr}, *comboType{nullptr};
 
   void updateCompPropsList(void);
 
 private:
-  ElementGraphics* _gfx;
-  TaskElement const* _comp;
+  ElementGraphics* _gfx{nullptr};
+  TaskElement const* _comp{nullptr};
 };
 
 #endif

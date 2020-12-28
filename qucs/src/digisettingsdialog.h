@@ -46,9 +46,9 @@ private slots:
   void slotChangeMode(int);
 
 private:
-  TextDoc *Doc;
+  TextDoc *Doc{nullptr};
   QRegExp Expr;
-  QRegExpValidator *Validator;
+  QRegExpValidator *Validator{nullptr};
 };
 
 #endif

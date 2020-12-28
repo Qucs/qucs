@@ -1,0 +1,85 @@
+[
+    {
+    "type": "archive",
+    "dest": "perl-libs/XMLSAXException",
+    "sha256": "66cb355ba4ef47c10ca738bd35999723644386ac853abbeb5132841f5e8a2ad0",
+    "url": "https://cpan.metacpan.org/authors/id/G/GR/GRANTM/XML-SAX-Base-1.09.tar.gz"
+    },
+    {
+    "type": "archive",
+    "dest": "perl-libs/CaptureTiny",
+    "sha256": "6c23113e87bad393308c90a207013e505f659274736638d8c79bac9c67cc3e19",
+    "url": "https://cpan.metacpan.org/authors/id/D/DA/DAGOLDEN/Capture-Tiny-0.48.tar.gz"
+    },
+    {
+    "type": "archive",
+    "dest": "perl-libs/FileChdir",
+    "sha256": "efc121f40bd7a0f62f8ec9b8bc70f7f5409d81cd705e37008596c8efc4452b01",
+    "url": "https://cpan.metacpan.org/authors/id/D/DA/DAGOLDEN/File-chdir-0.1010.tar.gz"
+    },
+    {
+    "type": "archive",
+    "dest": "perl-libs/pathTiny",
+    "sha256": "cd0f88f37a58fc3667ec065767fe01e73ee6efa18a112bfd3508cf6579ca00e1",
+    "url": "https://cpan.metacpan.org/authors/id/D/DA/DAGOLDEN/Path-Tiny-0.114.tar.gz"
+    },
+    {
+    "type": "archive",
+    "dest": "perl-libs/AlienBuild",
+    "sha256": "3000bcbe98482643f76bbcffce42fd48f24c63a6457f8aa2c1695f481ac9ed51",
+    "url": "https://cpan.metacpan.org/authors/id/P/PL/PLICEASE/Alien-Build-2.37.tar.gz"
+    },
+    {
+    "type": "archive",
+    "dest": "perl-libs/AlienLibXML2",
+    "sha256": "73b45244f0b5c36e5332c33569b82a1ab2c33e263f1d00785d2003bcaec68db3",
+    "url": "https://cpan.metacpan.org/authors/id/P/PL/PLICEASE/Alien-Libxml2-0.17.tar.gz"
+   },
+    {
+    "type": "archive",
+    "dest": "perl-libs/FileWhich",
+    "sha256": "b79dc2244b2d97b6f27167fc3b7799ef61a179040f3abd76ce1e0a3b0bc4e078",
+    "url": "https://cpan.metacpan.org/authors/id/P/PL/PLICEASE/File-Which-1.23.tar.gz"
+   },
+   {
+    "type": "archive",
+    "dest": "perl-libs/AlienBaseWrapper",
+    "sha256": "3000bcbe98482643f76bbcffce42fd48f24c63a6457f8aa2c1695f481ac9ed51",
+    "url": "https://cpan.metacpan.org/authors/id/P/PL/PLICEASE/Alien-Build-2.37.tar.gz"
+   },
+   {
+      "type": "archive",
+      "dest": "perl-libs/LibXML",
+      "sha256": "010ba395c38711f9c233ee23d0b0b18b761e6d99a762125f7e6180d068851619",
+      "url": "https://cpan.metacpan.org/authors/id/S/SH/SHLOMIF/XML-LibXML-2.0206.tar.gz"
+   },
+   {
+      "dest-filename": "perl-libs/install.sh",
+      "commands": [
+         "set -e",
+         "function make_install {",
+         "    mod_dir=$1",
+         "    echo Install module: $mod_dir",
+         "    cd $mod_dir",
+         "    if [ -f 'Makefile.PL' ]; then",
+         "        perl Makefile.PL && make install",
+         "    elif [ -f 'Build.PL' ]; then",
+         "        perl Build.PL && ./Build && ./Build install",
+         "    else",
+         "        echo 'No Makefile.PL or Build.PL found. Do not know how to install this module'",
+         "        exit 1",
+         "    fi",
+         "}",
+         "(make_install perl-libs/FileWhich)",
+         "(make_install perl-libs/AlienBuild)",
+         "(make_install perl-libs/FileChdir)",
+         "(make_install perl-libs/CaptureTiny)",
+         "(make_install perl-libs/pathTiny)",
+         "(make_install perl-libs/AlienLibXML2)",
+         "(make_install perl-libs/AlienBaseWrapper)",
+         "(make_install perl-libs/XMLSAXException)",
+         "(make_install perl-libs/LibXML)"
+      ],
+      "type": "script"
+   }
+]

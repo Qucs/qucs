@@ -38,22 +38,22 @@ protected: // Doc stuff
 
 public: // actions... private?
 	     // not yet. still toggled from outside
-	MouseAction* maDelete;
-	MouseAction* maSelect;
-	MouseAction* maWire;
-	MouseAction* maMirror;
-	MouseAction* maActivate;
-	MouseAction* maRotate;
-	MouseAction* maEditPaste;
-	MouseAction* maOnGrid;
-	MouseAction* maMirrorXaxis;
-	MouseAction* maMirrorYaxis;
-	MouseAction* maInsertGround;
-	MouseAction* maInsertElement;
-	MouseAction* maInsertPort;
-	MouseAction* maInsertEqn;
-	MouseAction* maZoomIn;
-	// MouseAction* maZoomOut; // not a mouseaction
+	MouseAction* maDelete{nullptr};
+	MouseAction* maSelect{nullptr};
+	MouseAction* maWire{nullptr};
+	MouseAction* maMirror{nullptr};
+	MouseAction* maActivate{nullptr};
+	MouseAction* maRotate{nullptr};
+	MouseAction* maEditPaste{nullptr};
+	MouseAction* maOnGrid{nullptr};
+	MouseAction* maMirrorXaxis{nullptr};
+	MouseAction* maMirrorYaxis{nullptr};
+	MouseAction* maInsertGround{nullptr};
+	MouseAction* maInsertElement{nullptr};
+	MouseAction* maInsertPort{nullptr};
+	MouseAction* maInsertEqn{nullptr};
+	MouseAction* maZoomIn{nullptr};
+	// MouseAction* maZoomOut{nullptr}; // not a mouseaction
 };
 /*--------------------------------------------------------------------------*/
 /*--------------------------------------------------------------------------*/

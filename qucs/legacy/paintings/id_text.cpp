@@ -38,48 +38,9 @@
 #include <QRegExp> // BUG
 
 #include "id_dialog.h" //for now.
+#include "id_text.h"
 
-namespace{
-
-struct SubParameter {
-  SubParameter(bool display_, const QString& Name_, const QString& Descr_)
-     : display(display_), Name(Name_), Description(Descr_) { Type = ""; };
-  SubParameter(bool display_, const QString& Name_, const QString& Descr_,
-	       const QString& Type_)
-     : display(display_), Name(Name_), Description(Descr_), Type(Type_) {};
-
-  bool display;
-  QString Name, Description, Type;
-};
-
-
-// not sure what this is.
-class ID_Text : public Painting  {
-public:
-  ID_Text(int cx_=0, int cy_=0);
-  ~ID_Text();
-  Element* clone() const{
-	  return new ID_Text(*this);
-  }
-
-  void paintScheme(SchematicDoc*);
-  void getCenter(int&, int&);
-
-  bool load(const QString&);
-  QString save();
-  QString saveCpp();
-  QString saveJSON();
-  void paint(ViewPainter*);
-  bool getSelected(float, float, float);
-
-  void rotate();
-  void mirrorX();
-  void mirrorY();
-  bool Dialog();
-
-  QString Prefix;
-  QList<SubParameter *> Parameter;
-};
+namespace {
 ID_Text D;
 Dispatcher<Painting>::INSTALL p(&painting_dispatcher, ".ID", &D);
 Module::INSTALL pp("paintings", &D);
@@ -272,5 +233,3 @@ bool ID_Text::Dialog()
   delete d;
   return true;
 }
-
-#include "id_dialog.cpp" //for now.

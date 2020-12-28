@@ -96,7 +96,7 @@ class c_microstrip : public transline {
 
 
  private:
-  microstrip * aux_ms;
+  microstrip * aux_ms{nullptr};
 };
 
 #endif /* _C_MICROSTRIP_H_ */
