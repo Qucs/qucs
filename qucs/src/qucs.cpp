@@ -1164,13 +1164,18 @@ void QucsApp::slotButtonProjOpen()
 }
 
 // ----------------------------------------------------------
-// Is called when project is double-clicked to open it.
+/*!
+ * \brief QucsApp::slotListProjOpen
+ * Is called when project is double-clicked to open it.
+ * \param idx Index of the item on which was clicked
+ */
 void QucsApp::slotListProjOpen(const QModelIndex &idx)
-{ untested();
+{
   QString dName = idx.data().toString();
   if (dName.endsWith("_prj")) { // it's a Qucs project
     openProject(QucsSettings.projsDir.filePath(dName));
   } else { // it's a normal directory
+    untested();
     // change projects directory to the selected one
     QucsSettings.projsDir.setPath(QucsSettings.projsDir.filePath(dName));
     readProjects();
