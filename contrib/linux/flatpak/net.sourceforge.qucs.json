@@ -1,5 +1,5 @@
 {
-  "app-id": "net.sourceforge.qucs",
+  "app-id": "net.sourceforge.qucs.qucs",
   "runtime": "org.kde.Platform",
   "runtime-version": "5.15",
   "sdk": "org.kde.Sdk",
