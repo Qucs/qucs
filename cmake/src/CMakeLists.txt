@@ -64,10 +64,12 @@ readVariable(${coreSchematicPath}/MakeList CPP_SRC QUCS_SRCS)
 #readVariable(${coreSchematicPath}/MakeList CPP_HEADERS QUCS_HDRS)
 readVariable(${coreSchematicPath}/MakeList UI_FILES QUCS_UI_FILES)
 readVariable(${coreSchematicPath}/MakeList DIALOG_SRC QUCS_DIALOG_SRC)
+readVariable(${coreSchematicPath}/MakeList DIALOG_SRC2 QUCS_DIALOG_SRC2)
 list(TRANSFORM QUCS_SRCS PREPEND ${coreSchematicPath}/)
 #list(TRANSFORM QUCS_HDRS PREPEND ${coreSchematicPath}/)
 list(TRANSFORM QUCS_UI_FILES PREPEND ${coreSchematicPath}/)
 list(TRANSFORM QUCS_DIALOG_SRC PREPEND ${coreSchematicPath}/)
+list(TRANSFORM QUCS_DIALOG_SRC2 PREPEND ${coreSchematicPath}/)
 
 #
 # Read variable to generate rules for building source files from bitmap resources
@@ -76,7 +78,8 @@ list(TRANSFORM QUCS_DIALOG_SRC PREPEND ${coreSchematicPath}/)
 #list(TRANSFORM QUCS_RESOURCES PREPEND ${coreSchematicPath}/)
 
 ## schematic library
-add_library(coreSchematic OBJECT ${QUCS_SRCS} ${QUCS_RESOURCES} ${QUCS_UI_FILES} ${QUCS_DIALOG_SRC})
+add_library(coreSchematic OBJECT ${QUCS_SRCS} ${QUCS_RESOURCES} ${QUCS_UI_FILES}
+	             ${QUCS_DIALOG_SRC} ${QUCS_DIALOG_SRC2})
 target_include_directories(coreSchematic PRIVATE ${PROJECT_SOURCE_DIR}/../../include)
 target_include_directories(coreSchematic PRIVATE ${coreSchematicPath})
 # the order of the links is important. At least the libraries without dependencies are added
