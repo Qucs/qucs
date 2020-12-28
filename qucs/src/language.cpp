@@ -75,15 +75,6 @@ void DocumentLanguage::new__instance(istream_t& cmd, Symbol* /*sckt?*/ owner,
 				new_instance->setOwner(owner); // owner is null, usually.
 				Element* o = parseItem(cmd, new_instance);
 
-				{ // BUG: not here.
-					if (auto c=dynamic_cast<Symbol*>(o)) {
-						for(unsigned i=0; i<c->numPorts(); ++i){
-							c->connectNode(i, Scope->nodes());
-						}
-					}else{
-					}
-				}
-
 				if (Element* x=dynamic_cast<Element*>(o)) {
 					Scope->push_back(x);
 				}else{
