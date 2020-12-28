@@ -82,6 +82,7 @@ static void parsePainting(QString Line, Painting*p)
 	}
 }
 /*--------------------------------------------------------------------------*/
+#if 0
 static bool PaintingListLoad(QString Line, PaintingList& List)
 { untested();
 	Painting *p=0;
@@ -130,6 +131,7 @@ static bool PaintingListLoad(QString Line, PaintingList& List)
 	// QMessageBox::critical(0, QObject::tr("Error"), QObject::tr("Format Error:\n'Painting' field is not closed!"));
 	return false;
 }
+#endif
 
 /*--------------------------------------------------------------------------*/
 /*--------------------------------------------------------------------------*/

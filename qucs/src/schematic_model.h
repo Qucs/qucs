@@ -38,11 +38,9 @@ class TaskElement;
 class PARAM_LIST;
 class NetLang;
 /*--------------------------------------------------------------------------*/
-class PaintingList;
 class WireList;
 class NodeMap;
 class DiagramList;
-class PaintingList;
 class CmdEltList;
 class ElementList;
 class Diagram;
@@ -78,16 +76,7 @@ public:
 	const_iterator end() const{return container::end();}
 };
 /*--------------------------------------------------------------------------*/
-// TODO: use generic list.
-class PaintingList : public Q3PtrList<Painting> {
-public:
-	void sizeOfAll(int& xmin, int& ymin, int& xmax, int& ymax) const;
-};
-/*--------------------------------------------------------------------------*/
-// Base class for all schematic models.
-// currently containging chunks/cruft from legacy Schematic implementation
-// reminiscent of "subckt", "cardlist" ...
-// TODO: rename to ElementList or CircuitModel, SymbolModel.
+// TODO: rename to ObjectList
 class SchematicModel{
 public: // stub
 	typedef ElementList::iterator iterator;
@@ -99,29 +88,13 @@ public:
 	~SchematicModel();
 public: // stuff saved from Schematic
 	void sizeOfAll(int&, int&, int&, int&, float) const;
-	//void simpleInsertComponent(Component* c);
-	//void simpleInserttaskElement(TaskElement* c);
-	//void simpleInsertWire(Wire*);
-	//void recreateSymbol(Symbol* s); // yikes.
-	// bool throughAllComps(ostream_t&, int&, QStringList&, QPlainTextEdit *, int,
-	// 		bool creatingLib, NetLang const&);
-	// bool createLibNetlist(ostream_t&, QPlainTextEdit*, int, NetLang const&);
-	// bool createSubNetlist(ostream_t&, int&, QStringList&, QPlainTextEdit*, int,
-	// 		bool creatingLib, NetLang const&);
-	// void throughAllNodes(unsigned& z) const;
-//	void propagateNode(Node* z) const;
 
 private:
 	void detachFromNode(Element* what, Node* from);
 
 public:
 	void collectDigitalSignals(void);
-//	QString createNetlist(ostream_t&, int, NetLang const&);
-//	void createSubNetlistPlain(ostream_t&, QPlainTextEdit*, int,
-//			bool creatingLib, NetLang const&);
-//	QFileInfo const& getFileInfo ()const;
 	void print(QPrinter*, QPainter*, bool, bool);
-//	void setFileInfo(QString FileName); // { FileInfo = QFileInfo(FileName); }
 	void setDevType(QString const& type); // BUG. move to parent.
 	QString const& devType() const;
 
@@ -129,11 +102,8 @@ public:
 	void setOwner(Element* s);
 	int  prepareNetlist(ostream_t&, QStringList&, QPlainTextEdit*,
 			bool creatingLib, NetLang const&);
-	// Component* loadComponent(const QString& _s, Component* c) const;
 	TaskElement* loadtaskElement(const QString& _s, TaskElement* c) const;
-//	bool loadPaintings(QTextStream*, PaintingList* p=NULL);
 	bool loadProperties(QTextStream*);
-	// bool loadComponents(QTextStream*);
 
 public: // not sure. leaves unconnected objects in the main container...
 	void connect(Symbol* c);
@@ -149,9 +119,6 @@ public: // container
 	void erase(Element* what);
 	size_t size() const{ return components().size(); }
 
-private: // used in erase?
-//	void       deleteComp(Component*c);
-
 public: // compat? test? debug?
 	size_t nodeCount() const{ return nodes().size(); }
 	unsigned numberOfNets() const{ return Nets.size(); }
@@ -162,18 +129,12 @@ public:
 
 public: // why?
 	Node* insertNode(int x, int y, Element* owner);
-//	void insertSymbolNodes(Symbol *c, bool noOptimize);
-
-private:
-//	void removeNode(Node const* n);
 
 public: // scene interaction
 	void toScene(QGraphicsScene& s, QList<ElementGraphics*>* l=nullptr) const;
 
 private:
-//	WireList& wires();
 	DiagramList& diagrams();
-	PaintingList& paintings();
 	ElementList& components(); // possibly "devices". lets see.
 	CmdEltList& commands();
 
@@ -188,7 +149,6 @@ public:
 //	WireList const& wires() const;
 	NodeMap const& nodes() const;
 	DiagramList const& diagrams() const;
-	PaintingList const& paintings() const;
 	ElementList const& components() const;
 
 	Symbol const* findProto(QString const& what) const;
@@ -217,7 +177,6 @@ public:
 
 private:
 	ElementList Components;
-	PaintingList Paintings;
 	NetList Nets;
 	NodeMap Nodes;
 	DiagramList Diagrams;
@@ -239,10 +198,10 @@ private:
 	mutable PARAM_LIST* _params;
 
 public: // for now.
-	friend class SchematicDoc;
-	friend class NodeMap;
-	friend class SchematicEdit;
-	friend class SchematicSymbol;
+//	friend class SchematicDoc;
+//	friend class NodeMap;
+//	friend class SchematicEdit;
+//	friend class SchematicSymbol;
 }; // schematicmodel
 /*--------------------------------------------------------------------------*/
 size_t numWires(SchematicModel const& m);

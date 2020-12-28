@@ -181,6 +181,7 @@ int SchematicDoc::copyWires(int& x1, int& y1, int& x2, int& y2,
 
 Marker* SchematicDoc::setMarker(int x, int y)
 {
+#if 0
   // only diagrams ...
   for(auto pd : diagrams()){
     if(Marker* m=pd->setMarker(x,y)){
@@ -188,6 +189,7 @@ Marker* SchematicDoc::setMarker(int x, int y)
       return m;
     }
   }
+#endif
   return NULL;
 }
 
