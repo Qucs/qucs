@@ -217,6 +217,7 @@ Node const* Symbol::portValue(unsigned i) const
 }
 /*--------------------------------------------------------------------------*/
 // same as Element::center?
+// if yes, this method can be remove
 pos_t Symbol::center()const
 {
 	return Element::center(); // pos_t(_cx, _cy);

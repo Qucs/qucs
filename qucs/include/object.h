@@ -49,6 +49,11 @@ public:
 		    SchematicDoc = CreateType(QucsDoc, 2, 0),
 		 Element = CreateType(2, 0, 0),
 		     Marker = CreateType(Element, 1, 0),
+             Symbol = CreateType(Element, 2, 0),
+                 Component = CreateType(Element, Symbol, 1),
+                     //MultiviewComponent = CreateType(Element, Symbol, Component, ...)
+             Diagram = CreateType(Element, 4, 0),
+                 RectDiagram = CreateType(Element, Diagram, 1),
 		 QucsData = CreateType(4, 0, 0),
 		     SimOutputDir = CreateType(QucsData, 1, 0),
 		         SimOutputRoot = CreateType(QucsData, SimOutputDir, 1),

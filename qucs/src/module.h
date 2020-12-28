@@ -34,8 +34,11 @@ typedef Element * (* pInfoVAFunc) (QString&, QString&, bool, QString);
 
 void guiRegisterElement (std::string const& category, Element const*);
 
-// sort of element wrapper for stuff displayed in the select menu.
-// each module is part of a Category. see below.
+/*!
+ * \brief The Module class
+ * sort of element wrapper for stuff displayed in the select menu.
+ * Each module is part of a Category. see below.
+ */
 class Module {
 public:
 	Module (Element const* e) : _e(e) { }
@@ -60,11 +63,25 @@ public:
 
 public:
 	// TODO: this is somewhat redundant...
+        /*!
+         * \brief The INSTALL class
+         * Install element into a specified category
+         * Every element must contain a variable of this class inside their source file (see
+         * capacitor.cpp for example)
+         * So the element gets registered and Qucs knows they are available and can be used in
+         * the simulator. So easily parts can be removed and added.
+         */
 	class INSTALL {
 	private:
 		const std::string _cat;
 		Element const* _p;
 	public:
+                /*!
+                 * \brief INSTALL
+                 * Install the element \p p into category \p cat
+                 * \param cat
+                 * \param p
+                 */
 		INSTALL(const std::string& cat, Element const* p) :
 			_cat(cat),
 			_p(p)
@@ -111,6 +128,11 @@ public:
 	Module* operator[](unsigned x) const{
 		return Content.at(x);
 	}
+    /*!
+     * \brief push_back
+     * Add new module to category.
+     * \param x
+     */
 	void push_back(Module* x){
 		// incomplete(); // must refresh gui.
 		Content.append(x);

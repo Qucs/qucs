@@ -64,6 +64,10 @@ public:
 
 };
 
+/*!
+ * \brief The Component class
+ *
+ */
 class Component : public Symbol {
 protected:
   Component(Component const&);
@@ -276,7 +280,9 @@ public: // BUG
 }; // Component
 
 
-
+/*!
+ * \brief The MultiViewComponent class
+ */
 class MultiViewComponent : public Component {
 public:
   MultiViewComponent(MultiViewComponent const&c) : Component(c) {}

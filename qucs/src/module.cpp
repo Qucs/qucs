@@ -270,6 +270,8 @@ static void REGISTER_COMP_1(std::string const& cat, std::string const& name)
   REGISTER_COMP_1 (QObject::tr("external sim components"),val)
 
 // waah. need one plugin per symbol list.
+// Not needed anymore, because the new approach is to register each element by it
+// self by creating a Module::INSTALL element in their source file
 void Module::registerModules (void) {
 
   // lumped components

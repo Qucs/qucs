@@ -45,7 +45,7 @@ protected:
   explicit COMMON_COMPONENT(int c);
 public:
   virtual ~COMMON_COMPONENT();
-  Object::Type type() const override {return Object::Type::CommonComponent;}
+  Object::Type type() const {return Object::Type::CommonComponent;}
 
   void attach_model(const Symbol*)const;
 //  COMMON_COMPONENT& attach(const MODEL_CARD* m) {_model = m; return *this;}
@@ -99,6 +99,7 @@ protected: // Element
 
 public: // Element
 	pos_t center()const override;
+        Object::Type type() const {return Object::Type::Symbol;}
 
 public:
 	// what is this?
