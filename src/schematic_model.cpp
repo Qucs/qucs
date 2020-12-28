@@ -115,8 +115,17 @@ Element* SchematicModel::detach(Element* what)
 	return what;
 }
 /*--------------------------------------------------------------------------*/
+// stash object and keep track of label.
+void SchematicModel::push_back(Element* what)
+{
+	_map.insert(std::make_pair(what->label(), what));
+	components().append(what);
+}
+/*--------------------------------------------------------------------------*/
+// BUG: connect and push_back in one go. don't use.
 void SchematicModel::pushBack(Element* what)
 {
+	incomplete();
 	_map.insert(std::make_pair(what->label(), what));
 
 	trace2("SchematicModel::attach", what->label(), this);
@@ -125,7 +134,7 @@ void SchematicModel::pushBack(Element* what)
 	}else if(auto c=dynamic_cast<Symbol*>(what)){
 		if(c->is_device()){
 			trace1("connect?", what->label());
-			// connect(c); // BUG. wrong place.
+			connect(c); // BUG. wrong place.
 		}else{
 			assert(!dynamic_cast<Conductor*>(what));
 		}
@@ -214,10 +223,9 @@ void SchematicModel::disconnect(Symbol* c)
 	for(unsigned i=0; i<c->numPorts(); ++i) {
 		trace3("sm:ds", i, c->label(), c->portPosition(i));
 		Node* nn = c->disconnectNode(i, nodes());
-		assert(nn);
 
 		if(!nn){ untested();
-			unreachable();
+			unreachable(); // under construction
 		}else if(!nn->hasPorts()){
 			nodes().erase(nn); // possibly garbage collect only.
 		}else{
@@ -225,7 +233,7 @@ void SchematicModel::disconnect(Symbol* c)
 	}
 }
 /*--------------------------------------------------------------------------*/
-#if 1 // obsolete, but used in tests.
+#if 1 // obsolete
 void SchematicModel::connect(Symbol* c)
 {
 	incomplete();

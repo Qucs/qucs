@@ -144,6 +144,7 @@ public:
 
 public: // container
 	void clear();
+	void push_back(Element* what);
 	void pushBack(Element* what);
 	void erase(Element* what);
 	size_t size() const{ return components().size(); }
