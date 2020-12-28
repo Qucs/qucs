@@ -1091,7 +1091,7 @@ void QucsApp::slotButtonProjNew()
 }
 
 // ----------------------------------------------------------
-// Opens an existing project.
+// Open an existing project.
 void QucsApp::openProject(const QString& Path)
 { untested();
   slotHideEdit(); // disable text edit of component property
@@ -1102,18 +1102,20 @@ void QucsApp::openProject(const QString& Path)
   if(!ProjDir.exists() || !ProjDir.isReadable()) { // check project directory
     QMessageBox::critical(this, tr("Error"),
                           tr("Cannot access project directory: %1").arg(Path));
-    return;
+    return; // BUG
   }
 
   if (!openProjName.endsWith("_prj")) { // should not happen
     QMessageBox::critical(this, tr("Error"),
                           tr("Project directory name does not end in '_prj'(%1)").arg(openProjName));
-    return;
+    return; // BUG
   }
 
+  // try to close files and ask for saving them
   if(closeAllFiles()){ untested();
-    // close files and ask for saving them
+    // "all files were succesfully closed"
   }else{ untested();
+    // not sure why we need an empty schematic
     DocumentTab->createEmptySchematic("");
 
   //  view->drawn = false;
@@ -1584,7 +1586,7 @@ void QucsApp::closeFile(int index)
  *
  * @return true if all files were succesfully closed
  */
-bool QucsApp::closeAllFiles(int exceptTab)
+bool QucsApp::closeAllFiles(int exceptTab /* =-1 */)
 {itested();
   if (DocumentTab->count() == 0) // no open tabs
     return true;
