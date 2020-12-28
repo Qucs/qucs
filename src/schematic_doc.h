@@ -191,10 +191,10 @@ public:
   CmdEltList const& commands() const{
 	  return _commands;
   }
-  ElementList const& components() const{
-	  assert(_model);
-	  return _model->components();
-  }
+//  ElementList const& components() const{
+//	  assert(_model);
+//	  return _model->components();
+//  }
   NodeMap const& nodes() const{
 	  assert(_model);
 	  return _model->nodes();
@@ -203,37 +203,37 @@ public:
 //	  assert(_model);
 //	  return _model->wires();
 //  }
-  DiagramList const& diagrams() const{
-	  assert(_model);
-	  return _model->diagrams();
-  }
-  PaintingList& paintings(){
-	  assert(_model);
-	  return _model->paintings();
-  }
-  PaintingList const& paintings() const{
-	  assert(_model);
-	  return _model->paintings();
-  }
+//  DiagramList const& diagrams() const{
+//	  assert(_model);
+//	  return _model->diagrams();
+//  }
+//  PaintingList& paintings(){
+//	  assert(_model);
+//	  return _model->paintings();
+//  }
+//  PaintingList const& paintings() const{
+//	  assert(_model);
+//	  return _model->paintings();
+//  }
   unsigned numberOfNets() const{
 	  assert(_model);
 	  return _model->numberOfNets();
   }
   
 	// transition
-  PaintingList  SymbolPaints;  // symbol definition for subcircuit
-  PaintingList& symbolPaints(){
-	  return SymbolPaints; // -> schematicSymbol
-  }
-  PaintingList const& symbolPaints() const{
-	  return SymbolPaints; // -> schematicSymbol
-  }
-  PaintingList& symbolPaintings(){
-	  return SymbolPaints; // -> schematicSymbol
-  }
-  PaintingList const& symbolPaintings() const{
-	  return SymbolPaints; // -> schematicSymbol
-  }
+//  PaintingList  SymbolPaints;  // symbol definition for subcircuit
+//  PaintingList& symbolPaints(){
+//	  return SymbolPaints; // -> schematicSymbol
+//  }
+//  PaintingList const& symbolPaints() const{
+//	  return SymbolPaints; // -> schematicSymbol
+//  }
+//  PaintingList& symbolPaintings(){
+//	  return SymbolPaints; // -> schematicSymbol
+//  }
+//  PaintingList const& symbolPaintings() const{
+//	  return SymbolPaints; // -> schematicSymbol
+//  }
 
   QList<PostedPaintEvent>   PostedPaintEvents;
 public:

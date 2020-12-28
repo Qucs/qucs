@@ -886,10 +886,13 @@ void SchematicModel::sizeOfAll(int& xmin, int& ymin, int& xmax, int& ymax, float
 // Updates the graph data of all diagrams (load from data files).
 void SchematicDoc::reloadGraphs()
 {itested();
+  incomplete();
+#if 0
   QFileInfo Info(docName());
   for(auto pd : diagrams()){itested();
     pd->loadGraphData(Info.path()+QDir::separator()+DataSet);
   }
+#endif
 }
 
 // ---------------------------------------------------
@@ -1719,6 +1722,7 @@ void SchematicDoc::getSelAreaWidthAndHeight(int &wsel, int &hsel, int& xmin_sel_
 #endif
 
 // ===============================================================
+#if 0
 void PaintingList::sizeOfAll(int& xmin, int& ymin, int& xmax, int& ymax) const
 { untested();
   xmin=INT_MAX;
@@ -1742,6 +1746,7 @@ void PaintingList::sizeOfAll(int& xmin, int& ymin, int& xmax, int& ymax) const
     if(y2 > ymax) ymax = y2;
   }
 }
+#endif
 
 Component* SchematicDoc::find_component(QString const&)
 { untested();

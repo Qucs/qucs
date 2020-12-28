@@ -49,7 +49,7 @@ void SchematicModel::clear()
 	components().clear();
 	diagrams().clear();
 	nodes().clear();
-	paintings().clear();
+	// paintings().clear();
 	_map.clear();
 	//SymbolPaints.clear(); ??
 }
@@ -163,10 +163,10 @@ NodeMap& SchematicModel::nodes()
 //	return SymbolPaints;
 //}
 
-PaintingList& SchematicModel::paintings()
-{
-	return Paintings;
-}
+//PaintingList& SchematicModel::paintings()
+//{
+//	return Paintings;
+//}
 //
 //PaintingList& SchematicModel::symbolPaintings()
 //{ untested();
@@ -191,10 +191,10 @@ NodeMap const& SchematicModel::nodes() const
 	return Nodes;
 }
 
-PaintingList const& SchematicModel::paintings() const
-{
-	return Paintings;
-}
+// PaintingList const& SchematicModel::paintings() const
+// {
+// 	return Paintings;
+// }
 
 DiagramList const& SchematicModel::diagrams() const
 {
