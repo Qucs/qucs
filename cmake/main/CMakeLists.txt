@@ -152,7 +152,8 @@ target_include_directories(qucs PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/../../includ
  ${CMAKE_CURRENT_BINARY_DIR}
  )
 
-include(compileAndInstallDependencies.cmake)
+# TODO: disentangle
+# include(compileAndInstallDependencies.cmake)
 
-# install Qucs application
-include(${CMAKE_CURRENT_SOURCE_DIR}/installQucsApplication.cmake)
+# install additional files (icons etc.)
+include(${CMAKE_CURRENT_SOURCE_DIR}/extra.cmake)

@@ -65,8 +65,8 @@ add_definitions(${QT_DEFINITIONS} -DQT_DEPRECATED_WARNINGS)
 #configure_file(${CMAKE_CURRENT_SOURCE_DIR}/qucs-transcalc/qucstrans.1.cmake.in
 #               ${CMAKE_CURRENT_SOURCE_DIR}/qucs-transcalc/qucstrans.1)
 
-# add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/main)
 add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/src)
+add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/main)
 
 # add_subdirectory(man)
 # add_subdirectory(plugins)
