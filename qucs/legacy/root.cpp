@@ -26,14 +26,14 @@ public:
     assert(a);
     a->setLabel("main");
     a->setOwner(this);
-    subckt()->pushBack(a);
+    subckt()->push_back(a);
 
     // legacy Lib components in this circuit.
     _sub = symbol_dispatcher.clone("LegacySub");
     assert(a);
     _sub->setLabel("Sub");
     _sub->setOwner(this);
-    subckt()->pushBack(_sub);
+    subckt()->push_back(_sub);
   }
   ~sda(){
   }

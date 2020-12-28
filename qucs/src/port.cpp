@@ -39,10 +39,12 @@ void Port::connect(Node* n)
 /*--------------------------------------------------------------------------*/
 void Port::disconnect(Node* n)
 {
-	assert(_node);
-	n->dec_ports();
-
-	_node = nullptr;
+	if(_node) {
+		n->dec_ports();
+		_node = nullptr;
+	}else{
+		unreachable(); // under construction
+	}
 }
 /*--------------------------------------------------------------------------*/
 #if 0 // not yet

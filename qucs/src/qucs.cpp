@@ -2949,14 +2949,20 @@ bool saveApplSettings()
 
 }
 
+// not sure what this is.
 QVariant QucsFileSystemModel::data( const QModelIndex& index, int role ) const
-{ untested();
+{ itested();
   if (role == Qt::DecorationRole) { // it's an icon
     QString dName = fileName(index);
-    if (dName.endsWith("_prj")) { // it's a Qucs project
+    if (dName.endsWith("_prj")) {
+      // it's a Qucs project
       // for some reason SVG does not always work on Windows, so use PNG
       return QIcon(":bitmaps/hicolor/128x128/apps/qucs.png");
+    }else{
+      // ?
     }
+  }else{
+    // ?
   }
   // return default system icon
   return QFileSystemModel::data(index, role);

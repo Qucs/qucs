@@ -58,6 +58,7 @@ void DocumentLanguage::printItem(ostream_t& s, Element const* c) const
 void DocumentLanguage::new__instance(istream_t& cmd, Symbol* /*sckt?*/ owner,
 		SchematicModel* Scope) const
 {
+	assert(Scope);
 	if (cmd.atEnd()) {untested();
 		unreachable(); // some bogus loop condition
 		return;
@@ -84,8 +85,7 @@ void DocumentLanguage::new__instance(istream_t& cmd, Symbol* /*sckt?*/ owner,
 				}
 
 				if (Element* x=dynamic_cast<Element*>(o)) {
-					assert(Scope);
-					Scope->pushBack(x);
+					Scope->push_back(x);
 				}else{
 				}
 			}else{ untested();
