@@ -551,9 +551,8 @@ void QucsApp::fillLibrariesTreeView ()
 
     libTreeWidget->insertTopLevelItems(0, topitems);
 }
-
-// ---------------------------------------------------------------
-// Returns a pointer to the QucsDoc object whose number is "No".
+/*--------------------------------------------------------------------------*/
+// Return a pointer to the QucsDoc object whose number is "No".
 // If No < 0 then a pointer to the current document is returned.
 QucsDoc* QucsApp::getDoc(int No)
 {itested();
@@ -566,9 +565,8 @@ QucsDoc* QucsApp::getDoc(int No)
 
   return dynamic_cast<QucsDoc*>(w);
 }
-
-// ---------------------------------------------------------------
-// Returns a pointer to the QucsDoc object whose file name is "Name".
+/*--------------------------------------------------------------------------*/
+// Return a pointer to the QucsDoc object whose file name is "Name".
 QucsDoc * QucsApp::findDoc (QString File, int * Pos)
 {itested();
   QucsDoc * d;
