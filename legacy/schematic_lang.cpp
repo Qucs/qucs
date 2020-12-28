@@ -144,7 +144,7 @@ private: // stuff saved from schematic_file.cpp
 private: // stuff from component.cc
 	void loadProperties(QTextStream& stream, SchematicSymbol& m) const;
 //	Component* parseComponentObsoleteCallback(const QString& _s, Component* c) const;
-	Element* getComponentFromName(QString& Line) const;
+//	Element* getComponentFromName(QString& Line) const;
 
 private: // overrides
 	void parse_top_item(istream_t& stream, SchematicModel* sckt) const override;
@@ -153,7 +153,7 @@ private: // overrides
    DEV_DOT* parseCommand(istream_t&, DEV_DOT*) const override;
 
 private: // local/incomplete
-	Symbol* parseSymbol(QString const&, Symbol*) const;
+	Symbol* parseSymbol(istream_t&, Symbol*) const;
 	Element* loadElement_(const QString& _s, Element* e) const;
 
 private:
@@ -174,6 +174,7 @@ static Dispatcher<DocumentLanguage>::INSTALL
 static Component* parseComponentObsoleteCallback(const QString& _s, Component* c);
 static TaskElement* loadtaskElement(const QString& _s, TaskElement* c);
 /*--------------------------------------------------------------------------*/
+#if 0
 Element* LegacySchematicLanguage::loadElement_(const QString& _s, Element* e) const
 { untested();
 	trace1("loadElement", _s);
@@ -203,6 +204,7 @@ Element* LegacySchematicLanguage::loadElement_(const QString& _s, Element* e) co
 	}
 	return nullptr;
 }
+#endif
 /*--------------------------------------------------------------------------*/
 static std::list<Element*> implicit_hack;
 /*--------------------------------------------------------------------------*/
@@ -643,12 +645,25 @@ static TaskElement* loadtaskElement(const QString& _s, TaskElement* c)
 }
 /*--------------------------------------------------------------------------*/
 // decluttered parseComponentObsoleteCallback
-Symbol* LegacySchematicLanguage::parseSymbol(const QString& _s, Symbol* sym) const
+Symbol* LegacySchematicLanguage::parseSymbol(istream_t& cs, Symbol* sym) const
 {
-	trace1("parseSymbol", _s);
+	QString Line = QString::fromStdString( cs.fullString());
+	trace1("LegacySchematicLanguage::parseItem", Line);
+
+	QString l = Line.trimmed();
+	if(l.isEmpty()) { untested();
+		delete sym;
+		return nullptr;
+	}else if( (l.at(0) != '<') || (l.at(l.length()-1) != '>')) { untested();
+		incomplete();
+		// QMessageBox::critical(0, QObject::tr("Error"), QObject::tr("Format Error:\nWrong 'painting' line delimiter!"));
+		delete sym;
+		return nullptr;
+	}else{
+	}
+	QString s  = l.mid(1, l.length()-2);  // cut off start and end character
 	bool ok;
 	int tmp;
-	QString s = _s;
 
 //	if(s.at(0) != '<'){ untested();
 //		return NULL;
@@ -656,6 +671,13 @@ Symbol* LegacySchematicLanguage::parseSymbol(const QString& _s, Symbol* sym) con
 //		return NULL;
 //	}
 //	s = s.mid(1, s.length()-2);   // cut off start and end character
+
+	if(auto cc=dynamic_cast<Component*>(sym)){
+		trace2("compon callback", s, cc->label());
+		// HACK
+		return parseComponentObsoleteCallback(s, cc);
+	}else{
+	}
 
 	QString label=s.section(' ',1,1);
 	sym->setLabel(label.toStdString());
@@ -1000,19 +1022,12 @@ Element* LegacySchematicLanguage::parseItem(istream_t& c, Element* e) const
 	}
 	l = l.mid(1, l.length()-2);  // cut off start and end character
 
-	if(auto cc=dynamic_cast<Component*>(e)){
-		// callback?!
-		trace2("compon callback", l, cc->label());
-		e = parseComponentObsoleteCallback(l, cc);
-
-//	}else if(auto w=dynamic_cast<Wire*>(e)){ untested();
-//		bool err = obsolete_wireload(w, Line);
-	}else if(auto s=dynamic_cast<Symbol*>(e)){
+	if(auto s=dynamic_cast<Symbol*>(e)){
 		if(s->typeName()=="wire"){
 			// yikes.
 			obsolete_wireload(s, l);
 		}else{
-			parseSymbol(l, s);
+			parseSymbol(c, s);
 		}
 	}else if(auto t=dynamic_cast<TaskElement*>(e)){untested();
 		loadtaskElement(l, t);
@@ -1026,8 +1041,20 @@ Element* LegacySchematicLanguage::parseItem(istream_t& c, Element* e) const
 		return DocumentLanguage::parseItem(c, e);
 	}
 
+
+				{ // TODO: move to parseSymbol.
+					auto Scope = e->scope();
+					if (auto c=dynamic_cast<Symbol*>(e)) {
+						for(unsigned i=0; i<c->numPorts(); ++i){
+							c->connectNode(i, Scope->nodes());
+						}
+					}else{
+					}
+				}
+
+
 	return e; // wrong.
-}
+} // parseItem
 /*--------------------------------------------------------------------------*/
 DEV_DOT* LegacySchematicLanguage::parseCommand(istream_t& c, DEV_DOT* x) const
 { untested();
@@ -1100,6 +1127,7 @@ std::string LegacySchematicLanguage::findType(istream_t& c) const
 }
 /*--------------------------------------------------------------------------*/
 // findProto??
+#if 0
 Element* LegacySchematicLanguage::getComponentFromName(QString& Line) const
 { untested();
 	qDebug() << "component?" << Line;
@@ -1211,6 +1239,7 @@ Element* LegacySchematicLanguage::getComponentFromName(QString& Line) const
 
 	return e;
 }
+#endif
 /*--------------------------------------------------------------------------*/
 // was Schematic::loadProperties
 #if 0
