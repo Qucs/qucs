@@ -49,7 +49,7 @@ Gyrator::Gyrator()
   tx = x1+4;
   ty = y2+4;
   Model = "Gyrator";
-  Name  = "X";
+  setLabel("X");
 
   Props.append(new Property("R", "50 Ohm", true,
 		QObject::tr("gyrator ratio")));

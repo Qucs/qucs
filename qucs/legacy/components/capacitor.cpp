@@ -36,7 +36,9 @@ static Module::INSTALL pp("lumped", &C);
 
 Capacitor::Capacitor()
 {
-  info(Name, bitmap_file);
+  QString label;
+  info(label, bitmap_file);
+  setLabel(label.toStdString());
 
   Description = QObject::tr("capacitor");
 
@@ -51,7 +53,7 @@ Capacitor::Capacitor()
   tx = x1+4;
   ty = y2+4;
   Model = "C";
-  Name  = "C";
+  setLabel("C");
 }
 
 Element* Capacitor::info(QString& Name, char* &BitmapFile, bool getNewOne)

@@ -55,7 +55,7 @@ CCCS::CCCS()
   tx = x1+4;
   ty = y2+4;
   Model = "CCCS";
-  Name  = "SRC";
+  setLabel("SRC");
 
   Props.append(new Property("G", "1", true,
 		QObject::tr("forward transfer factor")));

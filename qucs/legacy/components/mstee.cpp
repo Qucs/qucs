@@ -46,7 +46,7 @@ MStee::MStee() : MultiViewComponent()
   tx = x1+4;
   ty = y1 - 5*metrics.lineSpacing() - 4; // 5 lines of text
   Model = "MTEE";
-  Name  = "MS";
+  setLabel("MS");
 
   Props.append(new Property("Subst", "Subst1", true,
 		QObject::tr("substrate")));

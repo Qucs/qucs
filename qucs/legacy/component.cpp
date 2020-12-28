@@ -148,7 +148,7 @@ Component::Component(Component const& p)
     y2(p.y2),
     showName(p.showName)
 {
-  trace3("Component::Component", p.Name, p.Model, _rotated);
+  trace3("Component::Component", p.label(), p.Model, _rotated);
   trace2("Component::Component", typeName(), p.typeName());
 
   setTypeName(p.Model.toStdString()); // BUG
@@ -230,7 +230,7 @@ int Component::textSize(int& _dx, int& _dy)
   int tmp, count=0;
   _dx = _dy = 0;
   if(showName) {itested();
-    _dx = metrics.width(Name);
+    _dx = metrics.width(label().c_str());
     _dy = metrics.height();
     count++;
   }
@@ -289,7 +289,7 @@ int Component::getTextSelected(int x_, int y_, float Corr)
   // use the screen-compatible metric
   FontMetrics  metrics;
   if(showName) { untested();
-    w  = metrics.width(Name);
+    w  = metrics.width(label().c_str());
     if(dy < 1) { untested();
       if(x_ < w) return 0;
       return -1;
@@ -528,7 +528,7 @@ void Component::rotate()
 
   dx = dy = 0;
   if(showName) {
-    dx = metrics.width(Name);
+    dx = metrics.width(QString(label().c_str()));
     dy = metrics.lineSpacing();
   }
   for(Property *pp = Props.first(); pp != 0; pp = Props.next())
@@ -816,7 +816,7 @@ void Component::mirrorY()
   FontMetrics  metrics;
   int dx = 0;
   if(showName)
-    dx = metrics.width(Name);
+    dx = metrics.width(label().c_str());
   for(Property *pp = Props.first(); pp != 0; pp = Props.next())
     if(pp->display) {
       // get width of text
@@ -1001,8 +1001,8 @@ int Component::analyseLine(const QString& Row, int numProps)
     if(!getIntegers(Row, &i1, &i2))  return -1;
     tx = i1;
     ty = i2;
-    Name = Row.section(' ',3,3);
-    if(Name.isEmpty())  Name = "SUB";
+    setLabel(Row.section(' ',3,3).toStdString());
+    if(label().empty())  setLabel("SUB");
 
     i1 = 1;
     Property *pp = Props.at(numProps-1);
@@ -1294,7 +1294,7 @@ void MultiViewComponent::recreate()
 GateComponent::GateComponent()
 { untested();
   Type = isComponent;   // both analog and digital
-  Name  = "Y";
+  setLabel("Y");
 
   // the list order must be preserved !!!
   Props.append(new Property("in", "2", false,

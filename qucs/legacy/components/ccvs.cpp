@@ -56,7 +56,7 @@ CCVS::CCVS()
   tx = x1+4;
   ty = y2+4;
   Model = "CCVS";
-  Name  = "SRC";
+  setLabel("SRC");
 
   Props.append(new Property("G", "1 Ohm", true,
 		QObject::tr("forward transfer factor")));

@@ -72,7 +72,7 @@ Verilog_File::Verilog_File()
 		QObject::tr("Name of Verilog file")));
 
   Model = "Verilog";
-  Name  = "X";
+  setLabel("X");
 
   // Do NOT call createSymbol() here. But create port to let it rotate.
   Ports.append(new ComponentPort(0, 0));

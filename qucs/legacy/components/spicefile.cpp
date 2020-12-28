@@ -50,7 +50,7 @@ SpiceFile::SpiceFile()
   withSim = false;
 
   Model = "SPICE";
-  Name  = "X";
+  setLabel("X");
   changed = false;
 
   // Do NOT call createSymbol() here. But create port to let it rotate.
@@ -267,7 +267,7 @@ bool SpiceFile::createSubNetlist(ostream_t &stream)
   QString FileName = Props.first()->Value;
   if(FileName.isEmpty()) {
     ErrText += QObject::tr("ERROR: No file name in SPICE component \"%1\".").
-      arg(Name);
+      arg(label().c_str());
     return false;
   }
 

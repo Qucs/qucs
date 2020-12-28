@@ -55,7 +55,7 @@ OpAmp::OpAmp() : Component()
   tx = x1+4;
   ty = y2+4;
   Model = "OpAmp";
-  Name  = "OP";
+  setLabel("OP");
 
   Props.append(new Property("G", "1e6", true,
 		QObject::tr("voltage gain")));

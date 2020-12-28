@@ -60,7 +60,7 @@ CPWstep::CPWstep()
   tx = x1+4;
   ty = y2+4;
   Model = "CSTEP";
-  Name  = "CL";
+  setLabel("CL");
 
   Props.append(new Property("Subst", "Subst1", true,
 		QObject::tr("name of substrate definition")));

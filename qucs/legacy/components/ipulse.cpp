@@ -45,7 +45,7 @@ iPulse::iPulse()
   tx = x1+4;
   ty = y2+4;
   Model = "Ipulse";
-  Name  = "I";
+  setLabel("I");
 
   Props.append(new Property("I1", "0", true,
 		QObject::tr("current before and after the pulse")));

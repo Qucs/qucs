@@ -55,7 +55,7 @@ MScorner::MScorner()
   tx = x2+4;
   ty = y1+4;
   Model = "MCORN";
-  Name  = "MS";
+  setLabel("MS");
 
   Props.append(new Property("Subst", "Subst1", true,
 		QObject::tr("substrate")));

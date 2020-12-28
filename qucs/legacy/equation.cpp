@@ -61,7 +61,7 @@ Equation::Equation() : Component()
   tx = x1+4;
   ty = y2+4;
   Model = "Eqn"; // BUG: don't use
-  Name  = "Eqn"; // BUG: don't use
+  setLabel("Eqn"); // BUG: don't use
 
   Props.append(new Property("y", "1", true));
   Props.append(new Property("Export", "yes", false,

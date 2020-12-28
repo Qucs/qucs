@@ -37,7 +37,9 @@ Module::INSTALL pp("sources", &D);
 vRect::vRect()
 {
   Description = QObject::tr("ideal rectangle voltage source");
-  info(Name, bitmap_file);
+  QString label;
+  info(label, bitmap_file);
+  setLabel(label.toStdString());
 
   Arcs.append(new Arc(-12,-12, 24, 24,     0, 16*360,QPen(Qt::darkBlue,2)));
   Lines.append(new Line(-30,  0,-12,  0,QPen(Qt::darkBlue,2)));
@@ -63,7 +65,7 @@ vRect::vRect()
   tx = x1+4;
   ty = y2+4;
   Model = "Vrect";
-  Name  = "V";
+  setLabel("V");
 
   Props.append(new Property("U", "1 V", true,
 		QObject::tr("voltage of high signal")));

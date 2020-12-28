@@ -65,7 +65,7 @@ iProbe::iProbe() : Component()
   tx = x1+4;
   ty = y2+4;
   Model = "IProbe";
-  Name  = "Pr";
+  setLabel("Pr");
 }
 
 iProbe::~iProbe()

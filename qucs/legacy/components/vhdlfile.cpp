@@ -35,7 +35,7 @@ VHDL_File::VHDL_File()
 		QObject::tr("Name of VHDL file")));
 
   Model = "VHDL";
-  Name  = "X";
+  setLabel("X");
 
   // Do NOT call createSymbol() here. But create port to let it rotate.
   Ports.append(new ComponentPort(0, 0));
@@ -224,7 +224,7 @@ bool VHDL_File::createSubNetlist(ostream_t& stream)
   QString FileName = Props.getFirst()->Value;
   if(FileName.isEmpty()) {
     ErrText += QObject::tr("ERROR: No file name in %1 component \"%2\".").
-      arg(Model).arg(Name);
+      arg(Model).arg(label().c_str());
     return false;
   }
 

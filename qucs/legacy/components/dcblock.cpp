@@ -40,7 +40,7 @@ dcBlock::dcBlock()
   tx = x1+4;
   ty = y2+4;
   Model = "DCBlock";
-  Name  = "C";
+  setLabel("C");
 
   Props.append(new Property("C", "1 uF", false,
 	QObject::tr("for transient simulation: capacitance in Farad")));

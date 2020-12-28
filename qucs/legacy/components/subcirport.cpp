@@ -65,7 +65,10 @@ Module::INSTALL pp("lumped", &D);
 
 SubCirPort::SubCirPort() : Component(), _pos(1)
 {
-  info(Name, bitmap_file);
+  QString label;
+  info(label, bitmap_file);
+  setLabel(label.toStdString());
+
   Type = isComponent;   // both analog and digital
   Description = QObject::tr("port of a subcircuit");
 
@@ -81,7 +84,7 @@ SubCirPort::SubCirPort() : Component(), _pos(1)
   tx = x1+4;
   ty = y2+4;
   Model = "Port";
-  Name  = "P";
+  setLabel("P");
 }
 
 // -------------------------------------------------------

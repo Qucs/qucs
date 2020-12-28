@@ -203,9 +203,6 @@ public:
   int cx() const{return getX(Element::center());}
   int cy() const{return getY(Element::center());}
 
-protected:
-  QString Name; // the label, but sometimes the type. yikes.
-
 public:
   QString const& obsolete_model_hack() const{
 	  // BUG. do not use
@@ -214,10 +211,8 @@ public:
   void setName(QString x){
 	  incomplete();
 	  setLabel(x.toStdString());
-	  Name = x;
   }
   void obsolete_name_override_hack(QString x){
-	  Name = x;
   }
   void gnd_obsolete_model_override_hack(QString x){
 	  //assert (this is a gnd component); // fix later
@@ -239,9 +234,9 @@ public: // BUG
 
 protected:
 public: // old mess
-  QString const& name() const{ return Name; }
+  QString const& name() const{ QString l(label().c_str()); return l; }
 //  virtual QString const& name() const{return Name;}
-  void setName(QString const& n){ Name = n; }
+  void setName(QString const& n){ setLabel(n.toStdString()); }
   virtual bool useObsoleteProps() const {return true;}
 
 

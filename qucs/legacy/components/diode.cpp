@@ -39,7 +39,9 @@ static Module::INSTALL pp("nonlinear", &D);
 
 Diode::Diode() : MultiViewComponent()
 {
-  info(Name, bitmap_file);
+  QString label;
+  info(label, bitmap_file);
+  setLabel(label.toStdString());
   Description = QObject::tr("diode");
 
   Props.append(new Property("Is", "1e-15 A", true,
@@ -105,7 +107,7 @@ Diode::Diode() : MultiViewComponent()
   tx = x1+4;
   ty = y2+4;
   Model = "Diode";
-  Name  = "D";
+  setLabel("D");
 }
 
 Element* Diode::info(QString& Name, char* &BitmapFile, bool getNewOne)
