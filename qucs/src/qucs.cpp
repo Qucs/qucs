@@ -553,7 +553,13 @@ QucsDoc* QucsApp::getDoc(int No)
 }
 
 // ---------------------------------------------------------------
-// Returns a pointer to the QucsDoc object whose file name is "Name".
+/*!
+ * \brief QucsApp::findDoc
+ * Returns a pointer to the QucsDoc object whose file name is "Name".
+ * \param File
+ * \param Pos
+ * \return
+ */
 QucsDoc * QucsApp::findDoc (QString File, int * Pos)
 {itested();
   QucsDoc * d;
@@ -699,8 +705,11 @@ void QucsApp::slotSetCompView (int index)
 }
 
 // ------------------------------------------------------------------
-// When CompSearch is being edited, create a temp page show the
-// search result
+/*!
+ * \brief QucsApp::slotSearchComponent
+ *  When CompSearch is being edited, create a temp page show the search result
+ * \param searchText
+ */
 void QucsApp::slotSearchComponent(const QString &searchText)
 { untested();
   incomplete();

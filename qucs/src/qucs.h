@@ -221,7 +221,7 @@ public: // called directly from Schematic... bug?
 public:
 //  MouseActions *view;
   QucsTabWidget *DocumentTab{nullptr};
-  QListWidget *CompComps{nullptr};
+  QListWidget *CompComps{nullptr}; // Shows the parts which are in the section of CompChoose
   QTreeWidget *libTreeWidget{nullptr};
 
   // menu appearing by right mouse button click on content listview
@@ -243,7 +243,7 @@ public:
 
 private:
 // ********* Widgets on the main area **********************************
-  QDockWidget     *dock{nullptr};
+  QDockWidget     *dock{nullptr}; // Main DockWidget on the right side with the Project list and the component list
   QTabWidget      *TabView{nullptr};
   QDockWidget     *octDock{nullptr};
   OctaveWindow    *octave{nullptr};

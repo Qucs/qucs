@@ -150,8 +150,13 @@ incomplete();
 }
 #endif
 
-// The function appends the given module to the appropriate category.
-// If there is no such category yet, then the category gets created.
+/*!
+ * \brief Module::intoCategory
+ * The function appends the given module to the appropriate category.
+ * If there is no such category yet, then the category gets created.
+ * \param cat
+ * \param m
+ */
 void Module::intoCategory(std::string const& cat, Module * m)
 {
   QString category = QString::fromStdString(cat);
