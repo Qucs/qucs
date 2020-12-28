@@ -1390,7 +1390,7 @@ bool QucsApp::saveFile(QucsDoc *Doc)
     Doc = getDoc();
 
   if(Doc->docName().isEmpty())
-    return saveAs();
+    return saveAs(Doc);
 
   int Result = Doc->save();
   if(Result < 0)  return false;
@@ -1421,10 +1421,13 @@ void QucsApp::slotFileSave()
 bool QucsApp::saveAs()
 { untested();
   QucsDoc *w = DocumentTab->current();
-  auto* W = dynamic_cast<QWidget*>(w);
-  assert(W);
+  return saveAs(w);
+}
 
-  return w->saveAs();
+bool QucsApp::saveAs(QucsDoc* doc)
+{ untested();
+
+  return doc->saveAs();
 }
 
 // --------------------------------------------------------------

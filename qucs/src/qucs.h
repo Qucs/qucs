@@ -270,6 +270,7 @@ private:
 
   void printCurrentDocument(bool);
   bool saveFile(QucsDoc *Doc=0);
+  bool saveAs(QucsDoc* doc);
   bool saveAs();
   void openProject(const QString &);
   bool deleteProject(const QString &);
