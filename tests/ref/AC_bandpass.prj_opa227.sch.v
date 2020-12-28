@@ -10,4 +10,4 @@ Port #(.Num(2), .Type(analog)) P2(_net15);
 GND #() *(gnd);
 endmodule // main
 
-Sub #(.File()) Sub(_net0);
+Sub #(.File()) Sub((null));

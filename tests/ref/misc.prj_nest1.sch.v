@@ -7,4 +7,4 @@ Sub$nest2 #(.File(nest2.sch)) SC2(_net8, _net10);
 R #(.R(0 Ohm), .Temp(26.85), .Tc1(0.0), .Tc2(0.0), .Tnom(26.85), .Symbol(US)) R1(_net1, _net8);
 endmodule // main
 
-Sub #(.File()) Sub(_net0);
+Sub #(.File()) Sub((null));

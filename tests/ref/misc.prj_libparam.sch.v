@@ -6,4 +6,4 @@ Lib$Ideal$Notch2 #(.Lib(Ideal), .Component(Notch2), .fc(1E3), .Q(1)) IB1(_net2, 
 //DC1
 endmodule // main
 
-Sub #(.File()) Sub(_net0);
+Sub #(.File()) Sub((null));

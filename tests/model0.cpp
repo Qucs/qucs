@@ -4,6 +4,7 @@
 
 #include "schematic_model.h"
 #include "globals.h"
+#include "wiretest.h"
 
 void more()
 {
@@ -18,8 +19,8 @@ void more()
 	auto w1 = prechecked_cast<Symbol*>(wp->clone());
 	w1->setParameter(std::string("deltax"), "10");
 //	assert(!w0->hasNet());
-	M.pushBack(w0);
-	M.pushBack(w1);
+	connect_push(M, w0);
+	connect_push(M, w1);
 //	assert(w0->hasNet());
 
 	assert(numWires(M)==2);
@@ -30,7 +31,7 @@ void more()
 
 	w0 = prechecked_cast<Symbol*>(wp->clone());
 //	assert(!w0->hasNet());
-	M.pushBack(w0);
+	connect_push(M, w0);
 //	assert(w0->hasNet());
 	assert(dynamic_cast<Symbol const*>(w0)->portValue(0));
 	assert(dynamic_cast<Symbol const*>(w0)->portValue(1));
@@ -55,7 +56,7 @@ void more()
 	w1->setParameter(std::string("deltax"), "1");
 	w1->setParameter(std::string("deltay"), "1");
 
-	M.pushBack(w1);
+	connect_push(M, w1);
 //	trace1("w1", w1->net());
 
 	std::cout << "disconnect\n";
@@ -71,7 +72,7 @@ void more()
 	w2->setParameter(std::string("$yposition"), "1");
 	w2->setParameter(std::string("deltax"), "1");
 
-	M.pushBack(w2);
+	connect_push(M, w2);
 	assert(numWires(M)==3);
 //	trace1("w2", w2->net());
 
@@ -95,7 +96,7 @@ void more()
 	auto w3 = prechecked_cast<Symbol*>(w0->clone());
 	w3->setParameter(std::string("deltay"), "1");
 
-	M.pushBack(w3);
+	connect_push(M, w3);
 	assert(numWires(M)==3);
 //	trace2("same", w0->net(), w2->net());
 //	assert(w2->net() == w0->net());
@@ -111,7 +112,7 @@ void more()
 	// W1011
 
 	std::cout << "=== square test\n";
-	M.pushBack(w1);
+	connect_push(M, w1);
 	SchematicModel const& cM = M;
 	for(auto i : cM){
 		Symbol* s = prechecked_cast<Symbol*>(i);
@@ -142,9 +143,9 @@ int main()
 	w1->setParameter(std::string("deltax"), "-1");
 
 	{
-		M.pushBack(w0);
+		connect_push(M, w0);
 		assert(M.nodeCount() == 2);
-		M.pushBack(w1);
+		connect_push(M, w1);
 		assert(M.nodeCount() == 2);
 	}
 

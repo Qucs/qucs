@@ -24,4 +24,4 @@ VProbe #() Pr1(_net23, gnd);
 GND #() *(gnd);
 endmodule // main
 
-Sub #(.File()) Sub(_net0);
+Sub #(.File()) Sub((null));

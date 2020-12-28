@@ -5,7 +5,7 @@
 # sckt own Sub:short_circuit
 
 .Def:short_circuit _net1 _net1
-# Missing ID & paramsSub:short_circuit
+# Missing ID & params Sub:short_circuit
 # 15
 .Def:End
 # unresolved symbol wire

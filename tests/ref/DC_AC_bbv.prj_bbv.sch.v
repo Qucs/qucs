@@ -28,4 +28,4 @@ GND #() *(gnd);
 R #(.R(1k), .Temp(26.85), .Tc1(0.0), .Tc2(0.0), .Tnom(26.85), .Symbol(european)) RL(gnd, _net25);
 endmodule // main
 
-Sub #(.File()) Sub(_net0);
+Sub #(.File()) Sub((null));
