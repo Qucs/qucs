@@ -102,16 +102,13 @@ public: // stuff saved from Schematic
 	//void simpleInsertComponent(Component* c);
 	//void simpleInserttaskElement(TaskElement* c);
 	//void simpleInsertWire(Wire*);
-	void recreateSymbol(Symbol* s); // yikes.
-	//private??
-//	bool giveNodeNames(ostream_t&, int&, QStringList&, QPlainTextEdit*, int,
-//			bool creatingLib, NetLang const&);
-	bool throughAllComps(ostream_t&, int&, QStringList&, QPlainTextEdit *, int,
-			bool creatingLib, NetLang const&);
-	bool createLibNetlist(ostream_t&, QPlainTextEdit*, int, NetLang const&);
-	bool createSubNetlist(ostream_t&, int&, QStringList&, QPlainTextEdit*, int,
-			bool creatingLib, NetLang const&);
-	void throughAllNodes(unsigned& z) const;
+	//void recreateSymbol(Symbol* s); // yikes.
+	// bool throughAllComps(ostream_t&, int&, QStringList&, QPlainTextEdit *, int,
+	// 		bool creatingLib, NetLang const&);
+	// bool createLibNetlist(ostream_t&, QPlainTextEdit*, int, NetLang const&);
+	// bool createSubNetlist(ostream_t&, int&, QStringList&, QPlainTextEdit*, int,
+	// 		bool creatingLib, NetLang const&);
+	// void throughAllNodes(unsigned& z) const;
 //	void propagateNode(Node* z) const;
 
 private:

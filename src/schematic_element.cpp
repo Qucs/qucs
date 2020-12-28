@@ -1960,10 +1960,10 @@ void SchematicDoc::insertRawComponent(Component *c, bool noOptimize)
 //
 // apparently label are owned by nodes,
 // FIXME: store labels properly, and get rid of this mess.
+#if 0 // does not work like this.
 void SchematicModel::recreateSymbol(Symbol *Comp)
 {
     incomplete();
-#if 0 // does not work like this.
     WireLabel **plMem=0, **pl;
     int PortCount = Comp->numPorts();
 
@@ -1990,7 +1990,7 @@ void SchematicModel::recreateSymbol(Symbol *Comp)
     int x1 = Comp->x1_(), x2 = Comp->x2_(), y1 = Comp->y1_(), y2 = Comp->y2_();
     QString tmp = Comp->name();    // is sometimes changed by "recreate"
 #endif
-    Comp->recreate(); // *this);
+//    Comp->recreate(); // *this);
 #if 0
     Comp->obsolete_name_override_hack(tmp);
     if(x < x1)
@@ -2026,8 +2026,8 @@ void SchematicModel::recreateSymbol(Symbol *Comp)
         }
         free(plMem);
     }
-#endif
 }
+#endif
 // ---------------------------------------------------
 void SchematicDoc::insertElement(Element *)
 {
