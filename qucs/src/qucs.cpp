@@ -255,8 +255,7 @@ void QucsApp::initView()
   TabView->addTab(ProjGroup, tr("Projects"));
   TabView->setTabToolTip(TabView->indexOf(ProjGroup), tr("content of project directory"));
 
-  connect(Projects, SIGNAL(doubleClicked(const QModelIndex &)),
-          this, SLOT(slotListProjOpen(const QModelIndex &)));
+  connect(Projects, &QListView::doubleClicked, this, &QucsApp::slotListProjOpen);
 
   // ----------------------------------------------------------
   {itested();
@@ -1085,7 +1084,11 @@ void QucsApp::slotButtonProjNew()
 }
 
 // ----------------------------------------------------------
-// Opens an existing project.
+/*!
+ * \brief QucsApp::openProject
+ * Opens an existing project.
+ * \param Path
+ */
 void QucsApp::openProject(const QString& Path)
 { untested();
   slotHideEdit(); // disable text edit of component property
