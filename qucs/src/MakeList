@@ -183,6 +183,13 @@ DIALOG_SRC = \
 	sweepdialog.cpp \
 	vasettingsdialog.cpp
 
+# dialogs related to components
+# sort out later.
+DIALOG_SRC2 = \
+	diagramdialog.cpp \
+	optimizedialog.cpp
+
+
 UI_FILES = searchdialog.ui
 
 EXTRA_DIST =

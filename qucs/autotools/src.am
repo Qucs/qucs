@@ -68,12 +68,6 @@ pqucsdir=${pkglibdir}
 pqucs_LTLIBRARIES = \
 	libqucs.la
 
-# dialogs related to components
-# sort out later.
-DIALOG_SRC2 = \
-	diagramdialog.cpp \
-	optimizedialog.cpp
-
 
 libqucs_la_SOURCES = \
 	${CPP_SRC} \
