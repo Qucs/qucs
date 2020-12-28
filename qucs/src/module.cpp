@@ -525,7 +525,7 @@ Category::~Category ()
   }
 }
 
-// Returns the available category names in a list of strings.
+// Return the available category names in a list of strings.
 QStringList Category::getCategories (void)
 {
   QStringList res;
@@ -536,9 +536,9 @@ QStringList Category::getCategories (void)
   }
   return res;
 }
-
-// The function returns the registered modules in the given category
-// as a pointer list.  The pointer list is empty if there is no such
+/*--------------------------------------------------------------------------*/
+// Return the registered modules in the given category
+// as a pointer list. The pointer list is empty if there is no such
 // category available.
 QList<Module *> Category::getModules (QString category)
 {
@@ -552,8 +552,8 @@ QList<Module *> Category::getModules (QString category)
   }
   return res;
 }
-
-// Returns the index number into the category list for the given
+/*--------------------------------------------------------------------------*/
+// Return the index number into the category list for the given
 // category name.  The function returns minus 1 if there is no such
 // category.
 int Category::getModulesNr (QString category)
@@ -564,5 +564,6 @@ int Category::getModulesNr (QString category)
   }
   return -1;
 }
-
+/*--------------------------------------------------------------------------*/
+/*--------------------------------------------------------------------------*/
 // vim:ts=8:sw=2:noet
