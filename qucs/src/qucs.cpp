@@ -2153,8 +2153,12 @@ void QucsApp::slotToPage()
 }
 
 // -------------------------------------------------------------------
-// Called when file name in Project View is double-clicked
-//   or open is selected in the context menu
+/*!
+ * \brief QucsApp::slotOpenContent
+ * Called when file name in Project View is double-clicked
+ * or open is selected in the context menu
+ * \param idx
+ */
 void QucsApp::slotOpenContent(const QModelIndex &idx)
 { untested();
   editText->setHidden(true); // disable text edit of component property
