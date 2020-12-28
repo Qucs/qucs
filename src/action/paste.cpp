@@ -86,29 +86,30 @@ class pastebuffer : public SubcktBase{
 public:
 	explicit pastebuffer(){ untested();
 		new_subckt();
-		Command const* cmd = command_dispatcher[cnp_lang];
-		assert(cmd);
-		auto fmt=prechecked_cast<DocumentFormat const*>(cmd);
+		auto const* lang = language_dispatcher[cnp_lang];
+		assert(lang);
 
 		QClipboard *cb = QApplication::clipboard();
 		QString s = cb->text(QClipboard::Clipboard);
-		istream_t stream(istream_t::_STRING, s.toStdString());
+		istream_t cs(istream_t::_STRING, s.toStdString());
 
-		fmt->load(stream, this);
+		// fmt->load(stream, this);
+		while(!cs.is_end()){ untested();
+			trace1("paste", cs.fullstring());
+			lang->new__instance(cs, this, subckt());
+			cs.read_line();
+		}
+
+		trace1("got paste", subckt()->size());
 	}
 
 public:
 	rect_t bounding_rect() const override{ untested();
 		rect_t r;
-		for (auto i : *subckt()){ untested();
+		for (auto i : *subckt()){ itested();
 			auto c = i->center();
 			r |= i->bounding_rect() + c;
 		}
-//		for (auto i : wires()){ untested();
-//			auto c = i->center();
-//			r |= i->bounding_rect() + c;
-//		}
-
 		return r;
 	}
 private:
@@ -133,7 +134,7 @@ QUndoCommand* MouseActionPaste::activate(QObject* sender)
 
 
   for(auto i : *buf->subckt()){ untested();
-	  trace2("centering", i->label(), br.center());
+	  trace2("paste: centering", i->label(), br.center());
 	  auto p = i->center();
 	  i->setPosition(p - center);
   }

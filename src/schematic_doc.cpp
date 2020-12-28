@@ -1053,7 +1053,7 @@ QString SchematicDoc::createClipboardFile() const
 	assert(sym.subckt());
 	for (auto i : scene()->selectedItems()){
 		auto cl = i->cloneElement();
-		sym.subckt()->pushBack(cl);
+		sym.subckt()->push_back(cl);
 	}
 
 	auto lang = language_dispatcher["leg_sch"];

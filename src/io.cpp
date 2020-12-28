@@ -529,9 +529,9 @@ CS& istream_t::get_line(std::string const& prompt)
 /*--------------------------------------------------------------------------*/
 bool istream_t::atEnd()
 {
-	if(_stream){
+	if(_stream){ untested();
 		return _stream->atEnd();
-	}else{
+	}else{ untested();
 		return is_end();
 	}
 }
