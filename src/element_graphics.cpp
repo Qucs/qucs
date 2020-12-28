@@ -211,9 +211,11 @@ void ElementGraphics::attachElement(Element* e)
 		p->setWidget(w);
 	}else if(!sym){ untested();
 	}else if(auto s = sym->subckt()){ untested();
-		for(auto i : s->components()){untested();
-			QGraphicsItem* cg = new ElementGraphics(i->clone());
-			cg->setParentItem(this);
+		for(auto o : *s){untested();
+			if(auto i=dynamic_cast<Element*>(o)){
+				QGraphicsItem* cg = new ElementGraphics(i->clone());
+				cg->setParentItem(this);
+			}
 		}
 	}else{ untested();
 	}

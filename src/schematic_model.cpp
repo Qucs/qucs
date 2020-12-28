@@ -46,8 +46,7 @@ SchematicModel::~SchematicModel()
 void SchematicModel::clear()
 {
 	incomplete(); // disconnect components?
-	components().clear();
-	diagrams().clear();
+	Components.clear();
 	nodes().clear();
 	// paintings().clear();
 	_map.clear();
@@ -62,15 +61,6 @@ QString const& SchematicModel::devType() const
 void SchematicModel::setDevType(QString const& s)
 {
 	DevType = s;
-}
-/*--------------------------------------------------------------------------*/
-// BUG: not here.
-/// ACCESS FUNCTIONS.
-// these are required to move model methods over to SchematicModel
-// note that _doc->...() functions still involve pointer hacks
-ElementList& SchematicModel::components()
-{
-	return Components;
 }
 /*--------------------------------------------------------------------------*/
 // called from schematic::erase only
@@ -103,10 +93,10 @@ Element* SchematicModel::detach(Element* what)
 	}
 
 	if(auto d=dynamic_cast<Diagram*>(what)){ untested();
-		diagrams().removeRef(d);
+		removeRef(d);
 	}else if(auto c=dynamic_cast<Symbol*>(what)){
 		disconnect(c); // BUG: wrong place.
-		components().removeRef(c);
+		removeRef(c);
 	}else{ untested();
 		unreachable();
 	}
@@ -119,7 +109,7 @@ Element* SchematicModel::detach(Element* what)
 void SchematicModel::push_back(Element* what)
 {
 	_map.insert(std::make_pair(what->label(), what));
-	components().append(what);
+	Components.push_back(what);
 }
 /*--------------------------------------------------------------------------*/
 // BUG: connect and push_back in one go. don't use.
@@ -130,7 +120,7 @@ void SchematicModel::pushBack(Element* what)
 
 	trace2("SchematicModel::attach", what->label(), this);
 	if(dynamic_cast<TaskElement*>(what)){ untested();
-		components().append(what);
+		Components.push_back(what);
 	}else if(auto c=dynamic_cast<Symbol*>(what)){
 		if(c->is_device()){
 			trace1("connect?", what->label());
@@ -139,9 +129,9 @@ void SchematicModel::pushBack(Element* what)
 			assert(!dynamic_cast<Conductor*>(what));
 		}
 
-		components().append(c);
+		Components.push_back(c);
 	}else if(dynamic_cast<Element*>(what)){
-		components().append(what);
+		Components.push_back(what);
 	}else{ untested();
 //		unreachable?
 		incomplete();
@@ -175,16 +165,11 @@ NodeMap& SchematicModel::nodes()
 //	return _symbol->symbolPaintings();
 //}
 //
-DiagramList& SchematicModel::diagrams()
-{
-	return Diagrams;
-}
-
 // same, but const.
-ElementList const& SchematicModel::components() const
-{
-	return Components;
-}
+//ElementList const& SchematicModel::components() const
+//{
+//	return Components;
+//}
 
 NodeMap const& SchematicModel::nodes() const
 {
@@ -195,11 +180,6 @@ NodeMap const& SchematicModel::nodes() const
 // {
 // 	return Paintings;
 // }
-
-DiagramList const& SchematicModel::diagrams() const
-{
-	return Diagrams;
-}
 
 //PaintingList const& SchematicModel::symbolPaints() const
 //{ untested();
@@ -272,7 +252,7 @@ Node const* SchematicModel::portValue(unsigned i) const
 /*--------------------------------------------------------------------------*/
 void SchematicModel::setOwner(Element* o)
 {
-	for(auto pc : components()){
+	for(auto pc : Components){
 		assert(pc);
 		trace3("set_owner", pc->label(), pc, o);
 		pc->setOwner(o);
@@ -300,8 +280,8 @@ SchematicModel::const_iterator SchematicModel::find_again(const std::string& sho
 {
 	// incomplete, does not find again.
 	trace1("find_again", short_name);
-	auto it = std::find(components().begin(), components().end(), short_name);
-	trace2("found?", components().size(), it==components().end());
+	auto it = std::find(Components.begin(), Components.end(), short_name);
+	trace2("found?", Components.size(), it==Components.end());
 	return it;
 }
 /*--------------------------------------------------------------------------*/

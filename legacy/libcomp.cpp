@@ -36,7 +36,7 @@ class QString;
 /*--------------------------------------------------------------------------*/
 namespace{
 /*--------------------------------------------------------------------------*/
-ElementList empty;
+SchematicModel empty;
 // this is a prototype
 class LibComp : public SubcktBase {
 private:
@@ -90,10 +90,10 @@ private:
 		auto pos = s->portPosition(i);
 		return pos;
 	}
-	ElementList const* symbolPaintings() const override{
-		incomplete(); // need painting stash in sckt();
-		return nullptr; // &paintings();
-	}
+	//ElementList const* symbolPaintings() const override{
+	//	incomplete(); // need painting stash in sckt();
+	//	return nullptr; // &paintings();
+	//}
 
 	rect_t bounding_rect() const override{ untested();
 		// BUG. cache.
@@ -135,7 +135,7 @@ private:
 
 public: // HACK
 	// TODO: move to painting.
-	ElementList const* paintings() const{
+	SchematicModel const* paintings() const{
 		if(!_paint){
 			assert(subckt());
 			auto p_ = subckt()->find_(":SymbolSection:");
@@ -143,7 +143,7 @@ public: // HACK
 			}else if(auto p = dynamic_cast<SubcktBase const*>(*p_)){
 				assert(p->subckt());
 				auto const* q = p->subckt();
-				_paint = &q->components();
+				_paint = q;
 			}else{
 			}
 		}else{
@@ -167,7 +167,7 @@ private:
 	int _ty;
 	Property _section;
 	Property _component;
-	mutable ElementList const* _paint; // just caching
+	mutable SchematicModel const* _paint; // just caching
 }d0;
 static Dispatcher<Symbol>::INSTALL p2(&symbol_dispatcher, "LegacyLibProto", &d0);
 /*--------------------------------------------------------------------------*/
@@ -425,7 +425,7 @@ private:
 	}
 
 private:
-	ElementList const* paintings() const{
+	SchematicModel const* paintings() const{
 		assert(_parent);
 		if(auto p = dynamic_cast<LibComp const*>(_parent)){
 			return p->paintings();

@@ -53,8 +53,7 @@
 
 class QPrinter;
 
-DiagramList   SymbolDiags;
-ElementList SymbolComps;
+//ElementList SymbolComps;
 
 void SchematicDoc::printCursorPosition(int x, int y)
 {itested();

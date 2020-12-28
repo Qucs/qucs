@@ -674,112 +674,123 @@ Symbol* LegacySchematicLanguage::parseSymbol(istream_t& cs, Symbol* sym) const
 //	}
 //	s = s.mid(1, s.length()-2);   // cut off start and end character
 
-	if(auto cc=dynamic_cast<Component*>(sym)){
+	if(sym->typeName()=="wire"){
+		// yikes.
+		obsolete_wireload(sym, s);
+	}else if(auto cc=dynamic_cast<Component*>(sym)){
 		trace2("compon callback", s, cc->label());
 		// HACK
-		return parseComponentObsoleteCallback(s, cc);
+		parseComponentObsoleteCallback(s, cc);
 	}else{
-	}
 
-	QString label=s.section(' ',1,1);
-	sym->setLabel(label.toStdString());
+		QString label=s.section(' ',1,1);
+		sym->setLabel(label.toStdString());
 
-	QString n;
-	n  = s.section(' ',2,2);      // flags
-	tmp = n.toInt(&ok);
-	if(!ok){ untested();
-		return NULL;
-	}
-	// sym->setParameter("is_active", std::to_string(tmp & 3));
-	// sym->setParameter("$hide_label", std::to_string(tmp & 4));
-
-	n  = s.section(' ',3,3);    // cx
-	int cx=n.toInt(&ok);
-	qDebug() << "cx" << cx;
-	if(!ok){ untested();
-		throw Exception("xposition parse");
-	}else{
-		sym->setParameter("$xposition", std::to_string(cx));
-	//	sym->setParameter(3, std::to_string(cx));
-	}
-
-	n  = s.section(' ',4,4);    // cy
-	int cy=n.toInt(&ok);
-	if(!ok){ untested();
-		throw Exception("yposition parse");
-	}else{
-		sym->setParameter("$yposition", std::to_string(cy));
-	//	sym->setParameter(4, std::to_string(cy));
-	}
-
-	n  = s.section(' ',5,5);    // tx
-	tmp = n.toInt(&ok);
-	if(!ok){ untested();
-		throw Exception("tx parse");
-	}else{
-		(void)tmp;
-//		sym->setParameter("$ttx", std::to_string(tmp));
-	}
-
-	n  = s.section(' ',6,6);    // ty
-	tmp = n.toInt(&ok);
-	if(!ok){ untested();
-		throw Exception("ty parse");
-	}else{
-		(void)tmp;
-//		sym->setParameter("$tty", std::to_string(tmp));
-	}
-
-	{
-		n  = s.section(' ',7,7);    // mirror y axis
-		int nn = n.toInt(&ok);
-		if(!ok){ untested();
-			throw Exception("vflip parse");
-		}else{
-			int vflip = 1-2*nn;
-			assert(vflip==1 || vflip==-1);
-			sym->setParameter("$vflip", std::to_string(vflip));
-		}
-
-		n  = s.section(' ',8,8);    // rotated
+		QString n;
+		n  = s.section(' ',2,2);      // flags
 		tmp = n.toInt(&ok);
 		if(!ok){ untested();
 			return NULL;
+		}
+		// sym->setParameter("is_active", std::to_string(tmp & 3));
+		// sym->setParameter("$hide_label", std::to_string(tmp & 4));
+
+		n  = s.section(' ',3,3);    // cx
+		int cx=n.toInt(&ok);
+		qDebug() << "cx" << cx;
+		if(!ok){ untested();
+			throw Exception("xposition parse");
 		}else{
+			sym->setParameter("$xposition", std::to_string(cx));
+			//	sym->setParameter(3, std::to_string(cx));
 		}
 
-		tmp *= 90;
-		sym->setParameter("$angle", std::to_string(tmp));
-		assert(sym->paramValue("$angle") == std::to_string(tmp));
-	}
-
-	// set parameters.
-	unsigned position = 0;
-
-	// skip the first 4. x y tx ty.
-	unsigned offset = 4; // Symbol::paramCountBase()
-	unsigned int z=0;
-	int counts = s.count('"');
-	trace2("set?", s, counts);
-	for(; int(position)<counts/2; ++ position){
-		z++;
-		n = s.section('"',z,z);    // property value. gaah parse over and over again?
-		z++;
-
-		trace2("legacy:set", position, n);
-		try{
-			sym->setParameter(position + offset, n);
-		}catch(ExceptionCantFind const*){ untested();
-			incomplete(); // CS has error messages...
-			error(5, "cannot parse Symbol param " +
-					std::to_string(position + offset) + " in " + sym->label());
-			throw; // BUG
+		n  = s.section(' ',4,4);    // cy
+		int cy=n.toInt(&ok);
+		if(!ok){ untested();
+			throw Exception("yposition parse");
+		}else{
+			sym->setParameter("$yposition", std::to_string(cy));
+			//	sym->setParameter(4, std::to_string(cy));
 		}
 
-		n  = s.section('"',z,z);    // display
+		n  = s.section(' ',5,5);    // tx
+		tmp = n.toInt(&ok);
+		if(!ok){ untested();
+			throw Exception("tx parse");
+		}else{
+			(void)tmp;
+			//		sym->setParameter("$ttx", std::to_string(tmp));
+		}
+
+		n  = s.section(' ',6,6);    // ty
+		tmp = n.toInt(&ok);
+		if(!ok){ untested();
+			throw Exception("ty parse");
+		}else{
+			(void)tmp;
+			//		sym->setParameter("$tty", std::to_string(tmp));
+		}
+
+		{
+			n  = s.section(' ',7,7);    // mirror y axis
+			int nn = n.toInt(&ok);
+			if(!ok){ untested();
+				throw Exception("vflip parse");
+			}else{
+				int vflip = 1-2*nn;
+				assert(vflip==1 || vflip==-1);
+				sym->setParameter("$vflip", std::to_string(vflip));
+			}
+
+			n  = s.section(' ',8,8);    // rotated
+			tmp = n.toInt(&ok);
+			if(!ok){ untested();
+				return NULL;
+			}else{
+			}
+
+			tmp *= 90;
+			sym->setParameter("$angle", std::to_string(tmp));
+			assert(sym->paramValue("$angle") == std::to_string(tmp));
+		}
+
+		// set parameters.
+		unsigned position = 0;
+
+		// skip the first 4. x y tx ty.
+		unsigned offset = 4; // Symbol::paramCountBase()
+		unsigned int z=0;
+		int counts = s.count('"');
+		trace2("set?", s, counts);
+		for(; int(position)<counts/2; ++ position){
+			z++;
+			n = s.section('"',z,z);    // property value. gaah parse over and over again?
+			z++;
+
+			trace2("legacy:set", position, n);
+			try{
+				sym->setParameter(position + offset, n);
+			}catch(ExceptionCantFind const*){ untested();
+				incomplete(); // CS has error messages...
+				error(5, "cannot parse Symbol param " +
+						std::to_string(position + offset) + " in " + sym->label());
+				throw; // BUG
+			}
+
+			n  = s.section('"',z,z);    // display
+		}
+
+		trace1("done sym parse", sym->label());
 	}
 
-	trace1("done sym parse", sym->label());
+	// setPort?
+	auto Scope = sym->scope();
+	assert(Scope);
+	for(unsigned i=0; i<sym->numPorts(); ++i){
+		sym->connectNode(i, Scope->nodes());
+	}
+
 	return sym;
 } // parseSymbol
 
@@ -1025,12 +1036,7 @@ Element* LegacySchematicLanguage::parseItem(istream_t& c, Element* e) const
 	l = l.mid(1, l.length()-2);  // cut off start and end character
 
 	if(auto s=dynamic_cast<Symbol*>(e)){
-		if(s->typeName()=="wire"){
-			// yikes.
-			obsolete_wireload(s, l);
-		}else{
-			parseSymbol(c, s);
-		}
+		parseSymbol(c, s);
 	}else if(auto t=dynamic_cast<TaskElement*>(e)){untested();
 		loadtaskElement(l, t);
 	}else if(auto d=dynamic_cast<Diagram*>(e)){
@@ -1042,17 +1048,6 @@ Element* LegacySchematicLanguage::parseItem(istream_t& c, Element* e) const
 	}else{ untested();
 		return DocumentLanguage::parseItem(c, e);
 	}
-
-
-				{ // TODO: move to parseSymbol.
-					auto Scope = e->scope();
-					if (auto c=dynamic_cast<Symbol*>(e)) {
-						for(unsigned i=0; i<c->numPorts(); ++i){
-							c->connectNode(i, Scope->nodes());
-						}
-					}else{
-					}
-				}
 
 
 	return e; // wrong.
