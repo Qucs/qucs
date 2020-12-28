@@ -10,7 +10,7 @@ find_package(
   )
 
 # Srcs
-readVariable(MakeList SRCS SRCS)
+readVariable(MakeList RAW_SRCS SRCS)
 
 # An object library compiles source files but does not archive or link their object files into a library.
 add_library(misc SHARED ${SRCS})
