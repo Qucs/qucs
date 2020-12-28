@@ -89,6 +89,13 @@ QStringList qucsPathList;
 VersionTriplet QucsVersion; // Qucs version string
 QucsApp *QucsMain = 0;  // the Qucs application itself
 
+typedef enum {
+    Project = 0,
+    Content,
+    Components,
+    Libraries,
+} TabViewTabs;
+
 
 /*!
  * \brief QucsApp::QucsApp main application
@@ -252,8 +259,13 @@ void QucsApp::initView()
   ProjGroupLayout->addWidget(Projects);
   ProjGroup->setLayout(ProjGroupLayout);
 
+  int tabviewIndex;
+
   TabView->addTab(ProjGroup, tr("Projects"));
-  TabView->setTabToolTip(TabView->indexOf(ProjGroup), tr("content of project directory"));
+  tabviewIndex = TabView->insertTab(TabViewTabs::Project, ProjGroup, tr("Projects"));
+  assert(tabviewIndex == TabViewTabs::Project);
+  TabView->setTabToolTip(TabViewTabs::Project, tr("content of project directory"));
+
 
   connect(Projects, &QListView::doubleClicked, this, &QucsApp::slotListProjOpen);
 
@@ -263,8 +275,9 @@ void QucsApp::initView()
     Content = new ProjectView(this);
     Content->setContextMenuPolicy(Qt::CustomContextMenu);
 
-    TabView->addTab(Content, tr("Content"));
-    TabView->setTabToolTip(TabView->indexOf(Content), tr("content of current project"));
+    tabviewIndex = TabView->insertTab(TabViewTabs::Content, Content, tr("Content"));
+    assert(tabviewIndex == TabViewTabs::Content);
+    TabView->setTabToolTip(TabViewTabs::Content, tr("content of current project"));
 
     connect(Content, SIGNAL(clicked(const QModelIndex &)), 
             SLOT(slotSelectSubcircuit(const QModelIndex &)));
@@ -295,8 +308,9 @@ void QucsApp::initView()
   CompSearchLayout->addWidget(CompSearchClear);
   CompGroup->setLayout(CompGroupLayout);
 
-  TabView->addTab(CompGroup,tr("Components"));
-  TabView->setTabToolTip(TabView->indexOf(CompGroup), tr("components and diagrams"));
+  tabviewIndex = TabView->insertTab(TabViewTabs::Components, CompGroup,tr("Components"));
+  assert(tabviewIndex == TabViewTabs::Components);
+  TabView->setTabToolTip(TabViewTabs::Components, tr("components and diagrams"));
   fillComboBox(true);
 
   slotSetCompView(0);
@@ -334,8 +348,9 @@ void QucsApp::initView()
 
   fillLibrariesTreeView ();
 
-  TabView->addTab (LibGroup, tr("Libraries"));
-  TabView->setTabToolTip (TabView->indexOf (CompGroup), tr ("system and user component libraries"));
+  tabviewIndex = TabView->insertTab(TabViewTabs::Libraries, LibGroup, tr("Libraries"));
+  assert(tabviewIndex == TabViewTabs::Libraries);
+  TabView->setTabToolTip (TabViewTabs::Libraries, tr ("system and user component libraries"));
 
   connect(libTreeWidget, SIGNAL(itemPressed (QTreeWidgetItem*, int)),
            SLOT(slotSelectLibComponent (QTreeWidgetItem*)));
@@ -345,7 +360,7 @@ void QucsApp::initView()
   dock->setWidget(TabView);
   dock->setAllowedAreas(Qt::LeftDockWidgetArea);
   this->addDockWidget(Qt::LeftDockWidgetArea, dock);
-  TabView->setCurrentIndex(0);
+  TabView->setCurrentIndex(TabViewTabs::Project);
 
   // ----------------------------------------------------------
   // Octave docking window
@@ -1126,7 +1141,7 @@ void QucsApp::openProject(const QString& Path)
 
     Content->setProjPath(QucsSettings.QucsWorkDir.absolutePath());
 
-    TabView->setCurrentIndex(1);   // switch to "Content"-Tab
+    TabView->setCurrentIndex(TabViewTabs::Content);
 
     openProjName.chop(4); // remove "_prj" from name
     ProjName = openProjName;   // remember the name of project
@@ -1201,7 +1216,7 @@ void QucsApp::slotMenuProjClose()
 
   Content->setProjPath("");
 
-  TabView->setCurrentIndex(0);   // switch to "Projects"-Tab
+  TabView->setCurrentIndex(TabViewTabs::Project);
   ProjName = "";
 }
 
@@ -2109,7 +2124,7 @@ void QucsApp::slotChangePage(QString& DocName, QString& DataDisplay)
 //    if(!isTextDocument (w))
 //      ((QucsDoc*)w)->reloadGraphs();  // ... changes, reload here !
 
-  TabView->setCurrentIndex(2);   // switch to "Component"-Tab
+  TabView->setCurrentIndex(TabViewTabs::Components);
   if (Name.right(4) == ".dpl") { untested();
     int i = Category::getModulesNr (QObject::tr("diagrams"));
     CompChoose->setCurrentIndex(i);   // switch to diagrams
