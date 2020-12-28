@@ -203,6 +203,11 @@ bool TaskElement::getSelected(int x_, int y_)
 #endif
 
 // -------------------------------------------------------
+rect_t TaskElement::bounding_rect() const
+{
+	incomplete();
+	return rect_t();
+}
 void TaskElement::paint(ViewPainter *p) const
 {
 	int x2=0; int y2=0; //?
