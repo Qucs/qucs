@@ -1108,10 +1108,14 @@ void QucsApp::openProject(const QString& Path)
     return;
   }
 
-  if(closeAllFiles()){ untested();
+  if(!closeAllFiles()){
+    untested();
     // close files and ask for saving them
-  }else{ untested();
-    DocumentTab->createEmptySchematic("");
+  }
+    // As soon as all files are closed, open a new file.
+  // TODO: maybe it is better to open no project or?
+
+  DocumentTab->createEmptySchematic("");
 
   //  view->drawn = false;
 
@@ -1129,7 +1133,6 @@ void QucsApp::openProject(const QString& Path)
 
     // show name in title of main window
     setWindowTitle("Qucs " PACKAGE_VERSION + tr(" - Project: ")+ProjName);
-  }
 }
 
 // ----------------------------------------------------------
