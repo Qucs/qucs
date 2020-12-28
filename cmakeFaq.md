@@ -66,3 +66,7 @@ I have to link again Printsupport in qucs_app target. Don't understand why
 Problem was that not all libraries where linkable correctly. For this testapplications can be created, so it is easier to find out why the library cannot be loaded.
 See commits: 9800732d32947296955166c88b32c6fe88372931, 18cd0dd65e703f29bf9d7e63d39d3b5184599165, be7e8d48d8c23e35e592d5b23d7a3d4c99d05791 and 45fb573bf19fbb75261aa6b7d9dddc701d228473
 
+# qucs binary does not find libqucsschematic.so when installing
+problem commit: 4843f08c40ba9ca62755220724da4e7b0efdc039
+solution: rpath must be set bf7842eb117b34fd5684694d363933453095de0b
+
