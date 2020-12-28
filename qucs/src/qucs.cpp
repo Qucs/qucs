@@ -279,11 +279,8 @@ void QucsApp::initView()
     assert(tabviewIndex == TabViewTabs::Content);
     TabView->setTabToolTip(TabViewTabs::Content, tr("content of current project"));
 
-    connect(Content, SIGNAL(clicked(const QModelIndex &)), 
-            SLOT(slotSelectSubcircuit(const QModelIndex &)));
-
-    connect(Content, SIGNAL(doubleClicked(const QModelIndex &)),
-            SLOT(slotOpenContent(const QModelIndex &)));
+    connect(Content, &ProjectView::clicked, this, &QucsApp::slotSelectSubcircuit);
+    connect(Content, &ProjectView::doubleClicked, this, &QucsApp::slotOpenContent);
   }
 
   // ----------------------------------------------------------
