@@ -31,4 +31,4 @@ C #(.C(0.1 uF), .V(), .Symbol(neutral)) C1(_net25, gnd);
 C #(.C(5 uF), .V(), .Symbol(neutral)) C2(_net12, gnd);
 endmodule // main
 
-Sub #(.File()) Sub(_net0);
+Sub #(.File()) Sub((null));

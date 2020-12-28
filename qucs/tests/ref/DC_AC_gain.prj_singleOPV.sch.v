@@ -9,4 +9,4 @@ Port #(.Num(2), .Type()) P2(_net7);
 Idc #(.I(5 uA)) I1(_net17, _net16);
 endmodule // main
 
-Sub #(.File()) Sub(_net0);
+Sub #(.File()) Sub((null));

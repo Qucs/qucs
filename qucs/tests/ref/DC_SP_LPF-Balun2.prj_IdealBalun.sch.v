@@ -7,4 +7,4 @@ Port #(.Num(2), .Type(analog)) P2(_net5);
 Port #(.Num(1), .Type(analog)) P1(_net10);
 endmodule // main
 
-Sub #(.File()) Sub(_net0);
+Sub #(.File()) Sub((null));

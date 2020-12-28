@@ -4,6 +4,7 @@
 
 #include "schematic_model.h"
 #include "globals.h"
+#include "wiretest.h"
 
 void union0()
 {
@@ -24,7 +25,7 @@ void union0()
 	assert( w1->nodePosition(0) == pos_t(1,0));
 	assert( w1->nodePosition(1) == pos_t(2,0));
 
-	M.pushBack(w0);
+	connect_push(M, w0);
 	assert(M.nodeCount() == 2);
 
 	auto c = dynamic_cast<Conductor const*>(w0);
@@ -49,7 +50,7 @@ void union1()
 	auto w1 = prechecked_cast<Symbol*>(wp->clone());
 	w1->setParameter(std::string("deltay"), "1");
 
-	M.pushBack(w0);
+	connect_push(M, w0);
 	assert(M.nodeCount() == 2);
 
 	auto c = dynamic_cast<Conductor const*>(w0);
@@ -69,7 +70,7 @@ void union2()
 	w1->setParameter(std::string("$xposition"), "5");
 	w1->setParameter(std::string("deltax"), "10");
 
-	M.pushBack(w0);
+	connect_push(M, w0);
 	assert(M.nodeCount() == 2);
 
 	auto c = dynamic_cast<Conductor const*>(w0);
@@ -93,8 +94,8 @@ void union3()
 	auto w2 = prechecked_cast<Symbol*>(wp->clone());
 	w2->setParameter(std::string("deltay"), "-10");
 
-	M.pushBack(w0);
-	M.pushBack(w1);
+	connect_push(M, w0);
+	connect_push(M, w1);
 	assert(M.nodeCount() == 3);
 
 	auto c = dynamic_cast<Conductor const*>(w0);
@@ -119,7 +120,7 @@ void union4()
 	trace1("dbg", w2->portPosition(1));
 	assert( w2->nodePosition(1) == pos_t(0,-10));
 
-	M.pushBack(w0);
+	connect_push(M, w0);
 	assert(M.nodeCount() == 2);
 
 	auto c = dynamic_cast<Conductor const*>(w0);
@@ -142,7 +143,7 @@ void union5()
 	auto g0 = prechecked_cast<Symbol*>(wp->clone());
 	assert(g0->nodePosition(0) == pos_t(0, 0));
 
-	M.pushBack(w0);
+	connect_push(M, w0);
 	assert(numWires(M) == 1);
 	assert(M.nodeCount() == 2);
 
@@ -173,8 +174,8 @@ void union6()
 	auto w2 = prechecked_cast<Symbol*>(wp->clone());
 	w2->setParameter(std::string("deltay"), "-10");
 
-	M.pushBack(w0);
-	M.pushBack(w1);
+	connect_push(M, w0);
+	connect_push(M, w1);
 	assert(M.nodeCount() == 3);
 
 	{

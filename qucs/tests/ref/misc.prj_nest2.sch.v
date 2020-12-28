@@ -6,4 +6,4 @@ GND #() *(gnd);
 C #(.C(1 pF), .V(), .Symbol(neutral)) C1(gnd, _net7);
 endmodule // main
 
-Sub #(.File()) Sub(_net0);
+Sub #(.File()) Sub((null));

@@ -17,4 +17,4 @@ L #(.L(5 H), .I()) L1(gnd, _net15);
 //DC1
 endmodule // main
 
-Sub #(.File()) Sub(_net0);
+Sub #(.File()) Sub((null));

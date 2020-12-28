@@ -9,4 +9,4 @@ L #(.L(13 nH), .I()) L1(Voltage, _net4);
 //AC1
 endmodule // main
 
-Sub #(.File()) Sub(_net0);
+Sub #(.File()) Sub((null));

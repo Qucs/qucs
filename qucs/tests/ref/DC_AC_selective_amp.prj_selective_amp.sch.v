@@ -19,4 +19,4 @@ Vdc #(.U(12 V)) V1(_net14, gnd);
 Eqn #(.Gain(dB(Output.v/Input.v)), .Export(yes)) Eqn1();
 endmodule // main
 
-Sub #(.File()) Sub(_net0);
+Sub #(.File()) Sub((null));

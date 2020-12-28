@@ -124,8 +124,8 @@ void SchematicModel::pushBack(Element* what)
 		components().append(what);
 	}else if(auto c=dynamic_cast<Symbol*>(what)){
 		if(c->is_device()){
-			trace1("connect", what->label());
-			connect(c); // BUG. wrong place.
+			trace1("connect?", what->label());
+			// connect(c); // BUG. wrong place.
 		}else{
 			assert(!dynamic_cast<Conductor*>(what));
 		}
@@ -225,14 +225,17 @@ void SchematicModel::disconnect(Symbol* c)
 	}
 }
 /*--------------------------------------------------------------------------*/
+#if 1 // obsolete, but used in tests.
 void SchematicModel::connect(Symbol* c)
 {
+	incomplete();
 	assert(c->is_device());
 	for(unsigned i=0; i<c->numPorts(); ++i){
 		c->connectNode(i, nodes()); // use scope.
 //		assert(dynamic_cast<Symbol const*>(c)->port(i).connected());
 	}
 }
+#endif
 /*--------------------------------------------------------------------------*/
 unsigned SchematicModel::numPorts() const
 {

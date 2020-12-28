@@ -4,6 +4,7 @@
 
 #include "schematic_model.h"
 #include "globals.h"
+#include "wiretest.h"
 
 void union0()
 {
@@ -27,7 +28,7 @@ void union0()
 	assert(g0->nodePosition(0) == pos_t(-30, 0));
 	assert(g0->nodePosition(1) == pos_t(30, 0));
 
-	M.pushBack(w0);
+	connect_push(M, w0);
 	assert(numWires(M) == 1);
 	assert(M.nodeCount() == 2);
 
@@ -80,7 +81,7 @@ void union1()
 	w1->setParameter(std::string("deltax"), "100");
 	w1->setParameter(std::string("$xposition"), "-50");
 
-	M.pushBack(w0);
+	connect_push(M, w0);
 	assert(numWires(M) == 1);
 	assert(M.nodeCount() == 2);
 
@@ -108,7 +109,7 @@ void union2()
 	auto w0 = prechecked_cast<Symbol*>(wp->clone());
 	w0->setParameter(std::string("deltax"), "100");
 	w0->setParameter(std::string("$xposition"), "-50");
-	M.pushBack(w0);
+	connect_push(M, w0);
 	assert(numWires(M) == 1);
 	assert(M.nodeCount() == 2);
 

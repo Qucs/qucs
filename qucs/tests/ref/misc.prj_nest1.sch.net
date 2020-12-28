@@ -5,7 +5,7 @@
 # sckt own Sub:nest2
 
 .Def:nest2 _net1 _net7
-# Missing ID & paramsSub:nest2
+# Missing ID & params Sub:nest2
 # 14
 R:R1 _net1 _net7 R="0 Ohm" Temp="26.85" Tc1="0.0" Tc2="0.0" Tnom="26.85"
 C:C1 gnd _net7 C="1 pF" V=""

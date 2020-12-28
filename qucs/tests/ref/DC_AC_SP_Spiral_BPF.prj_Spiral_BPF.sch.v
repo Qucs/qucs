@@ -19,4 +19,4 @@ Vdc #(.U(1.1 V)) V1(_net17, gnd);
 GND #() *(gnd);
 endmodule // main
 
-Sub #(.File()) Sub(_net0);
+Sub #(.File()) Sub((null));
