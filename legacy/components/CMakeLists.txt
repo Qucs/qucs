@@ -1,6 +1,6 @@
 # qucs/componenets library
 
-include(../../../cmake/readMakeList.txt)
+include(../../cmake/readMakeList.txt)
 
 find_package(
   Qt5
@@ -36,10 +36,10 @@ target_include_directories(components
 	PRIVATE
 	${CMAKE_CURRENT_SOURCE_DIR}/../../src
 	${CMAKE_CURRENT_SOURCE_DIR}/../../include
-	${qucs_app_BINARY_DIR}
+        ${qucs_BINARY_DIR}/main # config.h
 	)
 target_link_libraries(components Qt5::Widgets Qt5::Script)
-target_link_libraries(components qucsschematic legacy)
+target_link_libraries(components libqucs legacy)
 set_property(TARGET components PROPERTY AUTOMOC ON)
 set_property(TARGET components PROPERTY AUTORCC ON)
 

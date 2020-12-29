@@ -1,20 +1,15 @@
-# (C) 2014 Guilherme Brondani Torri
-#     2020 Martin Marmsoler
-#     2020 Felix Salfelder
-# License: GPLv3+
-
+# qucs-suite
+# whats the difference between it and the qucs subfolder?
 project(qucs CXX)
 cmake_minimum_required(VERSION 3.18)
 cmake_policy(VERSION 3.18)
 
 # Set standard installation paths.
-# TODO: check the difference.
-include(GNUInstallDirs)
+#include(GNUInstallDirs)
 
 set(QUCS_URL "https://sf.net/p/qucs")
 set(QUCS_BUGREPORT "qucs-bugs@lists.sourceforge.net")
 
-# TODO: this is outdated.
 set(GIT unknown)
 if(EXISTS ${CMAKE_SOURCE_DIR}/../.git)
   find_package(Git)
@@ -35,8 +30,9 @@ find_package(Qt5 REQUIRED Core Gui Script)
 set(QT_DEBUG TRUE)
 
 add_definitions(${QT_DEFINITIONS} -DQT_DEPRECATED_WARNINGS)
+add_compile_definitions(HAVE_CONFIG_H)
 
-# TODO: move to man
+# For some reason they do not exist anymore
 #configure_file(${CMAKE_CURRENT_SOURCE_DIR}/man/qucs.1.cmake.in
 #               ${CMAKE_CURRENT_SOURCE_DIR}/man/qucs.1)
 #configure_file(${CMAKE_CURRENT_SOURCE_DIR}/man/qucsdigi.1.cmake.in
@@ -46,7 +42,7 @@ add_definitions(${QT_DEFINITIONS} -DQT_DEPRECATED_WARNINGS)
 #configure_file(${CMAKE_CURRENT_SOURCE_DIR}/man/qucsveri.1.cmake.in
 #               ${CMAKE_CURRENT_SOURCE_DIR}/man/qucsveri.1)
 
-# TODO: move to tools
+# Tools
 #configure_file(
 #  ${CMAKE_CURRENT_SOURCE_DIR}/qucs-activefilter/qucsactivefilter.1.cmake.in
 #  ${CMAKE_CURRENT_SOURCE_DIR}/qucs-activefilter/qucsactivefilter.1)
@@ -65,7 +61,6 @@ add_definitions(${QT_DEFINITIONS} -DQT_DEPRECATED_WARNINGS)
 #configure_file(${CMAKE_CURRENT_SOURCE_DIR}/qucs-transcalc/qucstrans.1.cmake.in
 #               ${CMAKE_CURRENT_SOURCE_DIR}/qucs-transcalc/qucstrans.1)
 
-add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/src)
 add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/main)
 
 # add_subdirectory(man)
@@ -91,3 +86,4 @@ add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/main)
 
 #add_custom_target(uninstall-ui COMMAND ${CMAKE_COMMAND} -P
 #                                    ${CMAKE_CURRENT_BINARY_DIR}/uninstall.cmake)
+
