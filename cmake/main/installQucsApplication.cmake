@@ -1,11 +1,11 @@
 # everything related to install the qucs application
 # any dependencies are installed here
 if(UNIX AND NOT APPLE)
-	set(DESKTOP ${CMAKE_CURRENT_SOURCE_DIR}/../../contrib/qucs.desktop)
+	set(DESKTOP ${CMAKE_CURRENT_SOURCE_DIR}/../../main/qucs.desktop)
 	install(FILES ${DESKTOP}
 		DESTINATION ${CMAKE_INSTALL_PREFIX}/share/applications)
 		
-    set(BITMAPS_HICOLOR_PATH ${CMAKE_CURRENT_SOURCE_DIR}/../../bitmaps/hicolor)
+    set(BITMAPS_HICOLOR_PATH ${CMAKE_CURRENT_SOURCE_DIR}/../../src/bitmaps/hicolor)
     set(BITMAPS_HICOLOR_DESTINATION ${CMAKE_INSTALL_PREFIX}/share/icons/hicolor)
 
 	install(FILES ${BITMAPS_HICOLOR_PATH}/16x16/apps/qucs.png
