@@ -20,7 +20,7 @@
 
 iExp::iExp()
 {
-  Description = QObject::tr("exponential current source");
+  setLabel("exponential current source");
 
   // normal current source symbol
   Arcs.append(new Arc(-12,-12, 24, 24,  0, 16*360,QPen(Qt::darkBlue,2)));

@@ -20,7 +20,7 @@
 
 Diac::Diac()
 {
-  Description = QObject::tr("diac (bidirectional trigger diode)");
+  setLabel("diac (bidirectional trigger diode)");
 
   Lines.append(new Line(  0,-30,  0, -6,QPen(Qt::darkBlue,2)));
   Lines.append(new Line(  0, 30,  0,  6,QPen(Qt::darkBlue,2)));

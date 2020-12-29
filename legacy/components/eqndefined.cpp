@@ -23,7 +23,7 @@
 
 EqnDefined::EqnDefined()
 {
-  Description = QObject::tr("equation defined device");
+  setLabel("equation defined device");
 
   Model = "EDD";
   Name  = "D";

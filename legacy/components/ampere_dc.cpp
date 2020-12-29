@@ -36,8 +36,8 @@ static Module::INSTALL pp("sources", &D);
 
 Ampere_dc::Ampere_dc()
 {
-  info(Name, bitmap_file);
-  Description = QObject::tr("ideal dc current source");
+//  info(Name, bitmap_file);
+  setLabel("ideal dc current source");
 
   Arcs.append(new Arc(-12,-12, 24, 24,  0, 16*360,QPen(Qt::darkBlue,2)));
   Lines.append(new Line(-30,  0,-12,  0,QPen(Qt::darkBlue,2)));

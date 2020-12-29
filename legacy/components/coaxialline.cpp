@@ -20,7 +20,7 @@
 
 CoaxialLine::CoaxialLine()
 {
-  Description = QObject::tr("coaxial transmission line");
+  setLabel("coaxial transmission line");
 
   Arcs.append(new Arc(-20, -9, 8, 18,     0, 16*360,QPen(Qt::darkBlue,2)));
   Arcs.append(new Arc( 11, -9, 8, 18,16*270, 16*180,QPen(Qt::darkBlue,2)));

@@ -235,11 +235,7 @@ public: // BUG
 
 protected:
 public: // old mess
-  QString const& name() const{ return Name; }
-//  virtual QString const& name() const{return Name;}
-  void setName(QString const& n){ Name = n; }
   virtual bool useObsoleteProps() const {return true;}
-
 
 private:
   char const* iconBasename() const{return bitmap_file;}

@@ -22,7 +22,7 @@
 
 Mutual2::Mutual2()
 {
-  Description = QObject::tr("three mutual inductors");
+  setLabel("three mutual inductors");
 
   int w;
   QString stmp;

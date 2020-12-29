@@ -2156,7 +2156,7 @@ void ComponentDialog::slotApplyInput()
   QString tmp;
   Component *pc = nullptr;
   if(CompNameEdit->text().isEmpty()){
-    CompNameEdit->setText(Comp->name());
+    CompNameEdit->setText(QString::fromStdString(Comp->label()));
   }else if(CompNameEdit->text().toStdString() != Comp->label()) {
     trace2("Apply", Comp->label(), CompNameEdit->text());
 #if 0
@@ -2169,7 +2169,7 @@ void ComponentDialog::slotApplyInput()
     }
 #endif
     if(pc){
-      CompNameEdit->setText(Comp->name());
+      CompNameEdit->setText(QString::fromStdString(Comp->label()));
     } else if (Comp->label() != CompNameEdit->text().toStdString()) {
       Comp->setLabel(CompNameEdit->text().toStdString());
       changed = true;

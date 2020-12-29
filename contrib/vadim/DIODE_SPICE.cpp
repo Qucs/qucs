@@ -43,40 +43,37 @@ static Module::INSTALL pp("vadim", &D);
 
 DIODE_SPICE::DIODE_SPICE()
 {
-	info(Name, bitmap_file);
 	setTypeName("DIODE_SPICE");
-    Description = QObject::tr("SPICE D:\nMultiple line ngspice or Xyce D model specifications allowed using \"+\" continuation lines.\nLeave continuation lines blank when NOT in use.");
+	setLabel("SPICE D:\nMultiple line ngspice or Xyce D model specifications allowed using \"+\" continuation lines.\nLeave continuation lines blank when NOT in use.");
 
 
-    Lines.append(new Line(-30,  0, -20,  0,QPen(Qt::darkBlue,3)));
-    Lines.append(new Line( -20, 0, -6,   0,QPen(Qt::darkRed,3)));
-    Lines.append(new Line(  6,  0, 20,   0,QPen(Qt::darkRed,3)));
-    Lines.append(new Line( 20,  0, 30,   0,QPen(Qt::darkBlue,3)));
- 
- 
-    Lines.append(new Line( -6, -9, -6,  9,QPen(Qt::darkRed,3)));
-    Lines.append(new Line(  6, -9,  6,  9,QPen(Qt::darkRed,3)));
-    Lines.append(new Line( -6, -9,  6,  0,QPen(Qt::darkRed,3)));
-    Lines.append(new Line( -6,  9,  6,  0,QPen(Qt::darkRed,3)));
+	Lines.append(new Line(-30,  0, -20,  0,QPen(Qt::darkBlue,3)));
+	Lines.append(new Line( -20, 0, -6,   0,QPen(Qt::darkRed,3)));
+	Lines.append(new Line(  6,  0, 20,   0,QPen(Qt::darkRed,3)));
+	Lines.append(new Line( 20,  0, 30,   0,QPen(Qt::darkBlue,3)));
 
-  Ports.append(new ComponentPort(-30, 0));
-  Ports.append(new ComponentPort( 30, 0));
 
-  x1 = -30; y1 = -11;
-  x2 =  30; y2 =  11;
+	Lines.append(new Line( -6, -9, -6,  9,QPen(Qt::darkRed,3)));
+	Lines.append(new Line(  6, -9,  6,  9,QPen(Qt::darkRed,3)));
+	Lines.append(new Line( -6, -9,  6,  0,QPen(Qt::darkRed,3)));
+	Lines.append(new Line( -6,  9,  6,  0,QPen(Qt::darkRed,3)));
 
-    tx = x1+4;
-    ty = y2+4;
+	Ports.append(new ComponentPort(-30, 0));
+	Ports.append(new ComponentPort( 30, 0));
 
-    Model = "DIODE_SPICE";
-    // SpiceModel = "D"; BUG/ wrong baseclass
-    Name  = "D";
+	x1 = -30; y1 = -11;
+	x2 =  30; y2 =  11;
 
-    Props.append(new Property("D", "", true,"Param list and\n .model spec."));
-    Props.append(new Property("D_Line 2", "", false,"+ continuation line 1"));
-    Props.append(new Property("D_Line 3", "", false,"+ continuation line 2"));
-    Props.append(new Property("D_Line 4", "", false,"+ continuation line 3"));
-    Props.append(new Property("D_Line 5", "", false,"+ continuation line 4"));
+	tx = x1+4;
+	ty = y2+4;
+
+	Model = "DIODE_SPICE";
+
+	Props.append(new Property("D", "", true,"Param list and\n .model spec."));
+	Props.append(new Property("D_Line 2", "", false,"+ continuation line 1"));
+	Props.append(new Property("D_Line 3", "", false,"+ continuation line 2"));
+	Props.append(new Property("D_Line 4", "", false,"+ continuation line 3"));
+	Props.append(new Property("D_Line 5", "", false,"+ continuation line 4"));
 
 }
 

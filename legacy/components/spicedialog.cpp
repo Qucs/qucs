@@ -157,7 +157,7 @@ void SpiceDialog::attach(Object* spicecomponent)
   all->addLayout(hbottom);
 
   // ------------------------------------------------------------
-  CompNameEdit->setText(Comp->name());
+  CompNameEdit->setText(QString::fromStdString(Comp->label()));
   changed = false;
 
   // insert all properties into the ListBox
@@ -212,8 +212,9 @@ void SpiceDialog::reject()
 // Is called, if the "Apply"-button is pressed.
 void SpiceDialog::slotButtApply()
 {
+#if 0
   if(CompNameEdit->text().isEmpty()){
-	  CompNameEdit->setText(Comp->name());
+	  CompNameEdit->setText(QString::fromStdString(Comp->label()));
   } else if(CompNameEdit->text() != Comp->name()) {
     auto pc = Doc->find_component(CompNameEdit->text());
 
@@ -276,6 +277,7 @@ void SpiceDialog::slotButtApply()
 //    Doc->recreateSymbol(Comp); // to apply changes to the schematic symbol
     Doc->viewport()->repaint();
   }
+#endif
 }
 
 // -------------------------------------------------------------------------

@@ -20,7 +20,7 @@
 
 BondWire::BondWire()
 {
-  Description = QObject::tr("bond wire");
+  setLabel("bond wire");
 
   Lines.append(new Line(-30, 0,-8, 0,QPen(Qt::darkBlue,3)));
   Lines.append(new Line( 30, 0, 8, 0,QPen(Qt::darkBlue,3)));
