@@ -25,7 +25,7 @@ add_compile_definitions(QUCS_PREFIX="${prefix}")
 add_compile_definitions(QUCS_PLUGPATH="${pkglibdir}")
 
 # qucsschematic
-# add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/../src src)
+add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/../src src)
 
 ## ------ WHY needed?
 # If Git hash not defined, try to define it
@@ -49,10 +49,7 @@ add_compile_definitions(QUCS_PLUGPATH="${pkglibdir}")
 #  # set(BIN_INSTALL_DIR ".") set(DOC_INSTALL_DIR ".")
 #endif()
 
-#
-add_definitions(-DHAVE_CONFIG_H)
-
-# TODO. move *cmake files to cmake directory
+# configure the header config.h
 configure_file("${PROJECT_SOURCE_DIR}/../../config.h.cmake"
                "${PROJECT_BINARY_DIR}/config.h")
 
@@ -82,7 +79,6 @@ configure_file("${PROJECT_SOURCE_DIR}/../../config.h.cmake"
 #  endif()
 #endif()
 
-# why?
 find_package(
   Qt5
   REQUIRED
@@ -139,7 +135,7 @@ endif()
 ## CMake's way of creating an executable
 ##
 add_executable(qucs MACOSX_BUNDLE WIN32 ${CMAKE_CURRENT_SOURCE_DIR}/../../main/main.cpp)
-target_link_libraries(qucs qucsschematic)
+target_link_libraries(qucs libqucs)
 target_link_libraries(qucs Qt5::Widgets)
 target_link_libraries(qucs Qt5::Svg)
 # otherwise I'm getting /usr/bin/ld: QucsSchematicLibrary/libqucsschematic.so: undefined reference to `QPrinter::QPrinter(QPrinter::PrinterMode)'
@@ -152,8 +148,8 @@ target_include_directories(qucs PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/../../includ
  ${CMAKE_CURRENT_BINARY_DIR}
  )
 
-# TODO: disentangle
-# include(compileAndInstallDependencies.cmake)
+include(compileAndInstallPlugins.cmake)
 
-# install additional files (icons etc.)
-include(${CMAKE_CURRENT_SOURCE_DIR}/extra.cmake)
+# install Qucs application
+include(${CMAKE_CURRENT_SOURCE_DIR}/installQucsApplication.cmake)
+
