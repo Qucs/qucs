@@ -186,7 +186,7 @@ Element* LegacySchematicLanguage::loadElement_(const QString& _s, Element* e) co
 		// will not work non-qucs-.sch languages
 		c = parseComponentObsoleteCallback(_s, c);
 
-		QString cstr = c->name();   // is perhaps changed in "recreate" (e.g. subcircuit)
+        QString cstr = c->label().c_str();   // is perhaps changed in "recreate" (e.g. subcircuit)
 		int x = c->tx;
 		int y = c->ty;
 		// c->setSchematic (p);
@@ -1200,7 +1200,7 @@ Element* LegacySchematicLanguage::getComponentFromName(QString& Line) const
 			return 0;
 		}else{ untested();
 		}
-		cstr = c->name();   // is perhaps changed in "recreate" (e.g. subcircuit)
+        cstr = c->label().c_str();   // is perhaps changed in "recreate" (e.g. subcircuit)
 		int x = c->tx, y = c->ty;
 		c->setSchematic (p);
 		c->recreate(0);

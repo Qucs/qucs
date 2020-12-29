@@ -234,9 +234,6 @@ public: // BUG
 
 protected:
 public: // old mess
-  QString const& name() const{ QString l(label().c_str()); return l; }
-//  virtual QString const& name() const{return Name;}
-  void setName(QString const& n){ setLabel(n.toStdString()); }
   virtual bool useObsoleteProps() const {return true;}
 
 

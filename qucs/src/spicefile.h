@@ -30,8 +30,6 @@ class ostream_t;
 class SpiceFile : public QObject, public MultiViewComponent  {
  //  Q_OBJECT wtf?
 public:
-  using MultiViewComponent::name;
-public:
   SpiceFile();
  ~SpiceFile() {};
   Component* newOne() {
