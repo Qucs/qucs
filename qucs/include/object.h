@@ -20,7 +20,10 @@
 #define CreateType(firstDerivative, secondDerivative, thirdDerivative) \
 	(unsigned long long)thirdDerivative << 7*8 | secondDerivative << 3*8 << firstDerivative
 
-// base object for qucs.
+/*!
+ * \brief The Object class
+ * Base object in Qucs.
+ */
 class Object{
 public:
 	enum QucsMsgType{
