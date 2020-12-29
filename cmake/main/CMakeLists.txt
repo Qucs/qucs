@@ -24,8 +24,14 @@ set(PACKAGE_VERSION "${PROJECT_VERSION}")
 add_compile_definitions(QUCS_PREFIX="${prefix}")
 add_compile_definitions(QUCS_PLUGPATH="${pkglibdir}")
 
-# qucsschematic
+# add dependencies
 add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/../src src)
+add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/../../legacy legacy)
+add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/../../legacy/qucsator legacy/qucsator)
+add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/../../legacy/components legacy/components)
+add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/../../legacy/paintings legacy/paintings)
+add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/../../legacy/libfiles legacy/libfiles)
+add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/../../plugins/misc plugins/misc)
 
 ## ------ WHY needed?
 # If Git hash not defined, try to define it
@@ -53,16 +59,13 @@ add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/../src src)
 configure_file("${PROJECT_SOURCE_DIR}/../../config.h.cmake"
                "${PROJECT_BINARY_DIR}/config.h")
 
-#include_directories("${PROJECT_BINARY_DIR}")
-#include_directories(${CMAKE_SOURCE_DIR})
+set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wall ") # enable warning level
+set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++0x ") # enable C++11
 
-#set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wall ") # enable warning level
-#set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++0x ") # enable C++11
-
-## flag not available in mingw 4.8.2, MSVC10
-#if(NOT WIN32)
-#  set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wno-deprecated-register ")
-#endif()
+# flag not available in mingw 4.8.2, MSVC10
+if(NOT WIN32)
+  set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wno-deprecated-register ")
+endif()
 
 ## For some reason, on Windows QT_LIBRARIES point to static(?) .a libs which do
 ## not provide the needed symbols. They are found on the .dll libraries.
@@ -73,11 +76,11 @@ configure_file("${PROJECT_SOURCE_DIR}/../../config.h.cmake"
 #
 # Set position independed code PIC
 #
-#if(UNIX AND NOT APPLE)
-#  if(CMAKE_SYSTEM_PROCESSOR STREQUAL "x86_64")
-#    set(CMAKE_POSITION_INDEPENDENT_CODE ON)
-#  endif()
-#endif()
+if(UNIX AND NOT APPLE)
+  if(CMAKE_SYSTEM_PROCESSOR STREQUAL "x86_64")
+    set(CMAKE_POSITION_INDEPENDENT_CODE ON)
+  endif()
+endif()
 
 find_package(
   Qt5
