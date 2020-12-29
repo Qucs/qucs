@@ -2451,8 +2451,8 @@ bool Diagram::pressElement(SchematicDoc* Doc, Element*& selElem, QMouseEvent* Ev
 		Doc->viewport()->update();
 		drawn = false;
 	}else{ untested();
-
-		Doc->pushBack(Diag);
+	  incomplete();
+		// Doc->pushBack(Diag);
 //		Doc->enlargeView(Diag->cx(), Diag->cy()-Diag->y2_(), Diag->cx()+Diag->x2_(), Diag->cy());
 		Doc->setChanged(true, true);   // document has been changed
 

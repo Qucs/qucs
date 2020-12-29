@@ -28,6 +28,9 @@ include ../autotools/common.mk
 
 all-local: qucs # ${TGT_PROGRAM}
 
+desktopdir = ${prefix}/share/applications
+desktop_DATA = qucs.desktop
+
 qucs_real_LDFLAGS = $(QT_LDFLAGS)
 qucs_real_SOURCES = ${CPP_SRC}
 qucs_real_CPPFLAGS = ${AM_CPPFLAGS} $(QT_CFLAGS) \

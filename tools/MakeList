@@ -9,4 +9,4 @@ SUBDIRS = \
 DOES_NOT_WORK = \
 	filter-v2
 
-EXTRA_DIST =
+EXTRA_DIST = filter-v2/Makefile.in

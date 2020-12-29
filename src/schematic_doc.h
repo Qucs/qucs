@@ -112,7 +112,7 @@ private: //temporary/obsolete
 	  return _model->sizeOfAll(a, b, c, d, textCorr());
   }
 public:
-  void pushBack(Element* what);
+//  void pushBack(Element* what);
   bool  rotateElements();
   bool  mirrorXComponents();
   bool  mirrorYComponents();

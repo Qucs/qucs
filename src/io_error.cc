@@ -3,9 +3,10 @@
 //
 #include <iostream>
 #include <stdarg.h>
+#include "io_trace.h"
 
 void error(int, const char* fmt, ...)
-{
+{ untested();
   char buffer[1024] = "";
   va_list arg_ptr;
   va_start(arg_ptr,fmt);
@@ -15,6 +16,6 @@ void error(int, const char* fmt, ...)
 }
 /*--------------------------------------------------------------------------*/
 void error(int, const std::string& message)
-{
+{ untested();
 	std::cerr << message;
 }

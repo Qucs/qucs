@@ -159,14 +159,14 @@ void qucsMessageHandler(QtMsgType type, const QMessageLogContext &, const QStrin
 }
 /*--------------------------------------------------------------------------*/
 static void prepare_env()
-{
+{ untested();
   static const char* plugpath="PLUGPATH=" QUCS_PLUGPATH
                               "\0         (reserved space)                 ";
 
   std::string ldlpath = OS::getenv("LD_LIBRARY_PATH");
-  if (ldlpath != "") {
+  if (ldlpath != "") { untested();
     ldlpath += ":";
-  }else{
+  }else{ untested();
   }
   assert(strlen("PLUGPATH=") == 9);
   OS::setenv("QUCS_PLUGPATH", ldlpath + (plugpath+9), false);

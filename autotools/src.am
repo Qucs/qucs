@@ -106,9 +106,6 @@ hicolorscdir = ${prefix}/share/icons/hicolor/scalable/apps
 hicolorsc_DATA =bitmaps/hicolor/scalable/apps/qucs.svg
 
 
-desktopdir = ${prefix}/share/applications
-desktop_DATA = qucs.desktop
-
 EXTRA_DIST += \
 	searchdialog.ui \
 	qucsdigi qucsdigilib qucsdigi.bat qucsdigilib.bat qucsveri qucsveri.bat \

@@ -1,4 +1,4 @@
-# Copyright (C) 2017 Felix Salfelder
+# Copyright (C) 2017, 2020 Felix Salfelder
 #
 # This is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -126,6 +126,7 @@ out/%.qx.out: %.qx
 	../cli/qucs < $< > $@
 
 EXTRA_DIST += \
+	wiretest.h \
 	prj_log_compiler \
 	qx_log_compiler \
 	$(SH_TESTS) \
