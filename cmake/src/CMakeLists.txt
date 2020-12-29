@@ -87,6 +87,9 @@ target_link_libraries(libqucs   Qt5::Core
                                 Qt5::PrintSupport
                                 Qt5::Script)
 
+# rename the library to let it be libqucs (not liblibqucs)
+set_target_properties(libqucs PROPERTIES OUTPUT_NAME qucs)
+
 
 # set Windows runtime location for libqucschematic See:
 # http://www.cmake.org/pipermail/cmake/2010-June/037461.html
