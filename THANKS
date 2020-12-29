@@ -105,3 +105,4 @@ some of the qt5 refactoring insights have been contributed by
 - Eroen -- Qt3 compatibility container
 - yodalee -- some very early GraphicsScene stub
 - Friedrich <s@frhun.de> -- misc
+- Martin Marmsoler -- cmake files

@@ -20,9 +20,14 @@
 -- Boston, MA 02110-1301, USA.
 --
 
+## WIP WIP WIP
 
-Description
-===========
+This is the Qucs refactoring repository which will bring Qt5 support among
+other things. Help make it happen with your donation.
+[![donate](https://liberapay.com/assets/widgets/donate.svg "donate through lp")](https://liberapay.com/Gnucap_and_Qucs/donate)
+
+
+## Description
 
 Qucs was a circuit simulator with a graphical user interface. "Qucs, the GUI",
 this package, was the graphical user interface for circuit simulation. The
@@ -36,8 +41,7 @@ schematic editing and simulation. User data, such as circuit components,
 specific schematic/netlist languages, visualisation tools as well as
 simulator drivers can be loaded at runtime.
 
-Requirements
-============
+## Requirements
 
 Qucs needs Qt version 5 or later. For simplicity, the Qt configuration is
 currently obtained through pkg-config, which you need to install in addition
@@ -52,8 +56,7 @@ On Debian, install
 
 For development purposes (i.e. in order to bootstrap) autotools are required.
 
-Installation
-============
+## Installation
 
 Unpack the distribution tarball:
 
@@ -81,8 +84,7 @@ You need write permissions to the prefix of the installation (default:
 Please note:  Users of the FreeBSD OS may use a GNU make (probably gmake)
 to compile and install the package.
 
-use CMake instead
-=================
+## use CMake instead
 
 (this needs work)
 
@@ -95,16 +97,18 @@ $ mkdir cb
 $ cd cb
 $ cmake ../cmake
 
-Getting the latest Git snapshot
-===============================
+## Getting the latest Git snapshot
 
 You can get the latest Qucs version from our Git repository. Please use an
 official release if you want to work with Qucs. The Git version might not
 always compile or run smoothly. Currently, the main git repository is hosted
 on github.
 
-Debugging
-=========
+## Debugging
+
+Configure a debug build as in
+
+$ ../configure --enable-debug
 
 It is not normally recommended to install during development. Running the
 programs directly from the build directory is possible, with some caveats.
