@@ -31,6 +31,17 @@
 #include <QFileSystemWatcher>
 #include <QDebug>
 
+typedef enum {
+  Datasets = 0,
+  DataDisplays,
+  Verilog,
+  VerilogA,
+  VHDL,
+  Octave,
+  Schematics,
+  Others
+} FileTypes_T;
+
 ProjectView::ProjectView(QWidget *parent)
   : QTreeView(parent)
 {
@@ -53,8 +64,13 @@ ProjectView::~ProjectView()
   delete watcher;
 }
 
-void
-ProjectView::setProjPath(const QString &path)
+/*!
+ * \brief ProjectView::setProjPath
+ * Updates the path in QFileSystemWatcher, so changes in the
+ * new path can be seen automatically
+ * \param path
+ */
+void ProjectView::setProjPath(const QString &path)
 {
   // check if path exist
   m_valid = !path.isEmpty() && QDir(path).exists();
@@ -96,14 +112,28 @@ ProjectView::init()
   APPEND_ROW(m_model, tr("Schematics")   );
   APPEND_ROW(m_model, tr("Others")       );
 
+  // Test if the rows are correct
+  assert(m_model->data(m_model->index(FileTypes_T::Datasets, 0)).toString() == tr("Datasets"));
+  assert(m_model->data(m_model->index(FileTypes_T::DataDisplays, 0)).toString() == tr("Data Displays"));
+  assert(m_model->data(m_model->index(FileTypes_T::Verilog, 0)).toString() == tr("Verilog"));
+  assert(m_model->data(m_model->index(FileTypes_T::VerilogA, 0)).toString() == tr("Verilog-A"));
+  assert(m_model->data(m_model->index(FileTypes_T::VHDL, 0)).toString() == tr("VHDL"));
+  assert(m_model->data(m_model->index(FileTypes_T::Octave, 0)).toString() == tr("Octave"));
+  assert(m_model->data(m_model->index(FileTypes_T::Schematics, 0)).toString() == tr("Schematics"));
+  assert(m_model->data(m_model->index(FileTypes_T::Others, 0)).toString() == tr("Others"));
+
+
   if (!m_valid) {
     return;
   }
 }
 
-// refresh the view using the current projectPath
-void
-ProjectView::refresh()
+/*!
+ * \brief ProjectView::refresh
+ * refresh the view using the current projectPath
+ * Updates the content of the content ListView
+ */
+void ProjectView::refresh()
 {
   // put all files into "Content"-ListView
   QDir workPath(m_projPath);
@@ -122,9 +152,6 @@ ProjectView::refresh()
     m_model->item(i, 0)->removeRows(0, m_model->item(i, 0)->rowCount());
   }
 
-#define APPEND_CHILD(category, data) \
-  m_model->item(category, 0)->appendRow(data);
-
   for(it = files.begin(); it != files.end(); ++it) {
     fileName = (*it).toAscii();
     extName = QFileInfo(workPath.filePath(fileName)).suffix();
@@ -141,22 +168,22 @@ ProjectView::refresh()
     columnData.append(d);
 
     if(extName == "dat") {
-      APPEND_CHILD(0, columnData);
+      m_model->item(FileTypes_T::Datasets, 0)->appendRow(columnData);
     }
     else if(extName == "dpl") {
-      APPEND_CHILD(1, columnData);
+      m_model->item(FileTypes_T::DataDisplays, 0)->appendRow(columnData);
     }
     else if(extName == "v") {
-      APPEND_CHILD(2, columnData);
+      m_model->item(FileTypes_T::Verilog, 0)->appendRow(columnData);
     }
     else if(extName == "va") {
-      APPEND_CHILD(3, columnData);
+      m_model->item(FileTypes_T::VerilogA, 0)->appendRow(columnData);
     }
     else if((extName == "vhdl") || (extName == "vhd")) {
-      APPEND_CHILD(4, columnData);
+      m_model->item(FileTypes_T::VHDL, 0)->appendRow(columnData);
     }
     else if((extName == "m") || (extName == "oct")) {
-      APPEND_CHILD(5, columnData);
+      m_model->item(FileTypes_T::Octave, 0)->appendRow(columnData);
     }
     else if(extName == "sch") {
       // test if it's a valid schematic file
@@ -165,11 +192,11 @@ ProjectView::refresh()
         if(n > 0) { // is a subcircuit
           columnData.append(new QStandardItem(QString::number(n)+tr("-port")));
         }
-        APPEND_CHILD(6, columnData);
+        m_model->item(FileTypes_T::Schematics, 0)->appendRow(columnData);
       }
     }
     else {
-      APPEND_CHILD(7, columnData);
+      m_model->item(FileTypes_T::Others, 0)->appendRow(columnData);
     }
   }
 
@@ -180,7 +207,7 @@ QStringList
 ProjectView::exportSchematic()
 {
   QStringList list;
-  QStandardItem *item = m_model->item(6, 0);
+  QStandardItem *item = m_model->item(FileTypes_T::Schematics, 0);
   for (int i = 0; i < item->rowCount(); ++i) {
     if (item->child(i,1)) {
       list.append(item->child(i,0)->text());
