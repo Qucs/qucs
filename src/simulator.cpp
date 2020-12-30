@@ -46,6 +46,7 @@ void Simulator::attachCtrl(SimCtrl* ctrl)
 void Simulator::detachCtrl(SimCtrl const* ctrl)
 { untested();
   if(_ctrl == ctrl){ untested();
+	 join();
     _ctrl = nullptr;
   }else{ untested();
     _ctrl = nullptr;

@@ -15,7 +15,7 @@ void error(int, const char* fmt, ...)
   std::cerr << buffer;
 }
 /*--------------------------------------------------------------------------*/
-void error(int, const std::string& message)
+void error(int i, const std::string& message)
 { untested();
-	std::cerr << message;
+	std::cerr << "error" << i << " " << message;
 }

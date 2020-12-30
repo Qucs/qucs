@@ -2,6 +2,7 @@ TARGET = misc
 
 RAW_SRCS = \
 	c_comand.cc \
+	c_list.cc \
 	listcompentry.cpp \
 	netlist.cpp \
 	get.cpp \

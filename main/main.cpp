@@ -56,6 +56,8 @@
 static const std::string default_simulator="qucsator"; // FIXME: get from rc? maybe from environment?
 
 
+#define CMD Command
+
 void setSimulator(char const* name)
 { untested();
   Simulator const* S = simulator_dispatcher[name];

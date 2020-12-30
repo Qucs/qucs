@@ -80,6 +80,7 @@ private: // Simulator
 	void init() override{incomplete();}
 	std::string errorString() const override{ incomplete(); return "incomplete";}
 	void kill() override{ incomplete(); }
+	void join() override{ incomplete(); }
 
 private: // implementation
 	Simulator* chooseBackend();

@@ -55,12 +55,10 @@
 #include "l_lib.h"
 /*--------------------------------------------------------------------------*/
 // qucs hacks and wraps
-namespace IO{
-  auto& mstdout = std::cout;
-}
 #define CS istream_t
 #define CARD_LIST SchematicModel
 #define OPT tQucsSettings
+#define CMD Command
 static std::string I_PROMPT = "qucs> ";
 SchematicModel static_model;
 /*--------------------------------------------------------------------------*/

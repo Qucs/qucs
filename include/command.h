@@ -1,3 +1,5 @@
+#ifndef QUCS_COMMAND_H
+#define QUCS_COMMAND_H
 
 #include "object.h"
 #include "schematic_model.h"
@@ -10,7 +12,9 @@
 
 #include "c_comand.h"
 
-#undef Cmd
+//#undef CMD
 #undef CKT_BASE
 #undef CARD_LIST
 #undef CS
+
+#endif

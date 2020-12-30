@@ -194,6 +194,9 @@ private:
 	std::multimap<std::string, Element*> _map;
 	mutable PARAM_LIST* _params;
 
+public:
+	void precalc_first();
+
 public: // for now.
 //	friend class SchematicDoc;
 //	friend class NodeMap;

@@ -75,7 +75,6 @@ QMOCHEADERS = \
 	projectView.h \
 	schematic_doc.h \
 	schematic_scene.h \
-	schematic_model.h \
 	textdoc.h \
 	schematic_dialog.h \
 	qucs_tabs.h \
@@ -105,7 +104,6 @@ DIALG_MOCHEADERS = \
 HDR1 = \
 	actions.h \
 	cmdeltdlg.h \
-	command.h \
 	conductor.h \
 	docfmt.h \
 	dynamic_cc.h \
@@ -157,7 +155,6 @@ HDR2 = \
 	printerwriter.h \
 	projectView.h \
 	schematic_lang.h \
-	schematic_model.h \
 	syntax.h \
 	viewpainter.h \
 	wirelabel.h \

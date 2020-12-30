@@ -30,7 +30,11 @@ static char* trim(char *string)
   return string;
 }
 /*--------------------------------------------------------------------------*/
-
+ostream_t::ostream_t(FILE* file)
+	: QTextStream(file, QIODevice::WriteOnly)
+{
+}
+/*--------------------------------------------------------------------------*/
 // BUG.
 ostream_t::ostream_t(QFile* /* BUG const */ file)
 	: QTextStream(file)
@@ -590,6 +594,10 @@ char *getcmd(const char *prompt, char *buffer, int buflen)
 //		(mlog + mout) << buffer << '\n';
 		return buffer;
 	}
+}
+/*--------------------------------------------------------------------------*/
+namespace IO{
+  ostream_t mstdout(stdout);
 }
 /*--------------------------------------------------------------------------*/
 /*--------------------------------------------------------------------------*/

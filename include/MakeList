@@ -2,6 +2,7 @@
 HDR = \
 	ap.h \
 	c_comand.h \
+	command.h \
 	data.h \
 	d_dot.h \
 	element.h \
@@ -19,6 +20,7 @@ HDR = \
 	platform.h \
 	port.h \
 	qt_compat.h \
+	schematic_model.h \
 	settings.h \
 	simulator.h \
 	symbol.h \

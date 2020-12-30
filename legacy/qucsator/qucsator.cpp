@@ -158,6 +158,7 @@ private: // Simulator
   }
   void run(istream_t&, SimCtrl*) override; // really?
   void do_it(istream_t&, SchematicModel const*) override;
+  void join() override;
   void kill() override{incomplete();}
   void init() override{incomplete();}
   std::string errorString() const{ return "incomplete"; }
@@ -179,8 +180,7 @@ public: // QProcess callback.
 			break;
 		case QProcess::Starting:
 			if(_process.error()==5){ untested();
-				message(QucsMsgFatal, "Failed starting process.");
-				notifyState(Simulator::sst_error);
+				// this does not mean anything.
 			}else{
 			}
 //			notifyState(Simulator::sst_starting); // not interesting.
@@ -211,6 +211,12 @@ struct default_sim{
 	}
 }ds;
 /* -------------------------------------------------------------------------------- */
+void Qucsator::join()
+{
+	untested();
+	_process.waitForFinished();
+}
+/* -------------------------------------------------------------------------------- */
 void Qucsator::run(istream_t& cs, SimCtrl* ctrl)
 { untested();
 	Simulator::attachCtrl(ctrl);
@@ -220,8 +226,9 @@ void Qucsator::run(istream_t& cs, SimCtrl* ctrl)
 /* -------------------------------------------------------------------------------- */
 void Qucsator::do_it(istream_t& cs, SchematicModel const* scope)
 { untested();
+	assert(has_ctrl());
 
-	cs.umatch("run");
+	cs >> "run"; //?
 	std::string what;
 	cs >> what;
 
@@ -298,6 +305,7 @@ void Qucsator::do_it(istream_t& cs, SchematicModel const* scope)
 
 	trace2("start", Program, DataSet);
 	_process.start(Program, Arguments);
+	// _process.waitForFinished();
 
 	QString cmd = Program +" "+ Arguments.join(" ");
 	message(QucsMsgLog, cmd.toStdString());
@@ -306,7 +314,8 @@ void Qucsator::do_it(istream_t& cs, SchematicModel const* scope)
 void Qucsator::collectData()
 { untested();
 	auto data = new SimOutputDat(DataSet.toStdString(), "");
-	releaseOutput(data);
+	incomplete();
+	//releaseOutput(data);
 }
 /* -------------------------------------------------------------------------------- */
 }//namespace

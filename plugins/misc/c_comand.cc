@@ -27,6 +27,7 @@
 #include "globals.h"
 /*--------------------------------------------------------------------------*/
 #define CS istream_t
+#define CMD Command
 #define CARD_LIST SchematicModel
 /*--------------------------------------------------------------------------*/
 namespace {

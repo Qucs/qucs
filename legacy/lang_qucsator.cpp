@@ -32,7 +32,7 @@ static const char _typesep = ':';
 // not sure what this is about
 /// #ifdef __MINGW32__ // -> platform.h
 /// #include <windows.h>
-/// static QString pathName(QString longpath) {
+/// static QString pathName(QString longpath) { untested();
 ///   const char * lpath = QDir::toNativeSeparators(longpath).toAscii();
 ///   char spath[2048];
 ///   int len = GetShortPathNameA(lpath,spath,sizeof(spath)-1);
@@ -40,7 +40,7 @@ static const char _typesep = ':';
 ///   return QString(spath);
 /// }
 /// #else
-/// static QString pathName(QString longpath) {
+/// static QString pathName(QString longpath) { untested();
 ///   return longpath;
 /// }
 /// #endif
@@ -57,15 +57,15 @@ private: // Symbol
 	pos_t portPosition(unsigned) const {unreachable(); return pos_t(0,0);}
 	unsigned numPorts() const  override{ return 0;}
 	Port& port(unsigned) override{unreachable(); return *new Port();}
-	void setParameter(std::string const& name, std::string const& value){
-		if(name == "qucsatorsckthack"){
+	void setParameter(std::string const& name, std::string const& value){ untested();
+		if(name == "qucsatorsckthack"){ untested();
 			_text = value;
 		}else{ untested();
 			Symbol::setParameter(name, value);
 		}
 	}
-	std::string paramValue(std::string const& name) const override{
-		if(name == "qucsatorsckthack"){
+	std::string paramValue(std::string const& name) const override{ untested();
+		if(name == "qucsatorsckthack"){ untested();
 			return _text;
 		}else{ untested();
 			return Symbol::paramValue(name);
@@ -78,10 +78,10 @@ private:
 static Dispatcher<Symbol>::INSTALL p0(&symbol_dispatcher, "qucsatorScktHack", &d0);
 /* -------------------------------------------------------------------------------- */
 static std::string netLabel(Node const* nn)
-{
-	if(!nn){
+{ untested();
+	if(!nn){ untested();
 		return "(null)";
-	}else{
+	}else{ untested();
 
 	}
 	Net const* n = nn->net();
@@ -89,38 +89,38 @@ static std::string netLabel(Node const* nn)
 	if(!n){ untested();
 		unreachable();
 		return "(null)";
-	}else if(n->hasLabel()){
+	}else if(n->hasLabel()){ untested();
 		return n->label();
-	}else{
+	}else{ untested();
 		return "_net" + std::to_string(n->pos());
 	}
 }
 /* -------------------------------------------------------------------------------- */
 static int notalnum(char c)
-{
+{ untested();
 	return !std::isalnum(c);
 }
 /* -------------------------------------------------------------------------------- */
 static std::string mangleType(std::string& t)
-{
-	if(t == "_BJT"){
+{ untested();
+	if(t == "_BJT"){ untested();
 		// for some reason...
 		t = "BJT";
-	}else{
+	}else{ untested();
 	}
 	trace1("mangle", t);
 	auto pos = t.find(typesep);
 	std::string ret="";
-	if(pos == std::string::npos){
-	}else{
+	if(pos == std::string::npos){ untested();
+	}else{ untested();
 		auto sub = t.substr(pos+1);
 		std::replace_if(sub.begin(), sub.end(), notalnum, '_');
 		ret = " Type=\"" + sub + "\"";
 	}
 	t = t.substr(0, pos);
-	if(t=="Lib"){
+	if(t=="Lib"){ untested();
 		t="Sub";
-	}else{
+	}else{ untested();
 	}
 	return ret;
 }
@@ -144,12 +144,12 @@ static Dispatcher<DocumentFormat>::INSTALL p(&language_dispatcher, "qucsator", &
 /* -------------------------------------------------------------------------------- */
 // non-callback print.
 static void printSymbol_(Symbol const* c, ostream_t& s)
-{
+{ untested();
 	// todo: mfactor/active?
 	assert(c);
 	trace2("pc", c->label(), c->typeName());
 
-	{
+	{ untested();
 		std::string type = c->typeName();
 		std::string hack_type = mangleType(type);
 
@@ -157,30 +157,30 @@ static void printSymbol_(Symbol const* c, ostream_t& s)
 
 		Symbol const* sym=c;
 		trace3("print", c->label(), sym->numPorts(), sym->label());
-		for(unsigned i=0; i<sym->numPorts(); ++i){
+		for(unsigned i=0; i<sym->numPorts(); ++i){ untested();
 			std::string N = netLabel(sym->portValue(i));
 			s << " " << N;
 		}
 
-		for(unsigned ii=0; ii<sym->paramCount(); ++ii) {
+		for(unsigned ii=0; ii<sym->paramCount(); ++ii) { untested();
 			trace3("param", c->label(), ii, sym->paramCount());
 			std::string name = sym->paramName(ii);
 			//trace2("param", name, value);
 
-			if(name.at(0)=='$'){
+			if(name.at(0)=='$'){ untested();
 				// hmmm
 //			}else if(!sym->paramIsPrintable(ii)){ untested();
 			}else if(name==""){itested();
 				incomplete();
-			}else if(name == "Component") {
+			}else if(name == "Component") { untested();
 				// hack
 			}else if(name == "File") { untested();
 				// hack
-			}else if(name == "Lib") {
+			}else if(name == "Lib") { untested();
 				// hack
 			}else if(name == "Symbol") { untested();
 				// hack??
-			}else{
+			}else{ untested();
 				std::string value = sym->paramValue(ii);
 				s << " " << name << "=\"" << value << "\"";
 			}
@@ -192,16 +192,16 @@ static void printSymbol_(Symbol const* c, ostream_t& s)
 }
 /* -------------------------------------------------------------------------------- */
 void QucsatorLang::printSymbol(Symbol const* d, ostream_t& s) const
-{
+{ untested();
 	// is_device??
 	if(!d){ untested();
 		incomplete();
-	}else if(auto c=dynamic_cast<SubcktBase const*>(d)){
-		if(c->is_device()){
+	}else if(auto c=dynamic_cast<SubcktBase const*>(d)){ untested();
+		if(c->is_device()){ untested();
 			// here?
 		   s << "# got sckt device " << d->label() << "\n";
 			printSubckt(c, s);
-		}else{
+		}else{ untested();
 		   s << "# skip non-device " << d->label() << "\n";
 		}
 //	}else if(auto c=dynamic_cast<SubcktProto const*>(d)){ untested();
@@ -210,12 +210,12 @@ void QucsatorLang::printSymbol(Symbol const* d, ostream_t& s) const
 	}else if(auto c=dynamic_cast<TaskElement const*>(d)){ untested();
 		// why is this a Symbol??
 		printTaskElement(c, s);
-	}else if(auto c=dynamic_cast<Component const*>(d)){
+	}else if(auto c=dynamic_cast<Component const*>(d)){ untested();
 		// HACK
 		printComponent(c, s);
-	}else if(dynamic_cast<Conductor const*>(d)){
+	}else if(dynamic_cast<Conductor const*>(d)){ untested();
 		// possibly a wire.
-	}else if(d){
+	}else if(d){ untested();
 		// TODO. all symbols here.
 		printSymbol_(d, s);
 	}else{ untested();
@@ -225,26 +225,26 @@ void QucsatorLang::printSymbol(Symbol const* d, ostream_t& s) const
 }
 /* -------------------------------------------------------------------------------- */
 static void printDefHack(Symbol const* p, ostream_t& s)
-{
+{ untested();
 	std::string hack = p->paramValue("qucsatorsckthack");
 	s << hack;
 }
 /* -------------------------------------------------------------------------------- */
 // partly from Schematic::createSubnetlistplain
 void QucsatorLang::printSubckt(SubcktBase const* p, ostream_t& s) const
-{
+{ untested();
 	s << "# sckt " + p->label() + "\n";
-	if(p->label()[0] == ':'){
+	if(p->label()[0] == ':'){ untested();
 		return;
-	}else{
+	}else{ untested();
 	}
 //	assert(!p->is_device());
 	Symbol const* sym = p;
 	SchematicModel const* sckt;
-	if(p->makes_own_scope()){
+	if(p->makes_own_scope()){ untested();
 		s << "# sckt own " + p->label() + "\n";
 		sckt = p->scope();
-	}else{
+	}else{ untested();
 		s << "# sckt sckt " + p->label() + "\n";
 		sckt = p->subckt();
 	}
@@ -252,28 +252,28 @@ void QucsatorLang::printSubckt(SubcktBase const* p, ostream_t& s) const
 	std::string label = p->label();
 
 	auto h = sckt->find_(":qucsatorsckthack:");
-	if(h == sckt->end()){
-	}else if(auto p = dynamic_cast<Symbol const*>(*h)){
+	if(h == sckt->end()){ untested();
+	}else if(auto p = dynamic_cast<Symbol const*>(*h)){ untested();
 		return printDefHack(p, s);
-	}else{
+	}else{ untested();
 	}
 	h = sckt->find_("main");
-	if(h == sckt->end()){
-	}else{
+	if(h == sckt->end()){ untested();
+	}else{ untested();
 		sckt = (*h)->scope();
 		sym = prechecked_cast<Symbol const*>(*h);
 		assert(sym);
 	}
 
 	s << "\n"; //?
-	if(label.c_str()[3] == _typesep){
+	if(label.c_str()[3] == _typesep){ untested();
 		s << ".Def:" << label.substr(4);
-	}else{
+	}else{ untested();
 		incomplete();
 	}
 
 	{ // print_ports();
-		for(unsigned i=0; sym->portExists(i); ++i){
+		for(unsigned i=0; sym->portExists(i); ++i){ untested();
 			std::string N = netLabel(sym->portValue(i));
 			s << " " << N;
 		}
@@ -282,13 +282,13 @@ void QucsatorLang::printSubckt(SubcktBase const* p, ostream_t& s) const
 
 	// somehow parameters are stashed as paintings.
 	// let's see.
-	if(!p->symbolPaintings()){
+	if(!p->symbolPaintings()){ untested();
 		s << "# Missing ID & params " << p->label() << "\n";
-	}else{
+	}else{ untested();
 #if 0
-		for(auto pi : *p->symbolPaintings()){
+		for(auto pi : *p->symbolPaintings()){ untested();
 			incomplete();
-			if(pi->name() == ".ID ") {
+			if(pi->name() == ".ID ") { untested();
 				incomplete();
 				s << "# TODO ID & params" << pi->label() << pi->name() << "\n";
 		//		ID_Text *pid = (ID_Text*)pi;
@@ -297,7 +297,7 @@ void QucsatorLang::printSubckt(SubcktBase const* p, ostream_t& s) const
 		//			s = (*it)->Name; // keep 'Name' unchanged
 		//			(*tstream) << " " << s.replace("=", "=\"") << '"';
 		//			}
-			}else{
+			}else{ untested();
 			}
 		//		break;
 		}
@@ -306,20 +306,20 @@ void QucsatorLang::printSubckt(SubcktBase const* p, ostream_t& s) const
 	//(*tstream) << '\n';
 	//
 	s << "# " << sckt->size() << "\n";
-	for(auto it_ : *sckt){
+	for(auto it_ : *sckt){ untested();
 		auto i = dynamic_cast<Symbol const*>(it_);
-		if(it_){
-		}else{
+		if(it_){ untested();
+		}else{ untested();
 			incomplete();
 			continue;
 		}
 
-      if(!i){
+      if(!i){ untested();
 			incomplete();
-		}else if(i->typeName() == "Port"){
+		}else if(i->typeName() == "Port"){ untested();
 		}else if(i->typeName() == "Wire"){ // is Conductor?
-		}else if(i->typeName() == "GND"){
-		}else{
+		}else if(i->typeName() == "GND"){ untested();
+		}else{ untested();
 			// s << "# ps" << i->typeName() << " " << i->label() << "\n";
 			printSymbol(i, s);
 		}
@@ -329,7 +329,7 @@ void QucsatorLang::printSubckt(SubcktBase const* p, ostream_t& s) const
 }
 
 void QucsatorLang::printTaskElement(TaskElement const* c, ostream_t& s) const
-{
+{ untested();
 	assert(c);
 	s << "." << c->typeName() << ":" << c->label();
 
@@ -338,7 +338,7 @@ void QucsatorLang::printTaskElement(TaskElement const* c, ostream_t& s) const
 		if(p2->name() == "Symbol") { // hack??
 		}else if(p2->name()=="p" && p2->value()==""){itested();
 			// unreachable
-		}else{
+		}else{ untested();
 			s << " " << p2->name() << "=\"" << p2->value() << "\"";
 		}
 	}
@@ -348,16 +348,16 @@ void QucsatorLang::printTaskElement(TaskElement const* c, ostream_t& s) const
 // print Component in qucsator language
 // BUG: callback: untangle isShort, isActive (mfactor?).
 void QucsatorLang::printComponent(Component const* c, ostream_t& s) const
-{
-	if(c->isActive != COMP_IS_ACTIVE){
+{ untested();
+	if(c->isActive != COMP_IS_ACTIVE){ untested();
 		// comment out?
 		incomplete();
-	}else{
+	}else{ untested();
 	}
 	assert(c);
 	trace2("pc", c->label(), c->typeName());
 
-	if(c->isOpen()) {
+	if(c->isOpen()) { untested();
 		// nothing.
 	}else if(c->isShort()){ untested();
 		// replace by some resistors (hack?)
@@ -372,7 +372,7 @@ void QucsatorLang::printComponent(Component const* c, ostream_t& s) const
 			s << "R:" << c->label() << "." << QString::number(z++) << " "
 				<< Node1 << " " << netLabel( c->portValue(k) ) << " R=\"0\"\n";
 		}
-	}else{
+	}else{ untested();
 		std::string type = c->typeName();
 		std::string hack_type = mangleType(type);
 
@@ -380,27 +380,27 @@ void QucsatorLang::printComponent(Component const* c, ostream_t& s) const
 
 		Symbol const* sym=c;
 		trace3("print", c->label(), sym->numPorts(), sym->label());
-		for(unsigned i=0; i<sym->numPorts(); ++i){
+		for(unsigned i=0; i<sym->numPorts(); ++i){ untested();
 			std::string N = netLabel(sym->portValue(i));
 
 			s << " " << N;
 		}
 
-		for(unsigned ii=0; ii<sym->paramCount(); ++ii) {
+		for(unsigned ii=0; ii<sym->paramCount(); ++ii) { untested();
 			trace3("param", c->label(), ii, sym->paramCount());
 			std::string name = sym->paramName(ii);
 			//trace2("param", name, value);
 
-			if(name.at(0)=='$'){
+			if(name.at(0)=='$'){ untested();
 				// hmmm
 //			}else if(!sym->paramIsPrintable(ii)){ untested();
 			}else if(name==""){itested();
 				incomplete();
-			}else if(name == "File") {
+			}else if(name == "File") { untested();
 				// hack
-			}else if(name == "Symbol") {
+			}else if(name == "Symbol") { untested();
 				// hack??
-			}else{
+			}else{ untested();
 				std::string value = sym->paramValue(ii);
 				s << " " << name << "=\"" << value << "\"";
 			}

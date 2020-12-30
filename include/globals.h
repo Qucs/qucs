@@ -23,6 +23,7 @@ class DocumentLanguage;
 class Painting;
 class Simulator;
 class Symbol;
+class Command;
 
 extern INTERFACE Dispatcher<TaskElement> element_dispatcher;
 extern INTERFACE Dispatcher<Command> command_dispatcher;

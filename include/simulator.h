@@ -64,6 +64,7 @@ public:
   void attachDoc(QucsDoc*);
   QucsDoc const* doc() const {return _doc;}
   virtual void run(istream_t& cs, SimCtrl* ctx) = 0; // really??
+  virtual void join() = 0;
   virtual void do_it(istream_t& cs, SchematicModel const* ctx) = 0;
   virtual std::string errorString() const = 0;
   virtual void kill() = 0;
@@ -89,6 +90,9 @@ public:
 
 private:
   virtual void init() = 0;
+
+protected:
+  bool has_ctrl() const{return _ctrl;}
 
 private:
   QucsDoc* _doc; // const?

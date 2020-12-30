@@ -24,6 +24,10 @@
 //testing=trivial 2006.07.17
 #ifndef C_COMAND_H
 #define C_COMAND_H
+
+#ifndef CMD
+#error // not yet
+#endif
 //#include "e_card.h"
 /*--------------------------------------------------------------------------*/
 class CS;

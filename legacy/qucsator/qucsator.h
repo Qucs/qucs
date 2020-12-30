@@ -12,7 +12,8 @@ class Qucsator;
 class QucsatorProcess : public QProcess {
 	Q_OBJECT;
 public:
-	explicit QucsatorProcess(Qucsator* q) : QProcess(), _simulator(q) {}
+	explicit QucsatorProcess(Qucsator* q) : QProcess(), _simulator(q) { untested();
+	}
 
 	void start(QString const& a, QStringList const& b){ untested();
 		trace0("QucsatorProcess::start");
