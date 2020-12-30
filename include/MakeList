@@ -6,6 +6,7 @@ HDR = \
 	data.h \
 	d_dot.h \
 	element.h \
+	e_cardlist.h \
 	geometry.h \
 	globals.h \
 	graph.h \
@@ -25,4 +26,5 @@ HDR = \
 	simulator.h \
 	symbol.h \
 	tasks.h \
+	u_lang.h \
 	u_parameter.h

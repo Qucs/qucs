@@ -18,10 +18,10 @@
 #include "io_error.h"
 /* -------------------------------------------------------------------------------- */
 Simulator::~Simulator()
-{ untested();
+{
 	if(_data_p){ untested();
 		QucsData::detach(_data_p);
-	}else{ untested();
+	}else{
 	}
 }
 /* -------------------------------------------------------------------------------- */
@@ -30,7 +30,7 @@ Simulator::Simulator()
     _data_p(nullptr),
     _state(sst_idle),
     _ctrl(nullptr)
-{ untested();
+{
 }
 /* -------------------------------------------------------------------------------- */
 void Simulator::attachCtrl(SimCtrl* ctrl)

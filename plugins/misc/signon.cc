@@ -31,6 +31,7 @@ static class SIGN_ON {
 public:
   SIGN_ON() {
     std::cout << "misc plugins: " PATCHLEVEL "\n";
+    std::cout.flush();
   }
 } sign_on;
 /*--------------------------------------------------------------------------*/

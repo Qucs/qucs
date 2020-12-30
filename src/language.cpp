@@ -59,7 +59,7 @@ void DocumentLanguage::new__instance(istream_t& cmd, Symbol* /*sckt?*/ owner,
 		SchematicModel* Scope) const
 {
 	assert(Scope);
-	if (cmd.atEnd()) {untested();
+	if (cmd.atEnd()) {
 		unreachable(); // some bogus loop condition
 		return;
 	}else{
@@ -117,7 +117,7 @@ Element const* DocumentLanguage::find_proto(const std::string& Name, const Eleme
     auto d=new DEV_DOT;	//BUG// memory leak
 //	 d->setOwner(Scope); // really??
 	 return d;
-  }else if ((p = element_dispatcher[Name])) { untested();
+  }else if ((p = element_dispatcher[Name])) {
     return p;
   }else if ((p = symbol_dispatcher[Name])) {
     return p;

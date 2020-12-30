@@ -12,7 +12,7 @@ class Qucsator;
 class QucsatorProcess : public QProcess {
 	Q_OBJECT;
 public:
-	explicit QucsatorProcess(Qucsator* q) : QProcess(), _simulator(q) { untested();
+	explicit QucsatorProcess(Qucsator* q) : QProcess(), _simulator(q) {
 	}
 
 	void start(QString const& a, QStringList const& b){ untested();

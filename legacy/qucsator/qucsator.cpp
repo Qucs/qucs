@@ -67,15 +67,15 @@ private: // Symbol
 	pos_t portPosition(unsigned) const {unreachable(); return pos_t(0,0);}
 	unsigned numPorts() const  override{ return 0;}
 	Port& port(unsigned) override{unreachable(); return *new Port();}
-	void setParameter(std::string const& name, std::string const& value){ untested();
-		if(name == "qucsatorsckthack"){ untested();
+	void setParameter(std::string const& name, std::string const& value){
+		if(name == "qucsatorsckthack"){
 			_text = value;
 		}else{ untested();
 			Symbol::setParameter(name, value);
 		}
 	}
-	std::string paramValue(std::string const& name) const override{ untested();
-		if(name == "qucsatorsckthack"){ untested();
+	std::string paramValue(std::string const& name) const override{
+		if(name == "qucsatorsckthack"){
 			return _text;
 		}else{ untested();
 			return Symbol::paramValue(name);
@@ -144,7 +144,7 @@ static void printDefHack(Symbol const* p, ostream_t& s)
 // legacy Qucsator process (wrapping a QProcess)
 class Qucsator : public Simulator{
 public:
-	explicit Qucsator() : Simulator(), _process(this), _ctrl(nullptr) { untested();
+	explicit Qucsator() : Simulator(), _process(this), _ctrl(nullptr) {
 	}
 	Qucsator(Qucsator const&) = delete;
 	~Qucsator(){}
@@ -206,7 +206,7 @@ static Dispatcher<Simulator>::INSTALL qq(&simulator_dispatcher, "qucsator", &QS)
 /* -------------------------------------------------------------------------------- */
 /* -------------------------------------------------------------------------------- */
 struct default_sim{
-	default_sim(){ untested();
+	default_sim(){
 		QucsSettings.setSimulator(&QS);
 	}
 }ds;

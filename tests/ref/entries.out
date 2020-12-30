@@ -46,7 +46,7 @@ Sub:my_Sub (null)
   <Verilog my_Verilog 1 0 0 -26 21 0 0 "sub.v" 0>
 Verilog #(.File(sub.v)) my_Verilog();
 Verilog:my_Verilog
-==============
+=====ideal dc current source=========
   <Idc my_Idc 1 0 0 18 -26 0 1 "1 mA" 1>
 Idc #(.I(1 mA)) my_Idc((null), (null));
 Idc:my_Idc (null) (null) I="1 mA"

@@ -16,6 +16,6 @@ void error(int, const char* fmt, ...)
 }
 /*--------------------------------------------------------------------------*/
 void error(int i, const std::string& message)
-{ untested();
+{
 	std::cerr << "error" << i << " " << message;
 }

@@ -75,6 +75,7 @@ static void sign_on(void)
     "to redistribute it under the terms of \n"
     "the GNU General Public License, version 3 or later.\n"
     "See the file \"COPYING\" for details.\n";
+  IO::mstdout.flush();
 }
 /*--------------------------------------------------------------------------*/
 static void prepare_env()

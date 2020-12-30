@@ -1,0 +1,19 @@
+misc plugins: wip
+legacy plugins: wip
+Qucs : experimental CLI
+used for testing only
+This is free software, and you are welcome
+to redistribute it under the terms of 
+the GNU General Public License, version 3 or later.
+See the file "COPYING" for details.
+# sckt main
+# sckt own main
+
+
+# Missing ID & params main
+# 22
+R:R1 _net11 _net1 R="50 Ohm" Temp="26.85" Tc1="0.0" Tc2="0.0" Tnom="26.85"
+VProbe:Pr1 _net1 gnd
+Vrect:V1 _net11 gnd U="1 V" TH="1 ms" TL="1 ms" Tr="1 ns" Tf="1 ns" Td="0 ns"
+C:C1 _net1 gnd C="1u" V=""
+.Def:End
