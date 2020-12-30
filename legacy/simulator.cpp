@@ -76,6 +76,7 @@ private: // Simulator
 	DocumentFormat const* netLister() const override {return &LNL;}
 
 	void run(istream_t&, SimCtrl*) override{ incomplete(); }
+	void do_it(istream_t&, SchematicModel const*) override{ incomplete(); }
 	void init() override{incomplete();}
 	std::string errorString() const override{ incomplete(); return "incomplete";}
 	void kill() override{ incomplete(); }
@@ -87,7 +88,7 @@ private: // implementation
 static Dispatcher<Simulator>::INSTALL p(&simulator_dispatcher, "legacy", &QS);
 /* -------------------------------------------------------------------------------- */
 struct default_sim{
-	default_sim(){
+	default_sim(){ untested();
 		QucsSettings.setSimulator(&QS);
 	}
 }ds;
@@ -107,11 +108,11 @@ NetLang const* LegacySimulator::netLang() const
 // that would be one out of
 // qucsator, qucsdigi, asco
 Simulator* LegacySimulator::chooseBackend()
-{
+{ untested();
 	incomplete(); // only run qucstor for now
 	return simulator_dispatcher["qucsator"];
 #if 0
-      if(SimOpt = findOptimization(d)) {
+      if(SimOpt = findOptimization(d)) { untested();
 			return simulator_dispatcher["asco"];
 
 			// move to ASCO driver (or so)
@@ -126,11 +127,11 @@ Simulator* LegacySimulator::chooseBackend()
                   << "-s" << "\"" + QDir::toNativeSeparators(QucsSettings.Qucsator) + "\"";
       } else
 Component * SimMessage::findOptimization(SchematicDoc *)
-{
+{ untested();
 #if 0
-  for(auto pc : Doc->components()){
-    if(pc->isActive){
-      if(pc->obsolete_model_hack() == ".Opt"){
+  for(auto pc : Doc->components()){ untested();
+    if(pc->isActive){ untested();
+      if(pc->obsolete_model_hack() == ".Opt"){ untested();
 	return pc;
       }
     }
@@ -142,26 +143,26 @@ Component * SimMessage::findOptimization(SchematicDoc *)
 }
 
 void LegacyNetlister::clear() const
-{
+{ untested();
 	//_declarations.clear();
 }
 /* -------------------------------------------------------------------------------- */
 void LegacyNetlister::load(istream_t&, Object*) const
-{
+{ untested();
    _qucslang = language_dispatcher["qucsator"];
 	assert(_qucslang);
 	incomplete();
 }
 /* -------------------------------------------------------------------------------- */
 void LegacyNetlister::do_it(istream_t& cs, SchematicModel* m)
-{
+{ untested();
 	std::map<std::string, Element const*> declarations;
 	std::vector<Element const*> tasks;
 	std::string simcmd;
 	cs >> "netlist";
 
 	size_t here = cs.cursor();
-	do{
+	do{ untested();
 		Get(cs, "mode", &simcmd);
 	} while(cs.more() && !cs.stuck(&here));
 
@@ -170,9 +171,9 @@ void LegacyNetlister::do_it(istream_t& cs, SchematicModel* m)
 
 	QFile NetlistFile(QString::fromStdString(fn));
 	if(!NetlistFile.open(QIODevice::WriteOnly | QFile::Truncate)) { untested();
-		fprintf(stderr, "Error: Could write to %s\n", fn.c_str());
+		fprintf(stderr, "Error: Could not open %s for writing\n", fn.c_str());
 		exit(1); // BUG
-	}else{
+	}else{ untested();
 	}
 	ostream_t Stream(&NetlistFile);
 
@@ -215,17 +216,17 @@ void LegacyNetlister::do_it(istream_t& cs, SchematicModel* m)
 	}
 #endif
 	assert(_qucslang);
-	if(simcmd=="all"){
+	if(simcmd=="all"){ untested();
 		Stream << "# all tasks\n";
-		for(auto c : tasks){
+		for(auto c : tasks){ untested();
 			trace1("cmd", c->label());
 			_qucslang->printItem(Stream, c);
 		}
-	}else if(simcmd=="dcop"){
+	}else if(simcmd=="dcop"){ untested();
 		Element const* dc = element_dispatcher["DC"];
 		_qucslang->printItem(Stream, dc);
 		Stream << "# just dcop\n";
-	}else{
+	}else{ untested();
 	//	assert(false);
 	//	throw Exception("nothing to do");
 	}
@@ -234,19 +235,19 @@ void LegacyNetlister::do_it(istream_t& cs, SchematicModel* m)
 
 void LegacyNetlister::printDeclarations(ostream_t& stream,
 		std::map<std::string, Element const*>& declarations) const
-{
+{ untested();
    _qucslang = language_dispatcher["qucsator"];
 	assert(_qucslang);
 
 	stream << "## declarations "<< declarations.size() << "\n";
-	for(auto si : declarations){
+	for(auto si : declarations){ untested();
 
-		if(!si.second){
+		if(!si.second){ untested();
 			stream << "# unresolved symbol " << si.first << "\n";
-		}else if(dynamic_cast<SubcktBase const*>(si.second)){
+		}else if(dynamic_cast<SubcktBase const*>(si.second)){ untested();
 			stream << "### item " << si.first << "\n";
 			_qucslang->printItem(stream, si.second);
-		}else{
+		}else{ untested();
 			stream << "## " << si.first << "\n";
 		}
 	}
@@ -257,7 +258,7 @@ void LegacyNetlister::printDeclarations(ostream_t& stream,
 // visit lot of components, strange callbacks...
 void LegacyNetlister::prepareSave(ostream_t& stream, SchematicModel const* m,
 		std::map<std::string, Element const*>& declarations) const
-{
+{ untested();
 	incomplete();
 
 	// if(showBias > 0) showBias = -1;  // do not show DC bias anymore
@@ -303,8 +304,8 @@ void LegacyNetlister::prepareSave(ostream_t& stream, SchematicModel const* m,
 	}
 #endif
 
-	if((allTypes & isAnalogComponent) == 0) {
-		if(allTypes == 0) {
+	if((allTypes & isAnalogComponent) == 0) { untested();
+		if(allTypes == 0) { untested();
 			// If no simulation exists, assume analog simulation. There may
 			// be a simulation within a SPICE file. Otherwise Qucsator will
 			// output an error.
@@ -336,7 +337,7 @@ void LegacyNetlister::prepareSave(ostream_t& stream, SchematicModel const* m,
 	}
 
 	std::string DocName;
-	try{
+	try{ untested();
 //		DocName = m.paramValue("DocName");
 	}catch(ExceptionCantFind const&){ untested();
 		DocName = "unknown";
@@ -357,7 +358,7 @@ void LegacyNetlister::prepareSave(ostream_t& stream, SchematicModel const* m,
 void LegacyNetlister::createNetlist(ostream_t& stream,
 		SchematicModel const* scope_,
 		std::vector<Element const*>& tasks) const
-{
+{ untested();
 	assert(scope_);
 	auto s = scope_->find_("main");
 	assert(s!=scope_->end());
@@ -383,31 +384,31 @@ void LegacyNetlister::createNetlist(ostream_t& stream,
 	// BUG: deduplicate. "print_module_body" or so.
 	QString Time;
 	assert(scope);
-	for(auto it_ : *scope){
+	for(auto it_ : *scope){ untested();
 	//	stream << "...\n";
 		auto pc = dynamic_cast<Symbol const*>(it_);
-		if (auto t = dynamic_cast<TaskElement const*>(it_)){
+		if (auto t = dynamic_cast<TaskElement const*>(it_)){ untested();
 			tasks.push_back(t);
 			continue;
-		} else if(pc){
-		}else{
+		} else if(pc){ untested();
+		}else{ untested();
 			incomplete();
 			continue;
 		}
 
 		// if dynamic_cast<Label*>
 		//   ignore
-		if(dynamic_cast<Conductor const*>(pc)){
+		if(dynamic_cast<Conductor const*>(pc)){ untested();
 			// possibly a wire.
-		}else if(pc->typeName()=="GND"){
+		}else if(pc->typeName()=="GND"){ untested();
 			// qucsator hack, just ignore.
 		}else if(pc->typeName()=="NodeLabel"){ untested();
 			// qucsator hack, just ignore.
-		}else{
+		}else{ untested();
 			_qucslang->printItem(stream, pc);
 		}
 
-		if(isAnalog) {
+		if(isAnalog) { untested();
 		} else { // FIXME: use different lang to print things differently
 #if 0
 			if(pc->obsolete_model_hack() == ".Digi" && pc->isActive) {  // simulation component ?
@@ -460,16 +461,16 @@ void LegacyNetlister::throughAllComps(ostream_t&, SchematicModel const* scope_,
 	SchematicModel const* sckt = scope_;
 
 	auto f = scope_->find_("main");
-	if(f!=scope_->end()){
+	if(f!=scope_->end()){ untested();
 		assert(*f);
 		sckt = (*f)->scope();
-	}else{
+	}else{ untested();
 	}
 
-	for(auto it_ : *sckt){
+	for(auto it_ : *sckt){ untested();
 		auto pc = dynamic_cast<Symbol const*>(it_);
-		if(pc){
-		}else{
+		if(pc){ untested();
+		}else{ untested();
 			incomplete();
 			continue;
 		}
@@ -478,40 +479,40 @@ void LegacyNetlister::throughAllComps(ostream_t&, SchematicModel const* scope_,
 		assert(pc);
 		trace4("tac", pc->label(), pc, sym->owner(), pc->typeName());
 
-		if(!sym->owner()){
+		if(!sym->owner()){ untested();
 			incomplete(); //?
 //			symbolSection...
 			continue;
-		}else{
+		}else{ untested();
 		}
 		trace2("tac", sym->label(), sym->owner()->label());
 
 		// because they are components
 //		assert(sym->owner()==&m);
-		if(sym->scope()==sckt){
-		}else{
+		if(sym->scope()==sckt){ untested();
+		}else{ untested();
 			// ?
 			assert(sym->label()=="main");
 		}
 
-		if(pc->paramValue("$mfactor") == "0"){
+		if(pc->paramValue("$mfactor") == "0"){ untested();
 			incomplete();
 			continue;
-		}else if(isAnalog) {
+		}else if(isAnalog) { untested();
 			// check analog/digital typed components
-			if((pc->Type & isAnalogComponent) == 0) {
+			if((pc->Type & isAnalogComponent) == 0) { untested();
 				incomplete();
 			//
 				// throw??
 				// return;
-			}else{
+			}else{ untested();
 			}
 //		} else if((pc->Type & isDigitalComponent) == 0) { untested();
 //			return;
 		}else{ untested();
 		}
 
-		if(dynamic_cast<SubcktBase const*>(sym)){
+		if(dynamic_cast<SubcktBase const*>(sym)){ untested();
 			trace2("is sckt?", sym->label(), sym->typeName());
 			incomplete();
 		}else if(sym && sym->subckt()){ // really??
@@ -531,7 +532,7 @@ void LegacyNetlister::throughAllComps(ostream_t&, SchematicModel const* scope_,
 			Net* n = pc->Ports.first()->value()->getNet();
 			assert(n->label == "gnd");
 #endif
-		}else{
+		}else{ untested();
 			// no.
 			// find_type(pc->typeName()); // but where?
 			trace1("not sure", pc->typeName());

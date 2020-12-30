@@ -5,6 +5,7 @@ RAW_SRCS = \
 	listcompentry.cpp \
 	netlist.cpp \
 	get.cpp \
-	signon.cc
+	signon.cc \
+	simulate.cpp
 
 EXTRA_DIST =

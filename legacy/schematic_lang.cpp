@@ -1111,6 +1111,8 @@ std::string LegacySchematicLanguage::findType(istream_t& c) const
 	// untangle non-commands.
 	if(typestring == ".AC"){
 		return "AC";
+	}else if(typestring == ".TR"){
+		return "TR";
 	}else if(typestring == ".DC"){
 		return "DC";
 	}else if(typestring == ".SP"){

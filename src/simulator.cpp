@@ -18,10 +18,10 @@
 #include "io_error.h"
 /* -------------------------------------------------------------------------------- */
 Simulator::~Simulator()
-{
+{ untested();
 	if(_data_p){ untested();
 		QucsData::detach(_data_p);
-	}else{
+	}else{ untested();
 	}
 }
 /* -------------------------------------------------------------------------------- */
@@ -30,21 +30,21 @@ Simulator::Simulator()
     _data_p(nullptr),
     _state(sst_idle),
     _ctrl(nullptr)
-{
+{ untested();
 }
 /* -------------------------------------------------------------------------------- */
 void Simulator::attachCtrl(SimCtrl* ctrl)
-{
-  if(!_ctrl){
+{ untested();
+  if(!_ctrl){ untested();
     _ctrl = ctrl;
-  }else if(_ctrl==ctrl){
-  }else{
+  }else if(_ctrl==ctrl){ untested();
+  }else{ untested();
     throw Exception("already controlled");
   }
 }
 /* -------------------------------------------------------------------------------- */
 void Simulator::detachCtrl(SimCtrl const* ctrl)
-{
+{ untested();
   if(_ctrl == ctrl){ untested();
     _ctrl = nullptr;
   }else{ untested();
@@ -55,10 +55,10 @@ void Simulator::detachCtrl(SimCtrl const* ctrl)
 }
 /* -------------------------------------------------------------------------------- */
 void Simulator::message(QucsMsgType lvl, std::string const& msg)
-{
-	if(_ctrl){
+{ untested();
+	if(_ctrl){ untested();
 		_ctrl->message(lvl, msg);
-	}else{
+	}else{ untested();
 		Object::message(lvl, msg.c_str());
 	}
 }

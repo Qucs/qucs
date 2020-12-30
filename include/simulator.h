@@ -25,11 +25,11 @@
 #include "object.h"
 #include "language.h"
 #include "data.h"
-
+/*--------------------------------------------------------------------------*/
 class DocumentFormat;
 class Component;
 class QucsData;
-
+/*--------------------------------------------------------------------------*/
 // simulator controller
 struct SimCtrl{
   virtual void stateChange() = 0;
@@ -37,9 +37,9 @@ struct SimCtrl{
     trace2("received message", level, msg);
   }
 };
-
-// simulatorDriver maybe?
-class Simulator : public Object{
+/*--------------------------------------------------------------------------*/
+// must be Element, so it fits into a cl
+class Simulator : public Element /* Data? */{
 public:
   typedef enum {
     sst_killed = -2, // needed?
@@ -56,11 +56,15 @@ public:
   virtual NetLang const* netLang() const{return nullptr;}
   virtual DocumentFormat const* netLister() const{return nullptr;}
 //  virtual SimOutputData const* results(){}
+//
+private: // Element
+  void paint(ViewPainter*) const override{ untested(); }
 
 public:
   void attachDoc(QucsDoc*);
   QucsDoc const* doc() const {return _doc;}
-  virtual void run(istream_t& cs, SimCtrl* ctx) = 0;
+  virtual void run(istream_t& cs, SimCtrl* ctx) = 0; // really??
+  virtual void do_it(istream_t& cs, SchematicModel const* ctx) = 0;
   virtual std::string errorString() const = 0;
   virtual void kill() = 0;
 
