@@ -69,7 +69,6 @@ void Simulate::do_it(istream_t& cmd, SchematicModel* sckt)
 	}else{ untested();
 		incomplete();
 	}
-
 }
 /*--------------------------------------------------------------------------*/
 }
