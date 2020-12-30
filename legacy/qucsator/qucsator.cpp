@@ -178,6 +178,11 @@ public: // QProcess callback.
 			}
 			break;
 		case QProcess::Starting:
+			if(_process.error()==5){ untested();
+				message(QucsMsgFatal, "Failed starting process.");
+				notifyState(Simulator::sst_error);
+			}else{
+			}
 //			notifyState(Simulator::sst_starting); // not interesting.
 			break;
 		case QProcess::Running:
@@ -278,7 +283,6 @@ void Qucsator::do_it(istream_t& cs, SchematicModel const* scope)
 		incomplete();
 
 		DataSet = "/dev/stdout";
-		DataSet = "/tmp/fooo";
 	}
 
 	QString Program = QucsSettings.Qucsator;
