@@ -25,7 +25,7 @@ private:
 	CommonData(CommonData const&) = delete;
 public:
 	explicit CommonData() : Object(), _attach_count(0){}
-	virtual ~CommonData() {}
+	virtual ~CommonData();
 public:
 	virtual CommonData* clone() { return NULL; }
 protected:
@@ -95,6 +95,7 @@ inline void CommonData::detach(CommonData** from)
 	}
 }
 /* -------------------------------------------------------------------------------- */
+// BUG
 struct DataX {
 	DataX(std::string const& Var_, double *Points_=0, int count_=0)
 		: Var(Var_), Points(Points_), count(count_), Min(INFINITY), Max(-INFINITY) {};

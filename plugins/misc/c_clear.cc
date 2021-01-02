@@ -1,8 +1,5 @@
-/*$Id: c_comand.h 2014.11.25 $ -*- C++ -*-
- * Copyright (C) 2001 Albert Davis
- * Author: Albert Davis <aldavis@gnu.org>
- *
- * This file is part of "Gnucap", the Gnu Circuit Analysis Package
+/* Copyright (C) 2007 Albert Davis
+ *               2020 Felix Salfelder
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -19,35 +16,39 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA
  * 02110-1301, USA.
  *------------------------------------------------------------------
- * all of the commands
+ * delete and clear commands
  */
-//testing=trivial 2006.07.17
-#ifndef C_COMAND_H
-#define C_COMAND_H
 
-/*--------------------------------------------------------------------------*/
-// QUCS hacks
-#ifndef CMD
-#error // not yet
-#endif
-#include "object.h"
-#include "schematic_model.h"
-#define CKT_BASE Object
+#define CMD Command
+#define INTERFACE
+#include "c_comand.h"
+#include "globals.h"
 #define CARD_LIST SchematicModel
 #define CS istream_t
-//#include "e_card.h"
 /*--------------------------------------------------------------------------*/
-class CS;
+namespace {
 /*--------------------------------------------------------------------------*/
-class INTERFACE CMD : public CKT_BASE {
+/* cmd_clear: clear the whole circuit, including faults, etc
+ *   equivalent to unfault; unkeep; delete all; title = (blank)
+ */
+class CMD_CLEAR : public CMD {
 public:
-  std::string value_name()const {return "";}
-  virtual void do_it(CS&, CARD_LIST*) = 0; // const!?
-  virtual ~CMD() {}
-  static  void  cmdproc(CS&, CARD_LIST*);
-  static  void	command(const std::string&, CARD_LIST*);
-};
+  void do_it(CS&, CARD_LIST* Scope)
+  {
+  //  command("unfault", Scope);
+  //  command("unmark", Scope);
+  //  //command("ic clear", Scope);
+  //  //command("nodeset clear", Scope);
+  //  command("alarm clear", Scope);
+  //  command("plot clear", Scope);
+  //  command("print clear", Scope);
+  command("delete all", Scope);
+  //  command("title '", Scope);
+  }
+} p0;
+DISPATCHER<CMD>::INSTALL d0(&command_dispatcher, "clear", &p0);
+/*--------------------------------------------------------------------------*/
+}
 /*--------------------------------------------------------------------------*/
 /*--------------------------------------------------------------------------*/
-#endif
 // vim:ts=8:sw=2:noet:
