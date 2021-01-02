@@ -19,120 +19,29 @@
 #include <assert.h>
 #include <iostream>
 #include "io_trace.h"
-#include "object.h"
-/* -------------------------------------------------------------------------------- */
-// data structure to deal with what a simulator outputs.
-// this is organized as a tree with pluggable directories.
-// the leaves are waveforms or parameter sets or something like that.
-/* -------------------------------------------------------------------------------- */
-// base class for output related classes
-class QucsData : public Object{
-private:
-	QucsData(QucsData const&) = delete;
-public:
-	explicit QucsData() : Object(), _attach_count(0){}
-	virtual ~QucsData() {}
-public:
-	virtual QucsData* clone() { return NULL; }
-protected:
-	virtual QucsData* resolve(const std::string&){assert(false); return nullptr;}
-
-public:
-	static void attach(QucsData*, QucsData**);
-	static void detach(QucsData**);
-	virtual QucsData const* refresh(){unreachable(); return nullptr;}
-
-private:
-	unsigned _attach_count;
-};
-/* -------------------------------------------------------------------------------- */
-// borrowed from e_compon
-inline void QucsData::attach(QucsData* d, QucsData** to)
-{
-	incomplete();
-	assert(to);
-	if (d == *to) {
-		// The new and old are the same object.  Do nothing.
-	}else if (!d) {untested();
-		// There is no new common.  probably a simple element
-		detach(to);
-	}else if (!*to) {
-		// No old one, but have a new one.
-		++(d->_attach_count);
-		trace1("++1", d->_attach_count);
-		*to = d;
-#if 0
-	}else if (*d != **to) {
-		// They are different, usually by edit.
-		detach_common(to);
-		++(d->_attach_count);
-		trace1("++2", d->_attach_count);
-		*to = d;
-#endif
-	}else if (d->_attach_count == 0) {
-		// The new and old are identical.
-		// Use the old one.
-		// The new one is not used anywhere, so throw it away.
-		trace1("delete", d->_attach_count);    
-		delete d;
-	}else{untested();
-		// The new and old are identical.
-		// Use the old one.
-		// The new one is also used somewhere else, so keep it.
-	}
-}
-/* -------------------------------------------------------------------------------- */
-// borrowed from e_compon
-inline void QucsData::detach(QucsData** from)
-{
-	assert(from);
-	if (*from) {
-		assert((**from)._attach_count > 0);
-		--((**from)._attach_count);
-		trace1("--", (**from)._attach_count);
-		if ((**from)._attach_count == 0) {
-			trace1("delete", (**from)._attach_count);
-			delete *from;
-		}else{
-			trace1("nodelete", (**from)._attach_count);
-		}
-		*from = NULL;
-	}else{
-	}
-}
+#include "data.h"
 /* -------------------------------------------------------------------------------- */
 /* -------------------------------------------------------------------------------- */
 // base class for SimOutputs
-// a SimOutputDir provides a named list of QucsData
+// a SimOutputDir provides a named list of CommonData
 // these can again be "directories", or data sets
-class SimOutputDir : public QucsData {
+class SimOutputDir : public CommonData {
 protected:
 	explicit SimOutputDir(){ }
 	SimOutputDir(const SimOutputDir& s) : _d(s._d) { untested(); }
 
 public:
-	QucsData* clone() override{return new SimOutputDir(*this);}
-	typedef std::map<std::string, QucsData*> container_t;
+	typedef std::map<std::string, CommonData*> container_t;
 	virtual ~SimOutputDir(){}
+	virtual void set_var(std::string, std::string) { untested(); }
+
+private:
+	CommonData* clone() override{return new SimOutputDir(*this);}
 
 public:
-	virtual void set_var(std::string, std::string) { untested(); }
-	class const_iterator : public container_t::iterator{
+	class iterator : public /*BUG*/ container_t::iterator{
 	public:
-		const_iterator(const const_iterator& p) : container_t::iterator(p) { untested(); }
-		const_iterator(const container_t::iterator& p) : container_t::iterator(p) {}
-		const_iterator& operator=(container_t::iterator& p){ untested();
-			container_t::iterator::operator=(p);
-			return *this;
-		}
-		const SimOutputDir* dir() const{
-			return dynamic_cast<const SimOutputDir*>(container_t::iterator::operator*().second);
-		}
-		const container_t::value_type operator*(){ untested(); return container_t::iterator::operator*(); }
-	};
-	class iterator : public container_t::iterator{
-	public:
-		iterator(const const_iterator& p) : container_t::iterator(p) { untested(); }
+//		iterator(const const_iterator& p) : container_t::iterator(p) { untested(); }
 		iterator(const container_t::iterator& p) : container_t::iterator(p) {}
 		iterator& operator=(container_t::iterator& p){ untested();
 			container_t::iterator::operator=(p);
@@ -143,30 +52,66 @@ public:
 		}
 		container_t::value_type operator*(){ untested(); return container_t::iterator::operator*(); }
 	};
-	virtual const_iterator begin() const { return _d.begin(); }
-	const_iterator end() const { return _d.end(); }
+	class const_iterator : protected container_t::const_iterator{
+	public:
+		const_iterator(const_iterator const& p) : container_t::const_iterator(p) { untested(); }
+		explicit const_iterator(const container_t::iterator& p) : container_t::const_iterator(p) {}
+		explicit const_iterator(const container_t::const_iterator& p) : container_t::const_iterator(p) {}
+
+	public: //ops
+		CommonData const* operator->(){incomplete(); return nullptr;}
+		CommonData const* operator*(){ untested();
+			return container_t::const_iterator::operator*().second;
+		}
+		bool operator==(const_iterator const&x) const {untested();
+			return container_t::const_iterator(*this)==(container_t::const_iterator(x));
+		}
+		bool operator!=(const_iterator const&x) const {untested();
+			return container_t::const_iterator(*this)!=(container_t::const_iterator(x));
+		}
+		const_iterator& operator++(){untested();
+			container_t::const_iterator::operator++();
+			return *this;
+		}
+		//const container_t::value_type operator*(){ untested(); return container_t::iterator::operator*(); }
+
+		const_iterator& operator=(container_t::const_iterator& p){ untested();
+			container_t::const_iterator::operator=(p);
+			return *this;
+		}
+//		const SimOutputDir* dir() const{
+//			return dynamic_cast<const SimOutputDir*>(container_t::iterator::operator*().second);
+//		}
+	};
+	virtual const_iterator begin() const {
+		const_iterator b(_d.begin());
+		return b;
+	}
+	const_iterator end() const {
+		return const_iterator(_d.end());
+	}
 	iterator begin() { untested(); return _d.begin(); }
 	iterator end() { untested(); return _d.end(); }
 	size_t size() const {
 		return _d.size();
 	}
-	const QucsData* operator[](const_iterator& x){
-		if(!x->second){
-			x->second = resolve(x->first);
-		}
-		return x->second;
-	}
+//	const CommonData* operator[](const_iterator& x){
+//		if(!x->second){
+//			x->second = resolve(x->first);
+//		}else{
+//		}
+//		return x->second;
+//	}
 protected:
-	void pushBack(QucsData*);
+	void push_back(CommonData*);
 
 protected:
-	mutable /*why?*/ std::map<std::string, QucsData*> _d;
+	mutable /*why?*/ container_t _d;
 }; // SimOutputDir
 /* -------------------------------------------------------------------------------- */
-/* -------------------------------------------------------------------------------- */
-// namespace{
 // the root directory. here,
 // output plugins register as directories
+// obsolete.
 class SimOutputRoot : public SimOutputDir {
 private:
 	SimOutputRoot(const SimOutputRoot& s) : SimOutputDir(s){
@@ -175,7 +120,7 @@ private:
 		}
 	}
 public:
-	QucsData* clone(){return new SimOutputRoot(*this);}
+	CommonData* clone(){return new SimOutputRoot(*this);}
 
 public:
 	SimOutputRoot(){ }
@@ -185,13 +130,13 @@ public:
 			i.dir()->set_var(n,v);
 		}
 	}
-	void install(const std::string& s, QucsData* p){
+	void install(const std::string& s, CommonData* p){
 		assert(p);
 		_d[s] = p;
 		trace2("installing ", s, _d.size());
 		trace1("installing ", intptr_t(this));
 	}
-	void uninstall(QucsData*){ /* incomplete */ }
+	void uninstall(CommonData*){ /* incomplete */ }
 	class INSTALL {
 	private:
 		SimOutputRoot* _d;
@@ -213,11 +158,63 @@ public:
 		}
 	};
 private:
-	// std::map<std::string, QucsData*> *_d;
+	// std::map<std::string, CommonData*> *_d;
 };
 /* -------------------------------------------------------------------------------- */
 // (dictionary) data from a simulator, maybe later.
-class SimOutputParams : public QucsData{
+class SimOutputParams : public CommonData{
 };
+/* -------------------------------------------------------------------------------- */
+// (tabular) data from a simulator.
+class SimOutputData : public CommonData{
+public:
+	typedef std::pair<double, std::complex<double> > valuetype;
+	class const_iterator{
+		friend class SimOutputData; // need to access constructor.
+		friend class SimOutputDat; // bug.
+	protected:
+	public:
+		const_iterator(double const* x, double const* y) : seekx(x), seeky(y) {};
+	public:
+		const_iterator& operator++(){ ++seekx; ++seeky; ++seeky; return *this;}
+		valuetype operator*(){
+			return valuetype(*seekx,std::complex<double>(*seeky,seeky[1]));
+		}
+		const valuetype* operator->() const{
+			_v = valuetype(*seekx,std::complex<double>(*seeky,seeky[1]));
+			return &_v;
+		}
+		bool operator==(const const_iterator& p)const { return seekx==p.seekx; }
+		bool operator!=(const const_iterator& p)const { return seekx!=p.seekx; }
+	private:
+		double const* seekx;
+		double const* seeky;
+		static valuetype _v; // bit of a hack. lets see...
+	};
+public:
+	SimOutputData() : CommonData() {}
+	virtual ~SimOutputData(){}
+
+public: // obsolete interface. don't use.
+  virtual DataX const* axis(uint ) const { return nullptr; } // if (i<axis_count) return CPointsX.at(i); return NULL;}
+//	  double *cPointsY() const { return CPointsY; }
+
+public:
+	virtual bool isEmpty() {return true;}
+	size_t size() const{incomplete(); return 0;}
+
+	virtual const_iterator begin() const = 0; //  {return const_iterator(CPointsX.getFirst()->Points, CPointsY);}
+	virtual const_iterator end() const = 0; //  {return const_iterator(CPointsX.getFirst()->end(), NULL);}
+	virtual SimOutputData const* refresh() {return nullptr;}
+
+public:
+	const double& min()const {return Min;}
+	const double& max()const {return Max;}
+
+protected:
+	double Min;
+	double Max;
+}; // SimOutputRoot
+/* -------------------------------------------------------------------------------- */
 /* -------------------------------------------------------------------------------- */
 #endif

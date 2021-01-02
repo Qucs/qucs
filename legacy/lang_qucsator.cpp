@@ -329,7 +329,7 @@ void QucsatorLang::printSubckt(SubcktBase const* p, ostream_t& s) const
 }
 
 void QucsatorLang::printTaskElement(TaskElement const* c, ostream_t& s) const
-{ untested();
+{itested();
 	assert(c);
 	s << "." << c->typeName() << ":" << c->label();
 
@@ -338,7 +338,7 @@ void QucsatorLang::printTaskElement(TaskElement const* c, ostream_t& s) const
 		if(p2->name() == "Symbol") { // hack??
 		}else if(p2->name()=="p" && p2->value()==""){itested();
 			// unreachable
-		}else{ untested();
+		}else{itested();
 			s << " " << p2->name() << "=\"" << p2->value() << "\"";
 		}
 	}

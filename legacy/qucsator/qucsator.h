@@ -15,7 +15,7 @@ public:
 	explicit QucsatorProcess(Qucsator* q) : QProcess(), _simulator(q) {
 	}
 
-	void start(QString const& a, QStringList const& b){ untested();
+	void start(QString const& a, QStringList const& b){itested();
 		trace0("QucsatorProcess::start");
 		disconnect(this, 0, 0, 0);
 		connect(this, SIGNAL(stateChanged(QProcess::ProcessState)),

@@ -1,6 +1,7 @@
 load legacy
 load legacy/components
 load legacy/qucsator
+load plugins/verilog
 load plugins/misc
 
 <Components>
@@ -31,3 +32,5 @@ load plugins/misc
 </Wires>
 
 simulate
+list l=verilog
+list lang=dat qucsator

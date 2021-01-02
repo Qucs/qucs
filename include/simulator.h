@@ -24,11 +24,11 @@
 #include <QDebug>
 #include "object.h"
 #include "language.h"
-#include "data.h"
+#include "output.h"
 /*--------------------------------------------------------------------------*/
 class DocumentFormat;
 class Component;
-class QucsData;
+class CommonData;
 /*--------------------------------------------------------------------------*/
 // simulator controller
 struct SimCtrl{
@@ -39,7 +39,7 @@ struct SimCtrl{
 };
 /*--------------------------------------------------------------------------*/
 // must be Element, so it fits into a cl
-class Simulator : public Element /* Data? */{
+class Simulator : public Data {
 public:
   typedef enum {
     sst_killed = -2, // needed?
@@ -77,15 +77,14 @@ public:
 protected:
   void setState(state_t s){_state = s;}
   void notifyState(state_t);
-  void releaseOutput(QucsData* d) {
-    QucsData::attach(d, _data_p);
+  void releaseOutput(CommonData* d) {
+    CommonData::attach(d, _data_p);
   }
 
 public:
-  void setOutput(QucsData** d) {
+  void setOutput(CommonData** d) {
     assert(d);
     _data_p = d;
-    // QucsData::attach(d, _data_p);
   }
 
 private:
@@ -96,13 +95,11 @@ protected:
 
 private:
   QucsDoc* _doc; // const?
-  QucsData** _data_p;
+  CommonData** _data_p;
   int _state;
   SimCtrl* _ctrl;
 }; // Simulator
-
-
-
-
+/*--------------------------------------------------------------------------*/
+/*--------------------------------------------------------------------------*/
 #endif
 // vim:ts=8:sw=2:noet

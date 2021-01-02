@@ -42,6 +42,18 @@ void list_save(CS& cmd, ostream_t& out, CARD_LIST* scope)
   assert(scope);
   // CARD_LIST::card_list.precalc_first();
   scope->precalc_first();
+  for(auto i: *scope){
+    trace1("list??", i->label());
+  }
+
+  cmd >> "list";
+  std::string lang_name = "";
+
+  size_t here = cmd.cursor();
+  do{
+    Get(cmd, "l{anguage}", &lang_name);
+  } while(cmd.more() && !cmd.stuck(&here));
+  trace1("list_save", lang_name);
 
 #if 0
   //out.setfloatwidth(7);
@@ -68,29 +80,36 @@ void list_save(CS& cmd, ostream_t& out, CARD_LIST* scope)
 #endif
 
   LANGUAGE* lang = OPT::language;
-  if(!lang){ untested();
+  if(lang_name!=""){ untested();
+    lang = language_dispatcher[lang_name];
+    assert(lang); // TODO
+  }else if(!lang){ untested();
     incomplete();
     lang = language_dispatcher["qucsator"];
   }else{ untested();
   }
 
-  assert(lang);
+  assert(lang); // TODO
+
   if (cmd.is_end()) {			/* no args: list all		    */
     for (CARD_LIST::const_iterator ci=scope->begin();ci!=scope->end();++ci) { untested();
       lang->print_item(out, *ci);
     }
-  }else{				/* some args: be selective	    */
-#if 0
+  }else{ untested();
+    /* some args: be selective	    */
     size_t arg1 = cmd.cursor();
     CARD_LIST::fat_iterator ci = (cmd.match1('-')) 
       ? CARD_LIST::fat_iterator(scope, scope->begin())
       : findbranch(cmd, scope);
-    if (ci.is_end()) {itested();
+    if (ci.is_end()) {untested();
+      trace2("cantfind", cmd.fullstring(), cmd.tail());
       throw Exception_CS("can't find", cmd);
     }else{ untested();
     }
     
     if (cmd.match1('-')) {		/* there is a dash:  a range	    */
+      incomplete();
+#if 0
       cmd.skip();
       if (cmd.is_end()) {	/* line ends with dash: all to end  */
 	do { untested();
@@ -107,11 +126,15 @@ void list_save(CS& cmd, ostream_t& out, CARD_LIST* scope)
 	  } while (ci++ != stop); // note subtle difference
 	}
       }
-    }else{				/* no dash: a list		    */
-      do {				/* each arg			    */
+#endif
+    }else{ untested();
+      /* no dash: a list		    */
+      do { untested();
+	/* each arg			    */
 	size_t next = cmd.cursor();
-	do {				/* all that match this arg	    */
-	  OPT::language->print_item(out, *ci);
+	do { untested();
+	  /* all that match this arg	    */
+	  lang->print_item(out, *ci);
 	  cmd.reset(arg1);
 	  assert(!ci.is_end());
 	  ci = findbranch(cmd, ++ci); // next match
@@ -120,7 +143,6 @@ void list_save(CS& cmd, ostream_t& out, CARD_LIST* scope)
 	ci = findbranch(cmd, scope); // next arg
       } while (!ci.is_end());
     }
-#endif
   }
 }
 /*--------------------------------------------------------------------------*/
@@ -129,6 +151,7 @@ public:
   void do_it(CS& cmd, CARD_LIST* Scope)
   { untested();
     list_save(cmd, IO::mstdout, Scope);
+    untested();
     IO::mstdout.flush(); // ??
   }
 } p1;

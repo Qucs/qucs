@@ -209,7 +209,7 @@ void QucsDoc::executeCommand(QUndoCommand* c)
 	}
 }
 /* -------------------------------------------------------------------------------- */
-QucsData* QucsDoc::qucsData(std::string const& /*key*/)
+CommonData* QucsDoc::qucsData(std::string const& /*key*/)
 {
 	return nullptr; // _data[key];
 }

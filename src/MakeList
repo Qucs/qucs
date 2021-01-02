@@ -9,9 +9,11 @@ CPP_SRC = \
 	component_widget.cpp \
 	conductor.cpp \
 	cursors.cpp \
+	data.cc \
 	diagram.cpp \
 	element.cpp \
 	element_graphics.cpp \
+	findbr.cc \
 	geometry.cpp \
 	ghostwire.cpp \
 	graph.cpp \
@@ -20,6 +22,7 @@ CPP_SRC = \
 	io_error.cc \
 	io_findf.cc \
 	language.cpp \
+	l_wmatch.cc \
 	marker.cpp \
 	messagedock.cpp \
 	misc.cpp \

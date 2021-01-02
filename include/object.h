@@ -36,6 +36,7 @@ public:
 	virtual ~Object(){}
 
 	std::string const& label() const{ return _label;}
+	std::string const& short_label()const {return _label;}
 //	void setLabel(QString const& l) {_label = l.toStdString();}
 	void setLabel(std::string const& l) {_label = l;}
 	void setLabel(char const* l) {_label = l;}

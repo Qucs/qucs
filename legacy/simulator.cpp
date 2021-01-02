@@ -217,9 +217,9 @@ void LegacyNetlister::do_it(istream_t& cs, SchematicModel* m)
 	}
 #endif
 	assert(_qucslang);
-	if(simcmd=="all"){ untested();
+	if(simcmd=="all"){itested();
 		Stream << "# all tasks\n";
-		for(auto c : tasks){ untested();
+		for(auto c : tasks){itested();
 			trace1("cmd", c->label());
 			_qucslang->printItem(Stream, c);
 		}

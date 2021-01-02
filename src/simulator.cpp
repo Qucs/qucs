@@ -20,22 +20,23 @@
 Simulator::~Simulator()
 {
 	if(_data_p){ untested();
-		QucsData::detach(_data_p);
+		CommonData::detach(_data_p);
 	}else{
 	}
 }
 /* -------------------------------------------------------------------------------- */
 Simulator::Simulator()
-  : _doc(nullptr),
-    _data_p(nullptr),
+  : Data(),
+    _doc(nullptr),
+    _data_p(&_common),
     _state(sst_idle),
     _ctrl(nullptr)
 {
 }
 /* -------------------------------------------------------------------------------- */
 void Simulator::attachCtrl(SimCtrl* ctrl)
-{ untested();
-  if(!_ctrl){ untested();
+{itested();
+  if(!_ctrl){itested();
     _ctrl = ctrl;
   }else if(_ctrl==ctrl){ untested();
   }else{ untested();
@@ -44,8 +45,8 @@ void Simulator::attachCtrl(SimCtrl* ctrl)
 }
 /* -------------------------------------------------------------------------------- */
 void Simulator::detachCtrl(SimCtrl const* ctrl)
-{ untested();
-  if(_ctrl == ctrl){ untested();
+{itested();
+  if(_ctrl == ctrl){itested();
 	 join();
     _ctrl = nullptr;
   }else{ untested();
@@ -56,8 +57,8 @@ void Simulator::detachCtrl(SimCtrl const* ctrl)
 }
 /* -------------------------------------------------------------------------------- */
 void Simulator::message(QucsMsgType lvl, std::string const& msg)
-{ untested();
-	if(_ctrl){ untested();
+{itested();
+	if(_ctrl){itested();
 		_ctrl->message(lvl, msg);
 	}else{ untested();
 		Object::message(lvl, msg.c_str());

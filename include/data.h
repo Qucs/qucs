@@ -11,15 +11,90 @@
  *   (at your option) any later version.                                   *
  *                                                                         *
  ***************************************************************************/
-
+/* -------------------------------------------------------------------------------- */
 #ifndef QUCS_SIM_DATA_H__
 #define QUCS_SIM_DATA_H__
 #include <assert.h>
 #include <complex>
 #include <list>
 #include <QDateTime>
-#include "output.h"
+#include "element.h"
+/* -------------------------------------------------------------------------------- */
+class CommonData : public Object{
+private:
+	CommonData(CommonData const&) = delete;
+public:
+	explicit CommonData() : Object(), _attach_count(0){}
+	virtual ~CommonData() {}
+public:
+	virtual CommonData* clone() { return NULL; }
+protected:
+	virtual CommonData* resolve(const std::string&){assert(false); return nullptr;}
 
+public:
+	static void attach(CommonData*, CommonData**);
+	static void detach(CommonData**);
+	virtual CommonData const* refresh(){unreachable(); return nullptr;}
+
+private:
+	unsigned _attach_count;
+};
+/* -------------------------------------------------------------------------------- */
+// borrowed from e_compon
+inline void CommonData::attach(CommonData* d, CommonData** to)
+{
+	incomplete();
+	assert(to);
+	if (d == *to) {
+		// The new and old are the same object.  Do nothing.
+	}else if (!d) {untested();
+		// There is no new common.  probably a simple element
+		detach(to);
+	}else if (!*to) {
+		// No old one, but have a new one.
+		++(d->_attach_count);
+		trace1("++1", d->_attach_count);
+		*to = d;
+#if 0
+	}else if (*d != **to) {
+		// They are different, usually by edit.
+		detach_common(to);
+		++(d->_attach_count);
+		trace1("++2", d->_attach_count);
+		*to = d;
+#endif
+	}else if (d->_attach_count == 0) {
+		// The new and old are identical.
+		// Use the old one.
+		// The new one is not used anywhere, so throw it away.
+		trace1("delete", d->_attach_count);    
+		delete d;
+	}else{untested();
+		// The new and old are identical.
+		// Use the old one.
+		// The new one is also used somewhere else, so keep it.
+	}
+}
+/* -------------------------------------------------------------------------------- */
+// borrowed from e_compon
+inline void CommonData::detach(CommonData** from)
+{
+	assert(from);
+	if (*from) {
+		assert((**from)._attach_count > 0);
+		--((**from)._attach_count);
+		trace1("--", (**from)._attach_count);
+		if ((**from)._attach_count == 0) {
+			trace1("delete", (**from)._attach_count);
+			delete *from;
+		}else{
+			trace1("nodelete", (**from)._attach_count);
+		}
+		*from = NULL;
+	}else{
+	}
+}
+/* -------------------------------------------------------------------------------- */
 struct DataX {
 	DataX(std::string const& Var_, double *Points_=0, int count_=0)
 		: Var(Var_), Points(Points_), count(count_), Min(INFINITY), Max(-INFINITY) {};
@@ -44,56 +119,6 @@ private:
 	double Max;
 };
 
-// (tabular) data from a simulator.
-class SimOutputData : public QucsData{
-public:
-	typedef std::pair<double, std::complex<double> > valuetype;
-	class const_iterator{
-		friend class SimOutputData; // need to access constructor.
-		friend class SimOutputDat; // bug.
-	protected:
-	public:
-		const_iterator(double const* x, double const* y) : seekx(x), seeky(y) {};
-	public:
-		const_iterator& operator++(){ ++seekx; ++seeky; ++seeky; return *this;}
-		valuetype operator*(){
-			return valuetype(*seekx,std::complex<double>(*seeky,seeky[1]));
-		}
-		const valuetype* operator->() const{
-			_v = valuetype(*seekx,std::complex<double>(*seeky,seeky[1]));
-			return &_v;
-		}
-		bool operator==(const const_iterator& p)const { return seekx==p.seekx; }
-		bool operator!=(const const_iterator& p)const { return seekx!=p.seekx; }
-	private:
-		double const* seekx;
-		double const* seeky;
-		static valuetype _v; // bit of a hack. lets see...
-	};
-public:
-	SimOutputData() : QucsData() {}
-	virtual ~SimOutputData(){}
-
-public: // obsolete interface. don't use.
-  virtual DataX const* axis(uint ) const { return nullptr; } // if (i<axis_count) return CPointsX.at(i); return NULL;}
-//	  double *cPointsY() const { return CPointsY; }
-
-public:
-	virtual bool isEmpty() {return true;}
-	size_t size() const{incomplete(); return 0;}
-
-	virtual const_iterator begin() const = 0; //  {return const_iterator(CPointsX.getFirst()->Points, CPointsY);}
-	virtual const_iterator end() const = 0; //  {return const_iterator(CPointsX.getFirst()->end(), NULL);}
-	virtual SimOutputData const* refresh() {return nullptr;}
-
-public:
-	const double& min()const {return Min;}
-	const double& max()const {return Max;}
-
-protected:
-	double Min;
-	double Max;
-};
 
 
 #if 0 // not yet?
@@ -115,5 +140,18 @@ private:
 };
 #endif
 
+/* -------------------------------------------------------------------------------- */
+class Data : public Element{
+protected:
+	explicit Data() : Element(), _common(nullptr){}
+	~Data();
+public:
+	CommonData const* common()const{ return _common; }
 
+private:
+protected: // hmm
+	CommonData* _common;
+};
+/* -------------------------------------------------------------------------------- */
+/* -------------------------------------------------------------------------------- */
 #endif

@@ -26,9 +26,9 @@
 #include "painting.h"
 /* -------------------------------------------------------------------------------- */
 void Simulator::notifyState(Simulator::state_t st)
-{ untested();
+{untested();
 	setState(st);
-	if(_ctrl){ untested();
+	if(_ctrl){itested();
 		_ctrl->stateChange();
 	}else{ untested();
 	}
@@ -145,6 +145,7 @@ static void printDefHack(Symbol const* p, ostream_t& s)
 class Qucsator : public Simulator{
 public:
 	explicit Qucsator() : Simulator(), _process(this), _ctrl(nullptr) {
+		setLabel("qucsator");
 	}
 	Qucsator(Qucsator const&) = delete;
 	~Qucsator(){}
@@ -166,26 +167,27 @@ private: // Simulator
   void collectData();
 
 public: // QProcess callback.
-	void slotStateChanged(QProcess::ProcessState st){ untested();
+	void slotStateChanged(QProcess::ProcessState st){itested();
 		trace2("slotStateChanged", st, _process.error());
 		switch(st){
-		case QProcess::NotRunning: untested();
+		case QProcess::NotRunning:itested();
 			if(_oldState == QProcess::Starting){ untested();
 				message(QucsMsgFatal, "Failed to start process.");
 				notifyState(Simulator::sst_error);
-			}else{ untested();
+			}else{untested();
 				collectData();
 				notifyState(Simulator::sst_idle);
 			}
 			break;
 		case QProcess::Starting:
-			if(_process.error()==5){ untested();
+			if(_process.error()==5){itested();
 				// this does not mean anything.
 			}else{
 			}
 //			notifyState(Simulator::sst_starting); // not interesting.
 			break;
 		case QProcess::Running:
+			trace2("slotStateChanged to running", st, _process.error());
 			notifyState(Simulator::sst_running);
 			break;
 		default:
@@ -212,8 +214,7 @@ struct default_sim{
 }ds;
 /* -------------------------------------------------------------------------------- */
 void Qucsator::join()
-{
-	untested();
+{ untested();
 	_process.waitForFinished();
 }
 /* -------------------------------------------------------------------------------- */
@@ -225,7 +226,7 @@ void Qucsator::run(istream_t& cs, SimCtrl* ctrl)
 }
 /* -------------------------------------------------------------------------------- */
 void Qucsator::do_it(istream_t& cs, SchematicModel const* scope)
-{ untested();
+{itested();
 	assert(has_ctrl());
 
 	cs >> "run"; //?
@@ -250,7 +251,7 @@ void Qucsator::do_it(istream_t& cs, SchematicModel const* scope)
 	trace1("qucsator nl?", s);
 	istream_t nlcmd(istream_t::_STRING, s);
 	SchematicModel* hack = nullptr;
-	if(scope){ untested();
+	if(scope){itested();
 		hack = const_cast<SchematicModel*>(scope);
 	}else{ untested();
 		incomplete();
@@ -279,7 +280,6 @@ void Qucsator::do_it(istream_t& cs, SchematicModel const* scope)
 #endif
 
 	QString DocName;
-	QString DataSet;
 
 	if(doc()){
 		DocName = doc()->docName();
@@ -287,9 +287,14 @@ void Qucsator::do_it(istream_t& cs, SchematicModel const* scope)
 		DataSet = QDir::toNativeSeparators(Info.path()) +
 			QDir::separator() + doc()->DataSet;
 	} else{
-		incomplete();
+		// TODO: TMPFILENAME
+		char* t = strdup("/tmp/qucsator_XXXXXX.dat");
+		int h = mkstemps(t, 4);
+		close(h);
+		DataSet = QString(t);
+		free(t);
 
-		DataSet = "/dev/stdout";
+//		DataSet = "/dev/stdout";
 	}
 
 	QString Program = QucsSettings.Qucsator;
@@ -305,17 +310,19 @@ void Qucsator::do_it(istream_t& cs, SchematicModel const* scope)
 
 	trace2("start", Program, DataSet);
 	_process.start(Program, Arguments);
-	// _process.waitForFinished();
 
 	QString cmd = Program +" "+ Arguments.join(" ");
 	message(QucsMsgLog, cmd.toStdString());
 }
 /* -------------------------------------------------------------------------------- */
 void Qucsator::collectData()
-{ untested();
+{itested();
+	trace1("collectData", DataSet);
 	auto data = new SimOutputDat(DataSet.toStdString(), "");
-	incomplete();
-	//releaseOutput(data);
+	releaseOutput(data);
+//    CommonData::attach(data, &_common);
+
+//	 assert(data==_common);
 }
 /* -------------------------------------------------------------------------------- */
 }//namespace
@@ -324,7 +331,7 @@ void Qucsator::collectData()
 // BUG: must be anonymous
 /* -------------------------------------------------------------------------------- */
 void QucsatorProcess::slotStateChanged(QProcess::ProcessState newState)
-{ untested();
+{itested();
 	trace1("QucsatorProcess callback", newState);
 	assert(_simulator);
 	_simulator->slotStateChanged(newState);
@@ -338,7 +345,7 @@ void QucsatorProcess::stderr_()
 }
 /* -------------------------------------------------------------------------------- */
 void QucsatorProcess::stdout_()
-{ untested();
+{itested();
 	assert(_simulator);
 	std::string msg = readAllStandardOutput().toStdString();
 	trace1("QucsatorProcess stdout", msg);

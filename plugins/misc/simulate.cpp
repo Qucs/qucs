@@ -27,14 +27,14 @@ Dispatcher<Command>::INSTALL p0(&command_dispatcher, "simulate", &c);
 struct mySimCtrl : SimCtrl{
 	mySimCtrl(Simulate* r) : _r(r){}
 	void stateChange() override{ incomplete(); }
-	void message(int level, std::string msg) override { untested();
+	void message(int level, std::string msg) override {itested();
 		std::cout << level << " " << msg << "\n";
 	}
 	Simulate* _r;
 };
 /*--------------------------------------------------------------------------*/
 void Simulate::do_it(istream_t& cmd, SchematicModel* sckt)
-{ untested();
+{itested();
 	assert(sckt);
 	std::string fn;
 	cmd >> "simulate";
@@ -45,9 +45,9 @@ void Simulate::do_it(istream_t& cmd, SchematicModel* sckt)
 	auto f = sckt->find_(which);
 	Simulator* sim = nullptr;
 
-   if(f == sckt->end()){ untested();
+   if(f == sckt->end()){itested();
       Simulator const* proto = QucsSettings.simulator();
-      if(which!=""){ untested();
+      if(which!=""){itested();
          proto = simulator_dispatcher[which];
       }else{ untested();
       }
@@ -62,7 +62,7 @@ void Simulate::do_it(istream_t& cmd, SchematicModel* sckt)
 
 	mySimCtrl ctx(this);
 
-	if(sim){ untested();
+	if(sim){itested();
 		sim->attachCtrl(&ctx);
 		sim->do_it(cmd, sckt);
 		sim->detachCtrl(&ctx);

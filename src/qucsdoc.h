@@ -35,7 +35,7 @@ class MouseAction;
 class QUndoStack;
 class QUndoCommand;
 class Element;
-class QucsData;
+class CommonData;
 class Simulator;
 
 class QucsDoc : public Object {
@@ -162,7 +162,7 @@ public:
 	void possiblyToggleAction(MouseAction* a, QAction* sender);
 	MouseAction const* activeAction() const;
 
-	QucsData* qucsData(std::string const& key);
+	CommonData* qucsData(std::string const& key);
 	QWidget* ownerWidget(){return _owner;}
 	void setOwner(QWidget* o){_owner=o;}
 
@@ -172,7 +172,7 @@ private:
 	friend class Simulator;
 
 	std::map<std::string, Element const*> _protos;
-	std::map<std::string, QucsData*> _data;
+	std::map<std::string, CommonData*> _data;
 	std::map<std::string, Simulator*> _simulators;
 
 	QWidget* _owner;

@@ -21,6 +21,7 @@
 #include "d_dot.h"
 #include "diagram.h"
 #include "sckt_base.h"
+#include "data.h"
 
 Element* DocumentLanguage::parseItem(istream_t& s, Element* c) const
 { untested();
@@ -34,24 +35,27 @@ Element* DocumentLanguage::parseItem(istream_t& s, Element* c) const
 
 void DocumentLanguage::printItem(ostream_t& s, Element const* c) const
 {
-  if(!c){ untested();
-	  s << "unreachable, no item\n";
-	  // assert(c);
-  }else if (auto C=dynamic_cast<const TaskElement*>(c)) {
-    printTaskElement(C, s);
-  }else if (auto C=dynamic_cast<const SubcktBase*>(c)) {
-	  if(C->is_device()){
-		  printSymbol(C, s);
-	  }else{
-		  printSubckt(C, s);
-	  }
-  }else if (auto C=dynamic_cast<const Symbol*>(c)) {
-	  printSymbol(C, s);
-  }else if (auto C=dynamic_cast<const Painting*>(c)) {
-    printPainting(C, s);
-  }else{ untested();
-    incomplete();
-  }
+	if(!c){ untested();
+		s << "unreachable, no item\n";
+		// assert(c);
+	}else if (auto C=dynamic_cast<const TaskElement*>(c)) {
+		printTaskElement(C, s);
+	}else if (auto C=dynamic_cast<const SubcktBase*>(c)) {
+		if(C->is_device()){
+			printSymbol(C, s);
+		}else{
+			printSubckt(C, s);
+		}
+	}else if (auto C=dynamic_cast<const Symbol*>(c)) {
+		printSymbol(C, s);
+	}else if (auto C=dynamic_cast<const Painting*>(c)) {
+		printPainting(C, s);
+	}else if (auto C=dynamic_cast<const Data*>(c)) {
+		incomplete();
+		s << "sim" << C->label() << "\n";
+	}else{ untested();
+		incomplete();
+	}
 }
 
 // borrowed from u_lang.h

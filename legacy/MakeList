@@ -13,6 +13,7 @@ LEGACY_SRC = \
 	compcmd.cpp \
 	diagram.cpp \
 	equation.cpp \
+	lang_dat.cpp \
 	lang_qucsator.cpp \
 	libcomp.cpp \
 	markerdialog.cpp \
