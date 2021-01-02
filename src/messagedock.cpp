@@ -212,7 +212,8 @@ void MessageDock::slotCursor()
         // name from the fatal message and ->findDoc instead of ->getDoc?
 
         // grab active text document
-        TextDoc * d = (TextDoc*)QucsMain->getDoc();
+		  incomplete();
+        TextDoc * d = nullptr; // (TextDoc*)QucsMain->getDoc();
 
         QTextCursor cursor = d->textCursor();
         int pos = d->document()->findBlockByLineNumber(gotoLine-1).position();

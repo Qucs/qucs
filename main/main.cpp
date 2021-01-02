@@ -24,16 +24,16 @@
 #include <ctype.h>
 #include <locale.h>
 
-#include <QApplication>
+//#include <QApplication>
 #include <QString>
-#include <QStringList>
-#include <QTextCodec>
-#include <QTranslator>
+//#include <QStringList>
+//#include <QTextCodec>
+//#include <QTranslator>
 #include <QFile>
-#include <QMessageBox>
-#include <QRegExp>
-#include <QtSvg>
-#include <QDebug>
+//#include <QMessageBox>
+//#include <QRegExp>
+//#include <QtSvg>
+//#include <QDebug>
 
 #include "qucs.h"
 #include "docfmt.h"
@@ -297,19 +297,6 @@ int main(int argc, char *argv[])
 
 
 
-  // set codecs
-  QTextCodec::setCodecForLocale(QTextCodec::codecForName("UTF-8"));
-  QTextCodec::setCodecForTr(QTextCodec::codecForName("UTF-8"));
-
-  QTranslator tor( 0 );
-  QString lang = QucsSettings.Language;
-  if(lang.isEmpty()) {
-    QLocale loc;
-    lang = loc.name();
-  }else{ untested();
-  }
-  tor.load( QString("qucs_") + lang, QucsSettings.LangDir);
-
   //{ untested();
   //}
 
@@ -473,26 +460,7 @@ int main(int argc, char *argv[])
     }else{
     }
   }else{
-    //{ untested();
-    QApplication a(argc, argv);
-  //  Q_INIT_RESOURCE();
-    QDesktopWidget *d = a.desktop();
-    int w = d->width();
-    int h = d->height();
-    QucsSettings.x = w/8;
-    QucsSettings.y = h/8;
-    QucsSettings.dx = w*3/4;
-    QucsSettings.dy = h*3/4;
-    a.setFont(QucsSettings.font);
-    a.installTranslator( &tor );
-    //}
-
-    Module::registerModules (); // BUG
-    QucsMain = new QucsApp();
-
-    QucsMain->show();
-    result = a.exec();
-    //saveApplSettings(QucsMain);
+    CMD::command(std::string("startgui"), nullptr);
   }
   return result;
 }

@@ -228,8 +228,9 @@ QString SpiceFile::getSubcircuitFile() const
     mutex.lock();
     QString hashsearchresult = "";
     // if GUI is running and has something in the hash
-    if ( (QucsMain != 0) && !QucsMain->spiceNameHash.isEmpty() )
-      hashsearchresult = QucsMain->spiceNameHash.value(baseName);
+	 incomplete();
+    //if ( (QucsMain != 0) && !QucsMain->spiceNameHash.isEmpty() )
+    //  hashsearchresult = QucsMain->spiceNameHash.value(baseName);
     mutex.unlock();
 
     if (hashsearchresult.isEmpty())
@@ -458,11 +459,13 @@ bool SpiceFile::recreateSubNetlist(QString *SpiceFile, QString *FileName)
   (*filstream) << NetText;
 
   // only interact with the GUI if it was launched
+ #if 0 //message?!
   if (QucsMain) {
     QucsMain->statusBar()->showMessage(tr("Converting SPICE file \"%1\".").arg(*SpiceFile), 2000);
-  }
-  else
+  } else{
     qDebug() << QObject::tr("Converting SPICE file \"%1\".").arg(*SpiceFile);
+  }
+#endif
 
   // finish
   QucsConv->waitForFinished();
