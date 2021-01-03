@@ -38,7 +38,7 @@
 namespace {
 /*--------------------------------------------------------------------------*/
 void list_save(CS& cmd, ostream_t& out, CARD_LIST* scope)
-{ untested();
+{
   assert(scope);
   // CARD_LIST::card_list.precalc_first();
   scope->precalc_first();
@@ -80,7 +80,7 @@ void list_save(CS& cmd, ostream_t& out, CARD_LIST* scope)
 #endif
 
   LANGUAGE* lang = OPT::language;
-  if(lang_name!=""){ untested();
+  if(lang_name!=""){
     lang = language_dispatcher[lang_name];
     assert(lang); // TODO
   }else if(!lang){ untested();
@@ -92,10 +92,10 @@ void list_save(CS& cmd, ostream_t& out, CARD_LIST* scope)
   assert(lang); // TODO
 
   if (cmd.is_end()) {			/* no args: list all		    */
-    for (CARD_LIST::const_iterator ci=scope->begin();ci!=scope->end();++ci) { untested();
+    for (CARD_LIST::const_iterator ci=scope->begin();ci!=scope->end();++ci) {
       lang->print_item(out, *ci);
     }
-  }else{ untested();
+  }else{
     /* some args: be selective	    */
     size_t arg1 = cmd.cursor();
     CARD_LIST::fat_iterator ci = (cmd.match1('-')) 
@@ -104,7 +104,7 @@ void list_save(CS& cmd, ostream_t& out, CARD_LIST* scope)
     if (ci.is_end()) {untested();
       trace2("cantfind", cmd.fullstring(), cmd.tail());
       throw Exception_CS("can't find", cmd);
-    }else{ untested();
+    }else{
     }
     
     if (cmd.match1('-')) {		/* there is a dash:  a range	    */
@@ -127,12 +127,12 @@ void list_save(CS& cmd, ostream_t& out, CARD_LIST* scope)
 	}
       }
 #endif
-    }else{ untested();
+    }else{
       /* no dash: a list		    */
-      do { untested();
+      do {
 	/* each arg			    */
 	size_t next = cmd.cursor();
-	do { untested();
+	do {
 	  /* all that match this arg	    */
 	  lang->print_item(out, *ci);
 	  cmd.reset(arg1);
@@ -149,7 +149,7 @@ void list_save(CS& cmd, ostream_t& out, CARD_LIST* scope)
 class CMD_LIST : public Command {
 public:
   void do_it(CS& cmd, CARD_LIST* Scope)
-  { untested();
+  {
     list_save(cmd, IO::mstdout, Scope);
     untested();
     IO::mstdout.flush(); // ??

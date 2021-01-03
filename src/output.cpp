@@ -11,57 +11,19 @@
  *   (at your option) any later version.                                   *
  *                                                                         *
  ***************************************************************************/
+
+#include "output.h"
 /* -------------------------------------------------------------------------------- */
-/* -------------------------------------------------------------------------------- */
-#include "simulator.h"
-#include "qucsdoc.h"
-#include "io_error.h"
-/* -------------------------------------------------------------------------------- */
-Simulator::~Simulator()
+SimOutputDir::~SimOutputDir()
 {
-	if(_data_p){
-		CommonData::detach(_data_p);
-	}else{ untested();
+	for(auto i : _d){
+		detach(&i.second);
 	}
 }
 /* -------------------------------------------------------------------------------- */
-Simulator::Simulator()
-  : Data(),
-    _doc(nullptr),
-    _data_p(&_common),
-    _state(sst_idle),
-    _ctrl(nullptr)
-{
+SimOutputDir::SimOutputDir(const SimOutputDir& s) : _d(s._d)
+{ untested();
+	incomplete();
 }
 /* -------------------------------------------------------------------------------- */
-void Simulator::attachCtrl(SimCtrl* ctrl)
-{itested();
-  if(!_ctrl){itested();
-    _ctrl = ctrl;
-  }else if(_ctrl==ctrl){ untested();
-  }else{ untested();
-    throw Exception("already controlled");
-  }
-}
-/* -------------------------------------------------------------------------------- */
-void Simulator::detachCtrl(SimCtrl const* ctrl)
-{itested();
-  if(_ctrl == ctrl){itested();
-	 join();
-    _ctrl = nullptr;
-  }else{ untested();
-    _ctrl = nullptr;
-	 // throw?
-	  unreachable();
-  }
-}
-/* -------------------------------------------------------------------------------- */
-void Simulator::message(QucsMsgType lvl, std::string const& msg)
-{itested();
-	if(_ctrl){itested();
-		_ctrl->message(lvl, msg);
-	}else{ untested();
-		Object::message(lvl, msg.c_str());
-	}
-}
 /* -------------------------------------------------------------------------------- */

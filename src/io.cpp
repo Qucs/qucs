@@ -290,8 +290,8 @@ istream_t& istream_t::umatch(const std::string& s)
 //    }else if ((OPT::case_insensitive) && (tolower(peek()) == tolower(*str2))) { untested();
 //      skip();
 //      ++str2;
-    }else if (optional) { untested();
-      while (*str2 != '}') { untested();
+    }else if (optional) {
+      while (*str2 != '}') {
 			++str2;
       }
     }else{

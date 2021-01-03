@@ -28,6 +28,11 @@ public:
 	virtual ~CommonData();
 public:
 	virtual CommonData* clone() { return NULL; }
+
+public:
+	virtual bool  operator==(const CommonData&x)const;
+	bool operator!=(const CommonData& x)const {return !(*this == x);}
+
 protected:
 	virtual CommonData* resolve(const std::string&){assert(false); return nullptr;}
 
@@ -39,62 +44,6 @@ public:
 private:
 	unsigned _attach_count;
 };
-/* -------------------------------------------------------------------------------- */
-// borrowed from e_compon
-inline void CommonData::attach(CommonData* d, CommonData** to)
-{
-	incomplete();
-	assert(to);
-	if (d == *to) {
-		// The new and old are the same object.  Do nothing.
-	}else if (!d) {untested();
-		// There is no new common.  probably a simple element
-		detach(to);
-	}else if (!*to) {
-		// No old one, but have a new one.
-		++(d->_attach_count);
-		trace1("++1", d->_attach_count);
-		*to = d;
-#if 0
-	}else if (*d != **to) {
-		// They are different, usually by edit.
-		detach_common(to);
-		++(d->_attach_count);
-		trace1("++2", d->_attach_count);
-		*to = d;
-#endif
-	}else if (d->_attach_count == 0) {
-		// The new and old are identical.
-		// Use the old one.
-		// The new one is not used anywhere, so throw it away.
-		trace1("delete", d->_attach_count);    
-		delete d;
-	}else{untested();
-		// The new and old are identical.
-		// Use the old one.
-		// The new one is also used somewhere else, so keep it.
-	}
-}
-/* -------------------------------------------------------------------------------- */
-// borrowed from e_compon
-inline void CommonData::detach(CommonData** from)
-{
-	assert(from);
-	if (*from) {
-		assert((**from)._attach_count > 0);
-		--((**from)._attach_count);
-		trace1("--", (**from)._attach_count);
-		if ((**from)._attach_count == 0) {
-			trace1("delete", (**from)._attach_count);
-			delete *from;
-		}else{
-			trace1("nodelete", (**from)._attach_count);
-		}
-		*from = NULL;
-	}else{
-	}
-}
-/* -------------------------------------------------------------------------------- */
 // BUG
 struct DataX {
 	DataX(std::string const& Var_, double *Points_=0, int count_=0)
@@ -153,6 +102,12 @@ private:
 protected: // hmm
 	CommonData* _common;
 };
+/* -------------------------------------------------------------------------------- */
+inline bool CommonData::operator==(const CommonData&)const
+{
+	incomplete();
+	return false;
+}
 /* -------------------------------------------------------------------------------- */
 /* -------------------------------------------------------------------------------- */
 #endif

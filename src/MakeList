@@ -36,6 +36,7 @@ CPP_SRC = \
 	nodemap.cpp \
 	object.cpp \
 	octave_window.cpp \
+	output.cpp \
 	painting.cpp \
 	place.cpp \
 	port.cpp \

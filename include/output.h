@@ -27,12 +27,12 @@
 // these can again be "directories", or data sets
 class SimOutputDir : public CommonData {
 protected:
-	explicit SimOutputDir(){ }
-	SimOutputDir(const SimOutputDir& s) : _d(s._d) { untested(); }
+	explicit SimOutputDir(): CommonData() { }
+	SimOutputDir(const SimOutputDir& s);
 
 public:
 	typedef std::map<std::string, CommonData*> container_t;
-	virtual ~SimOutputDir(){}
+	virtual ~SimOutputDir();
 	virtual void set_var(std::string, std::string) { untested(); }
 
 private:
@@ -60,16 +60,16 @@ public:
 
 	public: //ops
 		CommonData const* operator->(){incomplete(); return nullptr;}
-		CommonData const* operator*(){ untested();
+		CommonData const* operator*(){
 			return container_t::const_iterator::operator*().second;
 		}
 		bool operator==(const_iterator const&x) const {untested();
 			return container_t::const_iterator(*this)==(container_t::const_iterator(x));
 		}
-		bool operator!=(const_iterator const&x) const {untested();
+		bool operator!=(const_iterator const&x) const {
 			return container_t::const_iterator(*this)!=(container_t::const_iterator(x));
 		}
-		const_iterator& operator++(){untested();
+		const_iterator& operator++(){
 			container_t::const_iterator::operator++();
 			return *this;
 		}
@@ -111,7 +111,8 @@ protected:
 /* -------------------------------------------------------------------------------- */
 // the root directory. here,
 // output plugins register as directories
-// obsolete.
+// obsolete -> Data
+#if 0
 class SimOutputRoot : public SimOutputDir {
 private:
 	SimOutputRoot(const SimOutputRoot& s) : SimOutputDir(s){
@@ -160,6 +161,7 @@ public:
 private:
 	// std::map<std::string, CommonData*> *_d;
 };
+#endif
 /* -------------------------------------------------------------------------------- */
 // (dictionary) data from a simulator, maybe later.
 class SimOutputParams : public CommonData{

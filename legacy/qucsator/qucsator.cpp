@@ -26,7 +26,7 @@
 #include "painting.h"
 /* -------------------------------------------------------------------------------- */
 void Simulator::notifyState(Simulator::state_t st)
-{untested();
+{
 	setState(st);
 	if(_ctrl){itested();
 		_ctrl->stateChange();
@@ -174,7 +174,7 @@ public: // QProcess callback.
 			if(_oldState == QProcess::Starting){ untested();
 				message(QucsMsgFatal, "Failed to start process.");
 				notifyState(Simulator::sst_error);
-			}else{untested();
+			}else{
 				collectData();
 				notifyState(Simulator::sst_idle);
 			}
@@ -214,7 +214,7 @@ struct default_sim{
 }ds;
 /* -------------------------------------------------------------------------------- */
 void Qucsator::join()
-{ untested();
+{
 	_process.waitForFinished();
 }
 /* -------------------------------------------------------------------------------- */

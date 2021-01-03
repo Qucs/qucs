@@ -44,42 +44,42 @@ bool wmatch(const std::string& s1,const std::string& s2); // lib
  * caution: caller must check return value before using
  */
 CARD_LIST::fat_iterator findbranch(CS& cmd, CARD_LIST::fat_iterator here)
-{ untested();
+{
   size_t save = cmd.cursor();
 
   char labelwanted[BUFLEN+1];
   cmd.ctostr(labelwanted, BUFLEN, TOKENTERM);
   trace1("findbranch", labelwanted);
   
-  if (!labelwanted[0]) { untested();
+  if (!labelwanted[0]) {
     // nothing to look for
     cmd.reset(save);
     return here.end();
-  }else{ untested();
+  }else{
   }
   
   char* local_part;	    // part before last dot, the thing inside
   char* last_part;	    // part after last dot, top level
-  { untested();
+  {
     char* dot = strrchr(labelwanted,'.');
     if (dot) {itested();		    // split the string into 2 parts at the last dot
       *dot = '\0';	    // before is the new "local_part", shortened
       last_part = dot + 1;  // after is the "last_part".
       local_part = labelwanted;
-    }else{ untested();
+    }else{
       last_part = labelwanted;
       local_part = NULL;
     }
   }
 
-  for (;;) { untested();
-    if (here.is_end()) { untested();
+  for (;;) {
+    if (here.is_end()) {
       // at the end of the list - done, fails.
       cmd.reset(save);
       return here;
     }else if (wmatch((**here).short_label(), last_part)) { 
       // last_part matches
-      if (!local_part) { untested();
+      if (!local_part) {
 	// requested a simple name, found it .. done.
 	return here;
       }else{untested();
@@ -108,7 +108,7 @@ CARD_LIST::fat_iterator findbranch(CS& cmd, CARD_LIST::fat_iterator here)
 	  ++here;
 	}
       }
-    }else{ untested();
+    }else{
       // label doesn't match
       // keep looking for one that does.  (linear search)
       ++here;

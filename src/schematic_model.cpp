@@ -46,6 +46,10 @@ SchematicModel::~SchematicModel()
 void SchematicModel::clear()
 {
 	incomplete(); // disconnect components?
+	for(auto& pc : _cl){
+		delete pc;
+		pc = nullptr;
+	}
 	_cl.clear();
 	nodes().clear();
 	// paintings().clear();
