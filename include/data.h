@@ -44,30 +44,6 @@ public:
 private:
 	unsigned _attach_count;
 };
-// BUG
-struct DataX {
-	DataX(std::string const& Var_, double *Points_=0, int count_=0)
-		: Var(Var_), Points(Points_), count(count_), Min(INFINITY), Max(-INFINITY) {};
-	~DataX() { if(Points) delete[] Points; };
-	const double* end() const{return Points+count;}
-
-public:
-	const double& min()const {return Min;}
-	const double& max()const {return Max;}
-public: // only called from Graph. cleanup later.
-	void setLimit(const double& x){
-		if (Min>x) Min=x;
-		if (Max<x) Max=x;
-	}
-public: // ??
-	std::string Var;
-	double *Points;
-	int     count;
-
-private:
-	double Min;
-	double Max;
-};
 
 
 

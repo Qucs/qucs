@@ -22,6 +22,8 @@
 #include "data.h"
 /* -------------------------------------------------------------------------------- */
 /* -------------------------------------------------------------------------------- */
+class DataX; // BUG
+/* -------------------------------------------------------------------------------- */
 // base class for SimOutputs
 // a SimOutputDir provides a named list of CommonData
 // these can again be "directories", or data sets

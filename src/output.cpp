@@ -19,6 +19,7 @@ SimOutputDir::~SimOutputDir()
 	for(auto i : _d){
 		detach(&i.second);
 	}
+	_d.clear();
 }
 /* -------------------------------------------------------------------------------- */
 SimOutputDir::SimOutputDir(const SimOutputDir& s) : _d(s._d)

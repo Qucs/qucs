@@ -34,6 +34,7 @@ private: // Language
   void printItem(ostream_t&, Element const*) const override;
 private: // local
   void printData(Data const*, ostream_t&) const;
+  void printCommonData(CommonData const*, ostream_t&) const;
 }d0;
 static Dispatcher<DocumentLanguage>::INSTALL p(&language_dispatcher, "dat", &d0);
 /* -------------------------------------------------------------------------------- */
@@ -47,17 +48,34 @@ void DatLang::printItem(ostream_t& s, Element const* c) const
 	}
 }
 /* -------------------------------------------------------------------------------- */
+void DatLang::printCommonData(CommonData const* c, ostream_t& s) const
+{
+	if(auto dd=dynamic_cast<SimOutputData const*>(c)){ untested();
+		s << "<var dep [..] " << dd->label() << "\n";
+		for(auto p : *dd){ untested();
+			auto x = p.first;
+			auto i = p.second;
+			s << x << " " << i.real() << " " << i.imag() << "\n";
+		}
+	}else if(auto sod=dynamic_cast<SimOutputDir const*>(c)){
+		s << "data from " << sod->label() << "\n";
+		for(auto i : *sod){ untested();
+			printCommonData(i, s);
+		}
+	}else{
+		incomplete();
+	}
+}
+/* -------------------------------------------------------------------------------- */
 void DatLang::printData(Data const* c, ostream_t& s) const
 {
 	assert(c);
+	s << " TODO " << c->label() << "\n";
 	CommonData const* cc = c->common();
 
-	if(auto sod=dynamic_cast<SimOutputData const*>(cc)){
-	}else if(auto sod=dynamic_cast<SimOutputDir const*>(cc)){
-		for(auto i : *sod){
-			s << " TODO " << i->label() << "\n";
-		}
-	}else{ untested();
+	if(cc){
+		printCommonData(cc, s);
+	}else{
 	}
 }
 /* -------------------------------------------------------------------------------- */
