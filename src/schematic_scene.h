@@ -33,6 +33,8 @@
 #include "qt_compat.h"
 #include "viewpainter.h"
 
+class Symbol;
+class Place;
 class Element;
 class ElementGraphics;
 class Node;
@@ -59,6 +61,13 @@ public:
 
   void attachToModel(Element*);
   Element* detachFromModel(Element*);
+  void connectPorts(Symbol* c);
+  Place const* placeAt(pos_t const& p){
+	  incomplete();
+	  return new_place(p);
+  }
+  Place const* is_place(pos_t const& p) const;
+  Place const* new_place(pos_t const& p);
 
 private:
   SchematicModel* scope();
@@ -78,7 +87,7 @@ public:
   QPoint snapToGrid(QPointF const&) const;
 
   bool isNode(pos_t) const;
-  Node const* nodeAt(pos_t) const;
+//  Node const* nodeAt(pos_t) const;
   bool isConductor(pos_t) const;
 
   void possiblyRename(Element* e) const;

@@ -15,6 +15,7 @@
 #include "sckt_base.h"
 
 namespace{
+	// QGraphicsScene
 class sda : public SubcktBase  {
 public:
   explicit sda() : SubcktBase () {

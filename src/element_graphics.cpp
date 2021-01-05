@@ -25,6 +25,7 @@
 #include "platform.h"
 #include "qt_compat.h"
 #include "painting.h"
+#include "place.h"
 
 #include <QGraphicsScene>
 #include <QGraphicsProxyWidget>
@@ -177,7 +178,12 @@ void ElementGraphics::attachElement(Element* e)
 	_elementText = nullptr;
 	_e = e;
 
-	auto flags = ItemIsSelectable|ItemIsMovable|ItemSendsGeometryChanges;
+	auto flags = ItemSendsGeometryChanges|ItemSendsGeometryChanges;
+	if(dynamic_cast<Place const*>(_e)){
+	}else{
+		flags |= ItemIsSelectable;
+		flags |= ItemIsMovable;
+	}
 	if(_e->legacyTransformHack()){ untested();
 		flags |= ItemIgnoresTransformations;
 	}else{ untested();
@@ -575,6 +581,17 @@ void ElementGraphics::hide()
 		}
 	}
 #endif
+
+	if(!_e->owner()){itested();
+	}else if(auto sym=dynamic_cast<Symbol*>(_e)){
+//		_port_values.clear();
+		for(unsigned i=0; i<sym->numPorts(); ++i){
+			trace2("unset port", sym->label(), i);
+//			_port_values.push_back(sym->port_value(i));
+			sym->set_port_by_index(i, "");
+		}
+	}else{
+	}
 
 	if(_e->owner()){itested();
 		// detach(_e, model());

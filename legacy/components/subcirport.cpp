@@ -16,6 +16,7 @@
 #include "component.h"
 #include "globals.h"
 #include "module.h"
+#include "sckt_base.h"
 
 namespace{
 
@@ -29,8 +30,6 @@ private:
 		  for(auto i : p.Lines){
 			 Lines.append(new Line(*i));
 		  }
-
-
 	  }
 public:
   SubCirPort();
@@ -39,8 +38,14 @@ public:
   Element* clone() const { return new SubCirPort(*this);}
   static Element* info(QString&, char* &, bool getNewOne=false);
 
+private: // Symbol
+  void set_port_by_index(index_t, std::string const&) override;
+//  unsigned numPorts() const override{
+//	  return 1;
+//  }
+
 private:
-  Node* connectNode(unsigned n, NodeMap& l) override;
+//  Node* connectNode(unsigned n, NodeMap& l) override;
   bool useObsoleteProps() const override{ return true; }
 
 private:
@@ -85,10 +90,17 @@ SubCirPort::SubCirPort() : Component(), _pos(1)
 }
 
 // -------------------------------------------------------
-Node* SubCirPort::connectNode(unsigned i, NodeMap& l)
+void SubCirPort::set_port_by_index(index_t i, std::string const& value)
 {
-	Node* N = Symbol::connectNode(i, l);
-	trace2("cn", i, N);
+   if(value==""){
+		incomplete();
+	}else{
+	}
+	
+	if(i){
+		incomplete(); // ?
+	}else{
+	}
 
 	bool ok=true;
 	QString pp;
@@ -108,14 +120,41 @@ Node* SubCirPort::connectNode(unsigned i, NodeMap& l)
 
 	--pos; // QUCS numbers start at 1.
 
-	if(ok){
+	auto so = dynamic_cast<SubcktBase*>(owner());
+
+	assert(scope());
+	assert(scope()->nodes());
+	auto& nm = *scope()->nodes();
+
+   if(value == ""){
+		Node* n = port(0).value();
+		Node* m = port(1).value();
+		if( n && m){
+			nm.removeEdge(m, n);
+			Symbol::set_port_by_index(0, "");
+			Symbol::set_port_by_index(1, "");
+		}else{
+			unreachable();
+		}
+	}else if(so){
 		assert(scope());
-		trace2("setting port", pos, N->netLabel());
-		scope()->setPort(pos, N);
+		assert(scope()==so->scope());
+		trace2("port::spbi", pos, label());
+		so->set_port_by_index(pos, label());
+
+		Symbol::set_port_by_index(0, label());
+		Symbol::set_port_by_index(1, value);
+
+
+		Node* n = port(0).value();
+		Node* m = port(1).value();
+		nm.addEdge(m, n);
+		n->setNetLabel(label());
+
+//		addedge?
 	}else{ untested();
 		incomplete();
 	}
-	return N;
 }
 // -------------------------------------------------------
 void SubCirPort::createSymbol()
@@ -154,6 +193,7 @@ void SubCirPort::createSymbol()
   }
 
   Ports.append(new ComponentPort(  0,  0));
+  Ports.append(new ComponentPort(  0,  0));
 }
 // -------------------------------------------------------
 std::string SubCirPort::paramName(unsigned n) const
@@ -166,6 +206,7 @@ std::string SubCirPort::paramName(unsigned n) const
 		return Component::paramName(n);
 	}
 }
+/*--------------------------------------------------------------------------*/
 std::string SubCirPort::paramValue(unsigned n) const
 {
 //	this is not correct.
@@ -175,8 +216,7 @@ std::string SubCirPort::paramValue(unsigned n) const
 	}else if(n==num_component_params + Symbol::paramCount() + 1){
 		return _some_type;
 	}else{
-		return "incomplete";
-		incomplete();
+		return Component::paramValue(n);
 	}
 }
 // -------------------------------------------------------

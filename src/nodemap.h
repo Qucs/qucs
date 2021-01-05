@@ -22,23 +22,25 @@ class ConnectedComponents;
 
 class NodeMap {
 public:
-  	typedef pos_t key_type;
+  	typedef std::string key_type;
 private:
+#if 1
 	class NodeCompare{
 	public:
 		using is_transparent = void;
 		bool operator()(Node const* n1, Node const* n2) const{
-			return c(n1->position(), n2->position());
+			return c(n1->label(), n2->label());
 		}
 		bool operator()(Node const* n1, key_type const& n2) const{
-			return c(n1->position(), n2);
+			return c(n1->label(), n2);
 		}
 		bool operator()(key_type const& n1, Node const* n2) const{
-			return c(n1, n2->position());
+			return c(n1, n2->label());
 		}
 	private:
-		std::less< std::pair<int, int> > c;
+		std::less<std::string> c;
 	};
+#endif
 public: // really?
 	// need *set*, because map splits key from payload.
 	// using a set of *pointers* because nodes must be mutable.
@@ -90,7 +92,7 @@ public: // friend Symbol? move to Conductor?
 public:
 	Node* find_at(key_type const&);
 	Node const* find_at(key_type const&) const;
-	Node& at(pos_t const&);
+	Node* new_node(std::string const&);
 
 private:
 	Node& new_at(pos_t const&); // same as at. but don't search

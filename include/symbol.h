@@ -160,12 +160,15 @@ private:
 	Port const& port(unsigned) const; // TODO. don't expose "Port"
 
 public: // Port stuff
+	virtual unsigned max_nodes() const{
+		return 100; // numPorts(); // for now.
+	}
 	virtual void set_port_by_index(index_t, std::string const&);
 	virtual void set_port_by_name(std::string const&, std::string const&);
-	virtual void setPort(int, std::string const&){unreachable();}
 	virtual pos_t portPosition(unsigned) const = 0;
 	pos_t nodePosition(unsigned) const;
 
+	std::string port_value(unsigned) const;
 	virtual Node const* portValue(unsigned) const; // why virtual?
 	Node const* portNode(unsigned) const;
 	// TODO: rethink Port/Node semantics
@@ -195,6 +198,7 @@ protected: // maybe not here. but need to rebase MultiViewComponent to ScktProto
 	int hflip() const{return _hflip;}
 	int angle() const{return _angle;}
 	void setAngle(int a){_angle = a;}
+
 private:
 	std::string _type;
 	int _vflip; // vscale??
@@ -203,7 +207,8 @@ private:
 	unsigned _param_display;
 	bool _label_display;
 	COMMON_COMPONENT* _common;
-}; // symbol
+	unsigned _net_nodes;
+}; // Symbol
 /*--------------------------------------------------------------------------*/
 /*--------------------------------------------------------------------------*/
 #endif

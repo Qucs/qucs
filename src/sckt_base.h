@@ -18,6 +18,11 @@
 class SubcktBase : public Symbol {
 public:
 	explicit SubcktBase() {} // HACK
+	~SubcktBase(){
+		for(auto pp : _ports){
+			delete pp;
+		}
+	}
 protected:
 	SubcktBase(SubcktBase const& p) : Symbol(p) {}
 private:
@@ -26,11 +31,23 @@ private:
 	virtual pos_t portPosition(unsigned i) const;
 public:
 	virtual unsigned numPorts() const { incomplete(); return 0; }
-	virtual bool makes_own_scope()const  {return false;}
+
+public: // Element
+	SchematicModel const* scope() const {
+		return Element::scope();
+	}
+
+private: // Symbol
+	Port& port(unsigned i) override;
+
 public:
+	virtual bool makes_own_scope()const  {return false;}
 	SchematicModel const* subckt() const{ return _subckt; }
 	SchematicModel* subckt(){ return _subckt; }
 	void new_subckt();
+
+private:
+	std::vector<Port*> _ports;
 };
 /*--------------------------------------------------------------------------*/
 /*--------------------------------------------------------------------------*/

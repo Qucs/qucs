@@ -149,10 +149,12 @@ SchematicScene const* MouseAction::scene() const
 	return doc().scene();
 }
 /*--------------------------------------------------------------------------*/
+// isPlace?
 bool MouseAction::isNode(pos_t const& p) const
 {
-	// return scene()->isNode(fX, fY);?
-	return doc().isNode(p);
+	assert(scene());
+	return scene()->isNode(p);
+	return false; // doc().isNode(p);
 }
 /*--------------------------------------------------------------------------*/
 bool MouseAction::isConductor(pos_t const&p) const

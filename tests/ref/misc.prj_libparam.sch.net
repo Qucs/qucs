@@ -13,6 +13,6 @@ C:C1 _net4 _net2 C="C" V="0"
 .Def:End
 ## declarations end
 
-Vdc:V1 _net2 gnd U="1 V"
+Vdc:V1 _net4 gnd U="1 V"
 R:R1 _net0 gnd R="50 Ohm" Temp="26.85" Tc1="0.0" Tc2="0.0" Tnom="26.85"
-Sub:IB1 _net2 _net0 fc="1E3" Q="1" Type="Ideal_Notch2"
+Sub:IB1 fc="1E3" Q="1" Type="Ideal_Notch2"

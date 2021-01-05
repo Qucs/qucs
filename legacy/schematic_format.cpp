@@ -18,11 +18,12 @@
 #include "schematic_model.h"
 #include "misc.h" //?!!
 
-#include "painting.h"
 #include "diagram.h" // BUG?
+#include "painting.h"
+#include "place.h"
+#include "sckt_base.h"
 #include "task_element.h" // BUG?
 #include "u_parameter.h" // BUG?
-#include "sckt_base.h"
 
 namespace{
 
@@ -240,18 +241,19 @@ void LegacySchematicFormat::do_it(istream_t& cs, SchematicModel* m)
 			paintings.push_back(pc);
 		}else if(pc->label()=="main"){
 			if(auto cc=dynamic_cast<SubcktBase*>(pc)){
-				assert(cc->scope());
+				assert(pc->scope());
 				stream << "<Components>\n";
-				for(auto pc : *cc->scope()){
-					if(dynamic_cast<Conductor const*>(pc)){
-						wires.push_back(pc);
-					}else if(dynamic_cast<Diagram const*>(pc)){
-						diagrams.push_back(pc);
-					}else if(dynamic_cast<Painting const*>(pc)){
-						paintings.push_back(pc);
+				for(auto ii : *pc->scope()){
+					if(dynamic_cast<Place const*>(ii)){
+					}else if(dynamic_cast<Conductor const*>(ii)){
+						wires.push_back(ii);
+					}else if(dynamic_cast<Diagram const*>(ii)){
+						diagrams.push_back(ii);
+					}else if(dynamic_cast<Painting const*>(ii)){
+						paintings.push_back(ii);
 					}else{
 						stream << "  ";
-						L->printItem(stream, pc);
+						L->printItem(stream, ii);
 					}
 				}
 				stream << "</Components>\n";

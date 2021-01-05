@@ -10,7 +10,6 @@
  *   (at your option) any later version.                                   *
  *                                                                         *
  ***************************************************************************/
-// place.
 #ifndef QUCS_PLACE_H
 #define QUCS_PLACE_H
 /*--------------------------------------------------------------------------*/
@@ -18,60 +17,48 @@
 #include "globals.h"
 #include "exception.h"
 #include "geometry.h"
+#include "place.h" // for now.
 /*--------------------------------------------------------------------------*/
 namespace{
 /*--------------------------------------------------------------------------*/
-class Place : public Symbol{
-private:
-	explicit Place(Place const& p)
-		: Symbol(p){
-	}
-public: // construct
-	explicit Place() : Symbol() { }
-	//explicit Place(pos_t p) : Symbol(),  _port(0, 0){
-	//	setCenter(p);
-	//}
-	virtual ~Place() {}
-
-private: // Element
-	virtual Element* clone()const {return new Place(*this); }
-	void paint(ViewPainter*) const override {incomplete();}
-
-private: // Symbol
-	virtual unsigned numPorts() const {return 1;}
-
-public: // Node stuff
-	//virtual Node* connectNode(unsigned idx, NodeMap&){incomplete(); return nullptr;}
-	//virtual Node* disconnectNode(unsigned idx, NodeMap&){incomplete(); return nullptr;}
-
-public: // Port access
-	virtual pos_t portPosition(unsigned i) const{
-		assert(i==0);
-		return pos_t(0, 0);
-	}
-	virtual pos_t nodePosition(unsigned) const{
-		return pos_t(center());
-	}
-
-	virtual Node const* portValue(unsigned) const{
-		incomplete(); return nullptr;
-	}
-	Node const* portNode(unsigned) const{
-		incomplete(); return nullptr;
-	}
-
-private: // internal port access
-	virtual Port& port(unsigned i){
-		assert(i==0);
-		return _port;
-	}
-
-private:
-	Port _port;
-}d0; // Place
+Place d0;
 Dispatcher<Command>::INSTALL p(&symbol_dispatcher, "place", &d0);
 /*--------------------------------------------------------------------------*/
 } // namespace
+/*--------------------------------------------------------------------------*/
+void Place::paint(ViewPainter* p) const
+{
+#ifdef DO_TRACE
+	if(node_degree()==1){
+		p->setPen(QPen(Qt::black, 1));
+	}else if(node_degree()==2){
+		p->setPen(QPen(Qt::green, 1));
+	}else{
+		p->setPen(QPen(Qt::red, 2));
+	}
+	p->drawEllipse(-1, -1, 1, 1);
+#endif
+}
+/*--------------------------------------------------------------------------*/
+rect_t Place::bounding_rect() const
+{
+  return rect_t(pos_t(-1,-1), pos_t(1,1));
+}
+/*--------------------------------------------------------------------------*/
+unsigned Place::node_degree() const
+{
+	assert(_port.value());
+	assert(_port.value()->numPorts());
+	return _port.value()->numPorts()-1;
+}
+/*--------------------------------------------------------------------------*/
+bool Place::showLabel() const
+{
+#ifdef DO_TRACE
+  	return true;
+#endif
+  	return false;
+}
 /*--------------------------------------------------------------------------*/
 /*--------------------------------------------------------------------------*/
 #endif

@@ -52,6 +52,7 @@ class SchematicModel;
 class Symbol;
 class QDialog;
 
+typedef unsigned index_t;
 
 // valid values for Element.Type
 // The 4 least significant bits of each value are reserved for special

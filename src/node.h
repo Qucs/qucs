@@ -24,6 +24,8 @@ class NodeMap;
 class NetList;
 class AdjNodeRange;
 /*--------------------------------------------------------------------------*/
+typedef unsigned index_t;
+/*--------------------------------------------------------------------------*/
 // CHECK: hierarchy
 // // maybe: Place : Conductor?
 class Node : public Object, public Conductor {
@@ -33,7 +35,7 @@ private:
 
 private: // managed by NodeMap
   friend class NodeMap;
-  explicit Node(pos_t);
+  explicit Node(std::string const& name, index_t n);
   ~Node();
 
 public:
@@ -51,9 +53,9 @@ public:
   // BUG
 //  void setName(const QString&, const QString&, int x_=0, int y_=0);
 
-  pos_t const& position() const{
-	  return _position;
-  }
+//  pos_t const& position() const{
+//	  return _position;
+//  }
   bool isNet(pos_t const&) const override;
 
 private:
@@ -62,7 +64,8 @@ private:
 public: // protected coordinate abuse
 
 private:
-  const pos_t _position;
+  const index_t _index;
+//  const pos_t _position;
   unsigned _ports; // number of ports connecting to this node
 };
 /* ---------------------------------------------------------- */

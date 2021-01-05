@@ -49,7 +49,7 @@ SchematicDoc::SchematicDoc(QucsApp* App_/*BUG?*/, const QString& Name_, QWidget*
 	  _main = dynamic_cast<SubcktBase*>(e);
 	  assert(_main);
 	  assert(_main->makes_own_scope()); // for now.
-	  _model = _main->scope();
+	  _model = e->scope();
 	  assert(_model);
   }
   // ...........................................................
@@ -233,7 +233,7 @@ bool SchematicDoc::load()
 	  _main = dynamic_cast<SubcktBase*>(e);
 	  assert(_main);
 	  assert(_main->makes_own_scope()); // for now.
-	  _model = _main->scope();
+	  _model = e->scope();
 	  assert(_model);
   }
 
@@ -841,7 +841,33 @@ void SchematicDoc::addElement(Element* x)
 {
 	assert(!x->mutable_owner());
 	x->setOwner(_main);
-	_model->pushBack(x);
+	_model->push_back(x);
+
+	if(auto c=dynamic_cast<Symbol*>(x)){
+		if(c->is_device()){
+			trace1("connect?", c->label());
+#if 1
+//			_model->connect(c); // BUG. wrong place.
+#else
+			// something like this. now in scene::attachToModel.
+			for(unsigned i=0; i<c->max_nodes(); ++i){
+				assert(portValue()==""); // ?
+				try{
+					// probably here.
+					// p = c->nodePosition(i);
+					// q = _model->places()->at(p);
+					// n = q->_n(0);
+					c->setPort(i, n.label());
+				}except{
+					// pass.
+				}
+			}
+#endif	
+		}else{
+			assert(!dynamic_cast<Conductor*>(x));
+		}
+	}else{
+	}
 }
 /*--------------------------------------------------------------------------*/
 // questionable.
@@ -884,11 +910,11 @@ QList<ElementGraphics*> SchematicDoc::selectedItems() const
 	return scene()->selectedItems();
 }
 /*--------------------------------------------------------------------------*/
-Node const* SchematicDoc::nodeAt(pos_t const& p) const
-{
-	assert(_model);
-	return _model->nodeAt(p);
-}
+// Node const* SchematicDoc::nodeAt(pos_t const& p) const
+// {
+// 	assert(_model);
+// 	return _model->nodeAt(p);
+// }
 /*--------------------------------------------------------------------------*/
 #include <QMessageBox> // really??
 void SchematicDoc::slotSimulate()

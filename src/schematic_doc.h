@@ -174,11 +174,11 @@ public:
 
   // find_symbol
 public:
-  Node const* nodeAt(pos_t const&) const;
-  bool isNode(pos_t const& p) const{
-	  assert(_model);
-	  return _model->isNode(p);
-  }
+//  Node const* nodeAt(pos_t const&) const;
+//  bool isNode(pos_t const& p) const{
+//	  assert(_model);
+//	  return _model->isNode(p);
+//  }
   Component* find_component(QString const&);
 
   // really?
@@ -195,10 +195,10 @@ public:
 //	  assert(_model);
 //	  return _model->components();
 //  }
-  NodeMap const& nodes() const{
-	  assert(_model);
-	  return _model->nodes();
-  }
+//  NodeMap const& nodes() const{
+//	  assert(_model);
+//	  return _model->nodes();
+//  }
 //  WireList const& wires() const{
 //	  assert(_model);
 //	  return _model->wires();

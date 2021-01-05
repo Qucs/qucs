@@ -80,7 +80,7 @@ void WireUC::pushWire(pos_t p0, pos_t delta)
 	w->setParameter("deltay", std::to_string(my));
 
 	trace2("expand", _p0, _p1);
-	subckt()->pushBack(w);
+	subckt()->push_back(w);
 }
 /*--------------------------------------------------------------------------*/
 pos_t WireUC::pmid() const

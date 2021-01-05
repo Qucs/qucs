@@ -1,10 +1,18 @@
-module main(_net10, _net5, _net3, _net0, _net6);
-sTr #(.T1(0.5), .T2(0.5)) Tr1(_net0, _net10, _net6, _net3, _net5, _net5);
-Port #(.Num(3), .Type(analog)) P3(_net3);
-Port #(.Num(4), .Type(analog)) P4(_net0);
-Port #(.Num(5), .Type(analog)) P5(_net6);
-Port #(.Num(2), .Type(analog)) P2(_net5);
-Port #(.Num(1), .Type(analog)) P1(_net10);
+module main(P1, P2, P3, P4, P5);
+sTr #(.T1(0.5), .T2(0.5)) Tr1(P4, P1, P5, P3, P2, P2);
+Port #(.Num(3), .Type(analog)) P3(P3, P3);
+Port #(.Num(4), .Type(analog)) P4(P4, P4);
+Port #(.Num(5), .Type(analog)) P5(P5, P5);
+Port #(.Num(2), .Type(analog)) P2(P2, P2);
+Port #(.Num(1), .Type(analog)) P1(P1, P1);
 endmodule // main
 
-Sub #(.File()) Sub((null));
+Sub #(.File()) Sub(unknown_net);
+//else?
+module :SymbolSection:();
+endmodule // :SymbolSection:
+
+//else?
+module :Paintings:();
+endmodule // :Paintings:
+

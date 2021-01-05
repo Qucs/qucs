@@ -100,13 +100,6 @@ void VerilogNetlister::createNetlist(ostream_t& stream,
 {
 	assert(m);
 
-	/// include directives. qucsator does not seem to do that.
-	// for(auto si : directives){
-	// 	lang->printItem(si, stream);
-	// }
-	//
-	// legacy: qucsator expects all definitions at the top
-
 	QString s, Time;
 	for(auto pc : *m){
 		auto sym = dynamic_cast<Symbol const*>(pc);
@@ -120,6 +113,8 @@ void VerilogNetlister::createNetlist(ostream_t& stream,
 		}else if(sym->is_device()){ // hack, here?
 			lang->printItem(stream, pc);
 		}else{
+			stream << "//else?\n";
+			lang->printItem(stream, pc);
 		}
 	}
 }

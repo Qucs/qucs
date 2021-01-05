@@ -149,11 +149,11 @@ public: // container
 	size_t size() const{ return _cl.size(); }
 
 public: // compat? test? debug?
-	size_t nodeCount() const{ return nodes().size(); }
+	size_t nodeCount() const{ assert(nodes()); return nodes()->size(); }
 	unsigned numberOfNets() const{ return Nets.size(); }
 
 public:
-	size_t numNodes() const{ return nodes().size(); }
+	size_t numNodes() const{ assert(nodes()); return nodes()->size(); }
 	unsigned numNets() const{ return Nets.size(); }
 
 public: // why?
@@ -167,15 +167,17 @@ private:
 	CmdEltList& commands();
 
 public:
-	NodeMap& nodes();
-	bool isNode(pos_t p) const{
-		return nodes().find_at(p);
-	}
-	Node const* nodeAt(pos_t p) const{
-		return nodes().find_at(p);
-	}
+	NodeMap* nodes() const;
+//	bool isNode(pos_t p) const{
+//		assert(nodes());
+//		return nodes()->find_at(p);
+//	}
+//	Node const* nodeAt(pos_t p) const{
+//		assert(nodes());
+//		return nodes()->find_at(p);
+//	}
 //	WireList const& wires() const;
-	NodeMap const& nodes() const;
+//	NodeMap const* nodes() const;
 //	ElementList const& components() const;
 
 	Symbol const* findProto(QString const& what) const;
@@ -207,7 +209,7 @@ public:
 private:
 	ElementList _cl;
 	NetList Nets;
-	NodeMap Nodes;
+	NodeMap* _nm;
 //	SchematicSymbol* _symbol;
 	QStringList PortTypes; // obsolete.
 	std::vector<Node*> _ports; // -> symbol?

@@ -22,6 +22,7 @@
 #include "d_dot.h"
 #include "components/component.h"
 #include "sckt_base.h"
+#include "place.h"
 
 #ifdef DO_TRACE
 #include <typeinfo>
@@ -614,6 +615,43 @@ static TaskElement* loadtaskElement(const QString& _s, TaskElement* c)
 	}
 }
 /*--------------------------------------------------------------------------*/
+Place const* place_at(pos_t p, Symbol* m)
+{
+	std::string ps = "net_" + std::to_string(getX(p)) + "_" + std::to_string(getY(p));
+	auto scope = m->scope();
+	assert(scope);
+	auto i = scope->find_(ps);
+	Place const* ret = nullptr;
+
+	assert(m->mutable_owner());
+
+	if(i == scope->end()){
+	}else if(auto p=dynamic_cast<Place const*>(*i)){
+		ret = p;
+	}else{
+		incomplete();// find_again...
+		assert(false); //for now.
+	}
+
+	if(!ret){
+		Symbol* c = symbol_dispatcher.clone("place");
+		auto s = prechecked_cast<Place*>(c);
+		assert(s);
+		s->setPosition(p);
+		s->setTypeName("place");
+		s->setLabel(ps);
+		s->setOwner(m->mutable_owner());
+		s->set_port_by_index(0, ps);
+		scope->push_back(s);
+
+		ret = s;
+	}else{
+	}
+
+	return ret;
+
+}
+/*--------------------------------------------------------------------------*/
 // decluttered parseComponentObsoleteCallback
 Symbol* LegacySchematicLanguage::parseSymbol(istream_t& cs, Symbol* sym) const
 {
@@ -756,7 +794,15 @@ Symbol* LegacySchematicLanguage::parseSymbol(istream_t& cs, Symbol* sym) const
 	auto Scope = sym->scope();
 	assert(Scope);
 	for(unsigned i=0; i<sym->numPorts(); ++i){
+#if 1
+		pos_t p = sym->nodePosition(i);
+		auto q = place_at(p, sym);
+		
+		std::string const& l = q->label();
+		sym->set_port_by_index(i, l);
+#else
 		sym->connectNode(i, Scope->nodes());
+#endif
 	}
 
 	return sym;
@@ -1350,6 +1396,7 @@ class DiagramCommand : public Command{
 		auto lang = language_dispatcher["legacy_lib"];
 		assert(lang);
 
+		Element* e = sym;
 
 		while(true){
 			cs.read_line();
@@ -1358,7 +1405,7 @@ class DiagramCommand : public Command{
 			}else{
 				trace2("Diag parse", sym->label(), cs.fullstring());
 				cs.skipbl();
-				lang->new__instance(cs, sym, sym->scope());
+				lang->new__instance(cs, sym, e->scope());
 			}
 		}
 		trace1("Diag parse", sym->subckt()->size());
@@ -1368,6 +1415,59 @@ Dispatcher<Command>::INSTALL p3_(&command_dispatcher, "Diagrams", &d4);
 Dispatcher<Command>::INSTALL p4_(&command_dispatcher, "Diagrams>", &d4); // BUG
 Dispatcher<Command>::INSTALL p5_(&command_dispatcher, "<Diagrams>", &d4); // ...
 /*--------------------------------------------------------------------------*/
+class WireCommand : public Command{
+	void do_it(istream_t& cs, SchematicModel* s) override{
+		auto fullstring = cs.fullString();
+		trace1("WireCommand", fullstring);
+
+		SubcktBase* sym = nullptr;
+		auto p_ = s->find_("main");
+		if(p_!=s->end()){
+			sym = dynamic_cast<SubcktBase*>(*p_);
+		}else{
+			// "headless" mode
+			// create main, but no project.
+			//  (defer expansion of components that need a project)
+//			Symbol* sc = mainSection.clone();
+			Symbol* sc = symbol_dispatcher.clone("subckt_proto");
+
+			sym = dynamic_cast<SubcktBase*>(sc);
+			assert(sym);
+			sym->setLabel("main");
+			//sym->setOwner(..);
+			s->pushBack(sym);
+			assert(s);
+		}
+
+		auto lang = language_dispatcher["legacy_lib"];
+		assert(lang);
+
+		Element* e = sym;
+
+		while(true){
+			cs.read_line();
+			if(cs.umatch("</Wires>")){
+				break;
+			}else{
+				cs.skipbl();
+				trace2("compcmd", cs.fullstring(), e->scope()->size());
+				lang->new__instance(cs, sym, e->scope());
+			}
+		}
+
+		trace1("find DOT", sym->label());
+		for(auto i : *e->scope()){
+			if(auto d = dynamic_cast<DEV_DOT*>(i)){ untested();
+				trace1("DOT incomplete", d->s());
+				//			  sym->setParam(k, name); //?
+			}else{
+			}
+		}
+	}
+}dw0;
+Dispatcher<Command>::INSTALL pw0(&command_dispatcher, "Wires", &dw0);
+Dispatcher<Command>::INSTALL pw1(&command_dispatcher, "Wires>", &dw0); // BUG
+Dispatcher<Command>::INSTALL pw2(&command_dispatcher, "<Wires>", &dw0); // ...
 } // namespace
 /*--------------------------------------------------------------------------*/
 /*--------------------------------------------------------------------------*/

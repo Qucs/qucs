@@ -18,13 +18,14 @@
 #include "netlist.h"
 
 #include <QPainter>
-
-Node::Node(pos_t pos)
+/*--------------------------------------------------------------------------*/
+Node::Node(std::string const& label, index_t n)
   : Object(),
-   _position(pos),
+   //_position(pos),
+   _index(n),
    _ports(0)
 {
-  trace1("Node::Node", this);
+  setLabel(label);
   // State = 0;
   // DType = ""; //?
 }
@@ -36,11 +37,13 @@ Node::~Node()
 }
 /*--------------------------------------------------------------------------*/
 bool Node::isNet(pos_t const& p) const
-{ untested();
-  return p == _position;
+{
+  unreachable(); // obsolete
+  return false;
+  //return p == _position;
 }
-// -------------------------------------------------------------
 #if 0
+// -------------------------------------------------------------
 TODO: untangle Label <-> Node
 void Node::paint(ViewPainter *)
 { untested();

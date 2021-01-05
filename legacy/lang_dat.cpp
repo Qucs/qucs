@@ -51,12 +51,15 @@ void DatLang::printItem(ostream_t& s, Element const* c) const
 void DatLang::printCommonData(CommonData const* c, ostream_t& s) const
 {
 	if(auto dd=dynamic_cast<SimOutputData const*>(c)){ untested();
-		s << "<var dep [..] " << dd->label() << "\n";
+		// TODO: if "indep" output it, and keep track.
+		// else
+		s << "<var dep " << dd->label() << "axes?>\n";
 		for(auto p : *dd){ untested();
-			auto x = p.first;
+//			auto x = p.first;
 			auto i = p.second;
-			s << x << " " << i.real() << " " << i.imag() << "\n";
+			s << "  " << i.real() << "+i*" << i.imag() << "\n";
 		}
+		s << "</var>\n";
 	}else if(auto sod=dynamic_cast<SimOutputDir const*>(c)){
 		s << "data from " << sod->label() << "\n";
 		for(auto i : *sod){ untested();

@@ -19,11 +19,12 @@
 #include "io_trace.h"
 #include "u_parameter.h"
 #include "painting.h" // BUG
+#include "place.h" // BUG?
 /*--------------------------------------------------------------------------*/
 /*--------------------------------------------------------------------------*/
 // getting here in CLI mode
 SchematicModel::SchematicModel()
-  : Nodes(Nets),
+  : _nm(new NodeMap(Nets)),
     _parent(nullptr),
     _params(nullptr)
 {
@@ -34,7 +35,7 @@ SchematicModel::~SchematicModel()
 	for(auto i : *this){
 	  	if(auto c=dynamic_cast<Symbol*>(i)){
 			if(c->is_device()){
-				disconnect(c);
+				// disconnect(c);
 			}else{
 				assert(!dynamic_cast<Conductor*>(i));
 			}
@@ -51,7 +52,7 @@ void SchematicModel::clear()
 		pc = nullptr;
 	}
 	_cl.clear();
-	nodes().clear();
+	nodes()->clear();
 	// paintings().clear();
 	_map.clear();
 	//SymbolPaints.clear(); ??
@@ -80,6 +81,7 @@ void SchematicModel::erase(Element* what)
 Element* SchematicModel::detach(Element* what)
 {
 	assert(what);
+	assert(what->mutable_owner());
 	std::string l = what->label();
 
 	if(_map.find(l) == _map.end()){
@@ -99,7 +101,7 @@ Element* SchematicModel::detach(Element* what)
 	if(auto d=dynamic_cast<Diagram*>(what)){ untested();
 		removeRef(d);
 	}else if(auto c=dynamic_cast<Symbol*>(what)){
-		disconnect(c); // BUG: wrong place.
+		disconnect(c);
 		removeRef(c);
 	}else{ untested();
 		unreachable();
@@ -121,11 +123,10 @@ void SchematicModel::push_back(Element* what)
 void SchematicModel::pushBack(Element* what)
 {
 	incomplete();
-	_map.insert(std::make_pair(what->label(), what));
+	push_back(what);
 
 	trace2("SchematicModel::push_back", what->label(), this);
 	if(dynamic_cast<TaskElement*>(what)){ untested();
-		_cl.push_back(what);
 	}else if(auto c=dynamic_cast<Symbol*>(what)){
 		if(c->is_device()){
 			trace1("connect?", what->label());
@@ -133,10 +134,7 @@ void SchematicModel::pushBack(Element* what)
 		}else{
 			assert(!dynamic_cast<Conductor*>(what));
 		}
-
-		_cl.push_back(c);
 	}else if(dynamic_cast<Element*>(what)){
-		_cl.push_back(what);
 	}else{ untested();
 //		unreachable?
 		incomplete();
@@ -148,9 +146,9 @@ void SchematicModel::pushBack(Element* what)
 // 	return FileInfo;
 // }
 /*--------------------------------------------------------------------------*/
-NodeMap& SchematicModel::nodes()
+NodeMap* SchematicModel::nodes() const
 {
-	return Nodes;
+	return _nm;
 }
 /*--------------------------------------------------------------------------*/
 //PaintingList const& SchematicModel::symbolPaints() const
@@ -176,10 +174,10 @@ NodeMap& SchematicModel::nodes()
 //	return _cl;
 //}
 
-NodeMap const& SchematicModel::nodes() const
-{
-	return Nodes;
-}
+// NodeMap const& SchematicModel::nodes() const
+// {
+// 	return Nodes;
+// }
 
 // PaintingList const& SchematicModel::paintings() const
 // {
@@ -204,28 +202,80 @@ static void createNodeSet(QStringList& Collect, int& countInit,
 /*--------------------------------------------------------------------------*/
 void SchematicModel::disconnect(Symbol* c)
 {
+	incomplete();
 	// drop port connections
 	for(unsigned i=0; i<c->numPorts(); ++i) {
 		trace3("sm:ds", i, c->label(), c->portPosition(i));
-		Node* nn = c->disconnectNode(i, nodes());
+		c->set_port_by_index(0, "");
+#if 0
+		Node* nn = c->disconnectNode(i, *nodes());
 
 		if(!nn){ untested();
 			unreachable(); // under construction
 		}else if(!nn->hasPorts()){
-			nodes().erase(nn); // possibly garbage collect only.
+			nodes()->erase(nn); // possibly garbage collect only.
 		}else{
 		}
+#endif
 	}
 }
 /*--------------------------------------------------------------------------*/
-#if 1 // obsolete
-void SchematicModel::connect(Symbol* c)
+static Place const* place_at(pos_t p, Symbol* m)
 {
+	std::string ps = ":" + std::to_string(getX(p)) + ":" + std::to_string(getY(p));
+	auto scope = m->scope();
+	assert(scope);
+	auto i = scope->find_(ps);
+	Place const* ret = nullptr;
+
+	assert(m->mutable_owner());
+
+	if(i == scope->end()){
+	}else if(auto p=dynamic_cast<Place const*>(*i)){
+		ret = p;
+	}else{
+		incomplete();// find_again...
+		assert(false); //for now.
+	}
+
+	if(!ret){
+		Symbol* c = symbol_dispatcher.clone("place");
+		auto s = prechecked_cast<Place*>(c);
+		assert(s);
+		s->setPosition(p);
+		s->setTypeName("place");
+		s->setLabel(ps);
+		s->setOwner(m->mutable_owner());
+		s->set_port_by_index(0, ps);
+		scope->push_back(s);
+
+		ret = s;
+	}else{
+	}
+
+	return ret;
+
+}
+#if 1 // obsolete. free?
+void SchematicModel::connect(Symbol* sym)
+{
+
+#if 0
 	incomplete();
 	assert(c->is_device());
 	for(unsigned i=0; i<c->numPorts(); ++i){
-		c->connectNode(i, nodes()); // use scope.
+		c->connectNode(i, *nodes()); // use scope.
 //		assert(dynamic_cast<Symbol const*>(c)->port(i).connected());
+	}
+#endif
+
+	for(unsigned i=0; i<sym->numPorts(); ++i){
+		incomplete(); // free?
+		pos_t p = sym->nodePosition(i);
+		auto q = place_at(p, sym);
+		
+		std::string const& l = q->label();
+		sym->set_port_by_index(i, l);
 	}
 }
 #endif

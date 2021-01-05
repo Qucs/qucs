@@ -2,18 +2,18 @@
 ## declarations 0
 ## declarations end
 
-Pac:P1 _net11 gnd Num="1" Z="100 Ohm" P="0 dBm" f="1 GHz" Temp="26.85"
-L:L1 _net42 _net41 L="1.2uH" I=""
-L:L2 _net41 _net5 L="470nH" I=""
-C:C1 _net6 _net42 C="270pF" V=""
-C:C2 _net8 _net41 C="270pF" V=""
-L:L3 _net22 _net42 L="470nH" I=""
+Pac:P1 _net12 gnd Num="1" Z="100 Ohm" P="0 dBm" f="1 GHz" Temp="26.85"
+L:L1 _net41 _net7 L="1.2uH" I=""
+L:L2 _net7 _net5 L="470nH" I=""
+C:C1 _net6 _net41 C="270pF" V=""
+C:C2 _net8 _net7 C="270pF" V=""
+L:L3 _net22 _net41 L="470nH" I=""
 Eqn:Eqn1 dBS21="dB(S[2,1])" dBS11="dB(S[1,1])" Export="yes"
-Pac:P2 _net0 gnd Num="2" Z="100 Ohm" P="0 dBm" f="1 GHz" Temp="26.85"
-L:L4 _net13 _net6 L="470nH" I=""
+Pac:P2 _net10 gnd Num="2" Z="100 Ohm" P="0 dBm" f="1 GHz" Temp="26.85"
+L:L4 _net15 _net6 L="470nH" I=""
 L:L5 _net6 _net8 L="1.2uH" I=""
 L:L6 _net8 _net21 L="470nH" I=""
-sTr:Tr5 _net22 _net11 gnd _net13 _net27 _net27 T1="0.5" T2="0.5"
-sTr:Tr6 _net5 _net0 gnd _net21 _net23 _net23 T1="0.5" T2="0.5"
+sTr:Tr5 _net22 _net12 gnd _net15 _net27 _net27 T1="0.5" T2="0.5"
+sTr:Tr6 _net5 _net10 gnd _net21 _net29 _net29 T1="0.5" T2="0.5"
 Vdc:V1 _net27 gnd U="1V"
-VProbe:Pr1 _net23 gnd
+VProbe:Pr1 _net29 gnd

@@ -93,7 +93,9 @@ void WireDialog::attach(ElementGraphics* gfx)
 		"$yposition" + Comp->paramValue("$yposition") + "\n"
 		"$vflip" + Comp->paramValue("$vflip") + "\n"
 		"$hflip" + Comp->paramValue("$hflip") + "\n"
-		"$angle" + Comp->paramValue("$angle") + "\n";
+		"$angle" + Comp->paramValue("$angle") + "\n"
+		"ports" + Comp->port_value(0) + " " + Comp->port_value(1) + "\n"
+		"net TODO" + "\n";
 
   _all->addWidget(new QLabel(QString::fromStdString(some_text)));
 

@@ -32,7 +32,7 @@ void union0()
 	assert(g0->nodePosition(0) == pos_t(-30, 0));
 	assert(g0->nodePosition(1) == pos_t(30, 0));
 
-	connect_push(M, w0);
+	connect_push(root, w0);
 	assert(numWires(M) == 1);
 	assert(M.nodeCount() == 2);
 
@@ -90,7 +90,7 @@ void union1()
 	w1->setParameter(std::string("deltax"), "100");
 	w1->setParameter(std::string("$xposition"), "-50");
 
-	connect_push(M, w0);
+	connect_push(root, w0);
 	assert(numWires(M) == 1);
 	assert(M.nodeCount() == 2);
 
@@ -123,7 +123,7 @@ void union2()
 	auto w0 = prechecked_cast<Symbol*>(wp->clone());
 	w0->setParameter(std::string("deltax"), "100");
 	w0->setParameter(std::string("$xposition"), "-50");
-	connect_push(M, w0);
+	connect_push(root, w0);
 	assert(numWires(M) == 1);
 	assert(M.nodeCount() == 2);
 

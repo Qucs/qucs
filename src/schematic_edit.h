@@ -16,6 +16,7 @@
 
 #include <QUndoCommand> // really?
 #include "element_graphics.h"
+#include "place.h"
 
 // edit a schematic add/delete/alter
 class SchematicEdit : public QUndoCommand {
@@ -74,7 +75,7 @@ private:
 	template<class T>
 	void expandSwap(T& rem);
 	template<class T>
-	void postRmPort(pos_t, T&);
+	void postRmPort(Place const*, T&);
 	template<class T>
 	bool addmerge(ElementGraphics*, T& rem);
 	template<class T>

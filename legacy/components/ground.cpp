@@ -29,9 +29,13 @@ public:
 
 private:
   void init();
+
+private: // Symbol
+	void set_port_by_index(index_t i, std::string const& value);
+
 private:
-	Node* connectNode(unsigned i, NodeMap&l);
-	Node* disconnectNode(unsigned i, NodeMap&l);
+	void connectNode(unsigned i);
+	void disconnectNode(unsigned i);
 
 protected:
   QString netlist() const;
@@ -104,22 +108,44 @@ Ground::~Ground()
 {
 }
 
-Node* Ground::connectNode(unsigned i, NodeMap&l)
+void Ground::connectNode(unsigned i)
 {
-  Node* n = Component::connectNode(i, l);
+	assert(scope());
+	assert(scope()->nodes());
+//	auto& nm = *scope()->nodes();
+//  Node* n = Component::connectNode(i, l);
+	Node* n = port(i).value();
   assert(n);
   trace1("ground set netlabel1", n->netLabel());
   n->setNetLabel("gnd");
   trace1("ground set netlabel2", n->netLabel());
-  return n;
 }
 
-Node* Ground::disconnectNode(unsigned i, NodeMap&l)
+void Ground::set_port_by_index(index_t i, std::string const& value)
 { untested();
-  Node* n = Component::disconnectNode(i, l);
-  assert(n);
+	assert(i<2);
+	if(port_value(i)=="(null)"){ untested();
+	}else if(port_value(i)==""){ untested();
+	}else if(value==""){ untested();
+		disconnectNode(i);
+	}else{
+	}
+
+	Symbol::set_port_by_index(i, value);
+
+	if(value==""){
+		assert(port_value(i)=="(null)");
+	}else{
+		trace2("wire::spbi", i, value);
+		connectNode(i);
+	}
+}
+
+void Ground::disconnectNode(unsigned i)
+{ untested();
+//  Node* n = Component::disconnectNode(i, l);
+//  assert(n);
   incomplete();
-  return n;
 }
 
 // -------------------------------------------------------

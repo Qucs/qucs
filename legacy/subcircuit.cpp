@@ -66,7 +66,7 @@ protected:
 
 private: // Symbol
 // unsigned numPorts() const override;
-//  bool portExists(unsigned) const override;
+  bool portExists(unsigned) const override;
   std::string const& portName(unsigned) const override;
 
   void setParameter(std::string const& name, std::string const& value);
@@ -547,12 +547,12 @@ void Subcircuit::proto(SchematicModel const* scope)
 
 		build_sckt(s);
 		assert(!s->subckt());
-		assert(s->scope());
+		assert(ss->scope());
 
 		QString t = Props.first()->Value;
 		trace2("Subcircuit::proto", t, owner());
 
-		for(auto i : *s->scope()){
+		for(auto i : *ss->scope()){
 			trace1("proto", i->label());
 		}
 		
@@ -612,10 +612,11 @@ void Subcircuit::build_sckt(SubcktBase* proto) const
 	pstream.read_line();
 	while(!pstream.atEnd()){itested();
 		trace1("parse schematic subckt", pstream.fullstring());
-		assert(proto->scope());
+		Element* e = proto;
+		assert(e->scope());
 		// assert(proto->scope() == proto->subckt()); nope
 		// L->parse_top_item(s, _root->subckt());
-		L->new__instance(pstream, proto, proto->scope());
+		L->new__instance(pstream, proto, e->scope());
 		pstream.read_line();
 	}
 #endif
@@ -623,16 +624,17 @@ void Subcircuit::build_sckt(SubcktBase* proto) const
 	proto->setTypeName(s.toStdString());
 }
 
-//bool Subcircuit::portExists(unsigned i) const
-//{ untested();
-//	assert(scope());
-//	trace1("Subcircuit::portExists", i);
-//	incomplete();
-//	return false;
-//}
+bool Subcircuit::portExists(index_t i) const
+{ untested();
+	return i<numPorts();
+	assert(scope());
+	trace1("Subcircuit::portExists", i);
+	incomplete();
+	return false;
+}
 
 static std::string invalid_="invalid";
-std::string const& Subcircuit::portName(unsigned) const
+std::string const& Subcircuit::portName(index_t) const
 { untested();
 	incomplete();
 	// throw?

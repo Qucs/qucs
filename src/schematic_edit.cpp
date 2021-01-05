@@ -14,17 +14,28 @@
 #include "platform.h"
 #include "symbol.h"
 #include "node.h"
+#include "place.h"
 #include "schematic_scene.h"
+#include <set>
 /*--------------------------------------------------------------------------*/
 /*--------------------------------------------------------------------------*/
-static void collectPorts(ElementGraphics const* e, std::vector<pos_t>& p)
+static void collectPorts(ElementGraphics const* e, std::set<Place const*>& p)
 {
+	auto scn = e->scene();
+	assert(scn);
+
 	if(auto s=dynamic_cast<Symbol const*>(element(e))){
 
 		for(unsigned i=0; i<s->numPorts(); ++i){
 			// if s->isConnected(i) ...
 			auto pp = s->nodePosition(i);
-			p.push_back(pp);
+			auto place = scn->placeAt(pp);
+			if(!place){
+			}else if(s->port_value(i) == place->port_value(0)){
+				p.insert(place);
+			}else{
+				// not here.
+			}
 		}
 	}else{
 	}
@@ -98,24 +109,24 @@ void SchematicEdit::do_it_first()
 
 	std::vector<ElementGraphics*> done_ins;
 	std::vector<ElementGraphics*> done_del;
-	std::vector<pos_t> pl;
+	std::set<Place const*> pl;
 
 	// remove ports and join adjacent wires. keep track.
 	trace1("============ edit delete...", _del.size());
 	while(_del.size()){itested();
 		auto r = _del.front();
-		trace1("remove", r);
+		trace1("remove", element(r)->label());
 		_del.pop_front();
 		collectPorts(r, pl);
-		r->hide();
+		r->hide(); // detaches from model
 		// queued delete.
-		done_del.push_back(r);
+		done_del.push_back(r); // TODO: different queue? just keep _del?
 	}
 	// sort pl?
 	// unique pl?
 
 	for(auto portremove : pl){itested();
-		// trace1("postremove", portremove);
+		trace1("postremove", portremove->label());
 		postRmPort(portremove, done_del);
 	}
 
@@ -131,13 +142,14 @@ void SchematicEdit::do_it_first()
 		assert(scn);
 		scn->possiblyRename(e);
 		if(addmerge(gfx, done_del)){
-			trace0("merged");
+			trace0("collision during merge attempt");
 		}else{
 			trace2("done insert, show", e->label(), e->mutable_owner());
 			// scn->possiblyRename(e); here?
-			// scn->attachToModel(e); part of gfx->show()
-			gfx->show();
-			gfx->setSelected(true); // really?
+			scn->attachToModel(e); // was part of gfx->show()
+			QGraphicsItem* gg=gfx;
+			gg->show();
+			gfx->setSelected(true); // BUG: keep track somewhere else.
 			done_ins.push_back(gfx);
 		}
 	}
@@ -148,7 +160,9 @@ void SchematicEdit::do_it_first()
 Node const* SchematicEdit::nodeAt(pos_t const& p) const
 {
 	assert(scene());
-	return scene()->nodeAt(p);
+	unreachable(); // obsolete();
+	return nullptr;
+//	return scene()->nodeAt(p);
 }
 /*--------------------------------------------------------------------------*/
 QList<ElementGraphics*> SchematicEdit::items(
@@ -231,24 +245,44 @@ bool SchematicEdit::addmerge(ElementGraphics* new_elt, T& del_done)
 	return collision;
 }
 /*--------------------------------------------------------------------------*/
-// remove stuff adjacent to degree-2 nodes. add back later.
+// remove stuff adjacent nodes that have become degree-2 after removal.
+// (add back stuff later).
 template<class T>
-void SchematicEdit::postRmPort(pos_t remove_at, T& del_done)
+void SchematicEdit::postRmPort(Place const* remove_at, T& del_done)
 {itested();
-	auto it = items(makeQPointF(remove_at));
-	Node const* node = nodeAt(remove_at);
+	auto it = items(makeQPointF(remove_at->position()));
 
-	if(!node){
-		// trace1("no node at", remove_at);
-	}else if(node->degree() == 2){
-		// trace1("postrm, degree 2", remove_at);
+	assert(remove_at->port_value(0)!="");
+
+	ElementGraphics* placegfx=nullptr;
+	unsigned deg = remove_at->node_degree();
+	if( deg == 2 || deg == 0 ) {
+		trace1("postrm, degree 2", remove_at);
+
 		for(auto gfx : it){
-			gfx->hide();
-			// additional delete
-			del_done.push_back(gfx);
-			_ins.push_front(gfx); // hmm.
-			trace1("queued", gfx);
+			if(dynamic_cast<Place*>(element(gfx))){
+				assert(element(gfx) == remove_at);
+				incomplete(); // disconnect?
+				placegfx = gfx;
+				// delete gfx; below.
+			}else{
+				trace1("hideadj", element(gfx)->label());
+				gfx->hide();
+				// additional delete
+				del_done.push_back(gfx);
+				_ins.push_front(gfx); // hmm.
+				trace1("queued", gfx);
+			}
 		}
+	}else{
+		trace1("postrm", remove_at->node_degree());
+	}
+
+	if(placegfx){
+		trace1("hidegfx", remove_at->label());
+		placegfx->hide();
+		placegfx->scene()->removeItem(placegfx);
+//		delete placegfx;
 	}else{
 	}
 }
