@@ -64,6 +64,7 @@ check_PROGRAMS = \
 	geometry0 \
 	model0 \
 	model1 \
+	place0 \
 	wire0 \
 	wire1
 
@@ -89,6 +90,10 @@ model0_LDADD += $(X11_LIBS) $(QT_LIBS) # yikes
 model1_CPPFLAGS = ${AM_CPPFLAGS} $(QT_CFLAGS) # yikes.
 model1_LDADD = ${LIBQUCS}
 model1_LDADD += $(X11_LIBS) $(QT_LIBS) # yikes
+
+place0_CPPFLAGS = ${AM_CPPFLAGS} $(QT_CFLAGS) # yikes.
+place0_LDADD = ${LIBQUCS}
+place0_LDADD += $(X11_LIBS) $(QT_LIBS) # yikes
 
 # wire0_CPPFLAGS = ${AM_CPPFLAGS} -DUNTANGLE_QT
 wire0_CPPFLAGS = ${AM_CPPFLAGS} $(QT_CFLAGS) # yikes.

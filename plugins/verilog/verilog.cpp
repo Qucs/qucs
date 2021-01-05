@@ -20,6 +20,7 @@
 #include "net.h"
 #include "sckt_base.h"
 #include "d_dot.h"
+#include "place.h"
 
 unsigned gndhackn=0;
 
@@ -68,10 +69,24 @@ class VS : public Verilog {
 	void printSubckt(SubcktBase const* x, ostream_t& o) const override;
 private:
 	void print_ports_short(ostream_t& o, const Symbol* x) const;
+	void print_args(ostream_t&, Symbol const* sym) const;
 } V_;
 static Dispatcher<DocumentLanguage>::INSTALL p1(&language_dispatcher, "verilog_schematic", &V_);
 /*--------------------------------------------------------------------------*/
-static void printArgs(Symbol const* sym, ostream_t& s)
+void VS::print_args(ostream_t& s, Symbol const* sym) const
+{
+	std::string comma="";
+	s << "#(";
+
+	for(unsigned i=0; i<sym->paramCount(); ++i) {
+		auto name = sym->paramName(i);
+		s << comma << "." << sym->paramName(i) << "(" << sym->paramValue(i) << ")";
+		comma = ", ";
+	}
+	s << ") ";
+}
+/*--------------------------------------------------------------------------*/
+static void print_args(Symbol const* sym, ostream_t& s)
 {
 	std::string comma="";
 	s << "#(";
@@ -95,9 +110,11 @@ void VS::print_ports_short(ostream_t& o, const Symbol* x) const
 	for(unsigned i=0; i<x->numPorts(); ++i){
 		trace3("...", x->label(), i, x->numPorts());
 		auto p = x->nodePosition(i);
+		auto v = x->port_value(i);
 		auto x = p.first;
 		auto y = p.second;
-		o << comma << "net_" << x << "_" << y;
+		/// o << comma << "net_" << x << "_" << y;
+		o << comma << v; // "net_" << x << "_" << y;
 		comma = ", ";
 	}
 
@@ -126,23 +143,20 @@ void Verilog::print_ports_short(ostream_t& o, const Symbol* x) const
   assert(x);
 
   std::string sep = "";
-#if 1
   auto s = x->scope();
   assert(s);
   auto n = s->nodes();
   assert(n);
   for (int ii = 0;  x->portExists(ii);  ++ii) {
 	  std::string p = x->port_value(ii);
-    o << sep << p << "!!" << n->netName(p);
+
+	 if(1){
+		 o << sep << n->netName(p);
+	 }else{
+		 o << sep << p;
+	 }
     sep = ", ";
   }
-#else
-  for(unsigned i=0; i < x->numPorts(); ++i){ untested();
-	  assert(x->portExists(i));
-	  o << sep << netLabel(x->portValue(i));
-	  sep = ", ";
-  }
-#endif
 
 #if 0
   for (int ii = 0;  x->current_port_exists(ii);  ++ii) {untested();
@@ -163,10 +177,13 @@ void Verilog::printSubckt(SubcktBase const* x, ostream_t& o) const
 		o << "// skip sckt " << x->label() << "\n";
 	}else
 #endif
+	Element const* e = x;
+
+	// BUG?
 	if(x->subckt()){
 		scope = x->subckt();
-	}else if(x->scope()){
-		scope = x->scope();
+	}else if(e->scope()){
+		scope = e->scope();
 	}else{ untested();
 	}
 
@@ -180,6 +197,7 @@ void Verilog::printSubckt(SubcktBase const* x, ostream_t& o) const
 		for (auto ci : *scope) { itested();
 //			o << "  "; later.
 			if(dynamic_cast<Conductor const*>(ci)){ untested();
+			}else if(dynamic_cast<Place const*>(ci)){ untested();
 			}else{ itested();
 				printItem(o, ci);
 			}
@@ -228,7 +246,7 @@ void Verilog::printSymbol(Symbol const* sym, ostream_t& s) const
       std::replace( type.begin(), type.end(), ':', '$');
 		s << QString::fromStdString(type) << " ";
 
-		printArgs(sym, s);
+		print_args(sym, s);
 #if 0
 		QString comma="";
 		s << "#(";
@@ -245,14 +263,7 @@ void Verilog::printSymbol(Symbol const* sym, ostream_t& s) const
 			}
 #endif
 		s << label << "(";
-
 		print_ports_short(s, sym);
-		//// QString comma="";
-		//// for(unsigned i=0; i < sym->numPorts(); ++i){ untested();
-		//// 	s << comma << netLabel(sym->portValue(i));
-		//// 	comma = ", ";
-		//// }
-
 		s << ");\n";
 	}
 }
@@ -266,7 +277,7 @@ void VS::printSymbol(Symbol const* sym, ostream_t& s) const
       std::replace( type.begin(), type.end(), ':', '$');
 		s << QString::fromStdString(type) << " ";
 
-		printArgs(sym, s);
+		print_args(s, sym);
 		if(label == "*"){
 			// bug/feature/wtf?
 			label="anonymous_gnd_hack_" + std::to_string(gndhackn++);
@@ -286,22 +297,26 @@ void VS::printSubckt(SubcktBase const* x, ostream_t& o) const
 //		return;
 //	}else
 	o << "// VS::printSubckt " << x->label() << "\n";
+	Element const* e = x;
+
+	// makes_own_scope?
 	if(x->subckt()){ untested();
 		scope = x->subckt();
-	}else if(x->scope()){
-		scope = x->scope();
+	}else if(e->scope()){
+		scope = e->scope();
 	}else{ untested();
 	}
 
 	auto it = scope->find_("main");
 	if(it == scope->end()){
-	}else if(auto xx = dynamic_cast<SubcktBase const*>(*it)){
+	}else if(dynamic_cast<SubcktBase const*>(*it)){
 		o << "// just main scope\n";
-		scope = xx->scope();
+		scope = (*it)->scope();
 		// good idea?
 	}else{ untested();
 	}
 
+	std::vector<Element*> places;
 	if(scope){
 		assert(x);
 
@@ -310,10 +325,14 @@ void VS::printSubckt(SubcktBase const* x, ostream_t& o) const
 		o << ");\n";
 
 		for (auto ci : *scope){
-			if(dynamic_cast<Conductor const*>(ci)){
+			if(dynamic_cast<Place const*>(ci)){
+				places.push_back(ci);
+			}else if(dynamic_cast<Conductor const*>(ci)){
 				// TODO: defer
 				printItem(o, ci);
 			}else if(ci->label()[0] == ':'){ untested();
+				// ?
+				printItem(o, ci);
 			}else{
 				// o << "  ";
 				printItem(o, ci);
@@ -321,6 +340,12 @@ void VS::printSubckt(SubcktBase const* x, ostream_t& o) const
 		}
 
 //		if(auto m=dynamic_cast<SchematicModel const*>(x)){ untested();
+#if 1
+		for(auto ci : places){
+				printItem(o, ci);
+		}
+
+#else
       if(scope){
 			for(auto const& n : scope->nodes()){
 				int a, b;
@@ -331,6 +356,7 @@ void VS::printSubckt(SubcktBase const* x, ostream_t& o) const
 					<< "(net_" << a << "_" << b << ");\n";
 			}
 		}
+#endif
 //		}
 
 		o << "endmodule // " << x->short_label() << "\n\n";
@@ -450,7 +476,7 @@ void VerilogSchematicFormat::printSymbol(Symbol const* sym, ostream_t& s) const
 		}else{ untested();
 		}
 
-		printArgs(sym, s);
+		print_args(sym, s);
 		s << label << "(";
 
 		QString comma = "";

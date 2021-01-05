@@ -1,14 +1,25 @@
-// (C) 2020 Felix Salfelder
-// GPLv3+
-/* -------------------------------------------------------------- */
+/***************************************************************************
+    copyright            : (C) 2020 Felix Salfelder
+ ***************************************************************************/
+
+/***************************************************************************
+ *                                                                         *
+ *   This program is free software; you can redistribute it and/or modify  *
+ *   it under the terms of the GNU General Public License as published by  *
+ *   the Free Software Foundation; either version 3 of the License, or     *
+ *   (at your option) any later version.                                   *
+ *                                                                         *
+ ***************************************************************************/
+/*--------------------------------------------------------------------------*/
 #include "nodemap.h"
 #include "node.h"
 #include "io_trace.h"
 #include "netlist.h"
 #include "net.h"
 #include "dynamic_cc.h"
-/* -------------------------------------------------------------- */
-/* -------------------------------------------------------------- */
+#include "io.h"
+/*--------------------------------------------------------------------------*/
+/*--------------------------------------------------------------------------*/
 template<>
 struct graph_traits<NodeMap>{
 	typedef Conductor* vertex_descriptor;
@@ -47,31 +58,30 @@ struct graph_traits<NodeMap>{
 		return t->visited(level);
 	}
 };
-/* -------------------------------------------------------------- */
+/*--------------------------------------------------------------------------*/
 NodeMap::NodeMap(NetList& n)
   : _nets(n),
     _cc(new_ccs())
 {
 }
-/* -------------------------------------------------------------- */
+/*--------------------------------------------------------------------------*/
 NodeMap::~NodeMap()
 {
 	delete _cc;
 }
-/* -------------------------------------------------------------- */
+/*--------------------------------------------------------------------------*/
 ConnectedComponents<NodeMap>* NodeMap::new_ccs()
 {
 	return new ConnectedComponents<NodeMap>(*this);
 }
-/* -------------------------------------------------------------- */
+/*--------------------------------------------------------------------------*/
 // Qucs schematic node.
 // at most one node in one place,
 // may have strange side effects.
-#include "io.h"
 int NodeMap::erase(Node* tt)
 {
 	assert(tt);
-	trace2("NodeMap::erase", tt->degree(), tt->position());
+	trace2("NodeMap::erase", tt->degree(), tt->label());
 	assert(tt->hasNet());
 	Conductor* c = tt;
 	_cc->deregisterVertex(c);
@@ -80,118 +90,115 @@ int NodeMap::erase(Node* tt)
 	_nodes.erase(tt);
 	return 1;
 }
-/* -------------------------------------------------------------- */
-Node* NodeMap::find_at(pos_t const& key)
+/*--------------------------------------------------------------------------*/
+Node* NodeMap::new_node(std::string const& s)
 {
-	auto f = _nodes.find(key);
-	if(f != _nodes.end()){
-		return *f;
-	}else{
+	//  if (OPT::case_insensitive) {
+	//    notstd::to_lower(&s);
+	//  }else{
+	//  }
+
+	if(s==""){
+		// HACK
 		return nullptr;
-	}
-}
-/* -------------------------------------------------------------- */
-Node const* NodeMap::find_at(pos_t const& key) const
-{
-	NodeMap* cc = const_cast<NodeMap*>(this);
-	return cc->find_at(key);
-}
-/* -------------------------------------------------------------- */
-// TODO: is this really needed with a proper map??
-Node& NodeMap::new_at(pos_t const& key)
-{
-	assert(!find_at(key)); // (!)
-
-	auto status = _nodes.emplace(new Node(key));
-	assert(status.second);
-	Conductor* c = *status.first;
-	assert(!c->hasNet());
-
-	_cc->registerVertex(c);
-   assert(c->hasNet());
-
-	return **status.first;
-}
-/* -------------------------------------------------------------- */
-Node& NodeMap::at(pos_t const& p)
-{
-	Node* pn = find_at(p);
-
-	// create new node, if no existing one lies at this position
-	if(!pn) {
-		pn = &new_at(p);
 	}else{
 	}
+	Node* node;
 
-	assert(pn);
-	assert(pn->hasNet());
-	return *pn;
+	auto f = _nodes.find(s);
+	if(f != _nodes.end()){
+		node = *f;
+	}else{
+		node = nullptr;
+	}
+
+	// increments how_many() when lookup fails (new s)  
+	if (!node) {
+		node = new Node(s, size());
+		//                 ^^^^ is really the map number of the new node
+		assert(!node->hasNet());
+		// hmm
+		_nodes.insert(node);
+		Conductor* c = node;
+		_cc->registerVertex(c);
+		assert(node->hasNet());
+	}
+	assert(node->hasNet());
+	assert(node);
+	return node;
 }
-/* -------------------------------------------------------------- */
+/*--------------------------------------------------------------------------*/
 std::string NodeMap::netName(std::string const& l) const
 {
 	auto i = _nodes.find(l);
 	if(i == _nodes.end()){ untested();
 		unreachable();
 		return "unknown_net";
+	}else{
+	}
+
+	if(!(*i)->hasNet()){
+		unreachable();
+		return "no_net";
 	}else if((*i)->net()->hasLabel()){ untested();
+		trace3("netName", (*i), (*i)->net(), (*i)->netLabel());
 		return (*i)->netLabel();
 	}else{ untested();
-		return "_net_"+(*i)->net()->pos();
+		return "_net" + std::to_string((*i)->net()->pos());
 	}
 }
-/* -------------------------------------------------------------- */
+/*--------------------------------------------------------------------------*/
 Net* NodeMap::newNet()
 { untested();
 	return _nets.newNet();
 }
-/* -------------------------------------------------------------- */
+/*--------------------------------------------------------------------------*/
 void NodeMap::delNet(Net* n)
 {
 	assert(n);
 	return _nets.delNet(n);
 }
-/* -------------------------------------------------------------- */
+/*--------------------------------------------------------------------------*/
 void NodeMap::removeEdge(Conductor* a, Conductor* b)
 {
   a->rmAdj(b);
   b->rmAdj(a);
   _cc->postRemoveEdge(a, b);
 }
-/* -------------------------------------------------------------- */
+/*--------------------------------------------------------------------------*/
 void NodeMap::addEdge(Conductor* a, Conductor* b)
 {
   _cc->addEdge(a, b);
   a->addAdj(b);
   b->addAdj(a);
 }
-/* -------------------------------------------------------------- */
+/*--------------------------------------------------------------------------*/
 void NodeMap::registerVertex(Conductor*c)
 {
   _cc->registerVertex(c);
 }
-/* -------------------------------------------------------------- */
+/*--------------------------------------------------------------------------*/
 void NodeMap::deregisterVertex(Conductor*c)
 {
   _cc->deregisterVertex(c);
 }
-/* -------------------------------------------------------------- */
+/*--------------------------------------------------------------------------*/
 size_t graph_traits<NodeMap>::cc_size(Net* n, NodeMap const&)
 {
 	assert(n);
 	return n->size();
 }
-/* -------------------------------------------------------------- */
+/*--------------------------------------------------------------------------*/
 Net* graph_traits<NodeMap>::new_cc(Conductor*n, NodeMap& s)
 {
 	assert(n);
 	assert(!n->hasNet());
 	return n->newNet(s.netList());
 }
-/* -------------------------------------------------------------- */
+/*--------------------------------------------------------------------------*/
 void graph_traits<NodeMap>::del_cc(Net* n, NodeMap& s)
 {
 	s.delNet(n);
 }
-/* -------------------------------------------------------------- */
-/* -------------------------------------------------------------- */
+/*--------------------------------------------------------------------------*/
+/*--------------------------------------------------------------------------*/

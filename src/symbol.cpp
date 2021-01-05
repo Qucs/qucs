@@ -96,7 +96,8 @@ Symbol::Symbol()
 		_hflip(1),
 		_angle(0),
 		_param_display(0),
-		_common(nullptr)
+		_common(nullptr),
+		_net_nodes(0)
 {
 }
 /*--------------------------------------------------------------------------*/
@@ -107,7 +108,8 @@ Symbol::Symbol(Symbol const& s)
 		_hflip(s._hflip),
 		_angle(s._angle),
 		_param_display(s._param_display),
-		_common(nullptr)
+		_common(nullptr),
+		_net_nodes(s._net_nodes)
 {
   attach_common(s._common);
   setTypeName(s.typeName());
@@ -150,28 +152,32 @@ void Symbol::set_port_by_name(std::string const& name, std::string const& value)
 {
 	incomplete();
 }
-void Symbol::set_port_by_index(index_t i, std::string const& value)
+/*--------------------------------------------------------------------------*/
+void Symbol::set_port_by_index(index_t num, std::string const& ext_name)
 {
-	incomplete();
+	trace5("spbi", num, max_nodes(), _net_nodes, ext_name, label());
+
+	if (num < max_nodes()) {
+		port(num).new_node(ext_name, this);
+		if (num+1 > _net_nodes) {
+			// make the list bigger
+			_net_nodes = num+1;
+		}else{
+			// it's already big enough, probably assigning out of order
+		}
+		assert(ext_name=="" || port(num)->hasNet());
+	}else{
+		throw Exception_Too_Many(num+1, max_nodes(), 0/*offset*/);
+	}
 }
-#if 0
-  if (num < max_nodes()) {
-    _n[num].new_node(ext_name, this);
-    if (num+1 > _net_nodes) {
-      // make the list bigger
-      _net_nodes = num+1;
-    }else{
-      // it's already big enough, probably assigning out of order
-    }
-  }else{
-    throw Exception_Too_Many(num+1, max_nodes(), 0/*offset*/);
-  }
-}
-#endif
 /*--------------------------------------------------------------------------*/
 // connect to a node. (connectPort?)
 Node* Symbol::connectNode(unsigned i, NodeMap&nm)
 {
+	incomplete(); // obsolete;
+	return nullptr;
+
+#if 0
 	trace2("connectNode", label(), i);
 	pos_t p = nodePosition(i);
 	Node* n = &nm.at(p);
@@ -183,18 +189,32 @@ Node* Symbol::connectNode(unsigned i, NodeMap&nm)
 	mp.connect(n /*,this*/);
 
 	return n;
+#endif
 }
 /*--------------------------------------------------------------------------*/
-// disconnect a node. (disconnectPort?)
-// (does not use the map, but could)
+void set_port_by_name(std::string const& name, std::string const& value)
+{
+	incomplete();
+}
+/*--------------------------------------------------------------------------*/
+void set_port_by_index(index_t i, std::string const& value)
+{
+	incomplete();
+}
+/*--------------------------------------------------------------------------*/
 Node* Symbol::disconnectNode(unsigned i, NodeMap&)
 {
+#if 1
+	//set_port_by_index(i, "");
+#else
 	trace2("disconnectNode", label(), i);
 	Port& mp = port(i);
 	Node* n = mp.value();
 	mp.disconnect(n /*, this*/);
 
 	return n;
+#endif
+	return nullptr;
 }
 /*--------------------------------------------------------------------------*/
 Node const* Symbol::portNode(unsigned i) const
@@ -1111,4 +1131,10 @@ ElementList const* Symbol::symbolPaintings() const
 	return nullptr;
 }
 /*--------------------------------------------------------------------------*/
+std::string Symbol::port_value(unsigned i) const
+{ untested();
+	trace2("port_value", label(), i);
+	Port const& p = port(i);
+	return p.nodeLabel();
+}
 /*--------------------------------------------------------------------------*/

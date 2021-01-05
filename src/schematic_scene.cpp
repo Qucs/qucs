@@ -14,6 +14,8 @@
 #include "schematic_scene.h"
 #include "schematic_doc.h"
 #include "qt_compat.h"
+#include "globals.h"
+#include "place.h"
 
 #include <QFileInfo>
 #include <QGraphicsSceneDragDropEvent>
@@ -361,10 +363,10 @@ bool SchematicScene::event(QEvent* e)
 	return r;
 }
 /*--------------------------------------------------------------------------*/
-Node const* SchematicScene::nodeAt(pos_t p) const
-{
-	return doc()->nodeAt(p);
-}
+// Node const* SchematicScene::nodeAt(pos_t p) const
+// {
+// 	return doc()->nodeAt(p);
+// }
 /*--------------------------------------------------------------------------*/
 bool SchematicScene::isConductor(pos_t p) const
 {itested();
@@ -506,15 +508,101 @@ Element* SchematicScene::detachFromModel(Element* e)
 #endif
 }
 /*--------------------------------------------------------------------------*/
+// new_place?
+Place const* SchematicScene::new_place(pos_t const& p)
+{
+	auto list = items(getX(p), getY(p));
+	Place const* ret=nullptr;
+	for(auto g : list){
+		auto c = dynamic_cast<Place const*>(element(g));
+		if(!c){ untested();
+		}else if(p == c->position()){ untested();
+			assert(getX(g->pos()) == getX(c->position()));
+			assert(getY(g->pos()) == getY(c->position()));
+			Element const* e = element(g);
+			ret = prechecked_cast<Place const*>(e);
+			break;
+		}
+	}
+	
+	if(ret){
+	}else{
+		auto cl = symbol_dispatcher.clone("place");
+		assert(cl);
+		std::string place_name = "_net_" + std::to_string(getX(p))
+		                           + "_" + std::to_string(getY(p));
+
+		{ // something_like_new_instance
+			assert(!cl->mutable_owner());
+			doc()->addElement(cl);
+//			cl->setOwner(root);
+//			scope()->push_back(cl);
+			assert(cl->mutable_owner());
+			cl->setPosition(p);
+			cl->setLabel(place_name);
+			cl->set_port_by_index(0, place_name);
+//
+			addElement(cl);
+		}
+
+		QGraphicsItem* gg = new ElementGraphics(cl);
+		addItem(gg);
+		gg->show(); // really?
+		ret = prechecked_cast<Place*>(cl);
+		assert(ret);
+	}
+	return ret;
+}
+/*--------------------------------------------------------------------------*/
+Place const* SchematicScene::is_place(pos_t const& p) const
+{
+	auto list = items(getX(p), getY(p));
+	Place const* ret=nullptr;
+	for(auto g : list){
+		auto c = dynamic_cast<Place const*>(element(g));
+		if(!c){ untested();
+		}else if(p == c->position()){ untested();
+			assert(getX(g->pos()) == getX(c->position()));
+			assert(getY(g->pos()) == getY(c->position()));
+			Element const* e = element(g);
+			ret = prechecked_cast<Place const*>(e);
+			break;
+		}
+	}
+
+	return ret;
+}
+/*--------------------------------------------------------------------------*/
+void SchematicScene::connectPorts(Symbol* c)
+{
+	assert(c->mutable_owner());
+
+	for(unsigned i=0; c->portExists(i); ++i){
+//		assert(portValue()==""); // ?
+		try{
+			pos_t p = c->nodePosition(i);
+			Symbol const* q = new_place(p);
+			std::string n = q->port_value(0);
+			trace3("connectPorts", c->label(), i, n);
+
+			assert(c->mutable_owner());
+			c->set_port_by_index(i, n);
+		}catch(Exception const&){ untested();
+			// pass.
+		}
+	}
+}
+/*--------------------------------------------------------------------------*/
 void SchematicScene::attachToModel(Element* e)
 {
-	//assert(!e->owner()); ?
 	Element const* ce = e;
+	assert(!ce->owner());
 	
-	if(ce->owner()){ untested();
-		incomplete();
-	}else{ untested();
-		doc()->addElement(e);
+	doc()->addElement(e);
+	assert(ce->owner());
+	if(auto s=dynamic_cast<Symbol*>(e)){
+		connectPorts(s);
+	}else{
 	}
 }
 /*--------------------------------------------------------------------------*/
@@ -530,6 +618,11 @@ void SchematicScene::possiblyRename(Element* e) const
 		e->setLabel(label + std::to_string(i));
 		// gfx->update();
 	}
+}
+/*--------------------------------------------------------------------------*/
+bool SchematicScene::isNode(pos_t x) const
+{
+	return is_place(x); // check if connected?
 }
 /*--------------------------------------------------------------------------*/
 /*--------------------------------------------------------------------------*/

@@ -2,5 +2,5 @@
 ## declarations 0
 ## declarations end
 
-Port:P2 _net1 Num="2" Type="analog"
-Port:P1 _net1 Num="1" Type="analog"
+Port:P2 P1 P1 Num="2" Type="analog"
+Port:P1 P1 P1 Num="1" Type="analog"

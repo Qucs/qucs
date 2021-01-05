@@ -32,6 +32,11 @@ public:
 	SymbolSection() : SubcktBase() { untested();
 		new_subckt();
 	}
+	~SymbolSection(){
+		for(auto pp : _ports){
+			delete pp;
+		}
+	}
 private:
 	SymbolSection(SymbolSection const& p) : SubcktBase(p) { untested();
 //		incomplete(); so what.
@@ -41,6 +46,11 @@ private:
 	void setParameter(int, std::string const&){ untested();
 	}
 
+private: // Sckt
+	bool makes_own_scope()const override { return true;}
+	SchematicModel* scope() override{
+		return subckt();
+	}
 private: // Symbol
 	bool is_device() const override { return false; }
 	unsigned numPorts() const override{ untested();
@@ -51,11 +61,26 @@ private: // Symbol
 			return 0;
 		}
 	}
-	Port& port(unsigned) override {incomplete(); return static_hack_port;}
+	Port& port(unsigned i) override {
+		assert(scope());
+		if(_ports.size() > i){ untested();
+		}else{ untested();
+			_ports.resize(i+1);
+		}
+
+		if(_ports[i]){
+		}else{
+			_ports[i] = new Port();
+		}
+
+		return *_ports[i];
+	}
 public:
 	Symbol* clone() const override{ untested();
 		return new SymbolSection(*this);
 	}
+private: // FIXME. base
+	std::vector<Port*> _ports;
 }symbolSection;
 /*--------------------------------------------------------------------------*/
 static void parse_dot(istream_t& cs, SubcktBase* s)
@@ -70,6 +95,7 @@ static void parse_dot(istream_t& cs, SubcktBase* s)
 		Get(cs, "l{abel}", &l);
 
 		trace3("got port", x, y, s->numPorts());
+		trace3("pd", n, l, cs.fullstring());
 		s->set_port_by_index(n, l);
 	}else{
 	}

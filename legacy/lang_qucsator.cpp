@@ -19,7 +19,7 @@
 #include "globals.h"
 #include "settings.h" //??
 #include "schematic_doc.h"
-//#include "qucsator.h"
+#include "place.h"
 //#include "dat.h"
 #include "painting.h"
 #include "components/component.h" // yikes
@@ -77,23 +77,16 @@ private:
 }d0;
 static Dispatcher<Symbol>::INSTALL p0(&symbol_dispatcher, "qucsatorScktHack", &d0);
 /* -------------------------------------------------------------------------------- */
-static std::string netLabel(Node const* nn)
+static std::string netLabel(Symbol const* s, index_t k)
 {
-	if(!nn){ untested();
-		return "(null)";
-	}else{
+	auto m = s->scope();
+	assert(m);
+	auto n = m->nodes();
+	assert(n);
 
-	}
-	Net const* n = nn->net();
-
-	if(!n){ untested();
-		unreachable();
-		return "(null)";
-	}else if(n->hasLabel()){
-		return n->label();
-	}else{
-		return "_net" + std::to_string(n->pos());
-	}
+	std::string p = s->port_value(k);
+//	return s->owner()->netName(p); //?
+	return n->netName(p);
 }
 /* -------------------------------------------------------------------------------- */
 static int notalnum(char c)
@@ -158,7 +151,7 @@ static void printSymbol_(Symbol const* c, ostream_t& s)
 		Symbol const* sym=c;
 		trace3("print", c->label(), sym->numPorts(), sym->label());
 		for(unsigned i=0; i<sym->numPorts(); ++i){
-			std::string N = netLabel(sym->portValue(i));
+			std::string N = netLabel(sym, i);
 			s << " " << N;
 		}
 
@@ -213,6 +206,8 @@ void QucsatorLang::printSymbol(Symbol const* d, ostream_t& s) const
 	}else if(auto c=dynamic_cast<Component const*>(d)){
 		// HACK
 		printComponent(c, s);
+	}else if(dynamic_cast<Place const*>(d)){
+		// no geometry in netlist.
 	}else if(dynamic_cast<Conductor const*>(d)){
 		// possibly a wire.
 	}else if(d){
@@ -233,6 +228,7 @@ static void printDefHack(Symbol const* p, ostream_t& s)
 // partly from Schematic::createSubnetlistplain
 void QucsatorLang::printSubckt(SubcktBase const* p, ostream_t& s) const
 {
+	Element const* e = p;
 	s << "# sckt " + p->label() + "\n";
 	if(p->label()[0] == ':'){ untested();
 		return;
@@ -241,12 +237,14 @@ void QucsatorLang::printSubckt(SubcktBase const* p, ostream_t& s) const
 //	assert(!p->is_device());
 	Symbol const* sym = p;
 	SchematicModel const* sckt;
+
+	// BUG?
 	if(p->makes_own_scope()){
 		s << "# sckt own " + p->label() + "\n";
-		sckt = p->scope();
+		sckt = e->scope();
 	}else{
 		s << "# sckt sckt " + p->label() + "\n";
-		sckt = p->subckt();
+		sckt = sym->subckt();
 	}
 	assert(sckt);
 	std::string label = p->label();
@@ -274,7 +272,7 @@ void QucsatorLang::printSubckt(SubcktBase const* p, ostream_t& s) const
 
 	{ // print_ports();
 		for(unsigned i=0; sym->portExists(i); ++i){
-			std::string N = netLabel(sym->portValue(i));
+			std::string N = netLabel(sym, i);
 			s << " " << N;
 		}
 		s << "\n";
@@ -366,11 +364,11 @@ void QucsatorLang::printComponent(Component const* c, ostream_t& s) const
 		QListIterator<ComponentPort*> iport(c->ports());
 		iport.next(); // BUG
 		unsigned k=0;
-		std::string Node1 = netLabel(c->portValue(k));
+		std::string Node1 = netLabel(c, k);
 		while (iport.hasNext()){ untested();
 			++k;
 			s << "R:" << c->label() << "." << QString::number(z++) << " "
-				<< Node1 << " " << netLabel( c->portValue(k) ) << " R=\"0\"\n";
+				<< Node1 << " " << netLabel(c, k) << " R=\"0\"\n";
 		}
 	}else{
 		std::string type = c->typeName();
@@ -381,7 +379,7 @@ void QucsatorLang::printComponent(Component const* c, ostream_t& s) const
 		Symbol const* sym=c;
 		trace3("print", c->label(), sym->numPorts(), sym->label());
 		for(unsigned i=0; i<sym->numPorts(); ++i){
-			std::string N = netLabel(sym->portValue(i));
+			std::string N = netLabel(sym, i);
 
 			s << " " << N;
 		}

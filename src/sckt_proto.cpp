@@ -25,18 +25,46 @@ namespace {
 class CommonSubckt : public COMMON_COMPONENT{
 public:
 	explicit CommonSubckt(int x)
-		: COMMON_COMPONENT(x), _subckt() {}
+		: COMMON_COMPONENT(x),
+        _subckt() {}
+	~CommonSubckt(){
+		for(auto& p : _ports){
+			delete p;
+			p = nullptr;
+		}
+	}
 public:
 	SchematicModel* subckt(){ return &_subckt; }
 	COMMON_COMPONENT* clone()const override{
+		assert(false); // not yet.
+		incomplete();
 		return new CommonSubckt(0);
 	}
    bool operator==(const COMMON_COMPONENT&)const override{
 		return false;
 	}
 	pos_t const& portPosition(index_t i) const;
+	Port& port(index_t i){ untested();
+		trace2("cport", i, _ports.size());
+		if(i<_ports.size()){ untested();
+		}else{ untested();
+			_ports.resize(i+1);
+		}
+		if(_ports[i]){ untested();
+			trace2("oldport", i, _ports.size());
+		}else{ untested();
+			trace2("newport", i, _ports.size());
+			_ports[i] = new Port();
+		}
+		return *_ports[i];
+	}
+	unsigned numPorts() const {
+		untested();
+		return _ports.size();
+	}
 private:
 	SchematicModel _subckt;
+	std::vector<Port*> _ports;
 };
 CommonSubckt comms(CC_STATIC);
 /*--------------------------------------------------------------------------*/
@@ -46,11 +74,14 @@ pos_t const& CommonSubckt::portPosition(index_t i) const
 	//  (maybe use precalc?)
 	auto p = _subckt.portValue(i); // BUG.
 	if(p){ untested();
-		return p->position();
+		incomplete();
+		// return p->position();
 	}else{ untested();
 		throw ExceptionCantFind("position", "subckt", std::to_string(i));
 	}
 	// a port is a place. return its position?
+	unreachable();
+	return pos_t(0, 0);
 }
 /*--------------------------------------------------------------------------*/
 /*--------------------------------------------------------------------------*/
@@ -64,13 +95,16 @@ public:
 	explicit SubcktProto(Element const* p=nullptr); // ?
 
 	virtual void build() { incomplete(); } // needed??
+	bool makes_own_scope()const override { return true;}
 	SchematicModel* scope() override;
+
+public: // repeat (why?!)
 	SchematicModel const* scope() const {
 		auto m = const_cast<SubcktProto*>(this);
 		return m->scope();
 	}
 private:
-	Port& port(unsigned) override{ incomplete(); throw "a";}
+	Port& port(unsigned) override;
 //	SchematicModel const* scope() const override { return &sm; }
 
 private: // Symbol
@@ -83,9 +117,8 @@ private: // Symbol
 	Element* clone_instance()const override{
 		return new SubcktProto(*this);
 	}
-	bool makes_own_scope()const override { return true;}
 //   bool portExists(unsigned) const override;
-	bool portExists(unsigned i) const override;
+//	bool portExists(unsigned i) const override;
 	unsigned numPorts() const override;
 	bool is_device() const override{return false;}
 
@@ -113,27 +146,57 @@ private:
 static Dispatcher<Symbol>::INSTALL p(&symbol_dispatcher, "subckt_proto", &d0);
 /*--------------------------------------------------------------------------*/
 /*--------------------------------------------------------------------------*/
-bool SubcktProto::portExists(unsigned i) const
-{
-	assert(subckt());
-	trace4("sckt_proto::portExists", i, subckt(), this, subckt()->numPorts());
-	return i<subckt()->numPorts(); //?
-}
+// bool SubcktProto::portExists(unsigned i) const
+// {
+// 	assert(subckt());
+// 	trace4("sckt_proto::portExists", i, subckt(), this, subckt()->numPorts());
+// 	return i<subckt()->numPorts(); //?
+// }
 /*--------------------------------------------------------------------------*/
 unsigned SubcktProto::numPorts() const
 {
-	assert(subckt());
-	if(makes_own_scope()){
-		trace1("sckt_proto::numPorts", scope()->numPorts());
-		return scope()->numPorts();
-	}else{
-		trace1("sckt_proto::numPorts", subckt()->numPorts());
-		return subckt()->numPorts();
-	}
+	// assert(subckt());
+	// if(makes_own_scope()){
+	// 	trace1("sckt_proto::numPorts", scope()->numPorts());
+	// 	return scope()->numPorts();
+	// }else{
+	// 	trace1("sckt_proto::numPorts", subckt()->numPorts());
+	// 	return subckt()->numPorts();
+	// }
+	COMMON_COMPONENT const* cc = common();
+	assert(cc);
+	auto cs = prechecked_cast<CommonSubckt const*>(cc);
+	assert(cs);
+	return cs->numPorts();
+}
+/*--------------------------------------------------------------------------*/
+Port& SubcktProto::port(index_t i)
+{ untested();
+	COMMON_COMPONENT* cc = mutable_common();
+	assert(cc);
+	auto cs = prechecked_cast<CommonSubckt*>(cc);
+	assert(cs);
+	return cs->port(i);
 }
 /*--------------------------------------------------------------------------*/
 pos_t SubcktProto::portPosition(unsigned i) const
 {
+	std::string n = portName(i);
+	SchematicModel const* s = scope();
+
+	if(s){
+//		return subckt()->portValue(i)->position();
+		auto i = s->find_(n);
+		if(i!=s->end()){
+			return (*i)->position();
+		}else{
+		}
+
+	}else{ untested();
+	}
+	unreachable();
+	return pos_t(0,0);
+#if 0
 	auto cs = prechecked_cast<CommonSubckt const*>(common());
 	if(cs){ untested();
 		return cs->portPosition(i);
@@ -145,6 +208,7 @@ pos_t SubcktProto::portPosition(unsigned i) const
 		unreachable();
 		return pos_t(0, 0);
 	}
+#endif
 }
 /*--------------------------------------------------------------------------*/
 Node const* SubcktProto::portValue(unsigned i) const
@@ -174,5 +238,6 @@ SchematicModel* SubcktProto::scope()
 	assert(cs->subckt());
 	return cs->subckt();
 }
-
+/*--------------------------------------------------------------------------*/
+/*--------------------------------------------------------------------------*/
 } // namespace

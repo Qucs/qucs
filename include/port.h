@@ -34,6 +34,7 @@ public: // This makes Port behave like a pointer (and that's what it is).
 
 public:
   std::string const& netLabel() const;
+  std::string const& nodeLabel() const;
 
 public: // perhaps not here
   Node* value() const{return _node;}

@@ -40,7 +40,14 @@ public:
 	explicit ExceptionCantFind(std::string const& dev, std::string const& key, std::string const& scope)
 	: Exception(dev + ": can't find: " + key + " in " + scope) {}
 };
-
+struct Exception_Too_Many :public Exception{
+  int _requested, _max, _offset;
+  Exception_Too_Many(int requested, int max, int offset)
+    :Exception("too many: requested=" + std::to_string(requested+offset)
+	       + " max=" + std::to_string(max+offset)),
+     _requested(requested), _max(max), _offset(offset) {
+  }
+};
 class ExceptionCantParse : public std::exception{
 };
 

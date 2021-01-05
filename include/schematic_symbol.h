@@ -1,5 +1,5 @@
 /***************************************************************************
-    copyright            : (C) 2019, 2020 Felix Salfelder
+    copyright            : (C) 2018, 2020 Felix Salfelder
  ***************************************************************************/
 
 /***************************************************************************
@@ -10,49 +10,32 @@
  *   (at your option) any later version.                                   *
  *                                                                         *
  ***************************************************************************/
-
+#ifndef QUCS_SCHEMATIC_SYMBOL_H
+#define QUCS_SCHEMATIC_SYMBOL_H
+/*--------------------------------------------------------------------------*/
 #include "sckt_base.h"
-#include "schematic_model.h"
 /*--------------------------------------------------------------------------*/
-void SubcktBase::new_subckt()
-{
-	assert(!_subckt);
-	_subckt = new SchematicModel();
-}
-/*--------------------------------------------------------------------------*/
-pos_t SubcktBase::portPosition(unsigned i) const
-{
-	std::string n = portName(i);
-	SchematicModel const* s = subckt(); // scope?
+// maybe later.
+class SchematicNetlist : public SubcktBase{
+protected:
+	SchematicSymbol(SchematicSymbol const& p);
+public:
 
-	if(s){
-//		return subckt()->portValue(i)->position();
-		auto i = s->find_(n);
-		if(i!=s->end()){
-			return (*i)->position();
-		}else{
-		}
+	explicit SchematicSymbol();
+	~SchematicSymbol();
 
-	}else{ untested();
+public
+	std::string const& netName(std::string const& nodeName) const {
+		incomplete();
+		auto m = s->scope();
+		assert(m);
+		auto n = m->nodes();
+		assert(n);
+
+		std::string p = s->port_value(k);
+		return n->netName(p);
 	}
-	unreachable();
-	return pos_t(0,0);
-}
-/*--------------------------------------------------------------------------*/
-Port& SubcktBase::port(index_t i)
-{ untested();
-	assert(scope());
-	if(_ports.size() > i){ untested();
-	}else{ untested();
-		_ports.resize(i+1);
-	}
-
-	if(_ports[i]){
-	}else{
-		_ports[i] = new Port();
-	}
-
-	return *_ports[i];
-}
+};
 /*--------------------------------------------------------------------------*/
 /*--------------------------------------------------------------------------*/
+#endif

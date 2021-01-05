@@ -47,8 +47,8 @@ class PortSym : public Command{
 		auto dot = new DEV_DOT();
 		dot->set(port + " x=" + std::to_string(cx)
 		              + " y=" + std::to_string(cy)
-		              + " n=" + std::to_string(n-1));
-		              + " label=" + portname;
+		              + " n=" + std::to_string(n-1)
+		              + " label=" + portname);
 		s->push_back(dot);
 
 		auto ps = painting_dispatcher.clone("PortSym");
@@ -60,27 +60,23 @@ class PortSym : public Command{
 		// not yet. place->set_port_by_index(0, "incomplete");
 		place->setPosition(pos_t(cx,cy));
 
-		if(0){
-		place->setLabel(portname);
-		s->pushBack(place);
+		if(1){
+			place->setLabel(portname);
+			s->push_back(place);
 		}
-		Node* node = place->connectNode(0, s->nodes());
-		assert(node);
+//		Node* node = place->connectNode(0, s->nodes());
+//		assert(node);
 
+#if 0
 		// tmp hack.
 		{
 			auto n = s->numPorts();
 			trace1("portsym:setport", n);
 			s->setPort(n, node);
 		}
+#endif
 	}
 }d0;
 Dispatcher<Command>::INSTALL p0(&command_dispatcher, ".PortSym", &d0);
-/*--------------------------------------------------------------------------*/
-class Port : public Command{
-	void do_it(istream_t& cs, SchematicModel* s) override{
-	}
-}d1;
-Dispatcher<Command>::INSTALL p1(&command_dispatcher, port, &d1);
 /*--------------------------------------------------------------------------*/
 } // namespace

@@ -85,22 +85,28 @@ class CompCommand : public Command{
 		auto lang = language_dispatcher["legacy_lib"];
 		assert(lang);
 
+		Element* e = sym;
+
 		while(true){
 			cs.read_line();
 			if(cs.umatch("</Components>")){
 				break;
-			}else if(cs.umatch("</Wires>")){
-				break;
 			}else{
 				cs.skipbl();
-				trace2("compcmd", cs.fullstring(), sym->scope()->size());
-				lang->new__instance(cs, sym, sym->scope());
+				trace2("compcmd", cs.fullstring(), e->scope()->size());
+				lang->new__instance(cs, sym, e->scope());
 			}
 		}
 
 		trace1("find DOT", sym->label());
-		for(auto i : *sym->scope()){
-			if(auto d = dynamic_cast<DEV_DOT*>(i)){ untested();
+		for(auto i : *e->scope()){
+			if(auto d = dynamic_cast<Symbol*>(i)){ untested();
+				if(d->typeName() == "Port"){
+					auto v = d->port_value(0);
+					trace2("found a port", d->label(), v);
+				}else{
+				}
+			}else if(auto d = dynamic_cast<DEV_DOT*>(i)){ untested();
 				trace1("DOT incomplete", d->s());
 				//			  sym->setParam(k, name); //?
 			}else{
@@ -108,8 +114,8 @@ class CompCommand : public Command{
 		}
 	}
 }d0;
-Dispatcher<Command>::INSTALL p0(&command_dispatcher, "Components|Wires", &d0);
-Dispatcher<Command>::INSTALL p1(&command_dispatcher, "Components>|Wires>", &d0); // BUG
-Dispatcher<Command>::INSTALL p2(&command_dispatcher, "<Components>|<Wires>", &d0); // ...
+Dispatcher<Command>::INSTALL p0(&command_dispatcher, "Components", &d0);
+Dispatcher<Command>::INSTALL p1(&command_dispatcher, "Components>", &d0); // BUG
+Dispatcher<Command>::INSTALL p2(&command_dispatcher, "<Components>", &d0); // ...
 /*--------------------------------------------------------------------------*/
 } // namespace

@@ -13,6 +13,8 @@
 
 #include "port.h"
 #include "node.h"
+#include "element.h"
+#include "schematic_model.h"
 /*--------------------------------------------------------------------------*/
 Port::~Port()
 {
@@ -21,6 +23,17 @@ Port::~Port()
 		// memory leak
 		unreachable();
 	}else{
+	}
+}
+/*--------------------------------------------------------------------------*/
+const std::string nullabel="(null)";
+std::string const& Port::nodeLabel() const
+{
+	if(_node){untested();
+		return _node->label();
+	}else{
+		unreachable();
+		return nullabel;
 	}
 }
 /*--------------------------------------------------------------------------*/
@@ -47,18 +60,31 @@ void Port::disconnect(Node* n)
 	}
 }
 /*--------------------------------------------------------------------------*/
-#if 0 // not yet
-void Port::new_node(const std::string& node_name, const Element* d)
+void Port::new_node(const std::string& node_name, Element const* d)
 {
-  //assert(!_nnn); //BUG// fails on MUTUAL_L::expand after clone
   assert(d);
 
-  NodeMap* Map = d->scope()->nodes();
-  assert(Map);
-  _nnn = Map->new_node(node_name);
-///  _ttt = _nnn->user_number();
-  assert(_nnn);
+  SchematicModel const* scope = d->scope();
+  if(scope){
+	  NodeMap* Map = scope->nodes();
+	  assert(Map);
+	  if(_node){
+		  _node->dec_ports();
+	  }else{
+	  }
+	  _node = Map->new_node(node_name);
+
+	  if(_node){
+		  _node->inc_ports();
+	  }else{
+	  }
+	///  _ttt = _nnn->user_number();
+  }else{
+	  // cannot have nodes without scope, can we?!
+	  trace2("new node no scope", d->label(), node_name);
+	  assert(false);
+	  unreachable();
+  }
 }
-#endif
 /*--------------------------------------------------------------------------*/
 /*--------------------------------------------------------------------------*/

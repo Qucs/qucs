@@ -24,7 +24,6 @@ static Dispatcher<Command>::INSTALL p0(&command_dispatcher, "get", &c);
 /*--------------------------------------------------------------------------*/
 void Get::do_it(istream_t& cmd, SchematicModel* sckt)
 {
-
 	std::string fn;
 	cmd >> "get";
 	cmd >> fn;

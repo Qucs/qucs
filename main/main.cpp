@@ -411,7 +411,11 @@ int main(int argc, char *argv[])
   }
 
   Command const* cmd = command_dispatcher[netlang_name];
-  assert(cmd);
+  if(!cmd){
+    error(5, "no language " + netlang_name);
+    exit(1);
+  }else{
+  }
   auto fmt=prechecked_cast<DocumentFormat const*>(cmd);
 
   if(fmt){
