@@ -44,7 +44,7 @@ inline bool access_ok(const std::string& file, int mode) {
 }
 }
 /*--------------------------------------------------------------------------*/
-std::string findfile(const std::string& filename, const std::string& path, int mode)
+std::string findfile(const std::string& filenameRel, const std::string& path, int mode)
 {
 #ifdef CHECK_LOCAL_FIRST
   if (OS::access_ok(filename, mode)) {untested();
@@ -52,7 +52,23 @@ std::string findfile(const std::string& filename, const std::string& path, int m
   }else{untested();
   }
 #endif
-					// for each item in the path
+
+  // filename can be a relative path with a filename, like legacy/legacy.so
+  // split it up
+  std::string filename;
+  std::string filePath;
+  for (std::string::const_iterator p_ptr=filenameRel.begin(); p_ptr!=filenameRel.end(); ++p_ptr) {
+      if (!strchr(ENDDIR,*p_ptr))
+      {
+        filename += *p_ptr;
+      } else {
+          filePath += filename + ENDDIR;
+          filename = "";
+      }
+  }
+
+
+    // for each item in the path
   for (std::string::const_iterator
 	 p_ptr=path.begin(); p_ptr!=path.end(); ++p_ptr) {
     // p_ptr changed internally                  ^^^^^ skip sep
@@ -65,9 +81,10 @@ std::string findfile(const std::string& filename, const std::string& path, int m
     }else{
     }
     
-    target += filename;
-    if (OS::access_ok(target, mode)) {	// found it
-      return target;
+    if (OS::access_ok(target + filePath + filename, mode)) {	// found it
+      return target + filePath + filename;
+    } else if (OS::access_ok(target + filePath + "lib" + filename, mode)) {	// found it
+        return target + filePath + "lib" + filename;
     }else if (p_ptr==path.end()) {	// ran out of path, didn't find it
       return "";
     }else{				// else try again
