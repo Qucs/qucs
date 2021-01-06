@@ -16,8 +16,8 @@ if (${CompileDependencies})
         file(COPY ${CMAKE_CURRENT_BINARY_DIR}/legacy/liblegacy.so DESTINATION ${LIB_PATH_TEMP})
     endif()
 
-    if(EXISTS ${CMAKE_CURRENT_BINARY_DIR}/legacy/qucsator/libqucsatorInterface.so)
-        file(COPY ${CMAKE_CURRENT_BINARY_DIR}/legacy/qucsator/libqucsatorInterface.so DESTINATION ${LIB_PATH_TEMP}/legacy)
+	if(EXISTS ${CMAKE_CURRENT_BINARY_DIR}/legacy/qucsator/libqucsator.so)
+		file(COPY ${CMAKE_CURRENT_BINARY_DIR}/legacy/qucsator/libqucsator.so DESTINATION ${LIB_PATH_TEMP}/legacy)
     endif()
 
     #set_target_properties(components PROPERTIES RUNTIME_OUTPUT_DIRECTORY_DEBUG ${LIB_PATH_TEMP})
