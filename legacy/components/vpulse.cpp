@@ -44,7 +44,7 @@ vPulse::vPulse()
   tx = x1+4;
   ty = y2+4;
   Model = "Vpulse";
-  Name  = "V";
+  setLabel("V");
 
   Props.append(new Property("U1", "0 V", true,
 		QObject::tr("voltage before and after the pulse")));

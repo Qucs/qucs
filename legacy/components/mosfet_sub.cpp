@@ -119,7 +119,7 @@ Basic_MOSFET::Basic_MOSFET()
   Props.append(new Property("Tnom", "26.85", false,
 	QObject::tr("parameter measurement temperature")));
 
-  Name  = "T";
+  setLabel("T");
 }
 
 MOSFET_sub::MOSFET_sub()

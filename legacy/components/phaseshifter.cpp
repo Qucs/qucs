@@ -41,7 +41,7 @@ Phaseshifter::Phaseshifter()
   tx = x1+4;
   ty = y2+4;
   Model = "PShift";
-  Name  = "X";
+  setLabel("X");
 
   Props.append(new Property("phi", "90", true,
 		QObject::tr("phase shift in degree")));

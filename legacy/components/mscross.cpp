@@ -41,7 +41,7 @@ MScross::MScross() : MultiViewComponent()
 	setTypeName("MCROSS");
 
   Model = "MCROSS";
-  Name  = "MS";
+  setLabel("MS");
 
   Props.append(new Property("Subst", "Subst1", true,
 		QObject::tr("substrate")));

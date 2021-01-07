@@ -118,7 +118,7 @@ Basic_BJT::Basic_BJT() : MultiViewComponent()
   Props.append(new Property("Area", "1.0", false,
 	QObject::tr("default area for bipolar transistor")));
 
-  Name  = "T";
+  setLabel("T");
 }
 
 BJTsub::BJTsub()

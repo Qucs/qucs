@@ -50,7 +50,7 @@ BiasT::BiasT()
   tx = x1+4;
   ty = y2+4;
   Model = "BiasT";
-  Name  = "X";
+  setLabel("X");
 
   Props.append(new Property("L", "1 uH", false,
 	QObject::tr("for transient simulation: inductance in Henry")));

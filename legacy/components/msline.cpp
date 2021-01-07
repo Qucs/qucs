@@ -52,7 +52,7 @@ MSline::MSline() : Component()
   tx = x1+4;
   ty = y2+4;
   Model = "MLIN";
-  Name  = "MS";
+  setLabel("MS");
 
   Props.append(new Property("Subst", "Subst1", true,
 	QObject::tr("name of substrate definition")));

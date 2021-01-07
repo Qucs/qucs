@@ -82,7 +82,7 @@ vacomponent::vacomponent(QString filename)
   createSymbol(filename);
 
   Model = getString(vadata, "Model");
-  Name  = getString(vadata, "SymName");
+  setLabel(getString(vadata, "SymName").toStdString());
 
   /// TODO adjust location of text
   tx = x1+100;

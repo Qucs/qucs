@@ -40,7 +40,9 @@ protected:
 Ground::Ground(Ground const& g) : Component(g)
 {
 //	init();
-  info(Name, bitmap_file);
+  QString label;
+  info(label, bitmap_file);
+  setLabel(label.toStdString());
   Type = isComponent;   // both analog and digital
   Description = QObject::tr("ground (reference potential)");
 
@@ -66,7 +68,7 @@ Ground::Ground(Ground const& g) : Component(g)
   tx = g.tx;
   ty = g.ty;
   Model = "GND";
-  Name  = "";
+  setLabel("");
   showName = false;
 }
 
@@ -77,7 +79,9 @@ Ground::Ground()
 
 void	Ground::init()
 {
-  info(Name, bitmap_file);
+  QString label;
+  info(label, bitmap_file);
+  setLabel(label.toStdString());
   Type = isComponent;   // both analog and digital
   Description = QObject::tr("ground (reference potential)");
 
@@ -96,7 +100,7 @@ void	Ground::init()
   tx = 0;
   ty = 0;
   Model = "GND";
-  Name  = "";
+  setLabel("");
   showName = false;
 }
 

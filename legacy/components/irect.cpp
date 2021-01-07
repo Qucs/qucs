@@ -47,7 +47,7 @@ iRect::iRect()
   tx = x1+4;
   ty = y2+4;
   Model = "Irect";
-  Name  = "I";
+  setLabel("I");
 
   Props.append(new Property("I", "1 mA", true,
 		QObject::tr("current at high pulse")));

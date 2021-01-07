@@ -52,7 +52,7 @@ Mutual::Mutual()
   tx = x1+4;
   ty = y2+4;
   Model = "MUT";
-  Name  = "Tr";
+  setLabel("Tr");
 
   Props.append(new Property("L1", "1 mH", false,
 		QObject::tr("inductance of coil 1")));

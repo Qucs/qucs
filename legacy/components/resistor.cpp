@@ -48,7 +48,10 @@ static Module::INSTALL pp("lumped", &D);
 
 Resistor::Resistor(bool european)
 {
-  info(Name, bitmap_file);
+  QString label;
+  info(label, bitmap_file);
+  setLabel(label.toStdString());
+
   Description = QObject::tr("resistor");
 
   Props.append(new Property("R", "50 Ohm", true,

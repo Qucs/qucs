@@ -37,7 +37,9 @@ static Module::INSTALL pp("sources", &D);
 
 VCVS::VCVS()
 {
-  info(Name, bitmap_file);
+  QString label;
+  info(label, bitmap_file);
+  setLabel(label.toStdString());
   Description = QObject::tr("voltage controlled voltage source");
 
   Arcs.append(new Arc(0,-11, 22, 22,  0, 16*360,QPen(Qt::darkBlue,2)));
@@ -76,7 +78,7 @@ VCVS::VCVS()
   tx = x1+4;
   ty = y2+4;
   Model = "VCVS";
-  Name  = "SRC";
+  setLabel("SRC");
 
   Props.append(new Property("G", "1", true,
 		QObject::tr("forward transfer factor")));

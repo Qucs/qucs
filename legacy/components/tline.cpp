@@ -57,7 +57,7 @@ TLine::TLine() : Component()
   tx = x1+4;
   ty = y2+4;
   Model = "TLIN";
-  Name  = "Line";
+  setLabel("Line");
 
   Props.append(new Property("Z", "50 Ohm", true,
 		QObject::tr("characteristic impedance")));

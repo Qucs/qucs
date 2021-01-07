@@ -68,7 +68,7 @@ Substrate::Substrate() : Component()
   tx = x1+4;
   ty = y2+4;
   Model = "SUBST";
-  Name  = "Subst";
+  setLabel("Subst");
 
   Props.append(new Property("er", "9.8", true,
 		QObject::tr("relative permittivity")));

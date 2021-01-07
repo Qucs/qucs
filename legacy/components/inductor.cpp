@@ -34,7 +34,9 @@ Module::INSTALL pp("lumped", &D);
 
 Inductor::Inductor()
 {
-  info(Name, bitmap_file);
+  QString label;
+  info(label, bitmap_file);
+  setLabel(label.toStdString());
   Description = QObject::tr("inductor");
 
   Arcs.append(new Arc(-18, -6, 12, 12,  0, 16*180,QPen(Qt::darkBlue,2)));
@@ -52,7 +54,7 @@ Inductor::Inductor()
   tx = x1+4;
   ty = y2+4;
   Model = "L";
-  Name  = "L";
+  setLabel("L");
 
   Props.append(new Property("L", "1 nH", true,
 		QObject::tr("inductance in Henry")));

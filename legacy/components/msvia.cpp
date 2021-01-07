@@ -39,7 +39,7 @@ MSvia::MSvia()
   tx = 20;
   ty = 0;
   Model = "MVIA";
-  Name  = "MS";
+  setLabel("MS");
 
   Props.append(new Property("Subst", "Subst1", true,
 		QObject::tr("substrate")));

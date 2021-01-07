@@ -41,7 +41,7 @@ MSmbend::MSmbend()
   tx = x2+4;
   ty = y1+4;
   Model = "MMBEND";
-  Name  = "MS";
+  setLabel("MS");
 
   Props.append(new Property("Subst", "Subst1", true,
 		QObject::tr("substrate")));

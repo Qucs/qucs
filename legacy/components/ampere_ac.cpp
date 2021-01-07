@@ -55,7 +55,7 @@ Ampere_ac::Ampere_ac() : Component()
   tx = x1+4;
   ty = y2+4;
   Model = "Iac";
-  Name  = "I";
+  setLabel("I");
 
   Props.append(new Property("I", "1 mA", true,
 		QObject::tr("peak current in Ampere")));
