@@ -7,4 +7,4 @@ SUBDIRS = \
 	rescodes \
 	transcalc
 
-EXTRA_DIST = filter-v2/Makefile.in
+EXTRA_DIST = 
