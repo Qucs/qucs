@@ -1,2 +1,20 @@
 
 EXTRA_DIST = 
+
+SRCS = \
+	helpdialog.cpp \
+	main.cpp \
+	optionsdialog.cpp \
+	qucstrans.cpp
+
+LIB_SRC = \
+	c_microstrip.cpp \
+	coax.cpp \
+	coplanar.cpp \
+	microstrip.cpp \
+	rectwaveguide.cpp \
+	stripline.cpp \
+	transline.cpp
+
+RESOURCES = \
+	qucstrans_.qrc
