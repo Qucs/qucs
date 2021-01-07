@@ -28,6 +28,8 @@ macro( readVariable FILENAME VARIABLE OUTVAR_NAME)
     string(REPLACE "\t" "    " BUFFER ${FILE_BUFFER})
     string(REGEX REPLACE "\n" "${Esc} ;" BUFFER "${BUFFER}")
     conditionalPrintOfMessage(${debugPrint} "STATE 1")
+    
+    set(VARIABLE_FOUND false)
 
     # CONT is the statemachine variable
     foreach(LINE ${BUFFER})
@@ -51,6 +53,7 @@ macro( readVariable FILENAME VARIABLE OUTVAR_NAME)
         endif()
       # startline, where the variable was found
       if("${LINE}" MATCHES "^[ ]*${VARIABLE}[ =]") # otherwise TEMPLATE_HDR will be recognized as TEMPLATE only if it will not be started from beginning
+           set(VARIABLE_FOUND true)
            conditionalPrintOfMessage(${debugPrint} "Variable found")
            conditionalPrintOfMessage(${debugPrint} "STATE 2")
            conditionalPrintOfMessage(${debugPrint} "LINE: ${LINE}")
@@ -66,6 +69,10 @@ macro( readVariable FILENAME VARIABLE OUTVAR_NAME)
            conditionalPrintOfMessage(${debugPrint} "RESULT: ${_RESULT}")
        endif()
     endforeach()
+    
+    if (NOT VARIABLE_FOUND)
+    	message(FATAL_ERROR "The variable ${VARIABLE} was not found in the file ${CMAKE_CURRENT_SOURCE_DIR}/${FILENAME}. Make sure the variable exists")
+    endif()
     
     string(REGEX REPLACE "\\\\" "" _RESULT ${_RESULT})
     separate_arguments(_RESULT)
