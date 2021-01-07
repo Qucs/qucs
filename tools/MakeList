@@ -2,11 +2,9 @@ SUBDIRS = \
 	activefilter \
 	attenuator \
 	filter \
+	filter-v2 \
 	powercombining \
 	rescodes \
 	transcalc
-
-DOES_NOT_WORK = \
-	filter-v2
 
 EXTRA_DIST = filter-v2/Makefile.in

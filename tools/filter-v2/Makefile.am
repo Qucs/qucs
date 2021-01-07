@@ -29,27 +29,7 @@ noinst_PROGRAMS = qucsfilter
 MOCHEADERS = qf_dialog.h qf_box.h
 MOCFILES = $(MOCHEADERS:.h=.moc.cpp)
 
-qucsfilter_SOURCES = qf_api.cpp\
-       qf_bessel.cpp\
-       qf_blinch.cpp\
-       qf_butcheb.cpp\
-       qf_cauer.cpp\
-       qf_common.cpp\
-       qf_comp.cpp\
-       qf_filter.cpp\
-       qf_icheb.cpp\
-       qf_legendre.cpp\
-       qf_matrix.cpp\
-       qf_optimize.cpp\
-       qf_poly.cpp\
-       qf_qr.cpp\
-       qf_tform.cpp\
-       qf_zigzag.cpp\
-       qf_main.cpp\
-       qf_settings.cpp\
-       qf_dialog.cpp\
-       qf_box.cpp\
-       qucsfilter.qrc
+qucsfilter_SOURCES = ${SRCS}
 
 nodist_qucsfilter_SOURCES = $(MOCFILES)
 
