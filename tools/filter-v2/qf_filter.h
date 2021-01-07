@@ -22,7 +22,7 @@
 # define PACKAGE_VERSION "Qf test"
 # endif
 
-# include <Q3TextStream>
+# include <QTextStream>
 
 using namespace std;
 
@@ -44,7 +44,7 @@ class qf_filter
  friend		     class  qf_zigzag;
  protected :
 
-  qf_spec*	      Pspec;			// Filter data
+  qf_spec*	      Pspec{nullptr};			// Filter data
 
   // Polynomial description
 

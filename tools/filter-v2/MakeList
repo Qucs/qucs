@@ -1,2 +1,26 @@
+SRCS = \
+    qf_api.cpp \
+    qf_bessel.cpp \
+    qf_blinch.cpp \
+    qf_box.cpp \
+    qf_butcheb.cpp \
+    qf_cauer.cpp \
+    qf_common.cpp \
+    qf_comp.cpp \
+    qf_dialog.cpp \
+    qf_filter.cpp \
+    qf_icheb.cpp \
+    qf_legendre.cpp \
+    qf_main.cpp \
+    qf_matrix.cpp \
+    qf_optimize.cpp \
+    qf_poly.cpp \
+    qf_qr.cpp \
+    qf_settings.cpp \
+    qf_tform.cpp \
+    # qf_transform.cpp \
+    qf_zigzag.cpp
+    
+RESOURCES = \
+	qucsfilter.qrc
 
-EXTRA_DIST =

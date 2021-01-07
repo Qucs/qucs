@@ -7,17 +7,17 @@
 #include "qf_box.h"
 #include "qf_dialog.h"
 
-#include <Q3Button>
+#include <QPushButton>
 #include <QComboBox>
 #include <QLineEdit>
 #include <QCheckBox>
 #include <QLabel>
 #include <QValidator>
 #include <QPushButton>
-#include <Q3ButtonGroup>
+#include <QButtonGroup>
 #include <QRadioButton>
 
-// static  QButton::ToggleState  OrderBoxState = QButton::Off;
+// static  QPushButton::ToggleState  OrderBoxState = QPushButton::Off;
 
 // Constructor
 
@@ -27,10 +27,10 @@ qf_box::qf_box (QWidget* parent) : FilterDialog (parent) {
 
   // Setup comboboxes according to qf_common.h contents
   for (i = 0; qf_filter_apis [i] != NULL ; i ++)
-    FilterName -> insertItem (qf_filter_apis [i] -> name);
+    FilterName->addItem(qf_filter_apis [i] -> name);
 
   for (i = 0; qf_tform_apis [i] != NULL; i ++)
-    TformName -> insertItem (qf_tform_apis [i] -> name);
+    TformName->addItem(qf_tform_apis [i] -> name);
     
   filter_index = 0;
   tform_index = 0;
@@ -57,19 +57,20 @@ qf_box::qf_box (QWidget* parent) : FilterDialog (parent) {
   EnterZout -> setValidator (new QDoubleValidator (1, 10000, 1, this));
 
   // Clear all fields
-  EnterCutoff -> setText (QString::null);
-  EnterRipple -> setText (QString::null);
-  EnterAngle -> setText (QString::null);
-  EnterBandwidth -> setText (QString::null);
-  EnterStopband -> setText (QString::null);
-  EnterAttenuation -> setText (QString::null);
-  EnterZin -> setText (QString::null);
-  EnterZout -> setText (QString::null);
+  EnterCutoff -> setText (QString());
+  EnterRipple -> setText (QString());
+  EnterAngle -> setText (QString());
+  EnterBandwidth -> setText (QString());
+  EnterStopband -> setText (QString());
+  EnterAttenuation -> setText (QString());
+  EnterZin -> setText (QString());
+  EnterZout -> setText (QString());
 
   // Hide Optimizing checkboxes
 
-  Cboxes -> hide ();
-  Lboxes -> hide ();
+  // TODO: how to replace?
+//  Cboxes -> hide ();
+//  Lboxes -> hide ();
 
   // Connect radio buttons update to semanticCheck
 
@@ -146,9 +147,9 @@ bool  qf_box::semanticCheck (void) {
   qf_double_t zout =  (EnterZout -> text ()). toDouble ();
 
   // Scales frequencies to correct unit (Hz)
-  cutoff *= pow (10.0, CutoffCombo -> currentItem () * 3);
-  bdwth *= pow (10.0, BandwidthCombo -> currentItem () * 3);
-  stop *= pow (10.0, StopbandCombo -> currentItem () * 3);
+  cutoff *= pow (10.0, CutoffCombo -> currentIndex() * 3);
+  bdwth *= pow (10.0, BandwidthCombo -> currentIndex () * 3);
+  stop *= pow (10.0, StopbandCombo -> currentIndex () * 3);
 
   // Fill in the specifications structure
 
@@ -161,7 +162,7 @@ bool  qf_box::semanticCheck (void) {
     spec. ord = OrderCombo -> currentText (). toInt ();
 
     if (SubOrderCombo -> isEnabled ())
-      spec. subord = SubOrderCombo -> currentItem () + 'b';
+      spec. subord = SubOrderCombo -> currentIndex () + 'b';
     else
       spec. subord = ' ';
 
@@ -175,10 +176,10 @@ bool  qf_box::semanticCheck (void) {
   if (spec. r2 == 0) spec.r2 = spec.r1;
     
 
-  spec. dual = (DualBox -> state () == QCheckBox::On);
-  spec. all_ind_equal = (EqualInductorBox -> state () == QCheckBox::On);
-  spec. use_cross = (UseCrossBox -> state () == QCheckBox::On);
-  spec. stop_is_pole = (CauerPoleBox -> state () == QCheckBox::On);
+  spec. dual = (DualBox -> checkState() == Qt::CheckState::Checked);
+  spec. all_ind_equal = (EqualInductorBox -> checkState() == Qt::CheckState::Checked);
+  spec. use_cross = (UseCrossBox -> checkState() == Qt::CheckState::Checked);
+  spec. stop_is_pole = (CauerPoleBox -> checkState() == Qt::CheckState::Checked);
 
   // Optimization subdialog
   if ((spec. optc = OptimizeCauerBox -> isChecked ())) {
@@ -233,10 +234,10 @@ bool  qf_box::dialogOk (void) {
 	  
 	{if (semanticCheck ()) {okButton -> setEnabled (true);
 				return true;}
-	    else {okButton -> setEnabled (false);
-		  return false;} }
+        else {okButton -> setEnabled (false);
+          return false;} }
   else	{okButton -> setEnabled (false);
-	 return false;}
+     return false;}
 }
 
 // This function updates the dialog according to the common capacities of
@@ -254,7 +255,7 @@ void  qf_box::updateDialog (void) {
   // The capacity flags are the logical OR of general capacity flags
   // and the flags corresponding to the current order (if selected)
 
-  if (OrderBox -> state () == QCheckBox::Off ||
+  if (OrderBox -> checkState() == Qt::CheckState::Unchecked ||
       ! (cflags & CAN_ORDER)) {
     fflags |= fapi -> if_no_order;
     tflags |= tapi -> if_no_order;
@@ -306,14 +307,14 @@ void  qf_box::updateDialog (void) {
   }
 
   if (cflags & CAN_ORDER_ONLY) {
-    if (OrderBox -> state () == QCheckBox::Off)
+    if (OrderBox -> checkState() == Qt::CheckState::Unchecked)
       OrderBox -> setChecked (true);
     OrderBox -> setEnabled (false);
   }
 
   SubOrderCombo -> setEnabled (cflags & CAN_SUBORDER);
   if (SubOrderCombo -> isEnabled ()) 
-    on_SubOrderCombo_activated (SubOrderCombo -> currentItem ());
+    on_SubOrderCombo_activated (SubOrderCombo -> currentIndex ());
 
 }
 
@@ -363,11 +364,11 @@ void  qf_box::populateOrderCombo (void) {
   if ((tflags & CAN_ALL_ORDERS) == 0) {
     if ((tflags & CAN_ORDER_EVEN) == 0)
       for (unsigned i = 4; i <= QF_MAX_ORD; i += 2)
-	ok [i] = false;
+    ok [i] = false;
 
     if ((tflags & CAN_ORDER_ODD) == 0)
       for (unsigned i = 3; i <= QF_MAX_ORD; i += 2)
-	ok [i] = false;
+    ok [i] = false;
   }
 
   // Now populate combobox
@@ -380,7 +381,7 @@ void  qf_box::populateOrderCombo (void) {
       at_least_one = true;
       QString Sval;
       Sval. setNum (i);
-      OrderCombo -> insertItem (Sval);
+      OrderCombo -> addItem (Sval);
     }
 
   // Disable dialog is no order permitted
@@ -412,19 +413,19 @@ void  qf_box::on_FilterName_activated (int) {
   if (! (fapi -> forbid_tform & tapi -> id)) {
     
     is_cptbl = true;
-    TformName -> insertItem (tapi -> name);
+    TformName -> addItem (tapi -> name);
   }
 
   for (unsigned i = 0; qf_tform_apis [i] != NULL; i ++) {
     if ((i == tform_index) && is_cptbl) continue;
     if (fapi -> forbid_tform & qf_tform_apis [i] -> id) continue;
-    TformName -> insertItem (qf_tform_apis [i] -> name);
+    TformName -> addItem(qf_tform_apis [i] -> name);
     if (! is_cptbl) {
       tform_index = i;
       is_cptbl = true;
     }
   }
-  TformName -> setCurrentItem (0);
+  TformName -> setCurrentIndex(0);
 
   tapi = qf_tform_apis [tform_index];
   fflags = fapi -> gen_flags;
@@ -435,7 +436,7 @@ void  qf_box::on_FilterName_activated (int) {
   updateDialog ();
   
   // Synthesize a fake event for suborder combo handling
-  on_OrderBox_stateChanged (OrderBox -> state ());
+  on_OrderBox_stateChanged (OrderBox -> checkState());
 
   return;
 }
@@ -462,14 +463,14 @@ void  qf_box::on_TformName_activated (int) {
   // First the current filter
   if (! (qf_filter_apis [filter_index] -> forbid_tform 
        	 & qf_tform_apis [tform_index] -> id)) 
-    FilterName -> insertItem (qf_filter_apis [filter_index] -> name);
+    FilterName -> addItem (qf_filter_apis [filter_index] -> name);
 
   for (unsigned i = 0; qf_filter_apis [i] != NULL; i ++) {
     if (i == filter_index) continue;
     if (qf_filter_apis [i] -> forbid_tform 
 	& qf_tform_apis [tform_index] -> id) continue;
 
-    FilterName -> insertItem (qf_filter_apis [i] -> name);
+    FilterName -> addItem (qf_filter_apis [i] -> name);
   }
   FilterName -> setCurrentItem (0);
 
@@ -509,9 +510,9 @@ void qf_box::on_SubOrderCombo_activated (int type) {
 
 void  qf_box::on_OrderBox_stateChanged (int state) {
 
-  if ((state == QCheckBox::On) && (cflags & CAN_ORDER)) {
+  if ((state == Qt::CheckState::Checked) && (cflags & CAN_ORDER)) {
     OrderCombo -> setEnabled (true);
-    on_OrderCombo_activated (OrderCombo -> currentItem ());
+    on_OrderCombo_activated (OrderCombo -> currentIndex ());
   }
   else {
     OrderCombo -> setEnabled (false);
@@ -521,7 +522,7 @@ void  qf_box::on_OrderBox_stateChanged (int state) {
   // Enable SubOrderCombo if necessary and synthesize a fake activate event
   SubOrderCombo -> setEnabled (cflags & CAN_SUBORDER);
   if (SubOrderCombo -> isEnabled ()) 
-    on_SubOrderCombo_activated (SubOrderCombo -> currentItem ());
+    on_SubOrderCombo_activated (SubOrderCombo -> currentIndex ());
 
   // Validates this state of affairs
   updateDialog ();
@@ -599,14 +600,15 @@ void  qf_box::on_CauerPoleBox_stateChanged (int) {
 
 void  qf_box::on_OptimizeCauerBox_stateChanged (int) {
 
-  if (OptimizeCauerBox -> isChecked ())
-    Cboxes -> show ();
-  else
-    Cboxes -> hide ();
-  if (OptimizeCauerBox -> isChecked ())
-    Lboxes -> show ();
-  else
-    Lboxes -> hide ();
+    // TODO: how to do in Qt5?
+//  if (OptimizeCauerBox -> isChecked ())
+//    Cboxes -> show ();
+//  else
+//    Cboxes -> hide ();
+//  if (OptimizeCauerBox -> isChecked ())
+//    Lboxes -> show ();
+//  else
+//    Lboxes -> hide ();
   
   // Handles dialog box vertical size change
   setMaximumSize (width (), 10000);
