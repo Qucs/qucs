@@ -1,3 +1,20 @@
+/***************************************************************************
+    copyright            : (C) 20?? QUCS
+                               2015, 2020 by Felix Salfelder
+    email                : felix@salfelder.org
+ ***************************************************************************/
+
+/***************************************************************************
+ *                                                                         *
+ *   This program is free software; you can redistribute it and/or modify  *
+ *   it under the terms of the GNU General Public License as published by  *
+ *   the Free Software Foundation; either version 3 of the License, or     *
+ *   (at your option) any later version.                                   *
+ *                                                                         *
+ ***************************************************************************/
+
+// TODO: remove.
+/* -------------------------------------------------------------------------------- */
 
 #include "data.h"
 #include "dat.h"
@@ -5,11 +22,12 @@
 #include <QFile> // hmm
 #include <QFileInfo> // hmm
 
-void SimOutputDir::pushBack(QucsData* d)
+void SimOutputDir::push_back(CommonData* d)
 {
 	assert(d);
 	assert(d->label()!="");
-	_d[d->label()] = d;
+
+	CommonData::attach(d, &_d[d->label()]);
 }
 
 // a Var from a Dat file
@@ -17,15 +35,32 @@ class SimOutputDatVar : public SimOutputData{
 	SimOutputDatVar(SimOutputDatVar const&) = delete;
 public:
 	explicit SimOutputDatVar(std::string const& fileName, std::string const& varname)
-	 : CPointsY(NULL),
+	 : SimOutputData(), CPointsY(NULL),
 	   _var(QString::fromStdString(varname)),
 	   _fileName(fileName) {}
 
 private:
 	void clear();
 	SimOutputData const* refresh() override;
-	virtual const_iterator begin() const {incomplete(); return const_iterator(nullptr, nullptr);}
-	virtual const_iterator end() const {incomplete(); return const_iterator(nullptr, nullptr);}
+	virtual const_iterator begin() const {
+		trace1("DatVar", numAxes());
+		incomplete();
+		auto a = axis(0);
+		if(a){ untested();
+			return const_iterator(a->Points, CPointsY);
+		}else{ untested();
+			return const_iterator(nullptr, nullptr);
+		}
+	}
+	virtual const_iterator end() const {
+		incomplete();
+		auto a = axis(0);
+		if(a){ untested();
+			return const_iterator(a->Points + a->count, nullptr);
+		}else{ untested();
+			return const_iterator(nullptr, nullptr);
+		}
+	}
 
 	unsigned numAxes() const { return CPointsX.size();}
 	int loadIndepVarData(std::string const& Variable, char *FileString, DataX* pD);
@@ -36,14 +71,21 @@ private:
 	}
 
 public: // obsolete interface. don't use.
-	DataX const* axis(uint i) const override { if (i<axis_count) return CPointsX[i]; return NULL;}
+	DataX const* axis(uint i) const override {
+		if (i<axis_count){ untested();
+			assert(i < CPointsX.size()); // ??
+		  	return CPointsX[i];
+		}else{ untested();
+			return NULL;
+		}
+	}
 	double *cPointsY() const { return CPointsY; }
 private:
 	double *CPointsY;
 	QString _var;
 	std::string _fileName;
 	unsigned axis_count;
-	std::vector<DataX*>  CPointsX;
+	std::vector<DataX*> CPointsX;
 	int CountY;    // number of curves ??
 	QDateTime lastLoaded;
 };
@@ -53,12 +95,12 @@ SimOutputDat::SimOutputDat(std::string const& fileName, std::string const& varna
       Var(QString::fromStdString(varname)),
       _fileName(fileName)
       // Min(INFINITY), Max(-INFINITY)
-{ untested();
+{itested();
 	QFile file(QString::fromStdString(fileName));
 	if(!file.open(QIODevice::ReadOnly)) { untested();
 		// BUG, throw?
 		return;
-	}else{ untested();
+	}else{itested();
 	}
 
 	QString Line, tmp, Var;
@@ -70,8 +112,8 @@ SimOutputDat::SimOutputDat(std::string const& fileName, std::string const& varna
 
 	int i=0, j=0;
 	i = FileString.indexOf('<')+1;
-	if(i > 0){ untested();
-		do { untested();
+	if(i > 0){itested();
+		do {itested();
 			j = FileString.indexOf('>', i);
 			for(int k=0;k<j-i;k++) Line[k]=FileString[k+i];
 			Line.truncate(j-i);
@@ -79,24 +121,24 @@ SimOutputDat::SimOutputDat(std::string const& fileName, std::string const& varna
 
 			Var = Line.section(' ', 1, 1).remove('>');
 
-			if(Var.length()==0){ untested();
-			}else if(Var.at(0) == '_'){ untested();
+			if(Var.length()==0){itested();
+			}else if(Var.at(0) == '_'){itested();
 				// continue;
-			}else{ untested();
+			}else{itested();
 			}
 
 
-			if(Line.left(3) == "dep") { untested();
-				trace1("dep", Var);
+			trace2("dep", Line.left(5), Var);
+			trace2("dep", Line.left(3), Var);
+			if(Line.left(3) == "dep") {itested();
 				tmp = Line.section(' ', 2);
 				varNumber++;
 				SimOutputData* v = new SimOutputDatVar(_fileName, Var.toStdString());
 				v->refresh();
-				pushBack(v); // _map[Var.toStdString()] = v;
-			} else if(Line.left(5) == "indep") { untested();
+				push_back(v); // _map[Var.toStdString()] = v;
+			} else if(Line.left(5) == "indep") {itested();
 				tmp = Line.section(' ', 2, 2);
 				//new Q3ListViewItem(ChooseVars, Var, "indep", tmp.remove('>'));
-				trace1("indep", Var);
 				varNumber++;
 
 			}
@@ -115,10 +157,11 @@ SimOutputData const* SimOutputDat::refresh()
 // --------------------------------------------------------------------------
 // former "loadDatFile", former "loadVarData".
 SimOutputData const* SimOutputDatVar::refresh()
-{ untested();
+{untested();
 	SimOutputDatVar* g = this;
 	QFile file;
 	QString Variable;
+	trace2("datvar", _fileName, _var);
 	QFileInfo Info(QString::fromStdString(_fileName));
 
 	setLabel(_var.toStdString()); // BUG
@@ -132,10 +175,11 @@ SimOutputData const* SimOutputDatVar::refresh()
 		to change the locale to the default. */
 	setlocale (LC_NUMERIC, "C");
 
-	if(pos <= 0) { untested();
+	if(pos <= 0) {itested();
 		file.setFileName(QString::fromStdString(_fileName));
 		Variable = g->_var;
 	} else { untested();
+		assert(false);
 		incomplete();
 		// is this digital stuff?? not here.
 ///		file.setFileName(Info.path()+QDir::separator() + g->Var.left(pos)+".dat");
@@ -189,8 +233,8 @@ SimOutputData const* SimOutputDatVar::refresh()
 	// "pFile" is used through-out the whole function and must NOT used
 	// for other purposes!
 	char *pFile = strstr(FileString, Variable.toLatin1());
-	while(pFile) { untested();
-		if(*(pFile-1) == '<') { untested();
+	while(pFile) {itested();
+		if(*(pFile-1) == '<') {itested();
 			// is dependent variable ?
 			break;
 		}else if(strncmp(pFile-3, "<in", 3) == 0) {  // is independent variable ?
@@ -219,19 +263,12 @@ SimOutputData const* SimOutputDatVar::refresh()
 	*pPos = '>';
 	pFile = pPos+1;
 	trace2("DBG", Variable, isIndep);
-	if(!isIndep) { untested();
-		pos = 0;
-		tmp = Line.section(' ', pos, pos);
-		while(!tmp.isEmpty()) { untested();
-			trace2("push", pos, tmp);
-			CPointsX.push_back(new DataX(tmp.toStdString()));  // name of independet variable
-			pos++;
-			tmp = Line.section(' ', pos, pos);
-		}
+	if(!isIndep) {itested();
 	}else{
 	}
 
-	if(isIndep) {    // create independent variable by myself ?
+	if(isIndep) {
+		// create independent variable
 		counter = Line.toInt(&ok);  // get number of values
 		CPointsX.push_back(new DataX("number", 0, counter));
 		if(!ok)  return 0;
@@ -245,6 +282,16 @@ SimOutputData const* SimOutputDatVar::refresh()
 		Axis->setLimit(double(counter));
 		trace3("indep", counter, Axis->max(), Axis->min());
 	}else{  // ...................................
+		pos = 0;
+		// name of independent variable
+		tmp = Line.section(' ', pos, pos);
+		while(!tmp.isEmpty()) {itested();
+			trace2("push", pos, tmp);
+			auto n = new DataX(tmp.toStdString());
+			CPointsX.push_back(n);
+			pos++;
+			tmp = Line.section(' ', pos, pos);
+		}
 		// get independent variables from data file
 		CountY = 1;
 #if 0 // FIXME: we do not have a Name.
@@ -256,7 +303,7 @@ SimOutputData const* SimOutputDatVar::refresh()
 		double min_tmp = xAxis.min, max_tmp = xAxis.max;
 #endif
 		DataX const *pD;
-		for(int ii= g->numAxes(); (pD = g->axis(--ii)); ) { untested();
+		for(int ii= g->numAxes(); (pD = g->axis(--ii)); ) {itested();
 #if 0 // FIXME: this is about diagram. do after load.
 			pa = &xAxis;
 			if(pD == g->axis(0)) { untested();
@@ -270,13 +317,14 @@ SimOutputData const* SimOutputDatVar::refresh()
 			if(counter <= 0) { untested();
 				trace0("huh, nothing there");
 				return 0;
-			}else{ untested();
+			}else{itested();
 				trace2("found sth", pD->Var, counter);
 			}
 
 			CountY *= counter;
 		}
 		trace3("dbg", g->numAxes(), CountY, counter);
+		assert(counter);
 		CountY /= counter;
 	}
 
@@ -298,7 +346,7 @@ SimOutputData const* SimOutputDatVar::refresh()
 
 	if(Variable.right(3) != ".X ") { // not "digital"
 
-		for(int z=counter; z>0; z--) { untested();
+		for(int z=counter; z>0; z--) {itested();
 			pEnd = 0;
 			while((*pPos) && (*pPos <= ' '))  pPos++; // find start of next number
 			x = strtod(pPos, &pEnd);  // real part
@@ -379,7 +427,7 @@ SimOutputData const* SimOutputDatVar::refresh()
 	if (numAxes()>1){ untested();
 		trace3("dep", axis(1)->Var, axis(1)->min(), axis(1)->max());
 	}
-	if(numAxes()){ untested();
+	if(numAxes()){itested();
 		trace3("dep", axis(0)->Var, axis(0)->min(), axis(0)->max());
 	}
 
@@ -394,19 +442,17 @@ void SimOutputDat::clear()
 }
 
 void SimOutputDatVar::clear()
-{ untested();
+{itested();
   for(auto i : CPointsX){ untested();
 	  delete[] i;
   }
   delete[] CPointsY;
 }
 
-/*!
-   Reads the data of an independent variable. Returns the number of points.
-*/
+// Read the data of an independent variable. Return the number of points.
 int SimOutputDatVar::loadIndepVarData(std::string const& Variable,
 			      char *FileString, DataX* pD)
-{ untested();
+{itested();
   bool isIndep = false;
   QString Line, tmp;
 
@@ -418,7 +464,7 @@ int SimOutputDatVar::loadIndepVarData(std::string const& Variable,
   // "pFile" is used through-out the whole function and must NOT used
   // for other purposes!
   char *pFile = strstr(FileString, Line.toLatin1());
-  while(pFile) { untested();
+  while(pFile) {itested();
     if(*(pFile-1) == '<') {     // is dependent variable ?
       trace0("huh? dependent variable in loadIndep");
       break;
@@ -447,10 +493,14 @@ int SimOutputDatVar::loadIndepVarData(std::string const& Variable,
     if(!pPos)  return -1;
     pPos += Line.length();
     pEnd = strchr(pPos, '>');
-    if(!pEnd)  return -1;   // file corrupt
+    if(!pEnd){ untested();
+	  	 return -1;   // file corrupt
+	 }else{ untested();
+	 }
     *pEnd = 0;
     Line = QString(pPos);
     *pEnd = '>';
+  }else{ untested();
   }
 
 
@@ -469,7 +519,7 @@ int SimOutputDatVar::loadIndepVarData(std::string const& Variable,
   // find first position containing no whitespace
   while((*pPos) && (*pPos <= ' '))  pPos++;
 
-  for(int z=0; z<n; z++) { untested();
+  for(int z=0; z<n; z++) {itested();
     pEnd = 0;
     x = strtod(pPos, &pEnd);  // real part
     if(pPos == pEnd) { untested();
@@ -481,7 +531,7 @@ int SimOutputDatVar::loadIndepVarData(std::string const& Variable,
 #if 0 // this is not location curve code
     if(Name[0] != 'C')   // not for location curves
 #endif
-      if(std::isfinite(x)) { untested();
+      if(std::isfinite(x)) {itested();
         pD->setLimit(x);
         pD->setLimit(x);
       }

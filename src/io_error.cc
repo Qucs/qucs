@@ -4,6 +4,8 @@
 #include <iostream>
 #include <stdarg.h>
 #include "io_trace.h"
+#include "io_error.h"
+#include "ap.h"
 
 void error(int, const char* fmt, ...)
 { untested();
@@ -15,7 +17,28 @@ void error(int, const char* fmt, ...)
   std::cerr << buffer;
 }
 /*--------------------------------------------------------------------------*/
-void error(int, const std::string& message)
-{ untested();
-	std::cerr << message;
+void error(int i, const std::string& message)
+{
+	std::cerr << "error" << i << " " << message;
 }
+/*--------------------------------------------------------------------------*/
+Exception_CS::Exception_CS(const std::string& Message, const istream_t& cmd)
+  :Exception(Message),
+   _cmd(cmd.fullstring()),
+   _cursor(cmd.cursor())
+{itested();
+}
+/*--------------------------------------------------------------------------*/
+const std::string Exception_CS::message()const
+{itested();
+  std::string s;
+  if (_cursor < 40) {itested();
+    s = _cmd.substr(0,60)
+      + '\n' + std::string(_cursor, ' ') + "^ ? " + Exception::message();
+  }else{untested();
+    s = "... " + _cmd.substr(_cursor-36, 56)
+      + "\n                                        ^ ? " + Exception::message();
+  }
+  return s;
+}
+/*--------------------------------------------------------------------------*/

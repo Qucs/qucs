@@ -11,89 +11,40 @@
  *   (at your option) any later version.                                   *
  *                                                                         *
  ***************************************************************************/
-
+/* -------------------------------------------------------------------------------- */
 #ifndef QUCS_SIM_DATA_H__
 #define QUCS_SIM_DATA_H__
 #include <assert.h>
 #include <complex>
 #include <list>
 #include <QDateTime>
-#include "output.h"
-
-struct DataX {
-	DataX(std::string const& Var_, double *Points_=0, int count_=0)
-		: Var(Var_), Points(Points_), count(count_), Min(INFINITY), Max(-INFINITY) {};
-	~DataX() { if(Points) delete[] Points; };
-	const double* end() const{return Points+count;}
-
-public:
-	const double& min()const {return Min;}
-	const double& max()const {return Max;}
-public: // only called from Graph. cleanup later.
-	void setLimit(const double& x){
-		if (Min>x) Min=x;
-		if (Max<x) Max=x;
-	}
-public: // ??
-	std::string Var;
-	double *Points;
-	int     count;
-
+#include "element.h"
+/* -------------------------------------------------------------------------------- */
+class CommonData : public Object{
 private:
-	double Min;
-	double Max;
-};
-
-// (tabular) data from a simulator.
-class SimOutputData : public QucsData{
+	CommonData(CommonData const&) = delete;
 public:
-	typedef std::pair<double, std::complex<double> > valuetype;
-	class const_iterator{
-		friend class SimOutputData; // need to access constructor.
-		friend class SimOutputDat; // bug.
-	protected:
-	public:
-		const_iterator(double const* x, double const* y) : seekx(x), seeky(y) {};
-	public:
-		const_iterator& operator++(){ ++seekx; ++seeky; ++seeky; return *this;}
-		valuetype operator*(){
-			return valuetype(*seekx,std::complex<double>(*seeky,seeky[1]));
-		}
-		const valuetype* operator->() const{
-			_v = valuetype(*seekx,std::complex<double>(*seeky,seeky[1]));
-			return &_v;
-		}
-		bool operator==(const const_iterator& p)const { return seekx==p.seekx; }
-		bool operator!=(const const_iterator& p)const { return seekx!=p.seekx; }
-	private:
-		double const* seekx;
-		double const* seeky;
-		static valuetype _v; // bit of a hack. lets see...
-	};
+	explicit CommonData() : Object(), _attach_count(0){}
+	virtual ~CommonData();
 public:
-	SimOutputData() : QucsData() {}
-	virtual ~SimOutputData(){}
-
-public: // obsolete interface. don't use.
-  virtual DataX const* axis(uint ) const { return nullptr; } // if (i<axis_count) return CPointsX.at(i); return NULL;}
-//	  double *cPointsY() const { return CPointsY; }
+	virtual CommonData* clone() { return NULL; }
 
 public:
-	virtual bool isEmpty() {return true;}
-	size_t size() const{incomplete(); return 0;}
-
-	virtual const_iterator begin() const = 0; //  {return const_iterator(CPointsX.getFirst()->Points, CPointsY);}
-	virtual const_iterator end() const = 0; //  {return const_iterator(CPointsX.getFirst()->end(), NULL);}
-	virtual SimOutputData const* refresh() {return nullptr;}
-
-public:
-	const double& min()const {return Min;}
-	const double& max()const {return Max;}
+	virtual bool  operator==(const CommonData&x)const;
+	bool operator!=(const CommonData& x)const {return !(*this == x);}
 
 protected:
-	double Min;
-	double Max;
+	virtual CommonData* resolve(const std::string&){assert(false); return nullptr;}
+
+public:
+	static void attach(CommonData*, CommonData**);
+	static void detach(CommonData**);
+	virtual CommonData const* refresh(){unreachable(); return nullptr;}
+
+private:
+	unsigned _attach_count;
 };
+
 
 
 #if 0 // not yet?
@@ -115,5 +66,24 @@ private:
 };
 #endif
 
+/* -------------------------------------------------------------------------------- */
+class Data : public Element{
+protected:
+	explicit Data() : Element(), _common(nullptr){}
+	~Data();
+public:
+	CommonData const* common()const{ return _common; }
 
+private:
+protected: // hmm
+	CommonData* _common;
+};
+/* -------------------------------------------------------------------------------- */
+inline bool CommonData::operator==(const CommonData&)const
+{
+	incomplete();
+	return false;
+}
+/* -------------------------------------------------------------------------------- */
+/* -------------------------------------------------------------------------------- */
 #endif

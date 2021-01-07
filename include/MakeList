@@ -2,9 +2,11 @@
 HDR = \
 	ap.h \
 	c_comand.h \
+	command.h \
 	data.h \
 	d_dot.h \
 	element.h \
+	e_cardlist.h \
 	geometry.h \
 	globals.h \
 	graph.h \
@@ -19,8 +21,10 @@ HDR = \
 	platform.h \
 	port.h \
 	qt_compat.h \
+	schematic_model.h \
 	settings.h \
 	simulator.h \
 	symbol.h \
 	tasks.h \
+	u_lang.h \
 	u_parameter.h

@@ -82,7 +82,7 @@ extern tQucsSettings QucsSettings;  // extern because nearly everywhere used
 extern QString lastDir;    // to remember last directory for several dialogs
 extern QStringList qucsPathList;
 extern VersionTriplet QucsVersion;
-extern QucsApp *QucsMain;  // the Qucs application itself
+// extern QucsApp *QucsMain;  // the Qucs application itself
 
 // TODO move these inside the QucsApp class?
 bool loadSettings();

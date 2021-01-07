@@ -76,9 +76,11 @@ private: // Simulator
 	DocumentFormat const* netLister() const override {return &LNL;}
 
 	void run(istream_t&, SimCtrl*) override{ incomplete(); }
+	void do_it(istream_t&, SchematicModel const*) override{ incomplete(); }
 	void init() override{incomplete();}
 	std::string errorString() const override{ incomplete(); return "incomplete";}
 	void kill() override{ incomplete(); }
+	void join() override{ incomplete(); }
 
 private: // implementation
 	Simulator* chooseBackend();
@@ -107,11 +109,11 @@ NetLang const* LegacySimulator::netLang() const
 // that would be one out of
 // qucsator, qucsdigi, asco
 Simulator* LegacySimulator::chooseBackend()
-{
+{ untested();
 	incomplete(); // only run qucstor for now
 	return simulator_dispatcher["qucsator"];
 #if 0
-      if(SimOpt = findOptimization(d)) {
+      if(SimOpt = findOptimization(d)) { untested();
 			return simulator_dispatcher["asco"];
 
 			// move to ASCO driver (or so)
@@ -126,11 +128,11 @@ Simulator* LegacySimulator::chooseBackend()
                   << "-s" << "\"" + QDir::toNativeSeparators(QucsSettings.Qucsator) + "\"";
       } else
 Component * SimMessage::findOptimization(SchematicDoc *)
-{
+{ untested();
 #if 0
-  for(auto pc : Doc->components()){
-    if(pc->isActive){
-      if(pc->obsolete_model_hack() == ".Opt"){
+  for(auto pc : Doc->components()){ untested();
+    if(pc->isActive){ untested();
+      if(pc->obsolete_model_hack() == ".Opt"){ untested();
 	return pc;
       }
     }
@@ -147,7 +149,7 @@ void LegacyNetlister::clear() const
 }
 /* -------------------------------------------------------------------------------- */
 void LegacyNetlister::load(istream_t&, Object*) const
-{
+{ untested();
    _qucslang = language_dispatcher["qucsator"];
 	assert(_qucslang);
 	incomplete();
@@ -170,7 +172,7 @@ void LegacyNetlister::do_it(istream_t& cs, SchematicModel* m)
 
 	QFile NetlistFile(QString::fromStdString(fn));
 	if(!NetlistFile.open(QIODevice::WriteOnly | QFile::Truncate)) { untested();
-		fprintf(stderr, "Error: Could write to %s\n", fn.c_str());
+		fprintf(stderr, "Error: Could not open %s for writing\n", fn.c_str());
 		exit(1); // BUG
 	}else{
 	}
@@ -215,13 +217,13 @@ void LegacyNetlister::do_it(istream_t& cs, SchematicModel* m)
 	}
 #endif
 	assert(_qucslang);
-	if(simcmd=="all"){
+	if(simcmd=="all"){itested();
 		Stream << "# all tasks\n";
-		for(auto c : tasks){
+		for(auto c : tasks){itested();
 			trace1("cmd", c->label());
 			_qucslang->printItem(Stream, c);
 		}
-	}else if(simcmd=="dcop"){
+	}else if(simcmd=="dcop"){ untested();
 		Element const* dc = element_dispatcher["DC"];
 		_qucslang->printItem(Stream, dc);
 		Stream << "# just dcop\n";
@@ -246,7 +248,7 @@ void LegacyNetlister::printDeclarations(ostream_t& stream,
 		}else if(dynamic_cast<SubcktBase const*>(si.second)){
 			stream << "### item " << si.first << "\n";
 			_qucslang->printItem(stream, si.second);
-		}else{
+		}else{ untested();
 			stream << "## " << si.first << "\n";
 		}
 	}
@@ -390,7 +392,7 @@ void LegacyNetlister::createNetlist(ostream_t& stream,
 			tasks.push_back(t);
 			continue;
 		} else if(pc){
-		}else{
+		}else{ untested();
 			incomplete();
 			continue;
 		}
@@ -463,7 +465,7 @@ void LegacyNetlister::throughAllComps(ostream_t&, SchematicModel const* scope_,
 	if(f!=scope_->end()){
 		assert(*f);
 		sckt = (*f)->scope();
-	}else{
+	}else{ untested();
 	}
 
 	for(auto it_ : *sckt){
@@ -478,7 +480,7 @@ void LegacyNetlister::throughAllComps(ostream_t&, SchematicModel const* scope_,
 		assert(pc);
 		trace4("tac", pc->label(), pc, sym->owner(), pc->typeName());
 
-		if(!sym->owner()){
+		if(!sym->owner()){ untested();
 			incomplete(); //?
 //			symbolSection...
 			continue;
@@ -489,7 +491,7 @@ void LegacyNetlister::throughAllComps(ostream_t&, SchematicModel const* scope_,
 		// because they are components
 //		assert(sym->owner()==&m);
 		if(sym->scope()==sckt){
-		}else{
+		}else{ untested();
 			// ?
 			assert(sym->label()=="main");
 		}
@@ -511,7 +513,7 @@ void LegacyNetlister::throughAllComps(ostream_t&, SchematicModel const* scope_,
 		}else{ untested();
 		}
 
-		if(dynamic_cast<SubcktBase const*>(sym)){
+		if(dynamic_cast<SubcktBase const*>(sym)){ untested();
 			trace2("is sckt?", sym->label(), sym->typeName());
 			incomplete();
 		}else if(sym && sym->subckt()){ // really??

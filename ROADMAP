@@ -8,15 +8,20 @@
 * move to qt5, graphicsView etc.
   - mouse/user actions rework
   - undo stack
-  - hidpi (?)
-* possibly qucs only (use qucsator 0.0.20)
+  - hidpi
+* qucs only (use qucsator 0.0.20)
 * refactoring
   - dissect Schematic into model, actions and doc
   - pluggable netlister and schematic parser/writer
   - pluggable components
   - untangle QucsDoc
-* probably postponed to 0.1.*
-  - some user interactions
+* legacy plugins
+  - partial 0.0.20 behaviour
+
+0.1.*
+=====
+* more qucs 0.0.20 features added
+  - more user interactions
   - SymbolEditor
   - netlister hacks
   - some plugins
@@ -24,3 +29,4 @@
 0.1.20
 ======
 * 0.0.20, feature-wise
+* extra stuff (optional)

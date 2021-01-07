@@ -59,5 +59,13 @@ struct Exception_File_Open :public Exception{
     :Exception(Message) {
   }
 };
+class istream_t;
+struct Exception_CS :public Exception {
+  std::string _cmd;
+  size_t _cursor;
+  const std::string message()const;
+  //Exception_CS(const std::string& Message, const CS& cmd, size_t cursor);
+  Exception_CS(const std::string& Message, const istream_t& cmd);
+};
 
 #endif

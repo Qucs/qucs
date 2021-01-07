@@ -32,7 +32,7 @@ static const char _typesep = ':';
 // not sure what this is about
 /// #ifdef __MINGW32__ // -> platform.h
 /// #include <windows.h>
-/// static QString pathName(QString longpath) {
+/// static QString pathName(QString longpath) { untested();
 ///   const char * lpath = QDir::toNativeSeparators(longpath).toAscii();
 ///   char spath[2048];
 ///   int len = GetShortPathNameA(lpath,spath,sizeof(spath)-1);
@@ -40,7 +40,7 @@ static const char _typesep = ':';
 ///   return QString(spath);
 /// }
 /// #else
-/// static QString pathName(QString longpath) {
+/// static QString pathName(QString longpath) { untested();
 ///   return longpath;
 /// }
 /// #endif
@@ -57,15 +57,15 @@ private: // Symbol
 	pos_t portPosition(unsigned) const {unreachable(); return pos_t(0,0);}
 	unsigned numPorts() const  override{ return 0;}
 	Port& port(unsigned) override{unreachable(); return *new Port();}
-	void setParameter(std::string const& name, std::string const& value){
-		if(name == "qucsatorsckthack"){
+	void setParameter(std::string const& name, std::string const& value){ untested();
+		if(name == "qucsatorsckthack"){ untested();
 			_text = value;
 		}else{ untested();
 			Symbol::setParameter(name, value);
 		}
 	}
-	std::string paramValue(std::string const& name) const override{
-		if(name == "qucsatorsckthack"){
+	std::string paramValue(std::string const& name) const override{ untested();
+		if(name == "qucsatorsckthack"){ untested();
 			return _text;
 		}else{ untested();
 			return Symbol::paramValue(name);
@@ -79,7 +79,7 @@ static Dispatcher<Symbol>::INSTALL p0(&symbol_dispatcher, "qucsatorScktHack", &d
 /* -------------------------------------------------------------------------------- */
 static std::string netLabel(Node const* nn)
 {
-	if(!nn){
+	if(!nn){ untested();
 		return "(null)";
 	}else{
 
@@ -196,12 +196,12 @@ void QucsatorLang::printSymbol(Symbol const* d, ostream_t& s) const
 	// is_device??
 	if(!d){ untested();
 		incomplete();
-	}else if(auto c=dynamic_cast<SubcktBase const*>(d)){
-		if(c->is_device()){
+	}else if(auto c=dynamic_cast<SubcktBase const*>(d)){ untested();
+		if(c->is_device()){ untested();
 			// here?
 		   s << "# got sckt device " << d->label() << "\n";
 			printSubckt(c, s);
-		}else{
+		}else{ untested();
 		   s << "# skip non-device " << d->label() << "\n";
 		}
 //	}else if(auto c=dynamic_cast<SubcktProto const*>(d)){ untested();
@@ -234,7 +234,7 @@ static void printDefHack(Symbol const* p, ostream_t& s)
 void QucsatorLang::printSubckt(SubcktBase const* p, ostream_t& s) const
 {
 	s << "# sckt " + p->label() + "\n";
-	if(p->label()[0] == ':'){
+	if(p->label()[0] == ':'){ untested();
 		return;
 	}else{
 	}
@@ -255,10 +255,10 @@ void QucsatorLang::printSubckt(SubcktBase const* p, ostream_t& s) const
 	if(h == sckt->end()){
 	}else if(auto p = dynamic_cast<Symbol const*>(*h)){
 		return printDefHack(p, s);
-	}else{
+	}else{ untested();
 	}
 	h = sckt->find_("main");
-	if(h == sckt->end()){
+	if(h == sckt->end()){ untested();
 	}else{
 		sckt = (*h)->scope();
 		sym = prechecked_cast<Symbol const*>(*h);
@@ -268,7 +268,7 @@ void QucsatorLang::printSubckt(SubcktBase const* p, ostream_t& s) const
 	s << "\n"; //?
 	if(label.c_str()[3] == _typesep){
 		s << ".Def:" << label.substr(4);
-	}else{
+	}else{ untested();
 		incomplete();
 	}
 
@@ -284,11 +284,11 @@ void QucsatorLang::printSubckt(SubcktBase const* p, ostream_t& s) const
 	// let's see.
 	if(!p->symbolPaintings()){
 		s << "# Missing ID & params " << p->label() << "\n";
-	}else{
+	}else{ untested();
 #if 0
-		for(auto pi : *p->symbolPaintings()){
+		for(auto pi : *p->symbolPaintings()){ untested();
 			incomplete();
-			if(pi->name() == ".ID ") {
+			if(pi->name() == ".ID ") { untested();
 				incomplete();
 				s << "# TODO ID & params" << pi->label() << pi->name() << "\n";
 		//		ID_Text *pid = (ID_Text*)pi;
@@ -297,7 +297,7 @@ void QucsatorLang::printSubckt(SubcktBase const* p, ostream_t& s) const
 		//			s = (*it)->Name; // keep 'Name' unchanged
 		//			(*tstream) << " " << s.replace("=", "=\"") << '"';
 		//			}
-			}else{
+			}else{ untested();
 			}
 		//		break;
 		}
@@ -309,12 +309,12 @@ void QucsatorLang::printSubckt(SubcktBase const* p, ostream_t& s) const
 	for(auto it_ : *sckt){
 		auto i = dynamic_cast<Symbol const*>(it_);
 		if(it_){
-		}else{
+		}else{ untested();
 			incomplete();
 			continue;
 		}
 
-      if(!i){
+      if(!i){ untested();
 			incomplete();
 		}else if(i->typeName() == "Port"){
 		}else if(i->typeName() == "Wire"){ // is Conductor?
@@ -329,7 +329,7 @@ void QucsatorLang::printSubckt(SubcktBase const* p, ostream_t& s) const
 }
 
 void QucsatorLang::printTaskElement(TaskElement const* c, ostream_t& s) const
-{
+{itested();
 	assert(c);
 	s << "." << c->typeName() << ":" << c->label();
 
@@ -338,7 +338,7 @@ void QucsatorLang::printTaskElement(TaskElement const* c, ostream_t& s) const
 		if(p2->name() == "Symbol") { // hack??
 		}else if(p2->name()=="p" && p2->value()==""){itested();
 			// unreachable
-		}else{
+		}else{itested();
 			s << " " << p2->name() << "=\"" << p2->value() << "\"";
 		}
 	}

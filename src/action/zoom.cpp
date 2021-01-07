@@ -96,8 +96,10 @@ QUndoCommand* MouseActionZoomIn::release(QMouseEvent* e)
 	  yShift -= (0.5*Doc->visibleHeight() + Doc->contentsY());
 	  Doc->scrollBy(xShift, yShift);
 	  */
+#if 0
 	  QucsMain->MouseMoveAction = &MouseActions::MMoveZoomIn;
 	  QucsMain->MouseReleaseAction = 0;
+#endif
 	  doc().releaseKeyboard();  // allow keyboard inputs again
 
   }else{ untested();

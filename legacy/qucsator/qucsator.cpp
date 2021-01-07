@@ -28,9 +28,9 @@
 void Simulator::notifyState(Simulator::state_t st)
 {
 	setState(st);
-	if(_ctrl){
+	if(_ctrl){itested();
 		_ctrl->stateChange();
-	}else{
+	}else{ untested();
 	}
 }
 /* -------------------------------------------------------------------------------- */
@@ -42,7 +42,7 @@ static const char _typesep = ':';
 // not sure what this is about
 /// #ifdef __MINGW32__ // -> platform.h
 /// #include <windows.h>
-/// static QString pathName(QString longpath) {
+/// static QString pathName(QString longpath) { untested();
 ///   const char * lpath = QDir::toNativeSeparators(longpath).toAscii();
 ///   char spath[2048];
 ///   int len = GetShortPathNameA(lpath,spath,sizeof(spath)-1);
@@ -50,7 +50,7 @@ static const char _typesep = ':';
 ///   return QString(spath);
 /// }
 /// #else
-/// static QString pathName(QString longpath) {
+/// static QString pathName(QString longpath) { untested();
 ///   return longpath;
 /// }
 /// #endif
@@ -88,10 +88,10 @@ private:
 static Dispatcher<Symbol>::INSTALL p0(&symbol_dispatcher, "qucsatorScktHack", &d0);
 /* -------------------------------------------------------------------------------- */
 static std::string netLabel(Node const* nn)
-{
-	if(!nn){
+{ untested();
+	if(!nn){ untested();
 		return "(null)";
-	}else{
+	}else{ untested();
 
 	}
 	Net const* n = nn->net();
@@ -99,44 +99,44 @@ static std::string netLabel(Node const* nn)
 	if(!n){ untested();
 		unreachable();
 		return "(null)";
-	}else if(n->hasLabel()){
+	}else if(n->hasLabel()){ untested();
 		return n->label();
-	}else{
+	}else{ untested();
 		return "_net" + std::to_string(n->pos());
 	}
 }
 /* -------------------------------------------------------------------------------- */
 static int notalnum(char c)
-{
+{ untested();
 	return !std::isalnum(c);
 }
 /* -------------------------------------------------------------------------------- */
 static std::string mangleType(std::string& t)
-{
-	if(t == "_BJT"){
+{ untested();
+	if(t == "_BJT"){ untested();
 		// for some reason...
 		t = "BJT";
-	}else{
+	}else{ untested();
 	}
 	trace1("mangle", t);
 	auto pos = t.find(typesep);
 	std::string ret="";
-	if(pos == std::string::npos){
-	}else{
+	if(pos == std::string::npos){ untested();
+	}else{ untested();
 		auto sub = t.substr(pos+1);
 		std::replace_if(sub.begin(), sub.end(), notalnum, '_');
 		ret = " Type=\"" + sub + "\"";
 	}
 	t = t.substr(0, pos);
-	if(t=="Lib"){
+	if(t=="Lib"){ untested();
 		t="Sub";
-	}else{
+	}else{ untested();
 	}
 	return ret;
 }
 /* -------------------------------------------------------------------------------- */
 static void printDefHack(Symbol const* p, ostream_t& s)
-{
+{ untested();
 	std::string hack = p->paramValue("qucsatorsckthack");
 	s << hack;
 }
@@ -145,6 +145,7 @@ static void printDefHack(Symbol const* p, ostream_t& s)
 class Qucsator : public Simulator{
 public:
 	explicit Qucsator() : Simulator(), _process(this), _ctrl(nullptr) {
+		setLabel("qucsator");
 	}
 	Qucsator(Qucsator const&) = delete;
 	~Qucsator(){}
@@ -153,10 +154,12 @@ private: // Simulator
   NetLang const* netLang() const override { untested();
 	  return dynamic_cast<NetLang const*>(language_dispatcher["qucsator"]);
   }
-  DocumentFormat const* netLister() const override {
+  DocumentFormat const* netLister() const override { untested();
 	  return dynamic_cast<DocumentFormat const*>(command_dispatcher["legacy_nl"]);
   }
-  void run(istream_t&, SimCtrl*) override;
+  void run(istream_t&, SimCtrl*) override; // really?
+  void do_it(istream_t&, SchematicModel const*) override;
+  void join() override;
   void kill() override{incomplete();}
   void init() override{incomplete();}
   std::string errorString() const{ return "incomplete"; }
@@ -164,22 +167,27 @@ private: // Simulator
   void collectData();
 
 public: // QProcess callback.
-	void slotStateChanged(QProcess::ProcessState st){ untested();
+	void slotStateChanged(QProcess::ProcessState st){itested();
 		trace2("slotStateChanged", st, _process.error());
 		switch(st){
-		case QProcess::NotRunning: untested();
+		case QProcess::NotRunning:itested();
 			if(_oldState == QProcess::Starting){ untested();
 				message(QucsMsgFatal, "Failed to start process.");
 				notifyState(Simulator::sst_error);
-			}else{ untested();
+			}else{
 				collectData();
 				notifyState(Simulator::sst_idle);
 			}
 			break;
 		case QProcess::Starting:
+			if(_process.error()==5){itested();
+				// this does not mean anything.
+			}else{
+			}
 //			notifyState(Simulator::sst_starting); // not interesting.
 			break;
 		case QProcess::Running:
+			trace2("slotStateChanged to running", st, _process.error());
 			notifyState(Simulator::sst_running);
 			break;
 		default:
@@ -205,55 +213,54 @@ struct default_sim{
 	}
 }ds;
 /* -------------------------------------------------------------------------------- */
-void Qucsator::run(istream_t& cs, SimCtrl* ctrl)
+void Qucsator::join()
 {
+	_process.waitForFinished();
+}
+/* -------------------------------------------------------------------------------- */
+void Qucsator::run(istream_t& cs, SimCtrl* ctrl)
+{ untested();
 	Simulator::attachCtrl(ctrl);
+	do_it(cs, nullptr);
+	// Simulator::detachCtrl(ctrl)?
+}
+/* -------------------------------------------------------------------------------- */
+void Qucsator::do_it(istream_t& cs, SchematicModel const* scope)
+{itested();
+	assert(has_ctrl());
 
-	cs.umatch("run");
+	cs >> "run"; //?
 	std::string what;
 	cs >> what;
+
+	if(what==""){
+		incomplete();
+		what="all"; // BUG?
+	}else{ untested();
+	}
 
 	// possibly not a good idea.
 	QString f = QucsSettings.QucsHomeDir.filePath("netlist.txt");
 
 	message(QucsMsgLog, "writing " + f.toStdString() + "...");
-	assert(doc());
+
 	auto d = dynamic_cast<SchematicDoc const*>(doc()); // BUG.
 
-#if 1
 	auto dl = command_dispatcher["legacy_nl"];
 	std::string s = "netlist mode=" + what + " " + f.toStdString();
 	trace1("qucsator nl?", s);
 	istream_t nlcmd(istream_t::_STRING, s);
-	auto hack = const_cast<SchematicModel*>(d->root()->subckt());
-	assert(hack);
-	dl->do_it(nlcmd, hack);
-#else
-	_netlistFile.setFileName(f);
-
-	if(!_netlistFile.open(QIODevice::WriteOnly | QFile::Truncate)){
-		message(QucsMsgFatal, "cannot open netlist file");
-		throw Exception("cannot write");
-	}else{
-	}
-
-	ostream_t Stream(&_netlistFile);
-	auto n = netLang();
-	assert(n);
-
-	assert(d);
-
-	SubcktBase const* m = d->root();
-	assert(m);
-	try{
+	SchematicModel* hack = nullptr;
+	if(scope){itested();
+		hack = const_cast<SchematicModel*>(scope);
+	}else{ untested();
 		incomplete();
-		n->printItem(Stream, m);
-	}catch(...){
-		message(QucsMsgFatal, "Error writing netlist file.");
-		throw;
+		// HACK
+		hack = const_cast<SchematicModel*>(d->root()->subckt());
 	}
-	_netlistFile.close();
-#endif
+	assert(hack);
+	trace1("qucsator", nlcmd.fullstring());
+	dl->do_it(nlcmd, hack);
 	//      ErrText->appendPlainText(tr("ERROR: Cannot write netlist file!"));
 	//      FinishSimulation(-1);
 	//      incomplete();
@@ -268,16 +275,34 @@ void Qucsator::run(istream_t& cs, SimCtrl* ctrl)
 		slotViewOctaveDock(true);
 		octave->runOctaveScript(Doc->docName());
 		return;
-	}else{
+	}else{ untested();
 	}
 #endif
 
-  QString DocName = doc()->docName();
-  QFileInfo Info(DocName);
-	  DataSet = QDir::toNativeSeparators(Info.path()) +
-		 QDir::separator() + doc()->DataSet;
+	QString DocName;
+
+	if(doc()){
+		DocName = doc()->docName();
+		QFileInfo Info(DocName);
+		DataSet = QDir::toNativeSeparators(Info.path()) +
+			QDir::separator() + doc()->DataSet;
+	} else{
+		// TODO: TMPFILENAME
+		char* t = strdup("/tmp/qucsator_XXXXXX.dat");
+		int h = mkstemps(t, 4);
+		close(h);
+		DataSet = QString(t);
+		free(t);
+
+//		DataSet = "/dev/stdout";
+	}
 
 	QString Program = QucsSettings.Qucsator;
+	if(Program==""){
+		unreachable();
+		Program="qucsator";
+	}else{
+	}
 	QStringList Arguments;
 	Arguments << "-b" << "-g" << "-i"
 		<< QucsSettings.QucsHomeDir.filePath("netlist.txt")
@@ -289,20 +314,24 @@ void Qucsator::run(istream_t& cs, SimCtrl* ctrl)
 	QString cmd = Program +" "+ Arguments.join(" ");
 	message(QucsMsgLog, cmd.toStdString());
 }
-
+/* -------------------------------------------------------------------------------- */
 void Qucsator::collectData()
-{
+{itested();
+	trace1("collectData", DataSet);
 	auto data = new SimOutputDat(DataSet.toStdString(), "");
 	releaseOutput(data);
-}
+//    CommonData::attach(data, &_common);
 
+//	 assert(data==_common);
+}
+/* -------------------------------------------------------------------------------- */
 }//namespace
 /* -------------------------------------------------------------------------------- */
 /* -------------------------------------------------------------------------------- */
 // BUG: must be anonymous
 /* -------------------------------------------------------------------------------- */
 void QucsatorProcess::slotStateChanged(QProcess::ProcessState newState)
-{
+{itested();
 	trace1("QucsatorProcess callback", newState);
 	assert(_simulator);
 	_simulator->slotStateChanged(newState);
@@ -316,7 +345,7 @@ void QucsatorProcess::stderr_()
 }
 /* -------------------------------------------------------------------------------- */
 void QucsatorProcess::stdout_()
-{ untested();
+{itested();
 	assert(_simulator);
 	std::string msg = readAllStandardOutput().toStdString();
 	trace1("QucsatorProcess stdout", msg);

@@ -30,7 +30,11 @@ static char* trim(char *string)
   return string;
 }
 /*--------------------------------------------------------------------------*/
-
+ostream_t::ostream_t(FILE* file)
+	: QTextStream(file, QIODevice::WriteOnly)
+{
+}
+/*--------------------------------------------------------------------------*/
 // BUG.
 ostream_t::ostream_t(QFile* /* BUG const */ file)
 	: QTextStream(file)
@@ -270,13 +274,13 @@ istream_t& istream_t::umatch(const std::string& s)
     }else if ((str2[0] == '\\') && (peek() == str2[1])) { untested();
       skip();
       str2 += 2;
-    }else if ((!optional) && (*str2 == '{')) { untested();
+    }else if ((!optional) && (*str2 == '{')) {itested();
       ++str2;
       optional = true;
-    }else if ((optional) && (*str2 == '}')) { untested();
+    }else if ((optional) && (*str2 == '}')) {itested();
       ++str2;
       optional = false;
-    }else if ((*str2 == ' ') && is_term()) { untested();
+    }else if ((*str2 == ' ') && is_term()) {itested();
       // blank in ref string matches anything that delimits tokens
       skipbl();
       ++str2;
@@ -286,8 +290,8 @@ istream_t& istream_t::umatch(const std::string& s)
 //    }else if ((OPT::case_insensitive) && (tolower(peek()) == tolower(*str2))) { untested();
 //      skip();
 //      ++str2;
-    }else if (optional) { untested();
-      while (*str2 != '}') { untested();
+    }else if (optional) {
+      while (*str2 != '}') {
 			++str2;
       }
     }else{
@@ -529,9 +533,9 @@ CS& istream_t::get_line(std::string const& prompt)
 /*--------------------------------------------------------------------------*/
 bool istream_t::atEnd()
 {
-	if(_stream){ untested();
+	if(_stream){
 		return _stream->atEnd();
-	}else{ untested();
+	}else{itested();
 		return is_end();
 	}
 }
@@ -590,6 +594,25 @@ char *getcmd(const char *prompt, char *buffer, int buflen)
 //		(mlog + mout) << buffer << '\n';
 		return buffer;
 	}
+}
+/*--------------------------------------------------------------------------*/
+namespace IO{
+  ostream_t mstdout(stdout);
+}
+/*--------------------------------------------------------------------------*/
+void CS::ctostr(char* des, int len, const std::string& term)
+{
+  skipbl();
+  int ii;
+  for (ii = 0;  ii < len && !is_term(term);  ++ii) {
+    des[ii] = ctoc();
+  }
+  des[ii] = '\0';
+
+  while (!is_term(term)) {untested();
+    skip();
+  }
+  skipcom();
 }
 /*--------------------------------------------------------------------------*/
 /*--------------------------------------------------------------------------*/

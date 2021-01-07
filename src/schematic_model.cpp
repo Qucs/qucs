@@ -46,7 +46,11 @@ SchematicModel::~SchematicModel()
 void SchematicModel::clear()
 {
 	incomplete(); // disconnect components?
-	Components.clear();
+	for(auto& pc : _cl){
+		delete pc;
+		pc = nullptr;
+	}
+	_cl.clear();
 	nodes().clear();
 	// paintings().clear();
 	_map.clear();
@@ -109,7 +113,8 @@ Element* SchematicModel::detach(Element* what)
 void SchematicModel::push_back(Element* what)
 {
 	_map.insert(std::make_pair(what->label(), what));
-	Components.push_back(what);
+	trace2("SchematicModel::push_back", what->label(), this);
+	_cl.push_back(what);
 }
 /*--------------------------------------------------------------------------*/
 // BUG: connect and push_back in one go. don't use.
@@ -118,9 +123,9 @@ void SchematicModel::pushBack(Element* what)
 	incomplete();
 	_map.insert(std::make_pair(what->label(), what));
 
-	trace2("SchematicModel::attach", what->label(), this);
+	trace2("SchematicModel::push_back", what->label(), this);
 	if(dynamic_cast<TaskElement*>(what)){ untested();
-		Components.push_back(what);
+		_cl.push_back(what);
 	}else if(auto c=dynamic_cast<Symbol*>(what)){
 		if(c->is_device()){
 			trace1("connect?", what->label());
@@ -129,9 +134,9 @@ void SchematicModel::pushBack(Element* what)
 			assert(!dynamic_cast<Conductor*>(what));
 		}
 
-		Components.push_back(c);
+		_cl.push_back(c);
 	}else if(dynamic_cast<Element*>(what)){
-		Components.push_back(what);
+		_cl.push_back(what);
 	}else{ untested();
 //		unreachable?
 		incomplete();
@@ -168,7 +173,7 @@ NodeMap& SchematicModel::nodes()
 // same, but const.
 //ElementList const& SchematicModel::components() const
 //{
-//	return Components;
+//	return _cl;
 //}
 
 NodeMap const& SchematicModel::nodes() const
@@ -252,7 +257,7 @@ Node const* SchematicModel::portValue(unsigned i) const
 /*--------------------------------------------------------------------------*/
 void SchematicModel::setOwner(Element* o)
 {
-	for(auto pc : Components){
+	for(auto pc : _cl){
 		assert(pc);
 		trace3("set_owner", pc->label(), pc, o);
 		pc->setOwner(o);
@@ -280,8 +285,8 @@ SchematicModel::const_iterator SchematicModel::find_again(const std::string& sho
 {
 	// incomplete, does not find again.
 	trace1("find_again", short_name);
-	auto it = std::find(Components.begin(), Components.end(), short_name);
-	trace2("found?", Components.size(), it==Components.end());
+	auto it = std::find(_cl.begin(), _cl.end(), short_name);
+	trace2("found?", _cl.size(), it==_cl.end());
 	return it;
 }
 /*--------------------------------------------------------------------------*/
@@ -347,6 +352,11 @@ size_t numWires(SchematicModel const& m)
 		}
 	}
 	return r;
+}
+/*--------------------------------------------------------------------------*/
+void SchematicModel::precalc_first()
+{
+	incomplete();
 }
 /*--------------------------------------------------------------------------*/
 /*--------------------------------------------------------------------------*/

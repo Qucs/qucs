@@ -24,12 +24,12 @@
 #include <QDebug>
 #include "object.h"
 #include "language.h"
-#include "data.h"
-
+#include "output.h"
+/*--------------------------------------------------------------------------*/
 class DocumentFormat;
 class Component;
-class QucsData;
-
+class CommonData;
+/*--------------------------------------------------------------------------*/
 // simulator controller
 struct SimCtrl{
   virtual void stateChange() = 0;
@@ -37,9 +37,9 @@ struct SimCtrl{
     trace2("received message", level, msg);
   }
 };
-
-// simulatorDriver maybe?
-class Simulator : public Object{
+/*--------------------------------------------------------------------------*/
+// must be Element, so it fits into a cl
+class Simulator : public Data {
 public:
   typedef enum {
     sst_killed = -2, // needed?
@@ -56,11 +56,16 @@ public:
   virtual NetLang const* netLang() const{return nullptr;}
   virtual DocumentFormat const* netLister() const{return nullptr;}
 //  virtual SimOutputData const* results(){}
+//
+private: // Element
+  void paint(ViewPainter*) const override{ untested(); }
 
 public:
   void attachDoc(QucsDoc*);
   QucsDoc const* doc() const {return _doc;}
-  virtual void run(istream_t& cs, SimCtrl* ctx) = 0;
+  virtual void run(istream_t& cs, SimCtrl* ctx) = 0; // really??
+  virtual void join() = 0;
+  virtual void do_it(istream_t& cs, SchematicModel const* ctx) = 0;
   virtual std::string errorString() const = 0;
   virtual void kill() = 0;
 
@@ -72,29 +77,29 @@ public:
 protected:
   void setState(state_t s){_state = s;}
   void notifyState(state_t);
-  void releaseOutput(QucsData* d) {
-    QucsData::attach(d, _data_p);
+  void releaseOutput(CommonData* d) {
+    CommonData::attach(d, _data_p);
   }
 
 public:
-  void setOutput(QucsData** d) {
+  void setOutput(CommonData** d) {
     assert(d);
     _data_p = d;
-    // QucsData::attach(d, _data_p);
   }
 
 private:
   virtual void init() = 0;
 
+protected:
+  bool has_ctrl() const{return _ctrl;}
+
 private:
   QucsDoc* _doc; // const?
-  QucsData** _data_p;
+  CommonData** _data_p;
   int _state;
   SimCtrl* _ctrl;
 }; // Simulator
-
-
-
-
+/*--------------------------------------------------------------------------*/
+/*--------------------------------------------------------------------------*/
 #endif
 // vim:ts=8:sw=2:noet

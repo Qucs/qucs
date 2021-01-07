@@ -933,8 +933,11 @@ int SchematicDoc::save()
 //    undoSymbol.at(undoSymbolIdx)->replace(1, 1, 'i');
   }
   // update the subcircuit file lookup hashes
+  incomplete();
+#if 0
   QucsMain->updateSchNameHash();
   QucsMain->updateSpiceNameHash();
+#endif
 
   return result;
 }

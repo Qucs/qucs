@@ -140,4 +140,5 @@ CLEANFILES = \
 ${PRJ_TESTS:%.prj=%.log} : .P
 ${SH_TESTS:%.sh=%.log} : .P
 ${QX_TESTS:%.qx=%.log} : .P
+${QX_TESTS:%.qx=out/%.qx.out} : .P
 ${check_PROGRAMS:%=%.log} : .P

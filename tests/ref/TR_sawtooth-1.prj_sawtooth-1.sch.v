@@ -10,6 +10,7 @@ Vdc #(.U(10)) V1(_net2, gnd);
 GND #() *(gnd);
 R #(.R(400), .Temp(26.85), .Tc1(0.0), .Tc2(0.0), .Tnom(26.85), .Symbol(european)) R1(Out, _net2);
 R #(.R(12), .Temp(26.85), .Tc1(0.0), .Tc2(0.0), .Tnom(26.85), .Symbol(european)) R2(_net18, _net2);
+//TR1
 endmodule // main
 
 Sub #(.File()) Sub((null));

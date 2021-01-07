@@ -10,6 +10,7 @@ Vdc #(.U(10)) V1(net_420_100, net_420_160);
 GND #() anonymous_gnd_hack_3(net_420_160);
 R #(.R(400), .Temp(26.85), .Tc1(0.0), .Tc2(0.0), .Tnom(26.85), .Symbol(european)) R1(net_320_160, net_320_100);
 R #(.R(12), .Temp(26.85), .Tc1(0.0), .Tc2(0.0), .Tnom(26.85), .Symbol(european)) R2(net_80_160, net_80_100);
+//TR1
 wire #() noname(net_80_230, net_80_260);
 wire #() noname(net_80_230, net_200_230);
 wire #() noname(net_200_230, net_230_230);

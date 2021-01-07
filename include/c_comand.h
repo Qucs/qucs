@@ -24,6 +24,17 @@
 //testing=trivial 2006.07.17
 #ifndef C_COMAND_H
 #define C_COMAND_H
+
+/*--------------------------------------------------------------------------*/
+// QUCS hacks
+#ifndef CMD
+#error // not yet
+#endif
+#include "object.h"
+#include "schematic_model.h"
+#define CKT_BASE Object
+#define CARD_LIST SchematicModel
+#define CS istream_t
 //#include "e_card.h"
 /*--------------------------------------------------------------------------*/
 class CS;

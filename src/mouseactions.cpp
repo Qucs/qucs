@@ -64,7 +64,7 @@ MouseActions::MouseActions(QucsDoc& d)
 
   // ...............................................................
   // initialize menu appearing by right mouse button click on component
-  ComponentMenu = new QMenu(QucsMain);
+  ComponentMenu = new QMenu(d._app);
   // focusMEvent   = new QMouseEvent(QEvent::MouseButtonPress, QPoint(0,0),
   //                 Qt::NoButton, Qt::NoButton, Qt::NoModifier);
 
@@ -1809,6 +1809,7 @@ void MouseActions::MDoubleClickWire2(SchematicDoc *, QMouseEvent *)
 {
   incomplete();
   // MPressWire2(Doc, Event);
+#if 0
 
   if(formerAction)
     QucsMain->select->setChecked(true);  // restore old action
@@ -1817,6 +1818,7 @@ void MouseActions::MDoubleClickWire2(SchematicDoc *, QMouseEvent *)
 //    QucsMain->MousePressAction = &MouseActions::MPressWire1;
     QucsMain->MouseDoubleClickAction = 0;
   }
+#endif
 }
 
 #if 0

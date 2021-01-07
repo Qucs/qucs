@@ -24,6 +24,7 @@ private:
 	ostream_t(ostream_t const&) = delete;
 public:
 //	explicit ostream_t(){ incomplete(); }
+	explicit ostream_t(FILE* f);
 	explicit ostream_t(QFile* /* BUG const */ file);
 	explicit ostream_t(QString /* BUG const */ * filename) :
 		QTextStream(filename, QIODevice::WriteOnly){}
@@ -55,5 +56,8 @@ inline std::ostream& operator<<(std::ostream&o, std::pair<int, int> const& p)
   return o << "(" << p.first << ", " << p.second << ")";
 }
 
+namespace IO{
+  extern ostream_t mstdout;
+}
 
 #endif

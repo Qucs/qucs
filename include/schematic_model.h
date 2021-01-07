@@ -79,6 +79,32 @@ public: // stub
 	typedef std::list<Element*> ElementList;
 	typedef ElementList::iterator iterator;
 	typedef ElementList::const_iterator const_iterator;
+  class fat_iterator {
+  private:
+    SchematicModel* _list;
+    iterator   _iter;
+  private:
+    explicit	  fat_iterator()	{unreachable();}
+  public:
+		  fat_iterator(const fat_iterator& p)
+					: _list(p._list), _iter(p._iter) {}
+    explicit	  fat_iterator(SchematicModel* l, iterator i)
+					: _list(l), _iter(i) {}
+    fat_iterator& operator=(const fat_iterator& p)
+					{_list = p._list, _iter = p._iter; return *this;}
+    bool	  is_end()const		{return _iter == _list->end();}
+    Element*	  operator*()		{return (is_end()) ? NULL : *_iter;}
+    fat_iterator& operator++()		{assert(!is_end()); ++_iter; return *this;}
+    fat_iterator  operator++(int)
+				{assert(!is_end()); fat_iterator t(*this); ++_iter; return t;}
+    bool	  operator==(const fat_iterator& x)const
+				{unreachable(); assert(_list==x._list); return (_iter==x._iter);}
+    bool	  operator!=(const fat_iterator& x)const
+					{assert(_list==x._list); return (_iter!=x._iter);}
+    iterator	  iter()const		{return _iter;}
+    fat_iterator  end()const		{return fat_iterator(_list, _list->end());}
+    void	  insert(Element* c)	{_list->insert(iter(),c);}
+  };
 private:
 	SchematicModel(SchematicModel const&) = delete;
 public:
@@ -90,7 +116,7 @@ public: // stuff saved from Schematic
 private:
 	void detachFromNode(Element* what, Node* from);
 	void removeRef(Element* s) { erase(std::find(begin(), end(), s)); }
-	void erase(const_iterator what){Components.erase(what);}
+	void erase(const_iterator what){_cl.erase(what);}
 
 public:
 	void collectDigitalSignals(void);
@@ -115,9 +141,12 @@ public:
 public: // container
 	void clear();
 	void push_back(Element* what);
+	SchematicModel& insert(SchematicModel::iterator i, Element* c) { untested();
+		_cl.insert(i, c);  return *this;
+	}
 	void pushBack(Element* what);
 	void erase(Element* what);
-	size_t size() const{ return Components.size(); }
+	size_t size() const{ return _cl.size(); }
 
 public: // compat? test? debug?
 	size_t nodeCount() const{ return nodes().size(); }
@@ -157,8 +186,10 @@ public:
 //	iterator find_again(const std::string& short_name, iterator);
   // return a const_iterator
 	SchematicModel const* parent() const;
-	const_iterator begin()const {return Components.begin();}
-	const_iterator end()const {return Components.end();}
+	const_iterator begin()const {return _cl.begin();}
+	const_iterator end()const {return _cl.end();}
+	iterator begin() {return _cl.begin();}
+	iterator end() {return _cl.end();}
 	const_iterator find_again(const std::string& short_name, const_iterator)const;
 	const_iterator find_(const std::string& short_name)const
 					{return find_again(short_name, begin());}
@@ -174,7 +205,7 @@ public:
 	Node const* portValue(unsigned i) const;
 
 private:
-	ElementList Components;
+	ElementList _cl;
 	NetList Nets;
 	NodeMap Nodes;
 //	SchematicSymbol* _symbol;
@@ -194,12 +225,23 @@ private:
 	std::multimap<std::string, Element*> _map;
 	mutable PARAM_LIST* _params;
 
+public:
+	void precalc_first();
+
 public: // for now.
 //	friend class SchematicDoc;
 //	friend class NodeMap;
 //	friend class SchematicEdit;
 //	friend class SchematicSymbol;
 }; // schematicmodel
+/*--------------------------------------------------------------------------*/
+SchematicModel::fat_iterator findbranch(istream_t&, SchematicModel::fat_iterator);
+/*--------------------------------------------------------------------------*/
+inline SchematicModel::fat_iterator findbranch(istream_t& cmd, SchematicModel* cl)
+{
+  assert(cl);
+  return findbranch(cmd, SchematicModel::fat_iterator(cl, cl->begin()));
+}
 /*--------------------------------------------------------------------------*/
 size_t numWires(SchematicModel const& m);
 /*--------------------------------------------------------------------------*/

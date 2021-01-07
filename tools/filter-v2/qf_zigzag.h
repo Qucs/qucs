@@ -5,7 +5,7 @@
 
 #include <vector>
 //Added by qt3to4:
-#include <Q3TextStream>
+#include <QTextStream>
 using namespace std;
 
 class qf_zigzag:  public qf_tform {
@@ -32,12 +32,12 @@ class qf_zigzag:  public qf_tform {
 
   // Dump
  
-  void		    dump   (Q3TextStream&);
+  void		    dump   (QTextStream&);
   friend qf_tform* zigzag  (qf_spec* Tspec) {return new qf_zigzag (Tspec);}
 };
 
 qf_tform*	    zigzag  (qf_spec*);
-void		    zzdump  (qf_tform*, Q3TextStream&);
+void		    zzdump  (qf_tform*, QTextStream&);
 
   # ifdef _QF_API
 

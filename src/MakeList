@@ -9,9 +9,11 @@ CPP_SRC = \
 	component_widget.cpp \
 	conductor.cpp \
 	cursors.cpp \
+	data.cc \
 	diagram.cpp \
 	element.cpp \
 	element_graphics.cpp \
+	findbr.cc \
 	geometry.cpp \
 	ghostwire.cpp \
 	graph.cpp \
@@ -20,6 +22,7 @@ CPP_SRC = \
 	io_error.cc \
 	io_findf.cc \
 	language.cpp \
+	l_wmatch.cc \
 	marker.cpp \
 	messagedock.cpp \
 	misc.cpp \
@@ -33,6 +36,7 @@ CPP_SRC = \
 	nodemap.cpp \
 	object.cpp \
 	octave_window.cpp \
+	output.cpp \
 	painting.cpp \
 	place.cpp \
 	port.cpp \
@@ -75,7 +79,6 @@ QMOCHEADERS = \
 	projectView.h \
 	schematic_doc.h \
 	schematic_scene.h \
-	schematic_model.h \
 	textdoc.h \
 	schematic_dialog.h \
 	qucs_tabs.h \
@@ -105,7 +108,6 @@ DIALG_MOCHEADERS = \
 HDR1 = \
 	actions.h \
 	cmdeltdlg.h \
-	command.h \
 	conductor.h \
 	docfmt.h \
 	dynamic_cc.h \
@@ -157,7 +159,6 @@ HDR2 = \
 	printerwriter.h \
 	projectView.h \
 	schematic_lang.h \
-	schematic_model.h \
 	syntax.h \
 	viewpainter.h \
 	wirelabel.h \

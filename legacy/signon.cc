@@ -28,6 +28,7 @@ static class SIGN_ON {
 public:
   SIGN_ON() {
     std::cout << "legacy plugins: " PATCHLEVEL "\n";
+    std::cout.flush();
   }
 } sign_on;
 /*--------------------------------------------------------------------------*/

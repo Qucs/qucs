@@ -22,7 +22,7 @@
 #include "qf_common.h"
 #include "qf_comp.h"
 //Added by qt3to4:
-#include <Q3TextStream>
+#include <QTextStream>
 
 // DUMP functions and utilities
 static QString valstr (qf_double_t num) {
@@ -53,9 +53,9 @@ static QString valstr (qf_double_t num) {
   }
 
   QString buffer;
-  Q3TextStream str (& buffer, QIODevice::WriteOnly);
+  QTextStream str (& buffer, QIODevice::WriteOnly);
 
-  str. precision (3);
+  str. setRealNumberPrecision(3);
 
   str << num;
   if (c) 
@@ -65,7 +65,7 @@ static QString valstr (qf_double_t num) {
 }
 
 void qf_cmp1::dump (unsigned n1, unsigned n2,
-		    Q3TextStream& com, Q3TextStream& wir) {
+		    QTextStream& com, QTextStream& wir) {
 
   // type of component
   if (name == "CAP")
@@ -107,7 +107,7 @@ void qf_cmp1::dump (unsigned n1, unsigned n2,
 }
 
 void qf_cmplc::dump (unsigned n1, unsigned n2,
-		     Q3TextStream& com, Q3TextStream& wir) {
+		     QTextStream& com, QTextStream& wir) {
 
   if (name == "PLC") {
     // parallel L and C to ground
@@ -238,14 +238,14 @@ void qf_cmplc::dump (unsigned n1, unsigned n2,
 }
 
 void  qf_pslc::dump (unsigned n1, unsigned n2,
-		     Q3TextStream& s, Q3TextStream& wir) {
+		     QTextStream& s, QTextStream& wir) {
   qf_slc (vC, vL, shnt, gnd). dump (n1, n2, s, wir);
   qf_slc (vC2, vL2, shnt, gnd). dump (n1, n2, s, wir);
 }
 
 // Dumps the whole filter structure
 int qf_lcmp::dump_node (int& p, list <qf_cmp*>::iterator& i,
-			  Q3TextStream& com, Q3TextStream& wir) {
+			  QTextStream& com, QTextStream& wir) {
 
   int n = p + 1;
   int g = 0;
@@ -291,7 +291,7 @@ int qf_lcmp::dump_node (int& p, list <qf_cmp*>::iterator& i,
   return -n;
 }
 
-void qf_lcmp::dump_all (Q3TextStream& out) {
+void qf_lcmp::dump_all (QTextStream& out) {
 
   if (lst.size () == 0) {
     return;
@@ -299,8 +299,8 @@ void qf_lcmp::dump_all (Q3TextStream& out) {
 
   int node = 1;
   QByteArray  buf1, buf2;
-  Q3TextStream com (buf1, QIODevice::ReadWrite);
-  Q3TextStream wir (buf2, QIODevice::ReadWrite);
+  QTextStream com (buf1, QIODevice::ReadWrite);
+  QTextStream wir (buf2, QIODevice::ReadWrite);
 
   x = 0;
   y = 0;

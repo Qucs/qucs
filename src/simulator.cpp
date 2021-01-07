@@ -19,33 +19,35 @@
 /* -------------------------------------------------------------------------------- */
 Simulator::~Simulator()
 {
-	if(_data_p){ untested();
-		QucsData::detach(_data_p);
-	}else{
+	if(_data_p){
+		CommonData::detach(_data_p);
+	}else{ untested();
 	}
 }
 /* -------------------------------------------------------------------------------- */
 Simulator::Simulator()
-  : _doc(nullptr),
-    _data_p(nullptr),
+  : Data(),
+    _doc(nullptr),
+    _data_p(&_common),
     _state(sst_idle),
     _ctrl(nullptr)
 {
 }
 /* -------------------------------------------------------------------------------- */
 void Simulator::attachCtrl(SimCtrl* ctrl)
-{
-  if(!_ctrl){
+{itested();
+  if(!_ctrl){itested();
     _ctrl = ctrl;
-  }else if(_ctrl==ctrl){
-  }else{
+  }else if(_ctrl==ctrl){ untested();
+  }else{ untested();
     throw Exception("already controlled");
   }
 }
 /* -------------------------------------------------------------------------------- */
 void Simulator::detachCtrl(SimCtrl const* ctrl)
-{
-  if(_ctrl == ctrl){ untested();
+{itested();
+  if(_ctrl == ctrl){itested();
+	 join();
     _ctrl = nullptr;
   }else{ untested();
     _ctrl = nullptr;
@@ -55,10 +57,10 @@ void Simulator::detachCtrl(SimCtrl const* ctrl)
 }
 /* -------------------------------------------------------------------------------- */
 void Simulator::message(QucsMsgType lvl, std::string const& msg)
-{
-	if(_ctrl){
+{itested();
+	if(_ctrl){itested();
 		_ctrl->message(lvl, msg);
-	}else{
+	}else{ untested();
 		Object::message(lvl, msg.c_str());
 	}
 }

@@ -176,38 +176,6 @@ static Dispatcher<DocumentLanguage>::INSTALL
 static Component* parseComponentObsoleteCallback(const QString& _s, Component* c);
 static TaskElement* loadtaskElement(const QString& _s, TaskElement* c);
 /*--------------------------------------------------------------------------*/
-#if 0
-Element* LegacySchematicLanguage::loadElement_(const QString& _s, Element* e) const
-{ untested();
-	trace1("loadElement", _s);
-	if(TaskElement* c=dynamic_cast<TaskElement*>(e)){ untested();
-		c = loadtaskElement(_s, c);
-		// incomplete();
-	}else if(Component* c=dynamic_cast<Component*>(e)){ untested();
-		trace1("loadComponent", _s);
-		// legacy components
-		// will not work non-qucs-.sch languages
-		c = parseComponentObsoleteCallback(_s, c);
-
-		QString cstr = c->name();   // is perhaps changed in "recreate" (e.g. subcircuit)
-		int x = c->tx;
-		int y = c->ty;
-		// c->setSchematic (p);
-	//	s->recreate(); // half-expand subcircuits? why not "precalc"?
-	//	               // why not in constructor? it needs parameters.
-		c->setLabel(cstr.toStdString());
-		c->tx = x;
-		c->ty = y;
-	}else if(auto s=dynamic_cast<Symbol*>(e)){itested();
-		s = parseSymbol(_s, s);
-	}else{ untested();
-		incomplete();
-		return e;
-	}
-	return nullptr;
-}
-#endif
-/*--------------------------------------------------------------------------*/
 static std::list<Element*> implicit_hack;
 /*--------------------------------------------------------------------------*/
 static bool obsolete_wireload(Symbol* w, const QString& sc)
@@ -371,7 +339,7 @@ void LegacySchematicLanguage::printSubckt(SubcktBase const*, ostream_t&) const
 }
 /*--------------------------------------------------------------------------*/
 void LegacySchematicLanguage::printTaskElement(TaskElement const* c, ostream_t& s) const
-{ untested();
+{
 	s << "  <." << c->Name << " ";
 
 	if(c->label()==""){
@@ -385,7 +353,7 @@ void LegacySchematicLanguage::printTaskElement(TaskElement const* c, ostream_t& 
 	int i = 0;
 	if(!c->showName){ untested();
 		i = 4;
-	}else{ untested();
+	}else{
 	}
 	std::string active = c->paramValue("$mfactor");
 	i |= atoi(active.c_str());
@@ -400,16 +368,16 @@ void LegacySchematicLanguage::printTaskElement(TaskElement const* c, ostream_t& 
 	// FIXME: ask element for properties, not for dictionary
 	auto cc=const_cast<TaskElement*>(c); // BUGBUGBUGBUG
 	// cannot access Props without this hack
-	for(Property *p1 = cc->Props.first(); p1 != 0; p1 = cc->Props.next()) { untested();
+	for(Property *p1 = cc->Props.first(); p1 != 0; p1 = cc->Props.next()) {
 		if(p1->Description.isEmpty()){ untested();
 			s << " \""+p1->Name+"="+p1->Value+"\"";   // e.g. for equations
-		}else{ untested();
+		}else{
 			s << " \""+p1->Value+"\"";
 		}
 		s << " ";
-		if(p1->display){ untested();
+		if(p1->display){
 			s << "1";
-		}else{ untested();
+		}else{
 			s << "0";
 		}
 	}
@@ -552,13 +520,13 @@ void LegacySchematicLanguage::printSymbol(Symbol const* sym, ostream_t& s) const
 } // printSymbol
 
 static TaskElement* loadtaskElement(const QString& _s, TaskElement* c)
-{ untested();
+{
 	trace1("loadtaskElement", c->label());
 	bool ok;
 	int  ttx, tty, tmp;
 	QString s = _s;
 
-	if(s.at(0) != '<'){ untested();
+	if(s.at(0) != '<'){
 	}else if(s.at(s.length()-1) != '>'){ untested();
 	}else{ untested();
 		s = s.mid(1, s.length()-2);   // cut off start and end character
@@ -581,7 +549,7 @@ static TaskElement* loadtaskElement(const QString& _s, TaskElement* c)
 
 		if(tmp & 4){ untested();
 			c->showName = false;
-		}else{ untested();
+		}else{
 			// use default, e.g. never show name for GND (bug?)
 		}
 
@@ -611,14 +579,14 @@ static TaskElement* loadtaskElement(const QString& _s, TaskElement* c)
 		// FIXME. use c->paramCount()
 
 		/// BUG FIXME. dont use Component parameter dictionary.
-		for(; tmp<=(int)counts/2; tmp++){ untested();
+		for(; tmp<=(int)counts/2; tmp++){
 			c->Props.append(new Property("p", "", true, " "));
 		}
 
 		// load all properties
 		Property *p1;
 		qDebug() << "load command props" << s;
-		for(p1 = c->Props.first(); p1 != 0; p1 = c->Props.next()) { untested();
+		for(p1 = c->Props.first(); p1 != 0; p1 = c->Props.next()) {
 			qDebug() << "load command props" << z;
 			z++;
 			n = s.section('"',z,z);    // property value
@@ -626,14 +594,14 @@ static TaskElement* loadtaskElement(const QString& _s, TaskElement* c)
 			//qDebug() << "LOAD: " << p1->Description;
 
 			// not all properties have to be mentioned (backward compatible)
-			if(z > counts) { untested();
+			if(z > counts) {
 				if(p1->Description.isEmpty()){ untested();
 					c->Props.remove();    // remove if allocated in vain
-				}else{ untested();
+				}else{
 				}
 
 				return c;
-			}else{ untested();
+			}else{
 			}
 
 			p1->Value = n;
@@ -908,7 +876,7 @@ static Component* parseComponentObsoleteCallback(const QString& _s, Component* c
 //	assert(tmp == c->ParamPositionHack()); //?
 
 	/// BUG FIXME. dont use Component parameter dictionary.
-	for(; tmp<=(int)counts/2; tmp++){ untested();
+	for(; tmp<=(int)counts/2; tmp++){
 		incomplete();
 		c->Props.append(new Property("p", "", true, " "));
 		//	sym->setParameter("p__" + std::to_string(tmp), "");
@@ -1037,7 +1005,7 @@ Element* LegacySchematicLanguage::parseItem(istream_t& c, Element* e) const
 
 	if(auto s=dynamic_cast<Symbol*>(e)){
 		parseSymbol(c, s);
-	}else if(auto t=dynamic_cast<TaskElement*>(e)){untested();
+	}else if(auto t=dynamic_cast<TaskElement*>(e)){
 		loadtaskElement(l, t);
 	}else if(auto d=dynamic_cast<Diagram*>(e)){
 		loadDiagram(d, c);
@@ -1111,6 +1079,8 @@ std::string LegacySchematicLanguage::findType(istream_t& c) const
 	// untangle non-commands.
 	if(typestring == ".AC"){
 		return "AC";
+	}else if(typestring == ".TR"){
+		return "TR";
 	}else if(typestring == ".DC"){
 		return "DC";
 	}else if(typestring == ".SP"){

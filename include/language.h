@@ -4,7 +4,7 @@
 #include "io.h"
 #include "object.h"
 
-class Command;
+//class Command;
 class DEV_DOT;
 class Element;
 class istream_t;

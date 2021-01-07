@@ -12,16 +12,19 @@ class Qucsator;
 class QucsatorProcess : public QProcess {
 	Q_OBJECT;
 public:
-	explicit QucsatorProcess(Qucsator* q) : QProcess(), _simulator(q) {}
+	explicit QucsatorProcess(Qucsator* q) : QProcess(), _simulator(q) {
+	}
 
-	void start(QString const& a, QStringList const& b){ untested();
-	  disconnect(this, 0, 0, 0);
-	  connect(this, SIGNAL(stateChanged(QProcess::ProcessState)),
-                      SLOT(slotStateChanged(QProcess::ProcessState)));
-	  connect(this, SIGNAL(readyReadStandardError()), SLOT(stderr_()));
-	  connect(this, SIGNAL(readyReadStandardOutput()), SLOT(stdout_()));
+	void start(QString const& a, QStringList const& b){itested();
+		trace0("QucsatorProcess::start");
+		disconnect(this, 0, 0, 0);
+		connect(this, SIGNAL(stateChanged(QProcess::ProcessState)),
+				SLOT(slotStateChanged(QProcess::ProcessState)));
+		connect(this, SIGNAL(readyReadStandardError()), SLOT(stderr_()));
+		connect(this, SIGNAL(readyReadStandardOutput()), SLOT(stdout_()));
 
-	  QProcess::start(a, b);
+		QProcess::start(a, b);
+		trace0("QucsatorProcess started");
 	}
 
 protected slots:

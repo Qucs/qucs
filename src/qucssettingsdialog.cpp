@@ -671,9 +671,11 @@ void QucsSettingsDialog::slotApply()
     }
 
     // update the schenatic filelist hash
+#if 0
     QucsMain->updatePathList(currentPaths);
     QucsMain->updateSchNameHash();
     QucsMain->updateSpiceNameHash();
+#endif
 
 }
 

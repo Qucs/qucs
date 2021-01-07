@@ -338,12 +338,12 @@ private: // Symbol
 			return _section.Value.toStdString();
 		case 3:
 			return _component.Value.toStdString();
-		default: untested();
+		default:
 			if(m - 4 < 0){
 				return Symbol::paramValue(i);
 			}else if(m - 4 >= int(_param_names.size())){ untested();
 				return Symbol::paramValue(i);
-			}else if(auto p = dynamic_cast<PARAMETER<double>* >(_params[m-4])){ untested();
+			}else if(auto p = dynamic_cast<PARAMETER<double>* >(_params[m-4])){
 			  	return p->string();
 			}else{
 				unreachable();
@@ -365,7 +365,7 @@ private: // Symbol
 		default:itested();
 			if(m - 4 < 0){
 				return Symbol::paramName(i);
-			}else if(m - 4 < int(_param_names.size())){ untested();
+			}else if(m - 4 < int(_param_names.size())){
 			  	return _param_names[m-4];
 			}else{
 				return Symbol::paramName(i);
