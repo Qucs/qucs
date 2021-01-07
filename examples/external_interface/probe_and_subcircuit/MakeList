@@ -1,0 +1,5 @@
+SCHEMATICS = \
+	example_probe_and_subcircuit.sch \
+	example_subcircuit.sch \
+	example_sub_subcircuit.sch
+

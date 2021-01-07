@@ -1,0 +1,5 @@
+SRCS = \
+	main.cpp
+
+CBP = \
+	qucs_cpp_interface_example.cbp

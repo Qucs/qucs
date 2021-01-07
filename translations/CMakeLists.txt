@@ -1,8 +1,13 @@
+project(Translations)
+cmake_minimum_required(VERSION 3.19)
+
 #
 # Handle Qucs translations
 
 # TODO - get list of .cpp files to refresh/update the .ts files - evaluate need
 # to merge the qtgeneric_XX.ts into the final .qm (see translations/Makefile.am)
+
+find_package(Qt5 COMPONENTS Core LinguistTools REQUIRED)
 
 #
 # Qucs translations
@@ -13,9 +18,9 @@ file(GLOB TRANSLATIONS_FILES qucs_*.ts)
 option(UPDATE_TRANSLATIONS "Update source translation translations/*.ts" "OFF")
 
 if(UPDATE_TRANSLATIONS)
-  qt4_create_translation(QM_FILES ${FILES_TO_TRANSLATE} ${TRANSLATIONS_FILES})
-else(UPDATE_TRANSLATIONS)
-  qt4_add_translation(QM_FILES ${TRANSLATIONS_FILES})
+  qt5_create_translation(QM_FILES ${FILES_TO_TRANSLATE} ${TRANSLATIONS_FILES})
+else()
+  qt5_add_translation(QM_FILES ${TRANSLATIONS_FILES}) # why this command is unknown?
 endif(UPDATE_TRANSLATIONS)
 
 add_custom_target(translations ALL DEPENDS ${QM_FILES})
