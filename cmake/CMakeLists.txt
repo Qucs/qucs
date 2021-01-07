@@ -10,17 +10,8 @@ cmake_policy(VERSION 3.18)
 set(QUCS_URL "https://sf.net/p/qucs")
 set(QUCS_BUGREPORT "qucs-bugs@lists.sourceforge.net")
 
-set(GIT unknown)
-if(EXISTS ${CMAKE_SOURCE_DIR}/../.git)
-  find_package(Git)
-  # Get the latest abbreviated commit hash of the working branch
-  execute_process(
-    COMMAND ${GIT_EXECUTABLE} log --pretty=format:%h -n 1u
-    WORKING_DIRECTORY ${CMAKE_SOURCE_DIR}
-    OUTPUT_VARIABLE GIT_COMMIT_HASH)
-  set(GIT ${GIT_COMMIT_HASH})
-  message(STATUS "Found Git repository, last commit hash: ${GIT}")
-endif()
+include(determineGitCommitHash.cmake)
+determineGitCommitHash()
 
 message(STATUS "${PROJECT_NAME} ${CMAKE_INSTALL_PREFIX}
     ${qucs-suite_BINARY_DIR}")
