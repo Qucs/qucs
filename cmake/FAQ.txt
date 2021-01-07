@@ -75,3 +75,7 @@ for some reason id_dialog.h gets not mocked. Do not understand why but
 qt5_wrap_cpp(EXTRA_DIST_MOCCED "id_dialog.h")
 solves the problem
 
+# Unknown CMake command "qt5_add_translation".
+In translations cmake file
+find_package(Qt5 COMPONENTS Core LinguistTools REQUIRED) is needed. Both Core and LinguistTools are needed
+
