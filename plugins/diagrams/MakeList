@@ -1,4 +1,19 @@
 
 TARGET = diagrams
 
+RAW_SRCS = \
+	rectdiagram.cpp
+
+NOTYET = \
+	curvediagram.cpp \
+	markerdialog.cpp \
+	phasordiagram.cpp \
+	polardiagram.cpp \
+	psdiagram.cpp \
+	rect3ddiagram.cpp \
+	smithdiagram.cpp \
+	timingdiagram.cpp \
+	truthdiagram.cpp \
+	waveac.cpp
+
 EXTRA_DIST =
