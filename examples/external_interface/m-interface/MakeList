@@ -1,0 +1,8 @@
+M_FILES = \
+	asynchronous_boost_converter_example.m \
+	example_ecvs.m \
+	example_probe_and_subcircuit_access_async.m \
+	synchronous_boost_converter_example.m
+
+NETLIST_FILE = \
+	boostconverter.net
