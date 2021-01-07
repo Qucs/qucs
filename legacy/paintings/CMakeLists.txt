@@ -13,9 +13,8 @@ find_package(
 
 readVariable(MakeList SRCS SRCS)
 readVariable(MakeList EXTRA_DIST EXTRA_DIST)
-qt5_wrap_cpp(EXTRA_DIST_MOCCED "id_dialog.h")
+qt5_wrap_cpp(EXTRA_DIST_MOCCED "id_dialog.h") # AUTOMOC should do the job. Don't understand why it is not working
 
-message(STATUS  "EXTRA_DIST_MOCCED ${EXTRA_DIST_MOCCED}")
 add_library(paintings SHARED ${SRCS} ${EXTRA_DIST_MOCCED})
 
 target_include_directories(paintings
