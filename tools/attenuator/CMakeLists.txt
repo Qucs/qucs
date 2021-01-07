@@ -1,9 +1,10 @@
-project(qucsattenuator CXX C)
-cmake_minimum_required(VERSION 2.6)
-cmake_policy(VERSION 2.6)
+project(qucsactivefilter CXX C)
+cmake_minimum_required(VERSION 3.16)
+
+include(${CMAKE_CURRENT_SOURCE_DIR}/../../cmake/readMakeList.txt)
 
 # use top VERSION file
-file(STRINGS ${PROJECT_SOURCE_DIR}/../VERSION QUCS_VERSION)
+file(STRINGS ${PROJECT_SOURCE_DIR}/../../VERSION QUCS_VERSION)
 message(STATUS "Configuring ${PROJECT_NAME} (GUI): VERSION ${QUCS_VERSION}")
 
 set(PROJECT_VERSION "${QUCS_VERSION}")
@@ -17,38 +18,26 @@ set(CMAKE_BUILD_TYPE Debug)
 
 add_definitions(-DHAVE_CONFIG_H)
 
-# configure the header config.h
-configure_file("${PROJECT_SOURCE_DIR}/../config.h.cmake"
-               "${PROJECT_BINARY_DIR}/config.h")
-
-include_directories("${PROJECT_BINARY_DIR}")
-
-set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wall ") # enable warning level
-set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++0x ") # enable C++11
+set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wall ")
+set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++0x ")
 
 # flag not available in mingw 4.8.2, MSVC10
 if(NOT WIN32)
   set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wno-deprecated-register ")
 endif()
 
-find_package(Qt4 REQUIRED)
-set(QT_USE_QTGUI TRUE)
+# configure the header config.h
+configure_file("${PROJECT_SOURCE_DIR}/../../config.h.cmake"
+               "${PROJECT_BINARY_DIR}/config.h")
 
-include(${QT_USE_FILE})
+include_directories("${PROJECT_BINARY_DIR}")
+
+find_package(Qt5 REQUIRED Widgets Gui Svg)
 
 add_definitions(${QT_DEFINITIONS})
 
-# ADD_SUBDIRECTORY( bitmaps ) -> added as resources
-
-set(attenuator_sources attenuatorfunc.cpp main.cpp qucsattenuator.cpp)
-
-set(attenuator_moc_headers qucsattenuator.h)
-
-qt4_wrap_cpp(attenuator_moc_sources ${attenuator_moc_headers})
-
-set(RESOURCES qucsattenuator_.qrc)
-
-qt4_add_resources(RESOURCES_SRCS ${RESOURCES})
+readVariable(MakeList SRCS QUCS-ACTIVE-FILTER_SRCS)
+readVariable(MakeList RESOURCES RESOURCES)
 
 if(APPLE)
   # set information on Info.plist file
@@ -60,97 +49,35 @@ if(APPLE)
   set(MACOSX_BUNDLE_GUI_IDENTIFIER
       "${PROJECT_DOMAIN_SECOND}.${PROJECT_DOMAIN_FIRST}")
   set(MACOSX_BUNDLE_BUNDLE_NAME "${PROJECT_NAME}")
-  set(MACOSX_BUNDLE_ICON_FILE qucsattenuator.icns)
+  set(MACOSX_BUNDLE_ICON_FILE qucsactivefilter.icns)
 
   # set where in the bundle to put the icns file
   set_source_files_properties(
-    ${CMAKE_CURRENT_SOURCE_DIR}/../qucs/bitmaps/qucsattenuator.icns
+    ${CMAKE_CURRENT_SOURCE_DIR}/../qucs/bitmaps/qucsactivefilter.icns
     PROPERTIES MACOSX_PACKAGE_LOCATION Resources)
   # include the icns file in the target
-  set(attenuator_sources
-      ${attenuator_sources}
-      ${CMAKE_CURRENT_SOURCE_DIR}/../qucs/bitmaps/qucsattenuator.icns)
+  set(QUCS-ACTIVE-FILTER_SRCS
+      ${QUCS-ACTIVE-FILTER_SRCS}
+      ${CMAKE_CURRENT_SOURCE_DIR}/../qucs/bitmaps/qucsactivefilter.icns)
 
 endif(APPLE)
 
 add_executable(
-  qucsattenuator MACOSX_BUNDLE WIN32
-  ${attenuator_sources} ${attenuator_moc_sources} ${RESOURCES_SRCS})
+  qucsactivefilter MACOSX_BUNDLE WIN32
+  ${QUCS-ACTIVE-FILTER_SRCS} ${QUCS-ACTIVE-FILTER_MOC_SRCS} ${RESOURCES})
 
-target_link_libraries(qucsattenuator ${QT_LIBRARIES})
-
-# INSTALL (TARGETS qucsattenuator DESTINATION bin)
-#
-# Prepare the installation
-#
-set(plugin_dest_dir bin)
-set(qtconf_dest_dir bin)
-set(APPS "${CMAKE_INSTALL_PREFIX}/bin/${PROJECT_NAME}")
-if(APPLE)
-  set(plugin_dest_dir ${PROJECT_NAME}.app/Contents/MacOS)
-  set(qtconf_dest_dir ${PROJECT_NAME}.app/Contents/Resources)
-  set(APPS "${CMAKE_INSTALL_PREFIX}/bin/${PROJECT_NAME}.app")
-endif(APPLE)
-
-if(WIN32)
-  set(APPS "${CMAKE_INSTALL_PREFIX}/bin/${PROJECT_NAME}.exe")
-endif(WIN32)
-
-#
-# Install the Qucs application, on Apple, the bundle is installed as on other
-# platforms it'll go into the bin directory.
-#
+target_link_libraries(qucsactivefilter Qt5::Widgets Qt5::Svg Qt5::Gui)
+target_include_directories(qucsactivefilter
+     PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}
+	 PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/../../include # qt_compat.h
+	 )
+set_property(TARGET qucsactivefilter PROPERTY AUTOMOC ON)
+set_property(TARGET qucsactivefilter PROPERTY AUTORCC ON)
 install(
-  TARGETS ${PROJECT_NAME}
+  TARGETS qucsactivefilter
   BUNDLE DESTINATION bin COMPONENT Runtime
   RUNTIME DESTINATION bin COMPONENT Runtime)
 
 # man pages
-install(FILES qucsattenuator.1 DESTINATION share/man/man1)
+install(FILES qucsactivefilter.1 DESTINATION share/man/man1)
 
-#
-# Install needed Qt plugins by copying directories from the qt installation One
-# can cull what gets copied by using 'REGEX "..." EXCLUDE'
-#
-if(APPLE)
-  install(
-    DIRECTORY "${QT_PLUGINS_DIR}/imageformats"
-    DESTINATION bin/${plugin_dest_dir}/plugins
-    COMPONENT Runtime)
-endif()
-#
-# install a qt.conf file this inserts some cmake code into the install script to
-# write the file
-#
-if(APPLE)
-  install(CODE "
-    file(WRITE \"\${CMAKE_INSTALL_PREFIX}/bin/${qtconf_dest_dir}/qt.conf\" \"\")
-    " COMPONENT Runtime)
-endif()
-
-# ------------------------------------------------------------------------------
-# --
-# Use BundleUtilities to get all other dependencies for the application to work.
-# It takes a bundle or executable along with possible plugins and inspects it
-# for dependencies.  If they are not system dependencies, they are copied.
-
-# directories to look for dependencies
-if(APPLE)
-  set(DIRS ${QT_LIBRARY_DIRS})
-endif()
-
-# Now the work of copying dependencies into the bundle/package The quotes are
-# escaped and variables to use at install time have their $ escaped An
-# alternative is the do a configure_file() on a script and use install(SCRIPT
-# ...). Note that the image plugins depend on QtSvg and QtXml, and it got those
-# copied over.
-if(APPLE)
-  install(
-    CODE "
-    file(GLOB_RECURSE QTPLUGINS
-      \"\${CMAKE_INSTALL_PREFIX}/bin/${plugin_dest_dir}/plugins/*${CMAKE_SHARED_LIBRARY_SUFFIX}\")
-    include(BundleUtilities)
-    fixup_bundle(\"${APPS}\" \"\${QTPLUGINS}\" \"${DIRS}\")
-    "
-    COMPONENT Runtime)
-endif()

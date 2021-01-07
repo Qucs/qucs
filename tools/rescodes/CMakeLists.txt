@@ -1,9 +1,11 @@
 project(qucsrescodes CXX C)
-cmake_minimum_required(VERSION 2.6)
-cmake_policy(VERSION 2.6)
+cmake_minimum_required(VERSION 3.1)
+cmake_policy(VERSION 3.1)
+
+include(${CMAKE_CURRENT_SOURCE_DIR}/../../cmake/readMakeList.txt)
 
 # use top VERSION file
-file(STRINGS ${PROJECT_SOURCE_DIR}/../VERSION QUCS_VERSION)
+file(STRINGS ${PROJECT_SOURCE_DIR}/../../VERSION QUCS_VERSION)
 message(STATUS "Configuring ${PROJECT_NAME} (GUI): VERSION ${QUCS_VERSION}")
 
 set(PROJECT_VERSION "${QUCS_VERSION}")
@@ -18,10 +20,8 @@ set(CMAKE_BUILD_TYPE Debug)
 add_definitions(-DHAVE_CONFIG_H)
 
 # configure the header config.h
-configure_file("${PROJECT_SOURCE_DIR}/../config.h.cmake"
-               "${PROJECT_BINARY_DIR}/config.h")
-
-include_directories("${PROJECT_BINARY_DIR}")
+configure_file("${PROJECT_SOURCE_DIR}/../../config.h.cmake"
+	"${PROJECT_BINARY_DIR}/config.h")
 
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wall ") # enable warning level
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++0x ") # enable C++11
@@ -31,29 +31,10 @@ if(NOT WIN32)
   set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wno-deprecated-register ")
 endif()
 
-find_package(Qt4 REQUIRED)
-set(QT_USE_QTGUI TRUE)
+find_package(Qt5 COMPONENTS Core Widgets REQUIRED)
 
-include(${QT_USE_FILE})
-
-add_definitions(${QT_DEFINITIONS})
-
-set(QUCS-RESCODES_SRCS
-    main.cpp
-    helpdialog.cpp
-    mycolorbox.cpp
-    myresistancebox.cpp
-    notation.cpp
-    qresistor.cpp
-    resistor.cpp)
-
-set(QUCS-RESCODES_MOC_HDRS helpdialog.h mycolorbox.h myresistancebox.h
-                           mywidget.h qresistor.h)
-
-qt4_wrap_cpp(QUCS-RESCODES_MOC_SRCS ${QUCS-RESCODES_MOC_HDRS})
-
-set(RESOURCES qucsrescodes.qrc)
-qt4_add_resources(RESOURCES_SRCS ${RESOURCES})
+readVariable(MakeList SRCS SRCS)
+readVariable(MakeList RESOURCES RESOURCES)
 
 if(APPLE)
   # set information on Info.plist file
@@ -63,26 +44,37 @@ if(APPLE)
   set(MACOSX_BUNDLE_SHORT_VERSION_STRING "${PROJECT_VERSION}")
   set(MACOSX_BUNDLE_COPYRIGHT "${PROJECT_COPYRIGHT_YEAR} ${PROJECT_VENDOR}")
   set(MACOSX_BUNDLE_GUI_IDENTIFIER
-      "${PROJECT_DOMAIN_SECOND}.${PROJECT_DOMAIN_FIRST}")
+	  "${PROJECT_DOMAIN_SECOND}.${PROJECT_DOMAIN_FIRST}")
   set(MACOSX_BUNDLE_BUNDLE_NAME "${PROJECT_NAME}")
   set(MACOSX_BUNDLE_ICON_FILE qucsrescodes.icns)
 
   # set where in the bundle to put the icns file
   set_source_files_properties(
-    ${CMAKE_CURRENT_SOURCE_DIR}/../qucs/bitmaps/qucsrescodes.icns
-    PROPERTIES MACOSX_PACKAGE_LOCATION Resources)
-  # include the icns file in the target
-  set(QUCS-RESCODES_SRCS
-      ${QUCS-RESCODES_SRCS}
-      ${CMAKE_CURRENT_SOURCE_DIR}/../qucs/bitmaps/qucsrescodes.icns)
+	  ${CMAKE_CURRENT_SOURCE_DIR}/../qucs/bitmaps/qucsrescodes.icns
+	PROPERTIES MACOSX_PACKAGE_LOCATION Resources)
+# include the icns file in the target
+set(SRCS
+	  ${SRCS}
+	  ${CMAKE_CURRENT_SOURCE_DIR}/../qucs/bitmaps/qucsrescodes.icns)
 
 endif(APPLE)
 
-add_executable(
-  qucsrescodes MACOSX_BUNDLE WIN32 ${QUCS-RESCODES_SRCS}
-                                   ${QUCS-RESCODES_MOC_SRCS} ${RESOURCES_SRCS})
+qt5_wrap_cpp(EXTRA_DIST_MOCCED "mywidget.h") # why is this needed?
 
-target_link_libraries(qucsrescodes ${QT_LIBRARIES})
+add_executable(
+  qucsrescodes MACOSX_BUNDLE WIN32 ${SRCS}
+  ${RESOURCES} ${EXTRA_DIST_MOCCED})
+target_link_libraries(qucsrescodes
+   Qt5::Core Qt5::Widgets)
+
+target_include_directories(qucsrescodes
+  PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}
+  PRIVATE
+  ${PROJECT_BINARY_DIR} # config.h
+  ${PROJECT_SOURCE_DIR}/../../include # qt_compat.h
+ )
+set_property(TARGET qucsrescodes PROPERTY AUTOMOC ON)
+set_property(TARGET qucsrescodes PROPERTY AUTORCC ON)
 
 install(
   TARGETS qucsrescodes

@@ -1,2 +1,22 @@
-
+SRCS = \
+	ccoupled_shunt_resonators.cpp \
+	cline_filter.cpp \ 
+	eqn_filter.cpp \ 
+	filter.cpp \ 
+	helpdialog.cpp \ 
+	lc_filter.cpp \ 
+	line_filter.cpp \ 
+	main.cpp \ 
+	qf_cauer.cpp \ 
+	qf_filter.cpp \ 
+	qf_poly.cpp \ 
+	quarterwave_filter.cpp \ 
+	qucsfilter.cpp \ 
+	qw_coupled_ring_filter.cpp \ 
+	stepz_filter.cpp \
+	tl_filter.cpp
+	
 EXTRA_DIST = 
+
+RESOURCES = \
+	qucsfilter_.qrc

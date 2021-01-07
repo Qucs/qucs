@@ -1,2 +1,15 @@
-
 EXTRA_DIST =
+
+SRCS = \
+    filter.cpp \
+    mfbfilter.cpp \
+    main.cpp \
+    qf_poly.cpp \
+    sallenkey.cpp \
+    schcauer.cpp \
+    transferfuncdialog.cpp \
+    helpdialog.cpp \
+    qucsactivefilter.cpp
+    
+RESOURCES = \
+    qucsactivefilter_.qrc

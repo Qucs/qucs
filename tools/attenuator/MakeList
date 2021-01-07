@@ -1,2 +1,9 @@
-
 EXTRA_DIST = 
+
+SRCS = \
+    attenuatorfunc.cpp \
+    main.cpp \
+    qucsattenuator.cpp
+    
+RESOURCES = \
+    qucsattenuator_.qrc
