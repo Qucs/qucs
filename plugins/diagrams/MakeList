@@ -17,3 +17,6 @@ NOTYET = \
 	waveac.cpp
 
 EXTRA_DIST =
+
+SRCS = \
+	rectdiagram.cpp
