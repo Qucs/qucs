@@ -1,5 +1,5 @@
 //Added by qt3to4:
-#include <Q3TextStream>
+#include <QTextStream>
 // Header for butterworth and chebychev I type filters
 // These filters are the easiest to compute, since the values of the
 // standard lowpass prototype are given by simple formulae. There is, thus,
@@ -18,7 +18,7 @@ class qf_buttcheb:  public qf_filter {
 
 		qf_buttcheb   (qf_spec*);
   virtual	~qf_buttcheb  (void) {}
-  friend void	btchdump      (qf_filter*, Q3TextStream&);
+  friend void	btchdump      (qf_filter*, QTextStream&);
 };
 
 class qf_butt:	public qf_buttcheb {
@@ -46,7 +46,7 @@ class qf_cheb:	public qf_buttcheb {
 
 qf_filter*	    butt      (qf_spec*);
 qf_filter*	    cheb      (qf_spec*);
-void		    btchdump  (qf_filter*, Q3TextStream&);
+void		    btchdump  (qf_filter*, QTextStream&);
 bool		    chebvalid (qf_spec *);
 
   # ifdef _QF_API
@@ -60,8 +60,8 @@ struct qf_filter_api    qf_butt_api = {
 	butt,
 
 	true,
-	false,
-	false,
+    false,
+    false,
 	NULL,
 	CAN_ORDER |
 	CAN_ALL_ORDERS | CAN_BANDPASS,
@@ -80,8 +80,8 @@ struct qf_filter_api	qf_cheb_api = {
 	cheb,
 
 	true,
-	false,
-	false,
+    false,
+    false,
 	NULL,
 	CAN_ORDER |
 	CAN_ALL_ORDERS | CAN_BANDPASS,

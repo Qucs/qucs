@@ -3,7 +3,7 @@
 
 #include <vector>
 #include <list>
-#include <Q3TextStream>
+#include <QTextStream>
 #include <QString>
 
 using namespace std;
@@ -28,11 +28,11 @@ struct qf_cmp {
 
   int           x, y;
 
-		qf_cmp	(QString n, bool s = false, bool g = false): 
+        qf_cmp	(QString n, bool s = false, bool g = false):
 					name (n), shnt(s), gnd (g) {}
   virtual	~qf_cmp	(void) {};
 
-  virtual void	dump	(unsigned, unsigned, Q3TextStream&, Q3TextStream&) = 0;
+  virtual void	dump	(unsigned, unsigned, QTextStream&, QTextStream&) = 0;
 
   // Denormalization according to the transformations implemented
   // By default, these do nothing
@@ -72,8 +72,8 @@ class qf_lcmp {
 
   bool		  isvoid    (void) {return lst. size () == 0;}
   int		  dump_node (int&, list <qf_cmp*>::iterator&,
-			     Q3TextStream&, Q3TextStream&);
-  void		  dump_all  (Q3TextStream&); 
+                 QTextStream&, QTextStream&);
+  void		  dump_all  (QTextStream&);
 
 		  qf_lcmp   (void)  {};
 		  ~qf_lcmp  (void)  {clear ();}
@@ -91,7 +91,7 @@ struct qf_cmp1: public qf_cmp {
 				qf_cmp (n, s, g), val(v), unit (u) {}
   virtual	~qf_cmp1  (void) {};
 
-  virtual void	dump	  (unsigned, unsigned, Q3TextStream&, Q3TextStream&);
+  virtual void	dump	  (unsigned, unsigned, QTextStream&, QTextStream&);
 };
 
 // A generic class of either serial or parallel LC
@@ -106,16 +106,16 @@ struct qf_cmplc: public qf_cmp {
 			   qf_cmp (n, s, g), vC(vc), vL(vl) {}
   virtual	~qf_cmplc (void) {};
 
-  virtual void	dump	  (unsigned, unsigned, Q3TextStream&, Q3TextStream&);
+  virtual void	dump	  (unsigned, unsigned, QTextStream&, QTextStream&);
 };
 
 // Fake component to signal output
 
 struct qf_end: public qf_cmp {
 
-		qf_end	  (void): qf_cmp ("END", false, false) {}
+        qf_end	  (void): qf_cmp ("END", false, false) {}
   inline	~qf_end   (void)  {}
-  void		dump	  (unsigned, unsigned, Q3TextStream&, Q3TextStream&) {};
+  void		dump	  (unsigned, unsigned, QTextStream&, QTextStream&) {};
 };
 
 // Inductor
@@ -219,7 +219,7 @@ struct qf_pslc : public qf_cmplc {
 			 vC2(vc2), vL2 (vl2) {}
   inline	~qf_pslc(void) {}; 
 
-  void		dump	(unsigned, unsigned, Q3TextStream&, Q3TextStream&);
+  void		dump	(unsigned, unsigned, QTextStream&, QTextStream&);
 };
 
 # endif //_QF_COMP_H

@@ -3,16 +3,17 @@
 #endif
 
 #include <QBuffer>
-#include <Q3TextStream>
+#include <QTextStream>
 #include <QObject>
 #include <QApplication>
-#include <Q3TextEdit>
+#include <QTextEdit>
 #include <QDir>
 #include <QTextCodec>
 #include <QClipboard>
 #include <QLineEdit>
 #include <QComboBox>
 #include <QCheckBox>
+#include <QLocale>
 
 #include "qf_common.h"
 #include "qf_poly.h"
@@ -25,7 +26,7 @@
 //Added by qt3to4:
 #include <QTranslator>
 
-void compute_lumped (qf_spec* spec_p, Q3TextStream& out) {
+void compute_lumped (qf_spec* spec_p, QTextStream& out) {
 
   qf_tform* T = qf_tform_apis [spec_p -> tform] -> cons (spec_p);
 
@@ -69,8 +70,9 @@ int main (int argc, char * argv []) {
   app.setFont( QucsSettings.font );
   QTranslator tor( 0 );
   QString lang = QucsSettings.Language;
+  QLocale l;
   if(lang.isEmpty())
-    lang = QTextCodec::locale();
+    lang = QLocale::languageToString(l.language());
   tor.load( QString("qucs_") + lang, QucsSettings.LangDir);
   app.installTranslator( &tor );
 
@@ -79,22 +81,22 @@ int main (int argc, char * argv []) {
   Filterbox.move (QucsSettings.x, QucsSettings.y);
   Filterbox.show ();
 
-  Filterbox.FilterName->setCurrentItem (QucsSettings.type);
+  Filterbox.FilterName->setCurrentIndex(QucsSettings.type);
   Filterbox.on_FilterName_activated (QucsSettings.form);
-  Filterbox.TformName->setCurrentItem (QucsSettings.form);
+  Filterbox.TformName->setCurrentIndex (QucsSettings.form);
   Filterbox.on_TformName_activated (QucsSettings.type);
 
   Filterbox.EnterCutoff->setText (QString::number (QucsSettings.cutoff));
-  Filterbox.CutoffCombo->setCurrentItem (QucsSettings.cutoff_unit);
+  Filterbox.CutoffCombo->setCurrentIndex (QucsSettings.cutoff_unit);
   Filterbox.EnterZin->setText (QString::number (QucsSettings.zin));
   Filterbox.EnterZout->setText (QString::number (QucsSettings.zout));
   Filterbox.OrderBox->setChecked (QucsSettings.specify);
-  Filterbox.OrderCombo->setCurrentItem (QucsSettings.ord);
-  Filterbox.SubOrderCombo->setCurrentItem (QucsSettings.subord);
+  Filterbox.OrderCombo->setCurrentIndex (QucsSettings.ord);
+  Filterbox.SubOrderCombo->setCurrentIndex (QucsSettings.subord);
   Filterbox.EnterBandwidth->setText (QString::number (QucsSettings.bw));
-  Filterbox.BandwidthCombo->setCurrentItem (QucsSettings.bw_unit);
+  Filterbox.BandwidthCombo->setCurrentIndex (QucsSettings.bw_unit);
   Filterbox.EnterStopband->setText (QString::number (QucsSettings.sb));
-  Filterbox.StopbandCombo->setCurrentItem (QucsSettings.sb_unit);
+  Filterbox.StopbandCombo->setCurrentIndex (QucsSettings.sb_unit);
   Filterbox.EnterRipple->setText (QString::number (QucsSettings.ripple));
   Filterbox.EnterAngle->setText (QString::number (QucsSettings.angle));
   Filterbox.EnterAttenuation->setText (QString::number (QucsSettings.atten));
@@ -105,7 +107,7 @@ int main (int argc, char * argv []) {
     spec_p = Filterbox. get_spec ();
 
     QByteArray	buf;
-    Q3TextStream s (buf, QIODevice::ReadWrite);
+    QTextStream s (buf, QIODevice::ReadWrite);
 
     compute_lumped (spec_p, s);
 // FIXME #warning s. device () -> flush ();

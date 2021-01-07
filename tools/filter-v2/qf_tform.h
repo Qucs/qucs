@@ -1,5 +1,5 @@
 //Added by qt3to4:
-#include <Q3TextStream>
+#include <QTextStream>
 # ifndef  _QF_TFORM_H
 # define  _QF_TFORM_H
 // Headers for standard transformations
@@ -18,7 +18,7 @@ class qf_tform {
   friend	      class	qf_plc;	      // To access Tspec in denorm
   friend	      class	qf_slc;	      // To access Tspec in denorm
 
-  qf_spec*	      Tspec;
+  qf_spec*	      Tspec{nullptr};
   qf_lcmp	      lcmp;
   virtual qf_double_t th	(void) = 0;
 
@@ -27,7 +27,7 @@ class qf_tform {
 		      qf_tform	(qf_spec* Ts) : Tspec (Ts) {};
   public:
 
-  virtual void	      dump	(Q3TextStream&) = 0;
+  virtual void	      dump	(QTextStream&) = 0;
 };
 
 // A common static function to dispatch denormalization
@@ -60,7 +60,7 @@ class qf_lowpass : public qf_tform {
   public:
 
   // Dump
-  virtual void	  dump	      (Q3TextStream&);
+  virtual void	  dump	      (QTextStream&);
 
 friend qf_tform*  lowpass     (qf_spec* Tspec) {return new qf_lowpass (Tspec);}
 };
@@ -78,7 +78,7 @@ class qf_nonetf : public qf_tform {
 
   public:
 
-      void	  dump	      (Q3TextStream&);
+      void	  dump	      (QTextStream&);
 friend qf_tform*  nonetf      (qf_spec* Tspec) {return new qf_nonetf (Tspec);}
 };
 
@@ -95,7 +95,7 @@ class qf_highpass : public qf_tform {
   public:
 
   // Dump
-  void		  dump	      (Q3TextStream&);
+  void		  dump	      (QTextStream&);
 
 friend qf_tform*  highpass     (qf_spec* spec) {return new qf_highpass (spec);}
 };
@@ -115,7 +115,7 @@ class qf_bandpass : public qf_tform {
   public:
 
   // Dump
-  void		  dump	      (Q3TextStream&);
+  void		  dump	      (QTextStream&);
 
 friend qf_tform*  bandpass     (qf_spec* spec) {return new qf_bandpass (spec);}
 };
@@ -140,7 +140,7 @@ class qf_bandstop: public qf_tform {
   public:
 
   // Dump
-  void		  dump	      (Q3TextStream&);
+  void		  dump	      (QTextStream&);
 
 friend qf_tform*  bandstop     (qf_spec* spec) {return new qf_bandstop (spec);}
 };
