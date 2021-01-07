@@ -111,7 +111,7 @@ int SchematicDoc::testFile(const QString& DocName)
     return -3;
   }
 
-  Line = Line.mid(16, Line.length()-17);
+  Line = Line.mid(16, Line.length()-17); // get version out from <Qucs Schematic 0.0.20
   VersionTriplet DocVersion = VersionTriplet(Line);
   if (DocVersion > QucsVersion) { // wrong version number ?
       if (!QucsSettings.IgnoreFutureVersion) {
