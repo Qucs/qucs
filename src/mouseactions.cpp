@@ -222,7 +222,7 @@ void MouseActions::endElementMoving(SchematicDoc *Doc, EGPList *movElements)
     }else if(painting(pe)){ untested();
 	Doc->paintings().append((Painting*)pe);
     }else if(auto c=component(pe)){ untested();
-      qDebug() << "type" << pe->Type << c->name();
+      qDebug() << "type" << pe->Type << c->label().c_str();
 	Doc->insertRawComponent(c, false);
 //      Doc->connect(c); // TODO.
     }else if(auto w=wireLabel(pe)){ untested();
