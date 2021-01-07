@@ -1,2 +1,14 @@
 
 EXTRA_DIST = 
+
+SRCS = \
+	main.cpp \
+	helpdialog.cpp \
+	mycolorbox.cpp \
+	myresistancebox.cpp \
+	notation.cpp \
+	qresistor.cpp \
+	resistor.cpp
+
+RESOURCES = \
+	qucsrescodes.qrc

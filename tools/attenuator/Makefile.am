@@ -33,8 +33,7 @@ dist_man_MANS = qucsattenuator.1
 MOCHEADERS = qucsattenuator.h
 MOCFILES = $(MOCHEADERS:.h=.moc.cpp)
 
-qucsattenuator_SOURCES = main.cpp qucsattenuator.cpp \
-  attenuatorfunc.cpp qucsattenuator_.qrc
+qucsattenuator_SOURCES = ${SRCS} ${RESOURCES}
 qucsattenuator_CXXFLAGS = ${AM_CXXFLAGS} -fPIC
 
 nodist_qucsattenuator_SOURCES = $(MOCFILES)

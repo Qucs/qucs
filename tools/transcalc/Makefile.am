@@ -33,8 +33,7 @@ dist_man_MANS = qucstrans.1
 MOCHEADERS = qucstrans.h helpdialog.h optionsdialog.h
 MOCFILES = $(MOCHEADERS:.h=.moc.cpp)
 
-qucstrans_SOURCES = main.cpp qucstrans.cpp helpdialog.cpp optionsdialog.cpp \
-  qucstrans_.qrc
+qucstrans_SOURCES = ${SRCS} ${RESOURCES}
 qucstrans_CXXFLAGS = ${AM_CXXFLAGS} -fPIC
 
 qucstrans_LDADD = libtranscalc.a $(X11_LIBS) $(QT_LIBS)
@@ -49,8 +48,7 @@ noinst_HEADERS = $(MOCHEADERS) transline.h units.h microstrip.h coax.h \
 
 noinst_LIBRARIES = libtranscalc.a
 
-libtranscalc_a_SOURCES = microstrip.cpp transline.cpp coax.cpp \
-	rectwaveguide.cpp c_microstrip.cpp coplanar.cpp stripline.cpp
+libtranscalc_a_SOURCES = ${LIB_SRC}
 libtranscalc_a_CXXFLAGS = ${AM_CXXFLAGS} -fPIC
 
 CLEANFILES = *~ qucstrans_.cpp
