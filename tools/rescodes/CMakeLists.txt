@@ -22,6 +22,8 @@ add_definitions(-DHAVE_CONFIG_H)
 # configure the header config.h
 configure_file("${PROJECT_SOURCE_DIR}/../../config.h.cmake"
 	"${PROJECT_BINARY_DIR}/config.h")
+configure_file(${CMAKE_CURRENT_SOURCE_DIR}/qucsrescodes.1.cmake.in
+	${CMAKE_CURRENT_SOURCE_DIR}/qucsrescodes.1)
 
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wall ") # enable warning level
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++0x ") # enable C++11
@@ -82,4 +84,4 @@ install(
   RUNTIME DESTINATION bin COMPONENT Runtime)
 
 # man pages
-install(FILES qucsrescodes.1 DESTINATION share/man/man1)
+install(FILES ${CMAKE_CURRENT_BINARY_DIR}/qucsrescodes.1 DESTINATION share/man/man1)

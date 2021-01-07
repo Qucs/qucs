@@ -32,35 +32,6 @@ set(QT_DEBUG TRUE)
 add_definitions(${QT_DEFINITIONS} -DQT_DEPRECATED_WARNINGS)
 add_compile_definitions(HAVE_CONFIG_H)
 
-# For some reason they do not exist anymore
-#configure_file(${CMAKE_CURRENT_SOURCE_DIR}/man/qucs.1.cmake.in
-#               ${CMAKE_CURRENT_SOURCE_DIR}/man/qucs.1)
-#configure_file(${CMAKE_CURRENT_SOURCE_DIR}/man/qucsdigi.1.cmake.in
-#               ${CMAKE_CURRENT_SOURCE_DIR}/man/qucsdigi.1)
-#configure_file(${CMAKE_CURRENT_SOURCE_DIR}/man/qucsdigilib.1.cmake.in
-#               ${CMAKE_CURRENT_SOURCE_DIR}/man/qucsdigilib.1)
-#configure_file(${CMAKE_CURRENT_SOURCE_DIR}/man/qucsveri.1.cmake.in
-#               ${CMAKE_CURRENT_SOURCE_DIR}/man/qucsveri.1)
-
-# Tools
-#configure_file(
-#  ${CMAKE_CURRENT_SOURCE_DIR}/qucs-activefilter/qucsactivefilter.1.cmake.in
-#  ${CMAKE_CURRENT_SOURCE_DIR}/qucs-activefilter/qucsactivefilter.1)
-#configure_file(${CMAKE_CURRENT_SOURCE_DIR}/qucs-filter/qucsfilter.1.cmake.in
-#               ${CMAKE_CURRENT_SOURCE_DIR}/qucs-filter/qucsfilter.1)
-#configure_file(
-#  ${CMAKE_CURRENT_SOURCE_DIR}/qucs-attenuator/qucsattenuator.1.cmake.in
-#  ${CMAKE_CURRENT_SOURCE_DIR}/qucs-attenuator/qucsattenuator.1)
-#configure_file(${CMAKE_CURRENT_SOURCE_DIR}/qucs-lib/qucslib.1.cmake.in
-#               ${CMAKE_CURRENT_SOURCE_DIR}/qucs-lib/qucslib.1)
-#configure_file(
-#  ${CMAKE_CURRENT_SOURCE_DIR}/qucs-powercombining/qucspowercombining.1.cmake.in
-#  ${CMAKE_CURRENT_SOURCE_DIR}/qucs-powercombining/qucspowercombining.1)
-#configure_file(${CMAKE_CURRENT_SOURCE_DIR}/qucs-rescodes/qucsrescodes.1.cmake.in
-#               ${CMAKE_CURRENT_SOURCE_DIR}/qucs-rescodes/qucsrescodes.1)
-#configure_file(${CMAKE_CURRENT_SOURCE_DIR}/qucs-transcalc/qucstrans.1.cmake.in
-#               ${CMAKE_CURRENT_SOURCE_DIR}/qucs-transcalc/qucstrans.1)
-
 add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/main)
 
 # add_subdirectory(man)

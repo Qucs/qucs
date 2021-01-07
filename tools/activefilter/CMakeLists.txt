@@ -29,6 +29,9 @@ endif()
 # configure the header config.h
 configure_file("${PROJECT_SOURCE_DIR}/../../config.h.cmake"
                "${PROJECT_BINARY_DIR}/config.h")
+configure_file( # needed for what?
+	${CMAKE_CURRENT_SOURCE_DIR}/qucsactivefilter.1.cmake.in
+	${CMAKE_CURRENT_BINARY_DIR}/qucsactivefilter.1)
 
 include_directories("${PROJECT_BINARY_DIR}")
 
@@ -79,5 +82,5 @@ install(
   RUNTIME DESTINATION bin COMPONENT Runtime)
 
 # man pages
-install(FILES qucsactivefilter.1 DESTINATION share/man/man1)
+install(FILES ${CMAKE_CURRENT_BINARY_DIR}/qucsactivefilter.1 DESTINATION share/man/man1)
 

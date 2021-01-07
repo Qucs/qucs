@@ -1,4 +1,4 @@
-project(qucsactivefilter CXX C)
+project(attenuator CXX C)
 cmake_minimum_required(VERSION 3.16)
 
 include(${CMAKE_CURRENT_SOURCE_DIR}/../../cmake/readMakeList.txt)
@@ -29,6 +29,8 @@ endif()
 # configure the header config.h
 configure_file("${PROJECT_SOURCE_DIR}/../../config.h.cmake"
                "${PROJECT_BINARY_DIR}/config.h")
+configure_file(${CMAKE_CURRENT_SOURCE_DIR}/qucsattenuator.1.cmake.in
+	${CMAKE_CURRENT_BINARY_DIR}/qucsattenuator.1)
 
 include_directories("${PROJECT_BINARY_DIR}")
 
@@ -49,35 +51,35 @@ if(APPLE)
   set(MACOSX_BUNDLE_GUI_IDENTIFIER
       "${PROJECT_DOMAIN_SECOND}.${PROJECT_DOMAIN_FIRST}")
   set(MACOSX_BUNDLE_BUNDLE_NAME "${PROJECT_NAME}")
-  set(MACOSX_BUNDLE_ICON_FILE qucsactivefilter.icns)
+  set(MACOSX_BUNDLE_ICON_FILE attenuator.icns)
 
   # set where in the bundle to put the icns file
   set_source_files_properties(
-    ${CMAKE_CURRENT_SOURCE_DIR}/../qucs/bitmaps/qucsactivefilter.icns
+	  ${CMAKE_CURRENT_SOURCE_DIR}/../qucs/bitmaps/attenuator.icns
     PROPERTIES MACOSX_PACKAGE_LOCATION Resources)
   # include the icns file in the target
   set(QUCS-ACTIVE-FILTER_SRCS
       ${QUCS-ACTIVE-FILTER_SRCS}
-      ${CMAKE_CURRENT_SOURCE_DIR}/../qucs/bitmaps/qucsactivefilter.icns)
+	  ${CMAKE_CURRENT_SOURCE_DIR}/../qucs/bitmaps/attenuator.icns)
 
 endif(APPLE)
 
 add_executable(
-  qucsactivefilter MACOSX_BUNDLE WIN32
+  attenuator MACOSX_BUNDLE WIN32
   ${QUCS-ACTIVE-FILTER_SRCS} ${QUCS-ACTIVE-FILTER_MOC_SRCS} ${RESOURCES})
 
-target_link_libraries(qucsactivefilter Qt5::Widgets Qt5::Svg Qt5::Gui)
-target_include_directories(qucsactivefilter
+target_link_libraries(attenuator Qt5::Widgets Qt5::Svg Qt5::Gui)
+target_include_directories(attenuator
      PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}
 	 PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/../../include # qt_compat.h
 	 )
-set_property(TARGET qucsactivefilter PROPERTY AUTOMOC ON)
-set_property(TARGET qucsactivefilter PROPERTY AUTORCC ON)
+set_property(TARGET attenuator PROPERTY AUTOMOC ON)
+set_property(TARGET attenuator PROPERTY AUTORCC ON)
 install(
-  TARGETS qucsactivefilter
+  TARGETS attenuator
   BUNDLE DESTINATION bin COMPONENT Runtime
   RUNTIME DESTINATION bin COMPONENT Runtime)
 
 # man pages
-install(FILES qucsactivefilter.1 DESTINATION share/man/man1)
+install(FILES ${CMAKE_CURRENT_BINARY_DIR}/qucsattenuator.1 DESTINATION share/man/man1)
 

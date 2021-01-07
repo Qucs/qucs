@@ -31,6 +31,9 @@ set(OCTAVEDIR "${CMAKE_INSTALL_PREFIX}/share/qucs/octave/")
 # configure the header config.h
 configure_file("${PROJECT_SOURCE_DIR}/../../config.h.cmake"
 	"${PROJECT_BINARY_DIR}/config.h")
+configure_file(
+  ${CMAKE_CURRENT_SOURCE_DIR}/qucspowercombining.1.cmake.in
+  ${CMAKE_CURRENT_BINARY_DIR}/qucspowercombining.1)
 
 #include_directories("${PROJECT_BINARY_DIR}")
 
@@ -90,4 +93,4 @@ install(
   RUNTIME DESTINATION bin COMPONENT Runtime)
 
 # man pages
-install(FILES qucspowercombining.1 DESTINATION share/man/man1)
+install(FILES ${CMAKE_CURRENT_BINARY_DIR}/qucspowercombining.1 DESTINATION share/man/man1)
