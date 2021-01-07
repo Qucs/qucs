@@ -167,36 +167,42 @@ void ProjectView::refresh()
     }
     columnData.append(d);
 
+    FileTypes_T fileType;
+    int n = -1;
     if(extName == "dat") {
-      m_model->item(FileTypes_T::Datasets, 0)->appendRow(columnData);
+      fileType = FileTypes_T::Datasets;
     }
     else if(extName == "dpl") {
-      m_model->item(FileTypes_T::DataDisplays, 0)->appendRow(columnData);
+      fileType = FileTypes_T::DataDisplays;
     }
     else if(extName == "v") {
-      m_model->item(FileTypes_T::Verilog, 0)->appendRow(columnData);
+      fileType = FileTypes_T::Verilog;
     }
     else if(extName == "va") {
-      m_model->item(FileTypes_T::VerilogA, 0)->appendRow(columnData);
+      fileType = FileTypes_T::VerilogA;
     }
     else if((extName == "vhdl") || (extName == "vhd")) {
-      m_model->item(FileTypes_T::VHDL, 0)->appendRow(columnData);
+      fileType = FileTypes_T::VHDL;
     }
     else if((extName == "m") || (extName == "oct")) {
-      m_model->item(FileTypes_T::Octave, 0)->appendRow(columnData);
+      fileType = FileTypes_T::Octave;
     }
     else if(extName == "sch") {
+      fileType = FileTypes_T::Schematics;
       // test if it's a valid schematic file
-      int n = SchematicDoc::testFile(workPath.filePath(fileName));
-      if(n >= 0) {
-        if(n > 0) { // is a subcircuit
-          columnData.append(new QStandardItem(QString::number(n)+tr("-port")));
-        }
-        m_model->item(FileTypes_T::Schematics, 0)->appendRow(columnData);
+      n = SchematicDoc::testFile(workPath.filePath(fileName));
+      if(n > 0) { // is a subcircuit
+        columnData.append(new QStandardItem(QString::number(n)+tr("-port")));
       }
     }
     else {
-      m_model->item(FileTypes_T::Others, 0)->appendRow(columnData);
+      fileType = FileTypes_T::Others;
+    }
+
+    if (fileType != FileTypes_T::Schematics || (fileType == FileTypes_T::Schematics && n >=0)) {
+        QStandardItem* itm = m_model->item(fileType, 0);
+        if (itm)
+            itm->appendRow(columnData);
     }
   }
 
