@@ -176,38 +176,6 @@ static Dispatcher<DocumentLanguage>::INSTALL
 static Component* parseComponentObsoleteCallback(const QString& _s, Component* c);
 static TaskElement* loadtaskElement(const QString& _s, TaskElement* c);
 /*--------------------------------------------------------------------------*/
-#if 0
-Element* LegacySchematicLanguage::loadElement_(const QString& _s, Element* e) const
-{ untested();
-	trace1("loadElement", _s);
-	if(TaskElement* c=dynamic_cast<TaskElement*>(e)){ untested();
-		c = loadtaskElement(_s, c);
-		// incomplete();
-	}else if(Component* c=dynamic_cast<Component*>(e)){ untested();
-		trace1("loadComponent", _s);
-		// legacy components
-		// will not work non-qucs-.sch languages
-		c = parseComponentObsoleteCallback(_s, c);
-
-		QString cstr = c->name();   // is perhaps changed in "recreate" (e.g. subcircuit)
-		int x = c->tx;
-		int y = c->ty;
-		// c->setSchematic (p);
-	//	s->recreate(); // half-expand subcircuits? why not "precalc"?
-	//	               // why not in constructor? it needs parameters.
-		c->setLabel(cstr.toStdString());
-		c->tx = x;
-		c->ty = y;
-	}else if(auto s=dynamic_cast<Symbol*>(e)){itested();
-		s = parseSymbol(_s, s);
-	}else{ untested();
-		incomplete();
-		return e;
-	}
-	return nullptr;
-}
-#endif
-/*--------------------------------------------------------------------------*/
 static std::list<Element*> implicit_hack;
 /*--------------------------------------------------------------------------*/
 static bool obsolete_wireload(Symbol* w, const QString& sc)
