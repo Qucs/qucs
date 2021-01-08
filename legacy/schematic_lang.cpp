@@ -1329,33 +1329,46 @@ Dispatcher<Command>::INSTALL _p2(&command_dispatcher, "<Paintings>", &d3); // ..
 /*--------------------------------------------------------------------------*/
 class DiagramCommand : public Command{
 	void do_it(istream_t& cs, SchematicModel* s) override{
-	  auto fullstring = cs.fullString();
-	  trace1("Section", fullstring);
+		auto fullstring = cs.fullString();
+		trace1("Section", fullstring);
 
-	  Symbol* sc = symbol_dispatcher.clone("subckt_proto");
-	  auto* sym = dynamic_cast<SubcktBase*>(sc);
-	  assert(sym);
-	  sym->new_subckt();
-	  sym->setLabel(":Diagrams:");
-	  assert(s);
+		SubcktBase* sym = nullptr;
+		auto p_ = s->find_("main");
+		if(p_!=s->end()){
+			sym = dynamic_cast<SubcktBase*>(*p_);
+		}else{
+			// "headless" mode
+			// create main, but no project.
+			//  (defer expansion of components that need a project)
+			//			Symbol* sc = mainSection.clone();
+			Symbol* sc = symbol_dispatcher.clone("subckt_proto");
 
-	  auto lang = language_dispatcher["legacy_lib"];
-	  assert(lang);
+			sym = dynamic_cast<SubcktBase*>(sc);
+			assert(sym);
+			sym->setLabel("main");
+			//sym->setOwner(..);
+			s->pushBack(sym);
+			assert(s);
+		}
 
-	  while(true){
-		  cs.read_line();
-		  if(cs.umatch("</Diagrams>")){
-			  break;
-		  }else{
-			  trace2("Diag parse", sym->label(), cs.fullstring());
-			  cs.skipbl();
-			  lang->new__instance(cs, sym, sym->subckt());
-		  }
-	  }
-	  trace1("Diag parse", sym->subckt()->size());
+		auto lang = language_dispatcher["legacy_lib"];
+		assert(lang);
 
-	  s->pushBack(sym);
-  }
+
+		while(true){
+			cs.read_line();
+			if(cs.umatch("</Diagrams>")){
+				break;
+			}else{
+				trace2("Diag parse", sym->label(), cs.fullstring());
+				cs.skipbl();
+				lang->new__instance(cs, sym, sym->scope());
+			}
+		}
+		trace1("Diag parse", sym->subckt()->size());
+
+		s->pushBack(sym);
+	}
 }d4;
 Dispatcher<Command>::INSTALL p3_(&command_dispatcher, "Diagrams", &d4);
 Dispatcher<Command>::INSTALL p4_(&command_dispatcher, "Diagrams>", &d4); // BUG
