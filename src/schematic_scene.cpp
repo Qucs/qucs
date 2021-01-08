@@ -386,24 +386,6 @@ void SchematicScene::selectAll(bool v)
 	}
 }
 /*--------------------------------------------------------------------------*/
-#if 0
-static QList<ElementGraphics const*> filter(QList<QGraphicsItem const*> L)
-{
-	trace1("items raw mutable", L.size());
-	for(auto l = L.begin(); l!=L.end(); ){ untested();
-		if(dynamic_cast<ElementGraphics const*>(*l)){ untested();
-			++l;
-		}else{ untested();
-			// incomplete(); // actually
-			auto prev = l;
-			l = L.erase(prev);
-		}
-	}
-	auto EL = reinterpret_cast<QList<ElementGraphics const*>* >(&L);
-	return *EL;
-}
-#endif
-/*--------------------------------------------------------------------------*/
 static QList<ElementGraphics*> filter(QList<QGraphicsItem*> L)
 {
 	trace1("items raw mutable", L.size());
@@ -417,6 +399,13 @@ static QList<ElementGraphics*> filter(QList<QGraphicsItem*> L)
 		}
 	}
 	auto EL = reinterpret_cast<QList<ElementGraphics*>* >(&L);
+	return *EL;
+}
+/*--------------------------------------------------------------------------*/
+static QList<ElementGraphics const*> filter_const(QList<QGraphicsItem*> L)
+{
+	auto fL = filter(L);
+	auto EL = reinterpret_cast<QList<ElementGraphics const*>* >(&fL);
 	return *EL;
 }
 /*--------------------------------------------------------------------------*/
@@ -454,6 +443,22 @@ QList<ElementGraphics const*> SchematicScene::items(QRectF const& r) const
 	auto L = QGraphicsScene::items(r);
 	auto b = filter(L);
 	return *reinterpret_cast<QList<ElementGraphics const*>* >(&b);
+}
+/*--------------------------------------------------------------------------*/
+QList<ElementGraphics const*> SchematicScene::items(int x, int y) const
+{itested();
+	QPointF r(x, y);
+	auto L = QGraphicsScene::items(r);
+	auto b = filter_const(L);
+	return b;
+}
+/*--------------------------------------------------------------------------*/
+QList<ElementGraphics*> SchematicScene::items(int x, int y)
+{itested();
+	QPointF r(x, y);
+	auto L = QGraphicsScene::items(r);
+	auto b = filter(L);
+	return b;
 }
 /*--------------------------------------------------------------------------*/
 QList<ElementGraphics*> SchematicScene::items(QRectF const& r)
