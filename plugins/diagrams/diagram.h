@@ -51,6 +51,8 @@ class QMouseEvent;
 class istream_t;
 class FontMetrics;
 class Graph;
+class ScrPt;
+typedef std::vector<ScrPt>::iterator GraphIterator;
 
 struct Axis {
   double  min, max; // least and greatest values of all graph data
@@ -63,11 +65,6 @@ struct Axis {
   bool   autoScale;    // manual limits or auto-scale ?
   double limit_min, limit_max, step;   // if not auto-scale
 };
-
-
-// yikes.
-#include "graph.h"
-typedef Graph::iterator GraphIterator;
 
 class Diagram : public Element {
 protected:
