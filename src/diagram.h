@@ -15,7 +15,7 @@
 #ifndef DIAGRAM_H
 #define DIAGRAM_H
 
-//#include "graph.h"
+#include "graph.h"
 #include "marker.h"
 #include "element.h"
 //#include "viewpainter.h"
@@ -51,8 +51,7 @@ class QMouseEvent;
 class istream_t;
 class FontMetrics;
 class Graph;
-class ScrPt;
-typedef std::vector<ScrPt>::iterator GraphIterator;
+typedef Graph::iterator GraphIterator;
 
 struct Axis {
   double  min, max; // least and greatest values of all graph data
@@ -66,6 +65,7 @@ struct Axis {
   double limit_min, limit_max, step;   // if not auto-scale
 };
 
+// Interface class for the diagrams plugin
 class Diagram : public Element {
 protected:
 	Diagram(Diagram const& d);

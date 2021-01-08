@@ -20,9 +20,9 @@
 	width (see Qt docs)
 */
 
-#if HAVE_CONFIG_H
-# include <config.h>
-#endif
+//#if HAVE_CONFIG_H
+//# include <config.h>
+//#endif
 #include <stdlib.h>
 #include <cmath>
 #include <float.h>

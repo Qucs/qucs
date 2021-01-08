@@ -15,7 +15,7 @@
 #ifndef DIAGRAMDIALOG_H
 #define DIAGRAMDIALOG_H
 #include "diagram.h"
-#include "node.h"
+//#include "node.h"
 #include "schematic_dialog.h"
 
 #include <QDialog>

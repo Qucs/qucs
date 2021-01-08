@@ -10,6 +10,9 @@ CPP_SRC = \
 	conductor.cpp \
 	cursors.cpp \
 	data.cc \
+	#dialog.cpp \
+	diagram.cpp \
+	diagramdialog.cpp \
 	element.cpp \
 	element_graphics.cpp \
 	findbr.cc \
@@ -22,6 +25,8 @@ CPP_SRC = \
 	io_findf.cc \
 	language.cpp \
 	l_wmatch.cc \
+	marker.cpp \
+	markerdialog.cpp \
 	messagedock.cpp \
 	misc.cpp \
 	mnemo.cpp \
@@ -85,7 +90,6 @@ QMOCHEADERS = \
 DIALG_MOCHEADERS = \
 	aboutdialog.h \
 	changedialog.h \
-	diagramdialog.h \
 	digisettingsdialog.h \
 	exportdialog.h \
 	importdialog.h \
@@ -146,7 +150,6 @@ HDR1 = \
 HDR2 = \
 	actions.h \
 	task_element.h \
-	diagram.h \
 	dispatcher.h \
 	imagewriter.h \
 	io.h \

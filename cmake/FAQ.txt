@@ -79,3 +79,9 @@ solves the problem
 In translations cmake file
 find_package(Qt5 COMPONENTS Core LinguistTools REQUIRED) is needed. Both Core and LinguistTools are needed
 
+# /usr/bin/ld: src/libqucs.so: undefined reference to `typeinfo for Diagram'
+In commit: 292695b5ead907fad04c104e2e1dc3c46d8210fd
+Additional information about dynamic linking libraries: https://ask.xiaolee.net/questions/1044629
+https://tldp.org/HOWTO/html_single/C++-dlopen/
+The source file must be inside qucs and the library it self, otherwise linking does not work properly.
+

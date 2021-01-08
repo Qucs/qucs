@@ -21,7 +21,7 @@
          diagram
 */
 
-#include "../legacy/marker.h"
+#include "marker.h"
 #include "diagram.h"
 #include "graph.h"
 #include "qucs.h"

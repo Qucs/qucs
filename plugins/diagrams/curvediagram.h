@@ -36,7 +36,7 @@ public:
   bool insideDiagram(float, float) const;
 
 protected:
-  void clip(Graph::iterator&) const;
+  void clip(GraphIterator&) const;
 };
 
 #endif

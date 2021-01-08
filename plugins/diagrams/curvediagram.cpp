@@ -244,7 +244,7 @@ bool CurveDiagram::insideDiagram(float x, float y) const
 }
 
 // ------------------------------------------------------------
-void CurveDiagram::clip(Graph::iterator &p) const
+void CurveDiagram::clip(GraphIterator &p) const
 {
   rectClip(p);
 }

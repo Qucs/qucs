@@ -16,7 +16,7 @@ determineGitCommitHash()
 message(STATUS "${PROJECT_NAME} ${CMAKE_INSTALL_PREFIX}
     ${qucs-suite_BINARY_DIR}")
 
-find_package(Qt5 REQUIRED Core Gui Script)
+find_package(Qt5 REQUIRED Core Gui Script) # in main needed
 
 set(QT_DEBUG TRUE)
 

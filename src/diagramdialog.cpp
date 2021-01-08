@@ -41,6 +41,9 @@
 #include <QHeaderView>
 #include <QDir>
 #include <QDebug>
+#include <QRegularExpressionValidator>
+#include <QIntValidator>
+#include <QDoubleValidator>
 
 
 #define CROSS3D_SIZE   30

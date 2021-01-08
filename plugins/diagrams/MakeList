@@ -6,9 +6,6 @@ RAW_SRCS = \
 
 NOTYET = \
 	curvediagram.cpp \
-	diagram.cpp \
-	diagramdialog.cpp \
-	markerdialog.cpp \
 	phasordiagram.cpp \
 	polardiagram.cpp \
 	psdiagram.cpp \
