@@ -33,20 +33,8 @@ add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/../../legacy/libfiles legacy/libfil
 add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/../../plugins/misc plugins/misc)
 add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/../../plugins/diagrams plugins/diagrams)
 
-## ------ WHY needed?
-# If Git hash not defined, try to define it
-#if(NOT GIT)
-#  if(EXISTS ${CMAKE_CURRENT_SOURCE_DIR}/../../.git)
-#    find_package(Git)
-#    # Get the latest abbreviated commit hash of the working branch
-#    execute_process(
-#      COMMAND ${GIT_EXECUTABLE} log --pretty=format:%h -n 1u
-#      WORKING_DIRECTORY ${CMAKE_SOURCE_DIR}
-#      OUTPUT_VARIABLE GIT_COMMIT_HASH)
-#    set(GIT ${GIT_COMMIT_HASH})
-#    message(STATUS "Found Git repository, last commit hash: ${GIT}")
-#  endif()
-#endif()
+include(../determineGitCommitHash.cmake)
+determineGitCommitHash()
 
 #if(UNIX AND NOT APPLE)
 #  # string(TOLOWER ${PROJECT_NAME} PROJECT_NAME_LOWERCASE) set(BIN_INSTALL_DIR

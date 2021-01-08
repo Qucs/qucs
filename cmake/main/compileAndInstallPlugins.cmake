@@ -40,5 +40,10 @@ if (${CompileDependencies})
 		DEPENDS misc
 		COMMAND ${CMAKE_COMMAND} -E copy ${CMAKE_CURRENT_BINARY_DIR}/plugins/misc/libmisc.so ${LIB_PATH_TEMP}/plugins/libmisc.so
 		)
+
+	add_custom_target(libdiagramsInstall ALL
+		DEPENDS misc
+		COMMAND ${CMAKE_COMMAND} -E copy ${CMAKE_CURRENT_BINARY_DIR}/plugins/diagrams/libdiagram.so ${LIB_PATH_TEMP}/plugins/libdiagram.so
+		)
 endif()
 

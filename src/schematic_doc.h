@@ -358,8 +358,8 @@ public: // mostly not here
   Marker* setMarker(int, int);
 
 private: // FIXME: remove
-  void    markerLeftRight(bool, Q3PtrList<ElementGraphics>*);
-  void    markerUpDown(bool, Q3PtrList<ElementGraphics>*);
+  void    markerLeftRight(bool, Q3PtrList<ElementGraphics>*); // TODO: maybe better using QList<ElementGraphics*>&
+  void    markerUpDown(bool, Q3PtrList<ElementGraphics>*); // TODO: maybe better using QList<ElementGraphics*>&
 public:
   void    markerMove(arrow_dir_t d, Q3PtrList<ElementGraphics>* l){
 	  switch(d){

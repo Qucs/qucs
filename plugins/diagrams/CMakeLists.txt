@@ -12,3 +12,5 @@ target_include_directories(diagrams
 	PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/../../include # element.h
 	${CMAKE_CURRENT_SOURCE_DIR}/../../legacy # obsolete_paintings.h
 	)
+
+install(TARGETS diagrams DESTINATION lib/qucs/plugins)

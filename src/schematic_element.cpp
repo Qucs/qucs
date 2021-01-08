@@ -213,7 +213,7 @@ void SchematicDoc::markerLeftRight(bool left, Q3PtrList<ElementGraphics> *Elemen
 
 // ---------------------------------------------------
 // Move the marker pointer up/down on the more-dimensional graph.
-void SchematicDoc::markerUpDown(bool up, Q3PtrList<ElementGraphics> *Elements)
+void SchematicDoc::markerUpDown(bool up, Q3PtrList<ElementGraphics> *Elements) // maybe better using QList<ElementGraphics*>& ???
 {
     // Marker is in the diagrams plugin and will be loaded dynamically
     // Don't understand why it is undefined
