@@ -1115,12 +1115,14 @@ void QucsApp::openProject(const QString& Path)
     return; // BUG
   }
 
-  // try to close files and ask for saving them
-  if(closeAllFiles()){ untested();
-    // "all files were succesfully closed"
-  }else{ untested();
-    // not sure why we need an empty schematic
-    DocumentTab->createEmptySchematic("");
+  if(!closeAllFiles()){
+    untested();
+    // close files and ask for saving them
+  }
+    // As soon as all files are closed, open a new file.
+  // TODO: maybe it is better to open no project or?
+
+  DocumentTab->createEmptySchematic("");
 
   //  view->drawn = false;
 
@@ -1138,7 +1140,6 @@ void QucsApp::openProject(const QString& Path)
 
     // show name in title of main window
     setWindowTitle("Qucs " PACKAGE_VERSION + tr(" - Project: ")+ProjName);
-  }
 }
 
 // ----------------------------------------------------------
