@@ -1,7 +1,7 @@
 These are the "new style" diagrams introduced during Qt5 refactoring.
 
 currently, they will be used, if you start qucs with
-$ qucs -a diagrams
+$ qucs -a plugins/diagrams
 
 A diagram is a QtWidget with a reference to a Diagram (Element) in the
 schematic model.
