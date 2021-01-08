@@ -8,8 +8,8 @@ project(qucs_gui)
 cmake_minimum_required(VERSION 3.16)
 
 # use top VERSION file
-file(STRINGS ${PROJECT_SOURCE_DIR}/../../VERSION QUCS_VERSION)
-message(STATUS "Configuring ${PROJECT_NAME} (GUI): VERSION ${QUCS_VERSION}")
+file(STRINGS ${PROJECT_SOURCE_DIR}/../../VERSION PROJECT_VERSION)
+message(STATUS "Configuring ${PROJECT_NAME} (GUI): VERSION ${PROJECT_VERSION}")
 
 set(PROJECT_VENDOR "Qucs team. This program is licensed under the GNU GPL")
 set(PROJECT_COPYRIGHT_YEAR "2020")
@@ -20,7 +20,6 @@ set(PROJECT_DOMAIN_SECOND "org")
 option(CompileDependencies "Compile dependencies related to qucs (qucsator ...), default ON" ON)
 
 # add compiler definitions/symbols
-set(PACKAGE_VERSION "${PROJECT_VERSION}")
 add_compile_definitions(QUCS_PREFIX="${prefix}")
 add_compile_definitions(QUCS_PLUGPATH="${pkglibdir}")
 

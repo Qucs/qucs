@@ -3,10 +3,6 @@ cmake_minimum_required(VERSION 3.16
 	)
 include(../cmake/readMakeList.txt)
 
-# add compiler definitions/symbols
-# TODO: try to remove somehow
-add_compile_definitions(PACKAGE_VERSION="${PROJECT_VERSION}")
-
 readVariable(MakeList LEGACY_SRC SRCS)
 readVariable(MakeList HDR HDR)
 
