@@ -34,6 +34,7 @@
 #include "qucs.h"
 #include "misc.h"
 #include "some_font_stuff.h"
+#include "obsolete_paintings.h"
 
 Waveac::Waveac(int _cx, int _cy) : Diagram(_cx, _cy)
 {
@@ -217,6 +218,7 @@ Frame:
 
 void Waveac::calcData(Graph *g)
 {
+#if 0
   double *pz = g->cPointsY;
   if(!pz)  return;
   if(g->numAxes() < 1) return;
@@ -294,7 +296,8 @@ void Waveac::calcData(Graph *g)
   }
   p->setGraphEnd();
   return;
-  
+#else
+#endif
 }
 
 // ------------------------------------------------------------

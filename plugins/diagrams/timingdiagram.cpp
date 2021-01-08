@@ -29,6 +29,7 @@
 #include <QPainter>
 #include "some_font_stuff.h"
 #include "diagram.h"
+#include "obsolete_paintings.h"
 
 namespace {
 class TabDiagram : public Diagram  {

@@ -36,6 +36,7 @@
 #include "phasordiagram.h"
 #include "qucs.h"
 #include "misc.h"
+#include "obsolete_paintings.h"
 
 PhasorDiagram::PhasorDiagram(int _cx, int _cy) : Diagram(_cx, _cy)
 {

@@ -1,5 +1,8 @@
 // ripped off element.h
 
+#ifndef OBSOLETE_PAINTINGS_H
+#define OBSOLETE_PAINTINGS_H
+
 # include <QPen> // BUG
 
 #if 1 // BUG: used in component? and in Subcircuit?
@@ -42,3 +45,5 @@ struct Text {
   bool	  over, under;      // text attributes
 };
 #endif
+
+#endif // OBSOLETE_PAINTINGS_H
