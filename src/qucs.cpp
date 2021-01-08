@@ -150,6 +150,7 @@ QucsApp::QucsApp()
 
   lastExportFilename = QDir::homePath() + QDir::separator() + "export.png";
 
+#if 0
   // load documents given as command line arguments
   // // ARGH. this is argv argc
   // TODO: move to main.cc...
@@ -166,9 +167,17 @@ QucsApp::QucsApp()
       gotoPage(arg);
     }
   }
+#endif
 }
 
-
+// why "AtStartup?!"
+void QucsApp::openFileAtStartup(QString const& arg)
+{
+      QFileInfo Info(arg);
+      QucsSettings.QucsWorkDir.setPath(Info.absoluteDir().absolutePath()); // BUG.
+      QString p = QucsSettings.QucsWorkDir.filePath(Info.fileName());
+      gotoPage(p);
+}
 
 QucsApp::~QucsApp()
 { untested();

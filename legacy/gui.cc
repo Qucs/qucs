@@ -14,6 +14,10 @@ namespace{
 class g: public Command{
 	void do_it(istream_t& cs, SchematicModel*) override{
 
+		cs >> "startgui";
+		std::string filename;
+		cs >> filename;
+
 		int argc=0;
 		char** argv=nullptr;
 
@@ -49,6 +53,7 @@ class g: public Command{
 		auto QucsMain = new QucsApp();
 
 		QucsMain->show();
+		QucsMain->openFileAtStartup(QString::fromStdString(filename));
 		int result = a.exec();
 		exit(result); // FIXME: throw exception_exit or so
 		//saveApplSettings(QucsMain);
