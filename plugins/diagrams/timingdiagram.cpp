@@ -29,6 +29,7 @@
 #include <QPainter>
 #include "some_font_stuff.h"
 #include "diagram.h"
+#include "viewpainter.h"
 #include "obsolete_paintings.h"
 
 namespace {
@@ -164,6 +165,7 @@ void TimingDiagram::paintDiagram(ViewPainter *p)
 // ------------------------------------------------------------
 int TimingDiagram::calcDiagram()
 {
+#if 0
   Lines.clear();
   Texts.clear();
 
@@ -502,6 +504,9 @@ funcEnd:
   }
 
   return 1;
+#else
+    return 0;
+#endif
 }
 
 // ------------------------------------------------------------

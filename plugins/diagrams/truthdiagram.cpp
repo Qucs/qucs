@@ -78,6 +78,7 @@ TruthDiagram::~TruthDiagram()
 // calculates the text in the tabular
 int TruthDiagram::calcDiagram()
 {
+#if 0
   Lines.clear();
   Texts.clear();
   Arcs.clear();
@@ -291,6 +292,9 @@ funcEnd:
   }
 
   return 1;
+#else
+    return 0;
+#endif
 }
 
 // ------------------------------------------------------------

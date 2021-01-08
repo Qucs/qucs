@@ -43,6 +43,9 @@ public:
 protected:
   void calcData(Graph*);
 
+private:
+  Axis  xAxisV, yAxisV, zAxisV, xAxisI, yAxisI, zAxisI, xAxisP, yAxisP, zAxisP, xAxisZ, yAxisZ,
+ zAxisZ, *xAxisA, *yAxisA, *zAxisA;
 };
 
 #endif

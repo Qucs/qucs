@@ -149,9 +149,6 @@ public: // BUG/incomplete
   int x3, y3, sc;
   Axis  xAxis, yAxis, zAxis;   // axes (x, y left, y right)
 
-  /* PHASOR DIAGRAM RELATED
-  Axis  xAxisV, yAxisV, zAxisV, xAxisI, yAxisI, zAxisI, xAxisP, yAxisP, zAxisP, xAxisZ, yAxisZ,
- zAxisZ, *xAxisA, *yAxisA, *zAxisA;*/
   int State;  // to remember which resize area was touched
 
   bool hideLines;       // for "Rect3D": hide invisible lines ?
