@@ -8,8 +8,6 @@
 project(qucs_lib CXX)
 
 # this is where the library source is.
-set(libqucsPath ../../src)
-
 set(libqucsPath ${CMAKE_CURRENT_SOURCE_DIR}/../../src)
 
 # use top VERSION file
@@ -75,9 +73,13 @@ list(TRANSFORM QUCS_DIALOG_SRC2 PREPEND ${libqucsPath}/)
 
 ## qucs library
 add_library(libqucs SHARED ${QUCS_SRCS} ${QUCS_RESOURCES} ${QUCS_UI_FILES} ${QUCS_DIALOG_SRC} ${QUCS_DIALOG_SRC2})
-target_include_directories(libqucs PRIVATE ${PROJECT_SOURCE_DIR}/../../include)
-target_include_directories(libqucs PRIVATE ${libqucsPath})
-target_include_directories(libqucs PRIVATE ${qucs_BINARY_DIR}/main)
+target_include_directories(libqucs
+	PRIVATE
+	${PROJECT_SOURCE_DIR}/../../include
+	${libqucsPath}
+	${qucs_BINARY_DIR}/main
+	${CMAKE_CURRENT_SOURCE_DIR}/../../plugins/diagrams # diagram.h
+	)
 # the order of the links is important. At least the libraries without dependencies are added
 # here the Qt ones (https://stackoverflow.com/questions/51994603/cmake-qt5-undefined-reference-to-qprinterqprinterqprinterprintermode)
 target_link_libraries(libqucs   Qt5::Core

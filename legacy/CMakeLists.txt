@@ -16,9 +16,11 @@ find_package(
 
 add_library(legacy SHARED ${SRCS})
 # TODO: get rid of all of this dependecies
-target_include_directories(legacy PRIVATE ${PROJECT_SOURCE_DIR}/../src
- ${PROJECT_SOURCE_DIR}/../include
+target_include_directories(legacy PRIVATE
+ ${CMAKE_CURRENT_SOURCE_DIR}/../src
+ ${CMAKE_CURRENT_SOURCE_DIR}/../include
  ${qucs_BINARY_DIR}/main # config.h
+ ${CMAKE_CURRENT_SOURCE_DIR}/../plugins/diagrams # diagram.h
  )
 target_link_libraries(legacy Qt5::Core)
 target_link_libraries(legacy Qt5::Gui)

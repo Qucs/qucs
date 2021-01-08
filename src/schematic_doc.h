@@ -19,7 +19,7 @@
 #include "node.h"
 #include "qucsdoc.h"
 #include "viewpainter.h"
-#include "diagram.h"
+//#include "diagram.h"
 #include "simulator.h"
 #include "tasks.h"
 #include "schematic_scene.h"

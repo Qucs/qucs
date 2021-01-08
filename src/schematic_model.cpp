@@ -19,6 +19,7 @@
 #include "io_trace.h"
 #include "u_parameter.h"
 #include "painting.h" // BUG
+#include "diagram.h"
 /*--------------------------------------------------------------------------*/
 /*--------------------------------------------------------------------------*/
 // getting here in CLI mode

@@ -20,6 +20,7 @@
 #include <QDebug>
 #include "platform.h"
 #include "io_trace.h"
+#include "marker.h"
 
 
 /* *******************************************************************
@@ -214,6 +215,9 @@ void SchematicDoc::markerLeftRight(bool left, Q3PtrList<ElementGraphics> *Elemen
 // Move the marker pointer up/down on the more-dimensional graph.
 void SchematicDoc::markerUpDown(bool up, Q3PtrList<ElementGraphics> *Elements)
 {
+    // Marker is in the diagrams plugin and will be loaded dynamically
+    // Don't understand why it is undefined
+#if 0
     Marker *pm;
     bool acted = false;
     for(pm = (Marker*)Elements->first(); pm!=0; pm = (Marker*)Elements->next())
@@ -223,6 +227,7 @@ void SchematicDoc::markerUpDown(bool up, Q3PtrList<ElementGraphics> *Elements)
     }
 
     if(acted)  setChanged(true, true, 'm');
+#endif
 }
 
 

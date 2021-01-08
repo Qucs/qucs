@@ -16,13 +16,15 @@
 #define DIAGRAM_H
 
 //#include "graph.h"
-#include "../legacy/marker.h"
+#include "marker.h"
 #include "element.h"
-#include "viewpainter.h"
+//#include "viewpainter.h"
 
 #include <QFile>
 #include <QTextStream>
 #include <QList>
+#include <QRectF>
+#include <QPen>
 
 #define MIN_SCROLLBAR_SIZE 8
 

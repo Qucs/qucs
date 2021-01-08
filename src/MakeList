@@ -10,7 +10,6 @@ CPP_SRC = \
 	conductor.cpp \
 	cursors.cpp \
 	data.cc \
-	diagram.cpp \
 	element.cpp \
 	element_graphics.cpp \
 	findbr.cc \
@@ -23,7 +22,6 @@ CPP_SRC = \
 	io_findf.cc \
 	language.cpp \
 	l_wmatch.cc \
-	marker.cpp \
 	messagedock.cpp \
 	misc.cpp \
 	mnemo.cpp \
@@ -188,7 +186,6 @@ DIALOG_SRC = \
 # dialogs related to components
 # sort out later.
 DIALOG_SRC2 = \
-	diagramdialog.cpp \
 	optimizedialog.cpp
 
 

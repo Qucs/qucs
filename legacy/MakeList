@@ -9,51 +9,31 @@ SUBDIRS = \
 LEGACY_SRC = \
 	component.cpp \
 	gatecomponent.cpp \
-	curvediagram.cpp \
 	compcmd.cpp \
-	diagram.cpp \
 	equation.cpp \
 	gui.cc \
 	lang_dat.cpp \
 	lang_qucsator.cpp \
 	libcomp.cpp \
-	markerdialog.cpp \
 	modelcmd.cpp \
 	paramset.cpp \
-	polardiagram.cpp \
-	psdiagram.cpp \
 	portcmd.cpp \
 	spicecmd.cpp \
 	signon.cc \
 	symbolcmd.cpp \
 	idcmd.cpp \
 	propertiescmd.cpp \
-	rect3ddiagram.cpp \
-	rectdiagram.cpp \
 	root.cpp \
 	schematic_format.cpp \
 	schematic_lang.cpp \
 	simulator.cpp \
-	smithdiagram.cpp \
 	subcircuit.cpp \
-	verilogfile.cpp \
-	tabdiagram.cpp
+	verilogfile.cpp
 
 NOTYET_SRC = \
-	timingdiagram.cpp \
-	truthdiagram.cpp \
-	phasordiagram.cpp \
 	waveac.cpp
 
 HDR = \
-	obsolete_paintings.h \
-	curvediagram.h \
-	markerdialog.h \
-	marker.h \
-	rect3ddiagram.h \
-	smithdiagram.h \
-	polardiagram.h \
-	psdiagram.h \
-	tabdiagram.h
+	obsolete_paintings.h
 
 EXTRA_DIST =

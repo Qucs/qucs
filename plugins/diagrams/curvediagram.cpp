@@ -1,5 +1,8 @@
 /***************************************************************************
-    copyright            : (C) 2003 by Michael Margraf
+                              curvediagram.cpp
+                             ------------------
+    begin                : Sat Apr 9 2005
+    copyright            : (C) 2005 by Michael Margraf
     email                : michael.margraf@alumni.tu-berlin.de
  ***************************************************************************/
 
@@ -7,14 +10,14 @@
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU General Public License as published by  *
- *   the Free Software Foundation; either version 3 of the License, or     *
+ *   the Free Software Foundation; either version 2 of the License, or     *
  *   (at your option) any later version.                                   *
  *                                                                         *
  ***************************************************************************/
 
 /*!
-  \class RectDiagram
-  \brief The RectDiagram class implements the Cartesian diagram
+  \class CurveDiagram
+  \brief The CurveDiagram class implements the Locus Curve diagram
 */
 
 #if HAVE_CONFIG_H
@@ -26,107 +29,63 @@
 # include <ieeefp.h>
 #endif
 
-#include "diagram.h"
-#include "qucs.h"
+#include <QMessageBox>
+
+#include "curvediagram.h"
+//#include "qucs.h"
 #include "misc.h"
 #include "some_font_stuff.h"
-#include "globals.h"
-#include "module.h"
-#include <QLineEdit>
 #include "obsolete_paintings.h"
+#include "settings.h"
 
-namespace {
-
-class RectDiagram : public Diagram  {
-  RectDiagram(RectDiagram const& c) : Diagram(c) {}
-public:
-  explicit RectDiagram();
- ~RectDiagram();
-
-
-private:
-  Diagram* newOne() { unreachable(); return new RectDiagram(*this);}
-  Element* clone() const {return new RectDiagram(*this);}
-  static Element* info(QString&, char* &, bool getNewOne=false);
-  int  calcDiagram();
-  void calcLimits();
-  void calcCoordinate(const double*, const double*, const double*, float*, float*, Axis const*) const;
-  void finishMarkerCoordinates(float&, float&) const;
-  bool insideDiagram(float, float) const;
-
-  pos_t center() const override{
-    return Element::center();
-  }
-
-//  in new style diagrams.
-//  QWidget* newWidget(){ untested();
-//    QWidget* w=new QLineEdit;
-//    w->move(_cx, _cy);
-//    return w;
-//  }
-
-protected:
-  void clip(Graph::iterator &) const;
-}D;
-Dispatcher<Diagram>::INSTALL p(&diagram_dispatcher, "Rect", &D);
-Module::INSTALL pp("diagrams", &D);
-
-RectDiagram::RectDiagram() : Diagram(0, 0)
+CurveDiagram::CurveDiagram(int _cx, int _cy) : Diagram(_cx, _cy)
 {
   x1 = 10;      // position of label text
   y1 = y3 = 33;
-  x2 = 240;    // initial size of diagram
-  y2 = 160;
-  x3 = 247;    // with some distance for right axes text
+  x2 = y2 = 200;    // initial size of diagram
+  x3 = 207;    // with some distance for right axes text
 
-  Name = "Rect"; // BUG
+  Name = "Curve"; // BUG.
   calcDiagram();
 }
 
-RectDiagram::~RectDiagram()
+CurveDiagram::~CurveDiagram()
 {
 }
 
 // ------------------------------------------------------------
-void RectDiagram::calcCoordinate(const double* xD, const double* yD, const double*,
-                                 float *px, float *py, Axis const *pa) const
+void CurveDiagram::calcCoordinate(const double*, const double* yD, const double*,
+				  float *px, float *py, Axis const *pa) const
 {
-  double x  = *xD;
   double yr = yD[0];
   double yi = yD[1];
-  if(xAxis.log) {
-    x /= xAxis.low;
-    if(x <= 0.0)  *px = -1e5;   // "negative infinity"
-    else  *px = float(log10(x)/log10(xAxis.up / xAxis.low) * double(x2));
-  }
-  else  *px = float((x-xAxis.low)/(xAxis.up-xAxis.low)*double(x2));
+  if(xAxis.log)
+    *px = float(log10(yr / xAxis.low)/log10(xAxis.up / xAxis.low)
+		*double(x2));
+  else  *px = float((yr-xAxis.low)/(xAxis.up-xAxis.low)*double(x2));
 
-  if(pa->log) {
-    yr = sqrt(yr*yr + yi*yi);
-    if(yr <= 0.0)  *py = -1e5;   // "negative infinity"
-    else *py = float(log10(yr/fabs(pa->low)) /
-                     log10(pa->up/pa->low) * double(y2));
-  }
-  else {
-    if(fabs(yi) > 1e-250)  // preserve negative values if not complex number
-      yr = sqrt(yr*yr + yi*yi);
-    *py = float((yr-pa->low)/(pa->up-pa->low)*double(y2));
-  }
+  if(pa->log)
+    *py = float(log10(yi / pa->low)/log10(pa->up / pa->low)
+		*double(y2));
+  else  *py = float((yi-pa->low)/(pa->up-pa->low)*double(y2));
 
-  if(!std::isfinite(*px))  *px = 0.0;
-  if(!std::isfinite(*py))  *py = 0.0;
+  if(std::isfinite(*px))
+    if(std::isfinite(*py))
+      return;
+
+  *px = *py = 0.0;
 }
 
 // --------------------------------------------------------------
-void RectDiagram::finishMarkerCoordinates(float& fCX, float& fCY) const
+void CurveDiagram::finishMarkerCoordinates(float& fCX, float& fCY) const
 {
   if(!insideDiagram(fCX, fCY)) {
 	  fCX = fCY = 0.0;
   }
 }
 
-// --------------------------------------------------------------
-void RectDiagram::calcLimits()
+// ------------------------------------------------------------
+void CurveDiagram::calcLimits()
 {
   int i;
   double a, b, c;
@@ -163,7 +122,7 @@ void RectDiagram::calcLimits()
 }
 
 // --------------------------------------------------------------
-int RectDiagram::calcDiagram()
+int CurveDiagram::calcDiagram()
 {
   Lines.clear();
   Texts.clear();
@@ -197,9 +156,9 @@ int RectDiagram::calcDiagram()
   // ====  x grid  =======================================================
 if(xAxis.log) {
   if(xAxis.autoScale) {
-    if(xAxis.max*xAxis.min < 1e-200)  goto Frame;  // invalid
+    if(xAxis.max*xAxis.min <= 0.0)  goto Frame;  // invalid
   }
-  else  if(xAxis.limit_min*xAxis.limit_max < 1e-200)  goto Frame;  // invalid
+  else  if(xAxis.limit_min*xAxis.limit_max <= 0.0)  goto Frame;  // invalid
 
   back = calcAxisLogScale(&xAxis, z, zD, zDstep, corr, x2);
 
@@ -250,12 +209,23 @@ else {  // not logarithmical
     zD += zDstep;
     z = int(zD);
   }
+  
+  if(xAxis.up >= 0.0) if(xAxis.low <= 0.0) {  // paint origin cross ?
+    z = int(double(x2) * fabs(xAxis.low / (xAxis.up-xAxis.low)) + 0.5);
+    Lines.append(new Line(z, 0, z, y2, QPen(Qt::black,0)));
+  }
 } // of "if(xlog) ... else ..."
 
 
   // ====  y grid  =======================================================
   if(zAxis.numGraphs > 0) if(calcYAxis(&zAxis, x2)) valid |= 2;
-  if(yAxis.numGraphs > 0) if(calcYAxis(&yAxis, 0))  valid |= 1;
+  if(yAxis.numGraphs > 0) if(calcYAxis(&yAxis, 0)) {
+    valid |= 1;
+    if(yAxis.up >= 0.0) if(yAxis.low <= 0.0) {  // paint origin cross ?
+      z = int(double(y2) * fabs(yAxis.low / (yAxis.up-yAxis.low)) + 0.5);
+      Lines.append(new Line(0, z, x2, z, QPen(Qt::black,0)));
+    }
+  }
 
 
 Frame:
@@ -268,29 +238,23 @@ Frame:
 }
 
 // ------------------------------------------------------------
-bool RectDiagram::insideDiagram(float x, float y) const
+bool CurveDiagram::insideDiagram(float x, float y) const
 {
   return (regionCode(x, y) == 0);
 }
 
 // ------------------------------------------------------------
-void RectDiagram::clip(Graph::iterator &p) const
+void CurveDiagram::clip(Graph::iterator &p) const
 {
   rectClip(p);
 }
 
 // ------------------------------------------------------------
-#if 0
-Element* RectDiagram::info(QString& Name, char* &BitmapFile, bool getNewOne)
+Element* CurveDiagram::info(QString& Name, char* &BitmapFile, bool getNewOne)
 {
-  unreachable();
-  Name = QObject::tr("Cartesian");
-  BitmapFile = (char *) "rect";
+  Name = QObject::tr("Locus Curve");
+  BitmapFile = (char *) "curve";
 
-  if(getNewOne)  return new RectDiagram();
+  if(getNewOne)  return new CurveDiagram();
   return 0;
 }
-#endif
-
-}
-// vim:ts=8:sw=2:noet

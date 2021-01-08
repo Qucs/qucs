@@ -19,7 +19,7 @@
 #define MARKER_H
 
 #include "element.h"
-#include "viewpainter.h"
+//#include "viewpainter.h"
 
 class QPainter;
 class Diagram;

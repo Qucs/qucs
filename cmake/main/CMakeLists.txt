@@ -31,6 +31,7 @@ add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/../../legacy/components legacy/comp
 add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/../../legacy/paintings legacy/paintings)
 add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/../../legacy/libfiles legacy/libfiles)
 add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/../../plugins/misc plugins/misc)
+add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/../../plugins/diagrams plugins/diagrams)
 
 ## ------ WHY needed?
 # If Git hash not defined, try to define it

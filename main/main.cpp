@@ -146,12 +146,8 @@ void attach_default_plugins()
   attach_single("legacy/paintings");
   attach_single("legacy/libfiles");
   attach_single("plugins/misc");
+  attach_single("plugins/diagrams");
  // attach_single(pp, "libdialogs" SOEXT);
- //
- //
- // not yet. legacy diagrams are now part of legacy (above)
- // new diagrams: load manually.
-  // attach_single(pp, "diagrams" SOEXT);
 }
 /*--------------------------------------------------------------------------*/
 void qucsMessageHandler(QtMsgType type, const QMessageLogContext &, const QString & str)
@@ -180,10 +176,10 @@ int main(int argc, char *argv[])
   qInstallMsgHandler(qucsMessageHandler);
   QucsVersion = VersionTriplet(PACKAGE_VERSION);
 
-  QFile qf(":/bitmaps/doesnotexist.png");
-  assert(!qf.exists());
-  QFile qfl(":/bitmaps/line.png");
-  assert(qfl.exists());
+//  QFile qf(":/bitmaps/doesnotexist.png");
+//  assert(!qf.exists());
+//  QFile qfl(":/bitmaps/line.png");
+//  assert(qfl.exists());
 
   loadSettings();
 
