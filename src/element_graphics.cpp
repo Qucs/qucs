@@ -325,7 +325,21 @@ ElementGraphics* ElementGraphics::newPort(pos_t where) const
 ElementGraphics* ElementGraphics::newUnion(ElementGraphics const* s) const
 {
 	ElementGraphics* ng = nullptr;
-	if(auto c=dynamic_cast<Conductor const*>(_e)){itested();
+	if(auto o=dynamic_cast<Conductor const*>(element(s))){itested();
+		// HACK HACK HACK
+		if(Symbol* u = o->newUnion(symbol(this)) ){ untested();
+			trace1("new union2", u);
+			ng = new ElementGraphics(u);
+			assert(_e->mutable_owner());
+//			u->setOwner(_e->mutable_owner());
+//			ng->setParentItem(scene());
+			scene()->addItem(ng);
+			return ng;
+		}else{itested();
+		}
+	}else if(!symbol(s)){
+		// diagram? no union
+	}else if(auto c=dynamic_cast<Conductor const*>(_e)){itested();
 		assert(symbol(s));
 
 		if(Symbol* u = c->newUnion(symbol(s)) ){ untested();
@@ -338,18 +352,6 @@ ElementGraphics* ElementGraphics::newUnion(ElementGraphics const* s) const
 			return ng;
 		}else{itested();
 			trace1("no new union", symbol(s)->typeName());
-		}
-	}else if(auto o=dynamic_cast<Conductor const*>(element(s))){itested();
-		// HACK HACK HACK
-		if(Symbol* u = o->newUnion(symbol(this)) ){ untested();
-			trace1("new union2", u);
-			ng = new ElementGraphics(u);
-			assert(_e->mutable_owner());
-//			u->setOwner(_e->mutable_owner());
-//			ng->setParentItem(scene());
-			scene()->addItem(ng);
-			return ng;
-		}else{itested();
 		}
 	}else{
 	}
