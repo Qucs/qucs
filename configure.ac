@@ -847,16 +847,16 @@ AC_CONFIG_FILES([
     qucs-lib/Makefile
     qucs-lib/library/Makefile
     tools/Makefile:autotools/tools.in
-    tools/filter/Makefile
-    tools/filter-v2/Makefile
-    tools/activefilter/Makefile
-    tools/transcalc/Makefile
+    tools/filter/Makefile:autotools/filter.in
+    tools/filter-v2/Makefile:autotools/filter-v2.in
+    tools/activefilter/Makefile:autotools/activefilter.in
+    tools/transcalc/Makefile:autotools/transcalc.in
     tools/transcalc/bitmaps/Makefile
     tools/transcalc/examples/Makefile
-    tools/attenuator/Makefile
+    tools/attenuator/Makefile:autotools/attenuator.in
     tools/attenuator/bitmaps/Makefile
-    tools/rescodes/Makefile
-    tools/powercombining/Makefile
+    tools/rescodes/Makefile:autotools/rescodes.in
+    tools/powercombining/Makefile:autotools/powercombining.in
     src/Makefile:autotools/src.in
     src/action/Makefile
     src/bitmaps/Makefile
