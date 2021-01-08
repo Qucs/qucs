@@ -30,7 +30,7 @@ dist_man_MANS = qucspowercombining.1
 
 include ../../autotools/common.mk
 
-qucspowercombining_SOURCES = main.cpp qucspowercombiningtool.cpp qrc_qucspowercombining.cpp
+qucspowercombining_SOURCES = ${SRCS} ${RESOURCES}
 qucspowercombining_CXXFLAGS = ${AM_CXXFLAGS} -fPIC
 
 EXTRA_DIST += qucspowercombining.qrc

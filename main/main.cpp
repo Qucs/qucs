@@ -460,7 +460,7 @@ int main(int argc, char *argv[])
     }else{
     }
   }else{
-    CMD::command(std::string("startgui"), nullptr);
+    CMD::command(std::string("startgui " + inputfile.toStdString()), nullptr);
   }
   return result;
 }

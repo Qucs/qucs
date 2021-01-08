@@ -8,7 +8,7 @@ SRCS = \
 	myresistancebox.cpp \
 	notation.cpp \
 	qresistor.cpp \
-	resistor.cpp \
+	resistor.cpp
 
 RESOURCES = \
 	qucsrescodes.qrc

@@ -31,24 +31,7 @@ bin_PROGRAMS = qucsfilter
 
 dist_man_MANS = qucsfilter.1
 
-qucsfilter_SOURCES =  \
-	eqn_filter.cpp \
-	filter.cpp \
-	helpdialog.cpp \
-	lc_filter.cpp \
-	line_filter.cpp \
-	qf_cauer.cpp \
-	qf_filter.cpp \
-	qucsfilter.cpp \
-	stepz_filter.cpp \
-	tl_filter.cpp \
-	cline_filter.cpp \
-	main.cpp  \
-	qf_poly.cpp \
-	quarterwave_filter.cpp \
-        qw_coupled_ring_filter.cpp \
-        ccoupled_shunt_resonators.cpp \
-	qucsfilter_.qrc
+qucsfilter_SOURCES = ${SRCS} ${RESOURCES}
 qucsfilter_CXXFLAGS = ${AM_CXXFLAGS} -fPIC
 
 nodist_qucsfilter_SOURCES = $(MOCFILES)

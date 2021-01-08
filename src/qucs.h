@@ -117,6 +117,7 @@ public:
   bool closeAllFiles(int exceptTab = -1);
   bool closeAllLeft(int);
   bool closeAllRight(int);
+  void openFileAtStartup(QString const&); // ??
   bool gotoPage(const QString&);   // to load a document
   QucsDoc *getDoc(int No=-1);
   QucsDoc* findDoc (QString, int * Pos = 0);

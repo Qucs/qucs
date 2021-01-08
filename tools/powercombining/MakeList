@@ -2,8 +2,8 @@
 EXTRA_DIST = 
 
 SRCS = \
-    qucspowercombiningtool.cpp \
-    main.cpp
-    
+	main.cpp \
+	qucspowercombiningtool.cpp
+
 RESOURCES = \
-    qucspowercombining.qrc
+	qrc_qucspowercombining.qrc

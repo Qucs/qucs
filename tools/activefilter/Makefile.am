@@ -31,9 +31,7 @@ bin_PROGRAMS = qucsactivefilter
 
 dist_man_MANS = qucsactivefilter.1
 
-qucsactivefilter_SOURCES = main.cpp qucsactivefilter.cpp filter.cpp helpdialog.cpp \
-transferfuncdialog.cpp sallenkey.cpp \
-mfbfilter.cpp schcauer.cpp qf_poly.cpp qucsactivefilter_.qrc
+qucsactivefilter_SOURCES = ${SRCS} ${RESOURCES}
 qucsactivefilter_CXXFLAGS = ${AM_CXXFLAGS} -fPIC
 
 nodist_qucsactivefilter_SOURCES = $(MOCFILES)
