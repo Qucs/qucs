@@ -1366,8 +1366,6 @@ class DiagramCommand : public Command{
 			}
 		}
 		trace1("Diag parse", sym->subckt()->size());
-
-		s->pushBack(sym);
 	}
 }d4;
 Dispatcher<Command>::INSTALL p3_(&command_dispatcher, "Diagrams", &d4);

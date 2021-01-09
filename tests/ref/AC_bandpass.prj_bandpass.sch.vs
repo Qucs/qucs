@@ -129,5 +129,4 @@ place #(.$xposition(600),.$yposition(220)) place_600_220(net_600_220);
 place #(.$xposition(610),.$yposition(160)) place_610_160(net_610_160);
 endmodule // Sub:opa227
 
-// skip sckt :Diagrams:
 // skip sckt :Paintings:
