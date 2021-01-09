@@ -18,8 +18,14 @@
 /*--------------------------------------------------------------------------*/
 Conductor::~Conductor()
 {
-	assert(!_adj.size());
-	assert(!_net);
+	if(_adj.size()){
+		unreachable();
+		incomplete();
+	}else if(_net){
+		unreachable();
+		incomplete();
+	}else{
+	}
 }
 /*--------------------------------------------------------------------------*/
 Conductor::Conductor()
