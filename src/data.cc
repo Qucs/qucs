@@ -26,7 +26,7 @@ CommonData::~CommonData()
 /* -------------------------------------------------------------------------------- */
 /* -------------------------------------------------------------------------------- */
 // borrowed from e_compon
-inline void CommonData::attach(CommonData* d, CommonData** to)
+void CommonData::attach(CommonData* d, CommonData** to)
 {
 	assert(to);
 	if (d == *to) {
@@ -62,7 +62,7 @@ inline void CommonData::attach(CommonData* d, CommonData** to)
 }
 /* -------------------------------------------------------------------------------- */
 // borrowed from e_compon
-inline void CommonData::detach(CommonData** from)
+void CommonData::detach(CommonData** from)
 {
 	assert(from);
 	if (*from) {
