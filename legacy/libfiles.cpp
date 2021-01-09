@@ -25,13 +25,13 @@
 #include "sckt_base.h"
 #include <QList> // yikes.
 #include "../qucs-lib/qucslib_common.h"
+#include "command.h"
 
 namespace{
 
-class LIB{
+class LIB : public Command{
 public:
 	LIB(){
-		loadLibFiles();
 	}
 	~LIB(){
 		incomplete();
@@ -43,7 +43,7 @@ public:
 #endif
 	}
 private:
-	void loadLibFiles();
+	void do_it(istream_t&, SchematicModel*) override;
 	void stash(Dispatcher<Symbol>::INSTALL* i){
 		_stash.push_back(i);
 	}
@@ -52,8 +52,9 @@ private:
 
 	std::vector<Module::INSTALL*> _mod;
 }l;
+Dispatcher<Command>::INSTALL p(&command_dispatcher, "loadlegacylib", &l);
 
-void LIB::loadLibFiles()
+void LIB::do_it(istream_t&, SchematicModel*)
 {
     QList<QPair<QString, bool> > LibFiles;
     ComponentLibrary parsedlib;

@@ -112,7 +112,8 @@ void Rectangle::paint(ViewPainter *p) const
   }
 #endif
 
-  assert(false);
+  // assert(false);?
+  incomplete(); // probably
   p->setPen(Pen);
   if(filled)  p->setBrush(Brush);
   p->drawRect(cx, cy, x2, y2);

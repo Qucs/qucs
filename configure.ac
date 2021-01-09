@@ -832,7 +832,6 @@ AC_CONFIG_FILES([
     include/Makefile:autotools/include.in
     legacy/Makefile:autotools/legacy.in
     legacy/components/Makefile
-    legacy/libfiles/Makefile:autotools/libfiles.in
     legacy/qucsator/Makefile:autotools/qucsator.in
     legacy/paintings/Makefile:autotools/paintings.in
     main/Makefile:autotools/main.in
