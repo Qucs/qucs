@@ -59,5 +59,4 @@ place #(.$xposition(380),.$yposition(360)) place_380_360(net_380_360);
 place #(.$xposition(400),.$yposition(180)) place_400_180(net_400_180);
 endmodule // Sub:short_circuit
 
-// skip sckt :Diagrams:
 // skip sckt :Paintings:

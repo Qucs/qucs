@@ -144,7 +144,7 @@ void attach_default_plugins()
 
   attach_single("legacy/components");
   attach_single("legacy/paintings");
-  attach_single("legacy/libfiles");
+  CMD::command("loadlegacylib", nullptr);
   attach_single("plugins/misc");
  // attach_single(pp, "libdialogs" SOEXT);
  //

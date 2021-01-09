@@ -1,5 +1,0 @@
-TARGET = libfiles
-
-RAW_SRCS = libfiles.cpp
-
-EXTRA_DIST =

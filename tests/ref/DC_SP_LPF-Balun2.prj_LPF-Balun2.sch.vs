@@ -155,5 +155,4 @@ place #(.$xposition(460),.$yposition(140)) place_460_140(net_460_140);
 place #(.$xposition(460),.$yposition(280)) place_460_280(net_460_280);
 endmodule // Sub:IdealBalun
 
-// skip sckt :Diagrams:
 // skip sckt :Paintings:
