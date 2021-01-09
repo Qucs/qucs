@@ -162,8 +162,14 @@ Wire::Wire(pos_t const& p0, pos_t const& p1)
 /*--------------------------------------------------------------------------*/
 Wire::~Wire()
 {
-	assert(!port(0).isConnected());
-	assert(!port(1).isConnected());
+	if(!port(0).isConnected()){
+		unreachable();
+		incomplete();
+	}else if(!port(1).isConnected()){
+		unreachable();
+		incomplete();
+	}else{
+	}
 }
 /*--------------------------------------------------------------------------*/
 void Wire::findScaleAndAngle(pos_t p1)
