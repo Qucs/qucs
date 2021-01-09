@@ -74,5 +74,4 @@ endmodule // main
 
 Sub #(.File()) Sub(net_0_0);
 // skip sckt :SymbolSection:
-// skip sckt :Diagrams:
 // skip sckt :Paintings:

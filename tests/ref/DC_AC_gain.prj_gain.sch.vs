@@ -177,5 +177,4 @@ place #(.$xposition(500),.$yposition(400)) place_500_400(net_500_400);
 place #(.$xposition(540),.$yposition(230)) place_540_230(net_540_230);
 endmodule // Sub:singleOPV
 
-// skip sckt :Diagrams:
 // skip sckt :Paintings:
