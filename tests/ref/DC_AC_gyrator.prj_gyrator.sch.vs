@@ -1,3 +1,4 @@
+// VS::printSubckt main
 module main();
 GND #() anonymous_gnd_hack_0(net_120_320);
 Vdc #(.U(10 V)) V1(net_120_260, net_120_320);
@@ -39,6 +40,3 @@ place #(.$xposition(570),.$yposition(260)) place_570_260(net_570_260);
 place #(.$xposition(570),.$yposition(320)) place_570_320(net_570_320);
 endmodule // main
 
-Sub #(.File()) Sub(net_0_0);
-// skip sckt :SymbolSection:
-// skip sckt :Paintings:
