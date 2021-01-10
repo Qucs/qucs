@@ -187,7 +187,7 @@ Component::Component(Component const& p)
  */
 Component::Component() : Symbol(),  _rotated(0)
 {
-  Type = isAnalogComponent;
+  // Type = isAnalogComponent;
 
   mirroredX = false;
   isActive = COMP_IS_ACTIVE;
@@ -1293,7 +1293,7 @@ void MultiViewComponent::recreate()
 // ***********************************************************************
 GateComponent::GateComponent()
 { untested();
-  Type = isComponent;   // both analog and digital
+  // Type = isComponent;   // both analog and digital
   Name  = "Y";
 
   // the list order must be preserved !!!

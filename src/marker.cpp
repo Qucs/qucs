@@ -54,7 +54,7 @@ Marker::Marker(Graph *pg_, int branchNo, int cx_, int cy_) :
   numMode(0),
   Z0(default_Z0) // BUG: see declaration.
 {
-  Type = isMarker;
+  // Type = isMarker;
   transparent = false;
 
   setCenter(cx_, -cy_, false);

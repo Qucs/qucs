@@ -27,7 +27,7 @@ Graph::Graph(Diagram const* d, const QString& _Line) :
   Style(GRAPHSTYLE_SOLID),
   diagram(d)
 {
-  Type = isGraph;
+  // Type = isGraph;
 
   Var    = _Line;
   countY = 0;    // no points in graph

@@ -17,7 +17,7 @@
 
 Element::Element() : _position(0, 0), _owner(nullptr)
 {
-  Type = isDummyElement; // BUG
+  // Type = isDummyElement; // BUG
   x1 = y1 = 0; // x2 = y2 = 0; // really?
 //  setLabel(name());
 }

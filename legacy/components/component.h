@@ -269,6 +269,9 @@ public: // BUG
 
 // private: !!!
   bool showName;
+
+protected: // obsolete
+  int Type;
 }; // Component
 
 
