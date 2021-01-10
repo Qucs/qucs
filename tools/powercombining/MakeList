@@ -6,4 +6,4 @@ SRCS = \
 	qucspowercombiningtool.cpp
 
 RESOURCES = \
-	qrc_qucspowercombining.qrc
+	qucspowercombining.qrc
