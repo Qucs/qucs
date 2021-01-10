@@ -1336,13 +1336,9 @@ class DiagramCommand : public Command{
 		auto p_ = s->find_("main");
 		if(p_!=s->end()){
 			sym = dynamic_cast<SubcktBase*>(*p_);
+			assert(sym);
 		}else{
-			// "headless" mode
-			// create main, but no project.
-			//  (defer expansion of components that need a project)
-			//			Symbol* sc = mainSection.clone();
 			Symbol* sc = symbol_dispatcher.clone("subckt_proto");
-
 			sym = dynamic_cast<SubcktBase*>(sc);
 			assert(sym);
 			sym->setLabel("main");
