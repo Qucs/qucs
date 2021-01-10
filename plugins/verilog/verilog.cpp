@@ -28,7 +28,7 @@ class WireList;
 class ComponentList;
 
 namespace {
-
+/* -------------------------------------------------------------------------------- */
 static std::string netLabel(Node const* nn)
 {
 	if(!nn){
@@ -45,15 +45,17 @@ static std::string netLabel(Node const* nn)
 		return "_net" + std::to_string(n->pos());
 	}
 }
-
+/* -------------------------------------------------------------------------------- */
 class Verilog : public DocumentLanguage {
 	void printTaskElement(TaskElement const*, ostream_t&) const override;
 	void printSymbol(Symbol const*, ostream_t&) const override;
 	void printSubckt(SubcktBase const*, ostream_t&) const override;
 	void printPainting(Painting const*, ostream_t&) const override {incomplete();}
 	void printDiagram(Symbol const*, ostream_t&) const override {incomplete();}
+
 private:
 	void print_ports_short(ostream_t& o, const Symbol* x) const;
+
 private: //DocumentLanguage
 	std::string findType(istream_t&) const override {incomplete(); return "incomplete";}
 } V;
@@ -261,9 +263,9 @@ void VS::printSubckt(SubcktBase const* x, ostream_t& o) const
 	SchematicModel const* scope = nullptr;
 //	if(x->label()[0] == ':'){ untested();
 //		unreachable();
-//		o << "// skip sckt " << x->label() << "\n";
 //		return;
 //	}else
+	o << "// VS::printSubckt " << x->label() << "\n";
 	if(x->subckt()){ untested();
 		scope = x->subckt();
 	}else if(x->scope()){
@@ -356,7 +358,7 @@ void VerilogSchematicFormat::load(istream_t&, Object*) const
   incomplete();
 }
 /* -------------------------------------------------------------------------------- */
-void VerilogSchematicFormat::do_it(istream_t& cs, SchematicModel* o)
+void VerilogSchematicFormat::do_it(istream_t& cs, SchematicModel* scope)
 {
 	std::string fn;
 	cs >> fn;
@@ -369,6 +371,15 @@ void VerilogSchematicFormat::do_it(istream_t& cs, SchematicModel* o)
 	}
 	ostream_t stream(&NetlistFile);
 
+	auto it = scope->find_("main");
+	if(it == scope->end()){
+	}else if(auto main = dynamic_cast<SubcktBase*>(*it)){
+		// scope = xx->scope();
+		V_.printItem(stream, main);
+	}else{ untested();
+	}
+
+#if 0
 	for(auto pc : *o){
 		if(dynamic_cast<TaskElement const*>(pc)){ untested();
 			unreachable();
@@ -380,6 +391,7 @@ void VerilogSchematicFormat::do_it(istream_t& cs, SchematicModel* o)
 			V_.printItem(stream, s);
 		}
 	}
+#endif
 }
 /* -------------------------------------------------------------------------------- */
 // similar to Verilog::printSymbol, but with the actual node names and

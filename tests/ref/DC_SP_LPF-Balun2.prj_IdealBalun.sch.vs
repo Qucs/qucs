@@ -1,3 +1,4 @@
+// VS::printSubckt main
 module main(net_260_180, net_260_360, net_460_280, net_460_140, net_340_390);
 sTr #(.T1(0.5), .T2(0.5)) Tr1(net_410_140, net_350_180, net_350_240, net_410_280, net_410_220, net_410_200);
 Port #(.Num(3), .Type(analog)) P3(net_460_280);
@@ -32,6 +33,3 @@ place #(.$xposition(460),.$yposition(140)) place_460_140(net_460_140);
 place #(.$xposition(460),.$yposition(280)) place_460_280(net_460_280);
 endmodule // main
 
-Sub #(.File()) Sub(net_0_0);
-// skip sckt :SymbolSection:
-// skip sckt :Paintings:

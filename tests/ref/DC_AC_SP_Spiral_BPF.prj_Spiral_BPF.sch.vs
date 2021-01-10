@@ -1,3 +1,4 @@
+// VS::printSubckt main
 module main();
 C #(.C(195 fF), .V(), .Symbol(neutral)) C1(net_180_370, net_180_310);
 C #(.C(155 fF), .V(), .Symbol(neutral)) C2(net_260_260, net_320_260);
@@ -75,6 +76,3 @@ place #(.$xposition(730),.$yposition(370)) place_730_370(net_730_370);
 place #(.$xposition(730),.$yposition(410)) place_730_410(net_730_410);
 endmodule // main
 
-Sub #(.File()) Sub(net_0_0);
-// skip sckt :SymbolSection:
-// skip sckt :Paintings:

@@ -1,3 +1,4 @@
+// VS::printSubckt main
 module main();
 Lib$Z-Diodes$1N4732A #(.Lib(Z-Diodes), .Component(1N4732A)) D1(net_80_260, net_80_320);
 _BJT #(.Type(npn), .Is(15.5f), .Nf(1), .Nr(1), .Ikf(54.7m), .Ikr(0.135), .Vaf(127), .Var(28), .Ise(3.9p), .Ne(2), .Isc(0), .Nc(2), .Bf(524), .Br(4), .Rbm(0), .Irb(0), .Rc(0.116), .Re(0.29), .Rb(1.16), .Cje(22.7p), .Vje(1.1), .Mje(0.5), .Cjc(7.34p), .Vjc(0.3), .Mjc(0.3), .Xcjc(1), .Cjs(0), .Vjs(0.75), .Mjs(0), .Fc(0.5), .Tf(698p), .Xtf(0), .Vtf(0), .Itf(0), .Tr(121n), .Temp(26.85), .Kf(0), .Af(1), .Ffe(1), .Kb(0), .Ab(1), .Fb(1), .Ptf(0), .Xtb(0.0), .Xti(3.0), .Eg(1.11), .Tnom(26.85), .Area(1.0)) T_2DC4617R1(net_230_290, net_200_260, net_200_320, net_200_260);
@@ -56,6 +57,3 @@ place #(.$xposition(420),.$yposition(100)) place_420_100(net_420_100);
 place #(.$xposition(420),.$yposition(160)) place_420_160(net_420_160);
 endmodule // main
 
-Sub #(.File()) Sub(net_0_0);
-// skip sckt :SymbolSection:
-// skip sckt :Paintings:
