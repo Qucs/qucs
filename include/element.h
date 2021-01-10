@@ -105,14 +105,14 @@ class SchematicModel;
 /*--------------------------------------------------------------------------*/
 class Element : public Object {
 public:
-  friend class ElementGraphics;
-  typedef rect_t Rect;
+	friend class ElementGraphics;
+	typedef rect_t Rect;
 protected:
-  Element(Element const&);
+	Element(Element const&);
 public:
-  Element();
-  Element(int cx, int cy) : _position(cx, cy) { unreachable(); }
-  virtual ~Element();
+	Element();
+	Element(int cx, int cy) : _position(cx, cy) { unreachable(); }
+	virtual ~Element();
 
 public: // make old variables accessible
 	int const& cx() const { return _position.first; }
@@ -122,112 +122,86 @@ public: // make old variables accessible
 	int const& y1_() const { return y1; }
 	void snapToGrid(SchematicDoc& s);
 
-	void setObsoleteType(int t){
-		Type = t;
+	void setObsoleteType(int){
+		unreachable();
 	}
 	virtual rect_t bounding_rect() const;
 
 public: // other stuff
-  virtual bool showLabel() const{ return true; }
-  //virtual bool showParam(int i) const{ return true; } // later
+	virtual bool showLabel() const{ return true; }
+	//virtual bool showParam(int i) const{ return true; } // later
 
-  void setCenter(pos_t const& c){ incomplete(); _position = c; }
-  void setPosition(pos_t const& c){ _position = c; }
-//  virtual void setCenter(int x, int y, bool relative=false);
-  virtual void getCenter(int&, int&) const; // BUG
-  virtual void paint(ViewPainter*) const = 0;
-  virtual QDialog* schematicWidget(QucsDoc*) const { return nullptr; }
+	void setCenter(pos_t const& c){ incomplete(); _position = c; }
+	void setPosition(pos_t const& c){ _position = c; }
+	virtual void getCenter(int&, int&) const; // BUG
+	virtual void paint(ViewPainter*) const = 0;
+	virtual QDialog* schematicWidget(QucsDoc*) const { return nullptr; }
 
-  // really?
-  virtual QWidget* newWidget() {return nullptr;}
+	// really?
+	virtual QWidget* newWidget() {return nullptr;}
 
-  // BUG: remove "center"
-  // BUG: not virtual
-  virtual pos_t center()const;
+	// BUG: remove "center"
+	// BUG: not virtual
+	virtual pos_t center()const;
 
-  pos_t position()const{
-	  return _position;
-  }
+	pos_t position()const{
+		return _position;
+	}
 
 public:
 	virtual Element* clone()const = 0;
 	virtual Element* clone_instance()const{
 		return clone();
 	}
-  virtual QString const& description() const{return incomplete_description;}
-  virtual char const* iconBasename() const{return nullptr;}
-
-public: // BUG
-  int  Type;    // whether it is Component, Wire, ...
+	virtual QString const& description() const{return incomplete_description;}
+	virtual char const* iconBasename() const{return nullptr;}
 
 public: // compatibility
 	virtual bool legacyTransformHack() const{
 		return false;
 	}
 
-private:
-   pos_t _position; // BUG: store in symbol?
-
-protected:
-  int x1, y1;
 public:
-  
-  // BUG; abused in taskElement
-//  mutable int x2, y2;  // center and relative boundings
+	// BUG; abused in taskElement
+	//  mutable int x2, y2;  // center and relative boundings
 
-  // create a declaration, e.g. subcircuit definition or include directive
-  virtual Symbol const* proto(SchematicModel const*) const{return nullptr;}
-  SchematicModel const* scope() const;
-  virtual SchematicModel* scope();
+	// create a declaration, e.g. subcircuit definition or include directive
+	virtual Symbol const* proto(SchematicModel const*) const{return nullptr;}
+	SchematicModel const* scope() const;
+	virtual SchematicModel* scope();
 
 public: // friend ElementGraphics?
-//  void attachToModel();
-  void detachFromModel();
+	//  void attachToModel();
+	void detachFromModel();
 
 public:
-  Object const* owner() const{return _owner;}
-  Object* mutable_owner() const{return _owner;}
+	Object const* owner() const{return _owner;}
+	Object* mutable_owner() const{return _owner;}
 
 protected:
-  Object* owner(){ return _owner;}
+	Object* owner(){ return _owner;}
 
 public:
-  void setOwner(Object* e) { assert(!_owner || e==_owner || !e); _owner=e;}
-  const Element* find_looking_out(const std::string& name)const;
-  const Element* find_in_parent_scope(const std::string& name)const;
-  const Element* find_in_my_scope(const std::string& name)const;
+	void setOwner(Object* e) { assert(!_owner || e==_owner || !e); _owner=e;}
+	const Element* find_looking_out(const std::string& name)const;
+	const Element* find_in_parent_scope(const std::string& name)const;
+	const Element* find_in_my_scope(const std::string& name)const;
 
 private:
-  Object* _owner; // should probably be const all the way
-}; // Element
+	pos_t _position; // BUG: store in symbol?
 
+protected: // BUG in Painting
+	int x1, y1;
+
+private:
+	Object* _owner; // could be const all the way??
+}; // Element
+/*--------------------------------------------------------------------------*/
 inline SchematicModel const* Element::scope() const
 {
 	auto e=const_cast<Element*>(this);
 	return e->scope();
 }
-/*--------------------------------------------------------------------------*/
-#if 0
-// class Component;
-class TaskElement;
-class WireLabel;
-class Diagram;
-class Painting;
-class Graph;
-class Marker;
-/*--------------------------------------------------------------------------*/
-// Component const* component(Element const*);
-WireLabel const* wireLabel(Element const*);
-Diagram const* diagram(Element const*);
-Painting const* painting(Element const*);
-/*--------------------------------------------------------------------------*/
-// Component* component(Element*);
-TaskElement* command(Element*);
-inline Element*& element(Element*& x){return x;}
-WireLabel* wireLabel(Element*);
-Painting* painting(Element*);
-Marker* marker(Element*);
-#endif
 /*--------------------------------------------------------------------------*/
 /*--------------------------------------------------------------------------*/
 #endif

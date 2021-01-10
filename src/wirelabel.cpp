@@ -28,7 +28,7 @@
 #define isNodeLabel        0x4080
 
 WireLabel::WireLabel(const QString& _Name, int, int,
-                     int _x1, int _y1, int _Type) : Element()
+                     int _x1, int _y1, int) : Element()
 {
 	incomplete();
   // _cx = cx;
@@ -39,7 +39,7 @@ WireLabel::WireLabel(const QString& _Name, int, int,
   setLabel(_Name.toStdString());
   initValue = "";
 
-  Type = _Type;
+  // Type = _Type;
   isHighlighted = false;
 }
 
@@ -124,12 +124,12 @@ void WireLabel::paint(ViewPainter *p) const
   p->setFont(f); // restore old font
 
   int xpaint=0, ypaint=4, phi=0;
-  switch(Type) {
-    case isVWireLabel:  ypaint=0; xpaint=4; phi=16*140; break;
-    case isHWireLabel:  phi=16*50; break;
-    case isNodeLabel:   ypaint = 0;
-    default:            ;
-  }
+//  switch(Type) {
+//    case isVWireLabel:  ypaint=0; xpaint=4; phi=16*140; break;
+//    case isHWireLabel:  phi=16*50; break;
+//    case isNodeLabel:   ypaint = 0;
+//    default:            ;
+//  }
 
   int c, d;
   int a = int(double(x2) / p->Scale) >> 1;

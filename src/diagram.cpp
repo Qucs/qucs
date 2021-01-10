@@ -196,10 +196,13 @@ void Diagram::paintDiagram(ViewPainter *p)
 
 void Diagram::paintMarkers(ViewPainter *p, bool paintAll)
 {itested();
+  incomplete();
+#if 0
     // draw markers last, so they are at the top of painting layers
     foreach(Graph *pg, Graphs)
       foreach(Marker *pm, pg->Markers)
           if ((pm->Type & 1)||paintAll) pm->paint(p, cx(), cy());
+#endif
 }
 
 // ------------------------------------------------------------

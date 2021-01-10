@@ -501,6 +501,7 @@ void LegacyNetlister::throughAllComps(ostream_t&, SchematicModel const* scope_,
 			continue;
 		}else if(isAnalog) {
 			// check analog/digital typed components
+#if 0
 			if((pc->Type & isAnalogComponent) == 0) {
 				incomplete();
 			//
@@ -508,6 +509,7 @@ void LegacyNetlister::throughAllComps(ostream_t&, SchematicModel const* scope_,
 				// return;
 			}else{
 			}
+#endif
 //		} else if((pc->Type & isDigitalComponent) == 0) { untested();
 //			return;
 		}else{ untested();
