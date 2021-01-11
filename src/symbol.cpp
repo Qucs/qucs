@@ -146,12 +146,15 @@ QString const& Symbol::netLabel(unsigned i) const
 }
 #endif
 /*--------------------------------------------------------------------------*/
-#if 0
 void Symbol::set_port_by_name(std::string const& name, std::string const& value)
 {
+	incomplete();
 }
 void Symbol::set_port_by_index(index_t i, std::string const& value)
 {
+	incomplete();
+}
+#if 0
   if (num < max_nodes()) {
     _n[num].new_node(ext_name, this);
     if (num+1 > _net_nodes) {

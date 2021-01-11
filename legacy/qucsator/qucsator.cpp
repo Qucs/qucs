@@ -55,6 +55,7 @@ static const char _typesep = ':';
 /// }
 /// #endif
 /* -------------------------------------------------------------------------------- */
+#if 0 // duplicate
 // temporary kludge.
 class QucsatorScktHack : public Symbol {
 private:
@@ -86,6 +87,7 @@ private:
 	std::string _text;
 }d0;
 static Dispatcher<Symbol>::INSTALL p0(&symbol_dispatcher, "qucsatorScktHack", &d0);
+#endif
 /* -------------------------------------------------------------------------------- */
 static std::string netLabel(Node const* nn)
 { untested();

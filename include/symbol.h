@@ -160,6 +160,8 @@ private:
 	Port const& port(unsigned) const; // TODO. don't expose "Port"
 
 public: // Port stuff
+	virtual void set_port_by_index(index_t, std::string const&);
+	virtual void set_port_by_name(std::string const&, std::string const&);
 	virtual void setPort(int, std::string const&){unreachable();}
 	virtual pos_t portPosition(unsigned) const = 0;
 	pos_t nodePosition(unsigned) const;
