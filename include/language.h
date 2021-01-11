@@ -39,6 +39,8 @@ private: //called by printItem
   virtual void printSymbol(Symbol const*, ostream_t&) const = 0;
   virtual void printSubckt(SubcktBase const*, ostream_t&) const = 0;
   virtual void printTaskElement(TaskElement const*, ostream_t&) const = 0;
+//  virtual void print_comment(ostream_t&, const DEV_COMMENT const*){incomplete();}
+  virtual void print_command(ostream_t&, const DEV_DOT*) const{incomplete();}
 };
 
 // group netlist languages. needed? obsolete?

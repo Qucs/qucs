@@ -19,6 +19,7 @@
 #include "schematic_model.h"
 #include "net.h"
 #include "sckt_base.h"
+#include "d_dot.h"
 
 unsigned gndhackn=0;
 
@@ -50,7 +51,8 @@ class Verilog : public DocumentLanguage {
 	void printTaskElement(TaskElement const*, ostream_t&) const override;
 	void printSymbol(Symbol const*, ostream_t&) const override;
 	void printSubckt(SubcktBase const*, ostream_t&) const override;
-	void printPainting(Painting const*, ostream_t&) const override {incomplete();}
+	void printPainting(Painting const*, ostream_t&) const override;
+	void print_command(ostream_t&, DEV_DOT const*) const override;
 	void printDiagram(Symbol const*, ostream_t&) const override {incomplete();}
 
 private:
@@ -107,6 +109,16 @@ void VS::print_ports_short(ostream_t& o, const Symbol* x) const
 #endif
 }
 /*--------------------------------------------------------------------------*/
+void Verilog::print_command(ostream_t& o, DEV_DOT const* d) const
+{
+	o << "// " + d->s() << "\n";
+}
+/*--------------------------------------------------------------------------*/
+void Verilog::printPainting(Painting const*, ostream_t& o) const
+{
+	o << "painting incomplete\n";
+}
+/*--------------------------------------------------------------------------*/
 void Verilog::print_ports_short(ostream_t& o, const Symbol* x) const
 {
   // print in short form ...   value only
@@ -141,9 +153,12 @@ void Verilog::printSubckt(SubcktBase const* x, ostream_t& o) const
 {
 	SchematicModel const* scope = nullptr;
 
+#if 0 // no. too late.
 	if(x->label()[0] == ':'){ untested();
 		o << "// skip sckt " << x->label() << "\n";
-	}else if(x->subckt()){
+	}else
+#endif
+	if(x->subckt()){
 		scope = x->subckt();
 	}else if(x->scope()){
 		scope = x->scope();
@@ -157,10 +172,10 @@ void Verilog::printSubckt(SubcktBase const* x, ostream_t& o) const
 		print_ports_short(o, x);
 		o << ");\n";
 
-		for (auto ci : *scope) {
+		for (auto ci : *scope) { itested();
 //			o << "  "; later.
-			if(dynamic_cast<Conductor const*>(ci)){
-			}else{
+			if(dynamic_cast<Conductor const*>(ci)){ untested();
+			}else{ itested();
 				printItem(o, ci);
 			}
 		}

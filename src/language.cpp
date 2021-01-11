@@ -48,6 +48,8 @@ void DocumentLanguage::printItem(ostream_t& s, Element const* c) const
 		}
 	}else if (auto C=dynamic_cast<const Symbol*>(c)) {
 		printSymbol(C, s);
+	}else if (auto C=dynamic_cast<const DEV_DOT*>(c)) {
+		print_command(s, C);
 	}else if (auto C=dynamic_cast<const Painting*>(c)) {
 		printPainting(C, s);
 	}else if (auto C=dynamic_cast<const Data*>(c)) {

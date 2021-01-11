@@ -615,4 +615,54 @@ void CS::ctostr(char* des, int len, const std::string& term)
   skipcom();
 }
 /*--------------------------------------------------------------------------*/
+int CS::ctoo()
+{
+  int val = 0;
+
+  skipbl();
+  size_t here = cursor();
+  while (is_digit()) {
+    val = 8 * val + (ctoc()-'0');
+  }
+  skipcom();
+  _ok = cursor() > here;
+  return val;
+}
+/*--------------------------------------------------------------------------*/
+int CS::ctox()
+{untested();
+  int val = 0;
+
+  skipbl();
+  size_t here = cursor();
+  while (is_xdigit()) {untested();
+    if (is_digit()) {untested();
+      val = 16 * val + (ctoc()-'0');
+    }else{untested();
+      val = 16 * val + (tolower(ctoc())-'a'+10);
+    }
+  }
+  skipcom();
+  _ok = cursor() > here;
+  return val;
+}
+/*--------------------------------------------------------------------------*/
+bool Get(CS& cmd, const std::string& key, int* val, AP_MOD mod, int scale)
+{
+  if (cmd.umatch(key + " {=}")) {
+    switch(mod) {
+    case mNONE:			*val = int(cmd.ctof());		break;
+    case mSCALE:    untested(); *val = int(cmd.ctof())*scale;	break;
+    case mOFFSET:   untested(); *val = int(cmd.ctof())+scale;	break;
+    case mINVERT:   untested(); *val = 1 / int(cmd.ctof());	break;
+    case mPOSITIVE: untested(); *val = std::abs(int(cmd.ctof())); break;
+    case mOCTAL:		*val = cmd.ctoo();		break;
+    case mHEX:      untested(); *val = cmd.ctox();		break;
+    }
+    return true;
+  }else{
+    return false;
+  }
+}
+/*--------------------------------------------------------------------------*/
 /*--------------------------------------------------------------------------*/

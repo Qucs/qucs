@@ -23,41 +23,60 @@
 /*--------------------------------------------------------------------------*/
 namespace{
 /*--------------------------------------------------------------------------*/
+Port static_hack_port;
+/*--------------------------------------------------------------------------*/
 // stuff paintings in here
 // rename and move to library when ready?
 class SymbolSection : public SubcktBase{
 public:
-	SymbolSection() : SubcktBase() {
+	SymbolSection() : SubcktBase() { untested();
 		new_subckt();
 	}
 private:
-	SymbolSection(SymbolSection const& p) : SubcktBase(p) {
+	SymbolSection(SymbolSection const& p) : SubcktBase(p) { untested();
 //		incomplete(); so what.
 		new_subckt();
 	}
 
-	void setParameter(int, std::string const&){
+	void setParameter(int, std::string const&){ untested();
 	}
 
 private: // Symbol
 	bool is_device() const override { return false; }
-	unsigned numPorts() const override{
-		if(subckt()){
+	unsigned numPorts() const override{ untested();
+		if(subckt()){ untested();
 			return subckt()->numPorts();
 		}else{ untested();
 			unreachable();
 			return 0;
 		}
 	}
-	Port& port(unsigned) override {incomplete(); throw "incomplete";}
+	Port& port(unsigned) override {incomplete(); return static_hack_port;}
 public:
-	Symbol* clone() const override{
+	Symbol* clone() const override{ untested();
 		return new SymbolSection(*this);
 	}
 }symbolSection;
 /*--------------------------------------------------------------------------*/
+static void parse_dot(istream_t& cs, SubcktBase* s)
+{
+	trace1("symbol dot", cs.fullstring());
+	if(cs.umatch(".port_")){
+		int x, y, n;
+		std::string l;
+		Get(cs, "x", &x);
+		Get(cs, "y", &y);
+		Get(cs, "n", &n);
+		Get(cs, "l{abel}", &l);
+
+		trace3("got port", x, y, s->numPorts());
+		s->set_port_by_index(n, l);
+	}else{
+	}
+}
+/*--------------------------------------------------------------------------*/
 class SymbolCommand : public Command{
-	void do_it(istream_t& cs, SchematicModel* s) override{
+	void do_it(istream_t& cs, SchematicModel* s) override{ untested();
 	  auto fullstring = cs.fullString();
 	  trace1("SymbolSection", fullstring);
 
@@ -70,27 +89,30 @@ class SymbolCommand : public Command{
 	  auto lang = language_dispatcher["legacy_lib"];
 	  assert(lang);
 
-	  while(true){
+	  while(true){ itested();
 		  cs.read_line();
-		  if(cs.umatch("</Symbol>")){
+		  if(cs.umatch("</Symbol>")){ untested();
 			  break;
-		  }else{
+		  }else{ itested();
 			  cs.skipbl();
 			  lang->new__instance(cs, sym, sym->subckt());
 			  trace2("symbolpaint", cs.fullstring(), sym->subckt()->size());
 		  }
 	  }
 
-	  s->pushBack(sym);
+	  trace1("Symbol done", sym->numPorts());
+	  // assert(!sym->numPorts()); // BUG not yet
 
 	  trace1("find DOT", sym->label());
-	  for(auto i : *sym->subckt()){
-		  if(auto d = dynamic_cast<DEV_DOT*>(i)){
-			  trace1("DOT incomplete", d->s());
-//			  sym->setParam(k, name); //?
-		  }else{
+	  for(auto i : *sym->subckt()){ itested();
+		  if(auto d = dynamic_cast<DEV_DOT*>(i)){ untested();
+			  istream_t cs(istream_t::_STRING, d->s());
+			  parse_dot(cs, sym);
+		  }else{ itested();
 		  }
 	  }
+
+	  s->pushBack(sym);
   }
 }d0;
 Dispatcher<Command>::INSTALL p0(&command_dispatcher, "Symbol", &d0);

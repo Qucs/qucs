@@ -11,13 +11,14 @@
  *                                                                         *
  ***************************************************************************/
 
-// \brief base class for all sorts of objects
+// base object for qucs.
 
 #ifndef QUCS_OBJECT_H
 #define QUCS_OBJECT_H
 #include "io_trace.h"
-
-// base object for qucs.
+/*--------------------------------------------------------------------------*/
+typedef unsigned index_t;
+/*--------------------------------------------------------------------------*/
 class Object{
 public:
 	enum QucsMsgType{
@@ -48,5 +49,6 @@ protected: // error handling
 private:
 	std::string _label;
 };
-
+/*--------------------------------------------------------------------------*/
+/*--------------------------------------------------------------------------*/
 #endif
