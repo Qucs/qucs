@@ -11,15 +11,17 @@
  *                                                                         *
  ***************************************************************************/
 
-//#include "schematic_symbol.h"
+// subcircuit declaration as in a spice "subckt" or verilog "module" or
+// qucsator ".Def".
+/*--------------------------------------------------------------------------*/
 #include "sckt_base.h"
 #include "schematic_model.h"
 #include "globals.h"
-namespace {
 
-// a subcircuit declaration as in a spice "subckt" or verilog "module" or
-// qucsator ".Def"
-//
+typedef unsigned index_t;
+/*--------------------------------------------------------------------------*/
+namespace {
+/*--------------------------------------------------------------------------*/
 class CommonSubckt : public COMMON_COMPONENT{
 public:
 	explicit CommonSubckt(int x)
@@ -29,13 +31,27 @@ public:
 	COMMON_COMPONENT* clone()const override{
 		return new CommonSubckt(0);
 	}
-   bool  operator==(const COMMON_COMPONENT&)const override{
+   bool operator==(const COMMON_COMPONENT&)const override{
 		return false;
 	}
+	pos_t const& portPosition(index_t i) const;
 private:
 	SchematicModel _subckt;
 };
 CommonSubckt comms(CC_STATIC);
+/*--------------------------------------------------------------------------*/
+pos_t const& CommonSubckt::portPosition(index_t i) const
+{
+	// TODO: find a port connected to the node at position i..
+	//  (maybe use precalc?)
+	auto p = _subckt.portValue(i); // BUG.
+	if(p){ untested();
+		return p->position();
+	}else{ untested();
+		throw ExceptionCantFind("position", "subckt", std::to_string(i));
+	}
+	// a port is a place. return its position?
+}
 /*--------------------------------------------------------------------------*/
 /*--------------------------------------------------------------------------*/
 class SubcktProto : public SubcktBase {
@@ -118,9 +134,13 @@ unsigned SubcktProto::numPorts() const
 /*--------------------------------------------------------------------------*/
 pos_t SubcktProto::portPosition(unsigned i) const
 {
-	auto p = subckt()->portValue(i);
-	if(p){
-		return p->position();
+	auto cs = prechecked_cast<CommonSubckt const*>(common());
+	if(cs){ untested();
+		return cs->portPosition(i);
+	}else if(subckt()){
+		incomplete();
+		return pos_t(0, 0);
+		//return subckt()->portPosition(i);
 	}else{
 		unreachable();
 		return pos_t(0, 0);
