@@ -127,8 +127,13 @@ void Verilog::print_ports_short(ostream_t& o, const Symbol* x) const
 
   std::string sep = "";
 #if 1
+  auto s = x->scope();
+  assert(s);
+  auto n = s->nodes();
+  assert(n);
   for (int ii = 0;  x->portExists(ii);  ++ii) {
-    o << sep << netLabel(x->portValue(ii));
+	  std::string p = x->port_value(ii);
+    o << sep << p << "!!" << n->netName(p);
     sep = ", ";
   }
 #else

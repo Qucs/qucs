@@ -128,6 +128,19 @@ Node& NodeMap::at(pos_t const& p)
 	return *pn;
 }
 /* -------------------------------------------------------------- */
+std::string NodeMap::netName(std::string const& l) const
+{
+	auto i = _nodes.find(l);
+	if(i == _nodes.end()){ untested();
+		unreachable();
+		return "unknown_net";
+	}else if((*i)->net()->hasLabel()){ untested();
+		return (*i)->netLabel();
+	}else{ untested();
+		return "_net_"+(*i)->net()->pos();
+	}
+}
+/* -------------------------------------------------------------- */
 Net* NodeMap::newNet()
 { untested();
 	return _nets.newNet();
