@@ -103,6 +103,8 @@ public: // net access
 	void registerVertex(Conductor*);
 	void deregisterVertex(Conductor*);
 
+	std::string netName(std::string const& l) const;
+
 private:
 	ConnectedComponents<NodeMap>* new_ccs();
 
