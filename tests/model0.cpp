@@ -8,7 +8,10 @@
 
 void more()
 {
-	SchematicModel M;
+	Symbol* root = symbol_dispatcher.clone("subckt_proto");
+	assert(root);
+	assert(root->scope());
+	SchematicModel& M = *root->scope();
 
 	auto wp=symbol_dispatcher["Wire"];
 //	 Wire(0,0,1,0);
@@ -131,7 +134,11 @@ void more()
 
 int main()
 {
-	SchematicModel M;
+	Symbol* root = symbol_dispatcher.clone("subckt_proto");
+	assert(root);
+	assert(root->scope());
+	SchematicModel& M = *root->scope();
+
 	//auto w0 = new Wire(0,0,1,0);
 	auto wp=symbol_dispatcher["Wire"];
 	auto w0 = prechecked_cast<Symbol*>(wp->clone());
