@@ -12,7 +12,11 @@ void union0()
 	//     __           __  |
 	//   -[__]-   ->  -[__]-o
 	//                      |
-	SchematicModel M;
+	Symbol* root = symbol_dispatcher.clone("subckt_proto");
+	assert(root);
+	assert(root->scope());
+	SchematicModel& M = *root->scope();
+
 	auto wp=symbol_dispatcher["Wire"];
 	auto w0 = prechecked_cast<Symbol*>(wp->clone());
 	w0->setParameter(std::string("deltay"), "100");
@@ -63,6 +67,7 @@ void union0()
 	assert(ii == s->end());
 
 //	assert(w->subckt()->numComponents()==3);
+	delete root;
 }
 
 void union1()
@@ -72,7 +77,11 @@ void union1()
 	// |         |
 	// |   =>    |
 	// |      ---o---
-	SchematicModel M;
+	Symbol* root = symbol_dispatcher.clone("subckt_proto");
+	assert(root);
+	assert(root->scope());
+	SchematicModel& M = *root->scope();
+
 	auto wp = symbol_dispatcher["Wire"];
 	auto w0 = prechecked_cast<Symbol*>(wp->clone());
 	w0->setParameter(std::string("deltay"), "100");
@@ -95,6 +104,7 @@ void union1()
 	trace1("gnd", numWires(*w->subckt()));
 	assert(numWires(*w->subckt())==3);
 //	assert(w->subckt()->numComponents()==3);
+	delete root;
 }
 
 void union2()
@@ -103,7 +113,11 @@ void union2()
 	//                |
 	//          =>    |
 	// ------      ---o---
-	SchematicModel M;
+	Symbol* root = symbol_dispatcher.clone("subckt_proto");
+	assert(root);
+	assert(root->scope());
+	SchematicModel& M = *root->scope();
+
 	auto wp=symbol_dispatcher["Wire"];
 
 	auto w0 = prechecked_cast<Symbol*>(wp->clone());
@@ -129,6 +143,7 @@ void union2()
 	trace1("gnd", numWires(*w->subckt()));
 	assert(numWires(*w->subckt())==3);
 //	assert(w->subckt()->numComponents()==3);
+	delete root;
 }
 
 

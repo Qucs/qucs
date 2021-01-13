@@ -10,7 +10,10 @@ static const unsigned N=9999;
 
 int main()
 {
-	SchematicModel M;
+	Symbol* root = symbol_dispatcher.clone("subckt_proto");
+	assert(root);
+	assert(root->scope());
+	SchematicModel& M = *root->scope();
 
 	Symbol* w0;
 	Symbol* w1;
@@ -57,4 +60,5 @@ int main()
 	// this takes ages in comparison
 	std::cout << "clearing\n";
 	M.clear();
+	delete root;
 }
