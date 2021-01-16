@@ -73,9 +73,8 @@ libqucs_la_SOURCES = \
 	${CPP_SRC} \
 	$(MOCCPP) \
 	${DIALOG_SRC} \
-	${DIALOG_SRC2}
-
-libqucs_la_SOURCES += qucs_.qrc
+	${DIALOG_SRC2} \
+	${RESOURCES}
 
 AM_CPPFLAGS += $(X11_INCLUDES) $(QT_CFLAGS)
 
