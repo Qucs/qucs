@@ -70,8 +70,8 @@ list(TRANSFORM QUCS_DIALOG_SRC2 PREPEND ${libqucsPath}/)
 #
 # Read variable to generate rules for building source files from bitmap resources
 #
-#readVariable(${libqucsPath}/MakeList RESOURCES QUCS_RESOURCES)
-#list(TRANSFORM QUCS_RESOURCES PREPEND ${libqucsPath}/)
+readVariable(${libqucsPath}/MakeList RESOURCES QUCS_RESOURCES)
+list(TRANSFORM QUCS_RESOURCES PREPEND ${libqucsPath}/)
 
 ## qucs library
 add_library(libqucs SHARED ${QUCS_SRCS} ${QUCS_RESOURCES} ${QUCS_UI_FILES} ${QUCS_DIALOG_SRC} ${QUCS_DIALOG_SRC2})
