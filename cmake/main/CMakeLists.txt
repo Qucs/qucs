@@ -18,10 +18,14 @@ set(PROJECT_DOMAIN_SECOND "org")
 
 # when true, all the dependencies (Qucsator, legacy and so on are also compiled)
 option(CompileDependencies "Compile dependencies related to qucs (qucsator ...), default ON" ON)
+option(EnableTracing "If enabled, all traceX macros output a message, default OFF" OFF)
 
 # add compiler definitions/symbols
 add_compile_definitions(QUCS_PREFIX="${prefix}")
 add_compile_definitions(QUCS_PLUGPATH="${pkglibdir}")
+if (EnableTracing)
+	add_compile_definitions(DO_TRACE)
+endif()
 
 # add dependencies
 add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/../src src)
