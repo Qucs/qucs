@@ -496,7 +496,7 @@ void SchematicDoc::mouseMoveEvent(QMouseEvent *e)
   }
 
   return;
-
+    // TODO: Not reachable yet
   // mouse moveaction set by toggleaction
   // toggleaction should instead subscribe.
 #if 0
@@ -542,7 +542,7 @@ bool SchematicDoc::event(QEvent* e)
 		// handleMouseActions(e); //
 	}
 
-	handleMouseActions(e);
+    //handleMouseActions(e);
 	
 	// TODO: what is this call?
 	bool a = QGraphicsView::event(e);
@@ -553,6 +553,8 @@ bool SchematicDoc::event(QEvent* e)
 
 bool SchematicDoc::handleMouseActions(QEvent* e)
 {
+//    if (e->isAccepted())
+//        return false;
 	assert(mouseActions());
 	return mouseActions()->handle(e);
 }

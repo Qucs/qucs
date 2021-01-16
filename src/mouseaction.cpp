@@ -12,11 +12,15 @@
 QUndoCommand* MouseAction::handle(QEvent* e)
 {itested();
 
-  {
-    // pass to other places unless accepted somewhere else.
-    // assert(is_ignored) instead!
-    e->ignore();
-  }
+    if (e->isAccepted())
+    {
+        trace0("MouseAction::handle: event was already accepted.");
+    }
+//  {
+//    // pass to other places unless accepted somewhere else.
+//    // assert(is_ignored) instead!
+//    e->ignore();
+//  }
   assert(e);
   auto* m = prechecked_cast<QMouseEvent*>(e);
 //  auto* s = prechecked_cast<QGraphicsSceneEvent*>(e);
@@ -82,8 +86,7 @@ QUndoCommand* MouseAction::handle(QEvent* e)
   case QEvent::GraphicsSceneMousePress:itested();
     return press(e);
   default:
-    trace1("mouseaction miss", e->type());
-    e->ignore();
+    // It is not a mouse action, so ignore it.
     return nullptr;
   }
 }

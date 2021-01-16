@@ -267,7 +267,11 @@ bool SchematicScene::event(QEvent* e)
 
 	doc()->handleMouseActions(e);
 	bool r = false;
-	if(e->isAccepted()){
+    if (e->type() == QEvent::MetaCall)
+    {
+        trace0("SchematicScene::event: MetaCall event");
+    }
+    if(e->isAccepted() && e->type() != QEvent::MetaCall){
 	}else{itested();
 		trace0("fwd");
 		r = QGraphicsScene::event(e);
