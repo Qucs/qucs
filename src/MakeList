@@ -194,4 +194,7 @@ DIALOG_SRC2 = \
 
 UI_FILES = searchdialog.ui
 
+RESOURCES = \
+	qucs_.qrc
+
 EXTRA_DIST =
