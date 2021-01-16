@@ -31,10 +31,10 @@ if (${CompileDependencies})
 		COMMAND ${CMAKE_COMMAND} -E copy ${CMAKE_CURRENT_BINARY_DIR}/legacy/paintings/libpaintings.so ${LIB_PATH_TEMP}/legacy/libpaintings.so
 		)
 
-	add_custom_target(liblibfilesInstall ALL
-		DEPENDS libfiles
-		COMMAND ${CMAKE_COMMAND} -E copy ${CMAKE_CURRENT_BINARY_DIR}/legacy/libfiles/liblibfiles.so ${LIB_PATH_TEMP}/legacy/liblibfiles.so
-		)
+#	add_custom_target(liblibfilesInstall ALL
+#		DEPENDS libfiles
+#		COMMAND ${CMAKE_COMMAND} -E copy ${CMAKE_CURRENT_BINARY_DIR}/legacy/libfiles/liblibfiles.so ${LIB_PATH_TEMP}/legacy/liblibfiles.so
+#		)
 
 	add_custom_target(libmiscInstall ALL
 		DEPENDS misc

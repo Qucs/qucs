@@ -33,7 +33,7 @@ add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/../../legacy legacy)
 add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/../../legacy/qucsator legacy/qucsator)
 add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/../../legacy/components legacy/components)
 add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/../../legacy/paintings legacy/paintings)
-add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/../../legacy/libfiles legacy/libfiles)
+#add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/../../legacy/libfiles legacy/libfiles)
 add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/../../plugins/misc plugins/misc)
 
 ## ------ WHY needed?
