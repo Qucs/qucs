@@ -525,6 +525,8 @@ void SchematicDoc::mouseMoveEvent(QMouseEvent *e)
 // (whatever that means)
 //
 // getting here *after* the event has passed through Scene
+// possible fix: deal with it in scene. need to merge mouseActions into Scene
+// anyway...
 bool SchematicDoc::event(QEvent* e)
 {itested();
 	assert(mouseActions());
