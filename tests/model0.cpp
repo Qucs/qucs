@@ -152,19 +152,21 @@ void test0()
 	{
 		connect_push(root, w0);
 		assert(M.nodeCount() == 2);
-		assert("net_0_0" == w0->port_value(0));
-		assert("net_1_0" == w0->port_value(1));
-		assert("_net_0" == M.nodes()->netName(":0:0"));
-		assert("_net_0" == M.nodes()->netName(":1:0"));
+		trace1("model0", w0->port_value(0));
+		trace1("model0", M.nodes()->netName(":0:0"));
+		assert(":0:0" == w0->port_value(0));
+		assert(":1:0" == w0->port_value(1));
+		assert("_net0" == M.nodes()->netName(":0:0"));
+		assert("_net0" == M.nodes()->netName(":1:0"));
 	}
 
 	{
 		connect_push(root, w1);
 		assert(M.nodeCount() == 2);
-		assert("net_1_0" == w1->port_value(0));
-		assert("net_0_0" == w1->port_value(1));
-		assert("_net_0" == M.nodes()->netName(":0:0"));
-		assert("_net_0" == M.nodes()->netName(":1:0"));
+		assert(":1:0" == w1->port_value(0));
+		assert(":0:0" == w1->port_value(1));
+		assert("_net0" == M.nodes()->netName(":0:0"));
+		assert("_net0" == M.nodes()->netName(":1:0"));
 	}
 
 #if 0
