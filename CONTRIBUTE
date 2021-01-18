@@ -6,3 +6,8 @@ focus on fixing bugs and porting the features present in 0.0.20 (cf. ROADMAP).
 
 Code contributions that are clearly separate from the existing code base will
 be accepted given that they look useful. Examples for this are plugins.
+
+Your contribution will be distributed under the GNU General Public License v3
+or any later version. Please make sure that your code is suitable for this
+purpose and state the license where applicable. Please consider the non-free
+repository for license incompatible extensions.
