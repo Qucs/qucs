@@ -776,7 +776,7 @@ QUndoCommand* MouseActionSelect::press(QEvent*)
 QUndoCommand* MouseActionSelect::release(QEvent *ev)
 {itested();
 	QUndoCommand* cmd = nullptr;
-	auto m = dynamic_cast<QGraphicsSceneMouseEvent*>(ev);
+	auto m = dynamic_cast<QMouseEvent*>(ev);
 	if(!m){ untested();
 	}else if(m->button() == Qt::LeftButton){itested();
 		cmd = release_left(ev);
@@ -856,7 +856,12 @@ static void selectWireLine(ElementGraphics *g)
 /*--------------------------------------------------------------------------*/
 QUndoCommand* MouseActionSelect::release_left(QEvent *e)
 {itested();
-    auto m =prechecked_cast<QGraphicsSceneMouseEvent*>(e);
+    auto m = prechecked_cast<QMouseEvent*>(e);
+	 if(!m){
+		 unreachable();
+		 return nullptr;
+	 }else{
+	 }
     bool ctrl = m->modifiers().testFlag(Qt::ControlModifier);
 
 	if(!ctrl) {itested();
