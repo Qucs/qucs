@@ -508,11 +508,10 @@ Element* SchematicScene::detachFromModel(Element* e)
 #endif
 }
 /*--------------------------------------------------------------------------*/
-// new_place?
-Place const* SchematicScene::new_place(pos_t const& p)
+Place const* SchematicScene::find_place(pos_t const& p) const
 {
+	Place const* ret = nullptr;
 	auto list = items(getX(p), getY(p));
-	Place const* ret=nullptr;
 	for(auto g : list){
 		auto c = dynamic_cast<Place const*>(element(g));
 		if(!c){ untested();
@@ -524,6 +523,12 @@ Place const* SchematicScene::new_place(pos_t const& p)
 			break;
 		}
 	}
+	return ret;
+}
+/*--------------------------------------------------------------------------*/
+Place const* SchematicScene::new_place(pos_t const& p)
+{
+	Place const* ret = find_place(p);
 	
 	if(ret){
 	}else{
@@ -554,23 +559,9 @@ Place const* SchematicScene::new_place(pos_t const& p)
 	return ret;
 }
 /*--------------------------------------------------------------------------*/
-Place const* SchematicScene::is_place(pos_t const& p) const
+bool SchematicScene::is_place(pos_t const& p) const
 {
-	auto list = items(getX(p), getY(p));
-	Place const* ret=nullptr;
-	for(auto g : list){
-		auto c = dynamic_cast<Place const*>(element(g));
-		if(!c){ untested();
-		}else if(p == c->position()){ untested();
-			assert(getX(g->pos()) == getX(c->position()));
-			assert(getY(g->pos()) == getY(c->position()));
-			Element const* e = element(g);
-			ret = prechecked_cast<Place const*>(e);
-			break;
-		}
-	}
-
-	return ret;
+	return find_place(p);
 }
 /*--------------------------------------------------------------------------*/
 void SchematicScene::connectPorts(Symbol* c)

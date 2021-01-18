@@ -19,7 +19,7 @@
 #include <set>
 /*--------------------------------------------------------------------------*/
 /*--------------------------------------------------------------------------*/
-static void collectPorts(ElementGraphics const* e, std::set<Place const*>& p)
+static void collectPlaces(ElementGraphics const* e, std::set<Place const*>& p)
 {
 	auto scn = e->scene();
 	assert(scn);
@@ -29,11 +29,12 @@ static void collectPorts(ElementGraphics const* e, std::set<Place const*>& p)
 		for(unsigned i=0; i<s->numPorts(); ++i){
 			// if s->isConnected(i) ...
 			auto pp = s->nodePosition(i);
-			auto place = scn->placeAt(pp);
+			auto place = scn->find_place(pp);
 			if(!place){
 			}else if(s->port_value(i) == place->port_value(0)){
 				p.insert(place);
 			}else{
+				assert(false);
 				// not here.
 			}
 		}
@@ -117,7 +118,7 @@ void SchematicEdit::do_it_first()
 		auto r = _del.front();
 		trace1("remove", element(r)->label());
 		_del.pop_front();
-		collectPorts(r, pl);
+		collectPlaces(r, pl);
 		r->hide(); // detaches from model
 		// queued delete.
 		done_del.push_back(r); // TODO: different queue? just keep _del?
@@ -125,6 +126,7 @@ void SchematicEdit::do_it_first()
 	// sort pl?
 	// unique pl?
 
+	trace1("============ postrm...", pl.size());
 	for(auto portremove : pl){itested();
 		trace1("postremove", portremove->label());
 		postRmPort(portremove, done_del);
@@ -156,14 +158,6 @@ void SchematicEdit::do_it_first()
 
 	save(done_ins, done_del);
 } // do_it_first
-/*--------------------------------------------------------------------------*/
-Node const* SchematicEdit::nodeAt(pos_t const& p) const
-{
-	assert(scene());
-	unreachable(); // obsolete();
-	return nullptr;
-//	return scene()->nodeAt(p);
-}
 /*--------------------------------------------------------------------------*/
 QList<ElementGraphics*> SchematicEdit::items(
            const QPointF &pos, Qt::ItemSelectionMode mode,
@@ -250,20 +244,22 @@ bool SchematicEdit::addmerge(ElementGraphics* new_elt, T& del_done)
 template<class T>
 void SchematicEdit::postRmPort(Place const* remove_at, T& del_done)
 {itested();
-	auto it = items(makeQPointF(remove_at->position()));
 
 	assert(remove_at->port_value(0)!="");
 
-	ElementGraphics* placegfx=nullptr;
+	ElementGraphics* placegfx = nullptr;
 	unsigned deg = remove_at->node_degree();
+	trace2("postremove", deg, remove_at->label());
 	if( deg == 2 || deg == 0 ) {
-		trace1("postrm, degree 2", remove_at);
+		auto it = items(makeQPointF(remove_at->position()));
 
+		unsigned np=0;
 		for(auto gfx : it){
 			if(dynamic_cast<Place*>(element(gfx))){
 				assert(element(gfx) == remove_at);
 				incomplete(); // disconnect?
 				placegfx = gfx;
+				++np;
 				// delete gfx; below.
 			}else{
 				trace1("hideadj", element(gfx)->label());
@@ -274,6 +270,8 @@ void SchematicEdit::postRmPort(Place const* remove_at, T& del_done)
 				trace1("queued", gfx);
 			}
 		}
+		trace2("postremove", it.size(), np);
+		assert(np<2);
 	}else{
 		trace1("postrm", remove_at->node_degree());
 	}
