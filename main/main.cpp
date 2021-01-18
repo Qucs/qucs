@@ -24,16 +24,8 @@
 #include <ctype.h>
 #include <locale.h>
 
-//#include <QApplication>
 #include <QString>
-//#include <QStringList>
-//#include <QTextCodec>
-//#include <QTranslator>
 #include <QFile>
-//#include <QMessageBox>
-//#include <QRegExp>
-//#include <QtSvg>
-//#include <QDebug>
 
 #include "qucs.h"
 #include "docfmt.h"
@@ -109,15 +101,11 @@ void qucsMessageOutput(QtMsgType type, const char *msg)
 void doNetlist(QString schematic_fn, std::string netlist, Command* fmt)
 {
 	std::string sfn = schematic_fn.toStdString();
-	QucsDoc d(nullptr, "", nullptr); // obsolete?
-	d.setLabel("main");
 
 	Symbol* root = symbol_dispatcher.clone("schematic_root");
 	assert(root);
 	root->setParameter("$filename", sfn); // BUG: PATH.
-	root->setOwner(&d); // obsolete?
 	root->setLabel(sfn);
-	assert(root->subckt()); // BUG
 
 	SchematicModel* cl = root->subckt();
 	assert(cl);
@@ -126,7 +114,6 @@ void doNetlist(QString schematic_fn, std::string netlist, Command* fmt)
 	CMD::command(cs, cl);
 
 	istream_t cs2(istream_t::_STRING, netlist);
-	//  fmt.save(os, &xs);
 	assert(fmt);
 	fmt->do_it(cs2, cl);
 }
@@ -139,19 +126,16 @@ void attach_single(std::string const& what)
 void attach_default_plugins()
 {
   attach_single("legacy");
-//  attach_single("legacy-misc");
   attach_single("legacy/qucsator");
 
   attach_single("legacy/components");
   attach_single("legacy/paintings");
   CMD::command("loadlegacylib", nullptr);
   attach_single("plugins/misc");
- // attach_single(pp, "libdialogs" SOEXT);
- //
- //
+
  // not yet. legacy diagrams are now part of legacy (above)
  // new diagrams: load manually.
-  // attach_single(pp, "diagrams" SOEXT);
+ // attach_single(pp, "plugins/diagrams");
 }
 /*--------------------------------------------------------------------------*/
 void qucsMessageHandler(QtMsgType type, const QMessageLogContext &, const QString & str)
@@ -295,10 +279,6 @@ int main(int argc, char *argv[])
   if(!QucsSettings.Task.isValid())
     QucsSettings.Task = Qt::darkRed;
 
-
-
-  //{ untested();
-  //}
 
   // This seems to be neccessary on a few system to make strtod()
   // work properly !???!
