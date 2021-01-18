@@ -71,10 +71,10 @@ private:
 	cmd* press(QEvent*) override;
 	cmd* enter(QEvent*) override;
 	cmd* leave(QEvent*) override;
-	cmd* release(QMouseEvent*) override;
+	cmd* release(QEvent*) override;
 
 private:
-	cmd* makeNew(QMouseEvent*);
+	cmd* makeNew(QEvent*);
 	cmd* rotate(QEvent*);
 
 private:
@@ -167,10 +167,10 @@ QUndoCommand* MouseActionPaste::activate(QObject* sender)
   return MouseAction::activate(sender);
 }
 /*--------------------------------------------------------------------------*/
-QUndoCommand* MouseActionPaste::release(QMouseEvent* ev)
+QUndoCommand* MouseActionPaste::release(QEvent* ev)
 { untested();
 	QUndoCommand* cmd = nullptr;
-	auto m = dynamic_cast<QMouseEvent*>(ev);
+	auto m = dynamic_cast<QGraphicsSceneMouseEvent*>(ev);
 	if(!m){ untested();
 	}else if(m->button() == Qt::LeftButton){ untested();
 		cmd = makeNew(ev);
@@ -179,7 +179,7 @@ QUndoCommand* MouseActionPaste::release(QMouseEvent* ev)
 	return cmd;
 }
 /*--------------------------------------------------------------------------*/
-QUndoCommand* MouseActionPaste::makeNew(QMouseEvent* ev)
+QUndoCommand* MouseActionPaste::makeNew(QEvent* ev)
 { untested();
 	// assert(ev->widget=doc->scene()) // or so.
 	trace1("RELEASE", ev->type());

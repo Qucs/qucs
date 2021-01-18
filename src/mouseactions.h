@@ -56,7 +56,7 @@ public:
 	virtual cmd* move(QEvent*) { return nullptr; }
 	virtual cmd* press(QEvent*) { return nullptr; }
 	// virtual cmd* grab(QGraphicsSceneEvent*) { return nullptr; }
-	virtual cmd* release(QMouseEvent*) { return nullptr; }
+	virtual cmd* release(QEvent*) { return nullptr; }
 	virtual cmd* dblclk(QEvent*) { return nullptr; }
 
 	virtual cmd* generic(QEvent*) { return nullptr; } // remove

@@ -15,6 +15,10 @@
  *
  */
 /*--------------------------------------------------------------------------*/
+
+#include <QEvent>
+#include <QUndoCommand>
+
 class MouseActionZoomIn : public MouseAction{
 public:
 	explicit MouseActionZoomIn(MouseActions& ctx)
@@ -22,7 +26,7 @@ public:
 	}
 private: // MouseAction
 	cmd* press(QEvent*) override;
-	cmd* release(QMouseEvent*) override;
+	cmd* release(QEvent*) override;
 
 private:
 	int _MAx1;
@@ -61,12 +65,13 @@ QUndoCommand* MouseActionZoomIn::press(QEvent* e)
 	return nullptr; // zoom is not undoable (good idea?)
 }
 /*--------------------------------------------------------------------------*/
-QUndoCommand* MouseActionZoomIn::release(QMouseEvent* e)
+QUndoCommand* MouseActionZoomIn::release(QEvent* e)
 { untested();
-  if(e->button() == Qt::LeftButton){ untested();
+	auto* m = prechecked_cast<QGraphicsSceneMouseEvent*>(e);
+  if(m->button() == Qt::LeftButton){ untested();
 
-	  _MAx1 = e->pos().x();
-	  _MAy1 = e->pos().y();
+	  _MAx1 = m->pos().x();
+	  _MAy1 = m->pos().y();
 	  TODO("Sort out contentsX");
 	  return nullptr; // not undoable.
 	  /**

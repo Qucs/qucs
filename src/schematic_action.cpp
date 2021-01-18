@@ -50,7 +50,7 @@ private: // override
 //	cmd* activate(QAction* sender) override;
 	cmd* move(QEvent*) override;
 	cmd* press(QEvent*) override;
-	cmd* release(QMouseEvent*) override;
+	cmd* release(QEvent*) override;
 	//	cmd* release2(QMouseEvent*); // what is this?
 	// cmd* enter(QEvent*) override;
 	cmd* dblclk(QEvent*) override;
@@ -64,7 +64,7 @@ private: // rectangles?  // this was in MouseActions. BUG. remove
 #endif
 private:
 	void showSchematicWidget(QWidget*, ElementGraphics*);
-	cmd* release_left(QMouseEvent*);
+	cmd* release_left(QEvent*);
 
 protected:
 	void setPos1(QPointF pos){ untested();
@@ -140,7 +140,7 @@ private:
 	cmd* deactivate() override;
 //	cmd* move(QEvent*) override;
 	cmd* press(QEvent*) override;
-	cmd* release(QMouseEvent*) override;
+	cmd* release(QEvent*) override;
 //	cmd* generic(QEvent*) override;
 private:
 	QCursor _oldcursor;
@@ -188,7 +188,7 @@ QUndoCommand* MouseActionSelCmd<CMD>::press(QEvent* e)
 } // select::press
 /*--------------------------------------------------------------------------*/
 template<class CMD>
-QUndoCommand* MouseActionSelCmd<CMD>::release(QMouseEvent*)
+QUndoCommand* MouseActionSelCmd<CMD>::release(QEvent*)
 { untested();
 	incomplete(); // why?
 	return nullptr;
@@ -379,10 +379,10 @@ private:
 	cmd* press(QEvent*) override;
 	cmd* enter(QEvent*) override;
 	cmd* leave(QEvent*) override;
-	cmd* release(QMouseEvent*) override;
+	cmd* release(QEvent*) override;
 
 private:
-	cmd* makeNew(QMouseEvent*);
+	cmd* makeNew(QEvent*);
 	cmd* rotate(QEvent*);
 
 private:
@@ -419,10 +419,10 @@ QUndoCommand* MouseActionNewElement::activate(QObject* sender)
 	return MouseAction::activate(sender);
 }
 /*--------------------------------------------------------------------------*/
-QUndoCommand* MouseActionNewElement::release(QMouseEvent* ev)
+QUndoCommand* MouseActionNewElement::release(QEvent* ev)
 { untested();
 	QUndoCommand* cmd = nullptr;
-	auto m = dynamic_cast<QMouseEvent*>(ev);
+	auto m = dynamic_cast<QGraphicsSceneMouseEvent*>(ev);
 	if(!m){ untested();
 	}else if(m->button() == Qt::LeftButton){ untested();
 		cmd = makeNew(ev);
@@ -431,7 +431,7 @@ QUndoCommand* MouseActionNewElement::release(QMouseEvent* ev)
 	return cmd;
 }
 /*--------------------------------------------------------------------------*/
-QUndoCommand* MouseActionNewElement::makeNew(QMouseEvent* ev)
+QUndoCommand* MouseActionNewElement::makeNew(QEvent* ev)
 { untested();
 	// assert(ev->widget=doc->scene()) // or so.
 	trace1("RELEASE", ev->type());
@@ -773,10 +773,10 @@ QUndoCommand* MouseActionSelect::press(QEvent*)
 } // select::press
 /*--------------------------------------------------------------------------*/
 // was MouseActions::MReleaseSelect(SchematicDoc *Doc, QMouseEvent *Event)
-QUndoCommand* MouseActionSelect::release(QMouseEvent *ev)
+QUndoCommand* MouseActionSelect::release(QEvent *ev)
 {itested();
 	QUndoCommand* cmd = nullptr;
-	auto m = dynamic_cast<QMouseEvent*>(ev);
+	auto m = dynamic_cast<QGraphicsSceneMouseEvent*>(ev);
 	if(!m){ untested();
 	}else if(m->button() == Qt::LeftButton){itested();
 		cmd = release_left(ev);
@@ -854,9 +854,10 @@ static void selectWireLine(ElementGraphics *g)
 	}
 }
 /*--------------------------------------------------------------------------*/
-QUndoCommand* MouseActionSelect::release_left(QMouseEvent *Event)
+QUndoCommand* MouseActionSelect::release_left(QEvent *e)
 {itested();
-	bool ctrl = Event->modifiers().testFlag(Qt::ControlModifier);
+    auto m =prechecked_cast<QGraphicsSceneMouseEvent*>(e);
+    bool ctrl = m->modifiers().testFlag(Qt::ControlModifier);
 
 	if(!ctrl) {itested();
 		incomplete();
@@ -889,7 +890,7 @@ QUndoCommand* MouseActionSelect::release_left(QMouseEvent *Event)
 	if(c){
 	}else if(s.size()!=1){
 	}else if(!symbol(s.front())){
-	}else if(Event->button() == Qt::LeftButton){itested();
+	}else if(m->button() == Qt::LeftButton){itested();
 			// if it's a wire, select the whole thing?
 			// (what is a wire?)
 		if(isWire(symbol(s.front()))) { untested();
@@ -1001,62 +1002,62 @@ void SchematicDoc::actionInsertEquation(QAction* sender)
 /*--------------------------------------------------------------------------*/
 void SchematicDoc::actionInsertPort(QAction* sender)
 { untested();
-  possiblyToggleAction(schematicActions().maInsertPort, sender);
+	possiblyToggleAction(schematicActions().maInsertPort, sender);
 }
 /*--------------------------------------------------------------------------*/
 void SchematicDoc::actionSelect(QAction* sender)
 {itested();
-  // sender is a button. maSelect is an action. connect the two.
-  // this looks a bit redundant (but later...)
-  possiblyToggleAction(schematicActions().maSelect, sender);
+	// sender is a button. maSelect is an action. connect the two.
+	// this looks a bit redundant (but later...)
+	possiblyToggleAction(schematicActions().maSelect, sender);
 
 } // SchematicDoc::actionSelect
 /*--------------------------------------------------------------------------*/
 void SchematicDoc::actionOnGrid(QAction* sender)
 { untested();
-  possiblyToggleAction(schematicActions().maOnGrid, sender);
+	possiblyToggleAction(schematicActions().maOnGrid, sender);
 //  performToggleAction(on, App->onGrid, &SchematicDoc::elementsOnGrid,
 //		&MouseActions::MMoveOnGrid, &MouseActions::MPressOnGrid);
 }
 
 void SchematicDoc::actionEditRotate(QAction* sender)
 { untested();
-  possiblyToggleAction(schematicActions().maRotate, sender);
+	possiblyToggleAction(schematicActions().maRotate, sender);
 //  performToggleAction(on, App->editRotate, &SchematicDoc::rotateElements,
 //		&MouseActions::MMoveRotate, &MouseActions::MPressRotate);
 }
 
 void SchematicDoc::actionEditMirrorX(QAction* sender)
 { untested();
-  possiblyToggleAction(schematicActions().maMirrorYaxis, sender);
+	possiblyToggleAction(schematicActions().maMirrorYaxis, sender);
 //  performToggleAction(on, App->editMirror, &SchematicDoc::mirrorXComponents,
 //		&MouseActions::MMoveMirrorX, &MouseActions::MPressMirrorX);
 }
 
 void SchematicDoc::actionEditMirrorY(QAction* sender)
 { untested();
-  possiblyToggleAction(schematicActions().maMirrorXaxis, sender);
+	possiblyToggleAction(schematicActions().maMirrorXaxis, sender);
 //  performToggleAction(on, App->editMirrorY, &SchematicDoc::mirrorYComponents,
 //		&MouseActions::MMoveMirrorY, &MouseActions::MPressMirrorY);
 }
 
 void SchematicDoc::actionEditActivate(QAction* sender)
 { untested();
-  possiblyToggleAction(schematicActions().maActivate, sender);
+	possiblyToggleAction(schematicActions().maActivate, sender);
 }
 
 void SchematicDoc::actionEditDelete(QAction* sender)
 { untested();
-  possiblyToggleAction(schematicActions().maDelete, sender);
+	possiblyToggleAction(schematicActions().maDelete, sender);
 
-  updateViewport();
+	updateViewport();
 //  assert(mouseActions());
 //  mouseActions()->setDrawn(false);
 }
 
 void SchematicDoc::actionSetWire(QAction* sender)
 {itested();
-  possiblyToggleAction(schematicActions().maWire, sender);
+	possiblyToggleAction(schematicActions().maWire, sender);
 }
 
 void SchematicDoc::actionInsertLabel(QAction*)
@@ -1086,7 +1087,7 @@ void SchematicDoc::actionMoveText(QAction*)
 
 void SchematicDoc::actionZoomIn(QAction* sender)
 { untested();
-  possiblyToggleAction(schematicActions().maZoomIn, sender);
+	possiblyToggleAction(schematicActions().maZoomIn, sender);
 }
 
 #if 0 // obsolete.
@@ -1132,7 +1133,7 @@ void SchematicDoc::actionInsertEquation(QAction*)
 
 void SchematicDoc::actionEditPaste(QAction* sender)
 { untested();
-  possiblyToggleAction(schematicActions().maEditPaste, sender);
+	possiblyToggleAction(schematicActions().maEditPaste, sender);
 #if 0
 	// if it's not a text doc, prevent the user from editing
 	// while we perform the paste operation
