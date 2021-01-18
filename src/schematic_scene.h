@@ -67,7 +67,8 @@ public:
 	  return new_place(p);
   }
   bool is_place(pos_t const& p) const;
-  Place const* find_place(pos_t const& p) const;
+  ElementGraphics* find_place(pos_t const& p);
+  ElementGraphics const* find_place(pos_t const& p) const;
   Place const* new_place(pos_t const& p);
 
 private:

@@ -587,6 +587,7 @@ void ElementGraphics::hide()
 //		_port_values.clear();
 		for(unsigned i=0; i<sym->numPorts(); ++i){
 			trace2("unset port", sym->label(), i);
+//       TODO: stash the connections that are not induced by places.
 //			_port_values.push_back(sym->port_value(i));
 			sym->set_port_by_index(i, "");
 		}

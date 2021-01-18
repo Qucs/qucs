@@ -508,9 +508,15 @@ Element* SchematicScene::detachFromModel(Element* e)
 #endif
 }
 /*--------------------------------------------------------------------------*/
-Place const* SchematicScene::find_place(pos_t const& p) const
-{
-	Place const* ret = nullptr;
+ElementGraphics const* SchematicScene::find_place(pos_t const& p) const
+{ untested();
+	auto t = const_cast<SchematicScene*>(this);
+	return t->find_place(p);
+}
+/*--------------------------------------------------------------------------*/
+ElementGraphics* SchematicScene::find_place(pos_t const& p)
+{ untested();
+	ElementGraphics* ret = nullptr;
 	auto list = items(getX(p), getY(p));
 	for(auto g : list){
 		auto c = dynamic_cast<Place const*>(element(g));
@@ -518,17 +524,24 @@ Place const* SchematicScene::find_place(pos_t const& p) const
 		}else if(p == c->position()){ untested();
 			assert(getX(g->pos()) == getX(c->position()));
 			assert(getY(g->pos()) == getY(c->position()));
-			Element const* e = element(g);
-			ret = prechecked_cast<Place const*>(e);
+			ret = g;
 			break;
 		}
 	}
 	return ret;
 }
 /*--------------------------------------------------------------------------*/
+// return (new) place at position p
 Place const* SchematicScene::new_place(pos_t const& p)
 {
-	Place const* ret = find_place(p);
+	auto g = find_place(p);
+	Place const* ret = nullptr;
+	if(g){
+		Element const* e = element(g);
+	   ret = prechecked_cast<Place const*>(e);
+		assert(ret);
+	}else{
+	}
 	
 	if(ret){
 	}else{
