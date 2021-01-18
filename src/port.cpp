@@ -29,7 +29,7 @@ Port::~Port()
 const std::string nullabel="(null)";
 std::string const& Port::nodeLabel() const
 {
-	if(_node){untested();
+	if(_node){
 		return _node->label();
 	}else{
 		unreachable();

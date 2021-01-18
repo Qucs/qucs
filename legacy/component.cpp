@@ -1490,11 +1490,11 @@ unsigned Component::paramCount() const
 std::string Component::paramValue(unsigned i) const
 {
   unsigned s = Symbol::paramCount();
-  if(i<Symbol::paramCount()){ untested();
+  if(i<Symbol::paramCount()){
     return Symbol::paramValue(i);
-  }else if(i==s){ untested();
+  }else if(i==s){
     return std::to_string(tx);
-  }else if(i==s+1){ untested();
+  }else if(i==s+1){
     return std::to_string(tx);
   }else{
     assert(i>=s+num_component_params);

@@ -29,7 +29,7 @@ Port static_hack_port;
 // rename and move to library when ready?
 class SymbolSection : public SubcktBase{
 public:
-	SymbolSection() : SubcktBase() { untested();
+	SymbolSection() : SubcktBase() {
 		new_subckt();
 	}
 	~SymbolSection(){
@@ -38,7 +38,7 @@ public:
 		}
 	}
 private:
-	SymbolSection(SymbolSection const& p) : SubcktBase(p) { untested();
+	SymbolSection(SymbolSection const& p) : SubcktBase(p) {
 //		incomplete(); so what.
 		new_subckt();
 	}
@@ -53,8 +53,8 @@ private: // Sckt
 	}
 private: // Symbol
 	bool is_device() const override { return false; }
-	unsigned numPorts() const override{ untested();
-		if(subckt()){ untested();
+	unsigned numPorts() const override{
+		if(subckt()){
 			return subckt()->numPorts();
 		}else{ untested();
 			unreachable();
@@ -63,8 +63,8 @@ private: // Symbol
 	}
 	Port& port(unsigned i) override {
 		assert(scope());
-		if(_ports.size() > i){ untested();
-		}else{ untested();
+		if(_ports.size() > i){
+		}else{
 			_ports.resize(i+1);
 		}
 
@@ -76,7 +76,7 @@ private: // Symbol
 		return *_ports[i];
 	}
 public:
-	Symbol* clone() const override{ untested();
+	Symbol* clone() const override{
 		return new SymbolSection(*this);
 	}
 private: // FIXME. base
@@ -102,7 +102,7 @@ static void parse_dot(istream_t& cs, SubcktBase* s)
 }
 /*--------------------------------------------------------------------------*/
 class SymbolCommand : public Command{
-	void do_it(istream_t& cs, SchematicModel* s) override{ untested();
+	void do_it(istream_t& cs, SchematicModel* s) override{
 	  auto fullstring = cs.fullString();
 	  trace1("SymbolSection", fullstring);
 
@@ -117,7 +117,7 @@ class SymbolCommand : public Command{
 
 	  while(true){ itested();
 		  cs.read_line();
-		  if(cs.umatch("</Symbol>")){ untested();
+		  if(cs.umatch("</Symbol>")){
 			  break;
 		  }else{ itested();
 			  cs.skipbl();
@@ -131,7 +131,7 @@ class SymbolCommand : public Command{
 
 	  trace1("find DOT", sym->label());
 	  for(auto i : *sym->subckt()){ itested();
-		  if(auto d = dynamic_cast<DEV_DOT*>(i)){ untested();
+		  if(auto d = dynamic_cast<DEV_DOT*>(i)){
 			  istream_t cs(istream_t::_STRING, d->s());
 			  parse_dot(cs, sym);
 		  }else{ itested();

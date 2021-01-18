@@ -392,7 +392,7 @@ void LegacyNetlister::createNetlist(ostream_t& stream,
 			tasks.push_back(t);
 			continue;
 		} else if(pc){
-		}else{ untested();
+		}else{
 			incomplete();
 			continue;
 		}

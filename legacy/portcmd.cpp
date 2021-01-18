@@ -23,7 +23,7 @@ namespace{
 static const std::string port = ".port_";
 /*--------------------------------------------------------------------------*/
 class PortSym : public Command{
-	void do_it(istream_t& cs, SchematicModel* s) override{ untested();
+	void do_it(istream_t& cs, SchematicModel* s) override{
 		assert(s);
 		auto fullstring = cs.fullString();
 		cs.reset();

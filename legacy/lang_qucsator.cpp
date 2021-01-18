@@ -57,15 +57,15 @@ private: // Symbol
 	pos_t portPosition(unsigned) const {unreachable(); return pos_t(0,0);}
 	unsigned numPorts() const  override{ return 0;}
 	Port& port(unsigned) override{unreachable(); return *new Port();}
-	void setParameter(std::string const& name, std::string const& value){ untested();
-		if(name == "qucsatorsckthack"){ untested();
+	void setParameter(std::string const& name, std::string const& value){
+		if(name == "qucsatorsckthack"){
 			_text = value;
 		}else{ untested();
 			Symbol::setParameter(name, value);
 		}
 	}
-	std::string paramValue(std::string const& name) const override{ untested();
-		if(name == "qucsatorsckthack"){ untested();
+	std::string paramValue(std::string const& name) const override{
+		if(name == "qucsatorsckthack"){
 			return _text;
 		}else{ untested();
 			return Symbol::paramValue(name);
@@ -256,7 +256,7 @@ void QucsatorLang::printSubckt(SubcktBase const* p, ostream_t& s) const
 	}else{ untested();
 	}
 	h = sckt->find_("main");
-	if(h == sckt->end()){ untested();
+	if(h == sckt->end()){
 	}else{
 		sckt = (*h)->scope();
 		sym = prechecked_cast<Symbol const*>(*h);
@@ -266,7 +266,7 @@ void QucsatorLang::printSubckt(SubcktBase const* p, ostream_t& s) const
 	s << "\n"; //?
 	if(label.c_str()[3] == _typesep){
 		s << ".Def:" << label.substr(4);
-	}else{ untested();
+	}else{
 		incomplete();
 	}
 
@@ -312,7 +312,7 @@ void QucsatorLang::printSubckt(SubcktBase const* p, ostream_t& s) const
 			continue;
 		}
 
-      if(!i){ untested();
+      if(!i){
 			incomplete();
 		}else if(i->typeName() == "Port"){
 		}else if(i->typeName() == "Wire"){ // is Conductor?

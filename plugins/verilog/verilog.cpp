@@ -196,8 +196,8 @@ void Verilog::printSubckt(SubcktBase const* x, ostream_t& o) const
 
 		for (auto ci : *scope) { itested();
 //			o << "  "; later.
-			if(dynamic_cast<Conductor const*>(ci)){ untested();
-			}else if(dynamic_cast<Place const*>(ci)){ untested();
+			if(dynamic_cast<Conductor const*>(ci)){
+			}else if(dynamic_cast<Place const*>(ci)){
 			}else{ itested();
 				printItem(o, ci);
 			}

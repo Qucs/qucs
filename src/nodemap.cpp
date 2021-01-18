@@ -131,7 +131,7 @@ Node* NodeMap::new_node(std::string const& s)
 std::string NodeMap::netName(std::string const& l) const
 {
 	auto i = _nodes.find(l);
-	if(i == _nodes.end()){ untested();
+	if(i == _nodes.end()){
 		unreachable();
 		return "unknown_net";
 	}else{
@@ -140,10 +140,10 @@ std::string NodeMap::netName(std::string const& l) const
 	if(!(*i)->hasNet()){
 		unreachable();
 		return "no_net";
-	}else if((*i)->net()->hasLabel()){ untested();
+	}else if((*i)->net()->hasLabel()){
 		trace3("netName", (*i), (*i)->net(), (*i)->netLabel());
 		return (*i)->netLabel();
-	}else{ untested();
+	}else{
 		return "_net" + std::to_string((*i)->net()->pos());
 	}
 }
