@@ -227,7 +227,7 @@ public:
 private: // override
 	cmd* press(QEvent*) override;
 	cmd* move(QEvent*) override;
-	cmd* release(QMouseEvent*) override;
+	cmd* release(QEvent*) override;
 	cmd* activate(QObject* sender) override;
 	cmd* deactivate() override;
 	cmd* dblclk(QEvent* e) override;
@@ -298,8 +298,9 @@ void MouseActionWire::new_gfx()
 	_gfx.push_back(gfx);
 }
 /*--------------------------------------------------------------------------*/
-QUndoCommand* MouseActionWire::release(QMouseEvent* m)
+QUndoCommand* MouseActionWire::release(QEvent* e)
 {itested();
+	auto m =prechecked_cast<QGraphicsSceneMouseEvent*>(e);
 	if(!m){ untested();
 		unreachable();
 	}else if(m->button() == Qt::RightButton){ untested();
