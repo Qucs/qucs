@@ -2836,15 +2836,30 @@ QucsDoc *QucsTabWidget::createEmptySchematic(const QString &name)
   // create a schematic
   QFileInfo Info(name);
   assert(App);
+
+#if 1
   QucsDoc *d = newSchematicDoc(App, name, this);
   QWidget* w = dynamic_cast<QWidget*>(d);
+#else // need something like this.
+  Element* e = symbol_dispatcher.clone("schematic_root");
+  assert(e);
+  e->setParam("name", name.toStdString());
+  Qwidget* w = e->newWidget();
+  w->setParentWidget(this);
+  assert(w);
+  QucsDoc* d = dynamic_cast<QucsDoc*>(w);
+#endif
+
+  assert(d);
   assert(w);
   int i = addTab(w, QPixmap(":/bitmaps/empty.xpm"), name.isEmpty() ? QObject::tr("untitled") : Info.fileName());
   setCurrentIndex(i);
   return d;
 }
 
-QucsDoc* newTextDoc(QucsApp&, QString const&, QWidget*); // tmp hack.
+// tmp hack.. remove when no longer used (see below).
+// this is not a substitute for an include statement.
+QucsDoc* newTextDoc(QucsApp&, QString const&, QWidget*);
 
 QucsDoc *QucsTabWidget::createEmptyTextDoc(const QString &name)
 {itested();
