@@ -19,7 +19,8 @@
 #include <set>
 /*--------------------------------------------------------------------------*/
 /*--------------------------------------------------------------------------*/
-static void collectPlaces(ElementGraphics const* e, std::set<Place const*>& p)
+static void collectPlaces(ElementGraphics const* e,
+                          std::set<ElementGraphics*>& p)
 {
 	auto scn = e->scene();
 	assert(scn);
@@ -29,10 +30,12 @@ static void collectPlaces(ElementGraphics const* e, std::set<Place const*>& p)
 		for(unsigned i=0; i<s->numPorts(); ++i){
 			// if s->isConnected(i) ...
 			auto pp = s->nodePosition(i);
-			auto place = scn->find_place(pp);
+			ElementGraphics* pg = scn->find_place(pp);
+			Place const* place = prechecked_cast<Place const*>(element(pg));
 			if(!place){
+				assert(!pg);
 			}else if(s->port_value(i) == place->port_value(0)){
-				p.insert(place);
+				p.insert(pg);
 			}else{
 				assert(false);
 				// not here.
@@ -102,6 +105,13 @@ void SchematicEdit::save(T& del, T& ins)
 	trace2("saved", _del.size(), _ins.size());
 }
 /*--------------------------------------------------------------------------*/
+inline Place const* place(ElementGraphics const* g)
+{
+	auto p = prechecked_cast<Place const*>(element(g));
+	assert(p);
+	return p;
+}
+/*--------------------------------------------------------------------------*/
 // Perform an edit action for the first time. keep track of induced changes.
 // This is a generic version of legacy implementation, and it still requires a
 // scene implementing the geometry.
@@ -110,7 +120,7 @@ void SchematicEdit::do_it_first()
 
 	std::vector<ElementGraphics*> done_ins;
 	std::vector<ElementGraphics*> done_del;
-	std::set<Place const*> pl;
+	std::set<ElementGraphics*> pl;
 
 	// remove ports and join adjacent wires. keep track.
 	trace1("============ edit delete...", _del.size());
@@ -119,15 +129,31 @@ void SchematicEdit::do_it_first()
 		trace1("remove", element(r)->label());
 		_del.pop_front();
 		collectPlaces(r, pl);
-		r->hide(); // detaches from model
+		r->hide(); // detaches from model and all sorts of stuff.
+
 		// queued delete.
 		done_del.push_back(r); // TODO: different queue? just keep _del?
 	}
-	// sort pl?
-	// unique pl?
+
+	std::vector<Place const*> pl2;
+	for( auto pp : pl){
+		if (place(pp)->node_degree()==0){
+			//    // pp will be gone after this operation
+			trace1("hideplace0", place(pp)->label());
+			pp->hide();
+			done_del.push_back(pp);
+		}else if (place(pp)->node_degree()==2){
+			// why degree 2?
+			// these may need "wire adjustments"
+			// encapsulation bug?
+			pl2.push_back(place(pp));
+		}else{
+		}
+	}
 
 	trace1("============ postrm...", pl.size());
-	for(auto portremove : pl){itested();
+	// now remove symbols adjacent to the collected places of degree 2..
+	for(auto portremove : pl2){itested();
 		trace1("postremove", portremove->label());
 		postRmPort(portremove, done_del);
 	}
