@@ -443,8 +443,6 @@ private: // probably wrong.
 private:
   void simpleInsertElement(Element*);
 
-  void saveDocument() const;
-
   bool loadWires(QTextStream*, EGPList *List=0);
   bool loadIntoNothing(istream_t*);
 

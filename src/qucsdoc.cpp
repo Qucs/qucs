@@ -258,13 +258,19 @@ bool QucsDoc::saveAs()
 		s = QFileDialog::getSaveFileName(w, QWidget::tr("Enter a Document Name"),
 				QucsSettings.QucsWorkDir.absolutePath(),
 				Filter);
-		if(s.isEmpty())  return false;
+
+		if(s.isEmpty()) {
+			return false;
+		}else{
+		}
+
 		Info.setFile(s);               // try to guess the best extension ...
 		ext = Info.suffix();
 
 		if(ext.isEmpty() || !extlist.contains(ext)) { untested();
 			incomplete();
 			// if no extension was specified or is unknown
+		}else{
 		}
 
 		Info.setFile(s);
@@ -273,8 +279,13 @@ bool QucsDoc::saveAs()
 					QWidget::tr("The file '")+Info.fileName()+QWidget::tr("' already exists!\n")+
 					QWidget::tr("Saving will overwrite the old one! Continue?"),
 					QWidget::tr("No"), QWidget::tr("Yes"), QWidget::tr("Cancel"));
-			if(n == 2) return false;    // cancel
-			if(n == 0) continue;
+			if(n == 2){
+				return false;    // cancel
+			}else if(n == 0) {
+				// try again?
+				continue;
+			}else{
+			}
 		}else{
 		}
 

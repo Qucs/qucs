@@ -1098,17 +1098,49 @@ QString SchematicDoc::createClipboardFile() const
 	return buf;
 }
 /*--------------------------------------------------------------------------*/
-void SchematicDoc::saveDocument() const
-{
-  // TODO: provide selection GUI
-  auto d = command_dispatcher["leg_sch"];
-  assert(d);
-  assert(_root);
+// Save this Qucs document. Returns the number of subcircuit ports.
+int SchematicDoc::save()
+{ untested();
+	int result = adjustPortNumbers();// same port number for schematic and symbol
+	{ // saveDocument();
+		// TODO: provide selection GUI
+		auto d = command_dispatcher["leg_sch"];
+		assert(d);
+		assert(_root);
 
-  std::string command = "save " + docName().toStdString();
+		std::string command = "save " + docName().toStdString();
 
-  istream_t cs(istream_t::_STRING, command);
-  d->do_it(cs, _root->subckt());
+		istream_t cs(istream_t::_STRING, command);
+		d->do_it(cs, _root->subckt());
+	}
+
+	QFileInfo Info(docName());
+	lastSaved = Info.lastModified();
+
+	if(result >= 0) { untested();
+		setChanged(false);
+
+		//    QVector<QString *>::iterator it;
+		//    for (it = undoAction.begin(); it != undoAction.end(); it++) { untested();
+		//      (*it)->replace(1, 1, ' '); //at(1) = ' '; state of being changed
+		//    }
+		//(1) = 'i';   // state of being unchanged
+		//    undoAction.at(undoActionIdx)->replace(1, 1, 'i');
+		//
+		//    for (it = undoSymbol.begin(); it != undoSymbol.end(); it++) { untested();
+		//      (*it)->replace(1, 1, ' '); //at(1) = ' '; state of being changed
+		//    }
+		//at(1) = 'i';   // state of being unchanged
+		//    undoSymbol.at(undoSymbolIdx)->replace(1, 1, 'i');
+	}
+	// update the subcircuit file lookup hashes
+	incomplete();
+#if 0
+	QucsMain->updateSchNameHash();
+	QucsMain->updateSpiceNameHash();
+#endif
+
+	return result;
 }
 /*--------------------------------------------------------------------------*/
 /*--------------------------------------------------------------------------*/
