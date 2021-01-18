@@ -906,41 +906,6 @@ void SchematicDoc::cut()
 
 // ---------------------------------------------------
 
-// ---------------------------------------------------
-// Saves this Qucs document. Returns the number of subcircuit ports.
-int SchematicDoc::save()
-{ untested();
-  int result = adjustPortNumbers();// same port number for schematic and symbol
-  saveDocument();
-
-  QFileInfo Info(docName());
-  lastSaved = Info.lastModified();
-
-  if(result >= 0) { untested();
-    setChanged(false);
-
-//    QVector<QString *>::iterator it;
-//    for (it = undoAction.begin(); it != undoAction.end(); it++) { untested();
-//      (*it)->replace(1, 1, ' '); //at(1) = ' '; state of being changed
-//    }
-    //(1) = 'i';   // state of being unchanged
-//    undoAction.at(undoActionIdx)->replace(1, 1, 'i');
-//
-//    for (it = undoSymbol.begin(); it != undoSymbol.end(); it++) { untested();
-//      (*it)->replace(1, 1, ' '); //at(1) = ' '; state of being changed
-//    }
-    //at(1) = 'i';   // state of being unchanged
-//    undoSymbol.at(undoSymbolIdx)->replace(1, 1, 'i');
-  }
-  // update the subcircuit file lookup hashes
-  incomplete();
-#if 0
-  QucsMain->updateSchNameHash();
-  QucsMain->updateSpiceNameHash();
-#endif
-
-  return result;
-}
 
 // ---------------------------------------------------
 // If the port number of the schematic and of the symbol are not
