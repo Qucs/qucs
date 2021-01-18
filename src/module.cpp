@@ -42,7 +42,7 @@ Module::~Module () { untested();
 // Module registration using a category name and the appropriate
 // function returning a modules instance object.
 void Module::registerElement (QString category, Element const* e)
-{ untested();
+{
   Module * m = new Module (e);
   // m->category = category; // OUCH, incomplete?
   intoCategory(category.toStdString(), m);
@@ -51,22 +51,22 @@ void Module::registerElement (QString category, Element const* e)
 // The function appends the given module to the appropriate category.
 // If there is no such category yet, then the category gets created.
 void Module::intoCategory(std::string const& cat, Module * m)
-{ untested();
+{
   QString category = QString::fromStdString(cat);
 
   // look through existing categories
   // // BUG linear search
   QList<Category *>::const_iterator it;
   for (it = Category::categories.constBegin();
-       it != Category::categories.constEnd(); it++) { untested();
-    if ((*it)->name() == category) { untested();
+       it != Category::categories.constEnd(); it++) {
+    if ((*it)->name() == category) {
       (*it)->push_back(m);
       break;
     }
   }
 
   // if there is no such category, then create it
-  if (it == Category::categories.constEnd()) { untested();
+  if (it == Category::categories.constEnd()) {
     Category *cat = new Category (category);
     Category::categories.append (cat);
     cat->push_back(m);
@@ -109,7 +109,7 @@ Category::Category () { untested();
 }
 
 Category::Category (const QString name)
-{ untested();
+{
   Name = name;
   while(!Content.isEmpty()) { untested();
     delete Content.takeFirst();

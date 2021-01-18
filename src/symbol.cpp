@@ -1132,7 +1132,7 @@ ElementList const* Symbol::symbolPaintings() const
 }
 /*--------------------------------------------------------------------------*/
 std::string Symbol::port_value(unsigned i) const
-{ untested();
+{
 	trace2("port_value", label(), i);
 	Port const& p = port(i);
 	return p.nodeLabel();

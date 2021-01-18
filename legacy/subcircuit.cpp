@@ -79,7 +79,7 @@ private: // Symbol
 		  // BUG. don't use Props
 		  assert(Props.at(0));
 		  return Props.at(0)->Value.toStdString();
-	  }else{ untested();
+	  }else{
 		  return Component::paramName(i);
 	  }
   }
@@ -625,7 +625,7 @@ void Subcircuit::build_sckt(SubcktBase* proto) const
 }
 
 bool Subcircuit::portExists(index_t i) const
-{ untested();
+{
 	return i<numPorts();
 	assert(scope());
 	trace1("Subcircuit::portExists", i);

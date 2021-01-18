@@ -44,15 +44,15 @@ public:
 		return false;
 	}
 	pos_t const& portPosition(index_t i) const;
-	Port& port(index_t i){ untested();
+	Port& port(index_t i){
 		trace2("cport", i, _ports.size());
-		if(i<_ports.size()){ untested();
-		}else{ untested();
+		if(i<_ports.size()){
+		}else{
 			_ports.resize(i+1);
 		}
-		if(_ports[i]){ untested();
+		if(_ports[i]){
 			trace2("oldport", i, _ports.size());
-		}else{ untested();
+		}else{
 			trace2("newport", i, _ports.size());
 			_ports[i] = new Port();
 		}
@@ -171,7 +171,7 @@ unsigned SubcktProto::numPorts() const
 }
 /*--------------------------------------------------------------------------*/
 Port& SubcktProto::port(index_t i)
-{ untested();
+{
 	COMMON_COMPONENT* cc = mutable_common();
 	assert(cc);
 	auto cs = prechecked_cast<CommonSubckt*>(cc);

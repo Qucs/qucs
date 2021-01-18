@@ -122,9 +122,9 @@ void Ground::connectNode(unsigned i)
 }
 
 void Ground::set_port_by_index(index_t i, std::string const& value)
-{ untested();
+{
 	assert(i<2);
-	if(port_value(i)=="(null)"){ untested();
+	if(port_value(i)=="(null)"){
 	}else if(port_value(i)==""){ untested();
 	}else if(value==""){ untested();
 		disconnectNode(i);

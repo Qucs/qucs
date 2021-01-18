@@ -38,7 +38,7 @@ private: // local
 static Dispatcher<DocumentLanguage>::INSTALL p(&language_dispatcher, "spice", &d0);
 /*--------------------------------------------------------------------------*/
 void LangSpice::printSymbol(Symbol const* s, ostream_t& o) const
-{ untested();
+{
 	o << s->label() << " ... stub\n";
 }
 /*--------------------------------------------------------------------------*/

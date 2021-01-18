@@ -65,20 +65,20 @@ void Netlister::do_it(istream_t& cs, SchematicModel* m)
 		fprintf(stderr, "Failed to open %s\n", fn.c_str());
 		incomplete();
 		throw Exception("...");
-	}else{ untested();
+	}else{
 	}
 	ostream_t Stream(&NetlistFile);
 
 	DocumentLanguage const* lang = nullptr;
 	if(language==""){ untested();
 		lang = tQucsSettings::language;
-	}else{ untested();
+	}else{
 		lang = language_dispatcher[language];
 		trace2("netlist", lang, language);
 		assert(language_dispatcher[language]);
 	}
 
-	if(lang){ untested();
+	if(lang){
 	}else{ untested();
 		throw Exception("no lang: " + language);
 	}
@@ -97,7 +97,7 @@ void Netlister::do_it(istream_t& cs, SchematicModel* m)
 /* -------------------------------------------------------------------------------- */
 void Netlister::printMain(ostream_t& stream,
 		SchematicModel const* scope_, DocumentLanguage const* lang) const
-{ untested();
+{
 	assert(scope_);
 	auto s = scope_->find_("main");
 	assert(s!=scope_->end());
@@ -108,9 +108,9 @@ void Netlister::printMain(ostream_t& stream,
 
 	QString Time;
 	assert(scope);
-	for(auto it_ : *scope){ untested();
+	for(auto it_ : *scope){
 		auto pc = dynamic_cast<Symbol const*>(it_);
-		if(pc){ untested();
+		if(pc){
 		}else{
 			incomplete();
 			continue;

@@ -55,7 +55,7 @@ void DocumentLanguage::printItem(ostream_t& s, Element const* c) const
 	}else if (auto C=dynamic_cast<const Data*>(c)) {
 		incomplete();
 		s << "sim" << C->label() << "\n";
-	}else{ untested();
+	}else{
 		incomplete();
 	}
 }

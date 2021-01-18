@@ -100,7 +100,7 @@ class CompCommand : public Command{
 
 		trace1("find DOT", sym->label());
 		for(auto i : *e->scope()){
-			if(auto d = dynamic_cast<Symbol*>(i)){ untested();
+			if(auto d = dynamic_cast<Symbol*>(i)){
 				if(d->typeName() == "Port"){
 					auto v = d->port_value(0);
 					trace2("found a port", d->label(), v);
