@@ -98,7 +98,7 @@ Node* NodeMap::new_node(std::string const& s)
 	//  }else{
 	//  }
 
-	if(s==""){
+	if(s==""){ untested();
 		// HACK
 		return nullptr;
 	}else{

@@ -46,8 +46,11 @@ SchematicModel::~SchematicModel()
 /*--------------------------------------------------------------------------*/
 void SchematicModel::clear()
 {
-	incomplete(); // disconnect components?
 	for(auto& pc : _cl){
+		if(auto s=prechecked_cast<Symbol*>(pc)){
+			disconnect(s);
+		}else{
+		}
 		delete pc;
 		pc = nullptr;
 	}
@@ -202,21 +205,15 @@ static void createNodeSet(QStringList& Collect, int& countInit,
 /*--------------------------------------------------------------------------*/
 void SchematicModel::disconnect(Symbol* c)
 {
+	trace1("disconnect", c->label());
 	incomplete();
 	// drop port connections
 	for(unsigned i=0; i<c->numPorts(); ++i) {
 		trace3("sm:ds", i, c->label(), c->portPosition(i));
-		c->set_port_by_index(0, "");
-#if 0
-		Node* nn = c->disconnectNode(i, *nodes());
+		c->set_port_by_index(i, "");
 
-		if(!nn){ untested();
-			unreachable(); // under construction
-		}else if(!nn->hasPorts()){
-			nodes()->erase(nn); // possibly garbage collect only.
-		}else{
-		}
-#endif
+		// find and cleanup associated places here?
+		// (probably not.)
 	}
 }
 /*--------------------------------------------------------------------------*/
