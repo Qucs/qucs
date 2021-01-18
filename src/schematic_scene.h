@@ -66,7 +66,8 @@ public:
 	  incomplete();
 	  return new_place(p);
   }
-  Place const* is_place(pos_t const& p) const;
+  bool is_place(pos_t const& p) const;
+  Place const* find_place(pos_t const& p) const;
   Place const* new_place(pos_t const& p);
 
 private:

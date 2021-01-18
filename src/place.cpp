@@ -30,11 +30,15 @@ void Place::paint(ViewPainter* p) const
 {
 #ifdef DO_TRACE
 	if(node_degree()==1){
-		p->setPen(QPen(Qt::black, 1));
+		p->setPen(QPen(Qt::red, 1));
 	}else if(node_degree()==2){
 		p->setPen(QPen(Qt::green, 1));
+	}else if(node_degree()==0){
+		// BUG. a place without purpose...
+		//  (where does it come from??)
+		p->setPen(QPen(Qt::red, 3));
 	}else{
-		p->setPen(QPen(Qt::red, 2));
+		p->setPen(QPen(Qt::green, 2));
 	}
 	p->drawEllipse(-1, -1, 1, 1);
 #endif
@@ -47,9 +51,13 @@ rect_t Place::bounding_rect() const
 /*--------------------------------------------------------------------------*/
 unsigned Place::node_degree() const
 {
-	assert(_port.value());
-	assert(_port.value()->numPorts());
-	return _port.value()->numPorts()-1;
+	if(_port.value()){
+		assert(_port.value()->numPorts());
+		return _port.value()->numPorts()-1;
+	}else{
+		unreachable();
+		return 0;
+	}
 }
 /*--------------------------------------------------------------------------*/
 bool Place::showLabel() const
