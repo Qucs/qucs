@@ -82,7 +82,6 @@ class ElementGraphics;
 
 /* -------------------------------------------------------------------------------- */
 /* -------------------------------------------------------------------------------- */
-// TODO: add SymbolDocument (some other place)
 class SchematicDoc : public QGraphicsView, public QucsDoc {
   Q_OBJECT
 private:
@@ -174,66 +173,17 @@ public:
 
   // find_symbol
 public:
-//  Node const* nodeAt(pos_t const&) const;
-//  bool isNode(pos_t const& p) const{
-//	  assert(_model);
-//	  return _model->isNode(p);
-//  }
   Component* find_component(QString const&);
-
-  // really?
-  // taskElementList const& commands() const{
-  //    return _commands;
-  // }
   CmdEltList& commands(){
 	  return _commands;
   }
   CmdEltList const& commands() const{
 	  return _commands;
   }
-//  ElementList const& components() const{
-//	  assert(_model);
-//	  return _model->components();
-//  }
-//  NodeMap const& nodes() const{
-//	  assert(_model);
-//	  return _model->nodes();
-//  }
-//  WireList const& wires() const{
-//	  assert(_model);
-//	  return _model->wires();
-//  }
-//  DiagramList const& diagrams() const{
-//	  assert(_model);
-//	  return _model->diagrams();
-//  }
-//  PaintingList& paintings(){
-//	  assert(_model);
-//	  return _model->paintings();
-//  }
-//  PaintingList const& paintings() const{
-//	  assert(_model);
-//	  return _model->paintings();
-//  }
   unsigned numberOfNets() const{
 	  assert(_model);
 	  return _model->numberOfNets();
   }
-  
-	// transition
-//  PaintingList  SymbolPaints;  // symbol definition for subcircuit
-//  PaintingList& symbolPaints(){
-//	  return SymbolPaints; // -> schematicSymbol
-//  }
-//  PaintingList const& symbolPaints() const{
-//	  return SymbolPaints; // -> schematicSymbol
-//  }
-//  PaintingList& symbolPaintings(){
-//	  return SymbolPaints; // -> schematicSymbol
-//  }
-//  PaintingList const& symbolPaintings() const{
-//	  return SymbolPaints; // -> schematicSymbol
-//  }
 
   QList<PostedPaintEvent>   PostedPaintEvents;
 public:
@@ -461,31 +411,11 @@ public:
 //	  return _model->throughAllNodes(count);
 //  }
 
-private:
-//  void propagateNode(Node*) const;
-//  void collectDigitalSignals(void);
-//  bool giveNodeNames(QTextStream *, int&, QStringList&, QPlainTextEdit*,
-//		  int, NetLang const&);
-//   DigMap Signals; // collecting node names for VHDL signal declarations
-
 public: // for now
 	TaskElement* loadtaskElement(const QString& _s, TaskElement* c) const{
 		assert(_model);
 		return _model->loadtaskElement(_s, c);
 	}
-//	Component* loadComponent(const QString& _s, Component* c) const{
-//		assert(_model);
-//		return _model->loadComponent(_s, c);
-//	}
-//   int  prepareNetlist(ostream_t& a, QStringList& b, QPlainTextEdit* c,
-//			bool creatingLib, NetLang const& nl){
-//		assert(!creatingLib); // ?!
-// 	  return _model->prepareNetlist(a,b,c, creatingLib, nl);
-//   }
-//  bool createLibNetlist(ostream_t& a, QPlainTextEdit* b, int c, NetLang const& nl){
-//	  assert(_model);
-//		return _model->createLibNetlist(a,b,c, nl);
-//  }
 
 	QString getParameter(std::string const& key) const;
 
