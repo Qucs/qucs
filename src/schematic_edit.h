@@ -89,6 +89,9 @@ private:
 	SchematicScene const* scene() const{
 		return &_scn;
 	}
+	SchematicScene* scene(){
+		return &_scn;
+	}
 
 private:
 	list_t _ins;

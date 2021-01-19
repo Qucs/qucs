@@ -70,9 +70,7 @@ private: // QGraphicsItem
 public: // manipulate (used in UndotaskElements)
 	void hide();
 	void show();
-
-	template<class P>
-	void moveElement(P const& delta);
+	void restore();
 
 public: // schematic_action.cpp
 	void transform(rotate_after_mirror1_t, std::pair<int, int> pivot=std::make_pair(0,0));
@@ -99,12 +97,12 @@ public:
 	}
 
 	// BUG: selected is stored in Element.
-	void setSelected(bool s);
+//	void setSelected(bool s);
 
 private:
 	Element* _e;
 	QGraphicsItem* _elementText;
-	bool _select__;
+	bool _selected;
 }; // ElementGraphics
 /*--------------------------------------------------------------------------*/
 /*--------------------------------------------------------------------------*/
