@@ -40,7 +40,7 @@ ElementGraphics::ElementGraphics() : QGraphicsItem()
 }
 /*--------------------------------------------------------------------------*/
 ElementGraphics::ElementGraphics(ElementGraphics const& e)
-	: QGraphicsItem(), _e(nullptr), _elementText(nullptr)
+	: QGraphicsItem(), _e(nullptr), _elementText(nullptr), _selected(false)
 {itested();
 	assert(e._e);
 	Element* el = e._e->clone();
@@ -50,7 +50,7 @@ ElementGraphics::ElementGraphics(ElementGraphics const& e)
 }
 /*--------------------------------------------------------------------------*/
 ElementGraphics::ElementGraphics(Element* e)
-	: QGraphicsItem(), _e(nullptr), _elementText(nullptr)
+	: QGraphicsItem(), _e(nullptr), _elementText(nullptr), _selected(false)
 {itested();
 	assert(e);
 	attachElement(e);
@@ -263,7 +263,7 @@ void ElementGraphics::paint(QPainter *p, const QStyleOptionGraphicsItem *o,
 		p->setPen(QPen(Qt::darkGray,3));
 		p->drawRoundedRect(br, 3, 3);
 	}else{itested();
-#ifdef DO_TRACE
+#ifdef DO_TRACE_
 		p->setPen(QPen(Qt::green,3));
 		p->drawRoundedRect(br, 3, 3);
 		p->drawEllipse(-3, -3, 6, 6);
@@ -474,6 +474,7 @@ QRectF ElementGraphics::absoluteBoundingRect() const
 	return mapRectToScene(b);
 }
 /*--------------------------------------------------------------------------*/
+#if 0
 void ElementGraphics::setSelected(bool s)
 {itested();
 	qDebug() << "setSelected" << s << this;
@@ -484,6 +485,7 @@ void ElementGraphics::setSelected(bool s)
 	}
 	assert(_e);
 }
+#endif
 /*--------------------------------------------------------------------------*/
 // """
 // Reimplement this function to intercept events before they are dispatched to
@@ -526,6 +528,39 @@ bool ElementGraphics::sceneEvent(QEvent* e)
 	}
 }
 /*--------------------------------------------------------------------------*/
+void ElementGraphics::restore()
+{
+	assert(!isVisible());
+	assert(scene());
+	assert(!_e->owner());
+	scene()->attachToModel(_e);
+	assert(_e->owner());
+
+
+	if(auto s=dynamic_cast<Symbol*>(_e)){
+//		_port_values.clear();
+		for(unsigned i=0; i<s->numPorts(); ++i){
+			// if s->isConnected(i) ...
+			auto pp = s->nodePosition(i);
+			ElementGraphics* pg = scene()->find_place(pp);
+			Place const* place = prechecked_cast<Place const*>(element(pg));
+			assert(place);
+
+			std::string pv = place->port_value(0);
+			trace3("restore", s->label(), i, pv);
+
+			s->set_port_by_index(i, pv);
+			pg->update();
+		}
+	}else{
+	}
+
+	QGraphicsItem::show();
+	
+	// if(was_selected) ...
+	setSelected(_selected); // BUG: keep track somewhere else.
+}
+/*--------------------------------------------------------------------------*/
 void ElementGraphics::show()
 {itested();
 
@@ -566,6 +601,7 @@ void ElementGraphics::show()
 void ElementGraphics::hide()
 {itested();
 	assert(_e);
+	_selected = QGraphicsItem::isSelected();
 	QGraphicsItem::hide();
 //	for(auto x : childItems()){
 //		x->hide();

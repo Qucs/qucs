@@ -81,7 +81,7 @@ pos_t const& CommonSubckt::portPosition(index_t i) const
 	}
 	// a port is a place. return its position?
 	unreachable();
-	return pos_t(0, 0);
+	return *new pos_t(0, 0);
 }
 /*--------------------------------------------------------------------------*/
 /*--------------------------------------------------------------------------*/

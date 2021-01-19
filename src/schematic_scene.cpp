@@ -532,16 +532,9 @@ ElementGraphics* SchematicScene::find_place(pos_t const& p)
 }
 /*--------------------------------------------------------------------------*/
 // return (new) place at position p
-Place const* SchematicScene::new_place(pos_t const& p)
+ElementGraphics* SchematicScene::new_place(pos_t const& p)
 {
-	auto g = find_place(p);
-	Place const* ret = nullptr;
-	if(g){
-		Element const* e = element(g);
-	   ret = prechecked_cast<Place const*>(e);
-		assert(ret);
-	}else{
-	}
+	auto ret = find_place(p);
 	
 	if(ret){
 	}else{
@@ -560,14 +553,16 @@ Place const* SchematicScene::new_place(pos_t const& p)
 			cl->setLabel(place_name);
 			cl->set_port_by_index(0, place_name);
 //
-			addElement(cl);
+//			QGraphicsItem* i = new ElementGraphics(cl);
+//			addItem(i);
+//			i->show();
 		}
 
-		QGraphicsItem* gg = new ElementGraphics(cl);
-		addItem(gg);
-		gg->show(); // really?
-		ret = prechecked_cast<Place*>(cl);
-		assert(ret);
+		ret = new ElementGraphics(cl);
+		addItem(ret);
+		// !!!
+		QGraphicsItem* g = ret;
+		g->show(); // really?
 	}
 	return ret;
 }
@@ -577,15 +572,20 @@ bool SchematicScene::is_place(pos_t const& p) const
 	return find_place(p);
 }
 /*--------------------------------------------------------------------------*/
-void SchematicScene::connectPorts(Symbol* c)
+static inline Symbol const* symbol(ElementGraphics const* p)
 {
+	return dynamic_cast<Symbol const*>(element(p));
+}
+/*--------------------------------------------------------------------------*/
+void SchematicScene::connectPorts(Symbol* c)
+{ untested();
 	assert(c->mutable_owner());
 
 	for(unsigned i=0; c->portExists(i); ++i){
 //		assert(portValue()==""); // ?
 		try{
 			pos_t p = c->nodePosition(i);
-			Symbol const* q = new_place(p);
+			Symbol const* q = symbol(new_place(p));
 			std::string n = q->port_value(0);
 			trace3("connectPorts", c->label(), i, n);
 

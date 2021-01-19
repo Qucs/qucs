@@ -108,22 +108,22 @@ void SchematicEdit::save(T& del, T& ins)
 inline Place const* place(ElementGraphics const* g)
 {
 	auto p = prechecked_cast<Place const*>(element(g));
-	assert(p);
+	//assert(p);
 	return p;
 }
 /*--------------------------------------------------------------------------*/
 class Footprint : public Symbol{
 public:
 	template<class L>
-	Footprint(L const& v)
-	  : _scope(nullptr), _scene(nullptr) {
+	Footprint(SchematicModel* s, L const& v)
+	  : _scope(s), _scene(nullptr) {
 		setOwner(this);
 		if(v.size()){ untested();
 			_scene = v.front()->scene();
 		}else{ untested();
 		}
 		for(auto i : v){
-			_scope = element(i)->scope();
+//			_scope = element(i)->scope();
 			assert(_scope);
 			assert(!place(i));
 			assert(_scene == i->scene());
@@ -132,12 +132,15 @@ public:
 			}
 		}
 
+		trace2("Footprint", _new_plg.size(), _ports.size());
+
 	}
 	~Footprint(){
 		index_t j = 0;
 		for(auto p : _ports){
 			trace1("un-footprint", p->value());
 			set_port_by_index(j, "");
+			++j;
 		}
 	}
 
@@ -160,16 +163,32 @@ private:
 	SchematicModel* scope() override { return _scope; }
 	void connect(Symbol const* s) {
 		for(unsigned i=0; i<s->numPorts(); ++i){
-			Place const* place = _scene->new_place(s->nodePosition(i));
-			std::string name = place->port_value(0);
-			set_port_by_index(_ports.size(), name);
+			do_place(s->nodePosition(i));
 		}
+	}
+	void do_place(pos_t p){
+		if(_scene->is_place(p)){
+			trace2("already there", getX(p), getY(p));
+
+		}else{
+			ElementGraphics* plg = _scene->new_place(p/*, hint?*/);
+			Place const* pl = place(plg);
+			std::string name = pl->port_value(0);
+			set_port_by_index(_ports.size(), name);
+			trace5("not already there", getX(p), getY(p), name, pl->label(), plg);
+			_new_plg.push_back(plg);
+		}
+	}
+public:
+	std::vector<ElementGraphics*> const& new_plg(){
+		return _new_plg;
 	}
 
 private:
 	SchematicModel* _scope;
 	SchematicScene* _scene;
 	std::vector<Port*> _ports;
+	std::vector<ElementGraphics*> _new_plg;
 };
 /*--------------------------------------------------------------------------*/
 // Perform an edit action for the first time. keep track of induced changes.
@@ -195,9 +214,10 @@ void SchematicEdit::do_it_first()
 		done_del.push_back(r); // TODO: different queue? just keep _del?
 	}
 
-#if 0
-	SchematicModel* model = scene()->scope();
-	Footprint f(model, _ins);
+#if 1
+	// footprint. save places and nodes from garbage collection
+	SchematicModel* m = scene()->scope();
+	Footprint f(m, _ins);
 #endif
 
 	std::vector<Place const*> pl2;
@@ -239,18 +259,16 @@ void SchematicEdit::do_it_first()
 			// done with this one, others have been queued.
 		}else{
 			trace2("done insert, show", e->label(), e->mutable_owner());
-
-//			makePlaces(e, done_ins); // needed?
-			scn->attachToModel(e); // was part of gfx->show()
-
-			QGraphicsItem* gg=gfx;
-			gg->show();
-			gfx->setSelected(true); // BUG: keep track somewhere else.
+			gfx->restore();
 			done_ins.push_back(gfx);
 		}
 	}
 
 	save(done_ins, done_del);
+
+	for(auto i : f.new_plg()){
+		_del.push_back(i);
+	}
 } // do_it_first
 /*--------------------------------------------------------------------------*/
 QList<ElementGraphics*> SchematicEdit::items(
@@ -279,7 +297,7 @@ bool SchematicEdit::addmerge(ElementGraphics* new_elt, T& del_done)
 	trace3("addmerge candidates", new_elt, element(new_elt)->label(), it.size());
 	for(auto gfxi : it){itested();
 		assert(gfxi!=new_elt); // new_elt is invisible.
-		trace1("addmerge coll?", element(gfxi)->label());
+		trace3("addmerge coll?", element(gfxi)->label(), gfxi, gfxi->pos());
 
 		// gfxi is already on scene.
 		auto n = gfxi->newUnion(new_elt);

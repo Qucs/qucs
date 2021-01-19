@@ -21,7 +21,7 @@ namespace{
 /*--------------------------------------------------------------------------*/
 // ignore "<Spice>" section. (use <Model> instead.)
 class Model : public Command{
-	void do_it(istream_t& cs, SchematicModel* s) override {
+	void do_it(istream_t& cs, SchematicModel*) override {
 	  auto fullstring = cs.fullString();
 	  trace1("Model", fullstring);
 

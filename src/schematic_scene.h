@@ -62,16 +62,15 @@ public:
   void attachToModel(Element*);
   Element* detachFromModel(Element*);
   void connectPorts(Symbol* c);
-  Place const* placeAt(pos_t const& p){
-	  incomplete();
-	  return new_place(p);
-  }
+
+public: //places
   bool is_place(pos_t const& p) const;
   ElementGraphics* find_place(pos_t const& p);
   ElementGraphics const* find_place(pos_t const& p) const;
-  Place const* new_place(pos_t const& p);
+  ElementGraphics* new_place(pos_t const& p);
 
 private:
+public: // hack?
   SchematicModel* scope();
 
 public:

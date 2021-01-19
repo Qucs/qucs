@@ -28,6 +28,7 @@ Dispatcher<Command>::INSTALL p(&symbol_dispatcher, "place", &d0);
 /*--------------------------------------------------------------------------*/
 void Place::paint(ViewPainter* p) const
 {
+	trace3("placepaint", label(), position(), node_degree());
 #ifdef DO_TRACE
 	if(node_degree()==1){
 		p->setPen(QPen(Qt::red, 1));
