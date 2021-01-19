@@ -112,6 +112,66 @@ inline Place const* place(ElementGraphics const* g)
 	return p;
 }
 /*--------------------------------------------------------------------------*/
+class Footprint : public Symbol{
+public:
+	template<class L>
+	Footprint(L const& v)
+	  : _scope(nullptr), _scene(nullptr) {
+		setOwner(this);
+		if(v.size()){ untested();
+			_scene = v.front()->scene();
+		}else{ untested();
+		}
+		for(auto i : v){
+			_scope = element(i)->scope();
+			assert(_scope);
+			assert(!place(i));
+			assert(_scene == i->scene());
+			if(auto s=dynamic_cast<Symbol const*>(element(i))){
+				connect(s);
+			}
+		}
+
+	}
+	~Footprint(){
+		index_t j = 0;
+		for(auto p : _ports){
+			trace1("un-footprint", p->value());
+			set_port_by_index(j, "");
+		}
+	}
+
+private:
+	Element* clone()const{ unreachable(); return nullptr; }
+	pos_t portPosition(unsigned) const { assert(false); return pos_t(0, 0);}
+	index_t numPorts() const override { untested();
+		return _ports.size();
+	}
+	Port& port(index_t i) override {
+		if(i < _ports.size()){
+			assert(_ports[i]);
+			return *_ports[i];
+		}else{
+			assert(i==_ports.size());
+			_ports.push_back(new Port);
+			return *_ports.back();
+		}
+	}
+	SchematicModel* scope() override { return _scope; }
+	void connect(Symbol const* s) {
+		for(unsigned i=0; i<s->numPorts(); ++i){
+			Place const* place = _scene->new_place(s->nodePosition(i));
+			std::string name = place->port_value(0);
+			set_port_by_index(_ports.size(), name);
+		}
+	}
+
+private:
+	SchematicModel* _scope;
+	SchematicScene* _scene;
+	std::vector<Port*> _ports;
+};
+/*--------------------------------------------------------------------------*/
 // Perform an edit action for the first time. keep track of induced changes.
 // This is a generic version of legacy implementation, and it still requires a
 // scene implementing the geometry.
@@ -134,6 +194,11 @@ void SchematicEdit::do_it_first()
 		// queued delete.
 		done_del.push_back(r); // TODO: different queue? just keep _del?
 	}
+
+#if 0
+	SchematicModel* model = scene()->scope();
+	Footprint f(model, _ins);
+#endif
 
 	std::vector<Place const*> pl2;
 	for( auto pp : pl){
@@ -171,10 +236,13 @@ void SchematicEdit::do_it_first()
 		scn->possiblyRename(e);
 		if(addmerge(gfx, done_del)){
 			trace0("collision during merge attempt");
+			// done with this one, others have been queued.
 		}else{
 			trace2("done insert, show", e->label(), e->mutable_owner());
-			// scn->possiblyRename(e); here?
+
+//			makePlaces(e, done_ins); // needed?
 			scn->attachToModel(e); // was part of gfx->show()
+
 			QGraphicsItem* gg=gfx;
 			gg->show();
 			gfx->setSelected(true); // BUG: keep track somewhere else.
