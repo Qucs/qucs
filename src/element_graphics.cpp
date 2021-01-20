@@ -528,35 +528,56 @@ bool ElementGraphics::sceneEvent(QEvent* e)
 	}
 }
 /*--------------------------------------------------------------------------*/
-void ElementGraphics::restore()
+void ElementGraphics::restore_ports()
+{
+	auto s = dynamic_cast<Symbol*>(_e);
+	assert(s);
+	for(unsigned i=0; i<s->numPorts(); ++i) {
+		assert(i < _port_values.size());
+		s->set_port_by_index(i, _port_values[i]);
+	}
+}
+/*--------------------------------------------------------------------------*/
+void ElementGraphics::init_ports()
+{
+	auto s = dynamic_cast<Symbol*>(_e);
+	assert(!dynamic_cast<Place*>(_e)); // for now.
+	assert(s);
+	auto scn = scene();
+	assert(scn);
+	for(unsigned i=0; i<s->numPorts(); ++i){
+		auto pp = s->nodePosition(i);
+		ElementGraphics* pg = scn->find_place(pp);
+		Place const* place = prechecked_cast<Place const*>(element(pg));
+		assert(place);
+
+		std::string pv = place->port_value(0);
+		trace4("init_ports", s->label(), i, s->port_value(i), pv);
+
+		s->set_port_by_index(i, pv);
+	}
+}
+/*--------------------------------------------------------------------------*/
+// show? restore? init?
+void ElementGraphics::show_()
 {
 	assert(!isVisible());
 	assert(scene());
 	assert(!_e->owner());
 	scene()->attachToModel(_e);
+//	scene()->doc()->addElement(e);
 	assert(_e->owner());
 
-
-	if(auto s=dynamic_cast<Symbol*>(_e)){
-//		_port_values.clear();
-		for(unsigned i=0; i<s->numPorts(); ++i){
-			// if s->isConnected(i) ...
-			auto pp = s->nodePosition(i);
-			ElementGraphics* pg = scene()->find_place(pp);
-			Place const* place = prechecked_cast<Place const*>(element(pg));
-			assert(place);
-
-			std::string pv = place->port_value(0);
-			trace3("restore", s->label(), i, pv);
-
-			s->set_port_by_index(i, pv);
-			pg->update();
-		}
+	if(!_port_values.size()){
+		trace1("set_ports init", _e->label());
+		init_ports();
+	}else if(auto s=dynamic_cast<Symbol*>(_e)){
+		trace1("set_ports restore", _e->label());
+		restore_ports();
 	}else{
 	}
-
 	QGraphicsItem::show();
-	
+
 	// if(was_selected) ...
 	setSelected(_selected); // BUG: keep track somewhere else.
 }
@@ -602,6 +623,7 @@ void ElementGraphics::hide()
 {itested();
 	assert(_e);
 	_selected = QGraphicsItem::isSelected();
+	assert(isVisible());
 	QGraphicsItem::hide();
 //	for(auto x : childItems()){
 //		x->hide();
@@ -620,11 +642,11 @@ void ElementGraphics::hide()
 
 	if(!_e->owner()){itested();
 	}else if(auto sym=dynamic_cast<Symbol*>(_e)){
-//		_port_values.clear();
+		// store_ports?
+		_port_values.clear();
 		for(unsigned i=0; i<sym->numPorts(); ++i){
 			trace2("unset port", sym->label(), i);
-//       TODO: stash the connections that are not induced by places.
-//			_port_values.push_back(sym->port_value(i));
+			_port_values.push_back(sym->port_value(i));
 			sym->set_port_by_index(i, "");
 		}
 	}else{

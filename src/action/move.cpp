@@ -22,10 +22,11 @@ public:
 			if(auto eg=dynamic_cast<ElementGraphics*>(i)){itested();
 				++k;
 				Element* elt = eg->cloneElement();
-				eg->hide();
 				auto ec = elt->center();
+
+				eg->hide();
 				eg->setPos(QPoint(getX(ec), getY(ec)));
-				eg->show();
+				eg->show_();
 				assert(elt);
 				int dx = getX(delta);
 				int dy = getY(delta);

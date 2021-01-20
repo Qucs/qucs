@@ -102,7 +102,6 @@ void SchematicEdit::save(T& del, T& ins)
 	_ins.insert(_ins.end(), ii, ins.end());
 	_del.insert(_del.end(), di, del.end());
 
-	trace2("saved", _del.size(), _ins.size());
 }
 /*--------------------------------------------------------------------------*/
 inline Place const* place(ElementGraphics const* g)
@@ -246,7 +245,17 @@ void SchematicEdit::do_it_first()
 	trace1("============ edit insert...", _ins.size());
 	while(_ins.size()){
 		ElementGraphics* gfx = _ins.front();
-		trace1("try insert...", element(gfx)->label());
+		trace2("try insert...", element(gfx)->label(), gfx->has_port_values());
+
+#ifndef NDEBUG
+		if(auto sym=dynamic_cast<Symbol const*>(element(gfx))){
+			for(unsigned i=0; i<sym->numPorts(); ++i){
+				trace3("edit insert", sym->label(), i, sym->port_value(i));
+			}
+		}
+#endif
+
+
 		_ins.pop_front();
 
 		Element* e = element(gfx);
@@ -258,17 +267,20 @@ void SchematicEdit::do_it_first()
 			trace0("collision during merge attempt");
 			// done with this one, others have been queued.
 		}else{
-			trace2("done insert, show", e->label(), e->mutable_owner());
-			gfx->restore();
+			trace3("done insert, show", gfx, e->label(), e->mutable_owner());
+			gfx->show_();
 			done_ins.push_back(gfx);
 		}
 	}
 
 	save(done_ins, done_del);
 
+	trace2("saved", _del.size(), _ins.size());
+
 	for(auto i : f.new_plg()){
 		_del.push_back(i);
 	}
+	trace2("saved with places", _del.size(), _ins.size());
 } // do_it_first
 /*--------------------------------------------------------------------------*/
 QList<ElementGraphics*> SchematicEdit::items(
@@ -306,7 +318,8 @@ bool SchematicEdit::addmerge(ElementGraphics* new_elt, T& del_done)
 			trace1("hiding", element(gfxi)->label());
 
 			assert(element(gfxi)->mutable_owner());
-			gfxi->hide();
+			assert(!gfxi->isVisible());
+//			gfxi->hide(); // what??
 			assert(!element(gfxi)->mutable_owner());
 
 			// collision delete.
@@ -404,19 +417,22 @@ void SchematicEdit::do_it()
 		trace1("hide", d);
 		assert(d->isVisible());
 		d->hide();
+		assert(!d->isVisible());
 	}
 	for(auto& d : _ins){itested();
 		trace1("show", d);
 		assert(!d->isVisible());
 		//d->update(); // really?
-		d->show();
-		d->setSelected(true); // BUG. this will select too many.
+		d->show_(); // restore? show?
+		assert(d->isVisible());
 	}
 	std::swap(_ins, _del);
 }
 /*--------------------------------------------------------------------------*/
 void SchematicEdit::qDelete(ElementGraphics* gfx)
 {
+	// Elements must be properly intact (and visible),
+	// as we need to (re)store them
 	assert(gfx->isVisible());
 	_del.push_back(gfx);
 }
@@ -426,6 +442,14 @@ void SchematicEdit::qInsert(ElementGraphics* gfx)
 	assert(!gfx->isVisible());
 	assert(gfx->scene() == &_scn); // wrong?
 	_ins.push_back(gfx);
+
+#ifndef NDEBUG
+	if(auto sym=dynamic_cast<Symbol const*>(element(gfx))){
+		for(unsigned i=0; i<sym->numPorts(); ++i){
+			trace3("qInsert", sym->label(), i, sym->port_value(i));
+		}
+	}
+#endif
 }
 /*--------------------------------------------------------------------------*/
 // turn swap into add/delete
@@ -434,13 +458,11 @@ void SchematicEdit::qSwap(ElementGraphics* gfx, Element* e)
 	assert(!e->mutable_owner());
 
 	auto ng = new ElementGraphics(e);
+	assert(!ng->has_port_values());
 	{// ?
 		assert(!element(ng)->scope());
 		_scn.addItem(ng);
-		ng->hide(); // what??
-		// e->setOwner(element(gfx)->mutable_owner()); // not here.
-		// assert(e->mutable_owner());
-		//	assert(element(ng)->scope());
+		assert(!ng->isVisible());
 	}
 
 	qDelete(gfx);
