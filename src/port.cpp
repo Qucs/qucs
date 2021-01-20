@@ -32,7 +32,7 @@ std::string const& Port::nodeLabel() const
 	if(_node){
 		return _node->label();
 	}else{
-		unreachable();
+		// unreachable(); useful for debugging
 		return nullabel;
 	}
 }

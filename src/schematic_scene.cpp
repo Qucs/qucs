@@ -605,7 +605,10 @@ void SchematicScene::attachToModel(Element* e)
 	doc()->addElement(e);
 	assert(ce->owner());
 	if(auto s=dynamic_cast<Symbol*>(e)){
-		connectPorts(s);
+		trace1("not connecting", e->label());
+//		assert(false);
+		// this is WRONG. the scene is not responsible for port values.
+//		connectPorts(s);
 	}else{
 	}
 }

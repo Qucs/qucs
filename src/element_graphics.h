@@ -48,6 +48,7 @@ public:
 	Element* detachElement();
 	Element* cloneElement() const;
 	ElementGraphics* newUnion(ElementGraphics const*) const;
+	bool has_port_values() const{ return _port_values.size(); }
 //	ElementGraphics* newPort(pos_t) const; obsolete?
 
 public:
@@ -70,7 +71,11 @@ private: // QGraphicsItem
 public: // manipulate (used in UndotaskElements)
 	void hide();
 	void show();
-	void restore();
+	void show_();
+
+private:
+	void restore_ports();
+	void init_ports();
 
 public: // schematic_action.cpp
 	void transform(rotate_after_mirror1_t, std::pair<int, int> pivot=std::make_pair(0,0));
@@ -103,6 +108,7 @@ private:
 	Element* _e;
 	QGraphicsItem* _elementText;
 	bool _selected;
+	std::vector<std::string> _port_values;
 }; // ElementGraphics
 /*--------------------------------------------------------------------------*/
 /*--------------------------------------------------------------------------*/
