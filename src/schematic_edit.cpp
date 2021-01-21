@@ -463,6 +463,7 @@ void SchematicEdit::qSwap(ElementGraphics* gfx, Element* e)
 
 	qDelete(gfx);
 	qInsert(ng);
+	trace2("swap", gfx->pos(), ng->pos());
 }
 /*--------------------------------------------------------------------------*/
 void SchematicEdit::redo()

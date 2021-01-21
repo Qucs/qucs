@@ -2,7 +2,8 @@
 TARGET = diagrams
 
 RAW_SRCS = \
-	rectdiagram.cpp
+	rectdiagram.cpp \
+	tabdiagram.cpp
 
 NOTYET = \
 	curvediagram.cpp \

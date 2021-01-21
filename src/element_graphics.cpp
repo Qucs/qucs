@@ -29,6 +29,7 @@
 
 #include <QGraphicsScene>
 #include <QGraphicsProxyWidget>
+#include <QWidget>
 
 #include "../legacy/obsolete_paintings.h"
 /*--------------------------------------------------------------------------*/
@@ -53,7 +54,9 @@ ElementGraphics::ElementGraphics(Element* e)
 	: QGraphicsItem(), _e(nullptr), _elementText(nullptr), _selected(false)
 {itested();
 	assert(e);
+	trace2("new ElementGraphics0", e->label(), childItems().size());
 	attachElement(e);
+	trace2("new ElementGraphics1", e->label(), childItems().size());
 }
 /*--------------------------------------------------------------------------*/
 ElementGraphics* ElementGraphics::clone() const
@@ -169,10 +172,13 @@ void ElementGraphics::attachElement(Element* e)
 	trace1("attach", e->label());
 	assert(!_e);
 	if(e->owner()){ untested();
-		// freshly parsed model?
+		// freshly parsed model
+		// when loading a schematic
 	}else{ untested();
-		// something else. text?
+		// something else.
+		// "ghost", freely moving but not interacting
 	}
+	assert(QGraphicsItem::isVisible()); // why?
 	QGraphicsItem::hide();
 	delete _elementText;
 	_elementText = nullptr;
@@ -209,14 +215,23 @@ void ElementGraphics::attachElement(Element* e)
 		a->setPlainText(QString::fromStdString(e->label()));
 	}else{
 	}
-	_elementText = new ElementText(this);
 	auto sym = dynamic_cast<Symbol const*>(_e);
 
 	if (auto w=_e->newWidget()){ untested();
+		// BUG: this may break if there are multiple views.
 		auto p = new QGraphicsProxyWidget(this);
-		p->setWidget(w);
+		trace2("attach proxy", this, w);
+
+		if(e->owner()){ untested();
+			p->setWidget(w);
+		}else{
+			// dont expose if there is no link. this is a bit of a hack,
+			// need to disentangle show/show_/hide/attach.
+		}
+		trace2("attached proxy", this, w);
 	}else if(!sym){ untested();
 	}else if(auto s = sym->subckt()){ untested();
+		_elementText = new ElementText(this);
 		for(auto o : *s){untested();
 			if(auto i=dynamic_cast<Element*>(o)){
 				QGraphicsItem* cg = new ElementGraphics(i->clone());
@@ -224,6 +239,7 @@ void ElementGraphics::attachElement(Element* e)
 			}
 		}
 	}else{ untested();
+		_elementText = new ElementText(this);
 	}
 	trace1("ElementGraphics unpacked", childItems().size());
 
@@ -563,15 +579,30 @@ void ElementGraphics::show_()
 //	scene()->doc()->addElement(e);
 	assert(_e->owner());
 
-	if(!_port_values.size()){
-		trace1("set_ports init", _e->label());
-		init_ports();
+	QGraphicsItem::show();
+	if (auto w=_e->newWidget()){ untested();
+		assert(childItems().size()==1);
+		for(auto i: childItems()){
+			if(auto p = dynamic_cast<QGraphicsProxyWidget*>(i)){
+				trace2("show_ it's a proxy", p, this);
+				p->setWidget(w);
+				p->show();
+				w->show();
+				trace2("show_ proxy 2", p, this);
+				break; // only one proxy..
+			}else{
+			}
+		}
 	}else if(auto s=dynamic_cast<Symbol*>(_e)){
 		trace1("set_ports restore", _e->label());
-		restore_ports();
+		if(!_port_values.size()){
+			trace1("set_ports init", _e->label());
+			init_ports();
+		}else{
+			restore_ports();
+		}
 	}else{
 	}
-	QGraphicsItem::show();
 
 	// if(was_selected) ...
 	setSelected(_selected); // BUG: keep track somewhere else.
@@ -582,9 +613,9 @@ void ElementGraphics::show()
 
 	assert(!isVisible());
 	assert(scene());
-	assert(!_e->owner());
-	scene()->attachToModel(_e);
-	assert(_e->owner());
+//	assert(!_e->owner());
+//	scene()->attachToModel(_e);
+//	assert(_e->owner());
 
 #ifdef DO_TRACE
 	if(auto sym=dynamic_cast<Symbol const*>(_e)){
@@ -598,9 +629,9 @@ void ElementGraphics::show()
 #endif
 
 	QGraphicsItem::show();
-	for(auto x : childItems()){
-		x->show();
-	}
+//	for(auto x : childItems()){
+//		x->show();
+//	}
 
 #if 0
 	assert(!_e->owner());
@@ -619,6 +650,15 @@ void ElementGraphics::hide()
 	assert(_e);
 	_selected = QGraphicsItem::isSelected();
 	assert(isVisible());
+	auto l=childItems();
+	trace1("ElementGraphics hide", childItems().size());
+	for(auto i: childItems()){
+		if(auto p = dynamic_cast<QGraphicsProxyWidget*>(i)){
+			trace2("hide it's a proxy", p, this);
+			p->setWidget(nullptr); // the Element has a reference to it.
+		}else{
+		}
+	}
 	QGraphicsItem::hide();
 //	for(auto x : childItems()){
 //		x->hide();

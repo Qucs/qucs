@@ -822,9 +822,12 @@ void SchematicDoc::contentsDragMoveEvent(QDragMoveEvent *Event)
 }
 #endif
 
-// take ownership.
+/*--------------------------------------------------------------------------*/
+// take ownership. this does not call show_.
+// use scene?
 void SchematicDoc::sceneAddItem(ElementGraphics* x)
 {
+	assert(false);
 	assert(scene());
 	scene()->addItem(x);
 	QGraphicsItem* g = x;

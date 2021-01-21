@@ -15,7 +15,7 @@
 #include <QPolygon>
 #include <QPainter>
 
-#include "tabdiagram.h"
+#include "diagram.h"
 #include "qucs.h"
 #include <cmath>
 #include "misc.h"

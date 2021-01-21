@@ -527,6 +527,7 @@ QUndoCommand* MouseActionNewElement::enter(QEvent* ev)
 		_gfx->setPos(sp.x(), sp.y());
 	}
 	
+//	scene().addItem(_gfx);
 	doc().sceneAddItem(_gfx);
 
 	ev->accept();
