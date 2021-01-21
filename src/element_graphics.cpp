@@ -31,7 +31,7 @@
 #include <QGraphicsProxyWidget>
 #include <QWidget>
 
-#include "../legacy/obsolete_paintings.h"
+//#include "../legacy/obsolete_paintings.h"
 /*--------------------------------------------------------------------------*/
 /*--------------------------------------------------------------------------*/
 ElementGraphics::ElementGraphics() : QGraphicsItem()
@@ -131,6 +131,7 @@ private:
 	std::vector<QGraphicsTextItem*> _more;
 }; // ElementText
 /*--------------------------------------------------------------------------*/
+#if 0
 class TextGraphics : public QGraphicsTextItem{
 public:
 	explicit TextGraphics(Text& t, QGraphicsItem* parent)
@@ -142,6 +143,7 @@ public:
 private:
 	Text& _t;
 };
+#endif
 /*--------------------------------------------------------------------------*/
 inline std::ostream& operator<<(std::ostream& o, QRectF const& r)
 {
@@ -593,7 +595,7 @@ void ElementGraphics::show_()
 			}else{
 			}
 		}
-	}else if(auto s=dynamic_cast<Symbol*>(_e)){
+	}else if(dynamic_cast<Symbol*>(_e)){
 		trace1("set_ports restore", _e->label());
 		if(!_port_values.size()){
 			trace1("set_ports init", _e->label());
@@ -695,36 +697,6 @@ void ElementGraphics::hide()
 	assert(!_e->owner());
 }
 /*--------------------------------------------------------------------------*/
-#if 0 // does not make sense. reachable??
-template<class P>
-void ElementGraphics::moveElement(P const& delta)
-{ untested();
-	unreachable();
-	hide();
-	assert(_e);
-	int dx = getX(delta);
-	int dy = getY(delta);
-	trace3("moveElement", _e->label(), dx, dy);
-	
-	prepareGeometryChange(); // needed??
-	auto x = _e->center();
-	x = x + pos_t(dx, dy);
-	_e->setPosition(x);
-
-	// not redundant.
-	auto p = _e->center();
-	QGraphicsItem::setPos(p.first, p.second);
-
-#ifndef NDEBUG
-	auto pp = pos();
-	assert(getX(p) == getX(pp));
-	assert(getY(p) == getY(pp));
-#endif
-
-	show();
-}
-#endif
-/*--------------------------------------------------------------------------*/
 void ElementGraphics::setPos(QPoint const& p)
 {
 	setPos(getX(p), getY(p), false);
@@ -745,11 +717,6 @@ void ElementGraphics::setPos(int i, int j, bool relative)
 	QGraphicsItem::setPos(i, j);
 	_e->setPosition(pos_t(i, j));
 }
-/*--------------------------------------------------------------------------*/
-#if 0
-template
-void ElementGraphics::moveElement<QPoint>(QPoint const& delta);
-#endif
 /*--------------------------------------------------------------------------*/
 ItemEvent::ItemEvent(QEvent const& a, ElementGraphics& b)
 	: QEvent(a), _item(b)
