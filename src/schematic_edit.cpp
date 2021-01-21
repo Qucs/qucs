@@ -19,31 +19,6 @@
 #include <set>
 /*--------------------------------------------------------------------------*/
 /*--------------------------------------------------------------------------*/
-static void collectPlaces(ElementGraphics const* e,
-                          std::set<ElementGraphics*>& p)
-{
-	auto scn = e->scene();
-	assert(scn);
-
-	if(auto s=dynamic_cast<Symbol const*>(element(e))){
-
-		for(unsigned i=0; i<s->numPorts(); ++i){
-			// if s->isConnected(i) ...
-			auto pp = s->nodePosition(i);
-			ElementGraphics* pg = scn->find_place(pp);
-			Place const* place = prechecked_cast<Place const*>(element(pg));
-			if(!place){
-				assert(!pg);
-			}else if(s->port_value(i) == place->port_value(0)){
-				p.insert(pg);
-			}else{
-				assert(false);
-				// not here.
-			}
-		}
-	}else{
-	}
-}
 /*--------------------------------------------------------------------------*/
 struct{
 	bool operator ()(ElementGraphics* a, ElementGraphics* b) const{
@@ -55,10 +30,12 @@ struct{
 template<class T>
 void SchematicEdit::save(T& del, T& ins)
 {
-	trace2("save", del.size(), ins.size());
-	// return;
 	assert(!_ins.size());
-	assert(!_del.size());
+//	assert(!_del.size());
+	std::swap(_del, _ins);
+	trace2("save", del.size(), ins.size());
+	trace2("save", _del.size(), _ins.size());
+	// return;
 	std::sort(ins.begin(), ins.end(), lt);
 	std::sort(del.begin(), del.end(), lt);
 	std::unique(ins.begin(), ins.end(), lt);
@@ -104,6 +81,13 @@ void SchematicEdit::save(T& del, T& ins)
 
 }
 /*--------------------------------------------------------------------------*/
+inline Symbol const* symbol(ElementGraphics const* g)
+{
+	auto p = prechecked_cast<Symbol const*>(element(g));
+	//assert(p);
+	return p;
+}
+/*--------------------------------------------------------------------------*/
 inline Place const* place(ElementGraphics const* g)
 {
 	auto p = prechecked_cast<Place const*>(element(g));
@@ -111,85 +95,74 @@ inline Place const* place(ElementGraphics const* g)
 	return p;
 }
 /*--------------------------------------------------------------------------*/
-class Footprint : public Symbol{
+class Footprint {
 public:
-	template<class L>
-	Footprint(SchematicModel* s, L const& v)
-	  : _scope(s), _scene(nullptr) {
-		setOwner(this);
-		if(v.size()){ untested();
-			_scene = v.front()->scene();
-		}else{ untested();
-		}
-		for(auto i : v){
-//			_scope = element(i)->scope();
-			assert(_scope);
-			assert(!place(i));
-			assert(_scene == i->scene());
-			if(auto s=dynamic_cast<Symbol const*>(element(i))){
-				connect(s);
-			}
-		}
+	explicit Footprint(SchematicScene* s) : _scene(s){}
+	~Footprint(){ }
 
-		trace2("Footprint", _new_plg.size(), _ports.size());
-
-	}
-	~Footprint(){
-		index_t j = 0;
-		for(auto p : _ports){
-			trace1("un-footprint", p->value());
-			set_port_by_index(j, "");
-			++j;
-		}
-	}
-
-private:
-	Element* clone()const{ unreachable(); return nullptr; }
-	pos_t portPosition(unsigned) const { assert(false); return pos_t(0, 0);}
-	index_t numPorts() const override { untested();
-		return _ports.size();
-	}
-	Port& port(index_t i) override {
-		if(i < _ports.size()){
-			assert(_ports[i]);
-			return *_ports[i];
-		}else{
-			assert(i==_ports.size());
-			_ports.push_back(new Port);
-			return *_ports.back();
-		}
-	}
-	SchematicModel* scope() override { return _scope; }
-	void connect(Symbol const* s) {
+public:
+	void prepare(Symbol const* s) {
+		assert(s);
 		for(unsigned i=0; i<s->numPorts(); ++i){
 			do_place(s->nodePosition(i));
 		}
 	}
+private:
 	void do_place(pos_t p){
-		if(_scene->is_place(p)){
+		trace2("do_place", getX(p), getY(p));
+		assert(_scene);
+		if(auto fp = _scene->find_place(p)){
 			trace2("already there", getX(p), getY(p));
+			_old_plg.insert(fp);
 
 		}else{
 			ElementGraphics* plg = _scene->new_place(p/*, hint?*/);
 			Place const* pl = place(plg);
 			std::string name = pl->port_value(0);
-			set_port_by_index(_ports.size(), name);
 			trace5("not already there", getX(p), getY(p), name, pl->label(), plg);
-			_new_plg.push_back(plg);
+			_new_plg.insert(plg);
 		}
 	}
 public:
-	std::vector<ElementGraphics*> const& new_plg(){
+	void collectPlaces(ElementGraphics const* e);
+	std::set<ElementGraphics*> const& new_plg(){
 		return _new_plg;
+	}
+	std::set<ElementGraphics*> const& old_plg(){
+		return _old_plg;
 	}
 
 private:
 	SchematicModel* _scope;
 	SchematicScene* _scene;
-	std::vector<Port*> _ports;
-	std::vector<ElementGraphics*> _new_plg;
+	std::set<ElementGraphics*> _new_plg; // new places.
+	std::set<ElementGraphics*> _old_plg; // places that were already there
 };
 /*--------------------------------------------------------------------------*/
+void Footprint::collectPlaces(ElementGraphics const* e)
+{
+	auto& p = _old_plg;
+	auto scn = e->scene();
+	assert(scn);
+
+	if(auto s=dynamic_cast<Symbol const*>(element(e))){
+		for(unsigned i=0; i<s->numPorts(); ++i){
+			// if s->isConnected(i) ...
+			auto pp = s->nodePosition(i);
+			ElementGraphics* pg = scn->find_place(pp);
+			Place const* place = prechecked_cast<Place const*>(element(pg));
+			if(!place){
+				assert(!pg);
+			}else if(s->port_value(i) == place->port_value(0)){
+				p.insert(pg);
+			}else{
+				assert(false);
+				// not here.
+			}
+		}
+	}else{
+	}
+}
 // Perform an edit action for the first time. keep track of induced changes.
 // This is a generic version of legacy implementation, and it still requires a
 // scene implementing the geometry.
@@ -198,54 +171,42 @@ void SchematicEdit::do_it_first()
 
 	std::vector<ElementGraphics*> done_ins;
 	std::vector<ElementGraphics*> done_del;
-	std::set<ElementGraphics*> pl;
 
-	// remove ports and join adjacent wires. keep track.
+	// footprint. keep track of places and nodes
+//	SchematicModel* m = scene()->scope();
+	Footprint f(scene());
+
 	trace1("============ edit delete...", _del.size());
-	while(_del.size()){itested();
-		auto r = _del.front();
+	// remove symbols staged for deletion. keep track of port places.
+	for( auto r : _del){itested();
 		trace1("remove", element(r)->label());
-		_del.pop_front();
-		collectPlaces(r, pl);
+		f.collectPlaces(r);
 		r->hide(); // detaches from model and all sorts of stuff.
-
-		// queued delete.
-		done_del.push_back(r); // TODO: different queue? just keep _del?
 	}
 
-#if 1
-	// footprint. save places and nodes from garbage collection
-	SchematicModel* m = scene()->scope();
-	Footprint f(m, _ins);
-#endif
+	// remove symbols adjacent to the collected places.
+	// queue for re-insertion. keep a list of removed items.
+	for(auto portremove : f.old_plg()){itested();
+		trace1("postremove", element(portremove)->label());
+		postRmPort(place(portremove), done_del);
+	}
 
-	std::vector<Place const*> pl2;
-	for( auto pp : pl){
-		if (place(pp)->node_degree()==0){
-			//    // pp will be gone after this operation
-			trace1("hideplace0", place(pp)->label());
-			pp->hide();
-			done_del.push_back(pp);
-		}else if (place(pp)->node_degree()==2){
-			// why degree 2?
-			// these may need "wire adjustments"
-			// encapsulation bug?
-			pl2.push_back(place(pp));
+	// prepare places for insertion of i.
+	trace1("============ prepare", _ins.size());
+	for( auto i : _ins){ itested();
+		if(auto sym = dynamic_cast<Symbol const*>(symbol(i))){
+			f.prepare(sym);
 		}else{
 		}
-	}
-
-	trace1("============ postrm...", pl.size());
-	// now remove symbols adjacent to the collected places of degree 2..
-	for(auto portremove : pl2){itested();
-		trace1("postremove", portremove->label());
-		postRmPort(portremove, done_del);
 	}
 
 	trace1("============ edit insert...", _ins.size());
 	while(_ins.size()){
 		ElementGraphics* gfx = _ins.front();
 		trace2("try insert...", element(gfx)->label(), gfx->has_port_values());
+		Element* e = element(gfx);
+		assert(!dynamic_cast<Place*>(e));
+
 
 #ifndef NDEBUG
 		if(auto sym=dynamic_cast<Symbol const*>(element(gfx))){
@@ -255,16 +216,15 @@ void SchematicEdit::do_it_first()
 		}
 #endif
 
-
 		_ins.pop_front();
 
-		Element* e = element(gfx);
 		assert(e);
 		SchematicScene* scn = gfx->scene();
 		assert(scn);
 		scn->possiblyRename(e);
+		trace1("collision during merge attempt?", done_del.size());
 		if(addmerge(gfx, done_del)){
-			trace0("collision during merge attempt");
+			trace1("collision during merge attempt", done_del.size());
 			// done with this one, others have been queued.
 		}else{
 			trace3("done insert, show", gfx, e->label(), e->mutable_owner());
@@ -272,13 +232,36 @@ void SchematicEdit::do_it_first()
 			done_ins.push_back(gfx);
 		}
 	}
+	trace2("save", done_ins.size(), done_del.size());
 
 	save(done_ins, done_del);
 
 	trace2("saved", _del.size(), _ins.size());
 
+	trace2("saved", f.new_plg().size(), f.old_plg().size());
+
 	for(auto i : f.new_plg()){
-		_del.push_back(i);
+		trace3("FP", place(i)->node_degree(),
+				          getX(place(i)->position()),
+				          getY(place(i)->position()));
+		if(place(i)->node_degree()){
+			_del.push_back(i);
+		}else{
+			i->hide();
+			delete i;
+		}
+	}
+	for(auto i : f.old_plg()){
+		trace3("FPOLD", place(i)->node_degree(),
+				          getX(place(i)->position()),
+				          getY(place(i)->position()));
+		if(place(i)->node_degree()){
+			// still in use.
+		}else{
+			// has become redundant.
+			i->hide();
+			_ins.push_back(i);
+		}
 	}
 	trace2("saved with places", _del.size(), _ins.size());
 } // do_it_first
@@ -295,6 +278,11 @@ QList<ElementGraphics*> SchematicEdit::items(QRectF const& r) const
 	return _scn.items(r);
 }
 /*--------------------------------------------------------------------------*/
+void stash_more_places(Symbol* s)
+{
+	// ...
+}
+/*--------------------------------------------------------------------------*/
 // merge new item into existing.
 // return false if new item does not interfere with existing.
 template<class T>
@@ -309,20 +297,28 @@ bool SchematicEdit::addmerge(ElementGraphics* new_elt, T& del_done)
 	trace3("addmerge candidates", new_elt, element(new_elt)->label(), it.size());
 	for(auto gfxi : it){itested();
 		assert(gfxi!=new_elt); // new_elt is invisible.
-		trace3("addmerge coll?", element(gfxi)->label(), gfxi, gfxi->pos());
+
+		// gfxi could be a place hit by the new element.
+			// port hit by bb.
+			// if they are disconnected now, we may not need them later on.
+//		stash_more_places(element(gfxi));
 
 		// gfxi is already on scene.
-		auto n = gfxi->newUnion(new_elt);
-		if(n){ untested();
+		if(dynamic_cast<Place const*>( element(gfxi))){
+			// a place.. revisit_later
+			_check_places.insert(gfxi);
+		}else if(auto n = gfxi->newUnion(new_elt)){
+			trace4("addmerge coll?", element(gfxi)->label(), gfxi, gfxi->pos(), n);
+			// if gfxi is a place...
+
 			collision = true;
-			trace1("hiding", element(gfxi)->label());
+			trace2("hiding", element(gfxi)->label(), gfxi);
 
 			assert(element(gfxi)->mutable_owner());
-			assert(!gfxi->isVisible());
-//			gfxi->hide(); // what??
+			assert(gfxi->isVisible());
+			gfxi->hide();
 			assert(!element(gfxi)->mutable_owner());
 
-			// collision delete.
 			del_done.push_back(gfxi);
 			auto nc = n->childItems();
 			trace1("got union", nc.size());
@@ -331,7 +327,15 @@ bool SchematicEdit::addmerge(ElementGraphics* new_elt, T& del_done)
 
 			// unpack q insert.
 			for(auto c : nc){itested();
-				if(auto g = dynamic_cast<ElementGraphics*>(c)){
+				auto g = dynamic_cast<ElementGraphics*>(c);
+
+				if(!g){
+					trace0("not useful");
+					// text, maybe
+					// unreachable();
+				}else if(dynamic_cast<Place const*>(element(g))){
+					// it's a place. why?
+				}else{
 					auto cc = g->clone();
 					assert(cc);
 					assert(!cc->isVisible());
@@ -339,12 +343,9 @@ bool SchematicEdit::addmerge(ElementGraphics* new_elt, T& del_done)
 					assert(!cc->isVisible());
 					assert(!element(cc)->scope());
 					c->setParentItem(nullptr);
+					trace2("queueing", element(g)->label(), g);
 					_ins.push_front(cc); // BUG // need a different q for derived objects
 					++kk;
-				}else{
-					trace0("not useful");
-					// text, maybe
-					// unreachable();
 				}
 			}
 			if(kk){
@@ -356,7 +357,7 @@ bool SchematicEdit::addmerge(ElementGraphics* new_elt, T& del_done)
 			}
 			break;
 		}else{
-			trace0("no union");
+			trace4("addmerge no coll", element(gfxi)->label(), gfxi, gfxi->pos(), n);
 		}
 	}
 
@@ -364,7 +365,7 @@ bool SchematicEdit::addmerge(ElementGraphics* new_elt, T& del_done)
 	return collision;
 }
 /*--------------------------------------------------------------------------*/
-// remove stuff adjacent nodes that have become degree-2 after removal.
+// remove stuff adjacent to nodes that have become degree-2 after removal.
 // (add back stuff later).
 template<class T>
 void SchematicEdit::postRmPort(Place const* remove_at, T& del_done)
@@ -400,14 +401,6 @@ void SchematicEdit::postRmPort(Place const* remove_at, T& del_done)
 	}else{
 		trace1("postrm", remove_at->node_degree());
 	}
-
-	if(placegfx){
-		trace1("hidegfx", remove_at->label());
-		placegfx->hide();
-		placegfx->scene()->removeItem(placegfx);
-//		delete placegfx;
-	}else{
-	}
 }
 /*--------------------------------------------------------------------------*/
 void SchematicEdit::do_it()
@@ -439,6 +432,8 @@ void SchematicEdit::qDelete(ElementGraphics* gfx)
 /*--------------------------------------------------------------------------*/
 void SchematicEdit::qInsert(ElementGraphics* gfx)
 {
+	assert(!dynamic_cast<Place const*>(element(gfx)));
+
 	assert(!gfx->isVisible());
 	assert(gfx->scene() == &_scn); // wrong?
 	_ins.push_back(gfx);
@@ -458,6 +453,7 @@ void SchematicEdit::qSwap(ElementGraphics* gfx, Element* e)
 	assert(!e->mutable_owner());
 
 	auto ng = new ElementGraphics(e);
+	ng->setSelected(gfx->isSelected());
 	assert(!ng->has_port_values());
 	{// ?
 		assert(!element(ng)->scope());

@@ -40,7 +40,7 @@ ElementGraphics::ElementGraphics() : QGraphicsItem()
 }
 /*--------------------------------------------------------------------------*/
 ElementGraphics::ElementGraphics(ElementGraphics const& e)
-	: QGraphicsItem(), _e(nullptr), _elementText(nullptr), _selected(false)
+	: QGraphicsItem(), _e(nullptr), _elementText(nullptr), _selected(e._selected)
 {itested();
 	assert(e._e);
 	Element* el = e._e->clone();
@@ -331,19 +331,21 @@ ElementGraphics* ElementGraphics::newPort(pos_t where) const
 ElementGraphics* ElementGraphics::newUnion(ElementGraphics const* s) const
 {
 	ElementGraphics* ng = nullptr;
-	if(auto o=dynamic_cast<Conductor const*>(element(s))){itested();
+#if 0 // is this still needed? it does not work...
 		// HACK HACK HACK
 		if(Symbol* u = o->newUnion(symbol(this)) ){ untested();
+//			assert(!dynamic_cast<Place const*>(_e));
 			trace1("new union2", u);
 			ng = new ElementGraphics(u);
 			assert(_e->mutable_owner());
 //			u->setOwner(_e->mutable_owner());
 //			ng->setParentItem(scene());
 			scene()->addItem(ng);
-			return ng;
 		}else{itested();
 		}
-	}else if(!symbol(s)){
+	}else
+#endif
+	if(!symbol(s)){
 		// diagram? no union
 	}else if(auto c=dynamic_cast<Conductor const*>(_e)){itested();
 		assert(symbol(s));
@@ -355,7 +357,6 @@ ElementGraphics* ElementGraphics::newUnion(ElementGraphics const* s) const
 //			u->setOwner(_e->mutable_owner());
 //			ng->setParentItem(scene());
 			scene()->addItem(ng);
-			return ng;
 		}else{itested();
 			trace1("no new union", symbol(s)->typeName());
 		}
@@ -444,7 +445,7 @@ void ElementGraphics::transform(qucsSymbolTransform a, std::pair<int, int> pivot
 	}else{ untested();
 	}
 	setSelected(sel);
-}
+} // transform
 /*--------------------------------------------------------------------------*/
 SchematicScene* ElementGraphics::scene() const
 {
@@ -474,18 +475,12 @@ QRectF ElementGraphics::absoluteBoundingRect() const
 	return mapRectToScene(b);
 }
 /*--------------------------------------------------------------------------*/
-#if 0
+// QGraphicsItem::isSelected does not survive hide/show and clone. hence this
 void ElementGraphics::setSelected(bool s)
 {itested();
-	qDebug() << "setSelected" << s << this;
 	QGraphicsItem::setSelected(s);
-	if(QGraphicsItem::isSelected()==s){
-	}else{
-		//what??
-	}
-	assert(_e);
+	_selected = s;
 }
-#endif
 /*--------------------------------------------------------------------------*/
 // """
 // Reimplement this function to intercept events before they are dispatched to

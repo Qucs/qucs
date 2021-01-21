@@ -101,8 +101,7 @@ public:
 		return QGraphicsItem::prepareGeometryChange();
 	}
 
-	// BUG: selected is stored in Element.
-//	void setSelected(bool s);
+	void setSelected(bool s);
 
 private:
 	Element* _e;

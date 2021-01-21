@@ -103,7 +103,7 @@ void union1()
 	assert(w->subckt());
 	trace1("gnd", numWires(*w->subckt()));
 	assert(numWires(*w->subckt())==3);
-//	assert(w->subckt()->numComponents()==3);
+	assert(w->subckt()->size()==3);
 	delete root;
 }
 
@@ -142,7 +142,7 @@ void union2()
 	assert(w->subckt());
 	trace1("gnd", numWires(*w->subckt()));
 	assert(numWires(*w->subckt())==3);
-//	assert(w->subckt()->numComponents()==3);
+	assert(w->subckt()->size()==3);
 	delete root;
 }
 
