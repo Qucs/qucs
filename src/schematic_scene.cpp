@@ -30,20 +30,10 @@ QPoint SchematicScene::gridSize() const
 /*--------------------------------------------------------------------------*/
 QGraphicsItem& SchematicScene::addElement(Element* x)
 {
-	QGraphicsItem* i=nullptr;
-///	if(auto w=x->newWidget()){ untested();
-///		i = addWidget(w);
-///		assert(i);
-///		i->setFlags(QGraphicsItem::ItemIsSelectable
-///		           |QGraphicsItem::ItemIsMovable
-///		           //|QGraphicsItem::ItemSendsGeometryChanges
-///					  );
-///	}else
-	{itested();
-		i = new ElementGraphics(x);
-		addItem(i);
-		i->show();
-	}
+	auto i = new ElementGraphics(x);
+	addItem(i);
+	i->show();
+
 	return *i;
 }
 

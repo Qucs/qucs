@@ -25,9 +25,9 @@ public:
 				auto ec = elt->center();
 
 				trace1("MoveSelection", eg->isSelected());
-				eg->hide();
+		//		eg->hide(); // no longer needed (and wrong!!)
 				eg->setPos(QPoint(getX(ec), getY(ec)));
-				eg->show_();
+		//		eg->show_(); // no longer needed (and wrong!!)
 				assert(elt);
 				int dx = getX(delta);
 				int dy = getY(delta);
