@@ -184,7 +184,7 @@ void Wire::findScaleAndAngle(pos_t p1)
 	}else{ untested();
 	}
 
-#if 1
+#if 0
 	auto n0 = nodePosition(0);
 	auto n1 = nodePosition(1);
 	setLabel("wire_" + std::to_string(n0.first) +
