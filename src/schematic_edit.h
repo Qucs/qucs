@@ -17,6 +17,7 @@
 #include <QUndoCommand> // really?
 #include "element_graphics.h"
 #include "place.h"
+#include <set>
 
 // edit a schematic add/delete/alter
 class SchematicEdit : public QUndoCommand {
@@ -99,6 +100,7 @@ private:
 	std::vector<swap_t*> _swap;
 	bool _first;
 	SchematicScene& _scn;
+	std::set<ElementGraphics*> _check_places;
 };
 /*--------------------------------------------------------------------------*/
 /*--------------------------------------------------------------------------*/

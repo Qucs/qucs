@@ -24,6 +24,7 @@ public:
 				Element* elt = eg->cloneElement();
 				auto ec = elt->center();
 
+				trace1("MoveSelection", eg->isSelected());
 				eg->hide();
 				eg->setPos(QPoint(getX(ec), getY(ec)));
 				eg->show_();

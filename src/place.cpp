@@ -32,6 +32,8 @@ void Place::paint(ViewPainter* p) const
 #ifdef DO_TRACE
 	if(node_degree()==1){
 		p->setPen(QPen(Qt::red, 1));
+	}else if(node_degree()==3){
+		p->setPen(QPen(Qt::white, 1));
 	}else if(node_degree()==2){
 		p->setPen(QPen(Qt::green, 1));
 	}else if(node_degree()==0){

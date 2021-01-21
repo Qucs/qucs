@@ -151,6 +151,7 @@ Wire::Wire(pos_t const& p0, pos_t const& p1)
 	Symbol::setPosition(p0);
 
 	pos_t pp1((p1 - p0).first, (p1 - p0).second);
+	setLabel("noname");
 	findScaleAndAngle(pp1);
 
 	assert(_scale>0); // for now?
@@ -158,7 +159,6 @@ Wire::Wire(pos_t const& p0, pos_t const& p1)
 	assert(p1 == nodePosition(1));
 
 	setTypeName("wire");
-	setLabel("noname");
 }
 /*--------------------------------------------------------------------------*/
 Wire::~Wire()
@@ -184,7 +184,7 @@ void Wire::findScaleAndAngle(pos_t p1)
 	}else{ untested();
 	}
 
-#if 0
+#if 1
 	auto n0 = nodePosition(0);
 	auto n1 = nodePosition(1);
 	setLabel("wire_" + std::to_string(n0.first) +
@@ -243,19 +243,31 @@ Wire* Wire::extendTowards(pos_t const& other) const
 	auto n0 = nodePosition(0);
 	auto n1 = nodePosition(1);
 
-	trace2("extendTowards", _port0.value(), _port1.value());
+//	trace2("extendTowards", _port0.value(), _port1.value());
 
-	// TODO: some connect call got lost.
-	assert(_port0.isConnected());
-	assert(_port1.isConnected());
-	trace2("extendTowards", _port0->numPorts(), _port1->numPorts());
+	// HACK
+//	assert(_port0.isConnected());
+//	assert(_port1.isConnected());
+	unsigned np0 = 2; // hack
+	if(_port0.isConnected()){
+		np0 = _port0->numPorts();
+	}else{
+	}
+	unsigned np1 = 2; // hack
+	if(_port1.isConnected()){
+		np1 = _port1->numPorts();
+	}else{
+	}
+
+
+	// trace2("extendTowards", _port0->numPorts(), _port1->numPorts());
 
 	if(in_order(n0, other, n1)){
 		return clone();
-	}else if(in_order(other, n1, n0) && _port1->numPorts()==2){
+	}else if(in_order(other, n1, n0) && np1==2){
 		trace3("extend1", other, n1, n0);
 		return new Wire(other, n0);
-	}else if(in_order(other, n0, n1) && _port0->numPorts()==2){ untested();
+	}else if(in_order(other, n0, n1) && np0==2){ untested();
 		trace3("extend2",other, n0, n1);
 		return new Wire(other, n1);
 	}else{
