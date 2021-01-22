@@ -7,4 +7,4 @@ A diagram is a QtWidget with a reference to a Diagram (Element) in the
 schematic model.
 
 Diagrams don't know about each other, so you may use legacy diagrams instead
-(default), if you can make them work with Qt5. They are in ../legacy.
+(default), if you can make them work with Qt5. They are in ../../legacy.
