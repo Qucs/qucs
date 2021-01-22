@@ -300,4 +300,142 @@ void Diagram::phasorscale()
   zAxisV.min = zAxisI.min = zAxisP.min = zAxisZ.min = DBL_MAX;
   zAxisV.max = zAxisI.max = zAxisP.max = zAxisZ.max = -DBL_MAX;
 }
+/* RELATED TO PHASOR AND WAVEAC DIAGRAMS
+// if the checkbox 'V' change stated
+void DiagramDialog::PhasorvalV(int state)
+{
+  if(state == 2) {//if check add graph of type ".v" if exist
+    addvar(".v");
+  }
+  else {//if uncheck remove graph of type ".v"
+    remvar(".v");
+  }
+}
+
+// if the checkbox 'I' change stated
+void DiagramDialog::PhasorvalI(int state)
+{
+  if(state == 2) {//if check add graph of type ".i" if exist
+    addvar(".i");
+  }
+  else {//if uncheck remove graph of type ".i"
+    remvar(".i");
+  }
+}
+
+//if the checkbox 'P' change stated
+void DiagramDialog::PhasorvalP(int state)
+{
+  if(state == 2) {//if check add graph of type ".S" if exist
+    addvar(".S");
+  }
+  else {//if uncheck remove graph of type ".S"
+    remvar(".S");
+  }
+}
+//if the checkbox 'Z' change stated
+void DiagramDialog::PhasorvalZ(int state)
+{
+  if(state == 2) {//if check add graph of type ".Ohm" if exist
+    addvar(".Ohm");
+  }
+  else {
+    remvar(".Ohm");//if uncheck remove graph of type ".Ohm"
+  }
+}
+//this function will find graph of a certain type and place on screen
+void DiagramDialog::addvar(QString a)
+{
+  QFileInfo Info(defaultDataSet);
+  QString DocName = ChooseData->currentText()+".dat";
+
+  QFile file(Info.path() + QDir::separator() + DocName);
+  if(!file.open(QIODevice::ReadOnly)) {
+    return;
+  }
+
+  QString Line, tmp, Var;
+  Var2 = "";
+  //int varNumber = 0;
+  // reading the file as a whole improves speed very much, also using
+  // a QByteArray rather than a QString
+  QByteArray FileString = file.readAll();
+  file.close();
+
+  
+  int i=0, j=0, l=0;
+  QList<QListWidgetItem *> m;
+
+  for(i = GraphList->count()-1; i>=0; i--)
+  {
+    
+      Var = GraphList->item(i)->text();
+
+      if(Var.indexOf(a,0,Qt::CaseSensitive) != -1) return;
+  }
+
+  i = FileString.indexOf('<')+1;
+
+  if(i > 0)
+  do {
+    j = FileString.indexOf('>', i);
+    for(int k=0;k<j-i;k++) Line[k]=FileString[k+i];
+    Line.truncate(j-i);
+    i = FileString.indexOf('<', j)+1;
+
+    Var2 = Line.section(' ', 1, 1).remove('>');
+    if(Var2.length()>0)
+      if(Var2.at(0) == '_')  continue;   
+
+    m = GraphList->findItems(Var2, Qt::MatchExactly);
+    l = Var2.indexOf(a,0,Qt::CaseSensitive);
+
+
+    if( l != -1 && Var2.size() == (l + a.size()) && !(m.size()>0))//Var2.size == (l + a.size()) in case of voltage (.v) to don't let pass a variable like (name.var)
+    {
+      slotTakeVar(NULL);//In the case of the phasor diagram, the table ChooseVars is not used. Instead of that, the graph is put in the list bu using Var2.
+    }
+
+  } while(i > 0);
+  
+}
+
+//will locate if exist a graph on screen that match the type and removes
+void DiagramDialog::remvar(QString a)
+{
+    loc = -1;
+    QString Var;
+    int i;
+    Var2 = ".a";    
+
+    for(i = GraphList->count()-1; i>=0; i--)
+    {
+    
+      Var = GraphList->item(i)->text();
+
+      if(Var.indexOf(a,0,Qt::CaseSensitive) != -1)
+      {
+	loc = i;
+	slotDeleteGraph();
+      }
+    }
+    Var2="";
+
+}
+
+//checks if a type of graph is on screen
+bool DiagramDialog::testvar (QString a)
+{
+  QString Var;
+
+  foreach(Graph *pg, Diag->Graphs) {
+  
+    Var = pg->Var;
+    if(Var.indexOf(a,0,Qt::CaseSensitive) != -1)
+    {
+      return true;
+    }
+  }
+    return false;
+}
 #endif

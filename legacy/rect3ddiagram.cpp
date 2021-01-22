@@ -1081,4 +1081,82 @@ Element* Rect3DDiagram::info(QString& Name, char* &BitmapFile, bool getNewOne)
   return 0;
 }
 
+#if 0 // from Diagram::attach
+      if(Diag->Name == "Rect3D") {
+        hideInvisible = new QCheckBox(tr("hide invisible lines"), Tab2);
+        gp->addWidget(hideInvisible, Row, 0);
+        Row++;
+
+        QLabel *LabelRotX = new QLabel(tr("Rotation around x-Axis:"), Tab2);
+        misc::setWidgetForegroundColor(LabelRotX, Qt::red);
+        gp->addWidget(LabelRotX, Row,0);
+        SliderRotX = new QSlider(Qt::Horizontal, Tab2);
+        SliderRotX->setMinimum(0);
+        SliderRotX->setMaximum(360);
+        SliderRotX->setPageStep(20);
+        SliderRotX->setValue(((Rect3DDiagram*)Diag)->rotX);
+        gp->addWidget(SliderRotX, Row,1);
+        connect(SliderRotX, SIGNAL(valueChanged(int)), SLOT(slotNewRotX(int)));
+        rotationX = new QLineEdit(Tab2);
+        rotationX->setValidator(ValInteger);
+        rotationX->setMaxLength(3);
+        rotationX->setMaximumWidth(40);
+        gp->addWidget(rotationX, Row,2);
+        connect(rotationX, SIGNAL(textChanged(const QString&)),
+			   SLOT(slotEditRotX(const QString&)));
+        Row++;
+
+        QLabel *LabelRotY = new QLabel(tr("Rotation around y-Axis:"), Tab2);
+        misc::setWidgetForegroundColor(LabelRotY, Qt::green);
+        gp->addWidget(LabelRotY, Row,0);
+        SliderRotY = new QSlider(Qt::Horizontal, Tab2);
+        SliderRotY->setMinimum(0);
+        SliderRotY->setMaximum(360);
+        SliderRotY->setPageStep(20);
+        SliderRotY->setValue(((Rect3DDiagram*)Diag)->rotY);
+        gp->addWidget(SliderRotY, Row,1);
+        connect(SliderRotY, SIGNAL(valueChanged(int)), SLOT(slotNewRotY(int)));
+        rotationY = new QLineEdit(Tab2);
+        rotationY->setValidator(ValInteger);
+        rotationY->setMaxLength(3);
+        rotationY->setMaximumWidth(40);
+        gp->addWidget(rotationY, Row,2);
+        connect(rotationY, SIGNAL(textChanged(const QString&)),
+			   SLOT(slotEditRotY(const QString&)));
+        Row++;
+
+        QLabel *LabelRotZ = new QLabel(tr("Rotation around z-Axis:"), Tab2);
+        misc::setWidgetForegroundColor(LabelRotZ, Qt::blue);
+        gp->addWidget(LabelRotZ, Row,0);
+        SliderRotZ = new QSlider(Qt::Horizontal, Tab2);
+        SliderRotZ->setMinimum(0);
+        SliderRotZ->setMaximum(360);
+        SliderRotZ->setPageStep(20);
+        SliderRotZ->setValue(((Rect3DDiagram*)Diag)->rotZ);
+        gp->addWidget(SliderRotZ, Row,1);
+        connect(SliderRotZ, SIGNAL(valueChanged(int)), SLOT(slotNewRotZ(int)));
+        rotationZ = new QLineEdit(Tab2);
+        rotationZ->setValidator(ValInteger);
+        rotationZ->setMaxLength(3);
+        rotationZ->setMaximumWidth(40);
+        gp->addWidget(rotationZ, Row,2);
+        connect(rotationZ, SIGNAL(textChanged(const QString&)),
+			   SLOT(slotEditRotZ(const QString&)));
+        Row++;
+
+        gp->addWidget(new QLabel(tr("2D-projection:"), Tab2), Row,0);
+        DiagCross = new Cross3D(((Rect3DDiagram*)Diag)->rotX,
+				((Rect3DDiagram*)Diag)->rotY,
+				((Rect3DDiagram*)Diag)->rotZ, Tab2);
+        gp->addWidget(DiagCross, Row,1);
+
+        // transfer the diagram properties to the dialog
+        hideInvisible->setChecked(Diag->hideLines);
+        rotationX->setText(QString::number(((Rect3DDiagram*)Diag)->rotX));
+        rotationY->setText(QString::number(((Rect3DDiagram*)Diag)->rotY));
+        rotationZ->setText(QString::number(((Rect3DDiagram*)Diag)->rotZ));
+
+      }
+#endif
+
 // vim:ts=8:sw=2:noet

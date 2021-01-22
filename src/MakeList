@@ -62,6 +62,7 @@ CPP_SRC = \
 	settings.cpp \
 	simulator.cpp \
 	symbol.cpp \
+	symboldialog.cpp \
 	syntax.cpp \
 	task_element.cpp \
 	textdoc.cpp \

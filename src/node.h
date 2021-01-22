@@ -1,6 +1,5 @@
 /***************************************************************************
-    copyright            : (C) 2003 by Michael Margraf
-                               2020 Felix Salfelder
+    copyright            : (C) 2020 Felix Salfelder
  ***************************************************************************/
 
 /***************************************************************************
@@ -11,6 +10,9 @@
  *   (at your option) any later version.                                   *
  *                                                                         *
  ***************************************************************************/
+
+// Node in a circuit
+// A Port connects to a Node, Connected nodes form a Net
 
 #ifndef QUCS_NODE_H
 #define QUCS_NODE_H
@@ -26,8 +28,6 @@ class AdjNodeRange;
 /*--------------------------------------------------------------------------*/
 typedef unsigned index_t;
 /*--------------------------------------------------------------------------*/
-// CHECK: hierarchy
-// // maybe: Place : Conductor?
 class Node : public Object, public Conductor {
 private:
   Node(Node const&) = delete;
@@ -42,32 +42,16 @@ public:
   void inc_ports(){ ++_ports; }
   void dec_ports(){ assert(_ports); --_ports; }
 
-  // possibly wrong.
-//  void connect(Port&);
-//  void disconnect(Port&);
-
 public:
   bool hasPorts() const{ return _ports; }
   unsigned numPorts() const{ return _ports; }
 
-  // BUG
-//  void setName(const QString&, const QString&, int x_=0, int y_=0);
-
-//  pos_t const& position() const{
-//	  return _position;
-//  }
   bool isNet(pos_t const&) const override;
 
 private:
-  // QString DType; // type of node (used by digital files)
-
-public: // protected coordinate abuse
-
-private:
   const index_t _index;
-//  const pos_t _position;
   unsigned _ports; // number of ports connecting to this node
 };
-/* ---------------------------------------------------------- */
-/* ---------------------------------------------------------- */
+/*--------------------------------------------------------------------------*/
+/*--------------------------------------------------------------------------*/
 #endif
