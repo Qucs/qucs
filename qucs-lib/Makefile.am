@@ -30,13 +30,9 @@ bin_PROGRAMS = qucslib
 
 dist_man_MANS = qucslib.1
 
-MOCHEADERS = qucslib.h displaydialog.h symbolwidget.h librarydialog.h \
-       qucslib_common.h
-
 MOCFILES = $(MOCHEADERS:.h=.moc.cpp)
 
-qucslib_SOURCES = main.cpp qucslib.cpp displaydialog.cpp symbolwidget.cpp \
-       librarydialog.cpp qucslib_.qrc
+qucslib_SOURCES = ${SRCS} ${RESOURCES}
 
 nodist_qucslib_SOURCES = $(MOCFILES)
 nodist_qucslib_CXXFLAGS = ${AM_CXXFLAGS} -fPIC

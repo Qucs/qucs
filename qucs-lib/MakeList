@@ -1,2 +1,20 @@
 
+SRCS = \
+	displaydialog.cpp \
+	librarydialog.cpp \
+	main.cpp \
+	qucslib.cpp \
+	symbolwidget.cpp
+
+MOCHEADERS = \
+	displaydialog.h \
+	librarydialog.h \
+	qucslib_common.h \
+	qucslib.h \
+	symbolwidget.h
+
+
+RESOURCES = \
+	qucslib_.qrc
+
 EXTRA_DIST = 
