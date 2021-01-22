@@ -154,7 +154,7 @@ Wire::Wire(pos_t const& p0, pos_t const& p1)
 	setLabel("noname");
 	findScaleAndAngle(pp1);
 
-	assert(_scale>0); // for now?
+	// assert(_scale>0); // for now?
 	assert(p0 == nodePosition(0));
 	assert(p1 == nodePosition(1));
 
