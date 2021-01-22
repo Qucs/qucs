@@ -41,44 +41,44 @@ class QListWidget;
 class DiagramDialog : public SchematicDialog {
 	Q_OBJECT // does not work. StaticMetaobject...??
 public:
-  DiagramDialog(QucsDoc* d);
-  ~DiagramDialog();
+	DiagramDialog(QucsDoc* d);
+	~DiagramDialog();
 
-  bool loadVarData(const QString&);
-  void copyDiagramGraphs();
+	bool loadVarData(const QString&);
+	void copyDiagramGraphs();
 
 private: // SchematicDialog
-  void attach(ElementGraphics* gfx) override;
+  virtual void attach(ElementGraphics* gfx) override;
 
 private slots:
-  void slotReadVars(int);
-  void slotTakeVar(QTableWidgetItem *item);
-//  void slotSelectGraph(int index);
-  void slotSelectGraph(QListWidgetItem*);
-  void slotNewGraph();
-  void slotDeleteGraph();
-  void slotButtOK();
-  void slotButtApply();
-  void slotButtCancel();
-  void slotSetColor();
-  void slotSetGridColor();
-  void slotResetToTake(const QString&);
-  void slotSetProp2(const QString&);
-  void slotSetNumMode(int);
-  void slotSetGridBox(int);
-  void slotSetGraphStyle(int);
-  void slotSetYAxis(int);
-  void slotManualX(int);
-  void slotManualY(int);
-  void slotManualZ(int);
-  void slotChangeTab(QWidget*);
+  virtual void slotReadVars(int);
+  virtual void slotTakeVar(QTableWidgetItem *item);
+//virtual   void slotSelectGraph(int index);
+  virtual void slotSelectGraph(QListWidgetItem*);
+  virtual void slotNewGraph();
+  virtual void slotDeleteGraph();
+  virtual void slotButtOK();
+  virtual void slotButtApply();
+  virtual void slotButtCancel();
+  virtual void slotSetColor();
+  virtual void slotSetGridColor();
+  virtual void slotResetToTake(const QString&);
+  virtual void slotSetProp2(const QString&);
+  virtual void slotSetNumMode(int);
+  virtual void slotSetGridBox(int);
+  virtual void slotSetGraphStyle(int);
+  virtual void slotSetYAxis(int);
+  virtual void slotManualX(int);
+  virtual void slotManualY(int);
+  virtual void slotManualZ(int);
+  virtual void slotChangeTab(QWidget*);
 
-  void slotNewRotX(int);
-  void slotNewRotY(int);
-  void slotNewRotZ(int);
-  void slotEditRotX(const QString&);
-  void slotEditRotY(const QString&);
-  void slotEditRotZ(const QString&);
+  virtual void slotNewRotX(int);
+  virtual void slotNewRotY(int);
+  virtual void slotNewRotZ(int);
+  virtual void slotEditRotX(const QString&);
+  virtual void slotEditRotY(const QString&);
+  virtual void slotEditRotZ(const QString&);
   /* RELATED TO WAVEAC AND PHASOR DIAGRAMS
   void PhasorvalV(int);
   void PhasorvalI(int);
@@ -89,10 +89,10 @@ private slots:
   bool testvar(QString);*/
 
 protected slots:
-    void reject();
+  virtual void reject();
 
-private:
-  void SelectGraph(Graph*);
+protected:
+  virtual void SelectGraph(Graph*);
 
   Diagram *Diag;
   QString defaultDataSet;
