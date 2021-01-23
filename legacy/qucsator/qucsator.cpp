@@ -74,7 +74,7 @@ static void printDefHack(Symbol const* p, ostream_t& s)
 // legacy Qucsator process (wrapping a QProcess)
 class Qucsator : public Simulator{
 public:
-	explicit Qucsator() : Simulator(), _process(this), _ctrl(nullptr) {
+	explicit Qucsator() : Simulator(), _process(this) {
 		setLabel("qucsator");
 	}
 	Qucsator(Qucsator const&) = delete;
@@ -131,7 +131,6 @@ private:
 	QString DataSet;
 	QFile _netlistFile;
 	QucsatorProcess _process;
-	SimCtrl* _ctrl;
 	QProcess::ProcessState _oldState;
 }QS;
 static Dispatcher<Simulator>::INSTALL qq(&simulator_dispatcher, "qucsator", &QS);

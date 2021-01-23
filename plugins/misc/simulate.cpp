@@ -40,7 +40,11 @@ void Simulate::do_it(istream_t& cmd, SchematicModel* sckt)
 	cmd >> "simulate";
 	cmd >> fn;
 
-	std::string which = "qucsator"; // for now
+	std::string which = "qucsator";
+	if(auto s = QucsSettings.simulator()){
+		which = s->label();
+	}else{
+	}
 
 	auto f = sckt->find_(which);
 	Simulator* sim = nullptr;
