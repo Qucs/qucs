@@ -28,46 +28,6 @@
 #include <typeinfo>
 #endif
 /*--------------------------------------------------------------------------*/
-static Element* parseCommand(istream_t& c, DEV_DOT*x)
-{
-	QString Line = QString::fromStdString(c.fullString());
-#if 0 // not sure.
-	auto scope = x->owner()->subckt();
-#else
-	auto scope = x->scope();
-	if(scope){
-	}else{ untested();
-	}
-#endif
-//	assert(p);
-
-	std::string s;
-	c.reset();
-	c.skipbl();
-	c.skip1('<');
-	c >> s;
-
-	// c.reset(here);
-	if (!command_dispatcher[s]) { untested();
-		unreachable(); // for now
-		trace3("uuh", s, Line, c.cursor());
-		assert(false);
-		//    cmd.skip();
-		//    ++here;
-	}else{
-	}
-
-	//istream_t c(istream_t::_STRING, Line.toStdString());
-	c.reset();
-	c.skipbl();
-	c.skip1('<');
-	Command::cmdproc(c, scope);
-	// assert(false);
-
-	delete x;
-	return nullptr;
-}
-/*--------------------------------------------------------------------------*/
 static void parsePainting(QString Line, Painting*p)
 {
 	assert(p);
@@ -1058,7 +1018,7 @@ Element* LegacySchematicLanguage::parseItem(istream_t& c, Element* e) const
 	}else if(auto s=dynamic_cast<Painting*>(e)){
 		::parsePainting(l, s);
 	}else if(auto s=dynamic_cast<DEV_DOT*>(e)){
-		return ::parseCommand(c, s);
+		return parseCommand(c, s);
 	}else{ untested();
 		return DocumentLanguage::parseItem(c, e);
 	}
@@ -1069,35 +1029,50 @@ Element* LegacySchematicLanguage::parseItem(istream_t& c, Element* e) const
 /*--------------------------------------------------------------------------*/
 DEV_DOT* LegacySchematicLanguage::parseCommand(istream_t& c, DEV_DOT* x) const
 { untested();
-  assert(x);
-  // x->set(cmd.fullstring());
-  DEV_DOT const* cx = x;
-  assert(cx->owner());
+	QString Line = QString::fromStdString(c.fullString());
 #if 0 // not sure.
-  auto scope = x->owner()->subckt();
+	auto scope = x->owner()->subckt();
 #else
-  auto scope = x->scope();
+	auto scope = x->scope();
+	if(scope){ untested();
+	}else{ untested();
+	}
 #endif
 
-//  cmd.reset();
-//  skip_pre_stuff(cmd);
-
-  size_t here = c.cursor();
-
-  std::string s;
-  c >> s;
-  trace2("ctos?", c.fullString(), s);
-  c.reset(here);
-  if (!command_dispatcher[s]) { untested();
-	  unreachable(); // for now
-	  trace2("uuh", s, c.fullString());
-	  assert(false);
+#if 0
+  if(auto o=dynamic_cast<Element*>(x->mutable_owner())){ untested();
+	  assert(scope == x->scope());
   }else{ untested();
+	  // yikes. getting here from c_get.
+	  assert(false);
   }
-  Command::cmdproc(c, scope); // where is x->owner gone?
+#endif
 
-  delete x;
-  return NULL;
+	std::string s;
+	c.reset();
+	c.skipbl();
+	c.skip1('<');
+	c >> s;
+
+	// c.reset(here);
+	if (!command_dispatcher[s]) { untested();
+		unreachable(); // for now
+		trace3("uuh", s, Line, c.cursor());
+		assert(false);
+		//    cmd.skip();
+		//    ++here;
+	}else{
+	}
+
+	//istream_t c(istream_t::_STRING, Line.toStdString());
+	c.reset();
+	c.skipbl();
+	c.skip1('<');
+	Command::cmdproc(c, scope);
+	// assert(false);
+
+	delete x;
+	return nullptr;
 }
 /*--------------------------------------------------------------------------*/
 std::string LegacySchematicLanguage::findType(istream_t& c) const

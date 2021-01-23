@@ -59,7 +59,6 @@ public:
 		return *_ports[i];
 	}
 	unsigned numPorts() const {
-		untested();
 		return _ports.size();
 	}
 private:
