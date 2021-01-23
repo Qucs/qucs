@@ -65,3 +65,12 @@ void Simulator::message(QucsMsgType lvl, std::string const& msg)
 	}
 }
 /* -------------------------------------------------------------------------------- */
+void Simulator::notifyState(Simulator::state_t st)
+{
+	setState(st);
+	if(_ctrl){itested();
+		_ctrl->stateChange();
+	}else{ untested();
+	}
+}
+/* -------------------------------------------------------------------------------- */

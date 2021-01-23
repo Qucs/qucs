@@ -140,7 +140,6 @@ HDR1 = \
 	sckt_base.h \
 	swap.h \
 	some_font_stuff.h \
-	task_element.h \
 	viewpainter.h \
 	wiredialog.h \
 	wirelabel.h
@@ -148,11 +147,9 @@ HDR1 = \
 # must be installed. but later
 HDR2 = \
 	actions.h \
-	task_element.h \
 	diagram.h \
 	dispatcher.h \
 	imagewriter.h \
-	io.h \
 	misc.h \
 	mnemo.h \
 	module.h \

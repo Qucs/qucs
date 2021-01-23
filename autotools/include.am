@@ -1,2 +1,2 @@
 include MakeList
-noinst_HEADERS = $(HDR)
+pkginclude_HEADERS = $(HDR)
