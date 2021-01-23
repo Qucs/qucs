@@ -26,6 +26,7 @@
 #include "qt_compat.h"
 #include "painting.h"
 #include "place.h"
+#include "conductor.h"
 
 #include <QGraphicsScene>
 #include <QGraphicsProxyWidget>

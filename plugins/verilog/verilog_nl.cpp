@@ -14,6 +14,7 @@
 #include <map>
 #include "docfmt.h"
 #include "element.h"
+#include "conductor.h"
 //#include "components/component.h" // BUG
 #include "globals.h"
 #include "schematic_model.h"
@@ -22,6 +23,8 @@
 #include "net.h"
 #include "exception.h"
 #include "sckt_base.h"
+
+#include <QFile> // yikes.
 
 namespace{
 

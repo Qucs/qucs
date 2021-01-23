@@ -38,6 +38,7 @@
 #include <string>
 #include "ap.h"
 #include "schematic_model.h"
+#define INTERFACE
 //#include "l_lib.h"
 #define CS istream_t
 static const double MAXDBL=std::numeric_limits<double>::max();

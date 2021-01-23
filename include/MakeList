@@ -5,8 +5,10 @@ HDR = \
 	command.h \
 	data.h \
 	d_dot.h \
+	dispatcher.h \
 	element.h \
 	e_cardlist.h \
+	exception.h \
 	geometry.h \
 	globals.h \
 	graph.h \

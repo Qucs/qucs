@@ -113,7 +113,6 @@ HDR1 = \
 	docfmt.h \
 	dynamic_cc.h \
 	element_graphics.h \
-	exception.h \
 	imagewriter.h \
   	imagewriter.h \
 	material_props.h \
@@ -148,7 +147,6 @@ HDR1 = \
 HDR2 = \
 	actions.h \
 	diagram.h \
-	dispatcher.h \
 	imagewriter.h \
 	misc.h \
 	mnemo.h \

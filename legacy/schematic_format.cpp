@@ -18,6 +18,7 @@
 #include "schematic_model.h"
 #include "misc.h" //?!!
 
+#include "conductor.h"
 #include "diagram.h" // BUG?
 #include "painting.h"
 #include "place.h"
@@ -91,12 +92,12 @@ void LegacySchematicFormat::load(istream_t& s, Object* c) const
 	}
 }
 
+#if 0
 static QString QG(SubcktBase const& m, std::string const& key)
 {
 	return QString::fromStdString(m.paramValue(key));
 }
 
-#if 0
 static void printProperties(SchematicSymbol const& m, ostream_t& stream)
 {
 	// get legacy "parameters"

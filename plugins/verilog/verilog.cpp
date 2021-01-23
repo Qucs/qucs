@@ -18,9 +18,11 @@
 #include "schematic_lang.h"
 #include "schematic_model.h"
 #include "net.h"
+#include "nodemap.h" // BUG
 #include "sckt_base.h"
 #include "d_dot.h"
 #include "place.h"
+#include <QFile> // BUG
 
 unsigned gndhackn=0;
 
@@ -109,10 +111,10 @@ void VS::print_ports_short(ostream_t& o, const Symbol* x) const
 	QString comma = "";
 	for(unsigned i=0; i<x->numPorts(); ++i){
 		trace3("...", x->label(), i, x->numPorts());
-		auto p = x->nodePosition(i);
+//		auto p = x->nodePosition(i);
 		auto v = x->port_value(i);
-		auto x = p.first;
-		auto y = p.second;
+//		auto x = p.first;
+//		auto y = p.second;
 		/// o << comma << "net_" << x << "_" << y;
 		o << comma << v; // "net_" << x << "_" << y;
 		comma = ", ";
@@ -151,7 +153,7 @@ void Verilog::print_ports_short(ostream_t& o, const Symbol* x) const
 	  std::string p = x->port_value(ii);
 
 	 if(1){
-		 o << sep << n->netName(p);
+		 o << sep << n->netName(p); // BUG. use owner.
 	 }else{
 		 o << sep << p;
 	 }

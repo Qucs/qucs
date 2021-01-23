@@ -21,19 +21,22 @@
 #include "object.h"
 //#include "node.h"
 #include "io.h"
-#include "schematic_scene.h"
-#include "qucsdoc.h"
-#include "nodemap.h"
-#include "netlist.h"
-#include "protomap.h"
+//#include "schematic_scene.h"
+//#include "qucsdoc.h"
+//#include "nodemap.h"
+//#include "netlist.h"
+//#include "protomap.h"
 #include "tasks.h"
 #include "element.h"
 #include "symbol.h"
 /*--------------------------------------------------------------------------*/
 class Node;
+class NetList; // BUG
 class SchematicDoc;
 class QPlainTextEdit; //??!
+class QGraphicsScene; // bug?
 class QFileInfo; // BUG
+class QPrinter; // BUG?
 class TaskElement;
 class PARAM_LIST;
 class NetLang;
@@ -149,12 +152,12 @@ public: // container
 	size_t size() const{ return _cl.size(); }
 
 public: // compat? test? debug?
-	size_t nodeCount() const{ assert(nodes()); return nodes()->size(); }
-	unsigned numberOfNets() const{ return Nets.size(); }
+	size_t nodeCount() const {return numNodes();}
+	size_t numberOfNets() const{ return numNets(); }
 
 public:
-	size_t numNodes() const{ assert(nodes()); return nodes()->size(); }
-	unsigned numNets() const{ return Nets.size(); }
+	size_t numNodes() const;
+	size_t numNets() const;
 
 public: // why?
 	Node* insertNode(int x, int y, Element* owner);
@@ -208,7 +211,7 @@ public:
 
 private:
 	ElementList _cl;
-	NetList Nets;
+	NetList* Nets;
 	NodeMap* _nm;
 //	SchematicSymbol* _symbol;
 	QStringList PortTypes; // obsolete.

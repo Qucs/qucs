@@ -65,35 +65,6 @@ static std::string netLabel(Node const* nn)
 	}
 }
 /* -------------------------------------------------------------------------------- */
-static int notalnum(char c)
-{ untested();
-	return !std::isalnum(c);
-}
-/* -------------------------------------------------------------------------------- */
-static std::string mangleType(std::string& t)
-{ untested();
-	if(t == "_BJT"){ untested();
-		// for some reason...
-		t = "BJT";
-	}else{ untested();
-	}
-	trace1("mangle", t);
-	auto pos = t.find(typesep);
-	std::string ret="";
-	if(pos == std::string::npos){ untested();
-	}else{ untested();
-		auto sub = t.substr(pos+1);
-		std::replace_if(sub.begin(), sub.end(), notalnum, '_');
-		ret = " Type=\"" + sub + "\"";
-	}
-	t = t.substr(0, pos);
-	if(t=="Lib"){ untested();
-		t="Sub";
-	}else{ untested();
-	}
-	return ret;
-}
-/* -------------------------------------------------------------------------------- */
 static void printDefHack(Symbol const* p, ostream_t& s)
 { untested();
 	std::string hack = p->paramValue("qucsatorsckthack");
