@@ -835,6 +835,8 @@ AC_CONFIG_FILES([
     legacy/qucsator/Makefile:autotools/qucsator.in
     legacy/paintings/Makefile:autotools/paintings.in
     main/Makefile:autotools/main.in
+    main/qucs-conf
+    main/qucs.conf
     man/Makefile
     autotools/Makefile
     examples/Makefile

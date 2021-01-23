@@ -1,0 +1,64 @@
+#!/bin/bash
+
+prefix="@prefix@"
+sysconfdir="@sysconfdir@"
+qt_cppflags="@QT_CFLAGS@"
+
+source $sysconfdir/qucs.conf
+
+case $1 in
+	--cppflags)
+		echo "-I$includedir/qucs"
+	;;
+	--qt-cppflags)
+		echo ${qt_cppflags}
+	;;
+	--cxxflags)
+		echo "$CXXFLAGS"
+	;;
+	--cxx)
+		echo "$CXX"
+	;;
+	--ldflags)
+		echo "-L$libdir"
+	;;
+	--includedir)
+		echo $includedir/qucs
+	;;
+	--pkglibdir)
+		echo "$pkglibdir"
+	;;
+	--libdir)
+		echo "$libdir"
+	;;
+	--plugin-libs)
+		: # not needed on posix
+	;;
+	--libs)
+		echo "$QUCS_LIBS"
+	;;
+	--exec-prefix)
+		echo "$exec_prefix"
+	;;
+	--data)
+		echo "$datarootdir"
+	;;
+	--docdir)
+		echo "$docdir"
+	;;
+	--sysconfdir)
+		echo "$sysconfdir"
+	;;
+	*)
+	echo $0 --cppflags
+	echo $0 --cxxflags
+	echo $0 --cxx
+	echo $0 --ldflags
+	echo $0 --includedir
+	echo $0 --pkglibdir
+	echo $0 --libdir
+	echo $0 --libs
+	echo $0 --exec-prefix
+	echo $0 --data
+	echo $0 --sysconfdir
+esac

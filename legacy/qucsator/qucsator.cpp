@@ -25,15 +25,6 @@
 #include "dat.h"
 #include "painting.h"
 /* -------------------------------------------------------------------------------- */
-void Simulator::notifyState(Simulator::state_t st)
-{
-	setState(st);
-	if(_ctrl){itested();
-		_ctrl->stateChange();
-	}else{ untested();
-	}
-}
-/* -------------------------------------------------------------------------------- */
 namespace {
 /* -------------------------------------------------------------------------------- */
 static const std::string typesep(":");
@@ -54,40 +45,6 @@ static const char _typesep = ':';
 ///   return longpath;
 /// }
 /// #endif
-/* -------------------------------------------------------------------------------- */
-#if 0 // duplicate
-// temporary kludge.
-class QucsatorScktHack : public Symbol {
-private:
-	QucsatorScktHack(QucsatorScktHack const&) = default;
-public:
-	QucsatorScktHack() : Symbol() {}
-private:
-	Element* clone() const override{return new QucsatorScktHack(*this);}
-private: // Symbol
-	pos_t portPosition(unsigned) const {unreachable(); return pos_t(0,0);}
-	unsigned numPorts() const  override{ return 0;}
-	Port& port(unsigned) override{unreachable(); return *new Port();}
-	void setParameter(std::string const& name, std::string const& value){
-		if(name == "qucsatorsckthack"){
-			_text = value;
-		}else{ untested();
-			Symbol::setParameter(name, value);
-		}
-	}
-	std::string paramValue(std::string const& name) const override{
-		if(name == "qucsatorsckthack"){
-			return _text;
-		}else{ untested();
-			return Symbol::paramValue(name);
-		}
-	}
-
-private:
-	std::string _text;
-}d0;
-static Dispatcher<Symbol>::INSTALL p0(&symbol_dispatcher, "qucsatorScktHack", &d0);
-#endif
 /* -------------------------------------------------------------------------------- */
 static std::string netLabel(Node const* nn)
 { untested();

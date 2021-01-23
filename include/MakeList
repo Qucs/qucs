@@ -10,6 +10,7 @@ HDR = \
 	geometry.h \
 	globals.h \
 	graph.h \
+	io.h \
 	io_error.h \
 	io_trace.h \
 	language.h \
@@ -26,6 +27,7 @@ HDR = \
 	settings.h \
 	simulator.h \
 	symbol.h \
+	task_element.h \
 	tasks.h \
 	u_lang.h \
 	u_parameter.h

@@ -57,4 +57,7 @@ endif
 bin_PROGRAMS = qucs.real
 transform=s&qucs.real&${TGT_PROGRAM}&;$(program_transform_name)
 
+dist_bin_SCRIPTS = qucs-conf
+sysconf_DATA = qucs.conf
+
 CLEANFILES = qucs_.cpp
