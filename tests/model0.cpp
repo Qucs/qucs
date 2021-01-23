@@ -4,6 +4,7 @@
 
 #include "schematic_model.h"
 #include "globals.h"
+#include "nodemap.h"
 #include "wiretest.h"
 
 void test1()

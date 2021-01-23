@@ -75,7 +75,8 @@ void DocumentLanguage::new__instance(istream_t& cmd, Symbol* /*sckt?*/ owner,
 			if (auto p = dynamic_cast<DEV_DOT const*>(proto)){
 				DEV_DOT* new_instance = p->clone();
 				delete p;
-				new_instance->set_scope(Scope);
+				new_instance->setOwner(owner); // owner is null, usually.
+				new_instance->set_scope(Scope); // needed??
 				parseItem(cmd, new_instance);
 			}else if (Element* new_instance = proto->clone_instance()) {
 				new_instance->setOwner(owner); // owner is null, usually.

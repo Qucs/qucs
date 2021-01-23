@@ -4,6 +4,7 @@
 
 #include "schematic_model.h"
 #include "globals.h"
+#include "conductor.h"
 #include "wiretest.h"
 
 void union0()

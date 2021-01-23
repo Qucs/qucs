@@ -88,7 +88,7 @@ void LegacySchematicFormat::load(istream_t& s, Object* c) const
 
 	while(!s.atEnd()){
 		s.get_line("legacy-schematic>");
-		L->parse_top_item(s, cc->subckt());
+		L->new__instance(s, cc, cc->subckt());
 	}
 }
 

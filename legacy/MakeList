@@ -15,6 +15,7 @@ LEGACY_SRC = \
 	gui.cc \
 	lang_dat.cpp \
 	lang_qucsator.cpp \
+	lang_sch.cpp \
 	libcomp.cpp \
 	libfiles.cpp \
 	markerdialog.cpp \
@@ -32,7 +33,6 @@ LEGACY_SRC = \
 	rectdiagram.cpp \
 	root.cpp \
 	schematic_format.cpp \
-	schematic_lang.cpp \
 	simulator.cpp \
 	smithdiagram.cpp \
 	subcircuit.cpp \
