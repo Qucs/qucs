@@ -13,6 +13,7 @@
 
 #include "port.h"
 #include "node.h"
+#include "nodemap.h"
 #include "element.h"
 #include "schematic_model.h"
 /*--------------------------------------------------------------------------*/

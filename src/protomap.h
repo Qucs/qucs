@@ -1,6 +1,9 @@
 
+// BUG: is this still used??
+
 #include <map>
 
+class Symbol;
 
 
 class PrototypeMap{

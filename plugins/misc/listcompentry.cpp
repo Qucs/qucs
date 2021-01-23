@@ -14,6 +14,8 @@
 #include "task_element.h"
 #include "docfmt.h"
 #include "language.h"
+#include <QFile>
+
 namespace {
 class createListComponentEntry : public Command {
 public:

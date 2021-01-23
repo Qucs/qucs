@@ -16,6 +16,7 @@
 #include "globals.h"
 #include "nodemap.h"
 #include "net.h"
+#include "netlist.h" // BUG
 #include "io_trace.h"
 #include "u_parameter.h"
 #include "painting.h" // BUG
@@ -24,10 +25,13 @@
 /*--------------------------------------------------------------------------*/
 // getting here in CLI mode
 SchematicModel::SchematicModel()
-  : _nm(new NodeMap(Nets)),
+  : Nets(nullptr),
+    _nm(nullptr),
     _parent(nullptr),
     _params(nullptr)
 {
+	Nets = new NetList(); // BUG
+	_nm = new NodeMap(*Nets);
 }
 /*--------------------------------------------------------------------------*/
 SchematicModel::~SchematicModel()
@@ -404,6 +408,18 @@ size_t numWires(SchematicModel const& m)
 void SchematicModel::precalc_first()
 {
 	incomplete();
+}
+/*--------------------------------------------------------------------------*/
+size_t SchematicModel::numNets() const
+{
+	assert(Nets);
+	return Nets->size();
+}
+/*--------------------------------------------------------------------------*/
+size_t SchematicModel::numNodes() const
+{
+	assert(nodes());
+	return nodes()->size();
 }
 /*--------------------------------------------------------------------------*/
 /*--------------------------------------------------------------------------*/

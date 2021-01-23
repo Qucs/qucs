@@ -17,6 +17,7 @@
 #include "globals.h"
 #include "exception.h"
 #include "geometry.h"
+#include "node.h"
 #include "place.h" // for now.
 /*--------------------------------------------------------------------------*/
 namespace{

@@ -12,6 +12,7 @@
  *                                                                         *
  ***************************************************************************/
 #include "node.h"
+#include "nodemap.h"
 #include "schematic_model.h"
 #include "component.h"
 #include "globals.h"

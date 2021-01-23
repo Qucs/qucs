@@ -15,7 +15,9 @@
 #include "schematic_dialog.h"
 #include <assert.h>
 #include "net.h"
+#include "node.h"
 #include "geometry.h"
+#include "viewpainter.h"
 /*--------------------------------------------------------------------------*/
 #include <QVBoxLayout>
 #include <QTableWidget>
@@ -55,6 +57,7 @@ Symbol::Symbol(Symbol const& s)
 }
 /*--------------------------------------------------------------------------*/
 // dup
+#include "qucsdoc.h" //BUG
 SchematicModel* Symbol::scope()
 {
 	return Element::scope();

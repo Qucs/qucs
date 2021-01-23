@@ -20,6 +20,7 @@
 #include "settings.h" //??
 #include "schematic_doc.h"
 #include "place.h"
+#include "nodemap.h"
 //#include "dat.h"
 #include "painting.h"
 #include "components/component.h" // yikes
@@ -85,8 +86,13 @@ static std::string netLabel(Symbol const* s, index_t k)
 	assert(n);
 
 	std::string p = s->port_value(k);
-//	return s->owner()->netName(p); //?
+
+#if 0 // TODO.
+	return s->owner()->netName(p); //?
+#else
+	// BUG
 	return n->netName(p);
+#endif
 }
 /* -------------------------------------------------------------------------------- */
 static int notalnum(char c)
