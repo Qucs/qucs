@@ -221,10 +221,10 @@ static bool obsolete_wireload(Symbol* w, const QString& sc)
 		// node position from it.
 		auto nn = s.section('"',3,3);
 		trace7("hack push", s, sth, delta, nx, ny, nn, n);
-		sym->setParameter("netname", n); // what is this?
-		sym->setParameter("delta", delta); // what is this?
-		sym->setParameter("nx", nx); // not the node position, maybe the label position?
-		sym->setParameter("ny", ny); // not the node position, maybe the label position?
+		sym->setParameter("netname", n.toStdString()); // what is this?
+		sym->setParameter("delta", delta.toStdString()); // what is this?
+		sym->setParameter("nx", nx.toStdString()); // not the node position, maybe the label position?
+		sym->setParameter("ny", ny.toStdString()); // not the node position, maybe the label position?
 		sym->expand(); //always?
 	}else{
 	}
@@ -301,7 +301,8 @@ void LegacySchematicLanguage::printSubckt(SubcktBase const*, ostream_t&) const
 /*--------------------------------------------------------------------------*/
 void LegacySchematicLanguage::printTaskElement(TaskElement const* c, ostream_t& s) const
 {
-	s << "  <." << c->Name << " ";
+	// s << "  <." << c->Name << " ";
+	s << "  <." << "Name" << " ";
 
 	if(c->label()==""){
 		s << "MISSING_LABEL";
@@ -329,6 +330,8 @@ void LegacySchematicLanguage::printTaskElement(TaskElement const* c, ostream_t& 
 	// FIXME: ask element for properties, not for dictionary
 	auto cc=const_cast<TaskElement*>(c); // BUGBUGBUGBUG
 	// cannot access Props without this hack
+#if 0
+	s<<"taskprops_incomplete\n";
 	for(Property *p1 = cc->Props.first(); p1 != 0; p1 = cc->Props.next()) {
 		if(p1->Description.isEmpty()){ untested();
 			s << " \""+p1->Name+"="+p1->Value+"\"";   // e.g. for equations
@@ -342,6 +345,7 @@ void LegacySchematicLanguage::printTaskElement(TaskElement const* c, ostream_t& 
 			s << "0";
 		}
 	}
+#endif
 
 	s << ">\n";
 }
@@ -541,12 +545,13 @@ static TaskElement* loadtaskElement(const QString& _s, TaskElement* c)
 
 		/// BUG FIXME. dont use Component parameter dictionary.
 		for(; tmp<=(int)counts/2; tmp++){
-			c->Props.append(new Property("p", "", true, " "));
+			incomplete();
+//			c->Props.append(new Property("p", "", true, " "));
 		}
 
 		// load all properties
 		Property *p1;
-		qDebug() << "load command props" << s;
+#if 0
 		for(p1 = c->Props.first(); p1 != 0; p1 = c->Props.next()) {
 			qDebug() << "load command props" << z;
 			z++;
@@ -570,6 +575,7 @@ static TaskElement* loadtaskElement(const QString& _s, TaskElement* c)
 			n  = s.section('"',z,z);    // display
 			p1->display = (n.at(1) == '1');
 		}
+#endif
 
 		return c;
 	}
@@ -736,7 +742,7 @@ Symbol* LegacySchematicLanguage::parseSymbol(istream_t& cs, Symbol* sym) const
 
 			trace2("legacy:set", position, n);
 			try{
-				sym->setParameter(position + offset, n);
+				sym->setParameter(position + offset, n.toStdString());
 			}catch(qucs::ExceptionCantFind const*){ untested();
 				incomplete(); // CS has error messages...
 				error(5, "cannot parse Symbol param " +
@@ -981,7 +987,7 @@ static Component* parseComponentObsoleteCallback(const QString& _s, Component* c
 		p1->Value = n; // TODO: remove
 
 		Symbol* sym = c;
-		sym->setParameter(position++, n); // BUG: also do for non-Components.
+		sym->setParameter(position++, n.toStdString()); // BUG: also do for non-Components.
 
 		n  = s.section('"',z,z);    // display
 		p1->display = (n.at(1) == '1');

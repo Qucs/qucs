@@ -41,10 +41,13 @@ static Dispatcher<DocumentLanguage>::INSTALL p(&language_dispatcher, "dat", &d0)
 /* -------------------------------------------------------------------------------- */
 void DatLang::printItem(ostream_t& s, Element const* c) const
 {
-	if(auto d=dynamic_cast<Data const*>(c)){
+	s << "... dat item\n";
+	if(auto d=dynamic_cast<Data const*>(c)){ untested();
 		printData(d, s);
-	}else{ untested();
+	}else if(c){ untested();
 		DocumentLanguage::printItem(s, c);
+	}else{
+		unreachable();
 	}
 }
 /* -------------------------------------------------------------------------------- */

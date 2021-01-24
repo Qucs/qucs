@@ -41,7 +41,7 @@
 #include "io_trace.h"
 #include "port.h"
 #include "geometry.h"
-#include "qt_compat.h"
+// #include "qt_compat.h"
 
 class Node;
 class QucsDoc;
@@ -90,7 +90,7 @@ typedef unsigned index_t;
 class NetLang;
 class ViewPainter;
 
-static QString incomplete_description="incomplete_description";
+//static QString incomplete_description="incomplete_description";
 // will be gone soon.
 // class Component;
 class Label;
@@ -101,6 +101,7 @@ class Graph;
 class Marker;
 class Node;
 class ViewPainter;
+class QWidget;
 /*--------------------------------------------------------------------------*/
 class SchematicModel;
 /*--------------------------------------------------------------------------*/
@@ -154,7 +155,7 @@ public:
 	virtual Element* clone_instance()const{
 		return clone();
 	}
-	virtual QString const& description() const{return incomplete_description;}
+//	virtual QString const& description() const{return incomplete_description;}
 	virtual char const* iconBasename() const{return nullptr;}
 
 public: // compatibility

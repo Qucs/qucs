@@ -337,7 +337,7 @@ void QucsatorLang::printTaskElement(TaskElement const* c, ostream_t& s) const
 	assert(c);
 	s << "." << c->typeName() << ":" << c->label();
 
-	//for(auto p2 : c->params())
+#if 0
 	for(auto p2 : c->Props){ // BUG
 		if(p2->name() == "Symbol") { // hack??
 		}else if(p2->name()=="p" && p2->value()==""){itested();
@@ -346,7 +346,8 @@ void QucsatorLang::printTaskElement(TaskElement const* c, ostream_t& s) const
 			s << " " << p2->name() << "=\"" << p2->value() << "\"";
 		}
 	}
-	s << '\n';
+#endif
+	s << "PROPS\n";
 }
 
 // print Component in qucsator language

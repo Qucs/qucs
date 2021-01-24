@@ -76,8 +76,9 @@ void TaskElementDialog::attach(ElementGraphics* gfx)
   Property *pp = 0; // last property shown elsewhere outside the properties table, not to put in TableView
   // ...........................................................
   // if simulation component: .TR, .AC, .SW, (.SP ?)
-  if((Comp->typeName() != "DC") && (Comp->typeName() != "HB") &&
-     (Comp->typeName() != "Digi") && (Comp->typeName() != "ETR")) {
+  //if((Comp->typeName() != "DC") && (Comp->typeName() != "HB") &&
+  //   (Comp->typeName() != "Digi") && (Comp->typeName() != "ETR"))
+  {
     QTabWidget *t = new QTabWidget(this);
     _all->addWidget(t);
 
@@ -87,7 +88,7 @@ void TaskElementDialog::attach(ElementGraphics* gfx)
     Tab1->setLayout(gp);
 
 	 // BUG: memory leak?
-    gp->addWidget(new QLabel(Comp->description(), Tab1), 0,0,1,2);
+    gp->addWidget(new QLabel(QString::fromStdString(Comp->label()), Tab1), 0,0,1,2);
 
     int row=1;
     editParam = new QLineEdit(Tab1);
@@ -95,6 +96,7 @@ void TaskElementDialog::attach(ElementGraphics* gfx)
     connect(editParam, SIGNAL(returnPressed()), SLOT(slotParamEntered()));
     checkParam = new QCheckBox(tr("display in schematic"), Tab1);
 
+#if 0
     if(Comp->typeName() == "SW") {   // parameter sweep
       textSim = new QLabel(tr("Simulation:"), Tab1);
       gp->addWidget(textSim, row,0);
@@ -104,11 +106,14 @@ void TaskElementDialog::attach(ElementGraphics* gfx)
       gp->addWidget(comboSim, row,1);
       checkSim = new QCheckBox(tr("display in schematic"), Tab1);
       gp->addWidget(checkSim, row++,2);
-    } else {
+    } else
+#endif
+	 {
       editParam->setReadOnly(true);
       checkParam->setDisabled(true);
 
 	  // editParam->setText(Comp->axisName());
+#if 0
 		if(Comp->typeName() == "TR"){
 			// transient simulation ?
 			editParam->setText("time");
@@ -118,6 +123,7 @@ void TaskElementDialog::attach(ElementGraphics* gfx)
 		}else {
 			editParam->setText("frequency");
 		}
+#endif
 	 }
 
     gp->addWidget(new QLabel(tr("Sweep Parameter:"), Tab1), row,0);
@@ -184,10 +190,10 @@ void TaskElementDialog::attach(ElementGraphics* gfx)
     gp->addWidget(checkNumber, row++,2);
 
 
+#if 0
     if(Comp->typeName() == "SW") {   // parameter sweep
 		 // BUG: not here.
       incomplete();
-#if 0
       for(ComponentList::const_iterator pi=Doc->components().begin(); pi!=Doc->components().end(); ++pi) {
         Component const* pc=*pi;
 	// insert all schematic available simulations in the Simulation combo box
@@ -208,11 +214,16 @@ void TaskElementDialog::attach(ElementGraphics* gfx)
       checkType->setChecked(Comp->Props.current()->display);
       editParam->setText(Comp->Props.next()->Value);
       checkParam->setChecked(Comp->Props.current()->display);
+    } else
 #endif
-    } else {
+	 {
+#if 0
       s = Comp->Props.first()->Value;
       checkType->setChecked(Comp->Props.current()->display);
+#endif
     }
+
+#if 0
     pp = Comp->Props.next();
     editStart->setText(pp->Value);
     checkStart->setChecked(pp->display);
@@ -222,6 +233,7 @@ void TaskElementDialog::attach(ElementGraphics* gfx)
     pp = Comp->Props.next();  // remember last property for ListView
     editNumber->setText(pp->Value);
     checkNumber->setChecked(pp->display);
+#endif
 
     int tNum = 0;
     if(s[0] == 'l') {
@@ -238,7 +250,7 @@ void TaskElementDialog::attach(ElementGraphics* gfx)
     if(tNum > 1) {
       editValues->setText(
 		editNumber->text().mid(1, editNumber->text().length()-2));
-      checkValues->setChecked(Comp->Props.current()->display);
+//      checkValues->setChecked(Comp->Props.current()->display);
       editNumber->setText("2");
     }
     slotNumberChanged(0);
@@ -267,14 +279,15 @@ void TaskElementDialog::attach(ElementGraphics* gfx)
     t->addTab(tabProperties, tr("Properties"));
     //gp1 = new QGridLayout(tabProperties, 9,2,5,5);
     gp1 = new QGridLayout(tabProperties);
-  } else {
+  }
+  // else
+  {
 	  // "DC" "HB" "Digi" "ETR". nothing to do??
   }
 
 
   // ...........................................................
-  // BUG: memory leak
-  gp1->addWidget(new QLabel(Comp->description()), 0,0,1,2);
+//  gp1->addWidget(new QLabel(Comp->description()), 0,0,1,2);
 
   QHBoxLayout *h5 = new QHBoxLayout;
   h5->setSpacing(5);
@@ -437,6 +450,8 @@ void TaskElementDialog::attach(ElementGraphics* gfx)
 
   /*! Insert all \a Comp properties into the dialog \a prop list */
   int row=0; // row counter
+
+#if 0
   Comp->Props.findRef(pp);
   Property *p=Comp->Props.current();
   if(p){
@@ -483,6 +498,7 @@ void TaskElementDialog::attach(ElementGraphics* gfx)
         prop->setCurrentItem(prop->item(0,0));
         slotSelectProperty(prop->item(0,0));
     }
+#endif
 
 
   /// \todo add key up/down brose and select prop
@@ -524,6 +540,7 @@ void TaskElementDialog::updateCompPropsList()
     int last_prop=0; // last property not to put in ListView
         // ...........................................................
         // if simulation component: .TR, .AC, .SW, (.SP ?)
+#if 0
     if( (Comp->typeName() != "DC") && (Comp->typeName() != "HB") &&
        (Comp->typeName() != "Digi") && (Comp->typeName() != "ETR")) {
         if(Comp->typeName() == "SW") {   // parameter sweep
@@ -534,10 +551,12 @@ void TaskElementDialog::updateCompPropsList()
             last_prop += 4;  // remember last property for ListView
     }else{
 	 }
+#endif
 
     QString s;
     int row=0; // row counter
     //for(Property *p = Comp->Props.first(); p != 0; p = Comp->Props.next()) {}
+#if 0
     for(Property *p = Comp->Props.at(last_prop); p != 0; p = Comp->Props.next()) {
 
       // do not insert if already on first tab
@@ -580,6 +599,7 @@ void TaskElementDialog::updateCompPropsList()
         slotSelectProperty(prop->item(0,0));
     }else{
     }
+#endif
 
     if (row < prop->rowCount()-1) {
         prop->setRowCount(row);
@@ -882,6 +902,7 @@ void TaskElementDialog::slotApplyInput()
    *  Only check if the widgets were created (pointers checks are 'true')
    */
   bool display;
+#if 0
   Property *pp = Comp->Props.first();
   // apply all the new property values
 
@@ -994,6 +1015,7 @@ void TaskElementDialog::slotApplyInput()
       pp = Comp->Props.next();
     }
   }
+#endif
 
 
   // pick selected row
@@ -1021,6 +1043,7 @@ void TaskElementDialog::slotApplyInput()
          prop->item(row, 0)->setText(NameEdit->text());
 
      // apply all the new property values in the ListView
+#if 0
      for( int row = 0; row < prop->rowCount(); row++ ) {
 
        QString name  = prop->item(row, 0)->text();
@@ -1077,6 +1100,7 @@ void TaskElementDialog::slotApplyInput()
       Comp->Props.remove();
     changed = true;
   }
+#endif
 
  } // end if (item !=0)
 
@@ -1111,10 +1135,12 @@ void TaskElementDialog::slotApplyInput()
     auto V=schematic()->viewport();
     assert(V);
     V->repaint();
+#if 0
     if ( (int) Comp->Props.count() != prop->rowCount()) { // If props count was changed after recreation
       Q_ASSERT(prop->rowCount() >= 0);
       updateCompPropsList(); // of component we need to update properties
     }
+#endif
   }else{
   }
 }

@@ -702,7 +702,7 @@ void QucsApp::slotSetCompView (int index)
     QList<Module *>::const_iterator it;
     for (it = Comps.constBegin(); it != Comps.constEnd(); it++) {itested();
       if (Element const* e = (*it)->element()) {itested();
-        Name = e->description();
+        Name = "incomplete"; // e->description();
         File = e->iconBasename();
         trace1("adding icon?", File);
         QListWidgetItem *icon = new ComponentListWidgetItem(e);

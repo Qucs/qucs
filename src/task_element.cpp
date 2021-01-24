@@ -34,20 +34,20 @@
 #include "../legacy/obsolete_paintings.h" // BUG
 
 TaskElement::TaskElement(TaskElement const& p)
-  : Element(),
+  : Element(p),
     //cx(p.cx),
     //cy(p.cy),
     tx(p.tx),
     ty(p.ty),
-    showName(p.showName),
-	 Name(p.Name)
+    showName(p.showName)
+	 // Name(p.Name)
 {
   qDebug() << "component copy";
 
-  assert(!Props.count());
-  for(auto i : p.Props){
-    Props.append(new Property(*i));
-  }
+//  assert(!Props.count());
+//  for(auto i : p.Props){
+//    Props.append(new Property(*i));
+//  }
   isActive = COMP_IS_ACTIVE; // bug.
 }
 
@@ -65,7 +65,7 @@ TaskElement::TaskElement() : Element()
   tx = 0;
   ty = 0;
 
-  Props.setAutoDelete(true);
+  // Props.setAutoDelete(true);
 }
 /*--------------------------------------------------------------------------*/
 SchematicModel* TaskElement::scope()
@@ -80,6 +80,7 @@ SchematicModel* TaskElement::scope()
 // Size of component text.
 int TaskElement::textSize(int& _dx, int& _dy)
 {
+#if 0 // obsolete
   // get size of text using the screen-compatible metric
   QFontMetrics metrics(QucsSettings.font, 0);
 
@@ -104,6 +105,8 @@ int TaskElement::textSize(int& _dx, int& _dy)
     }
   }
   return count;
+#endif
+  return 0;
 }
 /*--------------------------------------------------------------------------*/
 QDialog* TaskElement::schematicWidget(QucsDoc* Doc) const
@@ -143,6 +146,7 @@ void TaskElement::entireBounds(int&, int&, int&, int&, float)
 // -------------------------------------------------------
 int TaskElement::getTextSelected(int x_, int y_, float Corr)
 {
+#if 0
   x_ -= cx();
   y_ -= cy();
   if(x_ < tx) return -1;
@@ -172,6 +176,8 @@ int TaskElement::getTextSelected(int x_, int y_, float Corr)
   w = metrics.horizontalAdvance(pp->Name+"="+pp->Value);
   if(x_ > w) return -1; // clicked past the property text end - selection invalid
   return Props.at()+1;  // number the property
+#endif
+  return 0;
 }
 
 std::string TaskElement::paramValue(std::string const& n) const
@@ -218,6 +224,8 @@ void TaskElement::paint(ViewPainter *p) const
   QFont newFont = f;
   {   // is simulation component (dc, ac, ...)
     unsigned size;
+
+#if 0
     if(!Texts.isEmpty()){
       size = Texts.first()->Size;
     }else{
@@ -252,6 +260,7 @@ void TaskElement::paint(ViewPainter *p) const
     p->drawLine(x+xb-1, y+yb, a+xb,   b+yb);
     p->drawLine(x+xb-1, y+yb, x+xb-1, y);
     p->drawLine(x+xb-1, y,    a+xb,   b);
+#endif
   }
 
   // restore old font
@@ -260,15 +269,18 @@ void TaskElement::paint(ViewPainter *p) const
   p->setPen(QPen(Qt::black,1));
   p->map(tx, ty, x, y);
   if(showName) {
-    p->drawText(x, y, 0, 0, Qt::TextDontClip, Name);
+    p->drawText(x, y, 0, 0, Qt::TextDontClip, "incomplete");
     y += p->LineSpacing;
   }
   // write all properties
-  for(Property *p4 = Props.first(); p4 != 0; p4 = Props.next())
+#if 0
+  for(Property *p4 = Props.first(); p4 != 0; p4 = Props.next()){
     if(p4->display) {
       p->drawText(x, y, 0, 0, Qt::TextDontClip, p4->Name+"="+p4->Value);
       y += p->LineSpacing;
     }
+  }
+#endif
 
   if(isActive == COMP_IS_OPEN)
     p->setPen(QPen(Qt::red,0));
@@ -293,6 +305,7 @@ void TaskElement::paint(ViewPainter *p) const
 // For output on a printer device.
 void TaskElement::print(ViewPainter *p, float FontScale)
 {
+#if 0
   foreach(Text *pt, Texts)
     pt->Size *= FontScale;
 
@@ -300,18 +313,13 @@ void TaskElement::print(ViewPainter *p, float FontScale)
 
  foreach(Text *pt, Texts)
     pt->Size /= FontScale;
+#endif
 }
 // -------------------------------------------------------
 QString TaskElement::netlist()
 {
   incomplete(); // remove.
   return "obsolete";
-}
-// -------------------------------------------------------
-QString TaskElement::getNetlist()
-{
-  unreachable(); // obsolete
-  return QString("");
 }
 // -------------------------------------------------------
 bool TaskElement::getPen(const QString& s, QPen& Pen, int i)

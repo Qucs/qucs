@@ -19,7 +19,7 @@
 
 HB_Sim::HB_Sim()
 {
-  Description = QObject::tr("Harmonic balance simulation");
+ auto  Description = QObject::tr("Harmonic balance simulation");
 
   QString  s = Description;
   int a = s.lastIndexOf(" ");

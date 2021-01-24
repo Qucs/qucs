@@ -343,18 +343,18 @@ void Symbol::setParameter(std::string const& name, std::string const& v)
 	}
 }
 /*--------------------------------------------------------------------------*/
-void Symbol::setParameter(QString const& name, QString const& b)
-{
-	std::string n = name.toStdString();
-	std::string v = b.toStdString();
-	setParameter(n, v);
-}
-/*--------------------------------------------------------------------------*/
-void Symbol::setParameter(unsigned pos, QString const& b)
-{
-	auto v = b.toStdString();
-	setParameter(pos, v);
-}
+// void Symbol::setParameter(QString const& name, QString const& b)
+// {
+// 	std::string n = name.toStdString();
+// 	std::string v = b.toStdString();
+// 	setParameter(n, v);
+// }
+// /*--------------------------------------------------------------------------*/
+// void Symbol::setParameter(unsigned pos, QString const& b)
+// {
+// 	auto v = b.toStdString();
+// 	setParameter(pos, v);
+// }
 /*--------------------------------------------------------------------------*/
 COMMON_COMPONENT::COMMON_COMPONENT(int c)
   :Object(),

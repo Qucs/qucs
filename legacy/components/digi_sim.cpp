@@ -19,9 +19,17 @@
 Digi_Sim::Digi_Sim()
 {
   // Type = isDigitalComponent;
-  Description = QObject::tr("digital simulation");
+  // Description = QObject::tr("digital simulation");
+  //
+  /// QList<Line *>     Lines;
+  /// QList<struct Arc *>      Arcs;
+  /// QList<Area *>     Rects;
+  /// QList<Area *>     Ellips;
+  /// QList<Port *>     Ports;
+  QList<Text *>     Texts;
+  QList<Property *>     Props;
 
-  QString  s = Description;
+  QString  s = "incomplete";
   int a = s.indexOf(" ");
   if (a != -1) s[a] = '\n';  // break line before the word "simulation"
 
