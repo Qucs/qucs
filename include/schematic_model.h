@@ -47,6 +47,7 @@ class CmdEltList;
 class ElementList;
 class Diagram;
 class Painting;
+class ElementGraphics; // BUG
 /*--------------------------------------------------------------------------*/
 class NodeMap;
 #if 0

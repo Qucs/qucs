@@ -30,6 +30,9 @@ public:
   static Element* info(QString&, char* &, bool getNewOne=false);
   void recreate(SchematicDoc*);
 private: // TaskElement
+  QList<Text *>     Texts;
+  Q3PtrList<Property>     Props;
+
 //  QString const& name() const override{
 //	  return "AC";
 //  }
@@ -40,7 +43,7 @@ Module::INSTALL pp("simulations", &D);
 
 AC_Sim::AC_Sim()
 {
-  Description = QObject::tr("ac simulation");
+  auto Description = QObject::tr("ac simulation");
 
   QString s = Description;
   int a = s.indexOf(" ");

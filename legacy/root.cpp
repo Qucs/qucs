@@ -86,7 +86,6 @@ private: // SchematicSymbol
       incomplete(); // there is no view.
       return "0";
     }else{
-      qDebug() << "unknown parameter" << QString::fromStdString(x);
       incomplete();
       return "unknown";
       throw qucs::ExceptionCantFind(x, "main");

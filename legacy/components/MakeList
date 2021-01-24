@@ -106,10 +106,12 @@ TASK_ELEMENTS = \
 	ac_sim.cpp \
 	dc_sim.cpp \
 	digi_sim.cpp \
+	tr_sim.cpp
+
+NOTYET_SIM = \
 	hb_sim.cpp \
 	param_sweep.cpp \
-	sp_sim.cpp \
-	tr_sim.cpp
+	sp_sim.cpp
 
 # opt_sim.cpp
 

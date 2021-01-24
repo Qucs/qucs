@@ -53,7 +53,7 @@ void WireDialog::attach(ElementGraphics* gfx)
 
   // ...........................................................
   // BUG: memory leak? CHECK: does addWidget transfer??
-  gp1->addWidget(new QLabel(Comp->description()), 0,0,1,2);
+  gp1->addWidget(new QLabel("TODO" /*description?*/), 0,0,1,2);
 
   QHBoxLayout *h5 = new QHBoxLayout;
   h5->setSpacing(5);

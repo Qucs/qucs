@@ -28,13 +28,17 @@ public:
   Element* clone() const{return new TR_Sim(*this);}
   static Element* info(QString&, char* &, bool getNewOne=false);
   void recreate(SchematicDoc*);
+
+private:
+  QList<Text *>     Texts;
+  Q3PtrList<Property>     Props;
 } D;
 Dispatcher<TaskElement>::INSTALL p(&element_dispatcher, "TR", &D);
 Module::INSTALL pp("simulations", &D);
 
 TR_Sim::TR_Sim()
 {
-  Description = QObject::tr("transient simulation");
+  auto Description = QObject::tr("transient simulation");
   // BitmapFile = (char *) "tran";
 
   QString  s = Description;

@@ -126,7 +126,7 @@ void SymbolDialog::attach(ElementGraphics* gfx)
 
 	// ...........................................................
 	// BUG: memory leak
-	gp1->addWidget(new QLabel(_sym->description()), 0,0,1,2);
+	gp1->addWidget(new QLabel(QString::fromStdString(_sym->label())), 0,0,1,2);
 
 	QHBoxLayout *h5 = new QHBoxLayout;
 	h5->setSpacing(5);

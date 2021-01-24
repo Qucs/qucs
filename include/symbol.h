@@ -144,12 +144,14 @@ public: // Parameters
 	virtual std::string paramValue(unsigned i) const;
 	virtual std::string paramName(unsigned i) const;
 
+#if 0
 public: // qt?
 	void setParameter(QString const&, QString const&);
 	void setParameter(unsigned, QString const&);
 
 public: // non-virtual (on purpose)
 	QString const& netLabel(unsigned i) const;
+#endif
 
 public: // Node stuff
 	virtual bool is_device() const{return true;}

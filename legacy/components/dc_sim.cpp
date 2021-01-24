@@ -31,6 +31,10 @@ public:
 	  return new DC_Sim(*this);
   }
   static Element* info(QString&, char* &, bool getNewOne=false);
+
+private:
+  QList<Text *>     Texts;
+  Q3PtrList<Property>     Props;
 }D;
 Dispatcher<TaskElement>::INSTALL p(&element_dispatcher, "DC", &D);
 Module::INSTALL pp("simulations", &D);
@@ -41,7 +45,7 @@ DC_Sim::DC_Sim(DC_Sim const& s) : TaskElement(s)
 
 DC_Sim::DC_Sim() : TaskElement()
 {
-  Description = QObject::tr("dc simulation");
+  auto Description = QObject::tr("dc simulation");
   setLabel("DC");
   setTypeName("DC");
 

@@ -23,6 +23,9 @@ class Line;
 class Text;
 class Area;
 class Arc;
+class QString; // BUG
+class QPen; // BUG
+class QBrush; // BUG
 /* -------------------------------------------------------------------------------- */
 class TaskElement : public Element {
 protected:
@@ -32,7 +35,7 @@ public:
   virtual ~TaskElement() {};
 
   virtual void recreate(SchematicDoc*) {};
-  QString getNetlist();
+  // QString getNetlist();
 
 private:
   virtual rect_t bounding_rect() const override;
@@ -53,13 +56,15 @@ public:
   // do somehting with buttons. can sb think of a more descriptive name?
   virtual void dialgButtStuff(ComponentDialog&)const;
 
-  QList<Line *>     Lines;
-  QList<struct Arc *>      Arcs;
-  QList<Area *>     Rects;
-  QList<Area *>     Ellips;
-  QList<Port *>     Ports;
-  QList<Text *>     Texts;
-  mutable /*BUG*/ Q3PtrList<Property> Props;
+  void setTypeName(std::string const&){ incomplete(); }
+  std::string typeName() const{ return "taskNameIncomplete"; }
+  /// QList<Line *>     Lines;
+  /// QList<struct Arc *>      Arcs;
+  /// QList<Area *>     Rects;
+  /// QList<Area *>     Ellips;
+  /// QList<Port *>     Ports;
+  /// QList<Text *>     Texts;
+  // mutable /*BUG*/ Q3PtrList<Property> Props;
 
   #define COMP_IS_OPEN    0
   #define COMP_IS_ACTIVE  1
@@ -70,14 +75,8 @@ public:
   int  x2, y2;
 
   bool showName;
-  QString  Name;
-  QString  Description;
 
 public:
-  QString typeName() const{ return Name;}
-  void setTypeName(QString const& s){
-	  Name = s;
-  }
 
 	virtual std::string paramValue(std::string const& n) const;
 private:
