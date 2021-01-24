@@ -22,7 +22,7 @@ copyright            : 2016, 2020 Felix Salfelder
 #include "command.h"
 #include "ap.h"
 #include "io_trace.h"
-#include "globals.h"
+#include "qucs_globals.h"
 #include <unistd.h>	// TODO: io_.h
 
 std::string findfile(const std::string& filename, const std::string& path, int mode);

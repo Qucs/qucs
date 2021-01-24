@@ -16,7 +16,7 @@
 #include "sckt_base.h"
 #include "net.h"
 #include "docfmt.h" // <<
-#include "globals.h"
+#include "qucs_globals.h"
 #include "settings.h" //??
 #include "schematic_doc.h"
 #include "place.h"

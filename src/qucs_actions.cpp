@@ -34,7 +34,7 @@
 #include <QUrl>
 
 #include "projectView.h"
-#include "qucs.h"
+#include "qucs_app.h"
 #include "textdoc.h"
 #include "mouseactions.h"
 #include "messagedock.h"
@@ -52,7 +52,7 @@
 
 #include "module.h"
 #include "misc.h"
-#include "globals.h"
+#include "qucs_globals.h"
 #include "actions.h"
 #include "platform.h"
 

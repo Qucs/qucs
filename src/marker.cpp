@@ -24,7 +24,7 @@
 #include "../legacy/marker.h"
 #include "diagram.h"
 #include "graph.h"
-#include "qucs.h"
+#include "qucs_app.h"
 
 #include <QString>
 #include <QPainter>

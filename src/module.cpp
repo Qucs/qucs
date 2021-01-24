@@ -20,7 +20,7 @@
 #include "element.h"
 #include "module.h"
 #include "io_trace.h"
-#include "globals.h"
+#include "qucs_globals.h"
 
 // Global category and component lists.
 QHash<QString, Module *> Module::Modules;

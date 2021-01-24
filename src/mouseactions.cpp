@@ -11,7 +11,7 @@
  *   (at your option) any later version.                                   *
  *                                                                         *
  ***************************************************************************/
-#include "qucs.h"
+#include "qucs_app.h"
 #include "node.h"
 #include "schematic_doc.h"
 #include "misc.h"

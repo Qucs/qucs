@@ -31,7 +31,7 @@
 #endif
 
 #include "waveac.h"
-#include "qucs.h"
+#include "qucs_app.h"
 #include "misc.h"
 #include "some_font_stuff.h"
 

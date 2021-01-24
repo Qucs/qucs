@@ -12,14 +12,14 @@
  *   (at your option) any later version.                                   *
  *                                                                         *
  ***************************************************************************/
-#include "qucs.h"
+#include "qucs_app.h"
 #include "mnemo.h"
 #include "viewpainter.h"
 #include "graphictext.h"
 #include "graphictextdialog.h"
 #include "schematic_doc.h" // BUG
 #include "misc.h"
-#include "globals.h"
+#include "qucs_globals.h"
 #include "module.h"
 #include "some_font_stuff.h"
 

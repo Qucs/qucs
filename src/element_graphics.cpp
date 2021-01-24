@@ -405,7 +405,7 @@ void ElementGraphics::transform(qucsSymbolTransform a, std::pair<int, int> pivot
 			assert(mx == 1);
 			mx -= 1;
 			mx /= -2;
-		}catch(ExceptionCantFind const&){ untested();
+		}catch(qucs::ExceptionCantFind const&){ untested();
 			incomplete();
 		}
 		try {itested();
@@ -413,7 +413,7 @@ void ElementGraphics::transform(qucsSymbolTransform a, std::pair<int, int> pivot
 			my = atoi(mys.c_str());
 			my -= 1;
 			my /= -2;
-		}catch(ExceptionCantFind const&){ untested();
+		}catch(qucs::ExceptionCantFind const&){ untested();
 		}
 		try {itested();
 			std::string rs = s->paramValue("$angle");
@@ -421,7 +421,7 @@ void ElementGraphics::transform(qucsSymbolTransform a, std::pair<int, int> pivot
 			assert(!(r%90));
 			assert(r<360);
 			r /= 90;
-		}catch(ExceptionCantFind const&){ untested();
+		}catch(qucs::ExceptionCantFind const&){ untested();
 		}
 
 		trace3("stuff", mx, my, r);

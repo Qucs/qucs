@@ -20,7 +20,7 @@
 
 #include "opt_sim.h"
 #include "property.h"
-#include "qucs.h"
+#include "qucs_app.h"
 #include "../legacy/obsolete_paintings.h"
 #include "task_element.h"
 

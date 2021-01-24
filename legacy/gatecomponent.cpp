@@ -1,12 +1,12 @@
 #include "components/component.h" // BUG
 #include "node.h"
-#include "qucs.h"
+#include "qucs_app.h"
 #include "schematic_doc.h"
 #include "viewpainter.h"
 #include "module.h"
 #include "misc.h"
 #include "io_trace.h"
-#include "globals.h"
+#include "qucs_globals.h"
 
 #include <QPen>
 #include <QString>

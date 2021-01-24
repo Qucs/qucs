@@ -1,7 +1,7 @@
 // (c) 2020 Felix Salfelder
 // GPLv3+
 
-#include "globals.h"
+#include "qucs_globals.h"
 #include "symbol.h"
 #include "viewpainter.h"
 #include "schematic_model.h"

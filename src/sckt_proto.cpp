@@ -16,7 +16,7 @@
 /*--------------------------------------------------------------------------*/
 #include "sckt_base.h"
 #include "schematic_model.h"
-#include "globals.h"
+#include "qucs_globals.h"
 
 typedef unsigned index_t;
 /*--------------------------------------------------------------------------*/
@@ -76,7 +76,7 @@ pos_t const& CommonSubckt::portPosition(index_t i) const
 		incomplete();
 		// return p->position();
 	}else{ untested();
-		throw ExceptionCantFind("position", "subckt", std::to_string(i));
+		throw qucs::ExceptionCantFind("position", "subckt", std::to_string(i));
 	}
 	// a port is a place. return its position?
 	unreachable();

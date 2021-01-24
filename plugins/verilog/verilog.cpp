@@ -12,7 +12,7 @@
  ***************************************************************************/
 
 #include "node.h"
-#include "globals.h"
+#include "qucs_globals.h"
 #include "docfmt.h"
 #include "task_element.h"
 #include "schematic_lang.h"

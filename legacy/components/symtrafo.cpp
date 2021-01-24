@@ -15,8 +15,8 @@
  *                                                                         *
  ***************************************************************************/
 
-#include "qucs.h"
-#include "globals.h"
+#include "qucs_app.h"
+#include "qucs_globals.h"
 #include "module.h"
 
 #include "some_font_stuff.h"

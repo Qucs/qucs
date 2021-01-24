@@ -14,7 +14,7 @@
 
 #include "bjtsub.h"
 //#include "node.h"
-#include "globals.h"
+#include "qucs_globals.h"
 
 namespace{
 

@@ -12,7 +12,7 @@
  ***************************************************************************/
 #include "io.h"
 #include "docfmt.h"
-#include "globals.h"
+#include "qucs_globals.h"
 #include "language.h"
 #include "schematic_lang.h"
 #include "schematic_model.h"

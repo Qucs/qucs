@@ -14,7 +14,7 @@
 // print flat netlists
 /* -------------------------------------------------------------------------------- */
 #include "command.h"
-#include "globals.h"
+#include "qucs_globals.h"
 #include "settings.h"
 #include "language.h"
 #include "conductor.h"
@@ -65,7 +65,7 @@ void Netlister::do_it(istream_t& cs, SchematicModel* m)
 	if(!NetlistFile.open(QIODevice::WriteOnly | QFile::Truncate)) { untested();
 		fprintf(stderr, "Failed to open %s\n", fn.c_str());
 		incomplete();
-		throw Exception("...");
+		throw qucs::Exception("...");
 	}else{
 	}
 	ostream_t Stream(&NetlistFile);
@@ -81,7 +81,7 @@ void Netlister::do_it(istream_t& cs, SchematicModel* m)
 
 	if(lang){
 	}else{ untested();
-		throw Exception("no lang: " + language);
+		throw qucs::Exception("no lang: " + language);
 	}
 
 	// global symbols are not in this model, need to find them and

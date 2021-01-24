@@ -15,7 +15,7 @@
  *                                                                         *
  ***************************************************************************/
 
-#include "qucs.h"
+#include "qucs_app.h"
 #include "mutual2.h"
 #include "some_font_stuff.h"
 

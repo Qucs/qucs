@@ -1,5 +1,5 @@
 
-#include "qucs.h"
+#include "qucs_app.h"
 #include "schematic_doc.h"
 #include "SchematicTests.h"
 

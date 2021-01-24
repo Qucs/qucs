@@ -27,12 +27,12 @@
 #define CMD Command
 #define INTERFACE
 #include "c_comand.h"
-#include "globals.h"
+#include "qucs_globals.h"
 #include "io.h"
 #define CARD_LIST SchematicModel
 #define CS istream_t
 
-#include "globals.h"
+#include "qucs_globals.h"
 #include "e_cardlist.h"
 #include "c_comand.h"
 /*--------------------------------------------------------------------------*/

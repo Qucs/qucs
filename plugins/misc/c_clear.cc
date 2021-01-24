@@ -22,7 +22,7 @@
 #define CMD Command
 #define INTERFACE
 #include "c_comand.h"
-#include "globals.h"
+#include "qucs_globals.h"
 #define CARD_LIST SchematicModel
 #define CS istream_t
 /*--------------------------------------------------------------------------*/

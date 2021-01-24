@@ -8,7 +8,7 @@
 //   - Verilog schematic
 //
 // table for quick reference and testing
-#include "globals.h"
+#include "qucs_globals.h"
 #include "command.h"
 #include "module.h"
 #include "task_element.h"

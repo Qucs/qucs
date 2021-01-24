@@ -14,7 +14,7 @@
 // dat "language".
 
 #include "language.h"
-#include "globals.h"
+#include "qucs_globals.h"
 #include "data.h"
 #include "output.h"
 /* -------------------------------------------------------------------------------- */

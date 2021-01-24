@@ -18,7 +18,7 @@ Copyright (C) 2006 by Michael Margraf <michael.margraf@alumni.tu-berlin.de>
 #include <QMessageBox>
 #include <QTextStream>
 
-#include "qucs.h"
+#include "qucs_app.h"
 #include "textdoc.h"
 #include "syntax.h"
 #include "misc.h"

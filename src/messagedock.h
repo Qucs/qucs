@@ -18,7 +18,7 @@
 #ifndef MESSAGEDOCK_H
 #define MESSAGEDOCK_H
 
-#include "qucs.h"
+#include "qucs_app.h"
 
 #include <QWidget>
 

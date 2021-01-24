@@ -15,7 +15,7 @@
  *                                                                         *
  ***************************************************************************/
 
-#include "globals.h"
+#include "qucs_globals.h"
 #include "module.h"
 #include "component.h"
 

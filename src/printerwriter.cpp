@@ -23,7 +23,7 @@
 #include "printerwriter.h"
 #include "schematic_doc.h"
 #include "textdoc.h"
-#include "qucs.h"
+#include "qucs_app.h"
 
 #include <QPrinter>
 #include <QPainter>

@@ -36,7 +36,7 @@
 #include <QGroupBox>
 
 #include "packagedialog.h"
-#include "qucs.h"
+#include "qucs_app.h"
 #include "misc.h"
 
 

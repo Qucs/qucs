@@ -27,7 +27,7 @@
 #include <QString>
 #include <QFile>
 
-#include "qucs.h"
+#include "qucs_app.h"
 #include "docfmt.h"
 #include "printerwriter.h"
 #include "imagewriter.h"
@@ -37,9 +37,9 @@
 #include "module.h"
 #include "misc.h"
 #include "exception.h"
-#include "io_error.h"
-#include "globals.h"
-#include "l_lib.h"
+#include "exception.h"
+#include "qucs_globals.h"
+#include "library.h"
 
 #ifdef _WIN32
 #include <Windows.h>  //for OutputDebugString

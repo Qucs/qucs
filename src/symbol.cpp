@@ -109,7 +109,7 @@ void Symbol::set_port_by_index(index_t num, std::string const& ext_name)
 		}
 		assert(ext_name=="" || port(num)->hasNet());
 	}else{
-		throw Exception_Too_Many(num+1, max_nodes(), 0/*offset*/);
+		throw qucs::Exception_Too_Many(num+1, max_nodes(), 0/*offset*/);
 	}
 }
 /*--------------------------------------------------------------------------*/
@@ -211,7 +211,7 @@ std::string Symbol::paramValue(std::string const& n) const
 	}else if(n=="$angle"){
 		return std::to_string(_angle);
 	}else{ untested();
-		throw ExceptionCantFind(label(), n, "params");
+		throw qucs::ExceptionCantFind(label(), n, "params");
 	}
 }
 /*--------------------------------------------------------------------------*/
@@ -291,7 +291,7 @@ std::string Symbol::paramValue(unsigned i) const
 	case 1:
 		return std::to_string(cy());
 	default:
-		throw ExceptionCantFind(label(), std::to_string(i), "param values");
+		throw qucs::ExceptionCantFind(label(), std::to_string(i), "param values");
 	}
 }
 /*--------------------------------------------------------------------------*/
@@ -304,7 +304,7 @@ std::string Symbol::paramName(unsigned i) const
 	case 1:
 		return "$yposition";
 	default:
-		throw ExceptionCantFind(label(), std::to_string(i), "param names");
+		throw qucs::ExceptionCantFind(label(), std::to_string(i), "param names");
 	}
 }
 /*--------------------------------------------------------------------------*/
@@ -317,7 +317,7 @@ void Symbol::setParameter(unsigned n, std::string const& v)
 	}else if(n<Symbol::paramCount()){
 		unreachable();
 	}else{
-		throw ExceptionCantFind( label(), std::to_string(n), "params");
+		throw qucs::ExceptionCantFind( label(), std::to_string(n), "params");
 	}
 }
 /*--------------------------------------------------------------------------*/
@@ -339,7 +339,7 @@ void Symbol::setParameter(std::string const& name, std::string const& v)
 		_vflip = atoi(v.c_str());
 		assert(_hflip==1 || _hflip==-1);
 	}else{
-		throw ExceptionCantFind( label(), name, "params");
+		throw qucs::ExceptionCantFind( label(), name, "params");
 	}
 }
 /*--------------------------------------------------------------------------*/
@@ -441,7 +441,7 @@ bool COMMON_COMPONENT::operator==(const COMMON_COMPONENT& x)const
 /*--------------------------------------------------------------------------*/
 /*--------------------------------------------------------------------------*/
 // symbolwidget.cpp?
-// #include "qucs.h"
+// #include "qucs_app.h"
 #include "schematic_doc.h"
 #include "misc.h"
 

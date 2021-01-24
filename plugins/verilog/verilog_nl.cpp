@@ -16,7 +16,7 @@
 #include "element.h"
 #include "conductor.h"
 //#include "components/component.h" // BUG
-#include "globals.h"
+#include "qucs_globals.h"
 #include "schematic_model.h"
 #include "schematic_lang.h"
 #include "io.h"

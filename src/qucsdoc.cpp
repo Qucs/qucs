@@ -18,7 +18,7 @@
 #include "qucsdoc.h"
 #include "mouseactions.h"
 #include "simmessage.h"
-#include "qucs.h"
+#include "qucs_app.h"
 #include <QUndoStack>
 #include "io.h" // tmp?
 #include "simulator.h"
@@ -325,7 +325,7 @@ bool QucsDoc::saveAs()
 	return true;
 }
 /* -------------------------------------------------------------------------------- */
-#include "globals.h"
+#include "qucs_globals.h"
 #include "simulator.h"
 /* -------------------------------------------------------------------------------- */
 void Simulator::attachDoc(QucsDoc /* const?? */ * d)
@@ -379,7 +379,7 @@ Element const* QucsDoc::find_proto(std::string const& n) const
 {
 	auto i = _protos.find(n);
 	if(i==_protos.end()){
-		throw ExceptionCantFind(n, label());
+		throw qucs::ExceptionCantFind(n, label());
 	}else{
 		return i->second;
 	}

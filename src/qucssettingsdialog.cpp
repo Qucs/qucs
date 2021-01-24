@@ -29,7 +29,7 @@
 #include <cmath>
 #include <QGridLayout>
 #include <QVBoxLayout>
-#include "qucs.h"
+#include "qucs_app.h"
 #include "textdoc.h"
 #include "schematic_doc.h"
 #include "misc.h"

@@ -15,7 +15,7 @@
 #include "io.h"
 #include "schematic_model.h"
 #include "schematic_doc.h"
-#include "globals.h"
+#include "qucs_globals.h"
 #include "u_parameter.h"
 /*--------------------------------------------------------------------------*/
 namespace{

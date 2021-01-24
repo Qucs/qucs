@@ -19,7 +19,7 @@
 #include "misc.h"
 // #include "extsimkernels/spicecompat.h" not yet.
 #include "../legacy/components/component.h" // yikes.
-#include "globals.h"
+#include "qucs_globals.h"
 #include "module.h"
 
 namespace {

@@ -8,23 +8,22 @@ HDR = \
 	dispatcher.h \
 	element.h \
 	e_cardlist.h \
-	exception.h \
 	geometry.h \
-	globals.h \
 	graph.h \
 	io.h \
-	io_error.h \
+	exception.h \
 	io_trace.h \
 	language.h \
 	l_compar.h \
 	l_dispatcher.h \
-	l_lib.h \
+	library.h \
 	object.h \
 	output.h \
 	place.h \
 	platform.h \
 	port.h \
 	qt_compat.h \
+	qucs_globals.h \
 	schematic_model.h \
 	settings.h \
 	simulator.h \

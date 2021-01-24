@@ -15,7 +15,7 @@
 /* -------------------------------------------------------------------------------- */
 #include "simulator.h"
 #include "qucsdoc.h"
-#include "io_error.h"
+#include "exception.h"
 /* -------------------------------------------------------------------------------- */
 Simulator::~Simulator()
 {
@@ -40,7 +40,7 @@ void Simulator::attachCtrl(SimCtrl* ctrl)
     _ctrl = ctrl;
   }else if(_ctrl==ctrl){ untested();
   }else{ untested();
-    throw Exception("already controlled");
+    throw qucs::Exception("already controlled");
   }
 }
 /* -------------------------------------------------------------------------------- */

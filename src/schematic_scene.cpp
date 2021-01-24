@@ -14,7 +14,7 @@
 #include "schematic_scene.h"
 #include "schematic_doc.h"
 #include "qt_compat.h"
-#include "globals.h"
+#include "qucs_globals.h"
 #include "place.h"
 
 #include <QFileInfo>
@@ -581,7 +581,7 @@ void SchematicScene::connectPorts(Symbol* c)
 
 			assert(c->mutable_owner());
 			c->set_port_by_index(i, n);
-		}catch(Exception const&){ untested();
+		}catch(qucs::Exception const&){ untested();
 			// pass.
 		}
 	}

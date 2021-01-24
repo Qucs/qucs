@@ -12,11 +12,11 @@
  *                                                                         *
  ***************************************************************************/
 #include "filldialog.h"
-#include "qucs.h"
+#include "qucs_app.h"
 #include "misc.h"
 #include "painting.h"
 #include "module.h"
-#include "globals.h"
+#include "qucs_globals.h"
 
 #include <QPainter>
 #include <QPushButton>

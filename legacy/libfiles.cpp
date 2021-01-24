@@ -14,7 +14,7 @@
 // read components from legacy "lib" files.
 // pieced together from various places.
 
-#include "globals.h"
+#include "qucs_globals.h"
 #include "module.h"
 #include "schematic_lang.h"
 #include "symbol.h"
@@ -151,7 +151,7 @@ void LIB::do_it(istream_t&, SchematicModel*)
 					trace1("Lib stashing", t);
 					stash(new Dispatcher<Symbol>::INSTALL(&symbol_dispatcher, t, ssym));
 					new Module::INSTALL(parsedlib.name.toStdString(), ssym);
-				}catch(Exception const&){ untested();
+				}catch(qucs::Exception const&){ untested();
 					trace0("not stashing");
 					delete ssym;
 				}

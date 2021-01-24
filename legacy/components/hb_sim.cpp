@@ -12,7 +12,7 @@
  *                                                                         *
  ***************************************************************************/
 #include "hb_sim.h"
-#include "qucs.h"
+#include "qucs_app.h"
 #include "property.h"
 #include "../legacy/obsolete_paintings.h"
 

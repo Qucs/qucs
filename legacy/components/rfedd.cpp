@@ -15,7 +15,7 @@
  *                                                                         *
  ***************************************************************************/
 #include "rfedd.h"
-#include "qucs.h"
+#include "qucs_app.h"
 //#include "schematic.h"
 
 #include <QFileInfo>

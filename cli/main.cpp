@@ -40,7 +40,8 @@
 #include <QtSvg>
 #include <QDebug>
 
-#include "qucs.h"
+//#include "qucs.h"
+#include "settings.h"
 #include "docfmt.h"
 #include "printerwriter.h"
 #include "imagewriter.h"
@@ -50,9 +51,9 @@
 #include "module.h"
 #include "misc.h"
 #include "exception.h"
-#include "io_error.h"
-#include "globals.h"
-#include "l_lib.h"
+#include "exception.h"
+#include "qucs_globals.h"
+#include "library.h"
 /*--------------------------------------------------------------------------*/
 // qucs hacks and wraps
 #define CS istream_t
@@ -212,19 +213,19 @@ static void process_cmd_line(int argc, const char *argv[])
       }else{
 	try {
 	  CMD::command(std::string("include ") + argv[ii++], &static_model);
-	}catch (Exception& e) {itested();
+	}catch (qucs::Exception& e) {itested();
 	  error(bDANGER, e.message() + '\n');
 	  finish();
 	}
 	if (ii >= argc) {itested();
 	  //CMD::command("end", &static_model);
-	  throw Exception_Quit("");
+	  throw qucs::Exception_Quit("");
 	}else{untested();
 	}	
       }
-    }catch (Exception_Quit& e) {
+    }catch (qucs::Exception_Quit& e) {
       throw;
-    }catch (Exception& e) {itested();
+    }catch (qucs::Exception& e) {itested();
       // abort command, continue loop
       error(bDANGER, e.message() + '\n');
       finish();
@@ -249,7 +250,7 @@ int main(int argc, const char *argv[])
 	setup_traps();
 	process_cmd_line(argc,argv);
 #if 0
-      }catch (Exception& e) {untested();
+      }catch (qucs::Exception& e) {untested();
 	error(bDANGER, e.message() + '\n');
 	finish();		/* error clean up (from longjmp()) */
 	//CMD::command("quit", &static_model);
@@ -274,13 +275,13 @@ int main(int argc, const char *argv[])
 	  }else{
 	    CMD::cmdproc(cmd.get_line(I_PROMPT), &static_model);
 	  }
-	}catch (Exception_End_Of_Input& e) {
+	}catch (qucs::Exception_End_Of_Input& e) {
 	  error(bDANGER, e.message() + '\n');
 	  finish();
 	  //CMD::command("quit", &static_model);
 	  //exit(0);
 	  break;
-	}catch (Exception& e) {
+	}catch (qucs::Exception& e) {
 	  error(bDANGER, e.message() + '\n');
 	  finish();
 	}
@@ -289,8 +290,8 @@ int main(int argc, const char *argv[])
       }
     }
   }
-  }catch (Exception_Quit&) {
-  }catch (Exception& e) {untested();
+  }catch (qucs::Exception_Quit&) {
+  }catch (qucs::Exception& e) {untested();
     error(bDANGER, e.message() + '\n');
   }
   

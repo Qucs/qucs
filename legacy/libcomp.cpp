@@ -12,11 +12,11 @@
  *                                                                         *
  ***************************************************************************/
 
-#include "globals.h"
+#include "qucs_globals.h"
 #include "misc.h"
 #include "painting.h"
 #include "qt_compat.h"
-#include "qucs.h"
+#include "qucs_app.h"
 #include "schematic_doc.h"
 #include "sckt_base.h"
 #include "property.h"

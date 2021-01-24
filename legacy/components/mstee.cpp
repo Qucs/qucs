@@ -11,11 +11,11 @@
  *   (at your option) any later version.                                   *
  *                                                                         *
  ***************************************************************************/
-#include "qucs.h" // BUG
+#include "qucs_app.h" // BUG
 #include "some_font_stuff.h" // BUG
 #include "component.h"
 #include "module.h"
-#include "globals.h"
+#include "qucs_globals.h"
 
 namespace{
 class MStee : public MultiViewComponent  {

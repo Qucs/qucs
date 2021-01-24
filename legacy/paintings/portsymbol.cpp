@@ -11,8 +11,8 @@
  *   (at your option) any later version.                                   *
  *                                                                         *
  ***************************************************************************/
-#include "qucs.h"
-#include "globals.h"
+#include "qucs_app.h"
+#include "qucs_globals.h"
 #include "module.h"
 #include "painting.h"
 #include "schematic_doc.h"

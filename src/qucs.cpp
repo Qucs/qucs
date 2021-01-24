@@ -41,7 +41,7 @@
 #include <QDebug>
 #include <QPlainTextEdit> // what?
 
-#include "qucs.h"
+#include "qucs_app.h"
 #include "qucsdoc.h"
 #include "mouseactions.h"
 #include "messagedock.h"
@@ -70,7 +70,7 @@
 #include "../qucs-lib/qucslib_common.h" // BUG
 #include "misc.h"
 #include "platform.h"
-#include "globals.h"
+#include "qucs_globals.h"
 #include "qucs_tabs.h"
 
 #include "simulator.h"

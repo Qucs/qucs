@@ -15,7 +15,7 @@
  ***************************************************************************/
 #include "filldialog.h"
 #include "misc.h"
-#include "globals.h"
+#include "qucs_globals.h"
 #include "module.h"
 #include "schematic_doc.h" // BUG
 

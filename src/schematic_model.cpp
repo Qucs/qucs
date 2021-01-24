@@ -13,7 +13,7 @@
 
 #include "schematic_doc.h"
 #include "schematic_lang.h"
-#include "globals.h"
+#include "qucs_globals.h"
 #include "nodemap.h"
 #include "net.h"
 #include "netlist.h" // BUG

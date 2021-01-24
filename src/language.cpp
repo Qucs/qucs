@@ -12,7 +12,7 @@
  ***************************************************************************/
 #include "command.h"
 #include "element.h"
-#include "globals.h"
+#include "qucs_globals.h"
 #include "task_element.h"
 #include "schematic_model.h"
 #include "symbol.h"
@@ -103,7 +103,7 @@ Element const* DocumentLanguage::find_proto(const std::string& Name, const Eleme
 		try {
 			p = Scope->find_looking_out(Name);
 			trace2("found", Name, p);
-		}catch (ExceptionCantFind& e) {
+		}catch (qucs::ExceptionCantFind& e) {
 			assert(!p);
 		}
 	}else{

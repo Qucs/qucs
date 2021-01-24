@@ -19,7 +19,7 @@
 #include "element.h"
 #include "exception.h"
 #include "geometry.h"
-#include "io_error.h"
+#include "exception.h"
 /*--------------------------------------------------------------------------*/
 class QPainter;
 class NodeMap;

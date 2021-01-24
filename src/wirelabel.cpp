@@ -16,7 +16,7 @@
  ***************************************************************************/
 #include "wirelabel.h"
 #include "viewpainter.h"
-#include "qucs.h"
+#include "qucs_app.h"
 #include "some_font_stuff.h"
 
 #include <QString>

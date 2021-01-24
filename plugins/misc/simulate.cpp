@@ -13,7 +13,7 @@
 // run a simulator.
 
 #include "command.h"
-#include "globals.h"
+#include "qucs_globals.h"
 #include "settings.h"
 #include "simulator.h"
 /*--------------------------------------------------------------------------*/

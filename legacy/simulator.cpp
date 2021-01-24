@@ -16,7 +16,7 @@
 #include "simulator.h"
 #include "node.h"
 #include <QString>
-#include "globals.h"
+#include "qucs_globals.h"
 #include "task_element.h"
 #include "docfmt.h"
 #include "schematic_model.h"
@@ -340,7 +340,7 @@ void LegacyNetlister::prepareSave(ostream_t& stream, SchematicModel const* m,
 	std::string DocName;
 	try{
 //		DocName = m.paramValue("DocName");
-	}catch(ExceptionCantFind const&){ untested();
+	}catch(qucs::ExceptionCantFind const&){ untested();
 		DocName = "unknown";
 	}
 	stream << " Qucs " << PACKAGE_VERSION << "  "

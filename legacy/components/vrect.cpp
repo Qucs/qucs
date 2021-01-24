@@ -17,7 +17,7 @@
 
 #include "component.h"
 #include "module.h"
-#include "globals.h"
+#include "qucs_globals.h"
 
 namespace{
 

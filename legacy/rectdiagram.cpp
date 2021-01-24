@@ -27,10 +27,10 @@
 #endif
 
 #include "diagram.h"
-#include "qucs.h"
+#include "qucs_app.h"
 #include "misc.h"
 #include "some_font_stuff.h"
-#include "globals.h"
+#include "qucs_globals.h"
 #include "module.h"
 #include <QLineEdit>
 #include "obsolete_paintings.h"

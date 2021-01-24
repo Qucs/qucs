@@ -19,7 +19,7 @@
  ***************************************************************************/
 
 #include "savedialog.h"
-#include "qucs.h"
+#include "qucs_app.h"
 #include "qucsdoc.h"
 
 #include <QVariant>
