@@ -11,8 +11,8 @@
  *   (at your option) any later version.                                   *
  *                                                                         *
  ***************************************************************************/
-#include "qucs.h"
-#include "globals.h"
+#include "qucs_app.h"
+#include "qucs_globals.h"
 #include "task_element.h"
 #include "module.h"
 #include "property.h"

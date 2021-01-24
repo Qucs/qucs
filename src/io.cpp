@@ -12,7 +12,7 @@
  ***************************************************************************/
 #include "platform.h"
 #include "io.h"
-#include "io_error.h"
+#include "exception.h"
 #include <QFile>
 
 /*--------------------------------------------------------------------------*/
@@ -94,7 +94,7 @@ istream_t::istream_t(istream_t::WHOLE_FILE, const std::string& name)
 	auto d = new QFile(qfn); // BUG: memory leak. (get rid of QTextStream...)
 	d->open(QIODevice::ReadOnly);
 	if(!d->isOpen()){ itested();
-		throw Exception_File_Open(name + ':' + " error"); // strerror(errno));
+		throw qucs::Exception_File_Open(name + ':' + " error"); // strerror(errno));
 	}else{
 		_stream = new QTextStream(d);
 	}
@@ -467,7 +467,7 @@ static std::string getlines(FILE *fileptr)
 		if (!got_something) { // probably end of file
 			need_to_get_more = false;
 			if (s == "") {
-				throw Exception_End_Of_Input("");
+				throw qucs::Exception_End_Of_Input("");
 			}else{untested();
 			}
 		}else{
@@ -554,7 +554,7 @@ char *getcmd(const char *prompt, char *buffer, int buflen)
 		if (OPT::edit) {
 			char* line_read = readline(prompt);
 			if (!line_read) {itested();
-				throw Exception_End_Of_Input("EOF on stdin");
+				throw qucs::Exception_End_Of_Input("EOF on stdin");
 			}else{
 			}
 			// readline gets a new buffer every time, so copy it to where we want it
@@ -576,7 +576,7 @@ char *getcmd(const char *prompt, char *buffer, int buflen)
 			// IO::mstdout << prompt;	/* prompt & flush buffer */
 			std::cout << prompt; // yikes.
 			if (!fgets(buffer, buflen, stdin)) {untested();	/* read line */
-				throw Exception_End_Of_Input("EOF on stdin");
+				throw qucs::Exception_End_Of_Input("EOF on stdin");
 			}else{
 			}
 		}
@@ -587,7 +587,7 @@ char *getcmd(const char *prompt, char *buffer, int buflen)
 	}else{
 		// stdin is file
 		if (!fgets(buffer, buflen, stdin)) {itested();	/* read line */
-			throw Exception_End_Of_Input("EOF on stdin");
+			throw qucs::Exception_End_Of_Input("EOF on stdin");
 		}else{
 		}
 		trim(buffer);

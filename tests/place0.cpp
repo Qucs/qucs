@@ -3,7 +3,7 @@
 // GPLv3+
 
 #include "schematic_model.h"
-#include "globals.h"
+#include "qucs_globals.h"
 #include "wiretest.h"
 
 void test0()

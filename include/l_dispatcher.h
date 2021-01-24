@@ -35,7 +35,7 @@
 // #include "l_stlextra.h"
 // #include "u_opt.h"
 // #include "ap.h"
-#include "io_error.h"
+#include "exception.h"
 /*--------------------------------------------------------------------------*/
 class DISPATCHER_BASE {
 private:

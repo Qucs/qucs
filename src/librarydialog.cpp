@@ -42,9 +42,9 @@
 #include <QStringList>
 
 #include "librarydialog.h"
-#include "qucs.h"//?
+#include "qucs_app.h"//?
 #include "schematic_doc.h" //??
-#include "globals.h"
+#include "qucs_globals.h"
 
 extern SubMap FileList;
 

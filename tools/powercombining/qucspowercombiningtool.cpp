@@ -25,7 +25,7 @@
 #endif
 
 #include "qucspowercombiningtool.h"
-#include "qucs.h" // BUG?
+#include "qucs_app.h" // BUG?
 #include "misc.h"
 #include "material_props.h"
 

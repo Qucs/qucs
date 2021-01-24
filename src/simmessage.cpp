@@ -33,11 +33,11 @@
 
 #include "simmessage.h"
 #include "module.h"
-#include "qucs.h"
+#include "qucs_app.h"
 #include "textdoc.h"
 #include "schematic_doc.h"
 #include "misc.h"
-#include "globals.h"
+#include "qucs_globals.h"
 #include "docfmt.h"
 /*--------------------------------------------------------------------------*/
 SimMessage::SimMessage(Simulator *sim, QucsDoc const* doc)

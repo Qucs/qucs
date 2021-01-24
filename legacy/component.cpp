@@ -16,13 +16,13 @@
 
 #include "components/component.h"
 #include "node.h"
-#include "qucs.h"
+#include "qucs_app.h"
 #include "schematic_doc.h"
 #include "viewpainter.h"
 #include "module.h"
 #include "misc.h"
 #include "io_trace.h"
-#include "globals.h"
+#include "qucs_globals.h"
 
 #include <QPen>
 #include <QString>
@@ -1529,7 +1529,7 @@ QDialog* Component::schematicWidget(QucsDoc* Doc) const
 /*--------------------------------------------------------------------------*/
 /*--------------------------------------------------------------------------*/
 /*--------------------------------------------------------------------------*/
-#include "qucs.h"
+#include "qucs_app.h"
 #include "schematic_doc.h"
 #include "misc.h"
 

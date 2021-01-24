@@ -38,7 +38,7 @@
 #include <QMessageBox>
 
 #include "loaddialog.h"
-#include "qucs.h"
+#include "qucs_app.h"
 #include "qucsdoc.h"
 
 LoadDialog::LoadDialog( QWidget* parent )

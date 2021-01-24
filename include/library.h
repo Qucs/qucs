@@ -5,7 +5,7 @@
 #include <string>
 #include "platform.h"
 #include "io_trace.h"
-#include "io_error.h"
+#include "exception.h"
 #include <cstring> // strdup?
 #include <assert.h>
 /*--------------------------------------------------------------------------*/
@@ -25,9 +25,9 @@ namespace OS{
   }
   inline void setenv(const std::string& Name, const std::string& Value, bool Overwrite=true) {
     if (Name == "") {untested();
-      throw Exception("setenv: bad name " + Name);
+      throw qucs::Exception("setenv: bad name " + Name);
     }else if (Value == "") {untested();
-      throw Exception("setenv: bad value " + Value);
+      throw qucs::Exception("setenv: bad value " + Value);
     }else if (!Overwrite && getenv(Name) != "") {
       error(bDEBUG, "setenv: " + Name + " overwrite prohibited");
     }else{
@@ -35,7 +35,7 @@ namespace OS{
       char *es = ::strdup(ev.c_str());	//BUG// memory leak
       assert(es);
       if (::putenv(es) != 0) {untested();
-	throw Exception("");
+	throw qucs::Exception("");
       }else{
       }
     }

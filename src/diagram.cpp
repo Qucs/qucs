@@ -33,7 +33,7 @@
 
 #include "diagram.h"
 #include "diagramdialog.h"
-#include "qucs.h"
+#include "qucs_app.h"
 #include "mnemo.h"
 #include "schematic_doc.h"
 #include "platform.h"

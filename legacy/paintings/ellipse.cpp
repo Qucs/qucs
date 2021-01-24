@@ -15,7 +15,7 @@
 //#include "schematic_doc.h" // BUG
 #include "viewpainter.h"
 #include "misc.h"
-#include "globals.h"
+#include "qucs_globals.h"
 #include "module.h"
 #include "painting.h"
 

@@ -11,7 +11,7 @@
  *                                                                         *
  ***************************************************************************/
 
-#include "globals.h"
+#include "qucs_globals.h"
 #include "sckt_base.h"
 
 namespace{
@@ -89,7 +89,7 @@ private: // SchematicSymbol
       qDebug() << "unknown parameter" << QString::fromStdString(x);
       incomplete();
       return "unknown";
-      throw ExceptionCantFind(x, "main");
+      throw qucs::ExceptionCantFind(x, "main");
     }
   }
 

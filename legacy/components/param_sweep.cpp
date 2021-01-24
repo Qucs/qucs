@@ -12,10 +12,10 @@
  *                                                                         *
  ***************************************************************************/
 #include "task_element.h"
-#include "globals.h"
+#include "qucs_globals.h"
 #include "module.h"
 #include "property.h"
-#include "qucs.h"
+#include "qucs_app.h"
 #include <assert.h>
 #include "../legacy/obsolete_paintings.h"
 

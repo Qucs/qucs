@@ -15,7 +15,7 @@
  *                                                                         *
  ***************************************************************************/
 #include "circulator.h"
-#include "qucs.h"
+#include "qucs_app.h"
 
 
 Circulator::Circulator()

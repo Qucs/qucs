@@ -2,7 +2,7 @@
     author               : 2018, 2020 Felix Salfelder
     license              : GPLv3+
  ***************************************************************************/
-#include "globals.h"
+#include "qucs_globals.h"
 //#include "painting.h"
 
 Dispatcher<Diagram> diagram_dispatcher;

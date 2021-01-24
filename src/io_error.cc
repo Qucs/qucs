@@ -4,7 +4,8 @@
 #include <iostream>
 #include <stdarg.h>
 #include "io_trace.h"
-#include "io_error.h"
+#include "io.h"
+#include "exception.h"
 #include "ap.h"
 
 void error(int, const char* fmt, ...)
@@ -21,6 +22,8 @@ void error(int i, const std::string& message)
 {
 	std::cerr << "error" << i << " " << message;
 }
+/*--------------------------------------------------------------------------*/
+namespace qucs{
 /*--------------------------------------------------------------------------*/
 Exception_CS::Exception_CS(const std::string& Message, const istream_t& cmd)
   :Exception(Message),
@@ -41,4 +44,7 @@ const std::string Exception_CS::message()const
   }
   return s;
 }
+/*--------------------------------------------------------------------------*/
+} // namespace qucs
+/*--------------------------------------------------------------------------*/
 /*--------------------------------------------------------------------------*/

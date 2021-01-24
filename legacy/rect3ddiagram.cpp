@@ -32,7 +32,7 @@
 #endif
 
 #include "rect3ddiagram.h"
-#include "qucs.h"
+#include "qucs_app.h"
 #include "misc.h"
 #include "qt_compat.h"
 #include "some_font_stuff.h"

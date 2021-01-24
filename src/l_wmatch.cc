@@ -29,7 +29,7 @@
 //testing=script 2006.07.13
 #include <cctype>
 //#include "u_opt.h"
-#include "l_lib.h"
+#include "library.h"
 /*--------------------------------------------------------------------------*/
 static char fix_case(char c)
 {

@@ -13,7 +13,7 @@
  *   (at your option) any later version.                                   *
  *                                                                         *
  ***************************************************************************/
-#include "globals.h"
+#include "qucs_globals.h"
 #include "node.h"
 // #include "schematic.h"
 #include "component.h"

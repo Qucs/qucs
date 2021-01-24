@@ -12,7 +12,7 @@
  *                                                                         *
  ***************************************************************************/
 
-#include "qucs.h"
+#include "qucs_app.h"
 #include "schematic_doc.h"
 #include "misc.h"
 
@@ -22,7 +22,7 @@
 
 #include <limits.h>
 #include <io_trace.h>
-#include "globals.h"
+#include "qucs_globals.h"
 #include "docfmt.h"
 #include "module.h"
 #include "sckt_base.h"
@@ -531,7 +531,7 @@ void Subcircuit::proto(SchematicModel const* scope)
 	Symbol const* p = nullptr;
 	try{
 		p = dynamic_cast<Symbol const*>(find_looking_out(t));
-	}catch(ExceptionCantFind const&){
+	}catch(qucs::ExceptionCantFind const&){
 		incomplete();
 	}
 

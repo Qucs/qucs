@@ -32,7 +32,7 @@
  * PATHSEP, ENDDIR are system dependent, defined in md.h
  */
 //testing=script,complete 2017.03.12
-//#include "l_lib.h"
+//#include "library.h"
 #include "platform.h" // PATHSEP
 /*--------------------------------------------------------------------------*/
 // from io_ TODO

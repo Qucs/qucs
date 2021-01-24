@@ -15,7 +15,7 @@
  *                                                                         *
  ***************************************************************************/
 #include "spembed.h"
-#include "qucs.h"
+#include "qucs_app.h"
 #include "schematic.h"
 #include "misc.h"
 #include "some_font_stuff.h"

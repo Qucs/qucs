@@ -22,7 +22,7 @@
 
 #include <cmath>
 
-#include "qucs.h"
+#include "qucs_app.h"
 #include "some_font_stuff.h"
 #include "diagram.h"
 

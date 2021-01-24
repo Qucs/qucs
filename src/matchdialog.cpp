@@ -28,11 +28,11 @@
 
 #include "material_props.h"
 #include "matchdialog.h"
-#include "qucs.h"
+#include "qucs_app.h"
 #include "element.h"
 
 #include "misc.h"
-#include "qucs.h"
+#include "qucs_app.h"
 
 #include <QApplication>
 #include <QClipboard>

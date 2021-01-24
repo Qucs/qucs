@@ -22,7 +22,7 @@
  */
 
 #include "spdeembed.h"
-#include "qucs.h" // for QucsSettings
+#include "qucs_app.h" // for QucsSettings
 #include "schematic.h"
 #include "misc.h"
 #include "some_font_stuff.h"

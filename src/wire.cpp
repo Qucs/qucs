@@ -13,7 +13,7 @@
  ***************************************************************************/
 #include "nodemap.h"
 #include "wiredialog.h"
-#include "globals.h"
+#include "qucs_globals.h"
 #include "geometry.h"
 #include "schematic_model.h"
 #include <QPainter>

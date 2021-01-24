@@ -15,7 +15,7 @@
 #include "nodemap.h"
 #include "schematic_model.h"
 #include "component.h"
-#include "globals.h"
+#include "qucs_globals.h"
 #include "module.h"
 #include "sckt_base.h"
 
@@ -109,7 +109,7 @@ void SubCirPort::set_port_by_index(index_t i, std::string const& value)
 		// don't know why this is a parameter and not a local variable
 		// (does it make any sense?)
 		pp = QString::fromStdString(paramValue(num_component_params + Symbol::paramCount()));
-	}catch(ExceptionCantFind const&){ untested();
+	}catch(qucs::ExceptionCantFind const&){ untested();
 		ok = false;
 	}
 
@@ -235,7 +235,7 @@ void SubCirPort::setParameter(unsigned n, std::string const& vv)
 		--pos; // QUCS numbers start at 1.
 		if(!ok){
 			incomplete();
-			throw Exception("can't parse " + vv);
+			throw qucs::Exception("can't parse " + vv);
 			// throw approriate error
 		}else if(portExists(pos)){
 			// possibly missing more error handling

@@ -109,7 +109,7 @@ const Element* Element::find_looking_out(const std::string& name)const
 	trace2("find_looking_out1", name, label());
 	try {
 		return find_in_parent_scope(name);
-	}catch (ExceptionCantFind&) {
+	}catch (qucs::ExceptionCantFind&) {
 		if (auto o=dynamic_cast<Element const*>(owner())) {
 			trace3("find_looking_out2", name, label(), o->label());
 			return o->find_looking_out(name);
@@ -136,13 +136,13 @@ const Element* Element::find_in_parent_scope(const std::string& name)const
   if(!p_scope){
 	  // unreachable(); happens in some lib files
 	  trace2("no scope", name, label());
-	  throw ExceptionCantFind(label(), name);
+	  throw qucs::ExceptionCantFind(label(), name);
   }else{
   }
 
   auto i = p_scope->find_(name);
   if (i == p_scope->end()) {
-    throw ExceptionCantFind(label(), name);
+    throw qucs::ExceptionCantFind(label(), name);
   }else{
   }
   return *i;

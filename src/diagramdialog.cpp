@@ -14,7 +14,7 @@
 // DiagramDialog: setup and edit diagrams.
 //
 #include "diagramdialog.h"
-#include "qucs.h"
+#include "qucs_app.h"
 #include "schematic_doc.h"
 #include "platform.h"
 // #include "rect3ddiagram.h" BUG

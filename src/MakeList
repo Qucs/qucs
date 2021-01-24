@@ -83,7 +83,7 @@ QMOCHEADERS = \
 	textdoc.h \
 	schematic_dialog.h \
 	qucs_tabs.h \
-	qucs.h
+	qucs_app.h
 
 DIALG_MOCHEADERS = \
 	aboutdialog.h \

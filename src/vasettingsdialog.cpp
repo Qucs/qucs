@@ -32,7 +32,7 @@
 
 #include "vasettingsdialog.h"
 #include "textdoc.h"
-#include "qucs.h"
+#include "qucs_app.h"
 
 
 VASettingsDialog::VASettingsDialog (TextDoc * Doc_)

@@ -14,7 +14,7 @@
 #define QUCS_PLACE_H
 /*--------------------------------------------------------------------------*/
 #include "symbol.h"
-#include "globals.h"
+#include "qucs_globals.h"
 #include "exception.h"
 #include "geometry.h"
 #include "node.h"

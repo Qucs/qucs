@@ -14,7 +14,7 @@
  *   (at your option) any later version.                                   *
  *                                                                         *
  ***************************************************************************/
-#include "qucs.h"
+#include "qucs_app.h"
 #include "rlcg.h"
 
 #include "some_font_stuff.h"

@@ -19,7 +19,7 @@
 #ifndef QUCSSETTINGSDIALOG_H
 #define QUCSSETTINGSDIALOG_H
 
-#include "qucs.h"
+#include "qucs_app.h"
 
 #include <QDialog>
 #include <QFont>

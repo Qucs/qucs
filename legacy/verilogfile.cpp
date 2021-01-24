@@ -11,7 +11,7 @@
  *   (at your option) any later version.                                   *
  *                                                                         *
  ***************************************************************************/
-#include "qucs.h"
+#include "qucs_app.h"
 #include "io.h"
 #include "qucsdoc.h"
 #include "misc.h"
@@ -22,7 +22,7 @@
 #include <QFileInfo>
 
 #include "components/component.h"
-#include "globals.h"
+#include "qucs_globals.h"
 #include "module.h"
 
 namespace{

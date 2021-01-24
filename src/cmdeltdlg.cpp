@@ -13,7 +13,7 @@
  ***************************************************************************/
 
 #include "cmdeltdlg.h"
-#include "qucs.h"
+#include "qucs_app.h"
 #include "schematic_doc.h"
 #include "property.h"
 #include "misc.h"

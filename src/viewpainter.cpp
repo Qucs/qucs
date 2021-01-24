@@ -15,7 +15,7 @@
  *                                                                         *
  ***************************************************************************/
 
-#include "qucs.h"
+#include "qucs_app.h"
 #include "viewpainter.h"
 #include "qt_compat.h"
 #include "graph.h"

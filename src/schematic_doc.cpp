@@ -14,8 +14,8 @@
 
 #include "schematic_doc.h"
 #include "misc.h"
-#include "globals.h"
-#include "qucs.h" // BUG. QucsSettings?
+#include "qucs_globals.h"
+#include "qucs_app.h" // BUG. QucsSettings?
 #include <QUndoStack>
 #include "simmessage.h"
 #include "docfmt.h" // copy&paste
@@ -979,7 +979,7 @@ void SchematicDoc::slotSimulate()
 
   try{
 	  ctrl->startProcess(cs);
-  }catch(Exception& e){
+  }catch(qucs::Exception& e){
 	  incomplete();
   }
 
@@ -1043,7 +1043,7 @@ void SchematicDoc::slotDCbias()
 
   try{
 	  ctrl->startProcess(cs);
-  }catch(Exception& e){
+  }catch(qucs::Exception& e){
 	  incomplete();
   }
 

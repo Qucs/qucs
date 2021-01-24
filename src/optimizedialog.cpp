@@ -13,7 +13,7 @@
  *                                                                         *
  ***************************************************************************/
 
-#include "qucs.h"
+#include "qucs_app.h"
 #include "optimizedialog.h"
 #include "schematic_doc.h"
 #include "property.h"

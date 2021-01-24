@@ -21,7 +21,7 @@
 // spice language implementation. (stub)
 //
 #include "language.h"
-#include "globals.h"
+#include "qucs_globals.h"
 namespace{
 class LangSpice : public NetLang {
 private: // NetLang

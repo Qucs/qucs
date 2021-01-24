@@ -17,7 +17,7 @@
 
 #include "graphictextdialog.h"
 
-#include "qucs.h"
+#include "qucs_app.h"
 #include "misc.h"
 
 #include <QLabel>

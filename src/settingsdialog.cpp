@@ -18,7 +18,7 @@
 #include "settingsdialog.h"
 
 #include "node.h"
-#include "qucs.h"
+#include "qucs_app.h"
 #include "mnemo.h"
 #include "schematic_doc.h"
 

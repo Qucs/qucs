@@ -14,7 +14,7 @@
 #include "schematic_model.h"
 #include "schematic_lang.h"
 #include "schematic_model.h" /// hmm
-#include "globals.h"
+#include "qucs_globals.h"
 #include "task_element.h"
 #include "painting.h"
 #include "diagram.h" // BUG
@@ -36,7 +36,7 @@ static void parsePainting(QString Line, Painting*p)
 		trace2("ERROR parsePainting", Line, p->label());
 		incomplete();
 		// QMessageBox::critical(0, QObject::tr("Error"), QObject::tr("Format Error:\nWrong 'painting' line format!"));
-		throw Exception("cannot parse painting");
+		throw qucs::Exception("cannot parse painting");
 
 	}else{
 		trace2("parsePainting", Line, p->center());
@@ -147,9 +147,9 @@ static bool obsolete_wireload(Symbol* w, const QString& sc)
 	bool ok;
 
 //	if(s.at(0) != '<'){ untested();
-//		throw ExceptionCantParse();
+//		throw qucs::ExceptionCantParse();
 //	}else if(s.at(s.length()-1) != '>'){ untested();
-//		throw ExceptionCantParse();
+//		throw qucs::ExceptionCantParse();
 //	}
 //	s = s.mid(1, s.length()-2);   // cut off start and end character
 
@@ -665,7 +665,7 @@ Symbol* LegacySchematicLanguage::parseSymbol(istream_t& cs, Symbol* sym) const
 		int cx=n.toInt(&ok);
 		qDebug() << "cx" << cx;
 		if(!ok){ untested();
-			throw Exception("xposition parse");
+			throw qucs::Exception("xposition parse");
 		}else{
 			sym->setParameter("$xposition", std::to_string(cx));
 			//	sym->setParameter(3, std::to_string(cx));
@@ -674,7 +674,7 @@ Symbol* LegacySchematicLanguage::parseSymbol(istream_t& cs, Symbol* sym) const
 		n  = s.section(' ',4,4);    // cy
 		int cy=n.toInt(&ok);
 		if(!ok){ untested();
-			throw Exception("yposition parse");
+			throw qucs::Exception("yposition parse");
 		}else{
 			sym->setParameter("$yposition", std::to_string(cy));
 			//	sym->setParameter(4, std::to_string(cy));
@@ -683,7 +683,7 @@ Symbol* LegacySchematicLanguage::parseSymbol(istream_t& cs, Symbol* sym) const
 		n  = s.section(' ',5,5);    // tx
 		tmp = n.toInt(&ok);
 		if(!ok){ untested();
-			throw Exception("tx parse");
+			throw qucs::Exception("tx parse");
 		}else{
 			(void)tmp;
 			//		sym->setParameter("$ttx", std::to_string(tmp));
@@ -692,7 +692,7 @@ Symbol* LegacySchematicLanguage::parseSymbol(istream_t& cs, Symbol* sym) const
 		n  = s.section(' ',6,6);    // ty
 		tmp = n.toInt(&ok);
 		if(!ok){ untested();
-			throw Exception("ty parse");
+			throw qucs::Exception("ty parse");
 		}else{
 			(void)tmp;
 			//		sym->setParameter("$tty", std::to_string(tmp));
@@ -702,7 +702,7 @@ Symbol* LegacySchematicLanguage::parseSymbol(istream_t& cs, Symbol* sym) const
 			n  = s.section(' ',7,7);    // mirror y axis
 			int nn = n.toInt(&ok);
 			if(!ok){ untested();
-				throw Exception("vflip parse");
+				throw qucs::Exception("vflip parse");
 			}else{
 				int vflip = 1-2*nn;
 				assert(vflip==1 || vflip==-1);
@@ -737,7 +737,7 @@ Symbol* LegacySchematicLanguage::parseSymbol(istream_t& cs, Symbol* sym) const
 			trace2("legacy:set", position, n);
 			try{
 				sym->setParameter(position + offset, n);
-			}catch(ExceptionCantFind const*){ untested();
+			}catch(qucs::ExceptionCantFind const*){ untested();
 				incomplete(); // CS has error messages...
 				error(5, "cannot parse Symbol param " +
 						std::to_string(position + offset) + " in " + sym->label());

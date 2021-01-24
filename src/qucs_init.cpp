@@ -16,7 +16,7 @@
 # include <config.h>
 #endif
 
-#include "qucs.h"
+#include "qucs_app.h"
 #include "octave_window.h"
 #include "misc.h"
 #include "io_trace.h"

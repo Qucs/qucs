@@ -15,7 +15,7 @@
  *                                                                         *
  ***************************************************************************/
 #include "etr_sim.h"
-#include "qucs.h"
+#include "qucs_app.h"
 
 
 ETR_Sim::ETR_Sim()

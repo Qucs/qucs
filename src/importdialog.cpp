@@ -26,7 +26,7 @@
 #include <QDebug>
 
 #include "importdialog.h"
-#include "qucs.h"
+#include "qucs_app.h"
 
 
 ImportDialog::ImportDialog(QWidget *parent)

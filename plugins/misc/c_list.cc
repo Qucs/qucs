@@ -23,10 +23,11 @@
 #include "e_cardlist.h"
 #include "u_lang.h"
 //#include "c_comand.h"
-#include "globals.h"
+#include "qucs_globals.h"
 /*--------------------------------------------------------------------------*/
 // QUCS hacks
 #include "command.h"
+#include "exception.h"
 #include "io.h"
 #include "settings.h"
 #include "command.h"
@@ -72,7 +73,7 @@ void list_save(CS& cmd, ostream_t& out, CARD_LIST* scope)
   }
 
   if (!OPT::language) { untested();
-    throw Exception("no language");
+    throw qucs::Exception("no language");
   }else{ untested();
   }
 
@@ -104,7 +105,7 @@ void list_save(CS& cmd, ostream_t& out, CARD_LIST* scope)
       : findbranch(cmd, scope);
     if (ci.is_end()) {untested();
       trace2("cantfind", cmd.fullstring(), cmd.tail());
-      throw Exception_CS("can't find", cmd);
+      throw qucs::Exception_CS("can't find", cmd);
     }else{ untested();
     }
     
@@ -120,7 +121,7 @@ void list_save(CS& cmd, ostream_t& out, CARD_LIST* scope)
 	CARD_LIST::fat_iterator stop = ci;
 	stop = findbranch(cmd, ++stop);
 	if (stop.is_end()) {itested();
-	  throw Exception_CS("can't find", cmd);
+	  throw qucs::Exception_CS("can't find", cmd);
 	}else{ untested();
 	  do { untested();
 	    OPT::language->print_item(out, *ci);

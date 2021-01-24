@@ -14,7 +14,7 @@
 #include "command.h"
 #include "io.h"
 #include "schematic_model.h"
-#include "globals.h"
+#include "qucs_globals.h"
 #include "painting.h"
 #include "language.h"
 #include "symbol.h"

@@ -34,7 +34,7 @@
 #include <QMessageBox>
 
 #include "phasordiagram.h"
-#include "qucs.h"
+#include "qucs_app.h"
 #include "misc.h"
 
 PhasorDiagram::PhasorDiagram(int _cx, int _cy) : Diagram(_cx, _cy)

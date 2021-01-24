@@ -15,7 +15,7 @@
 #include "misc.h"
 #include "schematic_doc.h"
 #include "painting.h"
-#include "globals.h"
+#include "qucs_globals.h"
 #include "module.h"
 
 #include <QPainter>

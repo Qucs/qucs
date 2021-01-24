@@ -24,7 +24,7 @@
 //testing=script,sparse 2006.07.16
 // #include "constant.h"
 #include "command.h"
-#include "globals.h"
+#include "qucs_globals.h"
 /*--------------------------------------------------------------------------*/
 #define CS istream_t
 #define CMD Command

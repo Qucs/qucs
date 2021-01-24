@@ -24,13 +24,13 @@
 #include <QGraphicsItem>
 
 #include "schematic_doc.h"
-#include "qucs.h"
+#include "qucs_app.h"
 #include "misc.h"
-#include "globals.h"
+#include "qucs_globals.h"
 #include "schematic_action.h"
 #include "schematic_dialog.h"
 #include "schematic_edit.h"
-#include "globals.h"
+#include "qucs_globals.h"
 
 #include "changedialog.h"
 //#include "components/component.h" // BUG
@@ -231,7 +231,7 @@ void transformElement(Element* e, qucsSymbolTransform a, pos_t pivot)
 			// 1  |-> 0
 			// -1 |-> 1
 			mx = (1 - hflip) / 2;
-		}catch(ExceptionCantFind const&){ untested();
+		}catch(qucs::ExceptionCantFind const&){ untested();
 			incomplete();
 		}
 		try {itested();
@@ -241,7 +241,7 @@ void transformElement(Element* e, qucsSymbolTransform a, pos_t pivot)
 			// 1  |-> 0
 			// -1 |-> 1
 			my = (1 - vflip) / 2;
-		}catch(ExceptionCantFind const&){ untested();
+		}catch(qucs::ExceptionCantFind const&){ untested();
 			unreachable();
 		}
 		try {itested();
@@ -250,7 +250,7 @@ void transformElement(Element* e, qucsSymbolTransform a, pos_t pivot)
 			assert(!(angle%90));
 			assert(angle<360);
 			r = angle/90;
-		}catch(ExceptionCantFind const&){ untested();
+		}catch(qucs::ExceptionCantFind const&){ untested();
 			unreachable();
 		}
 

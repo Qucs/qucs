@@ -1,6 +1,6 @@
 #include "qucs_tabs.h"
 #include "qucsdoc.h"
-#include "qucs.h" // gaah
+#include "qucs_app.h" // gaah
 #include "io_trace.h"
 
 #include <QTabBar>
