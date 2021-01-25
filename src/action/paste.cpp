@@ -14,6 +14,7 @@
 #include <QClipboard>
 #include "docfmt.h"
 #include "sckt_base.h"
+#include "io.h"
 
 static const std::string cnp_lang = "leg_sch";
 /*--------------------------------------------------------------------------*/

@@ -26,6 +26,7 @@
 #include <QList> // yikes.
 #include "../qucs-lib/qucslib_common.h"
 #include "command.h"
+#include "io.h"
 
 namespace{
 
@@ -77,7 +78,7 @@ void LIB::do_it(istream_t&, SchematicModel*)
 #endif
 
 	 trace2("scanning", QucsSettings.libDir(), &QucsSettings);
-	 QDir SysLibDir(QucsSettings.libDir());
+	 QDir SysLibDir(QString_(QucsSettings.libDir()));
     // system libraries
     QStringList SysLibFiles = SysLibDir.entryList(QStringList("*.lib"), QDir::Files, QDir::Name);
     foreach(QString s, SysLibFiles) {

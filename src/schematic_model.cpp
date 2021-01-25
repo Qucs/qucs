@@ -65,16 +65,6 @@ void SchematicModel::clear()
 	//SymbolPaints.clear(); ??
 }
 /*--------------------------------------------------------------------------*/
-QString const& SchematicModel::devType() const
-{ untested();
-	return DevType;
-}
-/*--------------------------------------------------------------------------*/
-void SchematicModel::setDevType(QString const& s)
-{
-	DevType = s;
-}
-/*--------------------------------------------------------------------------*/
 // called from schematic::erase only
 // // possibly not needed. all actions must be undoable anyway
 // -> use detach, store reference in UndoAction.

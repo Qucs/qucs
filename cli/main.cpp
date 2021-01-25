@@ -54,6 +54,7 @@
 #include "exception.h"
 #include "qucs_globals.h"
 #include "library.h"
+#include "io.h"
 /*--------------------------------------------------------------------------*/
 // qucs hacks and wraps
 #define CS istream_t

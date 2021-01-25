@@ -25,6 +25,7 @@
 // #include "u_status.h"
 // #include "declare.h"	/* plclose */
 #include "error.h"
+#include "io.h"
 #include "command.h"
 #include "qucs_globals.h"
 #include "schematic_model.h"

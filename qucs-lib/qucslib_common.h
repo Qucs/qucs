@@ -215,7 +215,7 @@ inline int makeModelString (QString libPath, QString compname, QString
 // absolute paths (user libs) remain unchanged
 inline QString getLibAbsPath(QString libPath)
 {
-    QDir libdir(QucsSettings.libDir()); // system libraries paths
+    QDir libdir(QString::fromStdString(QucsSettings.libDir())); // system libraries paths
     QString libAbsPath = libdir.absoluteFilePath(libPath + ".lib");
     return libAbsPath;
 }

@@ -24,6 +24,7 @@
 #include "qucsator.h"
 #include "dat.h"
 #include "painting.h"
+#include "io.h"
 /* -------------------------------------------------------------------------------- */
 namespace {
 /* -------------------------------------------------------------------------------- */
@@ -169,7 +170,7 @@ void Qucsator::do_it(istream_t& cs, SchematicModel const* scope)
 	}
 
 	// possibly not a good idea.
-	QString f = QucsSettings.QucsHomeDir.filePath("netlist.txt");
+	QString f = QDir_(QucsSettings.QucsHomeDir).filePath("netlist.txt");
 
 	message(QucsMsgLog, "writing " + f.toStdString() + "...");
 
@@ -226,15 +227,15 @@ void Qucsator::do_it(istream_t& cs, SchematicModel const* scope)
 //		DataSet = "/dev/stdout";
 	}
 
-	QString Program = QucsSettings.Qucsator;
+	QString Program = QString_(QucsSettings.Qucsator);
 	if(Program==""){
 		unreachable();
-		Program="qucsator";
+		Program = "qucsator";
 	}else{
 	}
 	QStringList Arguments;
 	Arguments << "-b" << "-g" << "-i"
-		<< QucsSettings.QucsHomeDir.filePath("netlist.txt")
+		<< QDir_(QucsSettings.QucsHomeDir).filePath("netlist.txt")
 		<< "-o" << DataSet;
 
 	trace2("start", Program, DataSet);

@@ -54,9 +54,15 @@ bool loadSettings()
     // Qucs general settings
     if(settings.contains("QucsHomeDir"))
       if(settings.value("QucsHomeDir").toString() != "")
-         QucsSettings.QucsHomeDir.setPath(settings.value("QucsHomeDir").toString());
-    if(settings.contains("font"))QucsSettings.font.fromString(settings.value("font").toString());
-    if(settings.contains("Language"))QucsSettings.Language=settings.value("Language").toString();
+         QucsSettings.QucsHomeDir = str_(settings.value("QucsHomeDir").toString());
+    if(settings.contains("font")){
+		 QucsSettings.font = str_(settings.value("font").toString());
+	 }else{
+	 }
+    if(settings.contains("Language")) {
+		 QucsSettings.Language = str_(settings.value("Language").toString());
+	 }else{
+	 }
 
   return true;
 }
@@ -88,52 +94,53 @@ int main(int argc, char *argv[])
 { untested();
   QApplication a(argc, argv);
 
-  // apply default settings
+  // set default settings
   QucsSettings.x = 100;
   QucsSettings.y = 50;
   QucsSettings.dx = 600;
   QucsSettings.dy = 350;
-  QucsSettings.font = QFont("Helvetica", 12);
-  QucsSettings.QucsHomeDir.setPath(QDir::homePath() + "/.qucs");
+  QucsSettings.font = "Helvetica";
+  QucsSettings.QucsHomeDir = str_(QDir::homePath() + "/.qucs");
 
   // is application relocated?
   char * var = getenv ("QUCSDIR");
   QDir QucsDir;
-  if (var != NULL) {
+  if (var) {
     QucsDir = QDir(QString(var));
-    QucsSettings.LangDir =     QucsDir.canonicalPath() + "/share/qucs/lang/";
-    QucsSettings.setLibDir(   QucsDir.canonicalPath() + "/share/qucs/library/" );
+    QucsSettings.LangDir =    str_(QucsDir.canonicalPath() + "/share/qucs/lang");
+    QucsSettings.setLibDir(   str_(QucsDir.canonicalPath() + "/share/qucs/library") );
   } else {
     QString QucsApplicationPath = QCoreApplication::applicationDirPath();
-#ifdef __APPLE__
-    QucsDir = QDir(QucsApplicationPath.section("/bin",0,0));
-#else
+// platform.h? config.h??
+//#ifdef __APPLE__
+//    QucsDir = QDir(QucsApplicationPath.section("/bin",0,0));
+//#else
     QucsDir = QDir(QucsApplicationPath);
     QucsDir.cdUp();
-#endif
-    QucsSettings.LangDir = QucsDir.canonicalPath() + "/share/qucs/lang/";
-    QucsSettings.setLibDir( QucsDir.canonicalPath() + "/share/qucs/library/" );
+// #endif
+    QucsSettings.LangDir =    str_(QucsDir.canonicalPath() + "/share/qucs/lang");
+    QucsSettings.setLibDir(   str_(QucsDir.canonicalPath() + "/share/qucs/library") );
   }
 
   if(char* qucslibdir=getenv("QUCS_LIBRARY")){
 	  trace1("QUCS_LIBRARY", qucslibdir);
-    QucsSettings.setLibDir( QDir(QString(qucslibdir)).canonicalPath());
+    QucsSettings.setLibDir( qucslibdir);
   }else{
 	  trace0("no QUCS_LIBRARY");
   }
 
   loadSettings();
 
-  SysLibDir.setPath(QucsSettings.libDir());
-  UserLibDir.setPath(QucsSettings.QucsHomeDir.canonicalPath() + "/user_lib/");
+  SysLibDir.setPath(QString_(QucsSettings.libDir()));
+  UserLibDir.setPath(QString_(QucsSettings.QucsHomeDir + "/user_lib"));
 
-  a.setFont(QucsSettings.font);
+  a.setFont(QString_(QucsSettings.font));
 
   QTranslator tor( 0 );
-  QString lang = QucsSettings.Language;
+  QString lang = QString_(QucsSettings.Language);
   if(lang.isEmpty())
     lang = QString(QLocale::system().name());
-  tor.load( QString("qucs_") + lang, QucsSettings.LangDir);
+  tor.load( QString("qucs_") + lang, QString_(QucsSettings.LangDir));
   a.installTranslator( &tor );
 
   QucsLib *qucs = new QucsLib();

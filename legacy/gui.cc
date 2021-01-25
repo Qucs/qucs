@@ -1,5 +1,18 @@
+/***************************************************************************
+    copyright            : 2020 Felix Salfelder
+ ***************************************************************************/
+
+/***************************************************************************
+ *                                                                         *
+ *   This program is free software; you can redistribute it and/or modify  *
+ *   it under the terms of the GNU General Public License as published by  *
+ *   the Free Software Foundation; either version 3 of the License, or     *
+ *   (at your option) any later version.                                   *
+ *                                                                         *
+ ***************************************************************************/
 
 #include "command.h"
+#include "io.h"
 #include "qucs_globals.h"
 #include "qucs_app.h"
 #include "module.h"
@@ -30,7 +43,7 @@ class g: public Command{
 		QucsSettings.y = h/8;
 		QucsSettings.dx = w*3/4;
 		QucsSettings.dy = h*3/4;
-		a.setFont(QucsSettings.font);
+		a.setFont(QString_(QucsSettings.font));
 
 		{
 			// set codecs
@@ -38,13 +51,13 @@ class g: public Command{
 			QTextCodec::setCodecForTr(QTextCodec::codecForName("UTF-8"));
 
 			QTranslator tor( 0 );
-			QString lang = QucsSettings.Language;
+			QString lang = QString_(QucsSettings.Language);
 			if(lang.isEmpty()) {
 				QLocale loc;
 				lang = loc.name();
 			}else{ untested();
 			}
-			tor.load( QString("qucs_") + lang, QucsSettings.LangDir);
+			tor.load( QString("qucs_") + lang, QString_(QucsSettings.LangDir));
 
 			a.installTranslator( &tor );
 		}

@@ -25,7 +25,7 @@
 #include <locale.h>
 
 #include <QString>
-#include <QFile>
+// #include <QFile>
 
 #include "qucs_app.h"
 #include "docfmt.h"
@@ -40,6 +40,7 @@
 #include "exception.h"
 #include "qucs_globals.h"
 #include "library.h"
+#include "io.h"
 
 #ifdef _WIN32
 #include <Windows.h>  //for OutputDebugString
@@ -182,83 +183,88 @@ int main(int argc, char *argv[])
   }else{
   }
 
-  QucsSettings.BinDir =      QucsDir.absolutePath() + "/bin/";
-  QucsSettings.LangDir =     QucsDir.canonicalPath() + "/share/qucs/lang/";
+  QucsSettings.BinDir =    str_(  QucsDir.absolutePath() + "/bin");
+  QucsSettings.LangDir =   str_(  QucsDir.canonicalPath() + "/share/qucs/lang");
 
   // BUG BUG BUG. not here
   var = getenv("QUCS_LIBRARY");
-  if(var != NULL) {
+  if(var) {
     trace2("QUCS_LIBRARY", var, QucsDir.canonicalPath());
-    QucsSettings.setLibDir(QString(var));
+    QucsSettings.setLibDir(var);
   }else{
     trace0("no QUCS_LIBRARY");
-    QucsSettings.setLibDir(QucsDir.canonicalPath() + "/share/qucs/library/");
+    QucsSettings.setLibDir(str_(QucsDir.canonicalPath() + "/share/qucs/library"));
   }
-  QucsSettings.OctaveDir =   QucsDir.canonicalPath() + "/share/qucs/octave/";
-  QucsSettings.ExamplesDir = QucsDir.canonicalPath() + "/share/qucs/examples/";
-  QucsSettings.DocDir =      QucsDir.canonicalPath() + "/share/qucs/docs/";
+  QucsSettings.OctaveDir =   str_(QucsDir.canonicalPath() + "/share/qucs/octave");
+  QucsSettings.ExamplesDir = str_(QucsDir.canonicalPath() + "/share/qucs/examples");
+  QucsSettings.DocDir =      str_(QucsDir.canonicalPath() + "/share/qucs/docs");
 
   attach_default_plugins();
 
   /// \todo Make the setting up of all executables below more consistent
+  // use PATH?
   var = getenv("QUCSATOR");
-  if(var != NULL) {
-      QucsSettings.Qucsator = QString(var);
+  if(var) {
+      QucsSettings.Qucsator = var;
   } else { untested();
-      QucsSettings.Qucsator = QucsSettings.BinDir + "qucsator" + executableSuffix;
+      QucsSettings.Qucsator = (QucsSettings.BinDir + "/qucsator" + executableSuffix);
   }
 
   var = getenv("QUCSCONV");
   if(var != NULL) {
-      QucsSettings.Qucsconv = QString(var);
+      QucsSettings.Qucsconv = var;
   }else{ untested();
-      QucsSettings.Qucsconv = QucsSettings.BinDir + "qucsconv" + executableSuffix;
-  }
-  QFile file(QucsSettings.Qucsconv);
-  if(!file.exists())
-      qWarning() << "QucsConv not found: " << QucsSettings.Qucsconv;
-
-
-  var = getenv("ADMSXMLBINDIR");
-  if(var != NULL) { untested();
-      QucsSettings.AdmsXmlBinDir.setPath(QString(var));
-  }else{
-      // default admsXml bindir same as Qucs
-      QString admsExec;
-      admsExec = QDir::toNativeSeparators(QucsSettings.BinDir+"/admsXml" executableSuffix);
-      QFile adms(admsExec);
-      if(adms.exists()){ untested();
-        QucsSettings.AdmsXmlBinDir.setPath(QucsSettings.BinDir);
-      }else{
-      }
-  }
-
-  var = getenv("ASCOBINDIR");
-  if(var != NULL)  { untested();
-      QucsSettings.AscoBinDir.setPath(QString(var));
-  }else{
-      // default ASCO bindir same as Qucs
-      QString ascoExec;
-      ascoExec = QDir::toNativeSeparators(QucsSettings.BinDir+"/asco" executableSuffix);
-      QFile asco(ascoExec);
-      if(asco.exists()){ untested();
-        QucsSettings.AscoBinDir.setPath(QucsSettings.BinDir);
-      }else{
-      }
+      QucsSettings.Qucsconv = (QucsSettings.BinDir + "/qucsconv" + executableSuffix);
   }
 
 
-  var = getenv("QUCS_OCTAVE");
-  if (var != NULL) { untested();
-      QucsSettings.QucsOctave = QString(var);
-  } else {
-      QucsSettings.QucsOctave.clear();
-  }
+//  QFile file(QucsSettings.Qucsconv);
+//  if(!file.exists()){
+//      qWarning() << "QucsConv not found: " << QucsSettings.Qucsconv;
+//  }else{
+//  }
 
-  if(!QucsSettings.BGColor.isValid())
-    QucsSettings.BGColor.setRgb(255, 250, 225);
+  // var = getenv("ADMSXMLBINDIR");
+  // if(var != NULL) { untested();
+  //     QucsSettings.AdmsXmlBinDir.setPath(QString(var));
+  // }else{
+  //     // default admsXml bindir same as Qucs
+  //     QString admsExec;
+  //     admsExec = QDir::toNativeSeparators(QucsSettings.BinDir+"/admsXml" executableSuffix);
+  //     QFile adms(admsExec);
+  //     if(adms.exists()){ untested();
+  //       QucsSettings.AdmsXmlBinDir.setPath(QucsSettings.BinDir);
+  //     }else{
+  //     }
+  // }
+
+  // var = getenv("ASCOBINDIR");
+  // if(var != NULL)  { untested();
+  //     QucsSettings.AscoBinDir.setPath(QString(var));
+  // }else{
+  //     // default ASCO bindir same as Qucs
+  //     QString ascoExec;
+  //     ascoExec = QDir::toNativeSeparators(QucsSettings.BinDir+"/asco" executableSuffix);
+  //     QFile asco(ascoExec);
+  //     if(asco.exists()){ untested();
+  //       QucsSettings.AscoBinDir.setPath(QucsSettings.BinDir);
+  //     }else{
+  //     }
+  // }
 
 
+//   var = getenv("QUCS_OCTAVE");
+//   if (var != NULL) { untested();
+//       QucsSettings.QucsOctave = QString(var);
+//   } else {
+//       QucsSettings.QucsOctave.clear();
+//   }
+// 
+//   if(!QucsSettings.BGColor.isValid())
+//     QucsSettings.BGColor.setRgb(255, 250, 225);
+// 
+// 
+ #if 0 // TODO: set values in constructor.
   // syntax highlighting
   if(!QucsSettings.Comment.isValid())
     QucsSettings.Comment = Qt::gray;
@@ -278,6 +284,7 @@ int main(int argc, char *argv[])
     QucsSettings.Directive = Qt::darkCyan;
   if(!QucsSettings.Task.isValid())
     QucsSettings.Task = Qt::darkRed;
+#endif
 
 
   // This seems to be neccessary on a few system to make strtod()

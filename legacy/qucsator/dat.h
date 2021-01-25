@@ -16,6 +16,8 @@
 // TODO: remove.
 /* -------------------------------------------------------------------------------- */
 #include "output.h"
+#include <QString>
+#include <QDateTime>
 
 #ifndef QUCS_LEGACY_DAT_H
 #define QUCS_LEGACY_DAT_H

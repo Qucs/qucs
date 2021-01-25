@@ -40,7 +40,7 @@ TextDoc::TextDoc(QucsApp *parent, const QString& initial_name, QWidget* owner)
 {
   App = parent; // BUG? should be in base class.
   TextFont = QFont("Courier New");
-  TextFont.setPointSize(QucsSettings.font.pointSize()-1);
+//  TextFont.setPointSize(QucsSettings.font.pointSize()-1);
   TextFont.setStyleHint(QFont::Courier);
   TextFont.setFixedPitch(true);
   document()->setDefaultFont(TextFont);
@@ -58,7 +58,7 @@ TextDoc::TextDoc(QucsApp *parent, const QString& initial_name, QWidget* owner)
   viewport()->setFocus();
 
   setWordWrapMode(QTextOption::NoWrap);
-  misc::setWidgetBackgroundColor(viewport(), QucsSettings.BGColor);
+//  misc::setWidgetBackgroundColor(viewport(), QucsSettings.BGColor);
   connect(this, SIGNAL(textChanged()), SLOT(slotSetChanged()));
   connect(this, SIGNAL(cursorPositionChanged()),
           SLOT(slotCursorPosChanged()));
@@ -452,7 +452,7 @@ float TextDoc::zoomBy(float s)
 void TextDoc::showNoZoom()
 {
   TextFont = QFont("Courier New");
-  TextFont.setPointSize(QucsSettings.font.pointSize()-1);
+  TextFont.setPointSize(1); // QucsSettings.font.pointSize()-1);  // fontSize?
   TextFont.setStyleHint(QFont::Courier);
   TextFont.setFixedPitch(true);
   document()->setDefaultFont(TextFont);

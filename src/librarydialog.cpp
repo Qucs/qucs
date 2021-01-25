@@ -258,7 +258,7 @@ void LibraryDialog::slotCreateNext()
     return;
   }
 
-  LibDir = QDir(QucsSettings.QucsHomeDir);
+  LibDir = QDir(QString::fromStdString(QucsSettings.homeDir()));
   if(!LibDir.cd("user_lib")) { // user library directory exists ?
     if(!LibDir.mkdir("user_lib")) { // no, then create it
       QMessageBox::warning(this, tr("Warning"),
@@ -268,7 +268,8 @@ void LibraryDialog::slotCreateNext()
     LibDir.cd("user_lib");
   }
 
-  LibFile.setFileName(QucsSettings.libDir() + NameEdit->text() + ".lib");
+  LibFile.setFileName(QString::fromStdString(QucsSettings.libDir())
+		  + QDir::separator() + NameEdit->text() + ".lib");
   if(LibFile.exists()) {
     QMessageBox::critical(this, tr("Error"), tr("A system library with this name already exists!"));
     return;

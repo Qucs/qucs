@@ -22,6 +22,7 @@
 //
 #include "language.h"
 #include "qucs_globals.h"
+#include "io.h"
 namespace{
 class LangSpice : public NetLang {
 private: // NetLang

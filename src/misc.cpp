@@ -279,11 +279,11 @@ QString misc::properAbsFileName(const QString& Name)
   QString s = Name;
   QFileInfo Info(s);
 
-  if(Info.isRelative())
-  {
+  if(Info.isRelative()) { untested();
       // if it's a relative file, look for it relative to the
       // working directory (the qucs home directory)
-      s = QucsSettings.QucsWorkDir.filePath(s);
+      s = QDir(QString::fromStdString(QucsSettings.QucsWorkDir)).filePath(s);
+  }else{ untested();
   }
   // return the clean path
   return QDir::cleanPath(s);

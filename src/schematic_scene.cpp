@@ -159,12 +159,6 @@ void SchematicScene::drawBackground(QPainter *painter, const QRectF &r)
 
 // scene::display(SchematicModel&)?
 // 'l' is a bit of a hack. let's see
-void SchematicModel::toScene(QGraphicsScene&, QList<ElementGraphics*>*) const
-{
-	incomplete(); // this is too strange.
-	assert(false); // obsolete
-}
-
 #if 0
 void SchematicScene::removeItem(Element const* xx)
 { unreachable();

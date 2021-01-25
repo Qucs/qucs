@@ -7,17 +7,18 @@
 
 // need some cleanup. but at least it works...
 
+// obsolete.
 inline int get_some_width(QString const& stmp)
 {
 	incomplete(); // crashes.
 	return 17;
 
-  QFont Font(QucsSettings.font); // default application font
+//  QFont Font(QucsSettings.font); // default application font
   // symbol text is smaller (10 pt default)
-  Font.setPointSize(10); 
+////  Font.setPointSize(10); 
   // get the small font size; use the screen-compatible metric
-  QFontMetrics  smallmetrics(Font, 0);
-  return smallmetrics.horizontalAdvance(stmp); // compute width to right-align
+//  QFontMetrics  smallmetrics(Font, 0);
+  return 2; // smallmetrics.horizontalAdvance(stmp); // compute width to right-align
 }
 
 class FontMetrics{
@@ -30,13 +31,13 @@ public:
 	int height() const{
 		//		incomplete
 		return 0;
-		QFontMetrics f(QucsSettings.font, 0); // crashes.
-		return f.height();
+//		QFontMetrics f(QucsSettings.font, 0); // crashes.
+//		return f.height();
 	}
 	int width(QString const& s) const{
 		return 0;
-		QFontMetrics f(QucsSettings.font, 0); // crashes.
-		return f.horizontalAdvance(s);
+//		QFontMetrics f(QucsSettings.font, 0); // crashes.
+//		return f.horizontalAdvance(s);
 	}
 	int ascent() const{
 		return 1;

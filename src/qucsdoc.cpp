@@ -256,7 +256,7 @@ bool QucsDoc::saveAs()
 		assert(w);
 
 		s = QFileDialog::getSaveFileName(w, QWidget::tr("Enter a Document Name"),
-				QucsSettings.QucsWorkDir.absolutePath(),
+				QDir(QString::fromStdString(QucsSettings.QucsWorkDir)).absolutePath(),
 				Filter);
 
 		if(s.isEmpty()) {

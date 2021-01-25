@@ -412,11 +412,6 @@ public:
 //  }
 
 public: // for now
-	TaskElement* loadtaskElement(const QString& _s, TaskElement* c) const{
-		assert(_model);
-		return _model->loadtaskElement(_s, c);
-	}
-
 	QString getParameter(std::string const& key) const;
 
 public:

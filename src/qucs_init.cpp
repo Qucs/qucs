@@ -861,7 +861,7 @@ void QucsApp::initMenuBar()
   helpMenu->addAction(helpOnline);
 
   //Fill submenu's with filenames of PDF documents
-  QDir TechnicalDir = QDir(QucsSettings.DocDir.replace('\\','/'));
+  QDir TechnicalDir = QDir(QString::fromStdString(QucsSettings.DocDir).replace('\\','/'));
 
   if(TechnicalDir.cd("technical"))
   {
@@ -882,7 +882,7 @@ void QucsApp::initMenuBar()
   }
 
 //Fill submenu's with filenames of PDF documents
-  QDir ReportDir = QDir(QucsSettings.DocDir.replace('\\','/'));
+  QDir ReportDir = QDir(QString::fromStdString(QucsSettings.DocDir).replace('\\','/'));
   if(ReportDir.cd("report"))
   {
     helpReport = new QMenu(tr("Technical &Reports"));
@@ -901,15 +901,15 @@ void QucsApp::initMenuBar()
   }
 
 //Fill submenu's with filenames of PDF documents
-  QDir TutorialDir = QDir(QucsSettings.DocDir.replace('\\','/'));
-  if(TutorialDir.cd("tutorial"))
-  {
+incomplete();
+#if 0
+  QDir TutorialDir = QDir(QString::fromStdString(QucsSettings.DocDir.replace('\\','/')));
+  if(TutorialDir.cd("tutorial")) {
     helpTutorial = new QMenu(tr("T&utorials"));
     helpMenu->addMenu(helpTutorial);
     TutorialDir.setFilter(QDir::Files);
     QStringList entries = TutorialDir.entryList();
-    for(int i=0;i<entries.size();i++)
-    {
+    for(int i=0;i<entries.size();i++) {
       QAction* helpTutorialActions = new QAction(entries[i], this);
       helpTutorialActions->setObjectName ( entries[i] );
       helpTutorialActions->setStatusTip(tr("Open ")+entries[i]);
@@ -917,7 +917,9 @@ void QucsApp::initMenuBar()
       connect(helpTutorialActions, SIGNAL(triggered()), SLOT(slotHelpTutorial()));
       helpTutorial->addAction(helpTutorialActions);
     }
+  }else{
   }
+#endif
 
   helpMenu->addSeparator();
   helpMenu->addAction(helpAboutApp);

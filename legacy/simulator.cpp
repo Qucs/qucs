@@ -27,6 +27,7 @@
 #include "misc.h"
 #include "settings.h"
 #include "sckt_base.h"
+#include "io.h"
 
 extern tQucsSettings QucsSettings;  // bug, settings.h
 /* -------------------------------------------------------------------------------- */

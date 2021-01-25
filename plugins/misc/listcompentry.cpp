@@ -14,6 +14,7 @@
 #include "task_element.h"
 #include "docfmt.h"
 #include "language.h"
+#include "io.h"
 #include <QFile>
 
 namespace {

@@ -22,6 +22,7 @@
 #include "diagram.h"
 #include "sckt_base.h"
 #include "data.h"
+#include "io.h"
 
 Element* DocumentLanguage::parseItem(istream_t& s, Element* c) const
 { untested();

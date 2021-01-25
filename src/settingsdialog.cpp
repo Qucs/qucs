@@ -303,6 +303,7 @@ void SettingsDialog::slotApply()
 
 AuxFilesDialog::AuxFilesDialog(QWidget *parent, const QString &filter) :QDialog(parent)
 {
+#if 0
   fileName = QString();
   model = new QFileSystemModel();
   model->setFilter(QDir::Files);
@@ -349,6 +350,7 @@ AuxFilesDialog::AuxFilesDialog(QWidget *parent, const QString &filter) :QDialog(
   OkButt->setDefault(true);
 
   resize(600, 300);
+#endif
 }
 
 void AuxFilesDialog::slotDoubleClick(const QModelIndex &index)

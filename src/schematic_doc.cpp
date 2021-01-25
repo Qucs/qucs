@@ -97,7 +97,7 @@ SchematicDoc::SchematicDoc(QucsApp* App_/*BUG?*/, const QString& Name_, QWidget*
   setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOn);
   setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOn);
 
-  misc::setWidgetBackgroundColor(viewport(), QucsSettings.BGColor);
+//  misc::setWidgetBackgroundColor(viewport(), QucsSettings.BGColor);
   assert(viewport());
   viewport()->setMouseTracking(true);
   viewport()->setAcceptDrops(true);  // enable drag'n drop
@@ -827,7 +827,7 @@ void SchematicDoc::contentsDragMoveEvent(QDragMoveEvent *Event)
 // use scene?
 void SchematicDoc::sceneAddItem(ElementGraphics* x)
 {
-	assert(false);
+	incomplete();
 	assert(scene());
 	scene()->addItem(x);
 	QGraphicsItem* g = x;

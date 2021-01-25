@@ -55,12 +55,12 @@ SymbolWidget::SymbolWidget(QWidget *parent) : QWidget(parent)
   y1 = 0;
   y2 = 0;
   PaintText = tr("Symbol:");
-  QFontMetrics  metrics(QucsSettings.font, 0); // use the the screen-compatible metric
-  TextWidth = metrics.horizontalAdvance(PaintText) + 4;    // get size of text
+//  QFontMetrics  metrics(QucsSettings.font, 0); // use the the screen-compatible metric
+  TextWidth = 12; // metrics.horizontalAdvance(PaintText) + 4;    // get size of text
 
   DragNDropText = tr("! Drag n'Drop me !");
-  DragNDropWidth = metrics.horizontalAdvance(DragNDropText);    // get size of text
-  TextHeight = metrics.lineSpacing();
+  DragNDropWidth = 19; // metrics.horizontalAdvance(DragNDropText);    // get size of text
+  TextHeight = 4; // metrics.lineSpacing();
 
   ///setPaletteBackgroundColor(Qt::white);
   QPalette palette;
@@ -109,8 +109,10 @@ void SymbolWidget::paintEvent(QPaintEvent*)
   QPainter Painter(this);
   Painter.drawText(2, 2, 0, 0, Qt::AlignLeft | Qt::TextDontClip, PaintText);
 
+#if 0
   QFontMetrics metrics(QucsSettings.font, 0);
   Painter.drawText(2, metrics.height(), 0, 0, Qt::AlignLeft | Qt::TextDontClip, Warning);
+#endif
 
   int dx = (x2-x1)/2 + TextWidth - DragNDropWidth/2;
   if(dx < 2)  dx = 2;
@@ -598,7 +600,7 @@ int SymbolWidget::analyseLine(const QString& Row)
 
     Texts.append(new Text(i1, i2, s, Color, float(i3)));
 
-    QFont Font(QucsSettings.font);
+    QFont Font(QString_(QucsSettings.font));
     Font.setPointSizeF(float(i3));
     QFontMetrics  metrics(Font, 0);  // use the the screen-compatible metric
     QSize r = metrics.size(0, s);  // get size of text

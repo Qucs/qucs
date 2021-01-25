@@ -97,10 +97,10 @@ QString EqnDefined::netlist() const
 // -------------------------------------------------------
 void EqnDefined::createSymbol()
 {  
-  QFont Font(QucsSettings.font); // default application font
-  // symbol text is smaller (10 pt default)
-  //Font.setPointSizeF(Font.pointSizeF()/1.2);  // symbol text size proportional to default font size
-  Font.setPointSize(10); // symbol text size fixed at 10 pt
+//  QFont Font(QucsSettings.font); // default application font
+//  // symbol text is smaller (10 pt default)
+//  //Font.setPointSizeF(Font.pointSizeF()/1.2);  // symbol text size proportional to default font size
+//  Font.setPointSize(10); // symbol text size fixed at 10 pt
   // get the small font size; use the screen-compatible metric
   FontMetrics  smallmetrics;
   smallmetrics.setSmall();

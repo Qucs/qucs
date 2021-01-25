@@ -56,6 +56,7 @@
 
 using namespace std;
 
+
 QucsSettingsDialog::QucsSettingsDialog(QucsApp *parent)
     : QDialog(parent)
 {
@@ -171,56 +172,56 @@ QucsSettingsDialog::QucsSettingsDialog(QucsApp *parent)
     QPalette p;
 
     ColorComment = new QPushButton(tr("Comment"), editorTab);
-    misc::setWidgetForegroundColor(ColorComment, QucsSettings.Comment);
-    misc::setWidgetBackgroundColor(ColorComment, QucsSettings.BGColor);
+    misc::setWidgetForegroundColor(ColorComment, QColor_(QucsSettings.Comment));
+    misc::setWidgetBackgroundColor(ColorComment, QColor_(QucsSettings.BGColor));
     connect(ColorComment, SIGNAL(clicked()), SLOT(slotColorComment()));
     editorGrid->addWidget(ColorComment,1,0);
 
     ColorString = new QPushButton(tr("String"), editorTab);
-    misc::setWidgetForegroundColor(ColorString, QucsSettings.String);
-    misc::setWidgetBackgroundColor(ColorString, QucsSettings.BGColor);
+    misc::setWidgetForegroundColor(ColorString, QColor_(QucsSettings.String));
+    misc::setWidgetBackgroundColor(ColorString, QColor_(QucsSettings.BGColor));
     connect(ColorString, SIGNAL(clicked()), SLOT(slotColorString()));
     editorGrid->addWidget(ColorString,1,1);
 
     ColorInteger = new QPushButton(tr("Integer Number"), editorTab);
-    misc::setWidgetForegroundColor(ColorInteger, QucsSettings.Integer);
-    misc::setWidgetBackgroundColor(ColorInteger, QucsSettings.BGColor);
+    misc::setWidgetForegroundColor(ColorInteger, QColor_(QucsSettings.Integer));
+    misc::setWidgetBackgroundColor(ColorInteger, QColor_(QucsSettings.BGColor));
     connect(ColorInteger, SIGNAL(clicked()), SLOT(slotColorInteger()));
     editorGrid->addWidget(ColorInteger,1,2);
 
     ColorReal = new QPushButton(tr("Real Number"), editorTab);
-    misc::setWidgetForegroundColor(ColorReal, QucsSettings.Real);
-    misc::setWidgetBackgroundColor(ColorReal, QucsSettings.BGColor);
+    misc::setWidgetForegroundColor(ColorReal, QColor_(QucsSettings.Real));
+    misc::setWidgetBackgroundColor(ColorReal, QColor_(QucsSettings.BGColor));
     connect(ColorReal, SIGNAL(clicked()), SLOT(slotColorReal()));
     editorGrid->addWidget(ColorReal,2,0);
 
     ColorCharacter = new QPushButton(tr("Character"), editorTab);
-    misc::setWidgetForegroundColor(ColorCharacter, QucsSettings.Character);
-    misc::setWidgetBackgroundColor(ColorCharacter, QucsSettings.BGColor);
+    misc::setWidgetForegroundColor(ColorCharacter, QColor_(QucsSettings.Character));
+    misc::setWidgetBackgroundColor(ColorCharacter, QColor_(QucsSettings.BGColor));
     connect(ColorCharacter, SIGNAL(clicked()), SLOT(slotColorCharacter()));
     editorGrid->addWidget(ColorCharacter,2,1);
 
     ColorDataType = new QPushButton(tr("Data Type"), editorTab);
-    misc::setWidgetForegroundColor(ColorDataType, QucsSettings.Type);
-    misc::setWidgetBackgroundColor(ColorDataType, QucsSettings.BGColor);
+    misc::setWidgetForegroundColor(ColorDataType, QColor_(QucsSettings.Type));
+    misc::setWidgetBackgroundColor(ColorDataType, QColor_(QucsSettings.BGColor));
     connect(ColorDataType, SIGNAL(clicked()), SLOT(slotColorDataType()));
     editorGrid->addWidget(ColorDataType,2,2);
 
     ColorAttribute = new QPushButton(tr("Attribute"), editorTab);
-    misc::setWidgetForegroundColor(ColorAttribute, QucsSettings.Attribute);
-    misc::setWidgetBackgroundColor(ColorAttribute, QucsSettings.BGColor);
+    misc::setWidgetForegroundColor(ColorAttribute, QColor_(QucsSettings.Attribute));
+    misc::setWidgetBackgroundColor(ColorAttribute, QColor_(QucsSettings.BGColor));
     connect(ColorAttribute, SIGNAL(clicked()), SLOT(slotColorAttribute()));
     editorGrid->addWidget(ColorAttribute,3,0);
 
     ColorDirective = new QPushButton(tr("Directive"), editorTab);
-    misc::setWidgetForegroundColor(ColorDirective, QucsSettings.Directive);
-    misc::setWidgetBackgroundColor(ColorDirective, QucsSettings.BGColor);
+    misc::setWidgetForegroundColor(ColorDirective, QColor_(QucsSettings.Directive));
+    misc::setWidgetBackgroundColor(ColorDirective, QColor_(QucsSettings.BGColor));
     connect(ColorDirective, SIGNAL(clicked()), SLOT(slotColorDirective()));
     editorGrid->addWidget(ColorDirective,3,1);
 
     ColorTask = new QPushButton(tr("Task"), editorTab);
-    misc::setWidgetForegroundColor(ColorTask, QucsSettings.Task);
-    misc::setWidgetBackgroundColor(ColorTask, QucsSettings.BGColor);
+    misc::setWidgetForegroundColor(ColorTask, QColor_(QucsSettings.Task));
+    misc::setWidgetBackgroundColor(ColorTask, QColor_(QucsSettings.BGColor));
     connect(ColorTask, SIGNAL(clicked()), SLOT(slotColorTask()));
     editorGrid->addWidget(ColorTask,3,2);
 
@@ -257,6 +258,8 @@ QucsSettingsDialog::QucsSettingsDialog(QucsApp *parent)
     fileTypesGrid->addWidget(fileTypesTableWidget,1,0,3,1);
 
     // fill listview with already registered file extensions
+	 // TODO: map fie extensions to lanuages?
+#if 0
     QStringList::Iterator it = QucsSettings.FileTypes.begin();
     while(it != QucsSettings.FileTypes.end())
     {
@@ -270,6 +273,7 @@ QucsSettingsDialog::QucsSettingsDialog(QucsApp *parent)
         fileTypesTableWidget->setItem(row, 1, program);
         it++;
     }
+#endif
 
     QLabel *l5 = new QLabel(tr("Suffix:"), fileTypesTab);
     fileTypesGrid->addWidget(l5,1,1);
@@ -397,26 +401,26 @@ QucsSettingsDialog::QucsSettingsDialog(QucsApp *parent)
 
     // ...........................................................
     // fill the fields with the Qucs-Properties
-    Font  = QucsSettings.font;
+    Font  = QString::fromStdString(QucsSettings.font);
     FontButton->setText(Font.toString());
     QString s = QString::number(QucsSettings.largeFontSize, 'f', 1);
     LargeFontSizeEdit->setText(s);
 
-    misc::setPickerColor(BGColorButton, QucsSettings.BGColor);
+    misc::setPickerColor(BGColorButton, QColor_(QucsSettings.BGColor));
 
     undoNumEdit->setText(QString::number(QucsSettings.maxUndo));
-    editorEdit->setText(QucsSettings.Editor);
+    editorEdit->setText(QString::fromStdString(QucsSettings.Editor));
     checkWiring->setChecked(QucsSettings.NodeWiring);
 
     for(int z=LanguageCombo->count()-1; z>=0; z--)
-        if(LanguageCombo->itemText(z).section('(',1,1).remove(')') == QucsSettings.Language)
+        if(LanguageCombo->itemText(z).section('(',1,1).remove(')') == QString::fromStdString(QucsSettings.Language))
             LanguageCombo->setCurrentIndex(z);
 
     /*! Load paths from settings */
-    homeEdit->setText(QucsSettings.QucsHomeDir.canonicalPath());
-    admsXmlEdit->setText(QucsSettings.AdmsXmlBinDir.canonicalPath());
-    ascoEdit->setText(QucsSettings.AscoBinDir.canonicalPath());
-    octaveEdit->setText(QucsSettings.OctaveExecutable);
+    homeEdit->setText(QDir_(QucsSettings.homeDir()).canonicalPath());
+//    admsXmlEdit->setText(QucsSettings.AdmsXmlBinDir.canonicalPath());
+//    ascoEdit->setText(QucsSettings.AscoBinDir.canonicalPath());
+//    octaveEdit->setText(QucsSettings.OctaveExecutable);
 
 
     resize(300, 200);
@@ -499,20 +503,19 @@ void QucsSettingsDialog::slotApply()
     bool homeDirChanged = false;
 
     // check QucsHome is changed, will require to close all files and refresh tree
-    if (homeEdit->text() != QucsSettings.QucsHomeDir.path()) {
+    if (homeEdit->text() != QDir_(QucsSettings.homeDir()).path()) {
       // close all open files, asking the user whether to save the modified ones
       // if user aborts closing, just return
       if(!App->closeAllFiles()) return;
 
-      QucsSettings.QucsHomeDir.setPath(homeEdit->text());
+      QucsSettings.setHomeDir(homeEdit->text().toStdString());
       homeDirChanged = true;
       // later below the file tree will be refreshed
     }
 
     QColor curColor = misc::getWidgetBackgroundColor(BGColorButton);
-    if(QucsSettings.BGColor != curColor)
-    {
-        QucsSettings.BGColor = curColor;
+    if(QColor_(QucsSettings.BGColor) != curColor) {
+        QucsSettings.BGColor = str_(curColor);
 
         int No=0;
         QWidget *w;
@@ -526,88 +529,51 @@ void QucsSettingsDialog::slotApply()
           } else {
             vp = ((SchematicDoc*)w)->viewport();
           }
-          misc::setWidgetBackgroundColor(vp, QucsSettings.BGColor);
+          misc::setWidgetBackgroundColor(vp, QColor_(QucsSettings.BGColor));
         }
         changed = true;
     }
 
-    QucsSettings.font=Font;
+    QucsSettings.font = str_(Font);
 
     QucsSettings.Language =
-        LanguageCombo->currentText().section('(',1,1).remove(')');
+        LanguageCombo->currentText().section('(',1,1).remove(')').toStdString();
 
     curColor = misc::getWidgetForegroundColor(ColorComment);
-    if(QucsSettings.Comment != curColor)
-    {
-        QucsSettings.Comment = curColor;
-        changed = true;
-    }
+    QucsSettings.Comment = str_(curColor);
+
     curColor = misc::getWidgetForegroundColor(ColorString);
-    if(QucsSettings.String != curColor)
-    {
-        QucsSettings.String = curColor;
-        changed = true;
-    }
+	 QucsSettings.String = str_(curColor);
+
     curColor = misc::getWidgetForegroundColor(ColorInteger);
-    if(QucsSettings.Integer != curColor)
-    {
-        QucsSettings.Integer = curColor;
-        changed = true;
-    }
+	 QucsSettings.Integer = str_(curColor);
+
     curColor = misc::getWidgetForegroundColor(ColorReal);
-    if(QucsSettings.Real != curColor)
-    {
-        QucsSettings.Real = curColor;
-        changed = true;
-    }
+	 QucsSettings.Real = str_(curColor);
+
     curColor = misc::getWidgetForegroundColor(ColorCharacter);
-    if(QucsSettings.Character != curColor)
-    {
-        QucsSettings.Character = curColor;
-        changed = true;
-    }
+	 QucsSettings.Character = str_(curColor);
+
     curColor = misc::getWidgetForegroundColor(ColorDataType);
-    if(QucsSettings.Type != curColor)
-    {
-        QucsSettings.Type = curColor;
-        changed = true;
-    }
+	 QucsSettings.Type = str_(curColor);
+
     curColor = misc::getWidgetForegroundColor(ColorAttribute);
-    if(QucsSettings.Attribute != curColor)
-    {
-        QucsSettings.Attribute = curColor;
-        changed = true;
-    }
+	 QucsSettings.Attribute = str_(curColor);
+
     curColor = misc::getWidgetForegroundColor(ColorDirective);
-    if(QucsSettings.Directive != curColor)
-    {
-        QucsSettings.Directive = curColor;
-        changed = true;
-    }
+    QucsSettings.Directive = str_(curColor);
+
     curColor = misc::getWidgetForegroundColor(ColorTask);
-    if(QucsSettings.Task != curColor)
-    {
-        QucsSettings.Task = curColor;
-        changed = true;
-    }
+    QucsSettings.Task = str_(curColor);
 
+	 changed = true;
     bool ok;
-    if(QucsSettings.maxUndo != undoNumEdit->text().toUInt(&ok))
-    {
-        QucsSettings.maxUndo = undoNumEdit->text().toInt(&ok);
-        changed = true;
-    }
-    if(QucsSettings.Editor != editorEdit->text())
-    {
-        QucsSettings.Editor = editorEdit->text();
-        changed = true;
-    }
-    if(QucsSettings.NodeWiring != (unsigned)checkWiring->isChecked())
-    {
-        QucsSettings.NodeWiring = checkWiring->isChecked();
-        changed = true;
-    }
 
+    QucsSettings.maxUndo = undoNumEdit->text().toInt(&ok);
+    QucsSettings.Editor = editorEdit->text().toStdString();
+    QucsSettings.NodeWiring = checkWiring->isChecked();
+
+#if 0
     QucsSettings.FileTypes.clear();
     for (int row=0; row < fileTypesTableWidget->rowCount(); row++)
     {
@@ -615,11 +581,12 @@ void QucsSettingsDialog::slotApply()
                                       +"/"+
                                       fileTypesTableWidget->item(row,1)->text());
     }
+#endif
 
     /*! Update QucsSettings, tool paths */
-    QucsSettings.AdmsXmlBinDir.setPath(admsXmlEdit->text());
-    QucsSettings.AscoBinDir.setPath(ascoEdit->text());
-    QucsSettings.OctaveExecutable = octaveEdit->text();
+    // QucsSettings.AdmsXmlBinDir.setPath(admsXmlEdit->text());
+    // QucsSettings.AscoBinDir.setPath(ascoEdit->text());
+    // QucsSettings.OctaveExecutable = octaveEdit->text();
 
     if (QucsSettings.IgnoreFutureVersion != checkLoadFromFutureVersions->isChecked()) {
       QucsSettings.IgnoreFutureVersion = checkLoadFromFutureVersions->isChecked();
@@ -707,7 +674,8 @@ void QucsSettingsDialog::slotBGColorDialog()
 void QucsSettingsDialog::slotDefaultValues()
 {
     QPalette p;
-    Font = QFont("Helvetica", 12);
+    Font = QFont("Helvetica");
+    // FontSize = 12;
     FontButton->setText(Font.toString());
     LargeFontSizeEdit->setText(QString::number(16.0));
 
@@ -926,7 +894,7 @@ void QucsSettingsDialog::slotAddPath()
 {
   QString d = QFileDialog::getExistingDirectory
     (this, tr("Select a directory"),
-     QucsSettings.QucsWorkDir.canonicalPath(),
+     QDir_(QucsSettings.QucsWorkDir).canonicalPath(),
      QFileDialog::ShowDirsOnly | QFileDialog::DontResolveSymlinks);
 
   if(!d.isEmpty())
@@ -946,7 +914,7 @@ void QucsSettingsDialog::slotAddPathWithSubFolders()
     // open a file dialog to select the top level directory
     QString d = QFileDialog::getExistingDirectory
       (this, tr("Select a directory"),
-       QucsSettings.QucsWorkDir.canonicalPath(),
+       QDir_(QucsSettings.QucsWorkDir).canonicalPath(),
        QFileDialog::ShowDirsOnly | QFileDialog::DontResolveSymlinks);
 
     QString path;

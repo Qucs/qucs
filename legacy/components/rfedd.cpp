@@ -114,9 +114,9 @@ QString RFedd::netlist() const
 // -------------------------------------------------------
 void RFedd::createSymbol()
 {
-  QFont Font(QucsSettings.font); // default application font
-  // symbol text is smaller (10 pt default)
-  Font.setPointSize(10); 
+  //QFont Font(QucsSettings.font); // default application font
+  //// symbol text is smaller (10 pt default)
+  //Font.setPointSize(10); 
   // get the small font size; use the screen-compatible metric
   FontMetrics  smallmetrics;
   int fHeight = smallmetrics.lineSpacing();

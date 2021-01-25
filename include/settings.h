@@ -1,72 +1,77 @@
 #ifndef QUCS_SETTINGS_H
 #define QUCS_SETTINGS_H
 
-#include <QFont>
-#include <QColor>
-#include <QDir>
+// #include <QFont>
+// #include <QColor>
+// #include <QDir>
 #include "qt_compat.h"
 #include "io_trace.h"
 
 class Simulator;
 class DocumentLanguage;
 
+// BUG: class. fix visibility
 struct tQucsSettings {
 	explicit tQucsSettings();
 	tQucsSettings(tQucsSettings const&) = delete;
   int x, y, dx, dy;    // position and size of main window
-  QFont font;
+  std::string font;
   float largeFontSize;
-  QColor BGColor;      // background color of view area
-  QString Language;
+  std::string BGColor;      // background color of view area
+  std::string Language;
   static DocumentLanguage* language;
 
   // syntax highlighting
-  QColor Comment, String, Integer, Real, Character, Type,
+  std::string Comment, String, Integer, Real, Character, Type,
     Attribute, Directive, Task;
 
   unsigned int maxUndo;    // size of undo stack
-  QString Editor;
-  QString Qucsator;
-  QString Qucsconv;
-  QString BinDir;
-  QString LangDir;
-  QString const& libDir() const{ return _libDir;}
-  void setLibDir(QString const& l){
+  std::string Editor;
+  std::string Qucsator;
+  std::string Qucsconv;
+  std::string BinDir;
+  std::string LangDir;
+  std::string const& libDir() const{ return _libDir;}
+  void setLibDir(std::string const& l){
 	  trace1("setLibDir", l);
 	  _libDir = l;
   }
-  QString OctaveDir;  // m-files location
-  QString ExamplesDir;
-  QString DocDir;
+  std::string OctaveDir;  // m-files location
+  std::string ExamplesDir;
+  std::string DocDir;
 
   unsigned int NodeWiring;
-  QDir QucsWorkDir; // Qucs user directory where user currently works (usually QucsHomeDir or subdir)
-  QDir QucsHomeDir; // Qucs initial user projects directory
-  QDir projsDir; // current user directory where projects are located
-  QDir AdmsXmlBinDir;  // dir of admsXml executable
-  QDir AscoBinDir;     // dir of asco executable
+  std::string QucsWorkDir; // Qucs user directory where user currently works (usually QucsHomeDir or subdir)
+  std::string QucsHomeDir; // Qucs initial user projects directory
+  std::string projsDir; // current user directory where projects are located
+  std::string AdmsXmlBinDir;  // dir of admsXml executable
+  std::string AscoBinDir;     // dir of asco executable
   // QDir OctaveBinDir;   // dir of octave executable
-  QString OctaveExecutable; // OctaveExecutable location
-  QString QucsOctave; // OUCS_OCTAVE variable
+  std::string OctaveExecutable; // OctaveExecutable location
+  std::string QucsOctave; // OUCS_OCTAVE variable
 
   // registered filename extensions with program to open the file
-  QStringList FileTypes;
+  std::string FileTypes;
 
   // List of extensions used for spice files
-  QStringList spiceExtensions;
+  std::string spiceExtensions;
 
   unsigned int numRecentDocs;
-  QStringList RecentDocs;
+  std::string RecentDocs;
 
   bool IgnoreFutureVersion;
   bool GraphAntiAliasing;
   bool TextAntiAliasing;
   bool ShowDescriptionProjectTree;
 
+public:
+  void setHomeDir(std::string const& s) { QucsHomeDir = s; }
+  std::string const& homeDir() const { return QucsHomeDir; }
+
   void setSimulator(Simulator const* s);
   Simulator const* simulator() const;
 private:
-  QString _libDir;
+  std::string _libDir;
   Simulator const* _simulator;
 };
 extern tQucsSettings QucsSettings;

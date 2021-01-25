@@ -37,6 +37,7 @@
 #include "mnemo.h"
 #include "schematic_doc.h"
 #include "platform.h"
+#include "io.h"
 
 // #include "diagrams/rect3ddiagram.h" // BUG
 #include "misc.h"
@@ -1526,6 +1527,7 @@ void Diagram::calcSmithAxisScale(Axis *Axis, int& GridX, int& GridY)
 }
 
 // ------------------------------------------------------------
+// // move
 void Diagram::createSmithChart(Axis *Axis, int Mode)
 { untested();
   int GridX;    // number of arcs with re(z)=const
@@ -1654,8 +1656,8 @@ void Diagram::createSmithChart(Axis *Axis, int Mode)
     if(!Below)  y = 0;
     Lines.append(new Line(x, dx2+m, x, dx2-y, GridPen));
 
-    if(Below)  y = 4;
-    else  y = y2-4-QucsSettings.font.pointSize();
+//    if(Below)  y = 4;
+//    else  y = y2-4-QucsSettings.font.pointSize();
     Texts.append(new Text(0, y, misc::StringNum(Axis->up)));
   }
 
@@ -1702,6 +1704,7 @@ void Diagram::calcPolarAxisScale(Axis *Axis, double& numGrids,
 // ------------------------------------------------------------
 void Diagram::createPolarDiagram(Axis *Axis, int Mode)
 { untested();
+#if 0 // not here.
   xAxis.low  = xAxis.min;
   xAxis.up   = xAxis.max;
   Axis->low = 0.0;
@@ -1765,6 +1768,7 @@ void Diagram::createPolarDiagram(Axis *Axis, int Mode)
   QSize r = metrics.size(0, Texts.last()->s);  // width of text
   len = x2+r.width()-4;   // more space at the right
   if(len > x3)  x3 = len;
+#endif
 }
 
 /*!
