@@ -21,6 +21,7 @@
 #include <QTranslator>
 #include <QTextCodec>
 #include <QDesktopWidget>
+#include "qt_compat.h"
 
 namespace{
 

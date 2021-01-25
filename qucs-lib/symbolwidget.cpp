@@ -34,6 +34,7 @@
 #include "symbolwidget.h"
 #include "qucslib.h"
 #include "qucslib_common.h"
+#include "qt_compat.h"
 
 /*!
  * \file symbolwidget.cpp

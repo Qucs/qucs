@@ -33,6 +33,7 @@
 #include <QSettings>
 #include <QDebug>
 #include "qucslib.h"
+#include "qt_compat.h" // BUG. mostly loadSettings.
 
 tQucsSettings QucsSettings;
 QDir UserLibDir;
