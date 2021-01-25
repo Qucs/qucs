@@ -11,23 +11,26 @@
  *   (at your option) any later version.                                   *
  *                                                                         *
  ***************************************************************************/
-#include "task_element.h"
 #include "qucs_globals.h"
 #include "module.h"
 #include "property.h"
 #include "qucs_app.h"
 #include <assert.h>
 #include "../legacy/obsolete_paintings.h"
+#include "../legacy_task_element.h"
 
 namespace{
 
-class Param_Sweep : public TaskElement  {
+class Param_Sweep : public LegacyTaskElement  {
 public:
   Param_Sweep();
   ~Param_Sweep();
   Element* clone()const {return new Param_Sweep(*this);}
   static Element* info(QString&, char* &, bool getNewOne=false);
   void recreate(SchematicDoc*);
+  std::string typeName() const{
+    return "SW";
+  }
 }D;
 Dispatcher<TaskElement>::INSTALL p(&element_dispatcher, "SW", &D);
 Module::INSTALL pp("simulations", &D);

@@ -10,7 +10,6 @@ GND #(.$xposition(730), .$yposition(410), .$tx(0), .$ty(0)) anonymous_gnd_hack_3
 C #(.$xposition(400), .$yposition(340), .$tx(17), .$ty(17), .C(320 fF), .V(), .Symbol(neutral)) C3(net_400_370, net_400_310);
 C #(.$xposition(620), .$yposition(340), .$tx(17), .$ty(17), .C(82 fF), .V(), .Symbol(neutral)) C5(net_620_370, net_620_310);
 C #(.$xposition(510), .$yposition(260), .$tx(-26), .$ty(-26), .C(600 fF), .V(), .Symbol(neutral)) C4(net_480_260, net_540_260);
-//SP1
 //AC1
 //DC1
 Eqn #(.$xposition(440), .$yposition(590), .$tx(-28), .$ty(-28), .S21_dB(dB(S[2,1])), .S11_dB(dB(S[1,1])), .Export(yes)) Eqn1();

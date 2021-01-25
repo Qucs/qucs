@@ -4,16 +4,16 @@
 # sckt Sub:nest2
 # sckt own Sub:nest2
 
-.Def:nest2 _net1 _net7
+.Def:nest2 P1 P2
 # Missing ID & params Sub:nest2
-# 14
-R:R1 _net1 _net7 R="0 Ohm" Temp="26.85" Tc1="0.0" Tc2="0.0" Tnom="26.85"
-C:C1 gnd _net7 C="1 pF" V=""
+# 26
+R:R1 P1 P2 R="0 Ohm" Temp="26.85" Tc1="0.0" Tc2="0.0" Tnom="26.85"
+C:C1 gnd P2 C="1 pF" V=""
 .Def:End
 ## declarations end
 
-Port:P2 _net10 Num="2" Type="analog"
-Port:P1 _net1 Num="1" Type="analog"
-C:C1 gnd _net10 C="1 pF" V=""
-Sub:SC2 _net8 _net10 Type="nest2"
-R:R1 _net1 _net8 R="0 Ohm" Temp="26.85" Tc1="0.0" Tc2="0.0" Tnom="26.85"
+Port:P2 P2 P2 Num="2" Type="analog"
+Port:P1 P1 P1 Num="1" Type="analog"
+C:C1 gnd P2 C="1 pF" V=""
+Sub:SC2 _net8 P2 Type="nest2"
+R:R1 P1 _net8 R="0 Ohm" Temp="26.85" Tc1="0.0" Tc2="0.0" Tnom="26.85"

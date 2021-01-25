@@ -25,7 +25,6 @@ R #(.$xposition(220), .$yposition(310), .$tx(15), .$ty(15), .R(10 Ohm), .Temp(26
 GND #(.$xposition(170), .$yposition(210), .$tx(0), .$ty(0)) anonymous_gnd_hack_6(net_170_210);
 R #(.$xposition(170), .$yposition(180), .$tx(-80), .$ty(-80), .R(20 kOhm), .Temp(26.85), .Tc1(0.0), .Tc2(0.0), .Tnom(26.85), .Symbol(european)) R1(net_170_210, net_170_150);
 Eqn #(.$xposition(550), .$yposition(140), .$tx(-19), .$ty(-19), .LoopGain(output.v / input.v), .LoopPhase(phase(output.v / input.v)), .Export(yes)) Eqn1();
-//SP1
 //DC1
 //AC1
 C #(.$xposition(580), .$yposition(270), .$tx(-26), .$ty(-26), .C(0.1 uF), .V(), .Symbol(neutral)) C1(net_550_270, net_610_270);

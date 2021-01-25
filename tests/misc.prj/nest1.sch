@@ -20,8 +20,8 @@
 </Properties>
 <Symbol>
   <.ID -20 14 SC1>
-  <.PortSym -30 0  0>
-  <.PortSym 30 0  0>
+  <.PortSym -30 0  1>
+  <.PortSym 30 0  2>
 </Symbol>
 <Components>
   <Port P2 1 400 180 4 -52 0 2 "2" 1 "analog" 0>

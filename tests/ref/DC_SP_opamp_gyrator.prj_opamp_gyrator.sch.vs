@@ -14,7 +14,6 @@ R #(.$xposition(530), .$yposition(130), .$tx(15), .$ty(15), .R(500k), .Temp(26.8
 R #(.$xposition(640), .$yposition(130), .$tx(15), .$ty(15), .R(10 Ohm), .Temp(26.85), .Tc1(0.0), .Tc2(0.0), .Tnom(26.85), .Symbol(european)) R3(net_640_160, net_640_100);
 GND #(.$xposition(640), .$yposition(250), .$tx(0), .$ty(0)) anonymous_gnd_hack_4(net_640_250);
 L #(.$xposition(640), .$yposition(220), .$tx(10), .$ty(10), .L(5 H), .I()) L1(net_640_250, net_640_190);
-//SP1
 //DC1
 wire #(.$xposition(240), .$yposition(110)) noname(net_240_110, net_260_110);
 wire #(.$xposition(240), .$yposition(150)) noname(net_240_150, net_260_150);

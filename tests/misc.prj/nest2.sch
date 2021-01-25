@@ -20,14 +20,14 @@
 </Properties>
 <Symbol>
   <.ID -20 14 SC>
-  <.PortSym -30 0  0>
+  <.PortSym -30 0  2>
   <Line -20 -10 40 0 #000080 2 1>
   <Line 20 -10 0 20 #000080 2 1>
   <Line -20 10 40 0 #000080 2 1>
   <Line -20 -10 0 20 #000080 2 1>
   <Line -30 0 10 0 #000080 2 1>
   <Line 20 0 10 0 #000080 2 1>
-  <.PortSym 30 0  0>
+  <.PortSym 30 0  1>
   <Line -20 0 40 0 #0000ff 3 1>
 </Symbol>
 <Components>

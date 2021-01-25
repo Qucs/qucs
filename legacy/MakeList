@@ -16,6 +16,7 @@ LEGACY_SRC = \
 	lang_dat.cpp \
 	lang_qucsator.cpp \
 	lang_sch.cpp \
+	legacy_task_element.cpp \
 	libcomp.cpp \
 	libfiles.cpp \
 	markerdialog.cpp \

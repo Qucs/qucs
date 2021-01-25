@@ -18,10 +18,11 @@
 #include "property.h"
 #include "../legacy/obsolete_paintings.h"
 #include "qt_compat.h"
+#include "../legacy_task_element.h"
 
 namespace{
 
-class TR_Sim : public TaskElement  {
+class TR_Sim : public LegacyTaskElement  {
 public:
   TR_Sim(TR_Sim const&) = default;
   TR_Sim();
@@ -30,11 +31,12 @@ public:
   static Element* info(QString&, char* &, bool getNewOne=false);
   void recreate(SchematicDoc*);
 
+  std::string typeName() const{
+    return "TR";
+  }
 private:
-  QList<Text *>     Texts;
-  Q3PtrList<Property>     Props;
 } D;
-Dispatcher<TaskElement>::INSTALL p(&element_dispatcher, "TR", &D);
+Dispatcher<LegacyTaskElement>::INSTALL p(&element_dispatcher, "TR", &D);
 Module::INSTALL pp("simulations", &D);
 
 TR_Sim::TR_Sim()

@@ -12,7 +12,12 @@
  *                                                                         *
  ***************************************************************************/
 
-// TODO: move
+//  The LegacyTaskElement class constitutes a baseclass for legacy TaskElements
+//  this one is a copy of the legacy Component class, the former
+//  baseclass for LegacyTaskElements. As such, it contains unneeded stuff.
+//
+//  !! Inherit from the TaskElement class in new code !!
+
 #include <stdlib.h>
 #include <cmath>
 
@@ -24,6 +29,7 @@
 #include "misc.h"
 #include "cmdeltdlg.h"
 #include "property.h"
+#include "legacy_task_element.h"
 
 #include <QPen>
 #include <QString>
@@ -33,14 +39,8 @@
 
 #include "../legacy/obsolete_paintings.h" // BUG
 
-TaskElement::TaskElement(TaskElement const& p)
-  : Element(p),
-    //cx(p.cx),
-    //cy(p.cy),
-    tx(p.tx),
-    ty(p.ty),
-    showName(p.showName)
-	 // Name(p.Name)
+LegacyTaskElement::LegacyTaskElement(LegacyTaskElement const& p)
+  : TaskElement(p)
 {
   qDebug() << "component copy";
 
@@ -48,16 +48,12 @@ TaskElement::TaskElement(TaskElement const& p)
 //  for(auto i : p.Props){
 //    Props.append(new Property(*i));
 //  }
+  isActive = COMP_IS_ACTIVE; // bug.
 }
 
-/*!
- * \class Component
- * \brief The TaskElement class constitutes a baseclass for commands.
- *        this one is a copy of the legacy Component class, the former
- *        baseclass for TaskElements. As such, it contains unneeded stuff.
- */
-TaskElement::TaskElement() : Element()
+LegacyTaskElement::LegacyTaskElement() : TaskElement()
 {
+  isActive = COMP_IS_ACTIVE;
   showName = true;
 
   tx = 0;
@@ -66,16 +62,39 @@ TaskElement::TaskElement() : Element()
   // Props.setAutoDelete(true);
 }
 /*--------------------------------------------------------------------------*/
-SchematicModel* TaskElement::scope()
+// Size of component text.
+int LegacyTaskElement::textSize(int& _dx, int& _dy)
 {
-	if(auto o=dynamic_cast<Symbol*>(owner())){
-		return o->subckt();
-	}else{ untested();
-		return nullptr;
-	}
+#if 1 // obsolete
+  // get size of text using the screen-compatible metric
+  QFontMetrics metrics(QString_(QucsSettings.font), 0);
+
+  int tmp, count=0;
+  _dx = _dy = 0;
+  if(showName) {
+    _dx = metrics.horizontalAdvance(QString_(label()));
+    _dy = metrics.height();
+    count++;
+  }else{
+  }
+  for(Property *pp = Props.first(); pp != 0; pp = Props.next()){
+    if(pp->display) {
+      // get width of text
+      tmp = metrics.horizontalAdvance(pp->Name+"="+pp->Value);
+      if(tmp > _dx) {
+	_dx = tmp;
+      }else{
+      }
+      _dy += metrics.height();
+      count++;
+    }
+  }
+  return count;
+#endif
+  return 0;
 }
 /*--------------------------------------------------------------------------*/
-QDialog* TaskElement::schematicWidget(QucsDoc* Doc) const
+QDialog* LegacyTaskElement::schematicWidget(QucsDoc* Doc) const
 { untested();
   trace0("Component::editElement");
   return new TaskElementDialog(Doc); // memory leak?
@@ -83,12 +102,6 @@ QDialog* TaskElement::schematicWidget(QucsDoc* Doc) const
 /*--------------------------------------------------------------------------*/
 
 // -------------------------------------------------------
-// Boundings including the component text.
-void TaskElement::entireBounds(int&, int&, int&, int&, float)
-{
-  // qt does that.
-  assert(false);
-}
 
 // -------------------------------------------------------
 // obsolete?
@@ -109,10 +122,10 @@ void TaskElement::entireBounds(int&, int&, int&, int&, float)
 //  y = cy();
 //}
 //
-// -------------------------------------------------------
-int TaskElement::getTextSelected(int x_, int y_, float Corr)
-{
 #if 0
+// -------------------------------------------------------
+int LegacyTaskElement::getTextSelected(int x_, int y_, float Corr)
+{
   x_ -= cx();
   y_ -= cy();
   if(x_ < tx) return -1;
@@ -142,29 +155,9 @@ int TaskElement::getTextSelected(int x_, int y_, float Corr)
   w = metrics.horizontalAdvance(pp->Name+"="+pp->Value);
   if(x_ > w) return -1; // clicked past the property text end - selection invalid
   return Props.at()+1;  // number the property
-#endif
   return 0;
 }
-
-std::string TaskElement::paramValue(std::string const& n) const
-{
-	if(n=="$xposition"){ untested();
-		return std::to_string(cx());
-	}else if(n=="$yposition"){ untested();
-		return std::to_string(cy());
-	}else if(n=="$mfactor"){
-		return "1";
-//	}else if(n=="$active"){
-//		return std::to_string(isActive); // move to element? it does not have params (yet).
-	}else{ untested();
-		trace1("TaskElement::paramValue", n);
-		incomplete();
-		return "incomplete";
-	}
-}
-
 // -------------------------------------------------------
-#if 0
 bool TaskElement::getSelected(int x_, int y_)
 {
   x_ -= cx();
@@ -177,12 +170,12 @@ bool TaskElement::getSelected(int x_, int y_)
 #endif
 
 // -------------------------------------------------------
-rect_t TaskElement::bounding_rect() const
+rect_t LegacyTaskElement::bounding_rect() const
 {
 	incomplete();
 	return rect_t();
 }
-void TaskElement::paint(ViewPainter *p) const
+void LegacyTaskElement::paint(ViewPainter *p) const
 {
 	int x2=0; int y2=0; //?
   int cx = center().first;
@@ -193,7 +186,7 @@ void TaskElement::paint(ViewPainter *p) const
   {   // is simulation component (dc, ac, ...)
     unsigned size;
 
-#if 0
+#if 1
     if(!Texts.isEmpty()){
       size = Texts.first()->Size;
     }else{
@@ -241,13 +234,14 @@ void TaskElement::paint(ViewPainter *p) const
     y += p->LineSpacing;
   }
   // write all properties
-#if 0
+#if 1
   for(Property *p4 = Props.first(); p4 != 0; p4 = Props.next()){
     if(p4->display) {
       p->drawText(x, y, 0, 0, Qt::TextDontClip, p4->Name+"="+p4->Value);
       y += p->LineSpacing;
     }
   }
+#endif
 
   if(isActive == COMP_IS_OPEN)
     p->setPen(QPen(Qt::red,0));
@@ -259,6 +253,7 @@ void TaskElement::paint(ViewPainter *p) const
     p->drawLine(+x1, +y2, +x2, +y1);
   }
 
+#if 0
   // draw component bounding box
   if(isSelected()) {
     p->setPen(QPen(Qt::darkGray,3));
@@ -267,6 +262,11 @@ void TaskElement::paint(ViewPainter *p) const
 #endif
 } // TaskElement::paint
 
+rect_t TaskElement::bounding_rect() const
+{
+	incomplete();
+	return rect_t();
+}
 // -------------------------------------------------------
 // For output on a printer device.
 void TaskElement::print(ViewPainter *p, float FontScale)
@@ -288,7 +288,7 @@ QString TaskElement::netlist()
   return "obsolete";
 }
 // -------------------------------------------------------
-bool TaskElement::getPen(const QString& s, QPen& Pen, int i)
+bool LegacyTaskElement::getPen(const QString& s, QPen& Pen, int i)
 {
 	unreachable();
 	bool ok;
@@ -314,7 +314,7 @@ bool TaskElement::getPen(const QString& s, QPen& Pen, int i)
 }
 
 // ---------------------------------------------------------------------
-bool TaskElement::getBrush(const QString& s, QBrush& Brush, int i)
+bool LegacyTaskElement::getBrush(const QString& s, QBrush& Brush, int i)
 {
 	unreachable();
 	bool ok;
@@ -341,7 +341,7 @@ bool TaskElement::getBrush(const QString& s, QBrush& Brush, int i)
 
 // ---------------------------------------------------------------------
 #if 0
-Property * TaskElement::getProperty(const QString& name)
+Property * LegacyTaskElement::getProperty(const QString& name)
 {
   incomplete();
   for(Property *pp = Props.first(); pp != 0; pp = Props.next()){
@@ -357,14 +357,14 @@ Property * TaskElement::getProperty(const QString& name)
 // ---------------------------------------------------------------------
 
 // do something with Dialog Buttons
-void TaskElement::dialgButtStuff(ComponentDialog& /*d*/)const
-{
-  incomplete();
-  // d.disableButtons();
-}
+// void LegacyTaskElement::dialgButtStuff(ComponentDialog& /*d*/)const
+// {
+//   incomplete();
+//   // d.disableButtons();
+// }
 //
 // BUG, tmp.
-//void SchematicModel::simpleInserttaskElement(TaskElement *)
+//void SchematicModel::simpleInserttaskElement(LegacyTaskElement *)
 //{
 //  unreachable();
 //}

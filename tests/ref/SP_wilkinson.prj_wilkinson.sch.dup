@@ -24,7 +24,6 @@
     <GND * 5 410 200 0 0 0 0>
     <GND * 5 410 100 0 0 0 0>
     <R R1 1 300 90 15 -26 0 1 "100 Ohm" 1 "26.85" 0 "0.0" 0 "0.0" 0 "26.85" 0 "european" 0>
-    <.SP SP1 1 -10 210 0 51  0 0 "lin" 1 "0.1 MHz" 1 "2 GHz" 1 "100" 1 "no" 0 "1" 0 "2" 0 "no" 0 "no" 0 "" 1 "" 1 "" 1 "" 1 "" 1 "" 1 "" 1>
     <Eqn Eqn1 1 140 230 -23 12 0 0 "Attenuation2=dB(S[2,1])" 1 "Reflect=dB(S[1,1])" 1 "Attenuation3=dB(S[3,1])" 1 "Decoupling=dB(S[3,2])" 1 "yes" 0>
 </Components>
 <Wires>

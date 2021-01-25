@@ -10,29 +10,30 @@
  *   (at your option) any later version.                                   *
  *                                                                         *
  ***************************************************************************/
-#ifndef QUCS_COMMMAND_H
-#define QUCS_COMMMAND_H
+#ifndef QUCS_LTE_H
+#define QUCS_LTE_H
 /* -------------------------------------------------------------------------------- */
 #include "platform.h"
-#include "element.h"
+#include "task_element.h"
+#include "qt_compat.h"
 class ComponentDialog;//really??
 class Property;
-
-// BUG. obsolete paintings
+/* -------------------------------------------------------------------------------- */
+// obsolete paintings and stuff
 class Line;
 class Text;
 class Area;
 class Arc;
-class QString; // BUG
-class QPen; // BUG
-class QBrush; // BUG
+class QString;
+class QPen;
+class QBrush;
 /* -------------------------------------------------------------------------------- */
-class TaskElement : public Element {
+class LegacyTaskElement : public TaskElement {
 protected:
-  TaskElement(const TaskElement&);
-  explicit TaskElement();
+  LegacyTaskElement(const LegacyTaskElement&);
+  explicit LegacyTaskElement();
 public:
-  virtual ~TaskElement() {};
+  virtual ~LegacyTaskElement() {};
 
   virtual void recreate(SchematicDoc*) {};
   // QString getNetlist();
@@ -42,49 +43,36 @@ private:
   void    paint(ViewPainter*) const;
   QDialog* schematicWidget(QucsDoc* Doc) const;
 
-public:
-  void    paintScheme(SchematicDoc*) const;
-  void    print(ViewPainter*, float);
-//  void    setCenter(int, int, bool relative=false);
-  void    getCenter(int&, int&);
-  void    entireBounds(int&, int&, int&, int&, float);
-  int     getTextSelected(int, int, float);
-  bool    load(const QString&);
-
-  // set the pointer scematic associated with the component
-  // do somehting with buttons. can sb think of a more descriptive name?
-  virtual void dialgButtStuff(ComponentDialog&)const;
-
-  void setTypeName(std::string const&){ incomplete(); }
-  std::string typeName() const{ return "taskNameIncomplete"; }
-  /// QList<Line *>     Lines;
-  /// QList<struct Arc *>      Arcs;
-  /// QList<Area *>     Rects;
-  /// QList<Area *>     Ellips;
-  /// QList<Port *>     Ports;
-  /// QList<Text *>     Texts;
-  // mutable /*BUG*/ Q3PtrList<Property> Props;
-
-  // BUG: abused in some display function
-  mutable int  tx, ty;   // upper left corner of text (position)
-  int  x2, y2;
-
-  bool showName;
-
-public:
-
-	virtual std::string paramValue(std::string const& n) const;
-private:
-  virtual SchematicModel* scope() override;
-
-protected:
-  virtual QString netlist();
-
-//  int  analyseLine(const QString&, int);
-  bool getIntegers(const QString&, int *i1=0, int *i2=0, int *i3=0,
-                   int *i4=0, int *i5=0, int *i6=0);
+public: // legacy stuff.
   bool getPen(const QString&, QPen&, int);
   bool getBrush(const QString&, QBrush&, int);
+
+  int     textSize(int&, int&);
+  QList<Line *>     Lines;
+  QList<struct Arc *>      Arcs;
+  QList<Area *>     Rects;
+  QList<Area *>     Ellips;
+  QList<Port *>     Ports;
+  QList<Text *>     Texts;
+  mutable /*BUG*/ Q3PtrList<Property> Props;
+  #define COMP_IS_OPEN    0
+  #define COMP_IS_ACTIVE  1
+  #define COMP_IS_SHORTEN 2
+  int  isActive; // should it be used in simulation or not ?
+
+//  QString  Name;
+//  QString  Description;
+
+  virtual std::string typeName() const{ return "taskNameIncomplete"; }
+	// virtual std::string paramValue(std::string const& n) const;
+
+protected:
+//  virtual QString netlist();
+
+//  int  analyseLine(const QString&, int);
+//  bool getIntegers(const QString&, int *i1=0, int *i2=0, int *i3=0, int *i4=0, int *i5=0, int *i6=0);
+//  bool getPen(const QString&, QPen&, int);
+//  bool getBrush(const QString&, QBrush&, int);
 
   // void copyComponent(Component*);
   // Property * getProperty(const QString&);

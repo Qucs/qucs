@@ -4,11 +4,11 @@
 # sckt Sub:nest1
 # sckt own Sub:nest1
 
-.Def:nest1 _net1 _net8
+.Def:nest1 P1 P2
 # Missing ID & params Sub:nest1
-# 11
-C:C1 gnd _net8 C="1 pF" V=""
-R:R1 _net1 _net6 R="0 Ohm" Temp="26.85" Tc1="0.0" Tc2="0.0" Tnom="26.85"
+# 21
+C:C1 gnd P2 C="1 pF" V=""
+R:R1 P1 _net6 R="0 Ohm" Temp="26.85" Tc1="0.0" Tc2="0.0" Tnom="26.85"
 .Def:End
 # unresolved symbol wire
 ## declarations end

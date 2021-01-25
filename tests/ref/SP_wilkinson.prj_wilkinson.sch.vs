@@ -10,7 +10,6 @@ Pac #(.$xposition(410), .$yposition(170), .$tx(18), .$ty(18), .Num(3), .Z(50 Ohm
 GND #(.$xposition(410), .$yposition(200), .$tx(0), .$ty(0)) anonymous_gnd_hack_1(net_410_200);
 GND #(.$xposition(410), .$yposition(100), .$tx(0), .$ty(0)) anonymous_gnd_hack_2(net_410_100);
 R #(.$xposition(300), .$yposition(90), .$tx(15), .$ty(15), .R(100 Ohm), .Temp(26.85), .Tc1(0.0), .Tc2(0.0), .Tnom(26.85), .Symbol(european)) R1(net_300_120, net_300_60);
-//SP1
 Eqn #(.$xposition(140), .$yposition(230), .$tx(-23), .$ty(-23), .Attenuation2(dB(S[2,1])), .Reflect(dB(S[1,1])), .Attenuation3(dB(S[3,1])), .Decoupling(dB(S[3,2])), .Export(yes)) Eqn1();
 wire #(.$xposition(180), .$yposition(40)) noname(net_180_40, net_200_40);
 wire #(.$xposition(180), .$yposition(40)) noname(net_180_40, net_180_80);

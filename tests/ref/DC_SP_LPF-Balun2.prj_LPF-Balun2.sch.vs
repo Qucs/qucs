@@ -20,7 +20,6 @@ VProbe #(.$xposition(920), .$yposition(130), .$tx(28), .$ty(28)) Pr1(net_910_150
 GND #(.$xposition(930), .$yposition(170), .$tx(0), .$ty(0)) anonymous_gnd_hack_4(net_930_170);
 Pac #(.$xposition(990), .$yposition(180), .$tx(18), .$ty(18), .Num(2), .Z(100 Ohm), .P(0 dBm), .f(1 GHz), .Temp(26.85)) P2(net_990_150, net_990_210);
 GND #(.$xposition(990), .$yposition(250), .$tx(0), .$ty(0)) anonymous_gnd_hack_5(net_990_250);
-//SP1
 Eqn #(.$xposition(200), .$yposition(370), .$tx(-28), .$ty(-28), .dBS21(dB(S[2,1])), .dBS11(dB(S[1,1])), .Export(yes)) Eqn1();
 //DC1
 wire #(.$xposition(440), .$yposition(90)) noname(net_440_90, net_440_140);
