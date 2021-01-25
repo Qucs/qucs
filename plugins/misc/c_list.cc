@@ -153,9 +153,12 @@ class CMD_LIST : public Command {
 public:
   void do_it(CS& cmd, CARD_LIST* Scope)
   {
-    list_save(cmd, IO::mstdout, Scope);
+//    list_save(cmd, IO::mstdout, Scope);
+    ostream_t out(stdout);
+    list_save(cmd, out, Scope);
     untested();
-    IO::mstdout.flush(); // ??
+//    IO::mstdout.flush(); // ??
+    out.flush();
   }
 } p1;
 DISPATCHER<CMD>::INSTALL d1(&command_dispatcher, "list", &p1);
