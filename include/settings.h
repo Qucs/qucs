@@ -4,7 +4,7 @@
 // #include <QFont>
 // #include <QColor>
 // #include <QDir>
-#include "qt_compat.h"
+// #include "qt_compat.h"
 #include "io_trace.h"
 
 class Simulator;

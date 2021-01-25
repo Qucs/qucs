@@ -19,6 +19,7 @@
 #include "language.h"
 #include "conductor.h"
 #include "io.h"
+#include "qt_compat.h"
 /* -------------------------------------------------------------------------------- */
 namespace {
 /* -------------------------------------------------------------------------------- */
@@ -62,7 +63,7 @@ void Netlister::do_it(istream_t& cs, SchematicModel* m)
 	}else{
 	}
 
-	QFile NetlistFile(QString::fromStdString(fn));
+	QFile NetlistFile(QString_(fn));
 	if(!NetlistFile.open(QIODevice::WriteOnly | QFile::Truncate)) { untested();
 		fprintf(stderr, "Failed to open %s\n", fn.c_str());
 		incomplete();

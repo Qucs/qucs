@@ -16,6 +16,7 @@
 #include "qucs_globals.h"
 #include "module.h"
 #include "property.h"
+#include "qt_compat.h"
 
 #include "../legacy/obsolete_paintings.h"
 

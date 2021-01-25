@@ -25,12 +25,12 @@ QucsTabWidget::QucsTabWidget(QucsApp *parent) : QTabWidget(parent)
 void QucsTabWidget::showContextMenu(const QPoint& point)
 { untested();
   if (point.isNull()) { untested();
-    qDebug() << "QucsTabWidget::showContextMenu() : point is null!";
+	  incomplete();
     return;
+  }else{
   }
 
   contextTabIndex = tabBar()->tabAt(point);
-  qDebug() << "contextTabIndex =" << contextTabIndex;
   if (contextTabIndex >= 0) { // clicked over a tab
     QMenu menu(this);
 

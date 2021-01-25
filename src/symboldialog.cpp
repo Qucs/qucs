@@ -13,6 +13,7 @@
 #include "symbol.h"
 #include "settings.h"
 #include "schematic_dialog.h"
+#include "qt_compat.h"
 
 #include <QLabel>
 #include <QLayout>

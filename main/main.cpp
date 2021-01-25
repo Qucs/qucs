@@ -41,6 +41,7 @@
 #include "qucs_globals.h"
 #include "library.h"
 #include "io.h"
+#include "qt_compat.h"
 
 #ifdef _WIN32
 #include <Windows.h>  //for OutputDebugString
