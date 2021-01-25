@@ -13,7 +13,6 @@ R #(.R(500k), .Temp(26.85), .Tc1(0.0), .Tc2(0.0), .Tnom(26.85), .Symbol(european
 R #(.R(10 Ohm), .Temp(26.85), .Tc1(0.0), .Tc2(0.0), .Tnom(26.85), .Symbol(european)) R3(_net15, _net8);
 GND #() *(gnd);
 L #(.L(5 H), .I()) L1(gnd, _net15);
-//SP1
 //DC1
 endmodule // main
 

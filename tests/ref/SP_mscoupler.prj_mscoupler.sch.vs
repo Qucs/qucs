@@ -9,7 +9,6 @@ GND #(.$xposition(120), .$yposition(190), .$tx(0), .$ty(0)) anonymous_gnd_hack_1
 GND #(.$xposition(300), .$yposition(120), .$tx(0), .$ty(0)) anonymous_gnd_hack_2(net_300_120);
 GND #(.$xposition(260), .$yposition(210), .$tx(0), .$ty(0)) anonymous_gnd_hack_3(net_260_210);
 SUBST #(.$xposition(390), .$yposition(180), .$tx(-30), .$ty(-30), .er(9.8), .h(0.635 mm), .t(17.5 um), .tand(0.0001), .rho(2.43902e-08), .D(1.5e-07)) SubstTC1();
-//SPTC1
 MCOUPLED #(.$xposition(170), .$yposition(70), .$tx(-26), .$ty(-26), .Subst(SubstTC1), .W(0.518 mm), .L(14.94 mm), .S(0.185 mm), .Model(Kirschning), .DispModel(Kirschning), .Temp(26.85)) MSTC1(net_140_40, net_200_40, net_200_100, net_140_100);
 Eqn #(.$xposition(250), .$yposition(300), .$tx(-23), .$ty(-23), .reflect(dB(S[1,1])), .isolated(dB(S[3,1])), .through(dB(S[2,1])), .coupled(dB(S[4,1])), .Export(yes)) Eqn1();
 wire #(.$xposition(80), .$yposition(40)) noname(net_80_40, net_140_40);

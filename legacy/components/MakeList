@@ -103,6 +103,7 @@ RF_COMPONENTS = \
 
 # wrong place.
 TASK_ELEMENTS = \
+	legacy_task_element.cpp \
 	ac_sim.cpp \
 	dc_sim.cpp \
 	digi_sim.cpp \

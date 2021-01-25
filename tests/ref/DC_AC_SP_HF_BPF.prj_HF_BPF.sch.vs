@@ -6,7 +6,6 @@ GND #(.$xposition(310), .$yposition(220), .$tx(0), .$ty(0)) anonymous_gnd_hack_1
 //DC1
 Eqn #(.$xposition(450), .$yposition(320), .$tx(-28), .$ty(-28), .S21_dB(dB(S[2,1])), .S11_dB(dB(S[1,1])), .Export(yes)) Eqn2();
 Eqn #(.$xposition(450), .$yposition(440), .$tx(-31), .$ty(-31), .Ql(200), .Qc(5000), .f0(14e6), .Export(yes)) Eqn1();
-//SP1
 //AC1
 GND #(.$xposition(100), .$yposition(220), .$tx(0), .$ty(0)) anonymous_gnd_hack_2(net_100_220);
 Pac #(.$xposition(100), .$yposition(150), .$tx(-122), .$ty(-122), .Num(1), .Z(50 Ohm), .P(0 dBm), .f(1 GHz), .Temp(-273.15)) P2(net_100_120, net_100_180);

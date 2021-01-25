@@ -11,7 +11,6 @@
  *   (at your option) any later version.                                   *
  *                                                                         *
  ***************************************************************************/
-#include "task_element.h"
 #include "qucs_app.h"
 #include "qucs_globals.h"
 #include "module.h"
@@ -19,10 +18,11 @@
 #include "qt_compat.h"
 
 #include "../legacy/obsolete_paintings.h"
+#include "../legacy_task_element.h"
 
 namespace{
 
-class DC_Sim : public TaskElement  {
+class DC_Sim : public LegacyTaskElement  {
 private:
 	DC_Sim(DC_Sim const&);
 public:
@@ -32,6 +32,9 @@ public:
 	  return new DC_Sim(*this);
   }
   static Element* info(QString&, char* &, bool getNewOne=false);
+  std::string typeName() const{
+    return "DC";
+  }
 
 private:
   QList<Text *>     Texts;
@@ -40,11 +43,11 @@ private:
 Dispatcher<TaskElement>::INSTALL p(&element_dispatcher, "DC", &D);
 Module::INSTALL pp("simulations", &D);
 
-DC_Sim::DC_Sim(DC_Sim const& s) : TaskElement(s)
+DC_Sim::DC_Sim(DC_Sim const& s) : LegacyTaskElement(s)
 {
 }
 
-DC_Sim::DC_Sim() : TaskElement()
+DC_Sim::DC_Sim() : LegacyTaskElement()
 {
   auto Description = QObject::tr("dc simulation");
   setLabel("DC");

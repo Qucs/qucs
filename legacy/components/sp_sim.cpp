@@ -13,25 +13,30 @@
  ***************************************************************************/
 #include "qucs_app.h"
 #include "qucs_globals.h"
-#include "task_element.h"
 #include "module.h"
 #include "property.h"
 #include "../legacy/obsolete_paintings.h"
+#include "../legacy_task_element.h"
 
 namespace{
 
-class SP_Sim : public TaskElement  {
+class SP_Sim : public LegacyTaskElement  {
 public:
   SP_Sim();
   ~SP_Sim();
   Element* clone() const {return new SP_Sim(*this);}
   static Element* info(QString&, char* &, bool getNewOne=false);
   void recreate(SchematicDoc*);
+
+  std::string typeName() const{
+    return "SP";
+  }
+
 }D;
 Dispatcher<TaskElement>::INSTALL d(&element_dispatcher, "SP", &D);
 Module::INSTALL pp("simulations", &D);
 
-SP_Sim::SP_Sim()
+SP_Sim::SP_Sim() : LegacyTaskElement()
 {
   Description = QObject::tr("S parameter simulation");
 

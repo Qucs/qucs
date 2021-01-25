@@ -1,4 +1,6 @@
 // ripped off element.h
+#ifndef QUCS_OBSOLETE_PAINTINGS
+#define QUCS_OBSOLETE_PAINTINGS
 
 # include <QPen> // BUG
 
@@ -41,4 +43,6 @@ struct Text {
   float	  Size, mSin, mCos; // font size and rotation coefficients
   bool	  over, under;      // text attributes
 };
+#endif
+
 #endif

@@ -2,10 +2,10 @@
 ## declarations 0
 ## declarations end
 
-Vdc:V1 _net14 gnd U="0.9 V"
-IProbe:Ib _net8 _net4
+Vdc:V1 _net13 gnd U="0.9 V"
+IProbe:Ib _net6 _net4
 IProbe:Ic _net5 _net7
-Pac:P1 _net2 gnd Num="1" Z="50 Ohm" P="0 dBm" f="1 GHz" Temp="26.85"
-Pac:P2 _net3 gnd Num="2" Z="50 Ohm" P="0 dBm" f="1 GHz" Temp="26.85"
-Vdc:V2 _net13 gnd U="2 V"
+Pac:P1 _net8 gnd Num="1" Z="50 Ohm" P="0 dBm" f="1 GHz" Temp="26.85"
+Pac:P2 _net10 gnd Num="2" Z="50 Ohm" P="0 dBm" f="1 GHz" Temp="26.85"
+Vdc:V2 _net0 gnd U="2 V"
 Eqn:Eqn1 NFmin="10*log10(Fmin)" NF="10*log10(F)" Export="yes"

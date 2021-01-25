@@ -12,16 +12,16 @@
  *                                                                         *
  ***************************************************************************/
 #include "qucs_app.h"
-#include "task_element.h"
 #include "qucs_globals.h"
 #include "module.h"
 #include "property.h"
 #include "../legacy/obsolete_paintings.h"
 #include "qt_compat.h"
+#include "../legacy_task_element.h"
 
 namespace{
 
-class AC_Sim : public TaskElement  {
+class AC_Sim : public LegacyTaskElement  {
 private:
   AC_Sim(AC_Sim const& s);
 public:
@@ -30,13 +30,10 @@ public:
   Element* clone() const{return new AC_Sim(*this);}
   static Element* info(QString&, char* &, bool getNewOne=false);
   void recreate(SchematicDoc*);
-private: // TaskElement
-  QList<Text *>     Texts;
-  Q3PtrList<Property>     Props;
 
-//  QString const& name() const override{
-//	  return "AC";
-//  }
+  std::string typeName() const{
+    return "AC";
+  }
 }D;
 
 Dispatcher<TaskElement>::INSTALL p(&element_dispatcher, "AC", &D);
@@ -83,7 +80,7 @@ AC_Sim::~AC_Sim()
 {
 }
 
-AC_Sim::AC_Sim(AC_Sim const& x): TaskElement(x)
+AC_Sim::AC_Sim(AC_Sim const& x): LegacyTaskElement(x)
 {
 	setTypeName("AC");
 }

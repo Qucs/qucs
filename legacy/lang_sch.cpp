@@ -24,6 +24,7 @@
 #include "sckt_base.h"
 #include "place.h"
 #include "io.h"
+#include "legacy_task_element.h"
 
 #ifdef DO_TRACE
 #include <typeinfo>
@@ -119,6 +120,7 @@ private: // overrides
 private: // local/incomplete
 	Symbol* parseSymbol(istream_t&, Symbol*) const;
 	Element* loadElement_(const QString& _s, Element* e) const;
+	void printLegacyTaskElement(LegacyTaskElement const*, ostream_t&) const;
 
 private:
 	void printSymbol(Symbol const*, ostream_t&) const override;
@@ -302,8 +304,16 @@ void LegacySchematicLanguage::printSubckt(SubcktBase const*, ostream_t&) const
 /*--------------------------------------------------------------------------*/
 void LegacySchematicLanguage::printTaskElement(TaskElement const* c, ostream_t& s) const
 {
-	// s << "  <." << c->Name << " ";
-	s << "  <." << "Name" << " ";
+	if (auto lc=dynamic_cast<LegacyTaskElement const*>(c)){ untested();
+		printLegacyTaskElement(lc, s);
+	}else{
+		incomplete();
+	}
+}
+/*--------------------------------------------------------------------------*/
+void LegacySchematicLanguage::printLegacyTaskElement(LegacyTaskElement const* c, ostream_t& s) const
+{
+	s << "  <." << c->typeName() << " ";
 
 	if(c->label()==""){
 		s << "MISSING_LABEL";
@@ -329,10 +339,9 @@ void LegacySchematicLanguage::printTaskElement(TaskElement const* c, ostream_t& 
 
 	// write all properties
 	// FIXME: ask element for properties, not for dictionary
-	auto cc=const_cast<TaskElement*>(c); // BUGBUGBUGBUG
+	auto cc=const_cast<LegacyTaskElement*>(c); // BUGBUGBUGBUG
 	// cannot access Props without this hack
-#if 0
-	s<<"taskprops_incomplete\n";
+#if 1
 	for(Property *p1 = cc->Props.first(); p1 != 0; p1 = cc->Props.next()) {
 		if(p1->Description.isEmpty()){ untested();
 			s << " \""+p1->Name+"="+p1->Value+"\"";   // e.g. for equations
@@ -485,7 +494,7 @@ void LegacySchematicLanguage::printSymbol(Symbol const* sym, ostream_t& s) const
 	s << ">\n";
 } // printSymbol
 
-static TaskElement* loadtaskElement(const QString& _s, TaskElement* c)
+static TaskElement* loadLegacyTaskElement(const QString& _s, LegacyTaskElement* c)
 {
 	trace1("loadtaskElement", c->label());
 	bool ok;
@@ -546,13 +555,12 @@ static TaskElement* loadtaskElement(const QString& _s, TaskElement* c)
 
 		/// BUG FIXME. dont use Component parameter dictionary.
 		for(; tmp<=(int)counts/2; tmp++){
-			incomplete();
-//			c->Props.append(new Property("p", "", true, " "));
+			c->Props.append(new Property("p", "", true, " "));
 		}
 
 		// load all properties
 		Property *p1;
-#if 0
+#if 1
 		for(p1 = c->Props.first(); p1 != 0; p1 = c->Props.next()) {
 			qDebug() << "load command props" << z;
 			z++;
@@ -998,6 +1006,16 @@ static Component* parseComponentObsoleteCallback(const QString& _s, Component* c
 	return c;
 }
 /*--------------------------------------------------------------------------*/
+static TaskElement* loadTaskElement(const QString& _s, TaskElement* c)
+{
+	if(auto t=dynamic_cast<LegacyTaskElement*>(c)){ untested();
+		loadLegacyTaskElement(_s, t);
+	}else{ untested();
+		incomplete();
+	}
+	return c;
+}
+/*--------------------------------------------------------------------------*/
 Element* LegacySchematicLanguage::parseItem(istream_t& c, Element* e) const
 {
 	QString Line = QString::fromStdString( c.fullString());
@@ -1019,7 +1037,7 @@ Element* LegacySchematicLanguage::parseItem(istream_t& c, Element* e) const
 	if(auto s=dynamic_cast<Symbol*>(e)){
 		parseSymbol(c, s);
 	}else if(auto t=dynamic_cast<TaskElement*>(e)){
-		loadtaskElement(l, t);
+		loadTaskElement(l, t);
 	}else if(auto d=dynamic_cast<Diagram*>(e)){
 		loadDiagram(d, c);
 	}else if(auto s=dynamic_cast<Painting*>(e)){
@@ -1037,6 +1055,7 @@ Element* LegacySchematicLanguage::parseItem(istream_t& c, Element* e) const
 DEV_DOT* LegacySchematicLanguage::parseCommand(istream_t& c, DEV_DOT* x) const
 { untested();
 	QString Line = QString::fromStdString(c.fullString());
+	trace2("command?", x->s(), Line);
 #if 0 // not sure.
 	auto scope = x->owner()->subckt();
 #else
@@ -1211,10 +1230,12 @@ Element* LegacySchematicLanguage::getComponentFromName(QString& Line) const
 	}
 
 
-#if 0 // legacy cruft?
+#if 1 // legacy cruft?
 	// BUG: don't use schematic.
-	if(TaskElement* cmd=command(e)){ untested();
+	if(LegacyTaskElement* cmd=command(e)){ untested();
 		p->loadtaskElement(Line, cmd);
+	}else if(TaskElement* cmd=command(e)){ untested();
+		incomplete();
 	}else if(Component* c=component(e)){ untested();
 		if(!p->parseComponentObsoleteCallback(Line, c)) { untested();
 			QMessageBox::critical(0, QObject::tr("Error"),

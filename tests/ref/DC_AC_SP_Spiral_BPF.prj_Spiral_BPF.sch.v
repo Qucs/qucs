@@ -9,7 +9,6 @@ GND #() *(gnd);
 C #(.C(320 fF), .V(), .Symbol(neutral)) C3(gnd, _net3);
 C #(.C(82 fF), .V(), .Symbol(neutral)) C5(gnd, out);
 C #(.C(600 fF), .V(), .Symbol(neutral)) C4(_net3, out);
-//SP1
 //AC1
 //DC1
 Eqn #(.S21_dB(dB(S[2,1])), .S11_dB(dB(S[1,1])), .Export(yes)) Eqn1();

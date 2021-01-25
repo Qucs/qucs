@@ -7,7 +7,6 @@ C #(.$xposition(440), .$yposition(160), .$tx(17), .$ty(17), .C(270pF), .V(), .Sy
 C #(.$xposition(580), .$yposition(160), .$tx(17), .$ty(17), .C(270pF), .V(), .Symbol(neutral)) C2(net_580_190, net_580_130);
 L #(.$xposition(360), .$yposition(80), .$tx(-26), .$ty(-26), .L(470nH), .I()) L3(net_330_80, net_390_80);
 GND #(.$xposition(40), .$yposition(190), .$tx(0), .$ty(0)) anonymous_gnd_hack_0(net_40_190);
-//SP1
 Eqn #(.$xposition(360), .$yposition(380), .$tx(-28), .$ty(-28), .dBS21(dB(S[2,1])), .dBS11(dB(S[1,1])), .Export(yes)) Eqn1();
 Pac #(.$xposition(960), .$yposition(130), .$tx(18), .$ty(18), .Num(2), .Z(100 Ohm), .P(0 dBm), .f(1 GHz), .Temp(26.85)) P2(net_960_100, net_960_160);
 GND #(.$xposition(960), .$yposition(200), .$tx(0), .$ty(0)) anonymous_gnd_hack_1(net_960_200);

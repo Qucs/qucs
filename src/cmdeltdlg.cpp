@@ -443,11 +443,13 @@ void TaskElementDialog::attach(ElementGraphics* gfx)
   showName->setChecked(Comp->showName);
   changed = false;
 
+#if 0
   Comp->textSize(tx_Dist, ty_Dist);
   int tmp = Comp->tx+tx_Dist - Comp->x1_();
   if((tmp > 0) || (tmp < -6))  tx_Dist = 0;  // remember the text position
   tmp = Comp->ty+ty_Dist - Comp->y1_();
   if((tmp > 0) || (tmp < -6))  ty_Dist = 0;
+#endif
 
   /*! Insert all \a Comp properties into the dialog \a prop list */
   int row=0; // row counter
@@ -1107,6 +1109,8 @@ void TaskElementDialog::slotApplyInput()
 
   if(changed) {
     int dx, dy;
+
+#if 0
     Comp->textSize(dx, dy);
     if(tx_Dist != 0) {
       Comp->tx += tx_Dist-dx;
@@ -1118,6 +1122,7 @@ void TaskElementDialog::slotApplyInput()
       ty_Dist = dy;
     }else{
     }
+#endif
 
 
     auto cmd = new SwapSymbolCommand(_gfx, Comp);
