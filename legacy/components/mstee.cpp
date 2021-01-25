@@ -93,9 +93,9 @@ Element* MStee::info(QString& Name, char* &BitmapFile, bool getNewOne)
 
 void MStee::createSymbol()
 {
-  QFont Font(QucsSettings.font); // default application font
-  // symbol text is smaller (10 pt default)
-  Font.setPointSize(10); 
+//  QFont Font(QucsSettings.font); // default application font
+//  // symbol text is smaller (10 pt default)
+//  Font.setPointSize(10); 
   // get the small font size; use the screen-compatible metric
   FontMetrics smallmetrics;
   smallmetrics.setSmall();

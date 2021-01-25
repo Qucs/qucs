@@ -22,6 +22,7 @@
 #include "sckt_base.h"
 #include "d_dot.h"
 #include "place.h"
+#include "io.h"
 #include <QFile> // BUG
 
 unsigned gndhackn=0;

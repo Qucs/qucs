@@ -283,6 +283,7 @@ void SpiceDialog::slotButtApply()
 // -------------------------------------------------------------------------
 void SpiceDialog::slotButtBrowse()
 {
+#if 0
   QString s = QFileDialog::getOpenFileName(this,
                   tr("Select a file"),
                   lastDir.isEmpty() ? QString(".") : lastDir,
@@ -305,6 +306,7 @@ void SpiceDialog::slotButtBrowse()
 
   Comp->Props.at(1)->Value = "";
   loadSpiceNetList(s);
+#endif
 }
 
 // -------------------------------------------------------------------------
@@ -323,7 +325,7 @@ bool SpiceDialog::loadSpiceNetList(const QString& s)
 {
   Comp->withSim = false;
   if(s.isEmpty()) return false;
-  QFileInfo FileInfo(QucsSettings.QucsWorkDir, s);
+  QFileInfo FileInfo(QString_(QucsSettings.QucsWorkDir), s);
 
   NodesList->clear();
   PortsList->clear();
@@ -354,7 +356,7 @@ bool SpiceDialog::loadSpiceNetList(const QString& s)
       script = "spiceprm";
       piping = false;
     }
-    script = QucsSettings.BinDir + script;
+    script = QString_(QucsSettings.BinDir) + "/" + script;
     QString spicetaskElement;
     SpicePrep = new QProcess(this);
     spicetaskElement+=interpreter + " ";
@@ -362,7 +364,7 @@ bool SpiceDialog::loadSpiceNetList(const QString& s)
     spicetaskElement+=FileInfo.filePath() + " ";
 
     QFile PrepFile;
-    QFileInfo PrepInfo(QucsSettings.QucsWorkDir, s + ".pre");
+    QFileInfo PrepInfo(QString_(QucsSettings.QucsWorkDir), s + ".pre");
     QString PrepName = PrepInfo.filePath();
 
     if (!piping)
@@ -426,7 +428,7 @@ bool SpiceDialog::loadSpiceNetList(const QString& s)
         QMessageBox::critical(this, tr("SPICE Preprocessor Error"), Error);
         return false;
     }
-    FileInfo = QFileInfo(QucsSettings.QucsWorkDir, s + ".pre");
+    FileInfo = QFileInfo(QString_(QucsSettings.QucsWorkDir), s + ".pre");
   }
 
   // Now do the spice->qucs netlist conversion using the qucsconv program ...
@@ -434,7 +436,7 @@ bool SpiceDialog::loadSpiceNetList(const QString& s)
 
   QString Program;
   QStringList Arguments;
-  Program = QucsSettings.Qucsconv;
+  Program = QString_(QucsSettings.Qucsconv);
   Arguments << "-if" << "spice"
             << "-of" <<  "qucs"
             << "-i" << FileInfo.filePath();
@@ -457,7 +459,7 @@ bool SpiceDialog::loadSpiceNetList(const QString& s)
 
   if(QucsConv->state() != QProcess::Running) {
     QMessageBox::critical(this, tr("Error"),
-                          tr("Cannot execute \"%1\".").arg(QucsSettings.Qucsconv));
+                          tr("Cannot execute \"%1\".").arg(QString_(QucsSettings.Qucsconv)));
     return false;
   }
 
@@ -605,7 +607,7 @@ void SpiceDialog::slotGetNetlist()
 // -------------------------------------------------------------------------
 void SpiceDialog::slotButtEdit()
 {
-  Doc->_app->editFile(QucsSettings.QucsWorkDir.filePath(FileEdit->text()));
+  Doc->_app->editFile(QDir_(QucsSettings.QucsWorkDir).filePath(FileEdit->text()));
 }
 
 // -------------------------------------------------------------------------

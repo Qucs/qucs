@@ -133,8 +133,10 @@ QString Verilog_File::verilogCode(int)
 // -------------------------------------------------------
 // Returns a comma separated list of the port names of the last
 // entity in this file.
+// TODO: use verilog parser.
 QString Verilog_File::loadFile()
 {
+#if 0
   QString s, File(Props.getFirst()->Value);
   QFileInfo Info(File);
   if(Info.isRelative())
@@ -152,6 +154,8 @@ QString Verilog_File::loadFile()
   Verilog_File_Info VInfo(File);
   ModuleName = VInfo.ModuleName;
   return VInfo.PortNames;
+#endif
+  return "1,2,3,4";
 }
 
 // -------------------------------------------------------

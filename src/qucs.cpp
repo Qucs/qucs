@@ -112,7 +112,7 @@ QucsApp::QucsApp()
     tr("Verilog Sources") + " (*.v);;" +
     tr("Verilog-A Sources") + " (*.va);;" +
     tr("Octave Scripts") + " (*.m *.oct);;" +
-    tr("Spice Files") + QString(" (") + QucsSettings.spiceExtensions.join(" ") + QString(");;") +
+//    tr("Spice Files") + QString(" (") + QucsSettings.spiceExtensions.join(" ") + QString(");;") +
     tr("Any File")+" (*)";
 
   updateSchNameHash();
@@ -174,8 +174,8 @@ QucsApp::QucsApp()
 void QucsApp::openFileAtStartup(QString const& arg)
 {
       QFileInfo Info(arg);
-      QucsSettings.QucsWorkDir.setPath(Info.absoluteDir().absolutePath()); // BUG.
-      QString p = QucsSettings.QucsWorkDir.filePath(Info.fileName());
+      QucsSettings.QucsWorkDir = Info.absoluteDir().absolutePath().toStdString(); // ?
+      QString p = QString_(QucsSettings.QucsWorkDir) + QDir::separator() + Info.fileName();
       gotoPage(p);
 }
 
@@ -235,7 +235,7 @@ void QucsApp::initView()
     editText->setFrame(false);
     editText->setHidden(true);
 
-    misc::setWidgetBackgroundColor(editText, QucsSettings.BGColor);
+//    misc::setWidgetBackgroundColor(editText, QucsSettings.BGColor);
 
     connect(editText, SIGNAL(returnPressed()), SLOT(slotApplyCompText()));
     connect(editText, SIGNAL(textChanged(const QString&)),
@@ -390,10 +390,10 @@ void QucsApp::initView()
   m_homeDirModel->setFilter(QDir::NoDot | QDir::AllDirs);
 
   // ............................................
-  QString path = QucsSettings.QucsHomeDir.absolutePath();
+  QString path = QDir(QString::fromStdString(QucsSettings.homeDir())).absolutePath();
   QDir ProjDir(path);
   // initial projects directory is the Qucs home directory
-  QucsSettings.projsDir.setPath(path);
+  QucsSettings.projsDir = path.toStdString();
 
   // create home dir if not exist
   if(!ProjDir.exists()) { untested();
@@ -426,7 +426,7 @@ void QucsApp::fillLibrariesTreeView ()
 //    newitem->setBackground
     topitems.append (newitem);
 
-    QDir LibDir(QucsSettings.libDir());
+    QDir LibDir(QString::fromStdString(QucsSettings.libDir()));
     LibFiles = LibDir.entryList(QStringList("*.lib"), QDir::Files, QDir::Name);
 
     // create top level library items, base on the library names
@@ -439,7 +439,7 @@ void QucsApp::fillLibrariesTreeView ()
         int result = parseComponentLibrary (libPath , parsedlibrary);
         QStringList nameAndFileName;
         nameAndFileName.append (parsedlibrary.name);
-        nameAndFileName.append (QucsSettings.libDir() + *it);
+        nameAndFileName.append (QString_(QucsSettings.libDir()) + *it);
 
         QTreeWidgetItem* newlibitem = new QTreeWidgetItem((QTreeWidget*)0, nameAndFileName);
 
@@ -487,7 +487,7 @@ void QucsApp::fillLibrariesTreeView ()
     newitem->setFont (0, sectionFont);
     topitems.append (newitem);
 
-    QDir UserLibDir = QDir (QucsSettings.QucsHomeDir.canonicalPath () + "/user_lib/");
+    QDir UserLibDir = QDir (QDir_(QucsSettings.homeDir()).canonicalPath () + "/user_lib/");
 
     LibFiles = UserLibDir.entryList(QStringList("*.lib"), QDir::Files, QDir::Name);
     int UserLibCount = LibFiles.count();
@@ -672,7 +672,7 @@ void QucsApp::slotSetCompView (int index)
 ///       if (c) delete c;
 
       // check if icon exists, fall back to default
-      QString iconPath = QucsSettings.QucsWorkDir.filePath(vaBitmap+".png");
+      QString iconPath = QDir_(QucsSettings.QucsWorkDir).filePath(vaBitmap+".png");
 
       QFile iconFile(iconPath);
       QPixmap vaIcon;
@@ -789,7 +789,7 @@ void QucsApp::slotSearchComponent(const QString &searchText)
         //match
 
         // check if icon exists, fall back to default
-        QString iconPath = QucsSettings.QucsWorkDir.filePath(vaBitmap+".png");
+        QString iconPath = QDir_(QucsSettings.QucsWorkDir).filePath(vaBitmap+".png");
 
         QFile iconFile(iconPath);
         QPixmap vaIcon;
@@ -910,7 +910,7 @@ void QucsApp::slotCMenuCopy()
   if (!idx.isValid() || !idx.parent().isValid()) { return; }
 
   QString filename = idx.sibling(idx.row(), 0).data().toString();
-  QDir dir(QucsSettings.QucsWorkDir);
+  QDir dir(QDir_(QucsSettings.QucsWorkDir));
   QString file(dir.filePath(filename));
   QFileInfo fileinfo(file);
 
@@ -976,7 +976,7 @@ void QucsApp::slotCMenuRename()
   if (!idx.isValid() || !idx.parent().isValid()) { return; }
 
   QString filename = idx.sibling(idx.row(), 0).data().toString();
-  QString file(QucsSettings.QucsWorkDir.filePath(filename));
+  QString file(QDir_(QucsSettings.QucsWorkDir).filePath(filename));
   QFileInfo fileinfo(file);
 
   if (findDoc(file)) { untested();
@@ -998,7 +998,7 @@ void QucsApp::slotCMenuRename()
     if (!s.endsWith(suffix)) { untested();
       s += QString(".") + suffix;
     }
-    QDir dir(QucsSettings.QucsWorkDir.path());
+    QDir dir(QDir_(QucsSettings.QucsWorkDir).path());
     if(!dir.rename(filename, s)) { untested();
       QMessageBox::critical(this, tr("Error"), tr("Cannot rename file: %1").arg(filename));
       return;
@@ -1014,7 +1014,7 @@ void QucsApp::slotCMenuDelete()
   if (!idx.isValid() || !idx.parent().isValid()) { return; }
 
   QString filename = idx.sibling(idx.row(), 0).data().toString();
-  QString file(QucsSettings.QucsWorkDir.filePath(filename));
+  QString file(QDir_(QucsSettings.QucsWorkDir).filePath(filename));
 
   if (findDoc (file)) { untested();
     QMessageBox::critical(this, tr("Error"), tr("Cannot delete an open file!"));
@@ -1046,8 +1046,8 @@ void QucsApp::slotCMenuInsert()
 // Checks for qucs directory and reads all existing Qucs projects.
 void QucsApp::readProjects()
 {itested();
-  QString path = QucsSettings.projsDir.absolutePath();
-  QString homepath = QucsSettings.QucsHomeDir.absolutePath();
+  QString path = QDir_(QucsSettings.projsDir).absolutePath();
+  QString homepath = QDir_(QucsSettings.QucsHomeDir).absolutePath();
 
   if (path == homepath) {itested();
     // in Qucs Home, disallow further up in the dirs tree
@@ -1077,7 +1077,7 @@ void QucsApp::slotButtonProjNew()
   NewProjDialog *d = new NewProjDialog(this);
   if(d->exec() != QDialog::Accepted) return;
 
-  QDir projDir(QucsSettings.projsDir.path());
+  QDir projDir(QDir_(QucsSettings.projsDir).path());
   QString name = d->ProjName->text();
   bool open = d->OpenProj->isChecked();
 
@@ -1090,7 +1090,7 @@ void QucsApp::slotButtonProjNew()
         tr("Cannot create project directory !"));
   }
   if(open) { untested();
-    openProject(QucsSettings.projsDir.filePath(name));
+    openProject(QDir_(QucsSettings.projsDir).filePath(name));
   }
 }
 
@@ -1126,10 +1126,10 @@ void QucsApp::openProject(const QString& Path)
 
     slotResetWarnings();
 
-    QucsSettings.QucsWorkDir.setPath(ProjDir.path());
+    QucsSettings.QucsWorkDir = str_(ProjDir.path());
     octave->adjustDirectory();
 
-    Content->setProjPath(QucsSettings.QucsWorkDir.absolutePath());
+    Content->setProjPath(QDir_(QucsSettings.QucsWorkDir).absolutePath());
 
     TabView->setCurrentIndex(TabViewTabs::Content);
 
@@ -1147,7 +1147,7 @@ void QucsApp::slotMenuProjOpen()
 { untested();
   QString d = QFileDialog::getExistingDirectory(
       this, tr("Choose Project Directory for Opening"),
-      QucsSettings.projsDir.path(),
+      QDir_(QucsSettings.projsDir).path(),
       QFileDialog::ShowDirsOnly | QFileDialog::DontResolveSymlinks);
   if(d.isEmpty()) return;
 
@@ -1176,11 +1176,11 @@ void QucsApp::slotListProjOpen(const QModelIndex &idx)
   QString dName = idx.data().toString();
   if (dName.endsWith("_prj")) {
     // it's a Qucs project
-    openProject(QucsSettings.projsDir.filePath(dName));
+    openProject(QDir_(QucsSettings.projsDir).filePath(dName));
   } else { untested();
     // it's a normal directory
     // change projects directory to the selected one
-    QucsSettings.projsDir.setPath(QucsSettings.projsDir.filePath(dName));
+    QucsSettings.projsDir = str_(QDir_(QucsSettings.projsDir).filePath(dName));
     readProjects();
     //repaint();
   }
@@ -1199,7 +1199,7 @@ void QucsApp::slotMenuProjClose()
 
   slotResetWarnings();
   setWindowTitle("Qucs " PACKAGE_VERSION + tr(" - Project: "));
-  QucsSettings.QucsWorkDir.setPath(QDir::homePath()+QDir::toNativeSeparators("/.qucs"));
+  QucsSettings.QucsWorkDir = str_(QDir::homePath()+QDir::toNativeSeparators("/.qucs"));
   octave->adjustDirectory();
 
   Content->setProjPath("");
@@ -1282,7 +1282,7 @@ void QucsApp::slotMenuProjDel()
 { untested();
   QString d = QFileDialog::getExistingDirectory(
       this, tr("Choose Project Directory for Deleting"),
-      QucsSettings.projsDir.path(),
+      QDir_(QucsSettings.projsDir).path(),
       QFileDialog::ShowDirsOnly
       | QFileDialog::DontResolveSymlinks);
 
@@ -1300,7 +1300,7 @@ void QucsApp::slotButtonProjDel()
     return;
   }
 
-  deleteProject(QucsSettings.projsDir.filePath(idx.data().toString()));
+  deleteProject(QDir_(QucsSettings.projsDir).filePath(idx.data().toString()));
 }
 
 
@@ -1671,28 +1671,28 @@ void QucsApp::slotFileExamples()
 { untested();
   statusBar()->showMessage(tr("Open examples directory..."));
   // pass the QUrl representation of a local file
-  QDesktopServices::openUrl(QUrl::fromLocalFile(QucsSettings.ExamplesDir));
+  QDesktopServices::openUrl(QUrl::fromLocalFile(QString_(QucsSettings.ExamplesDir)));
   statusBar()->showMessage(tr("Ready."));
 }
 
 void QucsApp::slotHelpTutorial()
 { untested();
   // pass the QUrl representation of a local file
-  QUrl url = QUrl::fromLocalFile(QDir::cleanPath(QucsSettings.DocDir + "/tutorial/" + QObject::sender()->objectName()));
+  QUrl url = QUrl::fromLocalFile(QDir::cleanPath(QString_(QucsSettings.DocDir) + "/tutorial/" + QObject::sender()->objectName()));
   QDesktopServices::openUrl(url);
 }
 
 void QucsApp::slotHelpTechnical()
 { untested();
   // pass the QUrl representation of a local file
-  QUrl url = QUrl::fromLocalFile(QDir::cleanPath(QucsSettings.DocDir + "/technical/" + QObject::sender()->objectName()));
+  QUrl url = QUrl::fromLocalFile(QDir::cleanPath(QString_(QucsSettings.DocDir) + "/technical/" + QObject::sender()->objectName()));
   QDesktopServices::openUrl(url);
 }
 
 void QucsApp::slotHelpReport()
 { untested();
   // pass the QUrl representation of a local file
-  QUrl url = QUrl::fromLocalFile(QDir::cleanPath(QucsSettings.DocDir + "/report/" + QObject::sender()->objectName()));
+  QUrl url = QUrl::fromLocalFile(QDir::cleanPath(QString_(QucsSettings.DocDir) + "/report/" + QObject::sender()->objectName()));
   QDesktopServices::openUrl(url);
 }
 
@@ -2150,7 +2150,7 @@ void QucsApp::slotOpenContent(const QModelIndex &idx)
 
   QString filename = idx.sibling(idx.row(), 0).data().toString();
   QString note = idx.sibling(idx.row(), 1).data().toString();
-  QFileInfo Info(QucsSettings.QucsWorkDir.filePath(filename));
+  QFileInfo Info(QDir_(QucsSettings.QucsWorkDir).filePath(filename));
   QString extName = Info.suffix();
 
   if (extName == "sch" || extName == "dpl") { untested();
@@ -2188,6 +2188,7 @@ void QucsApp::slotOpenContent(const QModelIndex &idx)
   }
 
 
+#if 0
   // File is no Qucs file, so go through list and search a user
   // defined program to open it.
   QStringList com;
@@ -2213,6 +2214,7 @@ void QucsApp::slotOpenContent(const QModelIndex &idx)
     }
     it++;
   }
+#endif
 
   // If no appropriate program was found, open as text file.
   editFile(Info.absoluteFilePath());  // open datasets with text editor
@@ -2714,7 +2716,7 @@ void QucsApp::updateSchNameHash(void)
     }
 
     // finally check the home/working directory
-    QDir thispath(QucsSettings.QucsWorkDir);
+    QDir thispath(QDir_(QucsSettings.QucsWorkDir));
     QFileInfoList schfilesList = thispath.entryInfoList( nameFilter, QDir::Files );
     // put each one in the hash table with the unique key the base name of
     // the file, note this will overwrite the value if the key already exists
@@ -2742,6 +2744,7 @@ void QucsApp::updateSpiceNameHash(void)
     // clear out any existing hash table entriess
     spiceNameHash.clear();
 
+#if 0
     foreach (QString qucspath, qucsPathList) { untested();
         QDir thispath(qucspath);
         // get all the schematic files in the directory
@@ -2762,6 +2765,8 @@ void QucsApp::updateSpiceNameHash(void)
     foreach (QFileInfo spicefile, spicefilesList) { untested();
         spiceNameHash[spicefile.completeBaseName()] = spicefile.absoluteFilePath();
     }
+#endif
+
 }
 
 // -----------------------------------------------------------
@@ -2800,6 +2805,9 @@ void QucsApp::updatePathList(QStringList newPathList)
 void QucsApp::updateRecentFilesList(QString s)
 { untested();
   QSettings* settings = new QSettings("qucs","qucs");
+
+incomplete();
+#if 0
   QucsSettings.RecentDocs.removeAll(s);
   QucsSettings.RecentDocs.prepend(s);
   if (QucsSettings.RecentDocs.size() > MaxRecentFiles) { untested();
@@ -2807,6 +2815,7 @@ void QucsApp::updateRecentFilesList(QString s)
   }
   settings->setValue("RecentDocs",QucsSettings.RecentDocs.join("*"));
   delete settings;
+#endif
   slotUpdateRecentFiles();
 }
 
@@ -2935,40 +2944,40 @@ bool saveApplSettings()
     settings.setValue("y", QucsSettings.y);
     settings.setValue("dx", QucsSettings.dx);
     settings.setValue("dy", QucsSettings.dy);
-    settings.setValue("font", QucsSettings.font.toString());
+    settings.setValue("font", QString_(QucsSettings.font));
     // store LargeFontSize as a string, so it will be also human-readable in the settings file (will be a @Variant() otherwise)
     settings.setValue("LargeFontSize", QString::number(QucsSettings.largeFontSize));
     settings.setValue("maxUndo", QucsSettings.maxUndo);
     settings.setValue("NodeWiring", QucsSettings.NodeWiring);
-    settings.setValue("BGColor", QucsSettings.BGColor.name());
-    settings.setValue("Editor", QucsSettings.Editor);
-    settings.setValue("FileTypes", QucsSettings.FileTypes);
-    settings.setValue("Language", QucsSettings.Language);
-    settings.setValue("Comment", QucsSettings.Comment.name());
-    settings.setValue("String", QucsSettings.String.name());
-    settings.setValue("Integer", QucsSettings.Integer.name());
-    settings.setValue("Real", QucsSettings.Real.name());
-    settings.setValue("Character", QucsSettings.Character.name());
-    settings.setValue("Type", QucsSettings.Type.name());
-    settings.setValue("Attribute", QucsSettings.Attribute.name());
-    settings.setValue("Directive", QucsSettings.Directive.name());
-    settings.setValue("Task", QucsSettings.Task.name());
+    settings.setValue("BGColor", QString_(QucsSettings.BGColor));
+    settings.setValue("Editor", QString_(QucsSettings.Editor));
+//    settings.setValue("FileTypes", QucsSettings.FileTypes);
+    settings.setValue("Language", QString_(QucsSettings.Language));
+    settings.setValue("Comment", QString_(QucsSettings.Comment));
+    settings.setValue("String", QString_(QucsSettings.String));
+    settings.setValue("Integer", QString_(QucsSettings.Integer));
+    settings.setValue("Real", QString_(QucsSettings.Real));
+    settings.setValue("Character", QString_(QucsSettings.Character));
+    settings.setValue("Type", QString_(QucsSettings.Type));
+    settings.setValue("Attribute", QString_(QucsSettings.Attribute));
+    settings.setValue("Directive", QString_(QucsSettings.Directive));
+    settings.setValue("Task", QString_(QucsSettings.Task));
     //settings.setValue("Qucsator", QucsSettings.Qucsator);
     //settings.setValue("BinDir", QucsSettings.BinDir);
     //settings.setValue("LangDir", QucsSettings.LangDir);
     //settings.setValue("LibDir", QucsSettings.LibDir);
-    settings.setValue("AdmsXmlBinDir", QucsSettings.AdmsXmlBinDir.canonicalPath());
-    settings.setValue("AscoBinDir", QucsSettings.AscoBinDir.canonicalPath());
+    //settings.setValue("AdmsXmlBinDir", QucsSettings.AdmsXmlBinDir.canonicalPath());
+    //settings.setValue("AscoBinDir", QucsSettings.AscoBinDir.canonicalPath());
     //settings.setValue("OctaveDir", QucsSettings.OctaveDir);
     //settings.setValue("ExamplesDir", QucsSettings.ExamplesDir);
     //settings.setValue("DocDir", QucsSettings.DocDir);
-    // settings.setValue("OctaveBinDir", QucsSettings.OctaveBinDir.canonicalPath());
-    settings.setValue("OctaveExecutable",QucsSettings.OctaveExecutable);
-    settings.setValue("QucsHomeDir", QucsSettings.QucsHomeDir.canonicalPath());
+    //settings.setValue("OctaveBinDir", QucsSettings.OctaveBinDir.canonicalPath());
+    //settings.setValue("OctaveExecutable",QucsSettings.OctaveExecutable);
+    settings.setValue("QucsHomeDir", QDir_(QucsSettings.QucsHomeDir).canonicalPath());
     settings.setValue("IgnoreVersion", QucsSettings.IgnoreFutureVersion);
     settings.setValue("GraphAntiAliasing", QucsSettings.GraphAntiAliasing);
     settings.setValue("TextAntiAliasing", QucsSettings.TextAntiAliasing);
-    settings.setValue("Editor", QucsSettings.Editor);
+    settings.setValue("Editor", QString_(QucsSettings.Editor));
     settings.setValue("ShowDescription", QucsSettings.ShowDescriptionProjectTree);
 
     // Copy the list of directory paths in which Qucs should

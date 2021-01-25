@@ -42,7 +42,7 @@ Equation::Equation() : Component()
   Type = isComponent; // Analogue and digital component.
   Description = QObject::tr("equation");
 
-  QFont f = QucsSettings.font;
+  QFont f(QString_(QucsSettings.font));
   f.setWeight(QFont::Light);
   f.setPointSizeF(12.0);
   FontMetrics  metrics;

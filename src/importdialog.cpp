@@ -166,7 +166,7 @@ void ImportDialog::slotImport()
   ImportButt->setDisabled(true);
   AbortButt->setDisabled(false);
 
-  QFile File(QucsSettings.QucsWorkDir.filePath(OutputEdit->text()));
+  QFile File(QDir(QString::fromStdString(QucsSettings.QucsWorkDir)).filePath(OutputEdit->text()));
   if(File.exists())
     if(QMessageBox::information(this, tr("Info"),
           tr("Output file already exists!")+"\n"+tr("Overwrite it?"),
@@ -179,10 +179,9 @@ void ImportDialog::slotImport()
 
   QFileInfo Info(ImportEdit->text());
   QString Suffix = Info.suffix();
-  QString Program;
   QStringList CommandLine;
 
-  Program = QucsSettings.Qucsconv;
+  QString Program = QString::fromStdString(QucsSettings.Qucsconv);
   CommandLine  << "-if";
   
   if((Suffix == "citi") || (Suffix == "cit"))
@@ -242,7 +241,7 @@ void ImportDialog::slotImport()
   }
 
   CommandLine << "-i" << ImportEdit->text()
-              << "-o" << QucsSettings.QucsWorkDir.filePath(OutputEdit->text());
+              << "-o" << QDir(QString::fromStdString(QucsSettings.QucsWorkDir)).filePath(OutputEdit->text());
 
   Process.blockSignals(false);
 

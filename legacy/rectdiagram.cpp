@@ -172,7 +172,7 @@ int RectDiagram::calcDiagram()
   double GridStep, corr, zD, zDstep, GridNum;
   // get size of text using the screen-compatible metric
   FontMetrics metrics;
-  y1 = QucsSettings.font.pointSize() + 6;
+  y1 = 18; // was: QucsSettings.fontSize() + 6;
 
   x1 = 10;      // position of label text
   x3 = x2 + 7;

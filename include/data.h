@@ -17,7 +17,6 @@
 #include <assert.h>
 #include <complex>
 #include <list>
-#include <QDateTime>
 #include "element.h"
 /* -------------------------------------------------------------------------------- */
 class CommonData : public Object{

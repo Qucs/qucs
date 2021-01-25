@@ -798,7 +798,7 @@ void Component::mirrorY()
     pa->x = -pa->x - pa->w;
 
   int tmp;
-  QFont f = QucsSettings.font;
+  QFont f(QString_(QucsSettings.font));
   // mirror all text
   foreach(Text *pt, Texts) {itested();
     f.setPointSizeF(pt->Size);
@@ -1115,8 +1115,8 @@ int Component::analyseLine(const QString& Row, int numProps)
                           float(cos(float(i4)*pi/180.0)),
                           float(sin(float(i4)*pi/180.0))));
 
-    QFont Font(QucsSettings.font);
-    Font.setPointSizeF(float(i3));
+//    QFont Font(QucsSettings.font);
+//    Font.setPointSizeF(float(i3));
     FontMetrics  metrics;
     QSize r = metrics.size(0, s);    // get size of text
     i3 = i1 + int(float(r.width())  * Texts.last()->mCos)
@@ -1971,7 +1971,7 @@ void ComponentDialog::slotSelectProperty(QTableWidgetItem *item)
     }
 
     // use the screen-compatible metric
-    QFontMetrics metrics(QucsSettings.font, 0);   // get size of text
+    QFontMetrics metrics(QString_(QucsSettings.font), 0);   // get size of text
     qDebug() << "desc = " << desc << metrics.horizontalAdvance(desc);
     while(metrics.horizontalAdvance(desc) > 270) {  // if description too long, cut it nicely
       // so 270 above will be the maximum size of the name label and associated edit line widget 
@@ -2442,8 +2442,7 @@ void ComponentDialog::slotBrowseFile()
         //        currFileInfo.fileName();
       } else { // no absolute paths around
 	// use the WorkDir path
-	currDir = QucsSettings.QucsWorkDir.path() + 
-	          QDir::separator() +
+	currDir = QString_(QucsSettings.QucsWorkDir) + QDir::separator() +
 	  currFileInfo.fileName();
       }
     } else { // current file name is absolute
@@ -2456,7 +2455,7 @@ void ComponentDialog::slotBrowseFile()
       currDir = schematicFileInfo.absolutePath();
     } else { // no absolute paths around
       // use the WorkDir path
-      currDir = QucsSettings.QucsWorkDir.path();
+      currDir = QString_(QucsSettings.QucsWorkDir);
     }
   }
   
@@ -2474,8 +2473,11 @@ void ComponentDialog::slotBrowseFile()
   if(!s.isEmpty()) {
     // snip path if file in current directory
     QFileInfo file(s);
-    if(QucsSettings.QucsWorkDir.exists(file.fileName()) &&
-       QucsSettings.QucsWorkDir.absolutePath() == file.absolutePath()) s = file.fileName();
+    if(!QDir_(QucsSettings.QucsWorkDir).exists(file.fileName())){
+    }else if( QDir_(QucsSettings.QucsWorkDir).absolutePath() == file.absolutePath()){
+      s = file.fileName();
+    }else{
+    }
     edit->setText(s);
   }
   /* FIX
@@ -2484,7 +2486,8 @@ void ComponentDialog::slotBrowseFile()
 /*--------------------------------------------------------------------------*/
 void ComponentDialog::slotEditFile()
 {
-  schematic()->_app->editFile(QucsSettings.QucsWorkDir.filePath(edit->text()));
+  // yikes
+  schematic()->_app->editFile(QDir_(QucsSettings.QucsWorkDir).filePath(edit->text()));
 }
 /*--------------------------------------------------------------------------*/
 /*!

@@ -1,7 +1,7 @@
 #ifndef QUCS_LANGUAGE_H
 #define QUCS_LANGUAGE_H
 
-#include "io.h"
+//#include "io.h"
 #include "object.h"
 
 //class Command;
@@ -13,6 +13,7 @@ class SchematicModel;
 class SubcktBase;
 class Symbol;
 class TaskElement;
+class ostream_t;
 
 // baseclass for schematic and net languages.
 // use u_lang.h instead?

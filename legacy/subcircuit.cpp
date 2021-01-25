@@ -26,6 +26,7 @@
 #include "docfmt.h"
 #include "module.h"
 #include "sckt_base.h"
+#include "io.h"
 #include "components/component.h" // BUG
 
 

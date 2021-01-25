@@ -36,6 +36,7 @@
 #include "schematic_model.h"
 #include "qucs_app.h"
 #include "misc.h"
+#include "io.h"
 #include "some_font_stuff.h"
 
 
@@ -74,9 +75,9 @@ Element* SpiceFile::info(QString& Name, char* &BitmapFile, bool getNewOne)
 // -------------------------------------------------------
 void SpiceFile::createSymbol()
 {
-  QFont f = QucsSettings.font; // get the basic font
-  // symbol text is smaller (10 pt default)
-  f.setPointSize(10);
+//  QFont f = QucsSettings.font; // get the basic font
+//  // symbol text is smaller (10 pt default)
+//  f.setPointSize(10);
   // use the screen-compatible metric
   FontMetrics  smallmetrics;
   smallmetrics.setSmall();
@@ -168,10 +169,14 @@ QString SpiceFile::getSubcircuitFile() const
   // construct full filename
   QString FileName = Props.getFirst()->Value;
 
-  if (FileName.isEmpty())
-  {
+  if (FileName.isEmpty()) {
       return misc::properAbsFileName(FileName);
+  }else{
   }
+
+  return FileName;
+
+#if 0
 
   QFileInfo FileInfo(FileName);
 
@@ -258,7 +263,7 @@ QString SpiceFile::getSubcircuitFile() const
     }
 
   }
-
+#endif
 }
 
 // -------------------------------------------------------------------------
@@ -419,7 +424,7 @@ bool SpiceFile::recreateSubNetlist(QString *SpiceFile, QString *FileName)
   QString prog;
   QStringList com;
   //prog =  QucsSettings.BinDir + "qucsconv"  + executableSuffix;
-  prog =  QucsSettings.Qucsconv;
+  prog = QString_(QucsSettings.Qucsconv);
 
   if(makeSubcircuit) com << "-g" << "_ref";
   com << "-if" << "spice" << "-of" << "qucs";

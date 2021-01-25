@@ -23,6 +23,9 @@
 #include <list>
 #ifndef UNTANGLE_QT // later
 #include <QDebug>
+#include <QColor>
+#include <QDir>
+#include <QFont>
 #endif
 
 #include "io_trace.h"
@@ -425,6 +428,35 @@ inline std::ostream& operator<<(std::ostream&o, QPointF const& p)
 inline QPointF makeQPointF(std::pair<int,int> p)
 {
 	return QPointF(p.first, p.second);
+}
+
+inline QDir QDir_(std::string const& c)
+{
+	auto cc = QString::fromStdString(c);
+	return QDir(cc);
+}
+inline QString QString_(std::string const& c)
+{
+	return QString::fromStdString(c);
+}
+inline QColor QColor_(std::string const& c)
+{
+	auto cc = QString::fromStdString(c);
+	return QColor(cc);
+}
+inline std::string str_(QString const& c)
+{
+	return c.toStdString();
+}
+inline std::string str_(QColor const& c)
+{
+	auto cc = c.name();
+	return cc.toStdString();
+}
+inline std::string str_(QFont const& c)
+{
+	auto cc = c.toString();
+	return cc.toStdString();
 }
 
 #endif

@@ -22,7 +22,7 @@ OctaveWindow::OctaveWindow(QDockWidget *parent_): QWidget()
 {
   QFont font;
   font = QFont("Courier New");
-  font.setPointSize(QucsSettings.font.pointSize()-1);
+//  font.setPointSize(QucsSettings.font.pointSize()-1);
   font.setStyleHint(QFont::Courier);
   font.setFixedPitch(true);
   setFont(font);
@@ -35,7 +35,7 @@ OctaveWindow::OctaveWindow(QDockWidget *parent_): QWidget()
   output->setUndoRedoEnabled(false);
   output->toPlainText();
   output->setLineWrapMode(QTextEdit::NoWrap);
-  misc::setWidgetBackgroundColor(output, QucsSettings.BGColor);
+//  misc::setWidgetBackgroundColor(output, QucsSettings.BGColor);
   allLayout->addWidget(output);
 
   input = new QLineEdit(this);
@@ -81,14 +81,15 @@ bool OctaveWindow::startOctave()
   QString Program;
   QStringList Arguments;
 
-  QString OctavePath = QDir::toNativeSeparators(QucsSettings.OctaveExecutable);
+  incomplete();
+//  QString OctavePath = QDir::toNativeSeparators(QucsSettings.OctaveExecutable);
 
   // Override Octave path by enviroment variable if it is set
-  if (QucsSettings.QucsOctave.isEmpty()) Program = OctavePath;
-  else Program = QucsSettings.QucsOctave;
+//  if (QucsSettings.QucsOctave.isEmpty()) Program = OctavePath;
+//  else Program = QucsSettings.QucsOctave;
 
   Arguments << "--no-history" << "-i" << "-f" << "-p"
-            << QDir::toNativeSeparators(QucsSettings.OctaveDir); // m-files location
+            << QDir::toNativeSeparators(QString::fromStdString(QucsSettings.OctaveDir)); // m-files location
 
   disconnect(&octProcess, 0, 0, 0);
   connect(&octProcess, SIGNAL(readyReadStandardError()), SLOT(slotDisplayErr()));
@@ -102,7 +103,7 @@ bool OctaveWindow::startOctave()
 
   // append process PATH, othewise Octave does not find gnuplot
   QProcessEnvironment env = QProcessEnvironment::systemEnvironment();
-  env.insert("PATH", env.value("PATH") + sep + QucsSettings.BinDir );
+  env.insert("PATH", env.value("PATH") + sep + QString::fromStdString(QucsSettings.BinDir));
   octProcess.setProcessEnvironment(env);
   output->clear();
 
@@ -122,7 +123,7 @@ bool OctaveWindow::startOctave()
 // ------------------------------------------------------------------------
 void OctaveWindow::adjustDirectory()
 {
-  sendtaskElement("cd \"" + QucsSettings.QucsWorkDir.absolutePath() + "\"");
+//  sendtaskElement("cd \"" + QucsSettings.QucsWorkDir.absolutePath() + "\"");
 }
 
 // ------------------------------------------------------------------------

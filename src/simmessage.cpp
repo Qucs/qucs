@@ -698,7 +698,9 @@ void SimMessage::FinishSimulation()
     ProgText->appendPlainText("\n" + txt + "\n" + tr("Aborted."));
   }
 
-  QFile file(QucsSettings.QucsHomeDir.filePath("log.txt"));  // save simulator messages
+  // save simulator messages
+  QDir dir(QString::fromStdString(QucsSettings.homeDir()));
+  QFile file(dir.filePath("log.txt"));
   if(file.open(QIODevice::WriteOnly)) {
     QTextStream stream(&file);
     stream << tr("Output:\n-------") << "\n\n";

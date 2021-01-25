@@ -15,7 +15,7 @@ HDR = \
 	io_trace.h \
 	language.h \
 	l_compar.h \
-	l_dispatcher.h \
+	l_dispatcher_.h \
 	library.h \
 	object.h \
 	output.h \

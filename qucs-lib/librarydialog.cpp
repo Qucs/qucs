@@ -151,6 +151,7 @@ void LibraryDialog::slotRename()
   qDebug() << oldName + ".lib";
   qDebug() << newName + ".lib";
 
+#if 0
   QFile NewLibFile(QucsSettings.libDir() + NameEdit->text() + ".lib");
   if(NewLibFile.exists()) {
     QMessageBox::critical(this, tr("Error"), tr("A system library with this name already exists!"));
@@ -219,6 +220,7 @@ void LibraryDialog::slotRename()
   }
 
   QMessageBox::critical(this, tr("Error"), tr("Library file is corrupt!"));
+#endif
 }
 
 // ---------------------------------------------------------------

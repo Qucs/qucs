@@ -20,7 +20,7 @@
 
 #include "object.h"
 //#include "node.h"
-#include "io.h"
+// #include "io.h"
 //#include "schematic_scene.h"
 //#include "qucsdoc.h"
 //#include "nodemap.h"
@@ -29,6 +29,9 @@
 #include "tasks.h"
 #include "element.h"
 #include "symbol.h"
+#include <vector>
+#include <map>
+#include <algorithm>
 /*--------------------------------------------------------------------------*/
 class Node;
 class NetList; // BUG
@@ -48,6 +51,7 @@ class ElementList;
 class Diagram;
 class Painting;
 class ElementGraphics; // BUG
+class ostream_t;
 /*--------------------------------------------------------------------------*/
 class NodeMap;
 #if 0
@@ -125,15 +129,15 @@ private:
 public:
 	void collectDigitalSignals(void);
 	void print(QPrinter*, QPainter*, bool, bool);
-	void setDevType(QString const& type); // BUG. move to parent.
-	QString const& devType() const;
+//	void setDevType(QString const& type); // BUG. move to parent.
+//	QString const& devType() const;
 
 public:
 	void setOwner(Element* s);
-	int  prepareNetlist(ostream_t&, QStringList&, QPlainTextEdit*,
-			bool creatingLib, NetLang const&);
-	TaskElement* loadtaskElement(const QString& _s, TaskElement* c) const;
-	bool loadProperties(QTextStream*);
+//	int  prepareNetlist(ostream_t&, QStringList&, QPlainTextEdit*,
+//			bool creatingLib, NetLang const&);
+//	TaskElement* loadtaskElement(const QString& _s, TaskElement* c) const;
+//	bool loadProperties(QTextStream*);
 
 public: // not sure. leaves unconnected objects in the main container...
 	void connect(Symbol* c);
@@ -164,7 +168,7 @@ public: // why?
 	Node* insertNode(int x, int y, Element* owner);
 
 public: // scene interaction
-	void toScene(QGraphicsScene& s, QList<ElementGraphics*>* l=nullptr) const;
+//	void toScene(QGraphicsScene& s, QList<ElementGraphics*>* l=nullptr) const;
 
 private:
 //	ElementList& components(); // possibly "devices". lets see.
@@ -184,8 +188,8 @@ public:
 //	NodeMap const* nodes() const;
 //	ElementList const& components() const;
 
-	Symbol const* findProto(QString const& what) const;
-	void cacheProto(Symbol const* what) const;
+//	Symbol const* findProto(QString const& what) const;
+//	void cacheProto(Symbol const* what) const;
 
 //	iterator find_(const std::string& short_name)
 //					{return find_again(short_name, begin());}
@@ -200,9 +204,9 @@ public:
 	const_iterator find_(const std::string& short_name)const
 					{return find_again(short_name, begin());}
 
-	QString const& portType(int i) const{
-		return PortTypes[i];
-	}
+//	QString const& portType(int i) const{
+//		return PortTypes[i];
+//	}
 
 	unsigned numPorts() const;
 
@@ -215,10 +219,10 @@ private:
 	NetList* Nets;
 	NodeMap* _nm;
 //	SchematicSymbol* _symbol;
-	QStringList PortTypes; // obsolete.
+//	QStringList PortTypes; // obsolete.
 	std::vector<Node*> _ports; // -> symbol?
 //	QFileInfo FileInfo;
-	QString DevType; // BUG move to parent
+//	QString DevType; // BUG move to parent
 
 public:
 	// HACK

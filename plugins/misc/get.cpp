@@ -14,6 +14,7 @@
 #include "command.h"
 #include "qucs_globals.h"
 #include "language.h"
+#include "io.h"
 
 namespace{
 /*--------------------------------------------------------------------------*/

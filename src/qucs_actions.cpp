@@ -445,6 +445,8 @@ extern QString lastDirOpenSave; // to remember last directory and file
 ///
 void QucsApp::editFile(const QString& File)
 {
+  incomplete();
+#if 0
     if ((QucsSettings.Editor.toLower() == "qucs") | QucsSettings.Editor.isEmpty()) {
         // The Editor is 'qucs' or empty, open a net document tab
         if (File.isEmpty()) {
@@ -493,20 +495,21 @@ void QucsApp::editFile(const QString& File)
       // to kill it before qucs ends
       connect(this, SIGNAL(signalKillEmAll()), externalEditor, SLOT(kill()));
     }
+#endif
 }
 
 // ------------------------------------------------------------------------
 // Is called to show the output messages of the last simulation.
 void QucsApp::slotShowLastMsg()
 {
-  editFile(QucsSettings.QucsHomeDir.filePath("log.txt"));
+  editFile(QString_(QucsSettings.homeDir()) + QDir::separator() + "log.txt");
 }
 
 // ------------------------------------------------------------------------
 // Is called to show the netlist of the last simulation.
 void QucsApp::slotShowLastNetlist()
 {
-  editFile(QucsSettings.QucsHomeDir.filePath("netlist.txt"));
+  editFile(QDir_(QucsSettings.homeDir()).filePath("netlist.txt"));
 }
 
 // ------------------------------------------------------------------------
@@ -582,13 +585,15 @@ void QucsApp::slotCallPowerComb()
 void QucsApp::launchTool(const QString& prog, const QString& progDesc, const QString& args) {
   QProcess *tool = new QProcess();
 
-#ifdef __MINGW32__
-  QString cmd = QDir::toNativeSeparators("\""+QucsSettings.BinDir + prog + ".exe\"");
-#elif __APPLE__
-  QString cmd = QDir::toNativeSeparators(QucsSettings.BinDir + prog + ".app/Contents/MacOS/" + prog);
-#else
-  QString cmd = QDir::toNativeSeparators(QucsSettings.BinDir + prog);
-#endif
+// platform.h? config.h??
+///#ifdef __MINGW32__
+///  QString cmd = QDir::toNativeSeparators("\""+QucsSettings.BinDir + prog + ".exe\"");
+///#elif __APPLE__
+///  QString cmd = QDir::toNativeSeparators(QucsSettings.BinDir + prog + ".app/Contents/MacOS/" + prog);
+///#else
+///#endif
+
+  QString cmd = QDir::toNativeSeparators(QString_(QucsSettings.BinDir) + prog);
 
   char const* var = getenv("QUCS_USE_PATH");
   if(var != NULL) {
@@ -599,7 +604,7 @@ void QucsApp::launchTool(const QString& prog, const QString& progDesc, const QSt
   }else{
     // don't know what this is about. doesn't make sense in the case above.
     // (and in all other cases i can think of)
-    tool->setWorkingDirectory(QucsSettings.BinDir);
+    tool->setWorkingDirectory(QString_(QucsSettings.BinDir));
   }
 
   qDebug() << "taskElement :" << cmd + " " + args;
@@ -686,7 +691,7 @@ void QucsApp::slotAddToProject()
   while(it != FileList.end()) {
     Info.setFile(*it);
     origFile.setFileName(*it);
-    destFile.setFileName(QucsSettings.QucsWorkDir.absolutePath() +
+    destFile.setFileName(QDir_(QucsSettings.QucsWorkDir).absolutePath() +
                      QDir::separator() + Info.fileName());
 
     if(!origFile.open(QIODevice::ReadOnly)) {
@@ -862,6 +867,8 @@ void QucsApp::slotOpenRecent()
 
 void QucsApp::slotUpdateRecentFiles()
 {
+incomplete();
+#if 0
   QMutableStringListIterator it(QucsSettings.RecentDocs);
   while(it.hasNext()) {
     if (!QFile::exists(it.next())) {
@@ -878,6 +885,7 @@ void QucsApp::slotUpdateRecentFiles()
       fileRecentAction[i]->setVisible(false);
     }
   }
+#endif
 }
 
 void QucsApp::slotClearRecentFiles()
@@ -886,11 +894,11 @@ void QucsApp::slotClearRecentFiles()
   slotUpdateRecentFiles();
 }
 
-/*!
- * \brief QucsApp::slotLoadModule launches the dialog to select dynamic modueles
- */
+// launch the dialog to select dynamic modules
+// redo?
 void QucsApp::slotLoadModule()
 {
+#if 0
     qDebug() << "slotLoadModule";
 
     LoadDialog *ld = new LoadDialog(this);
@@ -984,22 +992,15 @@ void QucsApp::slotLoadModule()
 
     delete ld;
 
+#endif
 }
 
 
-/*!
- * \brief QucsApp::slotBuildModule runs admsXml, C++ compiler to build library
- *
- * Run the va2cpp
- * Run the cpp2lib
- *
- * TODO
- * - split into two actions, elaborate and compile?
- * - collect, parse and display output of make
- *
- */
+// run admsXml, C++ compiler to build library
+// // BUG this is part of qucsator or qucsator driver
 void QucsApp::slotBuildModule()
 {
+#if 0
     qDebug() << "slotBuildModule";
 
     // reset message dock on entry
@@ -1017,9 +1018,9 @@ void QucsApp::slotBuildModule()
     make = "make";                // must be on the path!
 #endif
 
-    QDir prefix = QDir(QucsSettings.BinDir+"../");
+    QDir prefix = QDir_(QucsSettings.BinDir+"../");
 
-    QDir include = QDir(QucsSettings.BinDir+"../include/qucs-core");
+    QDir include = QDir_(QucsSettings.BinDir+"../include/qucs-core");
 
     QString workDir = QucsSettings.QucsWorkDir.absolutePath();
 
@@ -1103,7 +1104,7 @@ void QucsApp::slotBuildModule()
 
     // shot the message docks
     messageDock->msgDock->show();
-
+#endif
 }
 
 // ----------------------------------------------------------

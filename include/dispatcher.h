@@ -5,8 +5,10 @@
 //testing=script 2015.01.21
 #ifndef QUCS_DISPATCHER_H
 #define QUCS_DISPATCHER_H
+#include "platform.h"
 /*--------------------------------------------------------------------------*/
 // TODO: connect with qucs error facilities.
+#define INTERFACE // ??
 INTERFACE void error(int,const char*,...);
 INTERFACE void error(int,const std::string&);
 /*--------------------------------------------------------------------------*/
@@ -26,6 +28,6 @@ std::string to_string(int);
 #include "io_trace.h"
 #define CKT_BASE Object
 #define DISPATCHER Dispatcher
-#include "l_dispatcher.h"
+#include "l_dispatcher_.h"
 #undef CKT_BASE
 #endif

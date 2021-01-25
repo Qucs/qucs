@@ -20,8 +20,8 @@
 #include <task_element.h>
 #include <iostream>
 
-#include <QTextStream>
-#include <QDebug>
+//#include <QTextStream>
+//#include <QDebug>
 #include "object.h"
 #include "language.h"
 #include "output.h"

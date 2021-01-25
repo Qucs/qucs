@@ -424,7 +424,7 @@ void SymbolDialog::slotSelectProperty(QTableWidgetItem *item)
 		}
 
 		// use the screen-compatible metric
-		QFontMetrics metrics(QucsSettings.font, 0);   // get size of text
+		QFontMetrics metrics(QFont(QString::fromStdString(QucsSettings.font)), 0);   // get size of text
 		qDebug() << "desc = " << desc << metrics.horizontalAdvance(desc);
 		while(metrics.horizontalAdvance(desc) > 270) {  // if description too long, cut it nicely
 			// so 270 above will be the maximum size of the name label and associated edit line widget 

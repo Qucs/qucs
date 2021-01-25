@@ -40,7 +40,7 @@ GraphicText::GraphicText() : Painting()
 {
   Name = "Text ";
   Color = QColor(0,0,0);
-  Font = QucsSettings.font;
+  Font = QString_(QucsSettings.font);
   x1 = x2 = 0;
   y1 = y2 = 0;
   Angle = 0;
@@ -356,9 +356,11 @@ void GraphicText::mirrorY()
 // -----------------------------------------------------------------------
 // Calls the property dialog for the painting and changes them accordingly.
 // If there were changes, it returns 'true'.
+//
+// schematicWidget?
 bool GraphicText::Dialog()
 {
-  QFont f(QucsSettings.font);   // to avoid wrong text width
+  QFont f(QString_(QucsSettings.font));   // to avoid wrong text width
   bool changed = false;
 
   GraphicTextDialog *d = new GraphicTextDialog();

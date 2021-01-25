@@ -23,6 +23,7 @@
 #include "components/component.h"
 #include "sckt_base.h"
 #include "place.h"
+#include "io.h"
 
 #ifdef DO_TRACE
 #include <typeinfo>

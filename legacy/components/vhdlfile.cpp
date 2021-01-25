@@ -18,6 +18,7 @@
 #include "qucs_app.h"
 #include "schematic_doc.h"
 #include "misc.h"
+#include "io.h"
 
 #include "some_font_stuff.h"
 
@@ -106,8 +107,10 @@ QString VHDL_File::loadFile()
 {
   QString File(Props.getFirst()->Value);
   QFileInfo Info(File);
-  if(Info.isRelative())
-    File = QucsSettings.QucsWorkDir.filePath(File);
+  if(Info.isRelative()){
+    File = QDir_(QucsSettings.QucsWorkDir).filePath(File);
+  }else{
+  }
 
   QFile f(File);
   if(!f.open(QIODevice::ReadOnly))

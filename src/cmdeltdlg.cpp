@@ -34,6 +34,7 @@
 #include <QEvent>
 #include <QKeyEvent>
 #include <QDebug>
+#include <QFont> // BUG
 #include "swap.h"
 
 TaskElementDialog::TaskElementDialog(QucsDoc* d) : SchematicDialog(d)
@@ -682,15 +683,15 @@ void TaskElementDialog::slotSelectProperty(QTableWidgetItem *item)
     }
 
     // use the screen-compatible metric
-    QFontMetrics metrics(QucsSettings.font, 0);   // get size of text
-    while(metrics.horizontalAdvance(desc) > 270) {  // if description too long, cut it nicely
-      // so 270 above will be the maximum size of the name label and associated edit line widget 
-      if (desc.lastIndexOf(' ') != -1){
-        desc = desc.left(desc.lastIndexOf(' ')) + "....";
-		}else{
-        desc = desc.left(desc.length()-5) + "....";
-		}
-    }
+    QFontMetrics metrics(); // QucsSettings.font, 0);   // get size of text
+//     while(metrics.horizontalAdvance(desc) > 270) {  // if description too long, cut it nicely
+//       // so 270 above will be the maximum size of the name label and associated edit line widget 
+//       if (desc.lastIndexOf(' ') != -1){
+//         desc = desc.left(desc.lastIndexOf(' ')) + "....";
+// 		}else{
+//         desc = desc.left(desc.length()-5) + "....";
+// 		}
+//     }
     Description->setText(desc);
 
     if(List.count() >= 1) {    // ComboBox with value list or line edit ?
@@ -1146,9 +1147,11 @@ void TaskElementDialog::slotApplyInput()
 }
 
 // -------------------------------------------------------------------------
+// is this from ComponentDialog? then drop it.
 void TaskElementDialog::slotBrowseFile()
 {
   incomplete();
+#if 0
   // current file name from the component properties
   QString currFileName = prop->item(prop->currentRow(), 1)->text();
   QFileInfo currFileInfo(currFileName);
@@ -1168,7 +1171,7 @@ void TaskElementDialog::slotBrowseFile()
         //        currFileInfo.fileName();
       } else { // no absolute paths around
 	// use the WorkDir path
-	currDir = QucsSettings.QucsWorkDir.path() + 
+	currDir = QString::fromStdString(QucsSettings.QucsWorkDir) + 
 	          QDir::separator() +
 	  currFileInfo.fileName();
       }
@@ -1182,7 +1185,7 @@ void TaskElementDialog::slotBrowseFile()
       currDir = schematicFileInfo.absolutePath();
     } else { // no absolute paths around
       // use the WorkDir path
-      currDir = QucsSettings.QucsWorkDir.path();
+      currDir = QString::fromStdString(QucsSettings.QucsWorkDir);
     }
   }
   
@@ -1206,13 +1209,15 @@ void TaskElementDialog::slotBrowseFile()
   }
   /* FIX
   prop->currentIndex()->setText(1, s); */
+#endif
 }
 
 // -------------------------------------------------------------------------
+// edit what file?!
 void TaskElementDialog::slotEditFile()
 {
-	untested();
-	schematic()->_app->editFile(QucsSettings.QucsWorkDir.filePath(edit->text()));
+	incomplete();
+//	schematic()->_app->editFile(QucsSettings.QucsWorkDir.filePath(edit->text()));
 }
 
 /*!
