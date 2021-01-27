@@ -77,7 +77,7 @@ repository.
 
 The documetation can be found in qucs/qucs-doc
 
-Package maintainance
+Package maintenance
 ====================
 
 Some checks are missing in configure.ac.

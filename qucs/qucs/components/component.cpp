@@ -842,7 +842,7 @@ Component* Schematic::loadComponent(const QString& _s, Component* c) const
     n  = s.section(' ',8,8);    // rotated
     tmp = n.toInt(&ok);
     if(!ok) return NULL;
-    if(c->rotated > tmp)  // neccessary because of historical flaw in ...
+    if(c->rotated > tmp)  // necessary because of historical flaw in ...
       tmp += 4;        // ... components like "volt_dc"
     for(int z=c->rotated; z<tmp; z++){
       c->rotate();

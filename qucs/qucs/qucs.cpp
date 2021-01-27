@@ -624,7 +624,7 @@ void QucsApp::slotSetCompView (int index)
   QString Name;
   pInfoFunc Infos = 0;
 
-  // if something was registered dynamicaly, get and draw icons into dock
+  // if something was registered dynamically, get and draw icons into dock
   if (item == QObject::tr("verilog-a user devices")) {
 
     compIdx = 0;
@@ -632,7 +632,7 @@ void QucsApp::slotSetCompView (int index)
     while (i.hasNext()) {
       i.next();
 
-      // default icon initally matches the module name
+      // default icon initially matches the module name
       //Name = i.key();
 
       // Just need path to bitmap, do not create an object
@@ -1698,7 +1698,7 @@ void QucsApp::closeFile(int index)
  * @brief close all open documents - except a specified one, optionally
  * @param exceptTab tab to leave open, none if not specified
  *
- * @return true if all files were succesfully closed
+ * @return true if all files were successfully closed
  */
 bool QucsApp::closeAllFiles(int exceptTab)
 {
@@ -1714,7 +1714,7 @@ bool QucsApp::closeAllFiles(int exceptTab)
  * @param stoptTab last tab to be closed
  * @param exceptTab tab to leave open, none if not specified
  *
- * @return true if all requested tabs were succesfully closed
+ * @return true if all requested tabs were successfully closed
  */
 bool QucsApp::closeTabsRange(int startTab, int stopTab, int exceptTab)
 {

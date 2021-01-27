@@ -24,7 +24,7 @@ class QColor;
 
 #define TO_INT(f)   (f > 0.0 ? int(f + 0.5) : int(f - 0.5))
 
-/* This class is neccessary because scaled fonts looks very ungly.
+/* This class is necessary because scaled fonts looks very ungly.
    Avoiding this is unfortunately not easy.
    This class scales the font point size instead of the font glyphes.
    But this has the disadvantage, that the text size does not increase

@@ -1325,7 +1325,7 @@
 	* new property in coplanar line: Approx
 	* fixed small bug that always set changed-flag if "Set on Grid"
 	* right mouse button menu is now context sensitive
-	* added validators for all neccessary line edits
+	* added validators for all necessary line edits
 
 2005-04-11  Stefan Jahn  <stefan@lkcc.org>
 

@@ -342,7 +342,7 @@ qf_poly qf_poly::operator += (qf_poly P) {
   return (*this);
 }
 
-// Substraction
+// Subtraction
 qf_poly operator - (qf_poly P, qf_poly Q) {
   if ((P.rep == NONE) || (Q.rep == NONE)) {
     std::cout << "qf_poly::- used on a NONE polynom.\n";
@@ -359,7 +359,7 @@ qf_poly operator - (qf_poly P, qf_poly Q) {
   }
 }
 
-// Self-Substraction
+// Self-Subtraction
 qf_poly qf_poly::operator -= (qf_poly P) {
   if ((rep == NONE) || (P.rep == NONE)) {
     std::cout << "qf_poly::-= used on a NONE polynom.\n";
@@ -1052,7 +1052,7 @@ qf_double_t qf_poly::evalX2 (qf_double_t c) {
 void qf_poly::disp (const char *name) {
 
   if (rep == NONE) {
-    std::cout << name << "(x) is not initalized.\n";
+    std::cout << name << "(x) is not initialized.\n";
     return;
   }
 

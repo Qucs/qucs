@@ -236,7 +236,7 @@ qf_poly operator + (qf_poly & P, qf_poly & Q) {
   }
 }
 
-// Substraction
+// Subtraction
 // Similar to +=
 
 qf_poly& qf_poly::operator -= (const qf_poly& P) {

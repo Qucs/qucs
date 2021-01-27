@@ -721,7 +721,7 @@ void Diagram::loadGraphData(const QString& defaultDataSet)
 
     xAxis.min = xmin; yAxis.min = ymin; zAxis.min = zmin;
     xAxis.max = xmax; yAxis.max = ymax; zAxis.max = zmax;
-    return;    // -> no update neccessary
+    return;    // -> no update necessary
   }
 
   if(xAxis.min > xAxis.max)
@@ -830,7 +830,7 @@ int Graph::loadDatFile(const QString& fileName)
   Info.setFile(file);
   if(g->lastLoaded.isValid())
     if(g->lastLoaded > Info.lastModified())
-      return 1;    // dataset unchanged -> no update neccessary
+      return 1;    // dataset unchanged -> no update necessary
 
   g->countY = 0;
   g->mutable_axes().clear(); // HACK

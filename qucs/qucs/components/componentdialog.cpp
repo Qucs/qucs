@@ -47,7 +47,7 @@ ComponentDialog::ComponentDialog(Component *c, Schematic *d)
   QString s;
   setAllVisible = true; // state when toggling properties visibility
 
-  all = new QVBoxLayout; // to provide neccessary size
+  all = new QVBoxLayout; // to provide necessary size
   this->setLayout(all);
   all->setContentsMargins(1,1,1,1);
   QGridLayout *gp1;
