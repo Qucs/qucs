@@ -129,6 +129,15 @@ public: // make old variables accessible
 	}
 	virtual rect_t bounding_rect() const;
 
+public: // UI stuff.
+#if 0 // TODO (QucsDoc is not a QWidget yet);
+	virtual QWidget* widget(QObject* parent) { return nullptr; }
+#else
+	virtual QDialog* schematicWidget(QucsDoc*) const { return nullptr; }
+	virtual QWidget* newWidget() {return nullptr;}
+#endif
+
+
 public: // other stuff
 	virtual bool showLabel() const{ return true; }
 	//virtual bool showParam(int i) const{ return true; } // later
@@ -137,10 +146,6 @@ public: // other stuff
 	void setPosition(pos_t const& c){ _position = c; }
 	virtual void getCenter(int&, int&) const; // BUG
 	virtual void paint(ViewPainter*) const = 0;
-	virtual QDialog* schematicWidget(QucsDoc*) const { return nullptr; }
-
-	// really?
-	virtual QWidget* newWidget() {return nullptr;}
 
 	// BUG: remove "center"
 	// BUG: not virtual
