@@ -19,12 +19,12 @@
  * delete and clear commands
  */
 
-#define CMD Command
 #define INTERFACE
-#include "c_comand.h"
+#include "command.h"
 #include "qucs_globals.h"
 #define CARD_LIST SchematicModel
 #define CS istream_t
+#define CMD Command
 /*--------------------------------------------------------------------------*/
 namespace {
 /*--------------------------------------------------------------------------*/
@@ -46,7 +46,7 @@ public:
   //  command("title '", Scope);
   }
 } p0;
-DISPATCHER<CMD>::INSTALL d0(&command_dispatcher, "clear", &p0);
+DISPATCHER<CMD>::INSTALL d0(&commandDispatcher, "clear", &p0);
 /*--------------------------------------------------------------------------*/
 }
 /*--------------------------------------------------------------------------*/

@@ -37,7 +37,7 @@
 #include "mnemo.h"
 #include "schematic_doc.h"
 #include "platform.h"
-#include "io.h"
+#include "qio.h"
 
 // #include "diagrams/rect3ddiagram.h" // BUG
 #include "misc.h"

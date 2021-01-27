@@ -38,15 +38,16 @@
 #include <string>
 #include "ap.h"
 #include "schematic_model.h"
+#include "message.h"
 #define INTERFACE
+#define PARA_BASE ParameterBase
+#define PARAMETER Parameter
+#define PARAM_LIST ParamList
+#define error message
 //#include "l_lib.h"
 #define CS istream_t
 static const double MAXDBL=std::numeric_limits<double>::max();
 double const NOT_INPUT = -(MAXDBL)*(.9547658);	/* unlikely number	  */
-inline void error(int, std::string const&)
-{
-  incomplete();
-}
 std::string to_string(int);
 /*--------------------------------------------------------------------------*/
 class LANGUAGE;

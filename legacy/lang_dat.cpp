@@ -17,7 +17,7 @@
 #include "qucs_globals.h"
 #include "data.h"
 #include "output.h"
-#include "io.h"
+#include "qio.h"
 /* -------------------------------------------------------------------------------- */
 namespace {
 /* -------------------------------------------------------------------------------- */
@@ -37,7 +37,7 @@ private: // local
   void printData(Data const*, ostream_t&) const;
   void printCommonData(CommonData const*, ostream_t&) const;
 }d0;
-static Dispatcher<DocumentLanguage>::INSTALL p(&language_dispatcher, "dat", &d0);
+static Dispatcher<DocumentLanguage>::INSTALL p(&languageDispatcher, "dat", &d0);
 /* -------------------------------------------------------------------------------- */
 /* -------------------------------------------------------------------------------- */
 void DatLang::printItem(ostream_t& s, Element const* c) const

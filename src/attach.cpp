@@ -22,10 +22,11 @@ copyright            : 2016, 2020 Felix Salfelder
 #include "command.h"
 #include "ap.h"
 #include "io_trace.h"
+#include "qio.h"
 #include "qucs_globals.h"
 #include <unistd.h>	// TODO: io_.h
 
-std::string findfile(const std::string& filename, const std::string& path, int mode);
+#define findfile findFile
 
 namespace{
 
@@ -51,10 +52,9 @@ public:
 	  return what;
   }
 
-  void attach(std::string what) const{
+  void attach(std::string what, int dl_scope) const{
     // RTLD_NOW means to resolve symbols on loading
     // RTLD_LOCAL means symbols defined in a plugin are local
-    int dl_scope = RTLD_LOCAL;
     int check = RTLD_NOW;
     void* handle;
 
@@ -74,8 +74,8 @@ private:
 private:
   mutable std::map<std::string, void*> attach_list;
 } my_plugins;
-Dispatcher<Command>::INSTALL p0(&command_dispatcher, "load|attach", &my_plugins);
-Dispatcher<Command>::INSTALL p1(&command_dispatcher, "detach_all", &my_plugins);
+Dispatcher<Command>::INSTALL p0(&commandDispatcher, "load|attach", &my_plugins);
+Dispatcher<Command>::INSTALL p1(&commandDispatcher, "detach_all", &my_plugins);
 
 static std::string plugpath()
 {
@@ -94,6 +94,11 @@ void plugins::do_it(istream_t& cs, SchematicModel*)
 	if(cs.umatch("detach_all")){
 		incomplete();
 	}else if(cs.umatch("attach") || cs.umatch("load")){
+		int dl_scope = RTLD_LOCAL;
+		if (cs.umatch("public ")) {untested();
+			dl_scope = RTLD_GLOBAL;
+		}else{
+		}
 		auto path = plugpath();
 		std::string stem;
 		cs >> stem;
@@ -126,7 +131,7 @@ void plugins::do_it(istream_t& cs, SchematicModel*)
 		// 	full_file_name = compile(full_file_name);
 		// }else{ untested();
 		// }
-		attach(full_file_name);
+		attach(full_file_name, dl_scope);
 
 	}else{ untested();
 		incomplete();

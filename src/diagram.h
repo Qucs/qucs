@@ -106,7 +106,7 @@ protected:
 
 public:
   QString const& name() const{ incomplete(); return Name;}
-  QString const& typeName() const{return Name;}
+//  QString const& typeName() const{return Name;}
   void setName(QString const& n){ Name = n; }
 
 

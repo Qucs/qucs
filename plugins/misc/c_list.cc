@@ -28,7 +28,7 @@
 // QUCS hacks
 #include "command.h"
 #include "exception.h"
-#include "io.h"
+#include "qio.h"
 #include "settings.h"
 #include "command.h"
 #define print_item printItem
@@ -82,11 +82,11 @@ void list_save(CS& cmd, ostream_t& out, CARD_LIST* scope)
 
   LANGUAGE* lang = OPT::language;
   if(lang_name!=""){
-    lang = language_dispatcher[lang_name];
+    lang = languageDispatcher[lang_name];
     assert(lang); // TODO
   }else if(!lang){
     incomplete();
-    lang = language_dispatcher["qucsator"];
+    lang = languageDispatcher["qucsator"];
   }else{ untested();
   }
 
@@ -161,7 +161,7 @@ public:
     out.flush();
   }
 } p1;
-DISPATCHER<CMD>::INSTALL d1(&command_dispatcher, "list", &p1);
+DISPATCHER<CMD>::INSTALL d1(&commandDispatcher, "list", &p1);
 /*--------------------------------------------------------------------------*/
 #if 0 // later
 class CMD_SAVE : public CMD {
@@ -173,7 +173,7 @@ public:
     list_save(cmd, *outset(cmd,&out), Scope);
   }
 } p2;
-DISPATCHER<CMD>::INSTALL d2(&command_dispatcher, "save", &p2);
+DISPATCHER<CMD>::INSTALL d2(&commandDispatcher, "save", &p2);
 #endif
 /*--------------------------------------------------------------------------*/
 }

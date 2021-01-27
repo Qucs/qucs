@@ -12,7 +12,7 @@
  ***************************************************************************/
 
 #include "command.h"
-#include "io.h"
+#include "qio.h"
 #include "qucs_globals.h"
 #include "qucs_app.h"
 #include "module.h"
@@ -22,6 +22,8 @@
 #include <QTextCodec>
 #include <QDesktopWidget>
 #include "qt_compat.h"
+
+#define CMD Command
 
 namespace{
 
@@ -73,5 +75,5 @@ class g: public Command{
 		//saveApplSettings(QucsMain);
 	}
 }p;
-DISPATCHER<CMD>::INSTALL d0(&command_dispatcher, "startgui", &p);
+DISPATCHER<CMD>::INSTALL d0(&commandDispatcher, "startgui", &p);
 }// namespace

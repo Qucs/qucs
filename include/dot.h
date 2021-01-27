@@ -21,10 +21,11 @@
  * 02110-1301, USA.
  *------------------------------------------------------------------
  */
-#ifndef D_DOT_H
-#define D_DOT_H
+#ifndef QUCS_DOT_H
+#define QUCS_DOT_H
 //#include "e_card.h"
 #include "element.h"
+#define DEV_DOT Dot
 /*--------------------------------------------------------------------------*/
 class DEV_DOT : public Element {
 private:

@@ -24,9 +24,10 @@
 //testing=obsolete
 // #include "u_status.h"
 // #include "declare.h"	/* plclose */
-#include "error.h"
-#include "io.h"
+// #include "error.h"
+#include "qio.h"
 #include "command.h"
+#include "message.h"
 #include "qucs_globals.h"
 #include "schematic_model.h"
 // #include "qucs_globals.h"
@@ -35,17 +36,16 @@
 #define CS istream_t
 #define CMD Command
 #define CARD_LIST SchematicModel
+#define error ::message
 //#define fullstring fullString
 // TODO: connect with qucs error facilities.
-INTERFACE void error(int,const char*,...);
-INTERFACE void error(int,const std::string&);
 /*--------------------------------------------------------------------------*/
 /* cmdproc: process a command
  * parse, and act on, a command string
  */
 void CMD::cmdproc(CS& cmd, CARD_LIST* scope)
-{
-  trace2("cmdproc", cmd.fullstring(), cmd.cursor());
+{ untested();
+  trace2("qucs cmdproc", cmd.fullstring(), cmd.cursor());
 
 #if 0
   bool get_timer_was_running = ::status.get.is_running();
@@ -102,9 +102,9 @@ void CMD::cmdproc(CS& cmd, CARD_LIST* scope)
 
   if (s == "xxxxcomment") { untested();
     // nothing
-  }else if (s != "") {
-    CMD* c = command_dispatcher[s];
-    if (c) {
+  }else if (s != "") { untested();
+    CMD* c = commandDispatcher[s];
+    if (c) { untested();
       // assert(scope);
       c->do_it(cmd, scope);
       didsomething = true;
@@ -123,29 +123,29 @@ void CMD::cmdproc(CS& cmd, CARD_LIST* scope)
 #if 0
   if (OPT::acct  &&  didsomething) {itested();
     IO::mstdout.form("time=%8.2f\n", timecheck.check().elapsed());
-  }else{
+  }else{ untested();
   }
   plclose();
   outreset();
 
-  if (get_timer_was_running) {
+  if (get_timer_was_running) { untested();
     ::status.get.start();
-  }else{
+  }else{ untested();
   }
 #endif
 }
 /*--------------------------------------------------------------------------*/
 void CMD::command(const std::string& cs, CARD_LIST* scope)
-{
+{ untested();
   CS cmd(CS::_STRING, cs); // from string, full command
   std::string s;
   cmd >> s;
   trace1("CMD::command", s);
 
-  CMD* c = command_dispatcher[s];
-  if (c) {
+  CMD* c = commandDispatcher[s];
+  if (c) { untested();
     c->do_it(cmd, scope);
-  }else{
+  }else{ untested();
     error(bDEBUG, "bad internal command: " + s + '\n');
   }
 }

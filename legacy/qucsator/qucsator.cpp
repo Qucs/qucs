@@ -24,7 +24,7 @@
 #include "qucsator.h"
 #include "dat.h"
 #include "painting.h"
-#include "io.h"
+#include "qio.h"
 /* -------------------------------------------------------------------------------- */
 namespace {
 /* -------------------------------------------------------------------------------- */
@@ -83,10 +83,10 @@ public:
 private: // Simulator
   Simulator* clone() const override {return new Qucsator();}
   NetLang const* netLang() const override { untested();
-	  return dynamic_cast<NetLang const*>(language_dispatcher["qucsator"]);
+	  return dynamic_cast<NetLang const*>(languageDispatcher["qucsator"]);
   }
   DocumentFormat const* netLister() const override { untested();
-	  return dynamic_cast<DocumentFormat const*>(command_dispatcher["legacy_nl"]);
+	  return dynamic_cast<DocumentFormat const*>(commandDispatcher["legacy_nl"]);
   }
   void run(istream_t&, SimCtrl*) override; // really?
   void do_it(istream_t&, SchematicModel const*) override;
@@ -176,7 +176,7 @@ void Qucsator::do_it(istream_t& cs, SchematicModel const* scope)
 
 	auto d = dynamic_cast<SchematicDoc const*>(doc()); // BUG.
 
-	auto dl = command_dispatcher["legacy_nl"];
+	auto dl = commandDispatcher["legacy_nl"];
 	std::string s = "netlist mode=" + what + " " + f.toStdString();
 	trace1("qucsator nl?", s);
 	istream_t nlcmd(istream_t::_STRING, s);

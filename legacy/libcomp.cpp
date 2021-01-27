@@ -20,8 +20,8 @@
 #include "schematic_doc.h"
 #include "sckt_base.h"
 #include "property.h"
-#include "u_parameter.h"
-#include "d_dot.h"
+#include "parameter.h"
+#include "dot.h"
 
 #include <limits.h>
 

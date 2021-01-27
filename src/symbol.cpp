@@ -356,7 +356,7 @@ void Symbol::setParameter(std::string const& name, std::string const& v)
 // 	setParameter(pos, v);
 // }
 /*--------------------------------------------------------------------------*/
-COMMON_COMPONENT::COMMON_COMPONENT(int c)
+CommonComponent::CommonComponent(int c)
   :Object(),
 //   _tnom_c(NOT_INPUT),
 //   _dtemp(0),
@@ -369,13 +369,13 @@ COMMON_COMPONENT::COMMON_COMPONENT(int c)
 {
 }
 /*--------------------------------------------------------------------------*/
-COMMON_COMPONENT::~COMMON_COMPONENT()
+CommonComponent::~CommonComponent()
 {
   trace1("common,destruct", _attach_count);
-  assert(_attach_count == 0 || _attach_count == CC_STATIC);
+  assert(_attach_count == 0 || _attach_count == CC_STATIC_);
 }
 /*--------------------------------------------------------------------------*/
-void COMMON_COMPONENT::attach_common(COMMON_COMPONENT*c, COMMON_COMPONENT**to)
+void CommonComponent::attach_common(CommonComponent*c, CommonComponent**to)
 {
   assert(to);
   if (c == *to) {
@@ -407,7 +407,7 @@ void COMMON_COMPONENT::attach_common(COMMON_COMPONENT*c, COMMON_COMPONENT**to)
   }
 }
 /*--------------------------------------------------------------------------*/
-void COMMON_COMPONENT::detach_common(COMMON_COMPONENT** from)
+void CommonComponent::detach_common(CommonComponent** from)
 {
   assert(from);
   if (*from) {
@@ -425,7 +425,7 @@ void COMMON_COMPONENT::detach_common(COMMON_COMPONENT** from)
   }
 }
 /*--------------------------------------------------------------------------*/
-bool COMMON_COMPONENT::operator==(const COMMON_COMPONENT& x)const
+bool CommonComponent::operator==(const CommonComponent& x)const
 {
   return true;
 //  (_modelname == x._modelname

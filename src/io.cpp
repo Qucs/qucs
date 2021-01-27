@@ -11,7 +11,7 @@
  *                                                                         *
  ***************************************************************************/
 #include "platform.h"
-#include "io.h"
+#include "qio.h"
 #include "exception.h"
 #include <QFile>
 
@@ -597,7 +597,8 @@ char *getcmd(const char *prompt, char *buffer, int buflen)
 }
 /*--------------------------------------------------------------------------*/
 namespace IO{
-  ostream_t mstdout(stdout);
+// does not work (yet). Qt?
+//  ostream_t mstdout(stdout);
 }
 /*--------------------------------------------------------------------------*/
 void CS::ctostr(char* des, int len, const std::string& term)

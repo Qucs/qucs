@@ -26,7 +26,7 @@
 #include "docfmt.h"
 #include "module.h"
 #include "sckt_base.h"
-#include "io.h"
+#include "qio.h"
 #include "components/component.h" // BUG
 
 
@@ -599,7 +599,7 @@ void Subcircuit::build_sckt(SubcktBase* proto) const
 //	assert(file.isOpen());
 	istream_t pstream(istream_t::_WHOLE_FILE, scktfilename.toStdString());
 
-	auto cmd = command_dispatcher["leg_sch"];
+	auto cmd = commandDispatcher["leg_sch"];
 	auto D = prechecked_cast<DocumentFormat const*>(cmd);
 	assert(D);
 
@@ -607,7 +607,7 @@ void Subcircuit::build_sckt(SubcktBase* proto) const
 	D->load(pstream, proto);
 #else
 //	proto->new_subckt(); wrong.
-	auto LL = language_dispatcher["leg_sch"]; // use command instead?
+	auto LL = languageDispatcher["leg_sch"]; // use command instead?
 	auto L = dynamic_cast<SchematicLanguage const*>(LL);
 	assert(L);
 	pstream.read_line();

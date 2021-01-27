@@ -21,7 +21,7 @@
 #include "schematic_scene.h"
 #include "schematic_model.h"
 #include "element_graphics.h"
-#include "io.h"
+#include "qio.h"
 #include "platform.h"
 #include "qt_compat.h"
 #include "painting.h"

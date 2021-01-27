@@ -14,7 +14,7 @@
 #include <QClipboard>
 #include "docfmt.h"
 #include "sckt_base.h"
-#include "io.h"
+#include "qio.h"
 
 static const std::string cnp_lang = "leg_sch";
 /*--------------------------------------------------------------------------*/
@@ -87,7 +87,7 @@ class pastebuffer : public SubcktBase{
 public:
 	explicit pastebuffer(){ untested();
 		new_subckt();
-		auto const* lang = language_dispatcher[cnp_lang];
+		auto const* lang = languageDispatcher[cnp_lang];
 		assert(lang);
 
 		QClipboard *cb = QApplication::clipboard();

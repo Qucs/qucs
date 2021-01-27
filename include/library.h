@@ -4,13 +4,14 @@
 /*--------------------------------------------------------------------------*/
 #include <string>
 #include "platform.h"
+#include "message.h"
 #include "io_trace.h"
 #include "exception.h"
 #include <cstring> // strdup?
 #include <assert.h>
 /*--------------------------------------------------------------------------*/
-void error(int,const char*,...);
-void error(int,const std::string&);
+#define error message
+/*--------------------------------------------------------------------------*/
 std::string to_string(int);
 /*--------------------------------------------------------------------------*/
 // temporary stuff.

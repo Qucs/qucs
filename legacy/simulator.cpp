@@ -27,7 +27,7 @@
 #include "misc.h"
 #include "settings.h"
 #include "sckt_base.h"
-#include "io.h"
+#include "qio.h"
 
 extern tQucsSettings QucsSettings;  // bug, settings.h
 /* -------------------------------------------------------------------------------- */
@@ -62,7 +62,7 @@ private:
   mutable SubMap FileList; // BUG (maybe not)
   mutable DocumentLanguage* _qucslang;
 }LNL;
-static Dispatcher<Command>::INSTALL p1(&command_dispatcher, "qucsator|legacy_nl", &LNL);
+static Dispatcher<Command>::INSTALL p1(&commandDispatcher, "qucsator|legacy_nl", &LNL);
 /* -------------------------------------------------------------------------------- */
 // "simulator" backend emulating legacy behaviour
 // TODO: forward to other simulator following legacy heuristic.
@@ -98,7 +98,7 @@ struct default_sim{
 /* -------------------------------------------------------------------------------- */
 NetLang const* LegacySimulator::netLang() const
 { untested();
-	DocumentLanguage const* d = language_dispatcher["qucsator"];
+	DocumentLanguage const* d = languageDispatcher["qucsator"];
 	assert(d);
 	auto n = prechecked_cast<NetLang const*>(d);
 	assert(n);
@@ -151,7 +151,7 @@ void LegacyNetlister::clear() const
 /* -------------------------------------------------------------------------------- */
 void LegacyNetlister::load(istream_t&, Object*) const
 { untested();
-   _qucslang = language_dispatcher["qucsator"];
+   _qucslang = languageDispatcher["qucsator"];
 	assert(_qucslang);
 	incomplete();
 }
@@ -179,7 +179,7 @@ void LegacyNetlister::do_it(istream_t& cs, SchematicModel* m)
 	}
 	ostream_t Stream(&NetlistFile);
 
-   _qucslang = language_dispatcher["qucsator"];
+   _qucslang = languageDispatcher["qucsator"];
 	clear();
 
 	int SimPorts = 10;//??
@@ -238,7 +238,7 @@ void LegacyNetlister::do_it(istream_t& cs, SchematicModel* m)
 void LegacyNetlister::printDeclarations(ostream_t& stream,
 		std::map<std::string, Element const*>& declarations) const
 {
-   _qucslang = language_dispatcher["qucsator"];
+   _qucslang = languageDispatcher["qucsator"];
 	assert(_qucslang);
 
 	stream << "## declarations "<< declarations.size() << "\n";

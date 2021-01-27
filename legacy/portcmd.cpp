@@ -12,11 +12,11 @@
  ***************************************************************************/
 /*--------------------------------------------------------------------------*/
 #include "command.h"
-#include "io.h"
+#include "qio.h"
 #include "schematic_model.h"
 #include "qucs_globals.h"
 #include "painting.h"
-#include "d_dot.h"
+#include "dot.h"
 /*--------------------------------------------------------------------------*/
 namespace{
 /*--------------------------------------------------------------------------*/
@@ -77,6 +77,6 @@ class PortSym : public Command{
 #endif
 	}
 }d0;
-Dispatcher<Command>::INSTALL p0(&command_dispatcher, ".PortSym", &d0);
+Dispatcher<Command>::INSTALL p0(&commandDispatcher, ".PortSym", &d0);
 /*--------------------------------------------------------------------------*/
 } // namespace

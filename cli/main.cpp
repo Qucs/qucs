@@ -54,7 +54,8 @@
 #include "exception.h"
 #include "qucs_globals.h"
 #include "library.h"
-#include "io.h"
+#include "message.h"
+#include "qio.h"
 /*--------------------------------------------------------------------------*/
 // qucs hacks and wraps
 #define CS istream_t
@@ -70,14 +71,14 @@ struct JMP_BUF{
 /*--------------------------------------------------------------------------*/
 static void sign_on(void)
 {
-  IO::mstdout <<
+  std::cout <<
     "Qucs : experimental CLI\n"
     "used for testing only\n"
     "This is free software, and you are welcome\n"
     "to redistribute it under the terms of \n"
     "the GNU General Public License, version 3 or later.\n"
     "See the file \"COPYING\" for details.\n";
-  IO::mstdout.flush();
+  std::cout.flush();
 }
 /*--------------------------------------------------------------------------*/
 static void prepare_env()
@@ -176,7 +177,7 @@ extern "C" {
   static void sig_fpe(SIGNALARGS)
   {untested();
     signal(SIGFPE,sig_fpe);
-    error(bDANGER, "floating point error\n");
+    message(bDANGER, "floating point error\n");
   }
 }
 /*--------------------------------------------------------------------------*/
@@ -215,7 +216,7 @@ static void process_cmd_line(int argc, const char *argv[])
 	try {
 	  CMD::command(std::string("include ") + argv[ii++], &static_model);
 	}catch (qucs::Exception& e) {itested();
-	  error(bDANGER, e.message() + '\n');
+	  message(bDANGER, e.message() + '\n');
 	  finish();
 	}
 	if (ii >= argc) {itested();
@@ -228,7 +229,7 @@ static void process_cmd_line(int argc, const char *argv[])
       throw;
     }catch (qucs::Exception& e) {itested();
       // abort command, continue loop
-      error(bDANGER, e.message() + '\n');
+      message(bDANGER, e.message() + '\n');
       finish();
     }
   }
@@ -277,13 +278,13 @@ int main(int argc, const char *argv[])
 	    CMD::cmdproc(cmd.get_line(I_PROMPT), &static_model);
 	  }
 	}catch (qucs::Exception_End_Of_Input& e) {
-	  error(bDANGER, e.message() + '\n');
+	  message(bDANGER, e.message() + '\n');
 	  finish();
 	  //CMD::command("quit", &static_model);
 	  //exit(0);
 	  break;
 	}catch (qucs::Exception& e) {
-	  error(bDANGER, e.message() + '\n');
+	  message(bDANGER, e.message() + '\n');
 	  finish();
 	}
       }else{itested();
@@ -293,7 +294,7 @@ int main(int argc, const char *argv[])
   }
   }catch (qucs::Exception_Quit&) {
   }catch (qucs::Exception& e) {untested();
-    error(bDANGER, e.message() + '\n');
+    message(bDANGER, e.message() + '\n');
   }
   
   //static_model.erase_all();

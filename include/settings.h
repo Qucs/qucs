@@ -11,6 +11,8 @@ class Simulator;
 class DocumentLanguage;
 
 // BUG: class. fix visibility
+// TODO: this is a mix of installation environment, circuit settings,
+//       project settings plugin settings and UI settings. untangle.
 struct tQucsSettings {
 	explicit tQucsSettings();
 	tQucsSettings(tQucsSettings const&) = delete;
@@ -64,7 +66,7 @@ struct tQucsSettings {
   bool TextAntiAliasing;
   bool ShowDescriptionProjectTree;
 
-public:
+public: // BUG: this is per QucsDoc
   void setHomeDir(std::string const& s) { QucsHomeDir = s; }
   std::string const& homeDir() const { return QucsHomeDir; }
 
@@ -73,6 +75,9 @@ public:
 private:
   std::string _libDir;
   Simulator const* _simulator;
+
+public: // global settings.
+	static bool case_insensitive;
 };
 extern tQucsSettings QucsSettings;
 /*--------------------------------------------------------------------------*/

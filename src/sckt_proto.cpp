@@ -22,10 +22,10 @@ typedef unsigned index_t;
 /*--------------------------------------------------------------------------*/
 namespace {
 /*--------------------------------------------------------------------------*/
-class CommonSubckt : public COMMON_COMPONENT{
+class CommonSubckt : public CommonComponent{
 public:
 	explicit CommonSubckt(int x)
-		: COMMON_COMPONENT(x),
+		: CommonComponent(x),
         _subckt() {}
 	~CommonSubckt(){
 		for(auto& p : _ports){
@@ -35,12 +35,12 @@ public:
 	}
 public:
 	SchematicModel* subckt(){ return &_subckt; }
-	COMMON_COMPONENT* clone()const override{
+	CommonComponent* clone()const override{
 		assert(false); // not yet.
 		incomplete();
 		return new CommonSubckt(0);
 	}
-   bool operator==(const COMMON_COMPONENT&)const override{
+   bool operator==(const CommonComponent&)const override{
 		return false;
 	}
 	pos_t const& portPosition(index_t i) const;
@@ -65,7 +65,7 @@ private:
 	SchematicModel _subckt;
 	std::vector<Port*> _ports;
 };
-CommonSubckt comms(CC_STATIC);
+CommonSubckt comms(CC_STATIC_);
 /*--------------------------------------------------------------------------*/
 pos_t const& CommonSubckt::portPosition(index_t i) const
 {
@@ -123,7 +123,7 @@ private: // Symbol
 
 private: // internal
 	SchematicModel* subckt() { untested();
-		COMMON_COMPONENT* cc = mutable_common();
+		CommonComponent* cc = mutable_common();
 		assert(cc);
 		auto cs = prechecked_cast<CommonSubckt*>(cc);
 		assert(cs);
@@ -162,7 +162,7 @@ unsigned SubcktProto::numPorts() const
 	// 	trace1("sckt_proto::numPorts", subckt()->numPorts());
 	// 	return subckt()->numPorts();
 	// }
-	COMMON_COMPONENT const* cc = common();
+	CommonComponent const* cc = common();
 	assert(cc);
 	auto cs = prechecked_cast<CommonSubckt const*>(cc);
 	assert(cs);
@@ -171,7 +171,7 @@ unsigned SubcktProto::numPorts() const
 /*--------------------------------------------------------------------------*/
 Port& SubcktProto::port(index_t i)
 {
-	COMMON_COMPONENT* cc = mutable_common();
+	CommonComponent* cc = mutable_common();
 	assert(cc);
 	auto cs = prechecked_cast<CommonSubckt*>(cc);
 	assert(cs);
@@ -229,7 +229,7 @@ SubcktProto::SubcktProto(Element const*)
 /*--------------------------------------------------------------------------*/
 SchematicModel* SubcktProto::scope()
 {
-	COMMON_COMPONENT* cc = mutable_common();
+	CommonComponent* cc = mutable_common();
 	assert(cc);
 	auto cs = prechecked_cast<CommonSubckt*>(cc);
 	assert(cs);

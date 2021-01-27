@@ -12,14 +12,14 @@
  ***************************************************************************/
 /*--------------------------------------------------------------------------*/
 #include "command.h"
-#include "io.h"
+#include "qio.h"
 #include "schematic_model.h"
 #include "qucs_globals.h"
 #include "painting.h"
 #include "language.h"
 #include "symbol.h"
-#include "u_parameter.h"
-#include "d_dot.h"
+#include "parameter.h"
+#include "dot.h"
 /*--------------------------------------------------------------------------*/
 namespace{
 /*--------------------------------------------------------------------------*/
@@ -76,6 +76,6 @@ class IdCommand : public Command{
 		scope->pushBack(ps);
 	}
 }d0;
-Dispatcher<Command>::INSTALL p0(&command_dispatcher, ".ID", &d0);
+Dispatcher<Command>::INSTALL p0(&commandDispatcher, ".ID", &d0);
 /*--------------------------------------------------------------------------*/
 } // namespace

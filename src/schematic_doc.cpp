@@ -289,7 +289,7 @@ void SchematicDoc::parse(istream_t& s, SchematicLanguage const* L)
 {itested();
 	incomplete(); // but still used in qucs -i $file
 	if(!L){itested();
-		auto D = language_dispatcher["leg_sch"]; // use command instead.
+		auto D = languageDispatcher["leg_sch"]; // use command instead.
 		L = dynamic_cast<SchematicLanguage const*>(D);
 	}else{ untested();
 	}
@@ -1087,7 +1087,7 @@ QString SchematicDoc::createClipboardFile() const
 		sym.subckt()->push_back(cl);
 	}
 
-	auto lang = language_dispatcher["leg_sch"];
+	auto lang = languageDispatcher["leg_sch"];
 	assert(lang);
 	auto fmt = prechecked_cast<DocumentLanguage const*>(lang);
 	assert(fmt);
@@ -1107,7 +1107,7 @@ int SchematicDoc::save()
 	int result = adjustPortNumbers();// same port number for schematic and symbol
 	{ // saveDocument();
 		// TODO: provide selection GUI
-		auto d = command_dispatcher["leg_sch"];
+		auto d = commandDispatcher["leg_sch"];
 		assert(d);
 		assert(_root);
 

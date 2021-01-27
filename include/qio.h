@@ -16,10 +16,12 @@
 #include <QTextStream> // BUG
 #include "io_trace.h"
 
+std::string findFile(const std::string& filename, const std::string& path, int mode);
+
 class QFile;
 
 // output stream
-class ostream_t : public QTextStream {
+class ostream_t : public QTextStream /*BUG*/ {
 private:
 	ostream_t(ostream_t const&) = delete;
 public:
@@ -43,6 +45,15 @@ public:
 };
 
 #define CS istream_t
+#define AP_MOD AP_MOD_
+#define ONE_OF oneOf
+#define  mNONE	    qmNONE	/* nothing special */
+#define  mSCALE	 qmSCALE	/* scale it after reading */
+#define  mOFFSET	 qmOFFSET	/* add an offset */
+#define  mINVERT	 qmINVERT	/* save 1 / the number */
+#define  mPOSITIVE qmPOSITIVE	/* store absolute value */
+#define  mOCTAL	 qmOCTAL	/* read the number in octal */
+#define  mHEX		 qmHEX		/* read the number in hex */
 #define INTERFACE
 #include "ap.h"
 #undef CS
@@ -56,8 +67,9 @@ inline std::ostream& operator<<(std::ostream&o, std::pair<int, int> const& p)
   return o << "(" << p.first << ", " << p.second << ")";
 }
 
-namespace IO{
-  extern ostream_t mstdout;
-}
+// it does not work with Qt. switch implementation first.
+// namespace IO{
+//   extern ostream_t mstdout;
+// }
 
 #endif

@@ -18,11 +18,13 @@
 #include "symbol.h"
 #include "painting.h"
 #include "language.h"
-#include "d_dot.h"
+#include "dot.h"
 #include "diagram.h"
 #include "sckt_base.h"
 #include "data.h"
-#include "io.h"
+#include "qio.h"
+
+#define DEV_DOT Dot
 
 Element* DocumentLanguage::parseItem(istream_t& s, Element* c) const
 { untested();
@@ -121,7 +123,7 @@ Element const* DocumentLanguage::find_proto(const std::string& Name, const Eleme
 #endif
   if (p) {
     return p;
-  }else if ((command_dispatcher[Name])) {
+  }else if ((commandDispatcher[Name])) {
     auto d=new DEV_DOT;	//BUG// memory leak
 //	 d->setOwner(Scope); // really??
 	 return d;
@@ -158,7 +160,7 @@ Element const* DocumentLanguage::find_proto(const std::string& Name, const Eleme
     else{ /* no shortcut available */
       s = Name;
     }
-    if ((command_dispatcher[s])) { untested();
+    if ((commandDispatcher[s])) { untested();
       return new DEV_DOT; //BUG// we will look it up twice, //BUG// memory leak
     }else{ untested();
       return NULL;

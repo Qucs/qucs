@@ -19,7 +19,7 @@
 #include "qucs_globals.h"
 #include "schematic_model.h"
 #include "schematic_lang.h"
-#include "io.h"
+#include "qio.h"
 #include "net.h"
 #include "exception.h"
 #include "sckt_base.h"
@@ -50,18 +50,18 @@ private:
   DocumentLanguage const* lang;
 //  mutable SchematicModel const* modelhack;
 }VNL;
-static Dispatcher<Command>::INSTALL p1(&command_dispatcher, "verilog_nl", &VNL);
+static Dispatcher<Command>::INSTALL p1(&commandDispatcher, "verilog_nl", &VNL);
 /*--------------------------------------------------------------------------*/
 VerilogNetlister::VerilogNetlister() : DocumentFormat()
 {
-	lang = language_dispatcher["verilog"];
+	lang = languageDispatcher["verilog"];
 	// verilog = dynamic_cast<NetLang const*>(l);
 	assert(lang);
 }
 /*--------------------------------------------------------------------------*/
 void VerilogNetlister::do_it(istream_t& cs, SchematicModel* o)
 {
-	lang = language_dispatcher["verilog"];
+	lang = languageDispatcher["verilog"];
 	assert(lang);
 
 	std::map<std::string, Element const*> declarations;

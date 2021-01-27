@@ -19,11 +19,11 @@
 #include "painting.h"
 #include "diagram.h" // BUG
 #include "docfmt.h" // BUG
-#include "d_dot.h"
+#include "dot.h"
 #include "components/component.h"
 #include "sckt_base.h"
 #include "place.h"
-#include "io.h"
+#include "qio.h"
 #include "legacy_task_element.h"
 
 #ifdef DO_TRACE
@@ -131,10 +131,10 @@ private:
 	bool _lib_mod; // HACK HACK
 }d0;
 static Dispatcher<DocumentLanguage>::INSTALL
-    p0(&language_dispatcher, "leg_sch", &d0);
+    p0(&languageDispatcher, "leg_sch", &d0);
 LegacySchematicLanguage d1(true);
 static Dispatcher<DocumentLanguage>::INSTALL
-    p1(&language_dispatcher, "legacy_lib", &d1);
+    p1(&languageDispatcher, "legacy_lib", &d1);
 /*--------------------------------------------------------------------------*/
 /*--------------------------------------------------------------------------*/
 static Component* parseComponentObsoleteCallback(const QString& _s, Component* c);
@@ -754,7 +754,7 @@ Symbol* LegacySchematicLanguage::parseSymbol(istream_t& cs, Symbol* sym) const
 				sym->setParameter(position + offset, n.toStdString());
 			}catch(qucs::ExceptionCantFind const*){ untested();
 				incomplete(); // CS has error messages...
-				error(5, "cannot parse Symbol param " +
+				message(QucsMsgFatal, "cannot parse Symbol param " +
 						std::to_string(position + offset) + " in " + sym->label());
 				throw; // BUG
 			}
@@ -1081,7 +1081,7 @@ DEV_DOT* LegacySchematicLanguage::parseCommand(istream_t& c, DEV_DOT* x) const
 	c >> s;
 
 	// c.reset(here);
-	if (!command_dispatcher[s]) { untested();
+	if (!commandDispatcher[s]) { untested();
 		unreachable(); // for now
 		trace3("uuh", s, Line, c.cursor());
 		assert(false);
@@ -1347,7 +1347,7 @@ class PaintingCommand : public Command{
 	  sym->setLabel(":Paintings:");
 	  assert(s);
 
-	  auto lang = language_dispatcher["legacy_lib"];
+	  auto lang = languageDispatcher["legacy_lib"];
 	  assert(lang);
 
 	  while(true){
@@ -1372,9 +1372,9 @@ class PaintingCommand : public Command{
 	  }
   }
 }d3;
-Dispatcher<Command>::INSTALL _p0(&command_dispatcher, "Paintings", &d3);
-Dispatcher<Command>::INSTALL _p1(&command_dispatcher, "Paintings>", &d3); // BUG
-Dispatcher<Command>::INSTALL _p2(&command_dispatcher, "<Paintings>", &d3); // ...
+Dispatcher<Command>::INSTALL _p0(&commandDispatcher, "Paintings", &d3);
+Dispatcher<Command>::INSTALL _p1(&commandDispatcher, "Paintings>", &d3); // BUG
+Dispatcher<Command>::INSTALL _p2(&commandDispatcher, "<Paintings>", &d3); // ...
 /*--------------------------------------------------------------------------*/
 class DiagramCommand : public Command{
 	void do_it(istream_t& cs, SchematicModel* s) override{
@@ -1396,7 +1396,7 @@ class DiagramCommand : public Command{
 			assert(s);
 		}
 
-		auto lang = language_dispatcher["legacy_lib"];
+		auto lang = languageDispatcher["legacy_lib"];
 		assert(lang);
 
 		Element* e = sym;
@@ -1414,9 +1414,9 @@ class DiagramCommand : public Command{
 		trace1("Diag parse", sym->subckt()->size());
 	}
 }d4;
-Dispatcher<Command>::INSTALL p3_(&command_dispatcher, "Diagrams", &d4);
-Dispatcher<Command>::INSTALL p4_(&command_dispatcher, "Diagrams>", &d4); // BUG
-Dispatcher<Command>::INSTALL p5_(&command_dispatcher, "<Diagrams>", &d4); // ...
+Dispatcher<Command>::INSTALL p3_(&commandDispatcher, "Diagrams", &d4);
+Dispatcher<Command>::INSTALL p4_(&commandDispatcher, "Diagrams>", &d4); // BUG
+Dispatcher<Command>::INSTALL p5_(&commandDispatcher, "<Diagrams>", &d4); // ...
 /*--------------------------------------------------------------------------*/
 class WireCommand : public Command{
 	void do_it(istream_t& cs, SchematicModel* s) override{
@@ -1442,7 +1442,7 @@ class WireCommand : public Command{
 			assert(s);
 		}
 
-		auto lang = language_dispatcher["legacy_lib"];
+		auto lang = languageDispatcher["legacy_lib"];
 		assert(lang);
 
 		Element* e = sym;
@@ -1468,9 +1468,9 @@ class WireCommand : public Command{
 		}
 	}
 }dw0;
-Dispatcher<Command>::INSTALL pw0(&command_dispatcher, "Wires", &dw0);
-Dispatcher<Command>::INSTALL pw1(&command_dispatcher, "Wires>", &dw0); // BUG
-Dispatcher<Command>::INSTALL pw2(&command_dispatcher, "<Wires>", &dw0); // ...
+Dispatcher<Command>::INSTALL pw0(&commandDispatcher, "Wires", &dw0);
+Dispatcher<Command>::INSTALL pw1(&commandDispatcher, "Wires>", &dw0); // BUG
+Dispatcher<Command>::INSTALL pw2(&commandDispatcher, "<Wires>", &dw0); // ...
 } // namespace
 /*--------------------------------------------------------------------------*/
 /*--------------------------------------------------------------------------*/

@@ -26,7 +26,7 @@
 #include <QList> // yikes.
 #include "../qucs-lib/qucslib_common.h"
 #include "command.h"
-#include "io.h"
+#include "qio.h"
 
 namespace{
 
@@ -53,7 +53,7 @@ private:
 
 	std::vector<Module::INSTALL*> _mod;
 }l;
-Dispatcher<Command>::INSTALL p(&command_dispatcher, "loadlegacylib", &l);
+Dispatcher<Command>::INSTALL p(&commandDispatcher, "loadlegacylib", &l);
 
 void LIB::do_it(istream_t&, SchematicModel*)
 {
@@ -97,11 +97,11 @@ void LIB::do_it(istream_t&, SchematicModel*)
       case QUCS_COMP_LIB_IO_ERROR:
       { untested();
         QString filename = getLibAbsPath(LibFiles[i].first);
-        error(3, "Cannot open \"%1\"." + filename.toStdString());
+        message(QucsMsgWarning, "Cannot open \"%1\"." + filename.toStdString());
         return;
       }
       case QUCS_COMP_LIB_CORRUPT: untested();
-        error(3, "Library is corrupt.");
+        message(QucsMsgWarning, "Library is corrupt.");
         return;
       default:
         break;
@@ -122,9 +122,9 @@ void LIB::do_it(istream_t&, SchematicModel*)
 			}else{
 			}
 
-			auto D = language_dispatcher["legacy_lib"];
+			auto D = languageDispatcher["legacy_lib"];
 			auto L_ = dynamic_cast<SchematicLanguage const*>(D);
-			auto C = command_dispatcher["leg_sch"];
+			auto C = commandDispatcher["leg_sch"];
 			auto L = dynamic_cast<DocumentFormat const*>(C);
 			assert(L);
 

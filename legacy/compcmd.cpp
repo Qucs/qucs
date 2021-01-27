@@ -12,13 +12,13 @@
  ***************************************************************************/
 /*--------------------------------------------------------------------------*/
 #include "command.h"
-#include "io.h"
+#include "qio.h"
 #include "schematic_model.h"
 #include "qucs_globals.h"
 #include "painting.h"
 #include "language.h"
 #include "symbol.h"
-#include "d_dot.h"
+#include "dot.h"
 #include "sckt_base.h"
 /*--------------------------------------------------------------------------*/
 namespace{
@@ -82,7 +82,7 @@ class CompCommand : public Command{
 			assert(s);
 		}
 
-		auto lang = language_dispatcher["legacy_lib"];
+		auto lang = languageDispatcher["legacy_lib"];
 		assert(lang);
 
 		Element* e = sym;
@@ -114,8 +114,8 @@ class CompCommand : public Command{
 		}
 	}
 }d0;
-Dispatcher<Command>::INSTALL p0(&command_dispatcher, "Components", &d0);
-Dispatcher<Command>::INSTALL p1(&command_dispatcher, "Components>", &d0); // BUG
-Dispatcher<Command>::INSTALL p2(&command_dispatcher, "<Components>", &d0); // ...
+Dispatcher<Command>::INSTALL p0(&commandDispatcher, "Components", &d0);
+Dispatcher<Command>::INSTALL p1(&commandDispatcher, "Components>", &d0); // BUG
+Dispatcher<Command>::INSTALL p2(&commandDispatcher, "<Components>", &d0); // ...
 /*--------------------------------------------------------------------------*/
 } // namespace
