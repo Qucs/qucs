@@ -165,7 +165,12 @@ public: // compatibility
 
 public:
 	// BUG; abused in taskElement
-	//  mutable int x2, y2;  // center and relative boundings
+	virtual /*bug*/ std::string /* const& */ typeName() const{
+		return _type;
+	}
+	virtual /*bug*/ void setTypeName(std::string const& x){
+		_type = x;
+	}
 
 	// create a declaration, e.g. subcircuit definition or include directive
 	virtual Symbol const* proto(SchematicModel const*) const{return nullptr;}
@@ -197,6 +202,7 @@ protected: // BUG in Painting
 
 private:
 	Object* _owner; // could be const all the way??
+	std::string _type;
 }; // Element
 /*--------------------------------------------------------------------------*/
 inline SchematicModel const* Element::scope() const

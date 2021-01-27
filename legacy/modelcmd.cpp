@@ -12,7 +12,7 @@
  ***************************************************************************/
 /*--------------------------------------------------------------------------*/
 #include "command.h"
-#include "io.h"
+#include "qio.h"
 #include "schematic_model.h"
 #include "qucs_globals.h"
 #include "painting.h"
@@ -49,8 +49,8 @@ class Model : public Command{
 #endif
   }
 }d0;
-Dispatcher<Command>::INSTALL p0(&command_dispatcher, "Model", &d0);
-Dispatcher<Command>::INSTALL p1(&command_dispatcher, "Model>", &d0); // BUG
-Dispatcher<Command>::INSTALL p2(&command_dispatcher, "<Model>", &d0); // ...
+Dispatcher<Command>::INSTALL p0(&commandDispatcher, "Model", &d0);
+Dispatcher<Command>::INSTALL p1(&commandDispatcher, "Model>", &d0); // BUG
+Dispatcher<Command>::INSTALL p2(&commandDispatcher, "<Model>", &d0); // ...
 /*--------------------------------------------------------------------------*/
 } // namespace

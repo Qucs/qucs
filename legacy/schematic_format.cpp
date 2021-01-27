@@ -10,7 +10,7 @@
  *   (at your option) any later version.                                   *
  *                                                                         *
  ***************************************************************************/
-#include "io.h"
+#include "qio.h"
 #include "docfmt.h"
 #include "qucs_globals.h"
 #include "language.h"
@@ -24,7 +24,7 @@
 #include "place.h"
 #include "sckt_base.h"
 #include "task_element.h" // BUG?
-#include "u_parameter.h" // BUG?
+#include "parameter.h" // BUG?
 
 namespace{
 
@@ -68,12 +68,12 @@ private: // legacy cruft
 //		return m.components();
 	}
 }d0;
-static Dispatcher<Command>::INSTALL p0(&command_dispatcher, "leg_sch", &d0);
+static Dispatcher<Command>::INSTALL p0(&commandDispatcher, "leg_sch", &d0);
 
 void LegacySchematicFormat::load(istream_t& s, Object* c) const
 {
 // TODO: move stuff here that does not belong to leg_sch.
-	auto l=language_dispatcher["leg_sch"];
+	auto l=languageDispatcher["leg_sch"];
 	assert(l);
 	auto L=dynamic_cast<SchematicLanguage const*>(l);
 	assert(L);
@@ -197,7 +197,7 @@ void LegacySchematicFormat::do_it(istream_t& cs, SchematicModel* m)
 	std::vector<Element const*> paintings;
 	std::vector<Element const*> diagrams;
 
-	auto D = language_dispatcher["leg_sch"];
+	auto D = languageDispatcher["leg_sch"];
 	auto L = dynamic_cast<DocumentLanguage const*>(D);
 	assert(L);
 

@@ -36,7 +36,7 @@
 #include "schematic_model.h"
 #include "qucs_app.h"
 #include "misc.h"
-#include "io.h"
+#include "qio.h"
 #include "some_font_stuff.h"
 
 

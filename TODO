@@ -19,9 +19,9 @@
 
 ===== 0.1.* TODO =====
 
+- move interface to qucs namespace
 - run simulations in tests, add more simulators
 - resurrect diagrams as QWidgets
-- could add CMake at some point
 - hide text during symbols drag
 - movable (tx, ty) and editable text
 - adjust selection bits after "wire optimisation"
@@ -29,13 +29,15 @@
 - named nets and parse qucsator models
 - use dispatcher in Module::INSTALL
 - proper "Label" symbol/component
-- split repos (qucs & qucs-doc)
-- parse verilog schematic and round trip
 - implement symbol editor (standalone, not as "mode")
-- make code more (human) readable where possible
 - symbol text position / move text
 - refactor VHDLcode
 - qucsator process namesspace issue (important?)
+
+wishlist/optional
+- parse verilog schematic and round trip
+- make code more (human) readable where possible
+- could add CMake at some point
 
 done?
 - fix parameters in "Lib" style components

@@ -20,9 +20,9 @@
 #include "net.h"
 #include "nodemap.h" // BUG
 #include "sckt_base.h"
-#include "d_dot.h"
+#include "dot.h"
 #include "place.h"
-#include "io.h"
+#include "qio.h"
 #include <QFile> // BUG
 
 unsigned gndhackn=0;
@@ -65,7 +65,7 @@ private:
 private: //DocumentLanguage
 	std::string findType(istream_t&) const override {incomplete(); return "incomplete";}
 } V;
-static Dispatcher<DocumentLanguage>::INSTALL p0(&language_dispatcher, "verilog|verilog_nl", &V);
+static Dispatcher<DocumentLanguage>::INSTALL p0(&languageDispatcher, "verilog|verilog_nl", &V);
 /*--------------------------------------------------------------------------*/
 class VS : public Verilog {
 	void printSymbol(Symbol const*, ostream_t&) const override;
@@ -74,7 +74,7 @@ private:
 	void print_ports_short(ostream_t& o, const Symbol* x) const;
 	void print_args(ostream_t&, Symbol const* sym) const;
 } V_;
-static Dispatcher<DocumentLanguage>::INSTALL p1(&language_dispatcher, "verilog_schematic", &V_);
+static Dispatcher<DocumentLanguage>::INSTALL p1(&languageDispatcher, "verilog_schematic", &V_);
 /*--------------------------------------------------------------------------*/
 void VS::print_args(ostream_t& s, Symbol const* sym) const
 {
@@ -399,7 +399,7 @@ private: // legacy cruft
 private: // hacks.
   void printSymbol(Symbol const*, ostream_t&) const;
 }VS;
-static Dispatcher<Command>::INSTALL pp(&command_dispatcher, "v_sch", &VS);
+static Dispatcher<Command>::INSTALL pp(&commandDispatcher, "v_sch", &VS);
 /* -------------------------------------------------------------------------------- */
 /* -------------------------------------------------------------------------------- */
 void VerilogSchematicFormat::load(istream_t&, Object*) const

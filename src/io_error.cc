@@ -4,9 +4,12 @@
 #include <iostream>
 #include <stdarg.h>
 #include "io_trace.h"
-#include "io.h"
+#include "qio.h"
 #include "exception.h"
+#include "message.h"
 #include "ap.h"
+
+#define error message
 
 void error(int, const char* fmt, ...)
 { untested();

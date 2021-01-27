@@ -1,9 +1,11 @@
 #ifndef QUCS_LANGUAGE_H
 #define QUCS_LANGUAGE_H
 
-//#include "io.h"
+//#include "qio.h"
 #include "object.h"
 
+#define DEV_DOT Dot
+// include u_lang.h // TODO
 //class Command;
 class DEV_DOT;
 class Element;
@@ -14,6 +16,7 @@ class SubcktBase;
 class Symbol;
 class TaskElement;
 class ostream_t;
+
 
 // baseclass for schematic and net languages.
 // use u_lang.h instead?

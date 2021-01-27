@@ -40,8 +40,9 @@
 #include "exception.h"
 #include "qucs_globals.h"
 #include "library.h"
-#include "io.h"
+#include "qio.h"
 #include "qt_compat.h"
+#include "message.h"
 
 #ifdef _WIN32
 #include <Windows.h>  //for OutputDebugString
@@ -109,7 +110,7 @@ void doNetlist(QString schematic_fn, std::string netlist, Command* fmt)
 	root->setParameter("$filename", sfn); // BUG: PATH.
 	root->setLabel(sfn);
 
-	SchematicModel* cl = root->subckt();
+	SchematicModel* cl = root->subckt(); // scope?
 	assert(cl);
 
 	std::string cs = "get " + sfn;
@@ -398,9 +399,9 @@ int main(int argc, char *argv[])
     }
   }
 
-  Command const* cmd = command_dispatcher[netlang_name];
+  Command const* cmd = commandDispatcher[netlang_name];
   if(!cmd){
-    error(5, "no language " + netlang_name);
+    message(5, "no language " + netlang_name);
     exit(1);
   }else{
   }
@@ -434,7 +435,7 @@ int main(int argc, char *argv[])
       fprintf(stderr, "Error: Expected output file.\n");
       result = -1;
     }else if (dump_flag) {
-      auto cmd = command_dispatcher[netlang_name];
+      auto cmd = commandDispatcher[netlang_name];
       auto fmt = prechecked_cast<DocumentFormat*>(cmd);
       if(!fmt){ untested();
 	qDebug() << "no lang" << QString::fromStdString(netlang_name);

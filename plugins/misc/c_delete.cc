@@ -24,17 +24,16 @@
 // element will reappear next time an elaboration occurs, which is 
 // usually before anything else.
 //
-#define CMD Command
 #define INTERFACE
-#include "c_comand.h"
 #include "qucs_globals.h"
-#include "io.h"
+#include "qio.h"
 #define CARD_LIST SchematicModel
 #define CS istream_t
 
 #include "qucs_globals.h"
 #include "e_cardlist.h"
-#include "c_comand.h"
+#include "command.h"
+#define CMD Command
 /*--------------------------------------------------------------------------*/
 namespace {
 /*--------------------------------------------------------------------------*/
@@ -128,7 +127,7 @@ private:
     }
   }
 } p1;
-DISPATCHER<CMD>::INSTALL d1(&command_dispatcher, "delete|rm", &p1);
+DISPATCHER<CMD>::INSTALL d1(&commandDispatcher, "delete|rm", &p1);
 /*--------------------------------------------------------------------------*/
 }
 /*--------------------------------------------------------------------------*/

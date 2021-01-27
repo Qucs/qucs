@@ -14,7 +14,7 @@
 #include "task_element.h"
 #include "docfmt.h"
 #include "language.h"
-#include "io.h"
+#include "qio.h"
 #include <QFile>
 
 namespace {
@@ -22,7 +22,7 @@ class createListComponentEntry : public Command {
 public:
 	void do_it(istream_t&, SchematicModel*) override;
 }c;
-Dispatcher<Command>::INSTALL p(&command_dispatcher, "listcompentry", &c);
+Dispatcher<Command>::INSTALL p(&commandDispatcher, "listcompentry", &c);
 
 
 void createListComponentEntry::do_it(istream_t&, SchematicModel*)
@@ -32,11 +32,11 @@ void createListComponentEntry::do_it(istream_t&, SchematicModel*)
   data.open (QFile::WriteOnly | QFile::Truncate);
   ostream_t s(&data);
 
-  auto lang = language_dispatcher["leg_sch"];
+  auto lang = languageDispatcher["leg_sch"];
   assert(lang);
-  auto qucsatorlang = language_dispatcher["qucsator"];
+  auto qucsatorlang = languageDispatcher["qucsator"];
   assert(qucsatorlang);
-  auto verilog = language_dispatcher["verilog"];
+  auto verilog = languageDispatcher["verilog"];
 
   foreach(QString category, cats) {
 

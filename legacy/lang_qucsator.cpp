@@ -15,7 +15,7 @@
 
 #include "sckt_base.h"
 #include "net.h"
-#include "io.h"
+#include "qio.h"
 #include "docfmt.h" // <<
 #include "qucs_globals.h"
 #include "settings.h" //??
@@ -139,7 +139,7 @@ private: // local
   void printPainting(Painting const*, ostream_t&) const override {incomplete();}
   void printDiagram(Symbol const*, ostream_t&) const override {incomplete();}
 }qucslang;
-static Dispatcher<DocumentFormat>::INSTALL p(&language_dispatcher, "qucsator", &qucslang);
+static Dispatcher<DocumentFormat>::INSTALL p(&languageDispatcher, "qucsator", &qucslang);
 /* -------------------------------------------------------------------------------- */
 /* -------------------------------------------------------------------------------- */
 // non-callback print.

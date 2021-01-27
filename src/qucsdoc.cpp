@@ -20,7 +20,7 @@
 #include "simmessage.h"
 #include "qucs_app.h"
 #include <QUndoStack>
-#include "io.h" // tmp?
+#include "qio.h" // tmp?
 #include "simulator.h"
 
 

@@ -18,7 +18,7 @@
 #include "net.h"
 #include "netlist.h" // BUG
 #include "io_trace.h"
-#include "u_parameter.h"
+#include "parameter.h"
 #include "painting.h" // BUG
 #include "place.h" // BUG?
 /*--------------------------------------------------------------------------*/

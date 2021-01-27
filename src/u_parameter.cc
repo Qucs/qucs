@@ -25,7 +25,7 @@
  */
 //testing=script,sparse 2006.07.14
 //#include "l_stlextra.h"
-#include "u_parameter.h"
+#include "parameter.h"
 //#include "u_lang.h"
 /*--------------------------------------------------------------------------*/
 void PARAM_LIST::parse(CS& cmd)

@@ -33,18 +33,21 @@
  */
 //testing=script,complete 2017.03.12
 //#include "library.h"
+#include "io_trace.h"
 #include "platform.h" // PATHSEP
 /*--------------------------------------------------------------------------*/
 // from io_ TODO
 #include <unistd.h>	/* chdir, access, getcwd */
 #include <string.h>
+
+#define OS QOS //for now.
 namespace OS{
-inline bool access_ok(const std::string& file, int mode) {
+inline bool access_ok(const std::string& file, int mode) { untested();
   return (::access(file.c_str(), mode) == 0/*file_ok*/);
 }
 }
 /*--------------------------------------------------------------------------*/
-std::string findfile(const std::string& filename, const std::string& path, int mode)
+std::string findFile(const std::string& filename, const std::string& path, int mode)
 {
 #ifdef CHECK_LOCAL_FIRST
   if (OS::access_ok(filename, mode)) {untested();

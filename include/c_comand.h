@@ -22,8 +22,8 @@
  * all of the commands
  */
 //testing=trivial 2006.07.17
-#ifndef C_COMAND_H
-#define C_COMAND_H
+#ifndef C_COMAND__H
+#define C_COMAND__H
 
 /*--------------------------------------------------------------------------*/
 // QUCS hacks

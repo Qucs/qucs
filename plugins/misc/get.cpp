@@ -14,14 +14,14 @@
 #include "command.h"
 #include "qucs_globals.h"
 #include "language.h"
-#include "io.h"
+#include "qio.h"
 
 namespace{
 /*--------------------------------------------------------------------------*/
 class Get : public Command {
 	void do_it(istream_t&, SchematicModel*) override;
 }c;
-static Dispatcher<Command>::INSTALL p0(&command_dispatcher, "get", &c);
+static Dispatcher<Command>::INSTALL p0(&commandDispatcher, "get", &c);
 /*--------------------------------------------------------------------------*/
 void Get::do_it(istream_t& cmd, SchematicModel* sckt)
 {
@@ -37,7 +37,7 @@ void Get::do_it(istream_t& cmd, SchematicModel* sckt)
 // TODO: any language.
 // magic = stream.fullstring ...
 
-	auto L = language_dispatcher["leg_sch"];
+	auto L = languageDispatcher["leg_sch"];
 	assert(L);
 
 	while(!stream.atEnd()){

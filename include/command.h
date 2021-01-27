@@ -12,7 +12,7 @@
 
 #include "c_comand.h"
 
-//#undef CMD
+#undef CMD
 #undef CKT_BASE
 #undef CARD_LIST
 #undef CS

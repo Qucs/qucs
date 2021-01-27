@@ -16,14 +16,14 @@
 #include "qucs_globals.h"
 #include "settings.h"
 #include "simulator.h"
-#include "io.h"
+#include "qio.h"
 /*--------------------------------------------------------------------------*/
 namespace{
 /*--------------------------------------------------------------------------*/
 class Simulate : public Command{
 	void do_it(istream_t& cs, SchematicModel* s) override;
 }c;
-Dispatcher<Command>::INSTALL p0(&command_dispatcher, "simulate", &c);
+Dispatcher<Command>::INSTALL p0(&commandDispatcher, "simulate", &c);
 /*--------------------------------------------------------------------------*/
 struct mySimCtrl : SimCtrl{
 	mySimCtrl(Simulate* r) : _r(r){}

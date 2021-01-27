@@ -20,7 +20,7 @@
 
 #include "object.h"
 //#include "node.h"
-// #include "io.h"
+// #include "qio.h"
 //#include "schematic_scene.h"
 //#include "qucsdoc.h"
 //#include "nodemap.h"
@@ -41,7 +41,7 @@ class QGraphicsScene; // bug?
 class QFileInfo; // BUG
 class QPrinter; // BUG?
 class TaskElement;
-class PARAM_LIST;
+class ParamList;
 class NetLang;
 /*--------------------------------------------------------------------------*/
 class WireList;
@@ -227,13 +227,13 @@ private:
 public:
 	// HACK
 	unsigned nextIdx(std::string const& s) const;
-	PARAM_LIST* params();
-	PARAM_LIST const* params() const;
+	ParamList* params();
+	ParamList const* params() const;
 
 private:
 	const SchematicModel* _parent;
 	std::multimap<std::string, Element*> _map;
-	mutable PARAM_LIST* _params;
+	mutable ParamList* _params;
 
 public:
 	void precalc_first();

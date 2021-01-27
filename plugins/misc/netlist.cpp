@@ -18,7 +18,7 @@
 #include "settings.h"
 #include "language.h"
 #include "conductor.h"
-#include "io.h"
+#include "qio.h"
 #include "qt_compat.h"
 /* -------------------------------------------------------------------------------- */
 namespace {
@@ -39,7 +39,7 @@ private: // implementation
 	void printMain(ostream_t& stream, SchematicModel const*,
 			DocumentLanguage const*) const;
 }c0;
-static Dispatcher<Command>::INSTALL p1(&command_dispatcher, "netlist", &c0);
+static Dispatcher<Command>::INSTALL p1(&commandDispatcher, "netlist", &c0);
 /* -------------------------------------------------------------------------------- */
 void Netlister::do_it(istream_t& cs, SchematicModel* m)
 {
@@ -76,9 +76,9 @@ void Netlister::do_it(istream_t& cs, SchematicModel* m)
 	if(language==""){ untested();
 		lang = tQucsSettings::language;
 	}else{
-		lang = language_dispatcher[language];
+		lang = languageDispatcher[language];
 		trace2("netlist", lang, language);
-		assert(language_dispatcher[language]);
+		assert(languageDispatcher[language]);
 	}
 
 	if(lang){

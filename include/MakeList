@@ -4,13 +4,12 @@ HDR = \
 	c_comand.h \
 	command.h \
 	data.h \
-	d_dot.h \
+	dot.h \
 	dispatcher.h \
 	element.h \
 	e_cardlist.h \
 	geometry.h \
 	graph.h \
-	io.h \
 	exception.h \
 	io_trace.h \
 	language.h \
@@ -19,9 +18,11 @@ HDR = \
 	library.h \
 	object.h \
 	output.h \
+	parameter.h \
 	place.h \
 	platform.h \
 	port.h \
+	qio.h \
 	qt_compat.h \
 	qucs_globals.h \
 	schematic_model.h \
@@ -30,5 +31,4 @@ HDR = \
 	symbol.h \
 	task_element.h \
 	tasks.h \
-	u_lang.h \
-	u_parameter.h
+	u_lang.h

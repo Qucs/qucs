@@ -22,7 +22,7 @@
 //
 #include "language.h"
 #include "qucs_globals.h"
-#include "io.h"
+#include "qio.h"
 namespace{
 class LangSpice : public NetLang {
 private: // NetLang
@@ -36,7 +36,7 @@ private: // local
   void printPainting(Painting const*, ostream_t&) const override { untested(); }
   void printDiagram(Symbol const*, ostream_t&) const override { untested();}
 }d0;
-static Dispatcher<DocumentLanguage>::INSTALL p(&language_dispatcher, "spice", &d0);
+static Dispatcher<DocumentLanguage>::INSTALL p(&languageDispatcher, "spice", &d0);
 /*--------------------------------------------------------------------------*/
 void LangSpice::printSymbol(Symbol const* s, ostream_t& o) const
 {

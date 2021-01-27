@@ -12,7 +12,7 @@
  *                                                                         *
  ***************************************************************************/
 #include "qucs_app.h"
-#include "io.h"
+#include "qio.h"
 #include "qucsdoc.h"
 #include "misc.h"
 #include "some_font_stuff.h"
