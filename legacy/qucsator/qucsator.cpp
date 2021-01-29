@@ -102,17 +102,19 @@ public: // QProcess callback.
 		trace2("slotStateChanged", st, _process.error());
 		switch(st){
 		case QProcess::NotRunning:itested();
+			trace2("slotStateChanged to not running", st, _process.error());
 			if(_oldState == QProcess::Starting){ untested();
 				// bug/feature: errorString is not useful.
 				message(QucsMsgFatal, "Failed to start: "
 						 + _process.errorString().toStdString());
 				notifyState(Simulator::sst_error);
-			}else{
+			}else{ untested();
 				collectData();
 				notifyState(Simulator::sst_idle);
 			}
 			break;
 		case QProcess::Starting:
+			trace2("slotStateChanged to starting", st, _process.error());
 			if(_process.error()==5){itested();
 				// this does not mean anything.
 			}else{

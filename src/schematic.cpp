@@ -1715,19 +1715,19 @@ void PaintingList::sizeOfAll(int& xmin, int& ymin, int& xmax, int& ymax) const
 }
 #endif
 
+#if 0
 Component* SchematicDoc::find_component(QString const&)
 { untested();
   assert(false);
-#if 0
     for(auto pc : components()){ untested();
        if(pc->label() == n){ untested();
 	 incomplete();
 	 return dynamic_cast<Component*>(pc);
        }
     }
-#endif
     return nullptr;
 }
+#endif
 
 // ---------------------------------------------------
 

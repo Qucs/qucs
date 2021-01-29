@@ -173,7 +173,7 @@ public:
 
   // find_symbol
 public:
-  Component* find_component(QString const&);
+  // Component* find_component(QString const&);
   CmdEltList& commands(){
 	  return _commands;
   }
@@ -338,20 +338,20 @@ public:
   bool     distributeHorizontal();
   bool     distributeVertical();
 
-  void       setComponentNumber(Component*);
-  void       insertRawComponent(Component*, bool noOptimize=true);
+//  void       setComponentNumber(Component*);
+//  void       insertRawComponent(Component*, bool noOptimize=true);
 //  void       recreateSymbol(Symbol* s){
 //	  assert(_model);
 //	  _model->recreateSymbol(s);
 //  }
   void       insertElement(Element*);
-private: // old legacy stuff.
-  void       insertComponent(Component*);
+//private: // old legacy stuff.
+//  void       insertComponent(Component*);
 public:
   void       activateCompsWithinRect(int, int, int, int);
 //  bool       activateSpecifiedComponent(int, int);
   bool       activateSelectedComponents();
-  void       setCompPorts(Component*);
+//  void       setCompPorts(Component*);
   Component* searchSelSubcircuit();
   Component* selectedComponent(int, int);
   void     oneLabel(Node*);

@@ -80,9 +80,9 @@ void DatLang::printData(Data const* c, ostream_t& s) const
 	s << " TODO " << c->label() << "\n";
 	CommonData const* cc = c->common();
 
-	if(cc){
+	if(cc){ untested();
 		printCommonData(cc, s);
-	}else{
+	}else{ untested();
 	}
 }
 /* -------------------------------------------------------------------------------- */

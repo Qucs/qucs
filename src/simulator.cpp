@@ -19,16 +19,11 @@
 /* -------------------------------------------------------------------------------- */
 Simulator::~Simulator()
 {
-	if(_data_p){
-		CommonData::detach(_data_p);
-	}else{ untested();
-	}
 }
 /* -------------------------------------------------------------------------------- */
 Simulator::Simulator()
   : Data(),
     _doc(nullptr),
-    _data_p(&_common),
     _state(sst_idle),
     _ctrl(nullptr)
 {

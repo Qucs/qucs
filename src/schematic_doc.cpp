@@ -306,18 +306,6 @@ void SchematicDoc::parse(istream_t& s, SchematicLanguage const* L)
 	}
 }
 
-// obsolete?
-void SchematicDoc::insertComponent(Component *)
-{ untested();
-#if 0
-	[..]
-		// not sure where this belongs to.
-    setComponentNumber(c); // important for power sources and subcircuit ports
-#endif
-
-} // insertComponent
-
-
 // -----------------------------------------------------------
 QPoint SchematicDoc::setOnGrid(int x, int y) const
 {itested();
