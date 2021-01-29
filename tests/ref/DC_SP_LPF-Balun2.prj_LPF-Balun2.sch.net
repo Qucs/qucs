@@ -2,7 +2,6 @@
 ## declarations 1
 ### item Sub:IdealBalun
 # sckt Sub:IdealBalun
-# sckt own Sub:IdealBalun
 
 .Def:IdealBalun P1 P2 P3 P4 P5
 # Missing ID & params Sub:IdealBalun

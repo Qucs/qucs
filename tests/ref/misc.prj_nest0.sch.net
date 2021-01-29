@@ -2,7 +2,6 @@
 ## declarations 2
 ### item Sub:nest1
 # sckt Sub:nest1
-# sckt own Sub:nest1
 
 .Def:nest1 P1 P2
 # Missing ID & params Sub:nest1

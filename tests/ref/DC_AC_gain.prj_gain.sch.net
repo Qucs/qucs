@@ -2,7 +2,6 @@
 ## declarations 2
 ### item Sub:singleOPV
 # sckt Sub:singleOPV
-# sckt own Sub:singleOPV
 
 .Def:singleOPV P1 P2 P3 P4 P6
 # Missing ID & params Sub:singleOPV

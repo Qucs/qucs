@@ -2,7 +2,6 @@
 ## declarations 2
 ### item Sub:short_circuit
 # sckt Sub:short_circuit
-# sckt own Sub:short_circuit
 
 .Def:short_circuit P1 P1
 # Missing ID & params Sub:short_circuit
