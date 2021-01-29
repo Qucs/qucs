@@ -78,13 +78,7 @@ protected:
   void setState(state_t s){_state = s;}
   void notifyState(state_t);
   void releaseOutput(CommonData* d) {
-    CommonData::attach(d, _data_p);
-  }
-
-public:
-  void setOutput(CommonData** d) {
-    assert(d);
-    _data_p = d;
+    attach(d);
   }
 
 private:
@@ -95,7 +89,6 @@ protected:
 
 private:
   QucsDoc* _doc; // const?
-  CommonData** _data_p;
   int _state;
   SimCtrl* _ctrl;
 }; // Simulator

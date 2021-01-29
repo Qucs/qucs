@@ -1832,11 +1832,11 @@ bool SchematicDoc::distributeVertical()
    *****                                                         *****
    ******************************************************************* */
 
+#if 0
 // Finds the correct number for power sources, subcircuit ports and
 // digital sources and sets them accordingly.
 void SchematicDoc::setComponentNumber(Component *)
 {
-#if 0
     Property *pp = c->Props.getFirst();
     if(!pp) return;
     if(pp->Name != "Num") return;
@@ -1871,8 +1871,8 @@ void SchematicDoc::setComponentNumber(Component *)
     while(pc);     // found not used component number
     pp->Value = s; // set new number
 #endif
-#endif
 }
+#endif
 
 // ---------------------------------------------------
 // connect?
@@ -1923,12 +1923,12 @@ void SchematicDoc::insertComponentNodes(Component *c, bool noOptimize)
 #endif
 
 // ---------------------------------------------------
+#if 0 // does not work. manipulate objects in scene through scene()
 // Used for example in moving components.
 void SchematicDoc::insertRawComponent(Component *c, bool noOptimize)
 { untested();
     (void) c;
     (void) noOptimize;
-#if 0 // does not work. manipulate objects in scene through scene()
 
     // connect every node of component to corresponding schematic node
     insertComponentNodes(c, noOptimize);
@@ -1953,8 +1953,8 @@ void SchematicDoc::insertRawComponent(Component *c, bool noOptimize)
     }else{
 	untested();
     }
-#endif
 }
+#endif
 
 // ---------------------------------------------------
 // was void SchematicDoc::recreateComponent(Component *Comp)

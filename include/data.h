@@ -73,8 +73,12 @@ protected:
 public:
 	CommonData const* common()const{ return _common; }
 
+protected:
+	void attach(CommonData* d) {
+		CommonData::attach(d, &_common);
+	}
+
 private:
-protected: // hmm
 	CommonData* _common;
 };
 /* -------------------------------------------------------------------------------- */

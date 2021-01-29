@@ -72,7 +72,8 @@ private:
 
 public: // obsolete interface. don't use.
 	DataX const* axis(uint i) const override {
-		if (i<axis_count){ untested();
+		trace2("datax axis", i, axis_count);
+		if (i<numAxes()){ untested();
 			assert(i < CPointsX.size()); // ??
 		  	return CPointsX[i];
 		}else{ untested();
@@ -84,7 +85,7 @@ private:
 	double *CPointsY;
 	QString _var;
 	std::string _fileName;
-	unsigned axis_count;
+	unsigned axis_count{0};
 	std::vector<DataX*> CPointsX;
 	int CountY;    // number of curves ??
 	QDateTime lastLoaded;
@@ -137,6 +138,7 @@ SimOutputDat::SimOutputDat(std::string const& fileName, std::string const& varna
 				v->refresh();
 				push_back(v); // _map[Var.toStdString()] = v;
 			} else if(Line.left(5) == "indep") {itested();
+				trace1("indep?", Line);
 				tmp = Line.section(' ', 2, 2);
 				//new Q3ListViewItem(ChooseVars, Var, "indep", tmp.remove('>'));
 				varNumber++;
@@ -238,6 +240,7 @@ SimOutputData const* SimOutputDatVar::refresh()
 			// is dependent variable ?
 			break;
 		}else if(strncmp(pFile-3, "<in", 3) == 0) {  // is independent variable ?
+			trace1("dat indep??", pFile);
 			isIndep = true;
 			break;
 		}
@@ -280,7 +283,7 @@ SimOutputData const* SimOutputDatVar::refresh()
 		auto Axis = CPointsX.back();
 		Axis->setLimit(1.);
 		Axis->setLimit(double(counter));
-		trace3("indep", counter, Axis->max(), Axis->min());
+		trace4("indep", Line, counter, Axis->max(), Axis->min());
 	}else{  // ...................................
 		pos = 0;
 		// name of independent variable
@@ -323,7 +326,7 @@ SimOutputData const* SimOutputDatVar::refresh()
 
 			CountY *= counter;
 		}
-		trace3("dbg", g->numAxes(), CountY, counter);
+		trace4("dbg", Line, g->numAxes(), CountY, counter);
 		assert(counter);
 		CountY /= counter;
 	}
