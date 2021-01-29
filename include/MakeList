@@ -26,6 +26,7 @@ HDR = \
 	qt_compat.h \
 	qucs_globals.h \
 	schematic_model.h \
+	sckt_base.h \
 	settings.h \
 	simulator.h \
 	symbol.h \

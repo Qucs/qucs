@@ -121,6 +121,7 @@ protected:
 
 private:
   Simulator* _simulator;
+  QucsDoc const* _doc;
   Simulator::state_t oldState;
   // std::string _what;
 }; // SimMessage

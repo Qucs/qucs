@@ -137,7 +137,6 @@ HDR1 = \
 	schematic_action.h \
 	schematic_lang.h \
 	schematic_edit.h \
-	sckt_base.h \
 	swap.h \
 	some_font_stuff.h \
 	viewpainter.h \
