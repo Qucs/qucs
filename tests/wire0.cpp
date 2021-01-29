@@ -230,7 +230,7 @@ void union6()
 
 int main()
 {
-	CMD::command("attach legacy/components", nullptr);
+	Command::command("attach legacy/components", nullptr);
 	union4();
 	union0();
 	union1();

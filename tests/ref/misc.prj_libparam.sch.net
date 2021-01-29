@@ -2,7 +2,6 @@
 ## declarations 1
 ### item Lib:Ideal:Notch2
 # sckt Notch2
-# sckt sckt Notch2
 .Def:Ideal_Notch2 _net0 _net3 fc="1E3" Q="1"
 VCVS:SRC1 _net0 _net1 gnd gnd G="1" T="0"
 VCVS:SRC2 _net2 _net3 gnd gnd G="1" T="0"

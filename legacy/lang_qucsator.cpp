@@ -232,27 +232,31 @@ static void printDefHack(Symbol const* p, ostream_t& s)
 	s << hack;
 }
 /* -------------------------------------------------------------------------------- */
-// partly from Schematic::createSubnetlistplain
+static void print_ports(ostream_t& o, const Symbol* x)
+{
+	for(unsigned i=0; x->portExists(i); ++i){
+		std::string N = netLabel(x, i);
+		o << " " << N;
+	}
+	o << "\n";
+}
+/* -------------------------------------------------------------------------------- */
 void QucsatorLang::printSubckt(SubcktBase const* p, ostream_t& s) const
 {
+	trace1("subckt", p->label());
 	Element const* e = p;
 	s << "# sckt " + p->label() + "\n";
+#if 0
 	if(p->label()[0] == ':'){ untested();
 		return;
 	}else{
 	}
+#endif
 //	assert(!p->is_device());
 	Symbol const* sym = p;
 	SchematicModel const* sckt;
 
-	// BUG?
-	if(p->makes_own_scope()){
-		s << "# sckt own " + p->label() + "\n";
-		sckt = e->scope();
-	}else{
-		s << "# sckt sckt " + p->label() + "\n";
-		sckt = sym->subckt();
-	}
+	sckt = e->scope();
 	assert(sckt);
 	std::string label = p->label();
 
@@ -277,13 +281,7 @@ void QucsatorLang::printSubckt(SubcktBase const* p, ostream_t& s) const
 		incomplete();
 	}
 
-	{ // print_ports();
-		for(unsigned i=0; sym->portExists(i); ++i){
-			std::string N = netLabel(sym, i);
-			s << " " << N;
-		}
-		s << "\n";
-	}
+	print_ports(s, sym);
 
 	// somehow parameters are stashed as paintings.
 	// let's see.

@@ -59,6 +59,7 @@ public:
 
 private:
 	bool is_device() const override {return false;}
+	SchematicModel* scope() override {return subckt();}
 	std::string paramValue(unsigned n) const override{ untested();
 		return SubcktBase::paramValue(n);
 	}
