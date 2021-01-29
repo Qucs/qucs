@@ -37,14 +37,11 @@ C #(.C(1 pF), .V(), .Symbol(neutral)) C1(gnd, P1);
 endmodule // main
 
 module :Paintings:();
-painting incomplete
-painting incomplete
 endmodule // :Paintings:
 
 endmodule // Sub:short_circuit
 
 //else?
 module :Paintings:();
-painting incomplete
 endmodule // :Paintings:
 

@@ -49,6 +49,5 @@ endmodule // Sub:IdealBalun
 
 //else?
 module :Paintings:();
-painting incomplete
 endmodule // :Paintings:
 

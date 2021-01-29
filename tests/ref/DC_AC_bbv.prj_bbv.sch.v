@@ -35,6 +35,5 @@ endmodule // :SymbolSection:
 
 //else?
 module :Paintings:();
-painting incomplete
 endmodule // :Paintings:
 

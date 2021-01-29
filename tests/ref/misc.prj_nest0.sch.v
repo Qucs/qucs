@@ -30,14 +30,11 @@ R #(.R(0 Ohm), .Temp(26.85), .Tc1(0.0), .Tc2(0.0), .Tnom(26.85), .Symbol(US)) R1
 endmodule // main
 
 module :Paintings:();
-painting incomplete
-painting incomplete
 endmodule // :Paintings:
 
 endmodule // Sub:nest1
 
 //else?
 module :Paintings:();
-painting incomplete
 endmodule // :Paintings:
 
