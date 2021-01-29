@@ -469,7 +469,7 @@ private:
   void setDrawn(bool b=true){mouseActions()->setDrawn(b);}
   QUndoStack* undoStack() override{ return _undoStack; }
 
-  SimProcess* simProcess(std::string name);
+	SubcktBase* root() override {return _root;}
 
 public:
   SubcktBase const* root() const { return _root; }

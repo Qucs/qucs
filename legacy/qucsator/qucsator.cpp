@@ -103,7 +103,9 @@ public: // QProcess callback.
 		switch(st){
 		case QProcess::NotRunning:itested();
 			if(_oldState == QProcess::Starting){ untested();
-				message(QucsMsgFatal, "Failed to start process.");
+				// bug/feature: errorString is not useful.
+				message(QucsMsgFatal, "Failed to start: "
+						 + _process.errorString().toStdString());
 				notifyState(Simulator::sst_error);
 			}else{
 				collectData();
@@ -157,6 +159,7 @@ void Qucsator::run(istream_t& cs, SimCtrl* ctrl)
 /* -------------------------------------------------------------------------------- */
 void Qucsator::do_it(istream_t& cs, SchematicModel const* scope)
 {itested();
+	assert(scope);
 	assert(has_ctrl());
 
 	cs >> "run"; //?
@@ -186,6 +189,8 @@ void Qucsator::do_it(istream_t& cs, SchematicModel const* scope)
 	}else{ untested();
 		incomplete();
 		// HACK
+		assert(d);
+		assert(d->root());
 		hack = const_cast<SchematicModel*>(d->root()->subckt());
 	}
 	assert(hack);

@@ -44,10 +44,10 @@ LegacyTaskElement::LegacyTaskElement(LegacyTaskElement const& p)
 {
   qDebug() << "component copy";
 
-//  assert(!Props.count());
-//  for(auto i : p.Props){
-//    Props.append(new Property(*i));
-//  }
+  assert(!Props.count());
+  for(auto i : p.Props){
+    Props.append(new Property(*i));
+  }
   isActive = COMP_IS_ACTIVE; // bug.
 }
 

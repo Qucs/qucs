@@ -26,17 +26,20 @@
 #include "actions.h"
 #include "io_trace.h"
 
-class QucsApp;
 class QAction;
-class QPrinter;
 class QPainter;
-class MouseActions;
-class MouseAction;
-class QUndoStack;
+class QPrinter;
+class QucsApp;
 class QUndoCommand;
-class Element;
+class QUndoStack;
+
 class CommonData;
+class Element;
+class MouseAction;
+class MouseActions;
+class SchematicModel;
 class Simulator;
+class SubcktBase;
 
 class QucsDoc : public Object {
 protected:
@@ -83,9 +86,6 @@ public:
   int  showBias;     // -1=no, 0=calculation running, >0=show DC bias points
   bool GridOn;
   int  tmpPosX, tmpPosY;
-
-  void installElement(Element const*);
-  Element const* find_proto(std::string const& name) const;
 
 protected:
   Simulator* simulatorInstance(std::string const& which="");
@@ -168,13 +168,15 @@ public:
 
 	void setParameter(std::string const&, std::string const&);
 
+public:
+	SubcktBase const* root() const;
+	SchematicModel const* scope() const;
+
+public: // really??
+	virtual SubcktBase* root() {return nullptr;}
+	SchematicModel* scope();
+
 private:
-	friend class Simulator;
-
-	std::map<std::string, Element const*> _protos;
-	std::map<std::string, CommonData*> _data;
-	std::map<std::string, Simulator*> _simulators;
-
 	QWidget* _owner;
 }; // QucsDoc
 

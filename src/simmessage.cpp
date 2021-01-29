@@ -41,7 +41,7 @@
 #include "docfmt.h"
 /*--------------------------------------------------------------------------*/
 SimMessage::SimMessage(Simulator *sim, QucsDoc const* doc)
-  : QDialog(), _simulator(sim)
+  : QDialog(), _simulator(sim), _doc(doc)
 {
   setAttribute(Qt::WA_DeleteOnClose); // here?
   std::string _what = "DC"; // TODO
@@ -179,7 +179,10 @@ void SimMessage::startProcess(istream_t& cs)
 //  nextSPICE(); /// ???
   assert(_simulator);
   // do_it?
-  _simulator->run(cs, this); // should fork here.
+  _simulator->attachCtrl(this);
+  _simulator->do_it(cs, _doc->scope());
+
+  // old comment (recheck)
   // Since now, the Doc pointer may be obsolete, as the user could have
   // closed the schematic !!!
 } // startProcess
@@ -189,8 +192,8 @@ void SimMessage::startProcess(istream_t& cs)
 //   _simulator->run(what, this);
 // }
 
-void SimMessage::do_it(istream_t cs, QucsDoc&)
-{
+void SimMessage::do_it(istream_t cs, QucsDoc& d)
+{ untested();
 //  _simMessage->start(); // really?
 
 //  disconnect(&SimProcess, 0, 0, 0);
@@ -201,7 +204,7 @@ void SimMessage::do_it(istream_t cs, QucsDoc&)
 //                       SLOT(slotFinishSpiceNetlist(int)));
 
 //  startSimulator();
-  _simulator->run(cs, this);
+  _simulator->do_it(cs, d.scope());
 }
 
 #if 0

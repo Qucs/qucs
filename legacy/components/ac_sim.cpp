@@ -39,7 +39,7 @@ public:
 Dispatcher<TaskElement>::INSTALL p(&element_dispatcher, "AC", &D);
 Module::INSTALL pp("simulations", &D);
 
-AC_Sim::AC_Sim()
+AC_Sim::AC_Sim() : LegacyTaskElement()
 {
   auto Description = QObject::tr("ac simulation");
 
@@ -80,7 +80,7 @@ AC_Sim::~AC_Sim()
 {
 }
 
-AC_Sim::AC_Sim(AC_Sim const& x): LegacyTaskElement(x)
+AC_Sim::AC_Sim(AC_Sim const& x) : LegacyTaskElement(x)
 {
 	setTypeName("AC");
 }

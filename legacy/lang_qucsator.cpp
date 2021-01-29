@@ -24,6 +24,7 @@
 #include "nodemap.h"
 //#include "dat.h"
 #include "painting.h"
+#include "legacy_task_element.h"
 #include "components/component.h" // yikes
 /* -------------------------------------------------------------------------------- */
 namespace {
@@ -331,8 +332,28 @@ void QucsatorLang::printSubckt(SubcktBase const* p, ostream_t& s) const
 	s << ".Def:End\n"; //  << p->label() << "\n";
 }
 
+static void printLegacyTaskElement(LegacyTaskElement const* c, ostream_t& s)
+{
+	assert(c);
+	s << "." << c->typeName() << ":" << c->label();
+
+	for(auto p2 : c->Props){ // BUG
+		if(p2->name() == "Symbol") { // hack??
+		}else if(p2->name()=="p" && p2->value()==""){itested();
+			// unreachable
+		}else{itested();
+			s << " " << p2->name() << "=\"" << p2->value() << "\"";
+		}
+	}
+	s << "\n";
+}
 void QucsatorLang::printTaskElement(TaskElement const* c, ostream_t& s) const
 {itested();
+	if(auto t=dynamic_cast<LegacyTaskElement const*>(c)){
+		// tmp hack
+		return printLegacyTaskElement(t, s);
+	}else{
+	}
 	assert(c);
 	s << "." << c->typeName() << ":" << c->label();
 

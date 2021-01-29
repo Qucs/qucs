@@ -37,6 +37,9 @@ public: // Element
 	SchematicModel const* scope() const {
 		return Element::scope();
 	}
+	SchematicModel* scope() {
+		return Element::scope();
+	}
 
 private: // Symbol
 	Port& port(unsigned i) override;

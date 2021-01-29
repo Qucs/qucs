@@ -22,6 +22,7 @@
 #include <QUndoStack>
 #include "qio.h" // tmp?
 #include "simulator.h"
+#include "sckt_base.h"
 
 
 QucsDoc::QucsDoc(QucsApp* App_, const QString& Name_, QWidget* o)
@@ -56,13 +57,8 @@ QucsDoc::QucsDoc(QucsApp* App_, const QString& Name_, QWidget* o)
   // Scale = 1.0;
 }
 
-// vtable here?
 QucsDoc::~QucsDoc()
 {
-	for(auto i : _simulators){
-		delete i.second;
-	}
-//	assert(_simulators == 0);
 }
 
 // really?!
@@ -333,33 +329,63 @@ void Simulator::attachDoc(QucsDoc /* const?? */ * d)
 	_doc = d;
 }
 /* -------------------------------------------------------------------------------- */
+#if 1
+// FIXME.
 Simulator* QucsDoc::simulatorInstance(std::string const& which)
 {
-	Simulator* sim = _simulators[which];
+	if (!scope()){
+		return nullptr;
+	}else{
+	}
+	auto i = scope()->find_(which);
+	Simulator* sim=nullptr;
 
-	if(sim){ untested();
-	}else{ untested();
+	if(i==scope()->end()){ untested();
+
 		Simulator const* proto = QucsSettings.simulator();
 		if(which!=""){ untested();
 			proto = simulator_dispatcher[which];
 		}else{
 		}
 		sim = proto->clone();
-		sim->attachDoc(this);
-		_simulators[which] = sim;
+		sim->setOwner(root());
+		scope()->push_back(sim);
+	}else if(auto s=dynamic_cast<Simulator*>(*i)){ untested();
+		sim = s;
+	}else{
 	}
 
-	incomplete();
-	sim->setOutput(&_data[which]);
-	assert(sim);
 	return sim;
 }
+#endif
 /* -------------------------------------------------------------------------------- */
 void setParameter(std::string const&, std::string const&)
 {
 	incomplete();
 }
 /* -------------------------------------------------------------------------------- */
+SchematicModel* QucsDoc::scope()
+{
+	if(root()){
+		return root()->scope();
+	}else{
+		return nullptr;
+	}
+}
+/* -------------------------------------------------------------------------------- */
+SchematicModel const* QucsDoc::scope() const
+{
+	auto d = const_cast<QucsDoc*>(this);
+	return d->scope();
+}
+/* -------------------------------------------------------------------------------- */
+SubcktBase const* QucsDoc::root() const
+{
+	auto d = const_cast<QucsDoc*>(this);
+	return d->root();
+}
+/* -------------------------------------------------------------------------------- */
+#if 0
 // don't know how this works in legacy qucs. the tabs suggest that circuits
 // from different "projects" can be openened simultaneously.
 // Now a project might have prototypes (e.g. user library) that are not global,
@@ -374,15 +400,6 @@ void QucsDoc::installElement(Element const* e)
 	}
 	p = e;
 }
-/* -------------------------------------------------------------------------------- */
-Element const* QucsDoc::find_proto(std::string const& n) const
-{
-	auto i = _protos.find(n);
-	if(i==_protos.end()){
-		throw qucs::ExceptionCantFind(n, label());
-	}else{
-		return i->second;
-	}
-}
+#endif
 /* -------------------------------------------------------------------------------- */
 /* -------------------------------------------------------------------------------- */

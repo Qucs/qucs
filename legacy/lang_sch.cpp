@@ -496,7 +496,7 @@ void LegacySchematicLanguage::printSymbol(Symbol const* sym, ostream_t& s) const
 
 static TaskElement* loadLegacyTaskElement(const QString& _s, LegacyTaskElement* c)
 {
-	trace1("loadtaskElement", c->label());
+	trace1("loadLegacyTaskElement", c->label());
 	bool ok;
 	int  ttx, tty, tmp;
 	QString s = _s;
@@ -553,8 +553,9 @@ static TaskElement* loadLegacyTaskElement(const QString& _s, LegacyTaskElement* 
 		unsigned counts = s.count('"');
 		// FIXME. use c->paramCount()
 
+		tmp=0;
 		/// BUG FIXME. dont use Component parameter dictionary.
-		for(; tmp<=(int)counts/2; tmp++){
+		for(; tmp<=(int)counts/2; tmp++){ untested();
 			c->Props.append(new Property("p", "", true, " "));
 		}
 
@@ -562,9 +563,9 @@ static TaskElement* loadLegacyTaskElement(const QString& _s, LegacyTaskElement* 
 		Property *p1;
 #if 1
 		for(p1 = c->Props.first(); p1 != 0; p1 = c->Props.next()) {
-			qDebug() << "load command props" << z;
 			z++;
 			n = s.section('"',z,z);    // property value
+			trace3("load command props", z, n, p1->Name);
 			z++;
 			//qDebug() << "LOAD: " << p1->Description;
 
@@ -1386,7 +1387,7 @@ class DiagramCommand : public Command{
 		if(p_!=s->end()){
 			sym = dynamic_cast<SubcktBase*>(*p_);
 			assert(sym);
-		}else{
+		}else{ untested();
 			Symbol* sc = symbol_dispatcher.clone("subckt_proto");
 			sym = dynamic_cast<SubcktBase*>(sc);
 			assert(sym);
@@ -1411,7 +1412,7 @@ class DiagramCommand : public Command{
 				lang->new__instance(cs, sym, e->scope());
 			}
 		}
-		trace1("Diag parse", sym->subckt()->size());
+		trace1("Diag parse", e->scope()->size());
 	}
 }d4;
 Dispatcher<Command>::INSTALL p3_(&commandDispatcher, "Diagrams", &d4);
