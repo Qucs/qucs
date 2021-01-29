@@ -21,7 +21,5 @@ endmodule // :SymbolSection:
 
 //else?
 module :Paintings:();
-painting incomplete
-painting incomplete
 endmodule // :Paintings:
 

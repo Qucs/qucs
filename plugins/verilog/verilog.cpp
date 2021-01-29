@@ -112,11 +112,7 @@ void VS::print_ports_short(ostream_t& o, const Symbol* x) const
 	QString comma = "";
 	for(unsigned i=0; i<x->numPorts(); ++i){
 		trace3("...", x->label(), i, x->numPorts());
-//		auto p = x->nodePosition(i);
 		auto v = x->port_value(i);
-//		auto x = p.first;
-//		auto y = p.second;
-		/// o << comma << "net_" << x << "_" << y;
 		o << comma << v; // "net_" << x << "_" << y;
 		comma = ", ";
 	}
@@ -182,13 +178,7 @@ void Verilog::printSubckt(SubcktBase const* x, ostream_t& o) const
 #endif
 	Element const* e = x;
 
-	// BUG?
-	if(x->subckt()){
-		scope = x->subckt();
-	}else if(e->scope()){
-		scope = e->scope();
-	}else{ untested();
-	}
+	scope = x->scope();
 
 	if(scope){
 		assert(x);
@@ -295,10 +285,6 @@ void VS::printSymbol(Symbol const* sym, ostream_t& s) const
 void VS::printSubckt(SubcktBase const* x, ostream_t& o) const
 {
 	SchematicModel const* scope = nullptr;
-//	if(x->label()[0] == ':'){ untested();
-//		unreachable();
-//		return;
-//	}else
 	o << "// VS::printSubckt " << x->label() << "\n";
 	Element const* e = x;
 
@@ -343,23 +329,9 @@ void VS::printSubckt(SubcktBase const* x, ostream_t& o) const
 		}
 
 //		if(auto m=dynamic_cast<SchematicModel const*>(x)){ untested();
-#if 1
 		for(auto ci : places){
 				printItem(o, ci);
 		}
-
-#else
-      if(scope){
-			for(auto const& n : scope->nodes()){
-				int a, b;
-				std::tie(a, b) = n.position();
-				o << "place #(.$xposition(" << a << "),"
-					".$yposition(" << b << "))"
-					<<  " place_" << a << "_" << b
-					<< "(net_" << a << "_" << b << ");\n";
-			}
-		}
-#endif
 //		}
 
 		o << "endmodule // " << x->short_label() << "\n\n";

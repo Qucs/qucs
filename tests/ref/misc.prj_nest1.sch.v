@@ -43,15 +43,11 @@ C #(.C(1 pF), .V(), .Symbol(neutral)) C1(gnd, P2);
 endmodule // main
 
 module :Paintings:();
-painting incomplete
-painting incomplete
 endmodule // :Paintings:
 
 endmodule // Sub:nest2
 
 //else?
 module :Paintings:();
-painting incomplete
-painting incomplete
 endmodule // :Paintings:
 

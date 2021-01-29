@@ -40,8 +40,6 @@ private: // legacy implementation
   void clear() const;
 private: // Command
   void do_it(istream_t&, SchematicModel*) override;
-private: // internal
-  void printDeclarations(ostream_t& d) const;
 private: // DocumentFormat
   void load(istream_t&, Object*) const override{ incomplete(); }
 private:
@@ -86,16 +84,7 @@ void VerilogNetlister::do_it(istream_t& cs, SchematicModel* o)
 	}else{
 	}
 
-	//printDeclarations(Stream);
 	createNetlist(Stream, sch);
-}
-/*--------------------------------------------------------------------------*/
-void VerilogNetlister::printDeclarations(ostream_t& stream) const
-{
-	incomplete();
-//	for(auto si : declarations){
-//		lang->printItem(si.second, stream);
-//	}
 }
 /*--------------------------------------------------------------------------*/
 void VerilogNetlister::createNetlist(ostream_t& stream,
@@ -107,6 +96,9 @@ void VerilogNetlister::createNetlist(ostream_t& stream,
 	for(auto pc : *m){
 		auto sym = dynamic_cast<Symbol const*>(pc);
 
+#if 0 // TODO
+		lang->printItem(stream, pc);
+#else
 		if(pc->label()=="main"){
 			lang->printItem(stream, pc);
 		}else if(!sym){
@@ -119,9 +111,11 @@ void VerilogNetlister::createNetlist(ostream_t& stream,
 			stream << "//else?\n";
 			lang->printItem(stream, pc);
 		}
+#endif
 	}
 }
 /*--------------------------------------------------------------------------*/
+// obsolete.
 void VerilogNetlister::throughAllComps(ostream_t& stream, SubcktBase const& m) const
 { incomplete();
 	auto const& sckt = *m.subckt();
