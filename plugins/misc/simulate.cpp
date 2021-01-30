@@ -53,7 +53,8 @@ void Simulate::do_it(istream_t& cmd, SchematicModel* sckt)
    if(f == sckt->end()){itested();
       Simulator const* proto = QucsSettings.simulator();
       if(which!=""){itested();
-         proto = simulator_dispatcher[which];
+         auto p = dataDispatcher[which];
+			proto = dynamic_cast<Simulator const*>(p);
       }else{ untested();
       }
 

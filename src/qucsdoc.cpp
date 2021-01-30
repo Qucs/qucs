@@ -344,12 +344,18 @@ Simulator* QucsDoc::simulatorInstance(std::string const& which)
 
 		Simulator const* proto = QucsSettings.simulator();
 		if(which!=""){ untested();
-			proto = simulator_dispatcher[which];
+			auto d = dataDispatcher[which];
+			proto = dynamic_cast<Simulator*>(d);
 		}else{
 		}
-		sim = proto->clone();
-		sim->setOwner(root());
-		scope()->push_back(sim);
+
+		if(proto){
+			sim = proto->clone();
+			sim->setOwner(root());
+			scope()->push_back(sim);
+		}else{
+			incomplete();
+		}
 	}else if(auto s=dynamic_cast<Simulator*>(*i)){ untested();
 		sim = s;
 	}else{

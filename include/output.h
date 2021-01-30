@@ -33,7 +33,7 @@ protected:
 	SimOutputDir(const SimOutputDir& s);
 
 public:
-	typedef std::map<std::string, CommonData*> container_t;
+	typedef std::map<std::string, CommonData const*> container_t;
 	virtual ~SimOutputDir();
 	virtual void set_var(std::string, std::string) { untested(); }
 
@@ -49,8 +49,8 @@ public:
 			container_t::iterator::operator=(p);
 			return *this;
 		}
-		SimOutputDir* dir(){
-			return dynamic_cast<SimOutputDir*>(container_t::iterator::operator*().second);
+		SimOutputDir const* dir(){
+			return dynamic_cast<SimOutputDir const*>(container_t::iterator::operator*().second);
 		}
 		container_t::value_type operator*(){ untested(); return container_t::iterator::operator*(); }
 	};

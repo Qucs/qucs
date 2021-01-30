@@ -15,21 +15,88 @@
 
 // TODO: remove.
 /* -------------------------------------------------------------------------------- */
-
 #include "data.h"
 #include "dat.h"
 #include "qt_compat.h"
+#include "qucs_globals.h"
 #include <QFile> // hmm
 #include <QFileInfo> // hmm
-
+#include "output.h"
+#include <QString>
+#include <QDateTime>
+/* -------------------------------------------------------------------------------- */
+/* -------------------------------------------------------------------------------- */
 void SimOutputDir::push_back(CommonData* d)
-{
+{ untested();
 	assert(d);
 	assert(d->label()!="");
 
 	CommonData::attach(d, &_d[d->label()]);
 }
+/* -------------------------------------------------------------------------------- */
+struct DataX {
+	DataX(std::string const& Var_, double *Points_=0, int count_=0)
+		: Var(Var_), Points(Points_), count(count_), Min(INFINITY), Max(-INFINITY) {};
+	~DataX() { if(Points) delete[] Points; };
+	const double* end() const{return Points+count;}
 
+public:
+	const double& min()const {return Min;}
+	const double& max()const {return Max;}
+public: // only called from Graph. cleanup later.
+	void setLimit(const double& x){ untested();
+		if (Min>x) Min=x;
+		if (Max<x) Max=x;
+	}
+public: // ??
+	std::string Var;
+	double *Points;
+	int     count;
+
+private:
+	double Min;
+	double Max;
+};
+/* -------------------------------------------------------------------------------- */
+namespace{
+// "dat" file, some legacy code rearranged.
+// was just one var from dat file. (fixed)
+class SimOutputDat : public SimOutputDir {
+public:
+	SimOutputDat(std::string const& filename);
+//	int loadIndepVarData(std::string const&, char* datfilecontent, DataX*);
+
+//	bool isEmpty() const { return !numAxes(); }
+//	unsigned numAxes() const { return CPointsX.size();}
+//	int countY() const { return CountY; }
+
+public: // obsolete interface. don't use.
+	SimOutputData const* refresh() override;
+
+//	virtual const_iterator begin() const {return const_iterator(CPointsX.front()->Points, CPointsY);}
+//	virtual const_iterator end() const {return const_iterator(CPointsX.back()->end(), NULL);}
+
+private:
+	void clear();
+
+public:
+//	void setLimit(const double& x){ untested();
+//		if (Min>x) Min=x;
+//		if (Max<x) Max=x;
+//	}
+private:
+	unsigned axis_count;
+//	std::vector<DataX*>  CPointsX;
+	double *CPointsY;
+//	int CountY;    // number of curves
+//	QString Var;
+	std::string _fileName;
+	QDateTime lastLoaded;  // when it was loaded into memory
+	unsigned _attach_count;
+
+//	std::map<std::string, SimOutputData*> _map; -> dir
+}; // SimOutputDat
+/* -------------------------------------------------------------------------------- */
 // a Var from a Dat file
 class SimOutputDatVar : public SimOutputData{
 	SimOutputDatVar(SimOutputDatVar const&) = delete;
@@ -42,7 +109,7 @@ public:
 private:
 	void clear();
 	SimOutputData const* refresh() override;
-	virtual const_iterator begin() const {
+	virtual const_iterator begin() const { untested();
 		trace1("DatVar", numAxes());
 		incomplete();
 		auto a = axis(0);
@@ -52,7 +119,7 @@ private:
 			return const_iterator(nullptr, nullptr);
 		}
 	}
-	virtual const_iterator end() const {
+	virtual const_iterator end() const { untested();
 		incomplete();
 		auto a = axis(0);
 		if(a){ untested();
@@ -65,13 +132,13 @@ private:
 	unsigned numAxes() const { return CPointsX.size();}
 	int loadIndepVarData(std::string const& Variable, char *FileString, DataX* pD);
 
-	void setLimit(const double& x){
+	void setLimit(const double& x){ untested();
 		if (Min>x) Min=x;
 		if (Max<x) Max=x;
 	}
 
 public: // obsolete interface. don't use.
-	DataX const* axis(uint i) const override {
+	DataX const* axis(uint i) const override { untested();
 		trace2("datax axis", i, axis_count);
 		if (i<numAxes()){ untested();
 			assert(i < CPointsX.size()); // ??
@@ -90,15 +157,16 @@ private:
 	int CountY;    // number of curves ??
 	QDateTime lastLoaded;
 };
-
-SimOutputDat::SimOutputDat(std::string const& fileName, std::string const& varname)
+/* -------------------------------------------------------------------------------- */
+SimOutputDat::SimOutputDat(std::string const& fileName)
     : CPointsY(NULL),
-      Var(QString::fromStdString(varname)),
+      // Var(QString::fromStdString(varname)),
       _fileName(fileName)
       // Min(INFINITY), Max(-INFINITY)
 {itested();
 	QFile file(QString::fromStdString(fileName));
 	if(!file.open(QIODevice::ReadOnly)) { untested();
+		trace1("cannot open file. why?", fileName);
 		// BUG, throw?
 		return;
 	}else{itested();
@@ -152,7 +220,7 @@ SimOutputDat::SimOutputDat(std::string const& fileName, std::string const& varna
 }
 
 SimOutputData const* SimOutputDat::refresh()
-{
+{ untested();
 	incomplete();
 	return nullptr;
 }
@@ -189,18 +257,18 @@ SimOutputData const* SimOutputDatVar::refresh()
 	}
 
 	Info.setFile(file);
-	if(g->lastLoaded.isValid()){
-		if(g->lastLoaded > Info.lastModified()){
+	if(g->lastLoaded.isValid()){ untested();
+		if(g->lastLoaded > Info.lastModified()){ untested();
 			return this;    // dataset unchanged -> no update neccessary
-		}else{
+		}else{ untested();
 		}
-	}else{
+	}else{ untested();
 	}
 
 	clear(); // oops?
-	if(Variable.isEmpty()){
+	if(Variable.isEmpty()){ untested();
 		return NULL;
-	}else{
+	}else{ untested();
 	}
 
 #if 0 // FIXME encapsulation. implement digital waves later.
@@ -209,9 +277,9 @@ SimOutputData const* SimOutputDatVar::refresh()
 			return 0;  // digital variables only for tabulars and timing diagram
 #endif
 
-	if(!file.open(QIODevice::ReadOnly)){
+	if(!file.open(QIODevice::ReadOnly)){ untested();
 		return NULL;
-	}else{
+	}else{ untested();
 	}
 
 	// *****************************************************************
@@ -247,10 +315,10 @@ SimOutputData const* SimOutputDatVar::refresh()
 		pFile = strstr(pFile+4, Variable.toLatin1());
 	}
 
-	if(!pFile){
+	if(!pFile){ untested();
 		incomplete();
 		return 0;   // data not found
-	}else{
+	}else{ untested();
 	}
 
 	bool ok=true;
@@ -267,10 +335,10 @@ SimOutputData const* SimOutputDatVar::refresh()
 	pFile = pPos+1;
 	trace2("DBG", Variable, isIndep);
 	if(!isIndep) {itested();
-	}else{
+	}else{ untested();
 	}
 
-	if(isIndep) {
+	if(isIndep) { untested();
 		// create independent variable
 		counter = Line.toInt(&ok);  // get number of values
 		CPointsX.push_back(new DataX("number", 0, counter));
@@ -545,3 +613,34 @@ int SimOutputDatVar::loadIndepVarData(std::string const& Variable,
 
   return n; // number of independent data points
 }
+/* -------------------------------------------------------------------------------- */
+/* -------------------------------------------------------------------------------- */
+class DatFile : public Data{
+public:
+	explicit DatFile() : Data(){ untested();
+		setLabel("datfile");
+	}
+	DatFile(DatFile const&d) : Data(d){ untested(); }
+private:
+	DatFile* clone() const override { untested(); return new DatFile(*this); }
+
+	void set_param_by_name(std::string const& n, std::string const& v) override{ untested();
+		if(n=="filename"){ untested();
+			init(v);
+		}else{ untested();
+			incomplete();
+		}
+	}
+private: // Element. remove?
+	void paint(ViewPainter*) const {incomplete();}
+private: // implementation
+	void init(std::string const& fn){ untested();
+		CommonData* cd = new SimOutputDat(fn);
+		attach(cd);
+	}
+}f1;
+static Dispatcher<Data>::INSTALL d1(&dataDispatcher, "datfile", &f1);
+/* -------------------------------------------------------------------------------- */
+} // namespace
+/* -------------------------------------------------------------------------------- */
+/* -------------------------------------------------------------------------------- */

@@ -8,7 +8,7 @@
 Dispatcher<Diagram> diagram_dispatcher;
 Dispatcher<Command> commandDispatcher;
 Dispatcher<Symbol> symbol_dispatcher;
-Dispatcher<Simulator> simulator_dispatcher;
+Dispatcher<Data> dataDispatcher;
 Dispatcher<DocumentLanguage> languageDispatcher;
 Dispatcher<TaskElement> element_dispatcher; // taskElementSymbol ..
 Dispatcher<Painting> painting_dispatcher;

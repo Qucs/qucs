@@ -77,7 +77,7 @@ public:
 protected:
   void setState(state_t s){_state = s;}
   void notifyState(state_t);
-  void releaseOutput(CommonData* d) {
+  void releaseOutput(CommonData const* d) {
     attach(d);
   }
 
