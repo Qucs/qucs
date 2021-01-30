@@ -21,7 +21,7 @@ class TaskElement;
 class Diagram;
 class DocumentLanguage;
 class Painting;
-class Simulator;
+class Data;
 class Symbol;
 class Command;
 
@@ -30,7 +30,7 @@ extern INTERFACE Dispatcher<Command> commandDispatcher;
 extern INTERFACE Dispatcher<Diagram> diagram_dispatcher;
 extern INTERFACE Dispatcher<DocumentLanguage> languageDispatcher;
 extern INTERFACE Dispatcher<Painting> painting_dispatcher;
-extern INTERFACE Dispatcher<Simulator> simulator_dispatcher;
+extern INTERFACE Dispatcher<Data> dataDispatcher;
 extern INTERFACE Dispatcher<Symbol> symbol_dispatcher;
 
 #endif

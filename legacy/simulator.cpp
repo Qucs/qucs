@@ -84,10 +84,10 @@ private: // Simulator
 	void join() override{ incomplete(); }
 
 private: // implementation
-	Simulator* chooseBackend();
+	Simulator const* chooseBackend();
 	Simulator* _wrapped_simulator;
 }QS;
-static Dispatcher<Simulator>::INSTALL p(&simulator_dispatcher, "legacy", &QS);
+static Dispatcher<Data>::INSTALL p(&dataDispatcher, "legacy|legacy_sim", &QS);
 /* -------------------------------------------------------------------------------- */
 struct default_sim{
 	default_sim(){
@@ -109,10 +109,11 @@ NetLang const* LegacySimulator::netLang() const
 // find backend the way legacy qucs does
 // that would be one out of
 // qucsator, qucsdigi, asco
-Simulator* LegacySimulator::chooseBackend()
+Simulator const* LegacySimulator::chooseBackend()
 { untested();
 	incomplete(); // only run qucstor for now
-	return simulator_dispatcher["qucsator"];
+	auto dd = dataDispatcher["qucsator"];
+	return dynamic_cast<Simulator const*>(dd);
 #if 0
       if(SimOpt = findOptimization(d)) { untested();
 			return simulator_dispatcher["asco"];

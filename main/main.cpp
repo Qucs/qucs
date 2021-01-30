@@ -55,9 +55,9 @@ static const std::string default_simulator="qucsator"; // FIXME: get from rc? ma
 
 void setSimulator(char const* name)
 { untested();
-  Simulator const* S = simulator_dispatcher[name];
-  if(S){ untested();
-    QucsSettings.setSimulator(S);
+  auto const* d = dataDispatcher[name];
+  if(auto s=dynamic_cast<Simulator const*>(d)){ untested();
+    QucsSettings.setSimulator(s);
   }else{ untested();
     // message(5, "cannot find simulator " + std::string(name));
     std::cerr << "cannot find simulator " << std::string(name) << "\n";
@@ -409,7 +409,7 @@ int main(int argc, char *argv[])
 
   if(fmt){
     // just use it.
-  }else if(simulator_dispatcher[netlang_name]){ untested();
+  }else if(dataDispatcher[netlang_name]){ untested();
     incomplete();
     // ask a simulator.
 //    fmt = sd->netLang();

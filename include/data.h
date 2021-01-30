@@ -36,12 +36,12 @@ protected:
 	virtual CommonData* resolve(const std::string&){assert(false); return nullptr;}
 
 public:
-	static void attach(CommonData*, CommonData**);
-	static void detach(CommonData**);
+	static void attach(CommonData const*, CommonData const**);
+	static void detach(CommonData const**);
 	virtual CommonData const* refresh(){unreachable(); return nullptr;}
 
 private:
-	unsigned _attach_count;
+	mutable unsigned _attach_count;
 };
 
 
@@ -69,17 +69,20 @@ private:
 class Data : public Element{
 protected:
 	explicit Data() : Element(), _common(nullptr){}
-	~Data();
 public:
+	~Data();
 	CommonData const* common()const{ return _common; }
+	virtual void set_param_by_name(std::string const& n, std::string const& v){
+		incomplete(); // throw?
+	}
 
 protected:
-	void attach(CommonData* d) {
+	void attach(CommonData const* d) {
 		CommonData::attach(d, &_common);
 	}
 
 private:
-	CommonData* _common;
+	CommonData const* _common;
 };
 /* -------------------------------------------------------------------------------- */
 inline bool CommonData::operator==(const CommonData&)const

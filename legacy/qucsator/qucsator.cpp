@@ -137,8 +137,9 @@ private:
 	QFile _netlistFile;
 	QucsatorProcess _process;
 	QProcess::ProcessState _oldState;
+	Data* _dat{nullptr};
 }QS;
-static Dispatcher<Simulator>::INSTALL qq(&simulator_dispatcher, "qucsator", &QS);
+static Dispatcher<Data>::INSTALL qq(&dataDispatcher, "qucsator", &QS);
 /* -------------------------------------------------------------------------------- */
 /* -------------------------------------------------------------------------------- */
 struct default_sim{
@@ -255,11 +256,10 @@ void Qucsator::do_it(istream_t& cs, SchematicModel const* scope)
 void Qucsator::collectData()
 {itested();
 	trace1("collectData", DataSet);
-	auto data = new SimOutputDat(DataSet.toStdString(), "");
-	releaseOutput(data);
-//    CommonData::attach(data, &_common);
-
-//	 assert(data==_common);
+	_dat = dataDispatcher.clone("datfile");
+	assert(_dat);
+	_dat->set_param_by_name("filename", DataSet.toStdString());
+	releaseOutput(_dat->common());
 }
 /* -------------------------------------------------------------------------------- */
 }//namespace
