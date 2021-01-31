@@ -18,6 +18,7 @@
 #include <complex>
 #include <list>
 #include "element.h"
+#include "exception.h"
 /* -------------------------------------------------------------------------------- */
 class CommonData : public Object{
 private:
@@ -72,8 +73,8 @@ protected:
 public:
 	~Data();
 	CommonData const* common()const{ return _common; }
-	virtual void set_param_by_name(std::string const& n, std::string const& v){
-		incomplete(); // throw?
+	virtual void set_param_by_name(std::string const& name, std::string const&){
+		throw qucs::ExceptionCantFind(name, label());
 	}
 
 protected:

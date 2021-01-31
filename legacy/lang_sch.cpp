@@ -328,8 +328,11 @@ void LegacySchematicLanguage::printLegacyTaskElement(LegacyTaskElement const* c,
 		i = 4;
 	}else{
 	}
+	incomplete();
+#if 0
 	std::string active = c->paramValue("$mfactor");
 	i |= atoi(active.c_str());
+#endif
 	s << std::to_string(i);
 	s << " "+QString::number(c->cx())+" "+QString::number(c->cy());
 	s << " "+QString::number(c->tx)+" "+QString::number(c->ty);

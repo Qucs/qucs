@@ -146,7 +146,8 @@ int TaskElement::getTextSelected(int x_, int y_, float Corr)
   return 0;
 }
 
-std::string TaskElement::paramValue(std::string const& n) const
+#if 0
+std::string TaskElement::param_value(std::string const& n) const
 {
 	if(n=="$xposition"){ untested();
 		return std::to_string(cx());
@@ -162,6 +163,7 @@ std::string TaskElement::paramValue(std::string const& n) const
 		return "incomplete";
 	}
 }
+#endif
 
 // -------------------------------------------------------
 #if 0
