@@ -43,6 +43,10 @@ private:
   void    paint(ViewPainter*) const;
   QDialog* schematicWidget(QucsDoc* Doc) const;
 
+	virtual index_t param_count() const;
+	virtual std::string param_name(index_t n) const;
+	virtual std::string param_value(index_t n) const;
+
 public: // legacy stuff.
   bool getPen(const QString&, QPen&, int);
   bool getBrush(const QString&, QBrush&, int);

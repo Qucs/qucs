@@ -62,6 +62,25 @@ LegacyTaskElement::LegacyTaskElement() : TaskElement()
   // Props.setAutoDelete(true);
 }
 /*--------------------------------------------------------------------------*/
+index_t LegacyTaskElement::param_count() const
+{
+	return Props.size();
+}
+/*--------------------------------------------------------------------------*/
+std::string LegacyTaskElement::param_name(index_t n) const
+{
+	assert(n < param_count());
+	assert(Props.at(n));
+	return Props.at(n)->Name.toStdString();
+}
+/*--------------------------------------------------------------------------*/
+std::string LegacyTaskElement::param_value(index_t n) const
+{
+	assert(n < param_count());
+	assert(Props.at(n));
+	return Props.at(n)->Value.toStdString();
+}
+/*--------------------------------------------------------------------------*/
 // Size of component text.
 int LegacyTaskElement::textSize(int& _dx, int& _dy)
 {

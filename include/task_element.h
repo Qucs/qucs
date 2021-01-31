@@ -15,6 +15,7 @@
 /* -------------------------------------------------------------------------------- */
 #include "platform.h"
 #include "element.h"
+#include "exception.h"
 class ComponentDialog;//really??
 class Property;
 
@@ -72,8 +73,14 @@ public:
   bool showName;
 
 public:
+	virtual index_t param_count() const { return 0; }
+	virtual std::string param_name(index_t n) const{
+		throw qucs::ExceptionCantFind();
+	}
+	virtual std::string param_value(index_t n) const {
+		throw qucs::ExceptionCantFind();
+	}
 
-	virtual std::string paramValue(std::string const& n) const;
 private:
   virtual SchematicModel* scope() override;
 
