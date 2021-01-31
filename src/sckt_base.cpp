@@ -55,4 +55,14 @@ Port& SubcktBase::port(index_t i)
 	return *_ports[i];
 }
 /*--------------------------------------------------------------------------*/
+// a bug. need to entangle from nodemap.
+#include "nodemap.h"
+std::string net_name(SubcktBase const* s, std::string const& n)
+{
+	assert(s);
+	assert(s->scope());
+	assert(s->scope()->nodes());
+	return s->scope()->nodes()->netName(n);
+}
+/*--------------------------------------------------------------------------*/
 /*--------------------------------------------------------------------------*/
