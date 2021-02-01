@@ -43,7 +43,7 @@ static Dispatcher<DocumentLanguage>::INSTALL p(&languageDispatcher, "dat", &d0);
 void DatLang::printItem(ostream_t& s, Element const* c) const
 {
 	s << "... dat item\n";
-	if(auto d=dynamic_cast<Data const*>(c)){ untested();
+	if(auto d=dynamic_cast<Data const*>(c)){itested();
 		printData(d, s);
 	}else if(c){ untested();
 		DocumentLanguage::printItem(s, c);
@@ -82,7 +82,7 @@ void DatLang::printData(Data const* c, ostream_t& s) const
 
 	if(cc){ untested();
 		printCommonData(cc, s);
-	}else{ untested();
+	}else{itested();
 	}
 }
 /* -------------------------------------------------------------------------------- */
