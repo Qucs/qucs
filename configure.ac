@@ -839,7 +839,8 @@ AC_CONFIG_FILES([
     main/qucs.conf
     man/Makefile
     autotools/Makefile
-    examples/Makefile
+    examples/Makefile:autotools/examples.in
+    examples/schematics/Makefile:autotools/schematics.in
     plugins/Makefile:autotools/plugins.in
     plugins/diagrams/Makefile:autotools/diagrams.in
     plugins/misc/Makefile:autotools/misc.in

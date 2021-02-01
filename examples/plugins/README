@@ -1,0 +1,23 @@
+== Example plugins
+
+Qucs must be installed so these examples work. See ../../INSTALL for details.
+Then
+
+$ make    # <-- for now.
+[..]
+$ ls *.so
+hello_world.so
+red_wire.so
+
+Try
+
+$ qucs -a ./hello_world |& grep hello
+hello world
+
+$ qucs -a ./red_wires -i ../schematics/bandpass.sch
+
+== Your own plugin
+
+Create your_plugin.cc in a new direcory. Copy MakeList and adjust it
+accordingly. For now, also copy the Makefile. Build with make and use as shown
+above.

@@ -3,6 +3,7 @@ HDR = \
 	ap.h \
 	c_comand.h \
 	command.h \
+	conductor.h \
 	data.h \
 	dot.h \
 	dispatcher.h \
@@ -16,6 +17,7 @@ HDR = \
 	l_compar.h \
 	l_dispatcher_.h \
 	library.h \
+	node.h \
 	object.h \
 	output.h \
 	parameter.h \
@@ -32,4 +34,5 @@ HDR = \
 	symbol.h \
 	task_element.h \
 	tasks.h \
-	u_lang.h
+	u_lang.h \
+	viewpainter.h

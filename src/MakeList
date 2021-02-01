@@ -110,7 +110,6 @@ DIALG_MOCHEADERS = \
 HDR1 = \
 	actions.h \
 	cmdeltdlg.h \
-	conductor.h \
 	docfmt.h \
 	dynamic_cc.h \
 	element_graphics.h \
@@ -122,7 +121,6 @@ HDR1 = \
 	module.h \
 	net.h \
 	netlist.h \
-	node.h \
 	nodemap.h \
 	optimizedialog.h \
 	spicedialog.h \
@@ -139,7 +137,6 @@ HDR1 = \
 	schematic_edit.h \
 	swap.h \
 	some_font_stuff.h \
-	viewpainter.h \
 	wiredialog.h \
 	wirelabel.h
 
@@ -156,7 +153,6 @@ HDR2 = \
 	projectView.h \
 	schematic_lang.h \
 	syntax.h \
-	viewpainter.h \
 	wirelabel.h \
 	wirelabel.h
 

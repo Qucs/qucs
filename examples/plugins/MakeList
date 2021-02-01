@@ -1,0 +1,11 @@
+# example plugins MakeList for Qucs
+# (c) 2021 Felix Salfelder
+# GPLv3+
+
+# each of those is a standalone plugin
+PLUGINS = \
+	hello_world
+
+# Compiling these will require Qt headers.
+PLUGINS_QT = \
+	red_wire
