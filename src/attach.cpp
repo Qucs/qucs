@@ -95,7 +95,7 @@ void plugins::do_it(istream_t& cs, SchematicModel*)
 		incomplete();
 	}else if(cs.umatch("attach") || cs.umatch("load")){
 		int dl_scope = RTLD_LOCAL;
-		if (cs.umatch("public ")) {untested();
+		if (cs.umatch("public ")) {itested();
 			dl_scope = RTLD_GLOBAL;
 		}else{
 		}

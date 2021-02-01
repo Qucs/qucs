@@ -558,7 +558,7 @@ static TaskElement* loadLegacyTaskElement(const QString& _s, LegacyTaskElement* 
 
 		tmp=0;
 		/// BUG FIXME. dont use Component parameter dictionary.
-		for(; tmp<=(int)counts/2; tmp++){ untested();
+		for(; tmp<=(int)counts/2; tmp++){itested();
 			c->Props.append(new Property("p", "", true, " "));
 		}
 
@@ -1012,7 +1012,7 @@ static Component* parseComponentObsoleteCallback(const QString& _s, Component* c
 /*--------------------------------------------------------------------------*/
 static TaskElement* loadTaskElement(const QString& _s, TaskElement* c)
 {
-	if(auto t=dynamic_cast<LegacyTaskElement*>(c)){ untested();
+	if(auto t=dynamic_cast<LegacyTaskElement*>(c)){itested();
 		loadLegacyTaskElement(_s, t);
 	}else{ untested();
 		incomplete();
