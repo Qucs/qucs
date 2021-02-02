@@ -11,7 +11,7 @@ CPP_SRC = \
 	cursors.cpp \
 	data.cc \
 	diagram.cpp \
-	dispatcher.cpp \
+	dispatcher.cc \
 	element.cpp \
 	element_graphics.cpp \
 	findbr.cc \
