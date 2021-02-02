@@ -145,9 +145,8 @@ int TaskElement::getTextSelected(int x_, int y_, float Corr)
 #endif
   return 0;
 }
-
-#if 0
-std::string TaskElement::param_value(std::string const& n) const
+/* -------------------------------------------------------------------------------- */
+std::string TaskElement::param_value_by_name(std::string const& n) const
 {
 	if(n=="$xposition"){ untested();
 		return std::to_string(cx());
@@ -155,7 +154,8 @@ std::string TaskElement::param_value(std::string const& n) const
 		return std::to_string(cy());
 	}else if(n=="$mfactor"){
 		return "1";
-//	}else if(n=="$active"){
+	}else if(n=="$active"){
+		return "1";
 //		return std::to_string(isActive); // move to element? it does not have params (yet).
 	}else{ untested();
 		trace1("TaskElement::paramValue", n);
@@ -163,27 +163,13 @@ std::string TaskElement::param_value(std::string const& n) const
 		return "incomplete";
 	}
 }
-#endif
-
-// -------------------------------------------------------
-#if 0
-bool TaskElement::getSelected(int x_, int y_)
-{
-  x_ -= cx();
-  y_ -= cy();
-  if(x_ >= x1) if(x_ <= x2) if(y_ >= y1) if(y_ <= y2)
-    return true;
-
-  return false;
-}
-#endif
-
-// -------------------------------------------------------
+/* -------------------------------------------------------------------------------- */
 rect_t TaskElement::bounding_rect() const
 {
 	incomplete();
 	return rect_t();
 }
+/* -------------------------------------------------------------------------------- */
 void TaskElement::paint(ViewPainter *p) const
 {
 	int x2=0; int y2=0; //?

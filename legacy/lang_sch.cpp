@@ -304,15 +304,6 @@ void LegacySchematicLanguage::printSubckt(SubcktBase const*, ostream_t&) const
 /*--------------------------------------------------------------------------*/
 void LegacySchematicLanguage::printTaskElement(TaskElement const* c, ostream_t& s) const
 {
-	if (auto lc=dynamic_cast<LegacyTaskElement const*>(c)){ untested();
-		printLegacyTaskElement(lc, s);
-	}else{
-		incomplete();
-	}
-}
-/*--------------------------------------------------------------------------*/
-void LegacySchematicLanguage::printLegacyTaskElement(LegacyTaskElement const* c, ostream_t& s) const
-{
 	s << "  <." << c->typeName() << " ";
 
 	if(c->label()==""){
@@ -322,17 +313,24 @@ void LegacySchematicLanguage::printLegacyTaskElement(LegacyTaskElement const* c,
 		s << c->label();
 	}
 	s << " ";
-
+	if (auto lc=dynamic_cast<LegacyTaskElement const*>(c)){ untested();
+		printLegacyTaskElement(lc, s);
+	}else{
+		incomplete();
+		s << "taskElement incomplete\n";
+	}
+}
+/*--------------------------------------------------------------------------*/
+void LegacySchematicLanguage::printLegacyTaskElement(LegacyTaskElement const* c, ostream_t& s) const
+{
 	int i = 0;
 	if(!c->showName){ untested();
 		i = 4;
 	}else{
 	}
 	incomplete();
-#if 0
-	std::string active = c->paramValue("$mfactor");
+	std::string active = c->param_value_by_name("$active");
 	i |= atoi(active.c_str());
-#endif
 	s << std::to_string(i);
 	s << " "+QString::number(c->cx())+" "+QString::number(c->cy());
 	s << " "+QString::number(c->tx)+" "+QString::number(c->ty);

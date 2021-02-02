@@ -80,6 +80,7 @@ public:
 	virtual std::string param_value(index_t n) const {
 		throw qucs::ExceptionCantFind();
 	}
+	virtual std::string param_value_by_name(std::string const& key) const;
 
 private:
   virtual SchematicModel* scope() override;

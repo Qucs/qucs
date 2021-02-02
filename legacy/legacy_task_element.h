@@ -45,7 +45,9 @@ private:
 
 	virtual index_t param_count() const;
 	virtual std::string param_name(index_t n) const;
-	virtual std::string param_value(index_t n) const;
+public: // callback hack.
+	std::string param_value(index_t n) const override;
+//	std::string param_value_by_name(std::string const& n) const override;
 
 public: // legacy stuff.
   bool getPen(const QString&, QPen&, int);
