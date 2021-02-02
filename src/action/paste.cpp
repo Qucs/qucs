@@ -21,23 +21,33 @@ static const std::string cnp_lang = "leg_sch";
 // TODO: "NewElementCommand", deduplicate
 class PasteCommand : public SchematicEdit {
 public:
-	PasteCommand(SchematicDoc& ctx, ElementGraphics* gfx)
-	: SchematicEdit(*ctx.sceneHACK()) { untested();
+	PasteCommand(SchematicScene& ctx, ElementGraphics* gfx)
+	: SchematicEdit(ctx) { untested();
 		setText("Paste $n elements"); // tr?
+		trace1("paste it", element(gfx)->label());
 
 		auto pos = gfx->pos();
 
 		for(auto i : gfx->childItems()){ untested();
 			if(auto j=dynamic_cast<ElementGraphics*>(i)){ untested();
+
+				if(dynamic_cast<Place const*>(element(j))){
+					// BUG: should not get here. (fix later)
+					incomplete();
+					continue;
+				}else{
+				}
+				assert(!dynamic_cast<Place const*>(element(j)));
+
 				auto c = j->clone();
+				trace1("paste child", element(j)->label());
 
 				auto p = i->pos();
 				c->setPos((p + pos).toPoint());
 
 				{ // move to qInsert?
-					ctx.sceneAddItem(c);
+					ctx.addItem(c);
 					c->setVisible(false);
-					// ctx.takeOwnership(element(c)); // BUG?
 				}
 
 				{ // dropTrailingDigits(c)
@@ -93,24 +103,46 @@ public:
 		QClipboard *cb = QApplication::clipboard();
 		QString s = cb->text(QClipboard::Clipboard);
 		istream_t cs(istream_t::_STRING, s.toStdString());
+		trace1("cnp clipboard", s.toStdString());
 
-		// fmt->load(stream, this);
 		while(!cs.is_end()){ untested();
-			trace1("paste", cs.fullstring());
+			trace1("cnp paste", cs.fullstring());
 			lang->new__instance(cs, this, subckt());
 			cs.read_line();
 		}
 
 		trace1("got paste", subckt()->size());
+
+		auto br = bounding_rect();
+		auto center = br.center();
+#if 0
+		QPoint gc = doc().snapToGrid(QPoint(getX(center), getY(center)));
+		center = pos_t(getX(gc), getY(gc));
+#endif
+
+		for(auto i : *subckt()){ untested();
+			trace2("paste: centering", i->label(), br.center());
+			auto p = i->position();
+			i->setPosition(p - center);
+		}
+
 	}
 
-public:
+private:
+	void paint(ViewPainter* p) const{
+		auto r = bounding_rect();
+		p->drawRect(r);
+	}
 	rect_t bounding_rect() const override{ untested();
+		// BUG: this does not work.
+		// TODO: use Qt for drawing.
 		rect_t r;
 		for (auto i : *subckt()){ itested();
+			trace1("cnp br", i->label());
 			auto c = i->center();
 			r |= i->bounding_rect() + c;
 		}
+		trace3("cnp br", subckt()->size(), r.tl(), r.br());
 		return r;
 	}
 private:
@@ -127,18 +159,6 @@ QUndoCommand* MouseActionPaste::activate(QObject* sender)
 		uncheck();
 		return nullptr;
 	}
-
-  auto br = buf->bounding_rect();
-  auto center = br.center();
-  QPoint gc = doc().snapToGrid(QPoint(getX(center), getY(center)));
-  center = pos_t(getX(gc), getY(gc));
-
-
-  for(auto i : *buf->subckt()){ untested();
-	  trace2("paste: centering", i->label(), br.center());
-	  auto p = i->center();
-	  i->setPosition(p - center);
-  }
 
 #if 0
   // BUG
@@ -170,8 +190,10 @@ QUndoCommand* MouseActionPaste::activate(QObject* sender)
 /*--------------------------------------------------------------------------*/
 QUndoCommand* MouseActionPaste::release(QEvent* ev)
 { untested();
+	trace0("paste release");
 	QUndoCommand* cmd = nullptr;
-	auto m = dynamic_cast<QGraphicsSceneMouseEvent*>(ev);
+// 	auto m = dynamic_cast<QGraphicsSceneMouseEvent*>(ev);
+	auto m = dynamic_cast<QMouseEvent*>(ev);
 	if(!m){ untested();
 	}else if(m->button() == Qt::LeftButton){ untested();
 		cmd = makeNew(ev);
@@ -207,8 +229,9 @@ QUndoCommand* MouseActionPaste::makeNew(QEvent* ev)
 	}else{ untested();
 	}
 
-	cmd* c = new PasteCommand(doc(), _gfx);
+	cmd* c = new PasteCommand(*doc().sceneHACK(), _gfx);
 	_gfx->hide();
+	// scene->remove(_gfx);
 	delete _gfx;
 	_gfx = nullptr;
 
@@ -277,7 +300,7 @@ QUndoCommand* MouseActionPaste::enter(QEvent* ev)
 	trace1("enter", sp);
 	_gfx->setPos(sp.x(), sp.y());
 	
-	doc().sceneAddItem(_gfx);
+//	doc().sceneAddItem(_gfx);
 
 	ev->accept();
 	return nullptr;
@@ -290,7 +313,7 @@ QUndoCommand* MouseActionPaste::leave(QEvent* ev)
 		return nullptr;
 	}else{
 	}
-	sceneRemoveItem(_gfx);
+//	sceneRemoveItem(_gfx);
 	ev->accept();
 	return nullptr;
 }
@@ -321,7 +344,7 @@ QUndoCommand* MouseActionPaste::press(QEvent* ev)
 		unreachable();
 	}else if(m->button() == Qt::LeftButton){ untested();
 	}else if(m->button() == Qt::RightButton){ untested();
-		cmd = MouseActionPaste::rotate(ev);
+		cmd = rotate(ev);
 		ev->accept(); // really?
 	}else{ untested();
 		unreachable();

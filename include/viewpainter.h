@@ -49,6 +49,7 @@ public: // just forward
 	void drawRect (int a, int b, int c, int d){
 		Painter->drawRect(a, b, c, d);
 	}
+	void drawRect (rect_t const& r);
 	void drawRectD (int a, int b, int c, int d){
 		/// there is no drawRectD.
 		Painter->drawRect(a, b, c, d);

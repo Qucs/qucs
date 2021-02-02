@@ -88,6 +88,18 @@ void ViewPainter::map(int x1, int y1, int& x, int& y)
   y = TO_INT(z);
 }
 
+// not here.
+QRectF QRectF_(rect_t const& p)
+{
+	return QRectF(p.tl().first, p.tl().second, p.w(), p.h());
+}
+
+void ViewPainter::drawRect(rect_t const& r)
+{
+  auto q=QRectF_(r);
+  Painter->drawRect(q);
+}
+
 #ifdef USE_SCROLLVIEW
 obsolete
 // -------------------------------------------------------------

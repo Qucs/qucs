@@ -1057,14 +1057,14 @@ Element* LegacySchematicLanguage::parseItem(istream_t& c, Element* e) const
 } // parseItem
 /*--------------------------------------------------------------------------*/
 DEV_DOT* LegacySchematicLanguage::parseCommand(istream_t& c, DEV_DOT* x) const
-{ untested();
+{
 	QString Line = QString::fromStdString(c.fullString());
 	trace2("command?", x->s(), Line);
 #if 0 // not sure.
 	auto scope = x->owner()->subckt();
 #else
 	auto scope = x->scope();
-	if(scope){ untested();
+	if(scope){
 	}else{ untested();
 	}
 #endif
