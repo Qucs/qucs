@@ -76,8 +76,6 @@ public:
 	virtual void set_param_by_name(std::string const& name, std::string const&){
 		throw qucs::ExceptionCantFind(name, label());
 	}
-
-protected:
 	void attach(CommonData const* d) {
 		CommonData::attach(d, &_common);
 	}

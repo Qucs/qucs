@@ -13,10 +13,13 @@
  *                                                                         *
  ***************************************************************************/
 
-// TODO: remove.
+// multiple issues with "dat" format
+// - make it work in "legacy mode"
+// - figure out proper interface
+// - provide alternative
 /* -------------------------------------------------------------------------------- */
 #include "data.h"
-#include "dat.h"
+#include "qio.h"
 #include "qt_compat.h"
 #include "qucs_globals.h"
 #include <QFile> // hmm
@@ -63,7 +66,8 @@ namespace{
 // was just one var from dat file. (fixed)
 class SimOutputDat : public SimOutputDir {
 public:
-	SimOutputDat(std::string const& filename);
+	// SimOutputDat(std::string const& filename);
+	SimOutputDat(istream_t&);
 //	int loadIndepVarData(std::string const&, char* datfilecontent, DataX*);
 
 //	bool isEmpty() const { return !numAxes(); }
@@ -87,10 +91,9 @@ public:
 private:
 	unsigned axis_count;
 //	std::vector<DataX*>  CPointsX;
-	double *CPointsY;
 //	int CountY;    // number of curves
 //	QString Var;
-	std::string _fileName;
+//	std::string _fileName;
 	QDateTime lastLoaded;  // when it was loaded into memory
 	unsigned _attach_count;
 
@@ -98,23 +101,24 @@ private:
 }; // SimOutputDat
 /* -------------------------------------------------------------------------------- */
 // a Var from a Dat file
+// it can be "independent" or "dependent" with references.
 class SimOutputDatVar : public SimOutputData{
 	SimOutputDatVar(SimOutputDatVar const&) = delete;
 public:
-	explicit SimOutputDatVar(std::string const& fileName, std::string const& varname)
-	 : SimOutputData(), CPointsY(NULL),
-	   _var(QString::fromStdString(varname)),
-	   _fileName(fileName) {}
+	explicit SimOutputDatVar(QByteArray, std::string const& varname)
+	 : SimOutputData(),
+	   _var(QString::fromStdString(varname)) {}
 
+	SimOutputData const* refresh(QByteArray);
 private:
 	void clear();
-	SimOutputData const* refresh() override;
+	SimOutputData const* refresh() override{incomplete(); return nullptr;}
 	virtual const_iterator begin() const { untested();
 		trace1("DatVar", numAxes());
 		incomplete();
 		auto a = axis(0);
 		if(a){ untested();
-			return const_iterator(a->Points, CPointsY);
+			return const_iterator(a->Points, _CPointsY.data());
 		}else{ untested();
 			return const_iterator(nullptr, nullptr);
 		}
@@ -137,6 +141,9 @@ private:
 		if (Max<x) Max=x;
 	}
 
+	index_t numDeps() const override;
+	CommonData const* dep(index_t) const override;
+
 public: // obsolete interface. don't use.
 	DataX const* axis(uint i) const override { untested();
 		trace2("datax axis", i, axis_count);
@@ -147,37 +154,53 @@ public: // obsolete interface. don't use.
 			return NULL;
 		}
 	}
-	double *cPointsY() const { return CPointsY; }
+	size_t size() const override {return _CPointsY.size()/2;}
+	double const* cPointsY() const { return _CPointsY.data(); }
+
 private:
-	double *CPointsY;
 	QString _var;
 	std::string _fileName;
 	unsigned axis_count{0};
 	std::vector<DataX*> CPointsX;
+	std::vector<double> _CPointsY;
 	int CountY;    // number of curves ??
 	QDateTime lastLoaded;
-};
+
+public:
+	std::vector<std::string> _dep_names;
+	mutable std::vector<CommonData const*> _deps;
+}; // SimOutputDatVar
 /* -------------------------------------------------------------------------------- */
-SimOutputDat::SimOutputDat(std::string const& fileName)
-    : CPointsY(NULL),
-      // Var(QString::fromStdString(varname)),
-      _fileName(fileName)
-      // Min(INFINITY), Max(-INFINITY)
-{itested();
-	QFile file(QString::fromStdString(fileName));
-	if(!file.open(QIODevice::ReadOnly)) { untested();
-		trace1("cannot open file. why?", fileName);
-		// BUG, throw?
-		return;
-	}else{itested();
+index_t SimOutputDatVar::numDeps() const
+{
+	return _deps.size();
+}
+/* -------------------------------------------------------------------------------- */
+CommonData const* SimOutputDatVar::dep(index_t i) const
+{
+	return _deps[i];
+}
+/* -------------------------------------------------------------------------------- */
+// bridge obsolete code. belongs to qt_compat, but better delete it after use here.
+static QByteArray QByteArray_(istream_t& cs)
+{
+	std::string s;
+	while(!cs.atEnd()){ untested();
+		s += cs.fullstring() + "\n";
+		cs.read_line();
 	}
+	trace1("QByteArray", s.size());
+	return QByteArray(s.c_str(), s.size());
+}
+/* -------------------------------------------------------------------------------- */
+SimOutputDat::SimOutputDat(istream_t& cs)
+{itested();
 
 	QString Line, tmp, Var;
 	int varNumber = 0;
-	// reading the file as a whole improves speed very much, also using
-	// a QByteArray rather than a QString
-	QByteArray FileString = file.readAll();
-	file.close();
+	// reading the file as a whole improves speed very much.
+	// this has side effects. (could do proper caching -- later)
+	auto FileString = QByteArray_(cs);
 
 	int i=0, j=0;
 	i = FileString.indexOf('<')+1;
@@ -196,28 +219,49 @@ SimOutputDat::SimOutputDat(std::string const& fileName)
 			}else{itested();
 			}
 
-
 			trace2("dep", Line.left(5), Var);
 			trace2("dep", Line.left(3), Var);
 			if(Line.left(3) == "dep") {itested();
 				tmp = Line.section(' ', 2);
 				varNumber++;
-				SimOutputData* v = new SimOutputDatVar(_fileName, Var.toStdString());
-				v->refresh();
+				SimOutputDatVar* v = new SimOutputDatVar(FileString, Var.toStdString());
+				v->refresh(FileString);
 				push_back(v); // _map[Var.toStdString()] = v;
 			} else if(Line.left(5) == "indep") {itested();
 				trace1("indep?", Line);
 				tmp = Line.section(' ', 2, 2);
 				//new Q3ListViewItem(ChooseVars, Var, "indep", tmp.remove('>'));
 				varNumber++;
+				SimOutputDatVar* v = new SimOutputDatVar(FileString, Var.toStdString());
+				v->refresh(FileString);
+				push_back(v); // _map[Var.toStdString()] = v;
 
 			}
 		} while(i > 0);
 	}else{ untested();
 	}
 
+	for(auto i : *this){
+		trace1("postproc", i.first);
+
+		auto vv = prechecked_cast<SimOutputDatVar const*>(i.second);
+		assert(vv);
+		for(auto nn : vv->_dep_names){
+			trace1("postproc", nn);
+
+			const_iterator ff = find(nn);
+			const_iterator ee = end();
+			if(ff == ee){ untested();
+				message(QucsMsgWarning, "bogus deps in " + i.first + ": " + nn);
+			}else{ untested();
+				vv->_deps.push_back(nullptr);
+				attach(*ff, &vv->_deps.back());
+			}
+		}
+	}
+
 //	refresh();
-}
+} // SimOutputDat::SimOutputDat
 
 SimOutputData const* SimOutputDat::refresh()
 { untested();
@@ -226,44 +270,38 @@ SimOutputData const* SimOutputDat::refresh()
 }
 // --------------------------------------------------------------------------
 // former "loadDatFile", former "loadVarData".
-SimOutputData const* SimOutputDatVar::refresh()
+SimOutputData const* SimOutputDatVar::refresh(QByteArray FileContent)
 {untested();
 	SimOutputDatVar* g = this;
-	QFile file;
+//	QFile file;
 	QString Variable;
-	trace2("datvar", _fileName, _var);
-	QFileInfo Info(QString::fromStdString(_fileName));
+//	QFileInfo Info(QString::fromStdString(_fileName));
 
 	setLabel(_var.toStdString()); // BUG
 
 	int pos = g->_var.indexOf(':');
+	trace3("datvar", _fileName, _var, pos);
 	//  if(g->Var.right(3) == "].X")  // e.g. stdl[8:0].X
 	//    if(pos > g->Var.indexOf('['))
 	//      pos = -1;
+	//
+	  if(pos <= 0) {itested();
+               //file.setFileName(QString::fromStdString(_fileName));
+               Variable = g->_var;
+       } else { untested();
+               assert(false);
+               incomplete();
+               // is this digital stuff?? not here.
+///            file.setFileName(Info.path()+QDir::separator() + g->Var.left(pos)+".dat");
+///            Variable = g->Var.mid(pos+1);
+       }
 
+
+#if 0 //what?
 	/* WORK-AROUND: A bug in SCIM (libscim) which Qt is linked to causes
 		to change the locale to the default. */
 	setlocale (LC_NUMERIC, "C");
-
-	if(pos <= 0) {itested();
-		file.setFileName(QString::fromStdString(_fileName));
-		Variable = g->_var;
-	} else { untested();
-		assert(false);
-		incomplete();
-		// is this digital stuff?? not here.
-///		file.setFileName(Info.path()+QDir::separator() + g->Var.left(pos)+".dat");
-///		Variable = g->Var.mid(pos+1);
-	}
-
-	Info.setFile(file);
-	if(g->lastLoaded.isValid()){ untested();
-		if(g->lastLoaded > Info.lastModified()){ untested();
-			return this;    // dataset unchanged -> no update neccessary
-		}else{ untested();
-		}
-	}else{ untested();
-	}
+#endif
 
 	clear(); // oops?
 	if(Variable.isEmpty()){ untested();
@@ -275,21 +313,20 @@ SimOutputData const* SimOutputDatVar::refresh()
 	if(Variable.right(2) == ".X")
 		if(Name.at(0) != 'T')
 			return 0;  // digital variables only for tabulars and timing diagram
-#endif
 
 	if(!file.open(QIODevice::ReadOnly)){ untested();
 		return NULL;
 	}else{ untested();
 	}
+#endif
 
 	// *****************************************************************
-	// To strongly speed up the file read operation the whole file is
-	// read into the memory in one piece.
-	QByteArray FileContent;
-	FileContent = file.readAll();
-	file.close();
 	char *FileString = FileContent.data();
-	if(!FileString)  return 0;
+	trace1("FileString", FileString);
+	if(!FileString){ untested();
+		return 0;
+	}else{ untested();
+	}
 	char *pPos = FileString+FileContent.size()-1;
 	if(*pPos > ' ')  if(*pPos != '>')  return 0;
 	*pPos = 0;
@@ -384,6 +421,7 @@ SimOutputData const* SimOutputDatVar::refresh()
 			else if(pD == bLast)  pa = &yAxis;   // y axis for Rect3D
 #endif
 			trace1("refresh axis", pD->Var);
+			_dep_names.push_back(pD->Var);
 			counter = loadIndepVarData(pD->Var, FileString, CPointsX[ii]);
 			if(counter <= 0) { untested();
 				trace0("huh, nothing there");
@@ -403,8 +441,8 @@ SimOutputData const* SimOutputDatVar::refresh()
 	// *****************************************************************
 	// get dependent variables *****************************************
 	counter *= CountY;
-	p = new double[2*counter]; // dependent variables
-	CPointsY = p;
+	_CPointsY.resize(2*counter);
+	p = _CPointsY.data();
 #if 0 // FIXME: what does this do?!
 	if(g->yAxisNo == 0)  pa = &yAxis;   // for which axis
 	else  pa = &zAxis;
@@ -426,7 +464,8 @@ SimOutputData const* SimOutputDatVar::refresh()
 				y = 0.0;
 			else { untested();
 				if(((*pEnd != '+') && (*pEnd != '-')) || (*pPos != 'j')) { untested();
-					delete[] CPointsY; CPointsY = NULL;
+					incomplete();
+					// throw??
 					return 0;
 				}
 				*pPos = *pEnd;  // overwrite 'j' with sign
@@ -465,7 +504,11 @@ SimOutputData const* SimOutputDatVar::refresh()
 #endif
 		}
 
-	} else {  // of "if not digital"
+	} else {
+		// "digital". obsolete. use annother type.
+		incomplete();
+
+# if 0
 
 		char *pc = (char*)p;
 		pEnd = pc + 2*(counter-1)*sizeof(double);
@@ -474,7 +517,8 @@ SimOutputData const* SimOutputDatVar::refresh()
 
 			while((*pPos) && (*pPos <= ' '))  pPos++; // find start of next bit vector
 			if(*pPos == 0) { untested();
-				delete[] CPointsY; CPointsY = NULL;
+				incomplete();
+				// throw??
 				return 0;
 			}
 
@@ -492,7 +536,8 @@ SimOutputData const* SimOutputDatVar::refresh()
 			*(pc++) = 0;   // terminate each vector with NULL
 		}
 
-	}  // of "if not digital"
+#endif
+	}
 
 //	qDebug() << "loaded" << Var << min() << max();
 	if (numAxes()>1){ untested();
@@ -517,7 +562,6 @@ void SimOutputDatVar::clear()
   for(auto i : CPointsX){ untested();
 	  delete[] i;
   }
-  delete[] CPointsY;
 }
 
 // Read the data of an independent variable. Return the number of points.
@@ -527,9 +571,11 @@ int SimOutputDatVar::loadIndepVarData(std::string const& Variable,
   bool isIndep = false;
   QString Line, tmp;
 
+#if 0
   /* WORK-AROUND: A bug in SCIM (libscim) which Qt is linked to causes
      to change the locale to the default. */
   setlocale (LC_NUMERIC, "C");
+#endif
 
   Line = QString::fromStdString("dep "+Variable+std::string(" "));
   // "pFile" is used through-out the whole function and must NOT used
@@ -539,7 +585,7 @@ int SimOutputDatVar::loadIndepVarData(std::string const& Variable,
     if(*(pFile-1) == '<') {     // is dependent variable ?
       trace0("huh? dependent variable in loadIndep");
       break;
-    }else if(strncmp(pFile-3, "<in", 3) == 0) {  // is independent variable ?
+    }else if(strncmp(pFile-3, "<in", 3) == 0) {
       trace0("okay, really independent.");
       isIndep = true;
       break;
@@ -621,23 +667,29 @@ public:
 		setLabel("datfile");
 	}
 	DatFile(DatFile const&d) : Data(d){ untested(); }
+
 private:
 	DatFile* clone() const override { untested(); return new DatFile(*this); }
 
 	void set_param_by_name(std::string const& n, std::string const& v) override{ untested();
 		if(n=="filename"){ untested();
-			init(v);
+			_fileName = v;
 		}else{ untested();
 			incomplete();
 		}
 	}
+
 private: // Element. remove?
 	void paint(ViewPainter*) const {incomplete();}
+
 private: // implementation
-	void init(std::string const& fn){ untested();
-		CommonData* cd = new SimOutputDat(fn);
-		attach(cd);
-	}
+//	void init(std::string const& fn){ untested();
+//		CommonData* cd = new SimOutputDat(fn);
+//		attach(cd);
+//	}
+
+private:
+	std::string _fileName;
 }f1;
 static Dispatcher<Data>::INSTALL d1(&dataDispatcher, "datfile", &f1);
 /* -------------------------------------------------------------------------------- */

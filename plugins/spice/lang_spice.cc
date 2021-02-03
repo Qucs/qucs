@@ -28,6 +28,7 @@ class LangSpice : public NetLang {
 private: // NetLang
   // inline void printItem(Element const* c, stream_t& s) const;
   std::string findType(istream_t&) const override {incomplete(); return "incomplete";}
+  Element* parseItem(istream_t&, Element*) const override {incomplete(); return nullptr;}
 
 private: // local
   void printTaskElement(TaskElement const*, ostream_t&) const { untested(); }

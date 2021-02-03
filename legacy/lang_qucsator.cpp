@@ -26,6 +26,7 @@
 #include "painting.h"
 #include "legacy_task_element.h"
 #include "components/component.h" // yikes
+#include "lang_dat_hack.cpp"
 /* -------------------------------------------------------------------------------- */
 namespace {
 /* -------------------------------------------------------------------------------- */
@@ -133,6 +134,10 @@ private: // NetLang
   std::string findType(istream_t&) const override {incomplete(); return "incomplete";}
 
 private: // local
+	Element* parseItem(istream_t& s, Element* x) const override;
+	Data* parseData(istream_t& s, Data* x) const;
+
+private: // local
   void printTaskElement(TaskElement const*, ostream_t&) const; // override?
   void printSymbol(Symbol const*, ostream_t&) const override;
   void printSubckt(SubcktBase const*, ostream_t&) const;
@@ -224,6 +229,45 @@ void QucsatorLang::printSymbol(Symbol const* d, ostream_t& s) const
 	}else{ untested();
 		assert(false);
 		incomplete();
+	}
+}
+/* -------------------------------------------------------------------------------- */
+Data* QucsatorLang::parseData(istream_t& cs, Data* x) const
+{
+// 	std::string f = cs.name();
+// 	_dat->set_param_by_name("filename", f);
+#if 0
+	if(pos <= 0) {itested();
+		file.setFileName(QString::fromStdString(_fileName));
+		Variable = g->_var;
+	} else { untested();
+		assert(false);
+		incomplete();
+		// is this digital stuff?? not here.
+///		file.setFileName(Info.path()+QDir::separator() + g->Var.left(pos)+".dat");
+///		Variable = g->Var.mid(pos+1);
+	}
+
+	Info.setFile(file);
+	if(g->lastLoaded.isValid()){ untested();
+		if(g->lastLoaded > Info.lastModified()){ untested();
+			return this;    // dataset unchanged -> no update neccessary
+		}else{ untested();
+		}
+	}else{ untested();
+	}
+#endif
+	CommonData* cd = new SimOutputDat(cs);
+	x->attach(cd);
+	return x;
+}
+/* -------------------------------------------------------------------------------- */
+Element* QucsatorLang::parseItem(istream_t& s, Element* x) const
+{
+	if(auto d=dynamic_cast<Data*>(x)){
+		return parseData(s, d);
+	}else{
+		return x;
 	}
 }
 /* -------------------------------------------------------------------------------- */
@@ -331,7 +375,7 @@ void QucsatorLang::printSubckt(SubcktBase const* p, ostream_t& s) const
 
 	s << ".Def:End\n"; //  << p->label() << "\n";
 }
-
+/* -------------------------------------------------------------------------------- */
 static void printLegacyTaskElement(LegacyTaskElement const* c, ostream_t& s)
 {
 	assert(c);

@@ -64,6 +64,7 @@ private:
 
 private: //DocumentLanguage
 	std::string findType(istream_t&) const override {incomplete(); return "incomplete";}
+	Element* parseItem(istream_t&, Element*) const override {incomplete(); return nullptr;}
 } V;
 static Dispatcher<DocumentLanguage>::INSTALL p0(&languageDispatcher, "verilog|verilog_nl", &V);
 /*--------------------------------------------------------------------------*/

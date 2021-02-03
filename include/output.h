@@ -33,6 +33,7 @@ protected:
 	SimOutputDir(const SimOutputDir& s);
 
 public:
+	// multimap?
 	typedef std::map<std::string, CommonData const*> container_t;
 	virtual ~SimOutputDir();
 	virtual void set_var(std::string, std::string) { untested(); }
@@ -57,7 +58,8 @@ public:
 	class const_iterator : protected container_t::const_iterator{
 	public:
 		const_iterator(const_iterator const& p) : container_t::const_iterator(p) { untested(); }
-		explicit const_iterator(const container_t::iterator& p) : container_t::const_iterator(p) {}
+		const_iterator(iterator const& p) : container_t::const_iterator(p) { untested(); }
+//		explicit const_iterator(const container_t::iterator& p) : container_t::const_iterator(p) {}
 		explicit const_iterator(const container_t::const_iterator& p) : container_t::const_iterator(p) {}
 
 	public: //ops
@@ -88,6 +90,9 @@ public:
 	virtual const_iterator begin() const {
 		const_iterator b(_d.begin());
 		return b;
+	}
+	const_iterator find(std::string key) const {
+		return const_iterator(_d.find(key));
 	}
 	const_iterator end() const {
 		return const_iterator(_d.end());
@@ -166,7 +171,7 @@ private:
 #endif
 /* -------------------------------------------------------------------------------- */
 // (dictionary) data from a simulator, maybe later.
-class SimOutputParams : public CommonData{
+class SimOutputParams : public CommonData {
 };
 /* -------------------------------------------------------------------------------- */
 // (tabular) data from a simulator.
@@ -200,16 +205,18 @@ public:
 	virtual ~SimOutputData(){}
 
 public: // obsolete interface. don't use.
-  virtual DataX const* axis(uint ) const { return nullptr; } // if (i<axis_count) return CPointsX.at(i); return NULL;}
+  virtual DataX const* axis(uint ) const { return nullptr; } // if (i<axis_count) return CPointsX.at(i); return NULL;
 //	  double *cPointsY() const { return CPointsY; }
 
 public:
 	virtual bool isEmpty() {return true;}
-	size_t size() const{incomplete(); return 0;}
+	virtual size_t size() const{incomplete(); return 0;}
 
 	virtual const_iterator begin() const = 0; //  {return const_iterator(CPointsX.getFirst()->Points, CPointsY);}
 	virtual const_iterator end() const = 0; //  {return const_iterator(CPointsX.getFirst()->end(), NULL);}
 	virtual SimOutputData const* refresh() {return nullptr;}
+	virtual index_t numDeps() const {return 0;}
+	virtual CommonData const* dep(index_t) const {unreachable(); return nullptr;}
 
 public:
 	const double& min()const {return Min;}
@@ -218,7 +225,7 @@ public:
 protected:
 	double Min;
 	double Max;
-}; // SimOutputRoot
+}; // SimOutputData
 /* -------------------------------------------------------------------------------- */
 /* -------------------------------------------------------------------------------- */
 #endif

@@ -2,7 +2,9 @@
 include ../../autotools/common.mk
 
 inst_LTLIBRARIES = qucsator.la
-qucsator_la_SOURCES = qucsator.cpp dat.cpp qucsator.moc.cpp
+
+# HACK. use MakeList
+qucsator_la_SOURCES = qucsator.cpp qucsator.moc.cpp
 
 qucsator_la_LDFLAGS = -module -avoid-version
 # qucsator_la_CPPFLAGS = $(AM_CPPFLAGS)

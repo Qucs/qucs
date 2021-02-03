@@ -17,7 +17,7 @@ class Symbol;
 class TaskElement;
 class ostream_t;
 
-
+/* -------------------------------------------------------------------------------- */
 // baseclass for schematic and net languages.
 // use u_lang.h instead?
 class DocumentLanguage : public Object{
@@ -29,7 +29,7 @@ public:
   virtual void printItem(ostream_t&, Element const*) const;
 
   virtual void		parse_top_item(istream_t&, SchematicModel*) const {incomplete();}
-  virtual Element* parseItem(istream_t&, Element*) const;
+  virtual Element* parseItem(istream_t&, Element*) const = 0;
   virtual DEV_DOT* parseCommand(istream_t&, DEV_DOT*) const{
 	  untested(); return nullptr;
   }
@@ -52,5 +52,6 @@ class NetLang : public DocumentLanguage {
 public:
   virtual ~NetLang(){}
 };
-
+/* -------------------------------------------------------------------------------- */
+/* -------------------------------------------------------------------------------- */
 #endif

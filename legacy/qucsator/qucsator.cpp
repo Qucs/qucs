@@ -22,7 +22,6 @@
 #include "schematic_doc.h"
 #include <QProcess>
 #include "qucsator.h"
-#include "dat.h"
 #include "painting.h"
 #include "qio.h"
 /* -------------------------------------------------------------------------------- */
@@ -256,10 +255,14 @@ void Qucsator::do_it(istream_t& cs, SchematicModel const* scope)
 void Qucsator::collectData()
 {itested();
 	trace1("collectData", DataSet);
-	_dat = dataDispatcher.clone("datfile");
+	_dat = dataDispatcher.clone("datfile"); // really? table?
 	assert(_dat);
-	_dat->set_param_by_name("filename", DataSet.toStdString());
+ 	std::string fn = DataSet.toStdString();
+	istream_t cs(istream_t::_WHOLE_FILE, fn);
+ 	_dat->set_param_by_name("filename", fn);
+	netLang()->parseItem(cs, _dat);
 	releaseOutput(_dat->common());
+	delete _dat;
 }
 /* -------------------------------------------------------------------------------- */
 }//namespace
