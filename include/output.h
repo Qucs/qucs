@@ -24,12 +24,11 @@
 /* -------------------------------------------------------------------------------- */
 class DataX; // BUG
 /* -------------------------------------------------------------------------------- */
-// base class for SimOutputs
 // a SimOutputDir provides a named list of CommonData
-// these can again be "directories", or data sets
+// these can be lists, or data sets, waves etc.
 class SimOutputDir : public CommonData {
-protected:
-	explicit SimOutputDir(): CommonData() { }
+protected: // for now.
+	explicit SimOutputDir() : CommonData() {}
 	SimOutputDir(const SimOutputDir& s);
 
 public:
@@ -110,65 +109,11 @@ public:
 //		return x->second;
 //	}
 protected:
-	void push_back(CommonData*);
+	void push_back(CommonData const*);
 
 protected:
 	mutable /*why?*/ container_t _d;
 }; // SimOutputDir
-/* -------------------------------------------------------------------------------- */
-// the root directory. here,
-// output plugins register as directories
-// obsolete -> Data
-#if 0
-class SimOutputRoot : public SimOutputDir {
-private:
-	SimOutputRoot(const SimOutputRoot& s) : SimOutputDir(s){
-		for(auto i : _d){ untested();
-			i.second=i.second->clone();
-		}
-	}
-public:
-	CommonData* clone(){return new SimOutputRoot(*this);}
-
-public:
-	SimOutputRoot(){ }
-	virtual void set_var(std::string n, std::string v) { untested();
-		for(auto i = begin(); i!=end(); ++i){ untested();
-			assert(i.dir());
-			i.dir()->set_var(n,v);
-		}
-	}
-	void install(const std::string& s, CommonData* p){
-		assert(p);
-		_d[s] = p;
-		trace2("installing ", s, _d.size());
-		trace1("installing ", intptr_t(this));
-	}
-	void uninstall(CommonData*){ /* incomplete */ }
-	class INSTALL {
-	private:
-		SimOutputRoot* _d;
-		const std::string _name;
-		SimOutputDir* _p;
-	public:
-		INSTALL(SimOutputRoot* d, const std::string& name, SimOutputDir* p) :
-			_d(d),
-			_name(name),
-			_p(p)
-		{
-			std::cerr << "INSTALL\n";
-			assert(_d);
-			assert(p);
-			_d->install(_name, p);
-		}
-		~INSTALL() {
-			_d->uninstall(_p);
-		}
-	};
-private:
-	// std::map<std::string, CommonData*> *_d;
-};
-#endif
 /* -------------------------------------------------------------------------------- */
 // (dictionary) data from a simulator, maybe later.
 class SimOutputParams : public CommonData {

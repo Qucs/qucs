@@ -74,10 +74,10 @@ public:
 
 public:
 	virtual index_t param_count() const { return 0; }
-	virtual std::string param_name(index_t n) const{
+	virtual std::string param_name(index_t) const{
 		throw qucs::ExceptionCantFind();
 	}
-	virtual std::string param_value(index_t n) const {
+	virtual std::string param_value(index_t) const {
 		throw qucs::ExceptionCantFind();
 	}
 	virtual std::string param_value_by_name(std::string const& key) const;

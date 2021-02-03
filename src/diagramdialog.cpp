@@ -105,6 +105,62 @@ DiagramDialog::DiagramDialog(QucsDoc* d)
   setAttribute(Qt::WA_DeleteOnClose);
 }
 
+class DataChooser : public QComboBox{
+public:
+	explicit DataChooser() {
+		setMinimumWidth(300);
+	}
+
+public:
+	void setScope(SchematicModel const* s){ _scope = s; }
+
+	void refresh(){
+		for(Element const* elt : *_scope){
+			trace1("refresh chooser", elt->label());
+			CommonData const* cd = nullptr;;
+			if(auto dd=dynamic_cast<Data const*>(elt)){
+				dd->refresh();
+				CommonData::attach(dd->common(), &cd);
+				add_data(cd);
+				CommonData::detach(&cd);
+			}else{
+			}
+		}
+#if 0
+		= Elements.begin(); it != Elements.end(); ++it) {
+			ChooseData->addItem((*it).left((*it).length()-4));
+			if((*it) == Info.fileName()){
+				ChooseData->setCurrentIndex(ChooseData->count()-1);
+			}else{
+			}
+		}
+#endif
+	}
+
+private:
+	// this is completely ad-hoc, but uses the legacy diagramdialog widgets
+	void add_data(CommonData const* cd){ untested();
+		if(auto dd=dynamic_cast<SimOutputData const*>(cd)){ untested();
+		}else if(auto dir=dynamic_cast<SimOutputDir const*>(cd)){ untested();
+			bool nonempty = false;
+			for(auto n : *dir){
+				nonempty = true;
+				add_data(n);
+			}
+			if(nonempty){
+				std::string label = dir->label();
+				addItem(QString_(label)); // TODO: attach actual data to an item.
+			}else{
+			}
+		}else{
+		}
+	}
+
+public:
+	SchematicModel const* _scope{nullptr};
+};
+
+// BUG: disentangle different diagram types
 void DiagramDialog::attach(ElementGraphics* g)
 { untested();
 	auto d = g->operator->();
@@ -282,9 +338,16 @@ void DiagramDialog::attach(ElementGraphics* g)
   Box1Layout->addWidget(DataGroup);
   QVBoxLayout *DataGroupLayout = new QVBoxLayout();
   DataGroup->setLayout(DataGroupLayout);
-  ChooseData = new QComboBox();
-  DataGroupLayout->addWidget(ChooseData);
-  ChooseData->setMinimumWidth(300); // will force also min width of table below
+  ChooseData = new DataChooser;
+
+	// diag lives in main, for some reason. go up twice.
+	auto oo = dynamic_cast<Element const*>(Diag->mutable_owner());
+	assert(oo);
+	oo = dynamic_cast<Element const*>(oo->mutable_owner());
+	assert(oo);
+	assert(oo->scope());
+	ChooseData->setScope(oo->scope());
+	DataGroupLayout->addWidget(ChooseData);
 
   // todo: replace by QTableWidget
   // see https://gist.github.com/ClemensFMN/8955411
@@ -632,12 +695,8 @@ void DiagramDialog::attach(ElementGraphics* g)
   QDir ProjDir(Info.path());
   QStringList Elements = ProjDir.entryList(QStringList("*.dat"), QDir::Files, QDir::Name);
   QStringList::iterator it;
-  for(it = Elements.begin(); it != Elements.end(); ++it) {
-    ChooseData->addItem((*it).left((*it).length()-4));
-    if((*it) == Info.fileName())
-      // default dataset should be the current
-      ChooseData->setCurrentIndex(ChooseData->count()-1);
-  }
+  ChooseData->refresh();
+
   slotReadVars(0);  // put variables into the ListView
 
   // ...........................................................

@@ -100,12 +100,10 @@ public: // Element
 
 public:
 	// what is this?
+	//  TODO: use prepare == precalc_first everywhere.
 	// some kind of "init"??!
 	virtual void recreate(); // SchematicModel const& ctx);
-
 	virtual void build() {} // what does it do?
-	virtual unsigned paramCount()const;
-	virtual bool paramIsPrintable()const;
 
 public: // TODO. something like this.
 	virtual void expand() { untested(); }
@@ -130,6 +128,9 @@ public:
 	virtual SchematicModel* scope();
 
 public: // Parameters
+	virtual unsigned paramCount()const;
+	virtual bool paramIsPrintable()const;
+
 	virtual void setParameter(std::string const& name, std::string const&);
 	virtual void setParameter(unsigned i, std::string const&);
 

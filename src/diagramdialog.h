@@ -36,6 +36,7 @@ class QTableWidgetItem;
 class QListWidgetItem;
 class QTableWidget;
 class QListWidget;
+class DataChooser;
 
 
 class DiagramDialog : public SchematicDialog {
@@ -105,7 +106,7 @@ protected:
   QIntValidator    *ValInteger;
   QRegExpValidator *Validator;
 
-  QComboBox *ChooseData;
+  DataChooser *ChooseData;
   QTableWidget *ChooseVars;
   QListWidget  *GraphList;
 

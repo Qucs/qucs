@@ -1,5 +1,5 @@
 /***************************************************************************
-    copyright            : (C) 2015, 2020 by Felix Salfelder
+    copyright            : (C) 2015, 2020, 2021 by Felix Salfelder
     email                : felix@salfelder.org
  ***************************************************************************/
 
@@ -25,6 +25,14 @@ SimOutputDir::~SimOutputDir()
 SimOutputDir::SimOutputDir(const SimOutputDir& s) : _d(s._d)
 { untested();
 	incomplete();
+}
+/* -------------------------------------------------------------------------------- */
+void SimOutputDir::push_back(CommonData const* d)
+{ untested();
+	assert(d);
+	assert(d->label()!="");
+
+	CommonData::attach(d, &_d[d->label()]);
 }
 /* -------------------------------------------------------------------------------- */
 /* -------------------------------------------------------------------------------- */

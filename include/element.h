@@ -116,6 +116,9 @@ public:
 	Element(int cx, int cy) : _position(cx, cy) { unreachable(); }
 	virtual ~Element();
 
+public:	// "elaborate"
+	virtual void	 prepare()	{} // precalc_first.
+
 public: // make old variables accessible
 	int const& cx() const { return _position.first; }
 	int const& cy() const { return _position.second; }

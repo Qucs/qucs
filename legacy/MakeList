@@ -10,6 +10,7 @@ LEGACY_SRC = \
 	gatecomponent.cpp \
 	curvediagram.cpp \
 	compcmd.cpp \
+	datfiles.cpp \
 	diagram.cpp \
 	equation.cpp \
 	gui.cc \

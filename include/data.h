@@ -20,6 +20,7 @@
 #include "element.h"
 #include "exception.h"
 /* -------------------------------------------------------------------------------- */
+// rename to SharedData?
 class CommonData : public Object{
 private:
 	CommonData(CommonData const&) = delete;
@@ -80,8 +81,14 @@ public:
 		CommonData::attach(d, &_common);
 	}
 
+	virtual void refresh() const{ untested(); }
+protected:
+	void attach(CommonData const* d) const {
+		CommonData::attach(d, &_common);
+	}
+
 private:
-	CommonData const* _common;
+	mutable CommonData const* _common;
 };
 /* -------------------------------------------------------------------------------- */
 inline bool CommonData::operator==(const CommonData&)const

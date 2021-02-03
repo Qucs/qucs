@@ -258,6 +258,8 @@ Data* QucsatorLang::parseData(istream_t& cs, Data* x) const
 	}
 #endif
 	CommonData* cd = new SimOutputDat(cs);
+	trace1("datparse", label());
+	cd->setLabel(x->label()); // hmm
 	x->attach(cd);
 	return x;
 }

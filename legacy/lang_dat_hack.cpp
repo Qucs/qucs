@@ -29,14 +29,6 @@
 #include <QDateTime>
 /* -------------------------------------------------------------------------------- */
 /* -------------------------------------------------------------------------------- */
-void SimOutputDir::push_back(CommonData* d)
-{ untested();
-	assert(d);
-	assert(d->label()!="");
-
-	CommonData::attach(d, &_d[d->label()]);
-}
-/* -------------------------------------------------------------------------------- */
 struct DataX {
 	DataX(std::string const& Var_, double *Points_=0, int count_=0)
 		: Var(Var_), Points(Points_), count(count_), Min(INFINITY), Max(-INFINITY) {};
@@ -692,6 +684,7 @@ private:
 	std::string _fileName;
 }f1;
 static Dispatcher<Data>::INSTALL d1(&dataDispatcher, "datfile", &f1);
+/* -------------------------------------------------------------------------------- */
 /* -------------------------------------------------------------------------------- */
 } // namespace
 /* -------------------------------------------------------------------------------- */

@@ -1,5 +1,5 @@
 /***************************************************************************
-    copyright            : (C) 2020 Felix Salfelder
+    copyright            : (C) 2020, 2021 Felix Salfelder
  ***************************************************************************/
 
 /***************************************************************************
@@ -12,16 +12,17 @@
  ***************************************************************************/
 
 #include "qucs_globals.h"
+#include "data.h"
 #include "sckt_base.h"
-
+/*--------------------------------------------------------------------------*/
 namespace{
-	// QGraphicsScene
+/*--------------------------------------------------------------------------*/
 class sda : public SubcktBase  {
 public:
   explicit sda() : SubcktBase () {
   }
   explicit sda(sda const&x) : SubcktBase (x) {
-    new_subckt(); // really?
+    new_subckt();
 
     auto a = symbol_dispatcher.clone("subckt_proto");
     assert(a);
@@ -29,21 +30,31 @@ public:
     a->setOwner(this);
     subckt()->push_back(a);
 
-    // legacy Lib components in this circuit.
+    // Sub components in this circuit.
+	 // instance used when parsing a netlist.
     _sub = symbol_dispatcher.clone("LegacySub");
     assert(a);
     _sub->setLabel("Sub");
     _sub->setOwner(this);
     subckt()->push_back(_sub);
+
+#if 1
+		// dat file access...
+		// TODO: default according to properties in .sch file?
+		_dat = dataDispatcher.clone("datfiles");
+		assert(a);
+		_dat->setLabel("dat");
+		subckt()->push_back(_dat);
+#endif
   }
-  ~sda(){
-  }
+  ~sda(){}
+
 private: // Symbol
   Symbol* clone() const{return new sda(*this);}
   void setParameter(std::string const& n, std::string const& v){
     if(n == "$filename"){
-		 // BUG. only pass prefix
-      _sub->setParameter("$SUB_PATH", v);
+      _sub->setParameter("$SUB_PATH", v); // BUG. only pass search path
+      _dat->set_param_by_name("$schematic_filename", v);
     }else{ untested();
       SubcktBase::setParameter(n, v);
     }
@@ -102,12 +113,15 @@ private:
   Node const* portValue(unsigned)const {unreachable(); return nullptr;}
   void setPort(unsigned, Node*){incomplete();}
 
-public:
+public: // obsolete.
   SchematicModel* subckt(){return _subckt;}
-  // Commandlist* commands(){ ... }
 
 private:
   Symbol* _sub;
+  Data* _dat;
 }d0;
 static Dispatcher<Symbol>::INSTALL p(&symbol_dispatcher, "schematic_root", &d0);
-}
+/*--------------------------------------------------------------------------*/
+} // namespace
+/*--------------------------------------------------------------------------*/
+/*--------------------------------------------------------------------------*/
