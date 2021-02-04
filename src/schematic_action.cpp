@@ -422,9 +422,9 @@ QUndoCommand* MouseActionNewElement::activate(QObject* sender)
 QUndoCommand* MouseActionNewElement::release(QEvent* ev)
 { untested();
 	QUndoCommand* cmd = nullptr;
-	auto m = dynamic_cast<QGraphicsSceneMouseEvent*>(ev);
+	auto m = dynamic_cast<QMouseEvent*>(ev);
 	if(!m){ untested();
-	}else if(m->button() == Qt::LeftButton){ untested();
+	}else if(m->button() == Qt::LeftButton){ itested();
 		cmd = makeNew(ev);
 	}else if(m->button() == Qt::RightButton){ untested();
 	}
@@ -475,7 +475,7 @@ QUndoCommand* MouseActionNewElement::deactivate()
 }
 /*--------------------------------------------------------------------------*/
 QUndoCommand* MouseActionNewElement::move(QEvent* ev)
-{ untested();
+{ itested();
 	QPointF sp;
 	trace1("move", ev->type());
 	if(auto ee=dynamic_cast<QMouseEvent*>(ev)){ untested();
@@ -492,7 +492,7 @@ QUndoCommand* MouseActionNewElement::move(QEvent* ev)
 		unreachable();
 	}
 
-	if(_gfx){ untested();
+	if(_gfx){ itested();
 		_gfx->setPos(sp.x(), sp.y());
 	}else{ untested();
 		unreachable();
