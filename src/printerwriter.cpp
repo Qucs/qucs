@@ -58,13 +58,13 @@ void PrinterWriter::noGuiPrint(
 
   //page size
   if (page == "A3") {
-    Printer->setPaperSize(QPrinter::A3);
+    Printer->setPageSize(QPrinter::A3);
   } else if (page == "B4") {
-    Printer->setPaperSize(QPrinter::B4);
+    Printer->setPageSize(QPrinter::B4);
   } else if (page == "B5") {
-    Printer->setPaperSize(QPrinter::B5);
+    Printer->setPageSize(QPrinter::B5);
   } else {
-    Printer->setPaperSize(QPrinter::A4);
+    Printer->setPageSize(QPrinter::A4);
   }
   //dpi
   Printer->setResolution(dpi);

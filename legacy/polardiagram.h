@@ -31,6 +31,9 @@ public:
   int  calcDiagram();
   void calcLimits();
   void calcCoordinate(const double*, const double*, const double*, float*, float*, Axis const*) const;
+
+  void calcPolarAxisScale(Axis*, double&, double&, double&){incomplete();}
+  void createPolarDiagram(Axis*, int Mode=3){incomplete();}
 };
 
 #endif

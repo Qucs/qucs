@@ -55,7 +55,7 @@ void DocumentLanguage::printItem(ostream_t& s, Element const* c) const
 		print_command(s, C);
 	}else if (auto C=dynamic_cast<const Painting*>(c)) {
 		printPainting(C, s);
-	}else if (auto C=dynamic_cast<const Data*>(c)) {
+	}else if (dynamic_cast<const Data*>(c)) {
 		// omit data.
 	}else{
 		incomplete();
@@ -72,15 +72,17 @@ void DocumentLanguage::new__instance(istream_t& cmd, Symbol* /*sckt?*/ owner,
 		return;
 	}else{
 		std::string type = findType(cmd);
-		trace3("new_instance", type, cmd.fullString(), Scope);
+		trace3("new__instance", type, cmd.fullString(), Scope);
 		if (const Element* proto = find_proto(type, owner)) {
 			if (auto p = dynamic_cast<DEV_DOT const*>(proto)){
+				trace0("new__instance found dot .. ");
 				DEV_DOT* new_instance = p->clone();
 				delete p;
 				new_instance->setOwner(owner); // owner is null, usually.
 				new_instance->set_scope(Scope); // needed??
 				parseItem(cmd, new_instance);
 			}else if (Element* new_instance = proto->clone_instance()) {
+				trace0("new__instance no dot .. ");
 				new_instance->setOwner(owner); // owner is null, usually.
 				Element* o = parseItem(cmd, new_instance);
 

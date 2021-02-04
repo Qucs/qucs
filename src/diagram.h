@@ -19,6 +19,7 @@
 #include "../legacy/marker.h"
 #include "element.h"
 #include "viewpainter.h"
+#include "exception.h"
 
 #include <QFile>
 #include <QTextStream>
@@ -94,7 +95,7 @@ public:
 private:
   virtual void paint(ViewPainter*) const override;
 //  pos_t center() const override;
-  void    getCenter(int&, int&); //override; //remove this.
+//  void    getCenter(int&, int&); //override; //remove this.
   QDialog* schematicWidget(QucsDoc* Doc) const override;
   virtual QRectF boundingRect() const; // { unreachable(); return QRectF(); }
 
@@ -105,10 +106,24 @@ protected:
   }
 
 public:
-  QString const& name() const{ incomplete(); return Name;}
+//  QString const& name() const{ incomplete(); return Name;}
 //  QString const& typeName() const{return Name;}
-  void setName(QString const& n){ Name = n; }
+//  void setName(QString const& n){ Name = n; }
 
+public:
+  QString save(); // obsolete callback
+
+public: // Parameters
+	virtual unsigned param_count() const;
+//	virtual bool paramIsPrintable()const;
+	virtual void set_param_by_name(std::string const&, std::string const&){unreachable();}
+	virtual void set_param_by_index(index_t, std::string const&);
+	virtual std::string param_value(index_t i) const{ untested();
+		throw qucs::ExceptionCantFind( label(), std::to_string(i), "params");
+	}
+	virtual std::string param_name(index_t n) const{ untested();
+		throw qucs::ExceptionCantFind( label(), std::to_string(n), "params");
+	}
 
 public: // ??!
   virtual void paintDiagram(ViewPainter* p);
@@ -118,8 +133,7 @@ public: // ??!
   void    Bounding(int&, int&, int&, int&);
   bool    getSelected(int, int);
   bool    resizeTouched(float, float, float);
-  QString save();
-  bool    load(const QString&, istream_t&);
+  bool    load(const QString&, istream_t&); // TODO: remove.
 
   void getAxisLimits(Graph*);
   void updateGraphData();
@@ -156,10 +170,8 @@ public: // BUG/incomplete
   int rotX, rotY, rotZ; // for "Rect3D": rotation around x, y and z axis
 
 protected:
-  void calcSmithAxisScale(Axis*, int&, int&);
-  void createSmithChart(Axis*, int Mode=7);
-  void calcPolarAxisScale(Axis*, double&, double&, double&);
-  void createPolarDiagram(Axis*, int Mode=3);
+//  void calcSmithAxisScale(Axis*, int&, int&);
+//  void createSmithChart(Axis*, int Mode=7);
 
   bool calcAxisScale(Axis*, double&, double&, double&, double&, double);
   bool calcAxisLogScale(Axis*, int&, double&, double&, double&, int);

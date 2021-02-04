@@ -84,12 +84,14 @@ void PSDiagram::calcLimits()
     smithAxis = &zAxis;
   }
 
-  calcSmithAxisScale(smithAxis, i, i);
+   incomplete(); // move here.
+  // calcSmithAxisScale(smithAxis, i, i);
   smithAxis->limit_min = 0.0;
   smithAxis->step = double(i);
   smithAxis->limit_max = smithAxis->up;
 
-  calcPolarAxisScale(polarAxis, a, polarAxis->step, b);
+   incomplete(); // move here.
+  // calcPolarAxisScale(polarAxis, a, polarAxis->step, b);
   polarAxis->limit_min = 0.0;
   polarAxis->limit_max = polarAxis->up;
 
@@ -106,8 +108,7 @@ int PSDiagram::calcDiagram()
   if(Name == "PS") {   // if polar not in upper half -> mirror
     createSmithChart(&yAxis, 5);
     createPolarDiagram(&zAxis, 1);
-  }
-  else {
+  } else {
     createSmithChart(&zAxis, 3);
     createPolarDiagram(&yAxis, 2);
   }

@@ -444,6 +444,171 @@ Element* TabDiagram::info(QString& Name, char* &BitmapFile, bool getNewOne)
   if(getNewOne)  return new TabDiagram();
   return 0;
 }
+
+// "Apply" button pressed
+void DiagramDialog::slotButtApply()
+{
+  if(Diag->name().at(0) == 'T') {
+	  // tabular or timing
+  }else{
+    if(Diag->xAxis.Label.isEmpty())
+      Diag->xAxis.Label = ""; // can be not 0 and empty!
+    if(xLabel->text().isEmpty()) xLabel->setText("");
+    if(Diag->xAxis.Label != xLabel->text()) {
+      Diag->xAxis.Label = xLabel->text();
+      changed = true;
+    }
+    if(Diag->yAxis.Label.isEmpty())
+      Diag->yAxis.Label = ""; // can be not 0 and empty!
+    if(ylLabel->text().isEmpty()) ylLabel->setText("");
+    if(Diag->yAxis.Label != ylLabel->text()) {
+      Diag->yAxis.Label = ylLabel->text();
+      changed = true;
+    }
+    
+    if(GridOn) if(Diag->xAxis.GridOn != GridOn->isChecked()) {
+      Diag->xAxis.GridOn = GridOn->isChecked();
+      Diag->yAxis.GridOn = GridOn->isChecked();
+      changed = true;
+    }
+    if(GridColorButt) {
+      QColor gridColBut = misc::getWidgetBackgroundColor(GridColorButt);
+      if(Diag->GridPen.color() != gridColBut) {
+        Diag->GridPen.setColor(gridColBut);
+        changed = true;
+      }
+    }
+    if(GridStyleBox)
+      if(Diag->GridPen.style()!=(Qt::PenStyle)(GridStyleBox->currentIndex()+1)) {
+      Diag->GridPen.setStyle((Qt::PenStyle)(GridStyleBox->currentIndex()+1));
+      changed = true;
+    }
+    if((Diag->name() != "Smith") && (Diag->name() != "Polar")) {
+      if(Diag->zAxis.Label.isEmpty())
+        Diag->zAxis.Label = ""; // can be not 0 and empty!
+      if(yrLabel->text().isEmpty()) yrLabel->setText("");
+      if(Diag->zAxis.Label != yrLabel->text()) {
+        Diag->zAxis.Label = yrLabel->text();
+        changed = true;
+      }
+    }
+
+    if(Diag->name().left(4) == "Rect") {
+      if(Diag->xAxis.log != GridLogX->isChecked()) {
+        Diag->xAxis.log = GridLogX->isChecked();
+        changed = true;
+      }
+      if(Diag->yAxis.log != GridLogY->isChecked()) {
+        Diag->yAxis.log = GridLogY->isChecked();
+        changed = true;
+      }
+      if(Diag->zAxis.log != GridLogZ->isChecked()) {
+        Diag->zAxis.log = GridLogZ->isChecked();
+        changed = true;
+      }
+    }
+
+    if((Diag->name() == "Smith") || (Diag->name() == "ySmith") ||
+				  (Diag->name() == "PS"))
+      if(stopY->text().toDouble() < 1.0)
+        stopY->setText("1");
+
+    if(Diag->name() == "SP")
+      if(stopZ->text().toDouble() < 1.0)
+        stopZ->setText("1");
+
+    if(Diag->xAxis.autoScale == manualX->isChecked()) {
+      Diag->xAxis.autoScale = !(manualX->isChecked());
+      changed = true;
+    }
+
+    // Use string compares for all floating point numbers, in
+    // order to avoid rounding problems.
+    if(QString::number(Diag->xAxis.limit_min) != startX->text()) {
+      Diag->xAxis.limit_min = startX->text().toDouble();
+      changed = true;
+    }
+    if(QString::number(Diag->xAxis.step) != stepX->text()) {
+      Diag->xAxis.step = stepX->text().toDouble();
+      changed = true;
+    }
+    if(QString::number(Diag->xAxis.limit_max) != stopX->text()) {
+      Diag->xAxis.limit_max = stopX->text().toDouble();
+      changed = true;
+    }
+    if(Diag->yAxis.autoScale == manualY->isChecked()) {
+      Diag->yAxis.autoScale = !(manualY->isChecked());
+      changed = true;
+    }
+    if(QString::number(Diag->yAxis.limit_min) != startY->text()) {
+      Diag->yAxis.limit_min = startY->text().toDouble();
+      changed = true;
+    }
+    if(QString::number(Diag->yAxis.step) != stepY->text()) {
+      Diag->yAxis.step = stepY->text().toDouble();
+      changed = true;
+    }
+    if(QString::number(Diag->yAxis.limit_max) != stopY->text()) {
+      Diag->yAxis.limit_max = stopY->text().toDouble();
+      changed = true;
+    }
+    if(Diag->zAxis.autoScale == manualZ->isChecked()) {
+      Diag->zAxis.autoScale = !(manualZ->isChecked());
+      changed = true;
+    }
+    if(QString::number(Diag->zAxis.limit_min) != startZ->text()) {
+      Diag->zAxis.limit_min = startZ->text().toDouble();
+      changed = true;
+    }
+    if(QString::number(Diag->zAxis.step) != stepZ->text()) {
+      Diag->zAxis.step = stepZ->text().toDouble();
+      changed = true;
+    }
+    if(QString::number(Diag->zAxis.limit_max) != stopZ->text()) {
+      Diag->zAxis.limit_max = stopZ->text().toDouble();
+      changed = true;
+    }
+
+#if 0 //BUG
+    if(hideInvisible)
+      if(((Rect3DDiagram*)Diag)->hideLines != hideInvisible->isChecked()) {
+        ((Rect3DDiagram*)Diag)->hideLines = hideInvisible->isChecked();
+        changed = true;
+      }
+
+    if(rotationX)
+      if(((Rect3DDiagram*)Diag)->rotX != rotationX->text().toInt()) {
+        ((Rect3DDiagram*)Diag)->rotX = rotationX->text().toInt();
+        changed = true;
+      }
+
+    if(rotationY)
+      if(((Rect3DDiagram*)Diag)->rotY != rotationY->text().toInt()) {
+        ((Rect3DDiagram*)Diag)->rotY = rotationY->text().toInt();
+        changed = true;
+      }
+
+    if(rotationZ)
+      if(((Rect3DDiagram*)Diag)->rotZ != rotationZ->text().toInt()) {
+        ((Rect3DDiagram*)Diag)->rotZ = rotationZ->text().toInt();
+        changed = true;
+      }
+#endif
+
+  }   // of "if(Diag->Name != "Tab")"
+
+  Diag->Graphs.clear();   // delete the graphs
+  Graphs.setAutoDelete(false);
+  for(Graph *pg = Graphs.first(); pg != 0; pg = Graphs.next())
+    Diag->Graphs.append(pg);  // transfer the new graphs to diagram
+  Graphs.clear();
+  Graphs.setAutoDelete(true);
+
+  Diag->loadGraphData(defaultDataSet);
+  ((SchematicDoc*)parent())->viewport()->repaint();
+  copyDiagramGraphs();
+  if(changed) transfer = true;   // changes have been applied ?
+}
 #endif
 
 }

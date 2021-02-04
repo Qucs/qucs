@@ -131,6 +131,66 @@ void Diagram::paint(ViewPainter *p) const
   Element::paint(p);
 }
 
+index_t Diagram::param_count() const
+{
+  return 8; // yikes. too many.
+}
+
+void Diagram::set_param_by_index(index_t i, std::string const& v)
+{ untested();
+
+	pos_t p = position();
+	int cx = getX(p);
+	int cy = getY(p);
+	bool ok = true;
+	auto n = QString_(v);
+	QColor co;
+	char c;
+	switch(i){
+	case 0: untested();
+		cx = n.toInt(&ok);
+		break;
+	case 1: untested();
+		cy = n.toInt(&ok);
+		break;
+	case 2: untested();
+		x2 = n.toInt(&ok);
+		break;
+	case 3: untested();
+		y2 = n.toInt(&ok);
+		break;
+	case 4:
+		c = n.at(0).toLatin1() - '0';
+		xAxis.GridOn = yAxis.GridOn = (c & 1) != 0;
+		hideLines = (c & 2) != 0;
+		break;
+	case 5:
+		co.setNamedColor(n);
+		GridPen.setColor(co);
+		ok = GridPen.color().isValid();
+		break;
+	case 6:
+		GridPen.setStyle((Qt::PenStyle)n.toInt(&ok));
+		break;
+	case 7:
+		xAxis.log = n.at(0) != '0';
+		c = n.at(1).toLatin1();
+		yAxis.log = ((c - '0') & 1) == 1;
+		zAxis.log = ((c - '0') & 2) == 2;
+		break;
+	}
+
+	trace4("Diag param", cx, cy, x2, y2);
+
+	if(!ok){
+		throw qucs::Exception("bad value");
+	}else{
+	}
+
+	setPosition(pos_t(cx, cy)); // yikes. setPosition?
+}
+
+
 void Diagram::paintDiagram(ViewPainter *p)
 {itested();
 
@@ -1330,10 +1390,10 @@ QString Diagram::save()
 }
 
 // ------------------------------------------------------------
-// // MOVE to legacy lang
+// BUG: MOVE to legacy
 bool Diagram::load(const QString& Line, istream_t& stream)
 {
-	incomplete(); // use Lang
+  incomplete();
   bool ok;
   QString s = Line;
 
@@ -1507,269 +1567,13 @@ bool Diagram::load(const QString& Line, istream_t& stream)
 }
 
 // --------------------------------------------------------------
-void Diagram::calcSmithAxisScale(Axis *Axis, int& GridX, int& GridY)
-{ untested();
-  xAxis.low = xAxis.min;
-  xAxis.up  = xAxis.max;
-
-  Axis->low = 0.0;
-  if(fabs(Axis->min) > Axis->max)
-    Axis->max = fabs(Axis->min);  // also fit negative values
-  if(Axis->autoScale) { untested();
-    if(Axis->max > 1.01)  Axis->up = 1.05*Axis->max;
-    else  Axis->up = 1.0;
-    GridX = GridY = 4;
-  }
-  else { untested();
-    Axis->up = Axis->limit_max = fabs(Axis->limit_max);
-    GridX = GridY = int(Axis->step);
-  }
-}
 
 // ------------------------------------------------------------
-// // move
-void Diagram::createSmithChart(Axis *Axis, int Mode)
-{ untested();
-  int GridX;    // number of arcs with re(z)=const
-  int GridY;    // number of arcs with im(z)=const
-  calcSmithAxisScale(Axis, GridX, GridY);
-
-
-  if(!xAxis.GridOn)  return;
-
-  bool Zplane = ((Mode & 1) == 1);   // impedance or admittance chart ?
-  bool Above  = ((Mode & 2) == 2);   // paint upper half ?
-  bool Below  = ((Mode & 4) == 4);   // paint lower half ?
-
-  int dx2 = x2>>1;
-
-  double im, n_cos, n_sin, real, real1, real2, root;
-  double rMAXq = Axis->up*Axis->up;
-  int    theta, beta, phi, len, m, x, y;
-
-  int R1 = int(x2/Axis->up + 0.5);
-  // ....................................................
-  // draw arcs with im(z)=const
-  for(m=1; m<GridY; m++) { untested();
-    n_sin = pi*double(m)/double(GridY);
-    n_cos = cos(n_sin);
-    n_sin = sin(n_sin);
-    im = (1.0-n_cos)/n_sin * pow(Axis->up,0.7); // up^0.7 is beauty correction
-    y  = int(im/Axis->up*x2 + 0.5);  // diameter
-
-    if(Axis->up <= 1.0) {       // Smith chart with |r|=1
-      beta  = int(16.0*180.0*atan2(n_sin-im,n_cos-1.0)/pi - 0.5);
-      if(beta<0) beta += 16*360;
-      theta = 16*270-beta;
-    }
-    else {         // Smith chart with |r|>1
-      im = 1.0/im;
-      real = (rMAXq+1.0)/(rMAXq-1.0);
-      root =  real*real - im*im - 1.0;
-      if(root < 0.0) {  // circle lies completely within the Smith chart ?
-        beta = 0;       // yes, ...
-        theta = 16*360; // ... draw whole circle
-      }
-      else { untested();
-	// calculate both intersections with most outer circle
-	real1 =  sqrt(root)-real;
-	real2 = -sqrt(root)-real;
-
-	root  = (real1+1.0)*(real1+1.0) + im*im;
-	n_cos = (real1*real1 + im*im - 1.0) / root;
-	n_sin = 2.0*im / root;
-	beta  = int(16.0*180.0*atan2(n_sin-1.0/im,n_cos-1.0)/pi);
-	if(beta<0) beta += 16*360;
-
-	root  = (real2+1.0)*(real2+1.0) + im*im;
-	n_cos = (real2*real2 + im*im - 1.0) / root;
-	n_sin = 2.0*im / root;
-	theta  = int(16.0*180.0*atan2(n_sin-1/im,n_cos-1)/pi);
-	if(theta<0) theta += 16*360;
-	theta = theta - beta;   // arc length
-	if(theta < 0) theta = 16*360+theta;
-      }
-    }
-
-    if(Zplane)
-      x = (x2 + R1 - y) >> 1;
-    else { untested();
-      x = (x2 - R1 - y) >> 1;
-      beta = 16*180 - beta - theta;  // mirror
-      if(beta < 0) beta += 16*360;   // angle has to be > 0
-    }
-
-    if(Above)
-      Arcs.append(new struct Arc(x, dx2+y, y, y, beta, theta, GridPen));
-    if(Below)
-      Arcs.append(new struct Arc(x, dx2, y, y, 16*360-beta-theta, theta, GridPen));
-  }
-
-  // ....................................................
-  // draw  arcs with Re(z)=const
-  theta = 0;       // arc length
-  beta  = 16*180;  // start angle
-  if(Above)  { beta = 0;  theta = 16*180; }
-  if(Below)  theta += 16*180;
-
-  for(m=1; m<GridX; m++) { untested();
-    im = m*(Axis->up+1.0)/GridX - Axis->up;
-    y  = int((1.0-im)/Axis->up*double(dx2) + 0.5);  // diameter
-
-    if(Zplane)
-      x = ((x2+R1)>>1) - y;
-    else
-      x = (x2-R1)>>1;
-    if(fabs(fabs(im)-1.0) > 0.2)   // if too near to |r|=1, it looks ugly
-      Arcs.append(new struct Arc(x, (x2+y)>>1, y, y, beta, theta, GridPen));
-
-    if(Axis->up > 1.0) {  // draw arcs on the rigth-handed side ?
-      im = 1.0-im;
-      im = (rMAXq-1.0)/(im*(im/2.0+1.0)) - 1.0;
-      if(Zplane)  x += y;
-      else  x -= y;
-      if(im >= 1.0)
-        Arcs.append(new struct Arc(x, (x2+y)>>1, y, y, beta, theta, GridPen));
-      else { untested();
-        phi = int(16.0*180.0/pi*acos(im));
-        len = 16*180-phi;
-        if(Above && Below)  len += len;
-        else if(Below)  phi = 16*180;
-        if(!Zplane)  phi += 16*180;
-        Arcs.append(new struct Arc(x, (x2+y)>>1, y, y, phi, len, GridPen));
-      }
-    }
-  }
-
-
-  // ....................................................
-  if(Axis->up > 1.0) {  // draw circle with |r|=1 ?
-    x = (x2-R1) >> 1;
-    y = (x2+R1) >> 1;
-    Arcs.append(new struct Arc(x, y, R1, R1, beta, theta, QPen(Qt::black,0)));
-
-    // vertical line Re(r)=1 (visible only if |r|>1)
-    if(Zplane)  x = y;
-    y = int(sqrt(rMAXq-1)/Axis->up*dx2 + 0.5);
-    if(Above)  m = y;
-    else  m = 0;
-    if(!Below)  y = 0;
-    Lines.append(new Line(x, dx2+m, x, dx2-y, GridPen));
-
-//    if(Below)  y = 4;
-//    else  y = y2-4-QucsSettings.font.pointSize();
-    Texts.append(new Text(0, y, misc::StringNum(Axis->up)));
-  }
-
-}
 
 
 // --------------------------------------------------------------
-void Diagram::calcPolarAxisScale(Axis *Axis, double& numGrids,
-				 double& GridStep, double& zD)
-{ untested();
-  if(Axis->autoScale) {  // auto-scale or user defined limits ?
-    double Expo, Base;
-    numGrids = floor(double(x2)/80.0); // minimal grid is 40 pixel
-    Expo = floor(log10(Axis->max/numGrids));
-    Base = Axis->max/numGrids/pow(10.0,Expo);// get first significant digit
-    if(Base < 3.5) {       // use only 1, 2 and 5, which ever is best fitted
-      if(Base < 1.5) Base = 1.0;
-      else Base = 2.0;
-    }
-    else { untested();
-      if(Base < 7.5) Base = 5.0;
-      else { Base = 1.0; Expo++; }
-    }
-    GridStep = Base * pow(10.0,Expo); // grid distance in real values
-    numGrids -= floor(numGrids - Axis->max/GridStep); // correct num errors
-    Axis->up = GridStep*numGrids;
-
-    zD = double(x2) / numGrids;   // grid distance in pixel
-  }
-  else {   // no auto-scale
-    Axis->up = Axis->limit_max = fabs(Axis->limit_max);
-    GridStep = Axis->step;
-    zD = double(x2) / Axis->limit_max * Axis->step; // grid distance in pixel
-
-    if(fabs(zD) < 2.0) {  // if grid too small, then no grid
-      zD = double(x2);
-      GridStep = Axis->step = Axis->up;
-      numGrids = 1.0;
-    }
-    else numGrids = Axis->limit_max / Axis->step;
-  }
-}
 
 // ------------------------------------------------------------
-void Diagram::createPolarDiagram(Axis *Axis, int Mode)
-{ untested();
-#if 0 // not here.
-  xAxis.low  = xAxis.min;
-  xAxis.up   = xAxis.max;
-  Axis->low = 0.0;
-  if(fabs(Axis->min) > Axis->max)
-    Axis->max = fabs(Axis->min);  // also fit negative values
-
-
-  bool Above  = ((Mode & 1) == 1);  // paint upper half ?
-  bool Below  = ((Mode & 2) == 2);  // paint lower half ?
-
-  int i, z, tmp;
-  if(Above)  i = y2;  else  i = y2>>1;
-  if(Below)  z = 0;   else  z = y2>>1;
-  // y line
-  Lines.append(new Line(x2>>1, i, x2>>1, z, GridPen));
-
-  int len  = 0;       // arc length
-  int beta = 16*180;  // start angle
-  if(Above)  { beta = 0;  len = 16*180; }
-  if(Below)  len += 16*180;
-
-  int phi, tPos;
-  int tHeight = QucsSettings.font.pointSize() + 5;
-  if(!Below)  tPos = (y2>>1) + 3;
-  else  tPos = (y2>>1) - tHeight + 3;
-
-  double Expo, Base, numGrids, GridStep, zD;
-  if(xAxis.GridOn) { untested();
-    calcPolarAxisScale(Axis, numGrids, GridStep, zD);
-
-    double zDstep = zD;
-    double GridNum  = 0.0;
-    for(i=int(numGrids); i>1; i--) {    // create all grid circles
-      z = int(zD);
-      GridNum += GridStep;
-      Texts.append(new Text(((x2+z)>>1)-10, tPos, misc::StringNiceNum(GridNum)));
-
-      phi = int(16.0*180.0/pi*atan(double(2*tHeight)/zD));
-      if(!Below)  tmp = beta + phi;
-      else  tmp = beta;
-      Arcs.append(new struct Arc((x2-z)>>1, (y2+z)>>1, z, z, tmp, len-phi,
-			  GridPen));
-      zD += zDstep;
-    }
-  }
-  else {  // of  "if(GridOn)"
-    Expo = floor(log10(Axis->max));
-    Base = ceil(Axis->max/pow(10.0,Expo) - 0.01);
-    Axis->up = Base * pow(10.0,Expo);  // separate Base * 10^Expo
-  }
-
-  // create outer circle
-  Texts.append(new Text(x2-8, tPos, misc::StringNiceNum(Axis->up)));
-  phi = int(16.0*180.0/pi*atan(double(2*tHeight)/double(x2)));
-  if(!Below)  tmp = phi;
-  else  tmp = 0;
-  Arcs.append(new struct Arc(0, y2, x2, y2, tmp, 16*360-phi, QPen(Qt::black,0)));
-
-  // get size of text using the screen-compatible metric
-  FontMetrics metrics;
-  QSize r = metrics.size(0, Texts.last()->s);  // width of text
-  len = x2+r.width()-4;   // more space at the right
-  if(len > x3)  x3 = len;
-#endif
-}
 
 /*!
  Calculations for Cartesian diagrams (RectDiagram and Rect3DDiagram).
@@ -2556,5 +2360,3 @@ void SchematicDoc::actionExportGraphAsCsv()
   File.close();
 }
 #endif
-
-// vim:ts=8:sw=2:noet

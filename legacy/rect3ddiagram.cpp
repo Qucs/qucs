@@ -1159,4 +1159,9 @@ Element* Rect3DDiagram::info(QString& Name, char* &BitmapFile, bool getNewOne)
       }
 #endif
 
+//    }else{
+//      GridOn = 0;
+//      GridColorButt = 0;
+//      GridStyleBox = 0;
+
 // vim:ts=8:sw=2:noet

@@ -23,8 +23,6 @@ LEGACY_SRC = \
 	markerdialog.cpp \
 	modelcmd.cpp \
 	paramset.cpp \
-	polardiagram.cpp \
-	psdiagram.cpp \
 	portcmd.cpp \
 	spicecmd.cpp \
 	signon.cc \
@@ -36,12 +34,14 @@ LEGACY_SRC = \
 	root.cpp \
 	schematic_format.cpp \
 	simulator.cpp \
-	smithdiagram.cpp \
 	subcircuit.cpp \
 	verilogfile.cpp \
 	tabdiagram.cpp
 
 NOTYET_SRC = \
+	polardiagram.cpp \
+	psdiagram.cpp \
+	smithdiagram.cpp \
 	timingdiagram.cpp \
 	truthdiagram.cpp \
 	phasordiagram.cpp \

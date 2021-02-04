@@ -62,12 +62,14 @@ Marker::Marker(Graph *pg_, int branchNo, int cx_, int cy_) :
   fCX = float(cx());
   fCY = float(cy());
 
-  // BUG
+#if 0
   if (diag()->name() == "Smith") {
     optText = Marker::SHOW_Z;
   } else if (diag()->name() == "ySmith") {
     optText = Marker::SHOW_Y;
-  } else {
+  } else
+#endif
+  {
     optText = 0;
   }
 
@@ -545,10 +547,12 @@ QString Marker::save()
   if(transparent)  s += " 1";
   else  s += " 0";
 
-  if (diag()->name().count("Smith"))//Impedance/admittance smith charts
-  {
+#if 0
+  if (diag()->name().count("Smith")) {
+	  //Impedance/admittance smith charts
     s += " " + QString::number(optText);
   }
+#endif
 
   s+=">"; 
 

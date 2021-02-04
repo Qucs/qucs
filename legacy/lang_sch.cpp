@@ -244,6 +244,7 @@ void LegacySchematicLanguage::parse_top_item(istream_t& stream, SchematicModel* 
 	new__instance(stream, owner, sckt);
 }
 /*--------------------------------------------------------------------------*/
+// TODO: remove. not getting here for new-style diagrams
 Diagram* LegacySchematicLanguage::loadDiagram(Diagram* d, istream_t& stream)const
 {
 	QString Line = QString::fromStdString(stream.fullString());
@@ -264,10 +265,9 @@ Diagram* LegacySchematicLanguage::loadDiagram(Diagram* d, istream_t& stream)cons
 
 		auto type = what.c_str()+1;
 		if(diagram_dispatcher[what.c_str()+1]){
-			// d=prechecked_cast<Diagram*>(x->clone());
-			assert(d);
-			qDebug() << "got diagram" << what.c_str();
-			d->setName(type); // yuck
+			trace1("diagram parse", type);
+			assert(d); // BUG
+			d->setLabel(type); // yuck there is no label. put the type in
 		}else{ untested();
 			trace1("diagram doesntexist", type);
 			incomplete();
@@ -278,8 +278,8 @@ Diagram* LegacySchematicLanguage::loadDiagram(Diagram* d, istream_t& stream)cons
 		if(!d->load(Line, stream)) { untested();
 			trace1("loadfail", Line);
 			incomplete();
-			delete d;
-			return nullptr;
+			// delete d;
+			// return nullptr; // no. just use the half parsed thing.
 		}else{
 		}
 		return d;
@@ -1082,21 +1082,21 @@ DEV_DOT* LegacySchematicLanguage::parseCommand(istream_t& c, DEV_DOT* x) const
 	c.skip1('<');
 	c >> s;
 
-	// c.reset(here);
+	c.reset();
+	c.skipbl();
+	c.skip1('<');
+
 	if (!commandDispatcher[s]) { untested();
-		unreachable(); // for now
-		trace3("uuh", s, Line, c.cursor());
-		assert(false);
+		trace3("command miss", s, Line, c.cursor());
 		//    cmd.skip();
 		//    ++here;
+		c.reset();
+		c.skipbl();
 	}else{
 	}
 
 	//istream_t c(istream_t::_STRING, Line.toStdString());
-	c.reset();
-	c.skipbl();
-	c.skip1('<');
-	Command::cmdproc(c, scope);
+	Command::cmdproc(c, scope); // new__instance??
 	// assert(false);
 
 	delete x;
@@ -1136,6 +1136,8 @@ std::string LegacySchematicLanguage::findType(istream_t& c) const
 		return "SP";
 	}else if(typestring == ".SW"){
 		return "SW";
+	}else if(typestring == "Diagrams>"){
+		return "<Diagrams>";
 	}else{
 		return typestring;
 	}
@@ -1413,11 +1415,11 @@ class DiagramCommand : public Command{
 				lang->new__instance(cs, sym, e->scope());
 			}
 		}
+
+		e->scope()->setOwner(sym);
 		trace1("Diag parse", e->scope()->size());
 	}
 }d4;
-Dispatcher<Command>::INSTALL p3_(&commandDispatcher, "Diagrams", &d4);
-Dispatcher<Command>::INSTALL p4_(&commandDispatcher, "Diagrams>", &d4); // BUG
 Dispatcher<Command>::INSTALL p5_(&commandDispatcher, "<Diagrams>", &d4); // ...
 /*--------------------------------------------------------------------------*/
 class WireCommand : public Command{

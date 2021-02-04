@@ -1,5 +1,6 @@
 /***************************************************************************
-    copyright            : (C) 2003 by Michael Margraf
+    copyright            : (C) 2003 Michael Margraf
+                               2021 Felix Salfelder
  ***************************************************************************/
 
 /***************************************************************************
@@ -17,7 +18,6 @@
 #include "qucs_app.h"
 #include "schematic_doc.h"
 #include "platform.h"
-// #include "rect3ddiagram.h" BUG
 #include "misc.h"
 
 #include <cmath>
@@ -49,7 +49,7 @@
 class Cross3D : public QWidget  {
 public:
   Cross3D(float rx_, float ry_, float rz_, QWidget *parent = 0)
-          : QWidget(parent) {
+          : QWidget(parent) { untested();
     rotX = rx_;
     rotY = ry_;
     rotZ = rz_;
@@ -62,7 +62,7 @@ public:
   double rotX, rotY, rotZ;   // in radians !!!!
 
 private:
-  void  paintEvent(QPaintEvent*) {
+  void  paintEvent(QPaintEvent*) { untested();
     QPainter Painter(this);
     float cxx = cos(rotZ);
     float cxy = sin(rotZ);
@@ -101,37 +101,41 @@ static const int NumDefaultColors = 8;
 
 DiagramDialog::DiagramDialog(QucsDoc* d)
 	: SchematicDialog(d)
-{
+{ untested();
   setAttribute(Qt::WA_DeleteOnClose);
 }
 
+// this is needed to be able to attach CommonData to
+// dropdown menu items
+Q_DECLARE_METATYPE(CommonData const*)
+
 class DataChooser : public QComboBox{
 public:
-	explicit DataChooser() {
+	explicit DataChooser() { untested();
 		setMinimumWidth(300);
 	}
 
 public:
 	void setScope(SchematicModel const* s){ _scope = s; }
 
-	void refresh(){
-		for(Element const* elt : *_scope){
+	void refresh(){ untested();
+		for(Element const* elt : *_scope){ untested();
 			trace1("refresh chooser", elt->label());
 			CommonData const* cd = nullptr;;
-			if(auto dd=dynamic_cast<Data const*>(elt)){
+			if(auto dd=dynamic_cast<Data const*>(elt)){ untested();
 				dd->refresh();
 				CommonData::attach(dd->common(), &cd);
-				add_data(cd);
+				add_data(cd, elt->label());
 				CommonData::detach(&cd);
-			}else{
+			}else{ untested();
 			}
 		}
 #if 0
-		= Elements.begin(); it != Elements.end(); ++it) {
+		= Elements.begin(); it != Elements.end(); ++it) { untested();
 			ChooseData->addItem((*it).left((*it).length()-4));
-			if((*it) == Info.fileName()){
+			if((*it) == Info.fileName()){ untested();
 				ChooseData->setCurrentIndex(ChooseData->count()-1);
-			}else{
+			}else{ untested();
 			}
 		}
 #endif
@@ -139,20 +143,23 @@ public:
 
 private:
 	// this is completely ad-hoc, but uses the legacy diagramdialog widgets
-	void add_data(CommonData const* cd){ untested();
+	void add_data(CommonData const* cd, std::string prefix=""){ untested();
 		if(auto dd=dynamic_cast<SimOutputData const*>(cd)){ untested();
 		}else if(auto dir=dynamic_cast<SimOutputDir const*>(cd)){ untested();
 			bool nonempty = false;
-			for(auto n : *dir){
-				nonempty = true;
-				add_data(n);
+			for(auto n : *dir){ untested();
+				if(dynamic_cast<SimOutputData const*>(n)){ untested();
+					nonempty = true;
+				}else{ untested();
+					add_data(n, prefix+"."+n->label());
+				}
 			}
-			if(nonempty){
+			if(nonempty){ untested();
 				std::string label = dir->label();
-				addItem(QString_(label)); // TODO: attach actual data to an item.
-			}else{
+				addItem(QString_(prefix));
+			}else{ untested();
 			}
-		}else{
+		}else{ untested();
 		}
 	}
 
@@ -169,12 +176,12 @@ void DiagramDialog::attach(ElementGraphics* g)
   assert(Diag);
   Graphs.setAutoDelete(true);
   copyDiagramGraphs();   // why??
-  if(schematic()){
+  if(schematic()){ untested();
 	  const SchematicDoc* s = dynamic_cast<const SchematicDoc*>(schematic());
 	  assert(s);
 	  QFileInfo Info(s->docName());
 	  defaultDataSet = Info.path() + QDir::separator() + s->DataSet;
-  }else{
+  }else{ untested();
 	  defaultDataSet = "unknown";
   }
   setWindowTitle(tr("Edit Diagram Properties"));
@@ -188,24 +195,29 @@ void DiagramDialog::attach(ElementGraphics* g)
   ValDouble  = new QDoubleValidator(-1e200, 1e200, 6, this);
 
   QString NameY, NameZ;
+#if 1
+ NameY = tr("left Axis");
+ NameZ = tr("right Axis");
+  // whatever->getnames()
+#else // does not work
   if((Diag->name() == "Rect") || (Diag->name() == "Curve") || (Diag->name() == "Waveac")) {
     NameY = tr("left Axis");
     NameZ = tr("right Axis");
-  } else if(Diag->name() == "Polar") {
+  } else if(Diag->name() == "Polar") { untested();
     NameY = tr("y-Axis");
-  } else if((Diag->name() == "Smith") || (Diag->name() == "ySmith")) {
+  } else if((Diag->name() == "Smith") || (Diag->name() == "ySmith")) { untested();
     NameY = tr("y-Axis");
-  } else if(Diag->name() == "PS") {
+  } else if(Diag->name() == "PS") { untested();
     NameY = tr("smith Axis");
     NameZ = tr("polar Axis");
-  } else if(Diag->name() == "SP") {
+  } else if(Diag->name() == "SP") { untested();
     NameY = tr("polar Axis");
     NameZ = tr("smith Axis");
-  }else{
+  }else{ untested();
     NameY = tr("y-Axis");
     NameZ = tr("z-Axis");
   }
-  // whatever->getnames()
+#endif
   
   all = new QVBoxLayout(this); // to provide neccessary size
   QTabWidget *t = new QTabWidget();
@@ -241,7 +253,7 @@ void DiagramDialog::attach(ElementGraphics* g)
 
   // init_stuff()
 #if 0
-  if(Diag->typeName() == "Tab") {
+  if(Diag->typeName() == "Tab") { untested();
     Label1 = new QLabel(tr("Number Notation: "));
     Box2Layout->addWidget(Label1);
     PropertyBox = new QComboBox();
@@ -261,9 +273,9 @@ void DiagramDialog::attach(ElementGraphics* g)
     Property2->setMaxLength(2);
     Property2->setMaximumWidth(25);
     Property2->setText("3");
-  }else if(Diag->name() == "Truth") {
+  }else if(Diag->name() == "Truth") { untested();
 	  // ??
-  }else{
+  }else{ untested();
     Label1 = new QLabel(tr("Color:"));
     Box2Layout->addWidget(Label1);
     ColorButt = new QPushButton("");
@@ -282,7 +294,7 @@ void DiagramDialog::attach(ElementGraphics* g)
 
     PropertyBox->addItem(tr("dash line"));
     PropertyBox->addItem(tr("dot line"));
-    if(Diag->name() != "Time") {
+    if(Diag->name() != "Time") { untested();
       PropertyBox->addItem(tr("long dash line"));
       PropertyBox->addItem(tr("stars"));
       PropertyBox->addItem(tr("circles"));
@@ -302,7 +314,7 @@ void DiagramDialog::attach(ElementGraphics* g)
     Property2->setMaxLength(2);
     Property2->setText("0");
 
-    if((Diag->name()=="Rect") || (Diag->name()=="PS") || (Diag->name()=="SP") || (Diag->name()=="Curve")) {
+    if((Diag->name()=="Rect") || (Diag->name()=="PS") || (Diag->name()=="SP") || (Diag->name()=="Curve")) { untested();
       Label4 = new QLabel(tr("y-Axis:"));
       Box2Layout->addWidget(Label4);
       Label4->setEnabled(false);
@@ -316,7 +328,7 @@ void DiagramDialog::attach(ElementGraphics* g)
   }
 #endif // init_stuff
 
-  if(Property2) {
+  if(Property2) { untested();
     connect(Property2, SIGNAL(textChanged(const QString&)),
 			SLOT(slotSetProp2(const QString&)));
 
@@ -324,7 +336,7 @@ void DiagramDialog::attach(ElementGraphics* g)
     PropertyBox->setEnabled(false);
     Label2->setEnabled(false);
     Property2->setEnabled(false);
-  }else{
+  }else{ untested();
   }
 
   QWidget *Box1 = new QWidget();
@@ -366,14 +378,12 @@ void DiagramDialog::attach(ElementGraphics* g)
     ChooseVars->setSelectionBehavior(QAbstractItemView::SelectRows);
     //ChooseVars->selectRow(0);
     DataGroupLayout->addWidget(ChooseVars);
-    //ChooseVars->addColumn(tr("Name"));
-    //ChooseVars->addColumn(tr("Type"));
-    //ChooseVars->addColumn(tr("Size"));
+
     QStringList headers;
     headers << tr("Name") << tr("Type") << tr("Size");
     ChooseVars->setHorizontalHeaderLabels(headers);
 
-    connect(ChooseVars, SIGNAL(itemDoubleClicked(QTableWidgetItem*)), SLOT(slotTakeVar(QTableWidgetItem*)));
+    connect(ChooseVars, &QTableWidget::itemDoubleClicked, this, &DiagramDialog::slotTakeVar);
 
   QGroupBox *GraphGroup = new QGroupBox(tr("Graph"));
   Box1Layout->addWidget(GraphGroup);
@@ -392,11 +402,9 @@ void DiagramDialog::attach(ElementGraphics* g)
 
   t->addTab(Tab1, tr("Data"));
 
-
-
   // Tab #2...........................................................
   int Row = 0;
-  if(Diag->name().at(0) != 'T') {  // not tabular or timing diagram
+  if(1) { // } Diag->name().at(0) != 'T') {  // not tabular or timing diagram
     QWidget *Tab2 = new QWidget(t);
     QGridLayout *gp = new QGridLayout();
     Tab2->setLayout(gp);
@@ -413,21 +421,21 @@ void DiagramDialog::attach(ElementGraphics* g)
     gp->addWidget(ylLabel, Row, 1);
     Row++;
 
-    if((Diag->name() != "Smith") && (Diag->name() != "Polar")) {
+//    if((Diag->name() != "Smith") && (Diag->name() != "Polar")) {
       gp->addWidget(new QLabel(NameZ +" "+tr("Label:"), Tab2), Row, 0);
       yrLabel = new QLineEdit(Tab2);
       yrLabel->setValidator(Validator);
       gp->addWidget(yrLabel, Row, 1);
       Row++;
-    }
+//    }
 
     gp->addWidget(
         new QLabel(tr("<b>Label text</b>: Use LaTeX style for special characters, e.g. \\tau"), Tab2),
         Row, 0, 1, 2);
     Row++;
 
-	 // init_style_stuff
-    if(Diag->name() != "Rect3D") {
+	 // init_style_stuff?
+ //   if(Diag->name() != "Rect3D") {
       GridOn = new QCheckBox(tr("show Grid"), Tab2);
       gp->addWidget(GridOn, Row, 0);
       Row++;
@@ -455,18 +463,14 @@ void DiagramDialog::attach(ElementGraphics* g)
       GridOn->setChecked(Diag->xAxis.GridOn);
       if(!Diag->xAxis.GridOn) slotSetGridBox(0);
       connect(GridOn, SIGNAL(stateChanged(int)), SLOT(slotSetGridBox(int)));
-    }else{
-      GridOn = 0;
-      GridColorButt = 0;
-      GridStyleBox = 0;
-    }
+//  }
 
     // ...........................................................
     xLabel->setText(Diag->xAxis.Label);
     ylLabel->setText(Diag->yAxis.Label);
     if(yrLabel)  yrLabel->setText(Diag->zAxis.Label);
 
-    if((Diag->name().left(4) == "Rect") || (Diag->name() == "Curve")) {
+//    if((Diag->name().left(4) == "Rect") || (Diag->name() == "Curve")) {
       GridLogX = new QCheckBox(tr("logarithmical X Axis Grid"), Tab2);
       gp->addWidget(GridLogX, Row, 0);
       Row++;
@@ -485,9 +489,10 @@ void DiagramDialog::attach(ElementGraphics* g)
       GridLogY->setChecked(Diag->yAxis.log);
       GridLogZ->setChecked(Diag->zAxis.log);
 
-    } else{
-		 GridLogX = GridLogY = GridLogZ = 0;
-	 }
+//    } else{
+//		 // 3d??
+//		 GridLogX = GridLogY = GridLogZ = 0;
+//	 }
 
     t->addTab(Tab2, tr("Properties"));
 
@@ -562,9 +567,11 @@ void DiagramDialog::attach(ElementGraphics* g)
     QWidget *VBox7 = new QWidget();
     axisYLayout->addWidget(VBox7);
     QVBoxLayout *VBox7Layout = new QVBoxLayout();
-    if((Diag->name()=="Smith") || (Diag->name()=="ySmith") || (Diag->name()=="PS"))
-      VBox7Layout->addWidget(new QLabel(tr("number")));
-    else  VBox7Layout->addWidget(new QLabel(tr("step")));
+//    if((Diag->name()=="Smith") || (Diag->name()=="ySmith") || (Diag->name()=="PS")){
+//		 VBox7Layout->addWidget(new QLabel(tr("number")));
+//	 }else{
+		 VBox7Layout->addWidget(new QLabel(tr("step")));
+//	 }
     stepY = new QLineEdit();
     VBox7Layout->addWidget(stepY);
     stepY->setValidator(ValDouble);
@@ -607,8 +614,11 @@ void DiagramDialog::attach(ElementGraphics* g)
     QWidget *VBox11 = new QWidget();
     axisZLayout->addWidget(VBox11);
     QVBoxLayout *VBox11Layout = new QVBoxLayout();
-    if(Diag->name() == "SP") VBox11Layout->addWidget(new QLabel(tr("number")));
-    else VBox11Layout->addWidget(new QLabel(tr("step")));
+//    if(Diag->name() == "SP"){
+		 VBox11Layout->addWidget(new QLabel(tr("number")));
+//	 } else {
+//		 VBox11Layout->addWidget(new QLabel(tr("step")));
+//	 }
     stepZ = new QLineEdit();
     VBox11Layout->addWidget(stepZ);
     stepZ->setValidator(ValDouble);
@@ -654,18 +664,26 @@ void DiagramDialog::attach(ElementGraphics* g)
     stepZ->setText(QString::number(Diag->zAxis.step));
     stopZ->setText(QString::number(Diag->zAxis.limit_max));
 
-    if((Diag->name() == "Smith") || (Diag->name() == "ySmith") ||
-       (Diag->name() == "Polar")) {
-       axisZ->setEnabled(false);
-    }
-    if(Diag->name().left(4) != "Rect")   // cartesian 2D and 3D
-       if((Diag->name() != "Curve")) {
-        axisX->setEnabled(false);
-        startY->setEnabled(false);
-        startZ->setEnabled(false);
-      }
+#if 0
+	if((Diag->name() == "Smith") || (Diag->name() == "ySmith") ||
+			(Diag->name() == "Polar")) {
+		axisZ->setEnabled(false);
+	}else if(Diag->name().left(4) != "Rect") {
+		// cartesian 2D and 3D
+		if((Diag->name() != "Curve")) {
+			axisX->setEnabled(false);
+			startY->setEnabled(false);
+			startZ->setEnabled(false);
+		}else{
+		}
+	}
+#endif
+
+  }else{
+	  unreachable();
+	  // tabular or some Truth? not here.
+	  stepX = 0;
   }
-  else  stepX = 0;
 
   connect(t, SIGNAL(currentChanged(QWidget*)), SLOT(slotChangeTab(QWidget*)));
   // ...........................................................
@@ -703,155 +721,178 @@ void DiagramDialog::attach(ElementGraphics* g)
   // put all graphs into the ListBox
   Graph* currentGraph = nullptr;
   Row = 0;
-  foreach(Graph *pg, Diag->Graphs) {
+  foreach(Graph *pg, Diag->Graphs) { untested();
     GraphList->insertItem(Row, pg->Var);
-    if(pg == currentGraph) {
+    if(pg == currentGraph) { untested();
       GraphList->setCurrentRow(Row);   // select current graph
       SelectGraph(currentGraph);
     }
     Row++;
   }
 
-  if(ColorButt) {
-    if(!currentGraph) {
+  if(ColorButt) { untested();
+    if(!currentGraph) { untested();
       QColor selectedColor(DefaultColors[GraphList->count()%NumDefaultColors]);
       misc::setPickerColor(ColorButt, selectedColor);
     }
-  }else{
+  }else{ untested();
   }
 }
 
 DiagramDialog::~DiagramDialog()
-{
+{ untested();
   delete all;   // delete all widgets from heap
   delete ValInteger;
   delete ValDouble;
   delete Validator;
 }
 
-// --------------------------------------------------------------------------
+/*--------------------------------------------------------------------------*/
+// a QTableWidgetItem with a data reference.
+class DataRef : public QTableWidgetItem{
+	DataRef(DataRef const& x) = delete;
+public:
+	DataRef(CommonData const* x) :
+	       QTableWidgetItem(QString_(x->label())){ untested();
+		CommonData::attach(x, &_data);
+	}
+	~DataRef(){ untested();
+		CommonData::detach(&_data);
+	}
+	std::string label() const{ untested();
+		if(_data){ untested();
+			return _data->label();
+		}else{ untested();
+			return "null";
+		}
+	}
+private:
+	CommonData const* _data{nullptr};
+};
+// fill variables into table.
+// TODO: move to ChooseVars?
 void DiagramDialog::slotReadVars(int)
-{
-  QFileInfo Info(defaultDataSet);
-  QString DocName = ChooseData->currentText()+".dat";
+{ untested();
+#if 0 // ?
+  auto ChooseData = prechecked_cast<QComboBox*>(sender());
+  assert(ChooseData);
+#endif
 
-  QFile file(Info.path() + QDir::separator() + DocName);
-  if(!file.open(QIODevice::ReadOnly)) {
-    return;
-  }
+//  QFileInfo Info(defaultDataSet); // TODO
+  QVariant cv = ChooseData->currentData();
+  CommonData const* common = cv.value<CommonData const*>();
 
   QString Line, tmp, Var;
   int varNumber = 0;
-  // reading the file as a whole improves speed very much, also using
-  // a QByteArray rather than a QString
-  QByteArray FileString = file.readAll();
-  file.close();
 
   // make sure sorting is disabled before inserting items
   ChooseVars->setSortingEnabled(false);
   ChooseVars->clearContents();
-  int i=0, j=0;
-  i = FileString.indexOf('<')+1;
-  if(i > 0)
-  do {
-    j = FileString.indexOf('>', i);
-    for(int k=0;k<j-i;k++) Line[k]=FileString[k+i];
-    Line.truncate(j-i);
-    i = FileString.indexOf('<', j)+1;
 
-    Var = Line.section(' ', 1, 1).remove('>');
-    if(Var.length()>0)
-      if(Var.at(0) == '_')  continue;
+  if(auto d = dynamic_cast< SimOutputDir const*> (common)){ untested();
 
+	  for(auto v : *d){ untested();
+		  auto vd = dynamic_cast<SimOutputData const*>(v);
 
-    if(Line.left(3) == "dep") {
-      tmp = Line.section(' ', 2);
-      //new Q3ListViewItem(ChooseVars, Var, "dep", tmp.remove('>'));
-      qDebug() << varNumber << Var << tmp.remove('>');
-      ChooseVars->setRowCount(varNumber+1);
-      QTableWidgetItem *cell = new QTableWidgetItem(Var);
-      cell->setFlags(cell->flags() ^ Qt::ItemIsEditable);
-      ChooseVars->setItem(varNumber, 0, cell);
-      cell = new QTableWidgetItem("dep");
-      cell->setFlags(cell->flags() ^ Qt::ItemIsEditable);
-      ChooseVars->setItem(varNumber, 1, cell);
-      cell = new QTableWidgetItem(tmp.remove('>'));
-      cell->setFlags(cell->flags() ^ Qt::ItemIsEditable);
-      ChooseVars->setItem(varNumber, 2, cell);
-      varNumber++;
-    }
-    else if(Line.left(5) == "indep") {
-      tmp = Line.section(' ', 2, 2);
-      //new Q3ListViewItem(ChooseVars, Var, "indep", tmp.remove('>'));
-      qDebug() << varNumber << Var << tmp.remove('>');
-      ChooseVars->setRowCount(varNumber+1);
-      QTableWidgetItem *cell = new QTableWidgetItem(Var);
-      cell->setFlags(cell->flags() ^ Qt::ItemIsEditable);
-      ChooseVars->setItem(varNumber, 0, cell);
-      cell = new QTableWidgetItem("indep");
-      cell->setFlags(cell->flags() ^ Qt::ItemIsEditable);
-      ChooseVars->setItem(varNumber, 1, cell);
-      cell = new QTableWidgetItem(tmp.remove('>'));
-      cell->setFlags(cell->flags() ^ Qt::ItemIsEditable);
-      ChooseVars->setItem(varNumber, 2, cell);
-      varNumber++;
+		  if(!vd){ untested();
+			  trace1("slotReadVars not data", v->label());
+			  // message(Object::QucsMsgLog, "unknown data");
+		  }else{ untested();
+			  auto Var = QString_(v->label());
+			  QTableWidgetItem *vcell = new DataRef(v);
+			  //new Q3ListViewItem(ChooseVars, Var, "dep", tmp.remove('>'));
+			  trace3("slotReadVars", varNumber, Var, tmp.remove('>'));
+			  ChooseVars->setRowCount(varNumber+1);
+			  vcell->setFlags(vcell->flags() ^ Qt::ItemIsEditable);
+			  ChooseVars->setItem(varNumber, 0, vcell);
 
-    }
-  } while(i > 0);
+			  QTableWidgetItem *cell = nullptr;
+			  if((vd->numDeps())){ untested();
+				  tmp = Line.section(' ', 2);
+				  cell = new QTableWidgetItem("dep");
+			  }else{ untested();
+				  tmp = Line.section(' ', 2, 2);
+				  cell = new QTableWidgetItem("indep");
+			  }
+			  cell->setFlags(cell->flags() ^ Qt::ItemIsEditable);
+			  ChooseVars->setItem(varNumber, 1, cell);
+
+			  cell = new QTableWidgetItem("deplist?");
+			  cell->setFlags(cell->flags() ^ Qt::ItemIsEditable);
+			  ChooseVars->setItem(varNumber, 2, cell);
+
+			  varNumber++;
+		  }
+	  }
+  }
   // sorting should be enabled only after adding items
   ChooseVars->setSortingEnabled(true);
 }
+/*--------------------------------------------------------------------------*/
 
 // ------------------------------------------------------------------------
 // Inserts the double-clicked variable into the Graph Input Line at the
 // cursor position. If the Graph Input is empty, then the variable is
 // also inserted as graph.
 void DiagramDialog::slotTakeVar(QTableWidgetItem* Item)
-{
+{ untested();
   GraphInput->blockSignals(true);
   if(toTake) GraphInput->setText("");
 
   GraphInput->cursorPosition();
   //QString s="";
   //QString s1 = Item->text();
-  QString s1;
   int row = Item->row();
-  s1 = ChooseVars->item(row, 0)->text();
+  auto x = ChooseVars->item(row, 0);
+  auto xr = prechecked_cast<DataRef*>(x);
+  assert(xr);
+  auto s1 = QString_(xr->label());
 
   QFileInfo Info(defaultDataSet);
   if(ChooseData->currentText() != Info.completeBaseName())
     s1 = ChooseData->currentText() + ":" + s1;
   GraphInput->setText(s1);
 
-  //if(s.isEmpty()) {
+  //if(s.isEmpty()) { untested();
     GraphList->addItem(GraphInput->text());////insertItem(i, GraphInput->text());
     GraphList->setCurrentRow(GraphList->count()-1);
 
     Graph *g = new Graph(Diag, GraphInput->text());   // create a new graph
 
-    if(Diag->name() != "Tab") {
-      if(Diag->name() != "Truth") {
+//    if(Diag->name() != "Tab") {
+//      if(Diag->name() != "Truth") {
         g->Color = misc::getWidgetBackgroundColor(ColorButt);
         g->Thick = Property2->text().toInt();
         QColor selectedColor(DefaultColors[GraphList->count()%NumDefaultColors]);
         misc::setPickerColor(ColorButt, selectedColor);
-        if(g->Var.right(3) == ".Vb")   // harmonic balance output ?
-          if(PropertyBox->count() >= GRAPHSTYLE_ARROW)
+
+#if 0
+		  // HB hack. does not work.
+        if(g->Var.right(3) != ".Vb") {
+		  }else if(PropertyBox->count() >= GRAPHSTYLE_ARROW){
             PropertyBox->setCurrentIndex(GRAPHSTYLE_ARROW);
+		  }else{
+		  }
+#endif
+
         g->Style = toGraphStyle(PropertyBox->currentIndex());
         assert(g->Style!=GRAPHSTYLE_INVALID);
-        if(yAxisBox) {
+        if(yAxisBox) { untested();
           g->yAxisNo = yAxisBox->currentIndex();
           yAxisBox->setEnabled(true);
           Label4->setEnabled(true);
         }
-        else if(Diag->name() == "Rect3D") g->yAxisNo = 1;
+//        else if(Diag->name() == "Rect3D"){
+//			  g->yAxisNo = 1;
+//		  }
+        else{ untested();
+		  }
 
         Label3->setEnabled(true);
         ColorButt->setEnabled(true);
-      }
-    }
-    else {
+//      }
+//    } else
+      if(0){
       g->Precision = Property2->text().toInt();
       g->numMode   = PropertyBox->currentIndex();
     }
@@ -863,7 +904,7 @@ void DiagramDialog::slotTakeVar(QTableWidgetItem* Item)
 
   GraphInput->blockSignals(false);
 
-  if(Property2) {
+  if(Property2) { untested();
     Label1->setEnabled(true);
     PropertyBox->setEnabled(true);
     Label2->setEnabled(true);
@@ -875,8 +916,8 @@ void DiagramDialog::slotTakeVar(QTableWidgetItem* Item)
   Is called if a graph text is clicked in the ListBox.
 */
 void DiagramDialog::slotSelectGraph(QListWidgetItem *item)
-{
-  if(item == 0) {
+{ untested();
+  if(item == 0) { untested();
     GraphList->clearSelection();
     return;
   }
@@ -888,17 +929,17 @@ void DiagramDialog::slotSelectGraph(QListWidgetItem *item)
   Puts the text of the selected graph into the line edit.
 */
 void DiagramDialog::SelectGraph(Graph *g)
-{
+{ untested();
   GraphInput->blockSignals(true);
   GraphInput->setText(g->Var);
   GraphInput->blockSignals(false);
 
-  if(Diag->name() != "Tab") {
-    if(Diag->name() != "Truth") {
+//  if(Diag->name() != "Tab") {
+//    if(Diag->name() != "Truth") {
       Property2->setText(QString::number(g->Thick));
       misc::setPickerColor(ColorButt, g->Color);
       PropertyBox->setCurrentIndex(g->Style);
-      if(yAxisBox) {
+      if(yAxisBox) { untested();
         yAxisBox->setCurrentIndex(g->yAxisNo);
         yAxisBox->setEnabled(true);
         Label4->setEnabled(true);
@@ -906,15 +947,15 @@ void DiagramDialog::SelectGraph(Graph *g)
 
       Label3->setEnabled(true);
       ColorButt->setEnabled(true);
-    }
-  }
-  else {
-    Property2->setText(QString::number(g->Precision));
-    PropertyBox->setCurrentIndex(g->numMode);
-  }
+//    }
+//  }
+//  else {
+//    Property2->setText(QString::number(g->Precision));
+//    PropertyBox->setCurrentIndex(g->numMode);
+//  }
   toTake = false;
 
-  if(Property2) {
+  if(Property2) { untested();
     Label1->setEnabled(true);
     PropertyBox->setEnabled(true);
     Label2->setEnabled(true);
@@ -922,44 +963,41 @@ void DiagramDialog::SelectGraph(Graph *g)
   }
 }
 
-/*!
- Is called when the 'delete graph' button is pressed.
-*/
 void DiagramDialog::slotDeleteGraph()
 {
-  int i;
-  if(Diag->name() != "Phasor" || Var2 != ".a")
-  {
-    i = GraphList->currentRow();
-    if(i < 0) return;   // return, if no item selected
-  }
-  else
-  {
-    i = loc;
-    if(i < 0) return;
+  int i = GraphList->currentRow();
+
+//  if(Diag->name() != "Phasor" || Var2 != ".a") {
+//  } else {
+//    i = loc;
+//  }
+
+  if(i < 0){ untested();
+	  return;
+  }else{ untested();
   }
 
   GraphList->takeItem(i);
   Graphs.remove(i);
 
   int k=0;
-  if (GraphList->count()!=0) {
-      if (i>(GraphList->count()-1)) {
+  if (GraphList->count()!=0) { untested();
+      if (i>(GraphList->count()-1)) { untested();
           k = GraphList->count()-1;
-      } else {
+      } else { untested();
           k=i;
       }
       GraphInput->setText(GraphList->item(k)->text());
-  } else {
+  } else { untested();
       GraphInput->setText("");  // erase input line and back to default values
   }
 
-  if(Diag->name() != "Tab") {
-    if(Diag->name() != "Truth") {
+//  if(Diag->name() != "Tab") {
+//    if(Diag->name() != "Truth") {
       QColor selectedColor(DefaultColors[GraphList->count()%NumDefaultColors]);
       misc::setPickerColor(ColorButt, selectedColor);
       Property2->setText("0");
-      if(yAxisBox) {
+      if(yAxisBox) { untested();
         yAxisBox->setCurrentIndex(0);
         yAxisBox->setEnabled(false);
         Label4->setEnabled(false);
@@ -967,13 +1005,14 @@ void DiagramDialog::slotDeleteGraph()
 
       Label3->setEnabled(false);
       ColorButt->setEnabled(false);
-    }
-  }
-  else  Property2->setText("3");
+//    }
+//  }  else{
+//	  Property2->setText("3");
+//  }
   changed = true;
   toTake  = false;
 
-  if(Property2) {
+  if(Property2) { untested();
     PropertyBox->setCurrentIndex(0);
 
     Label1->setEnabled(false);
@@ -985,7 +1024,7 @@ void DiagramDialog::slotDeleteGraph()
 
 // --------------------------------------------------------------------------
 void DiagramDialog::slotNewGraph()
-{
+{ untested();
   assert(Diag);
   if(GraphInput->text().isEmpty()) return;
 
@@ -993,20 +1032,23 @@ void DiagramDialog::slotNewGraph()
 
   Graph *g = new Graph(Diag, GraphInput->text());
 // FIXME: call  Diag->whateverelse();
-  if(Diag->name() != "Tab") { // BUG
-    if(Diag->name() != "Truth") { // BUG
+//  if(Diag->name() != "Tab") { // BUG
+//    if(Diag->name() != "Truth") { // BUG
       g->Color = misc::getWidgetBackgroundColor(ColorButt);
       g->Thick = Property2->text().toInt();
       g->Style = toGraphStyle(PropertyBox->currentIndex());
       assert(g->Style!=GRAPHSTYLE_INVALID);
-      if(yAxisBox)  g->yAxisNo = yAxisBox->currentIndex();
-      else if(Diag->name() == "Rect3D")  g->yAxisNo = 1;
-    }
-  }
-  else {
-    g->Precision = Property2->text().toInt();
-    g->numMode   = PropertyBox->currentIndex();
-  }
+      if(yAxisBox){
+		 	g->yAxisNo = yAxisBox->currentIndex();
+		} else {
+		//	if(Diag->name() == "Rect3D")  g->yAxisNo = 1;
+		}
+//    }
+//  }
+//  else {
+//    g->Precision = Property2->text().toInt();
+//    g->numMode   = PropertyBox->currentIndex();
+//  }
   Graphs.append(g);
   changed = true;
   toTake  = false;
@@ -1016,156 +1058,156 @@ void DiagramDialog::slotNewGraph()
  Is called if "Ok" button is pressed.
 */
 void DiagramDialog::slotButtOK()
-{
+{ untested();
   slotButtApply();
   slotButtCancel();
 }
 
 // "Apply" button pressed
+//  todo: tabdiagram/truthtable override
 void DiagramDialog::slotButtApply()
 {
-  if(Diag->name().at(0) == 'T') {
-	  // tabular or timing
-  }else{
+  {
     if(Diag->xAxis.Label.isEmpty())
       Diag->xAxis.Label = ""; // can be not 0 and empty!
     if(xLabel->text().isEmpty()) xLabel->setText("");
-    if(Diag->xAxis.Label != xLabel->text()) {
+    if(Diag->xAxis.Label != xLabel->text()) { untested();
       Diag->xAxis.Label = xLabel->text();
       changed = true;
     }
     if(Diag->yAxis.Label.isEmpty())
       Diag->yAxis.Label = ""; // can be not 0 and empty!
     if(ylLabel->text().isEmpty()) ylLabel->setText("");
-    if(Diag->yAxis.Label != ylLabel->text()) {
+    if(Diag->yAxis.Label != ylLabel->text()) { untested();
       Diag->yAxis.Label = ylLabel->text();
       changed = true;
     }
     
-    if(GridOn) if(Diag->xAxis.GridOn != GridOn->isChecked()) {
+    if(GridOn) if(Diag->xAxis.GridOn != GridOn->isChecked()) { untested();
       Diag->xAxis.GridOn = GridOn->isChecked();
       Diag->yAxis.GridOn = GridOn->isChecked();
       changed = true;
     }
-    if(GridColorButt) {
+    if(GridColorButt) { untested();
       QColor gridColBut = misc::getWidgetBackgroundColor(GridColorButt);
-      if(Diag->GridPen.color() != gridColBut) {
+      if(Diag->GridPen.color() != gridColBut) { untested();
         Diag->GridPen.setColor(gridColBut);
         changed = true;
       }
     }
     if(GridStyleBox)
-      if(Diag->GridPen.style()!=(Qt::PenStyle)(GridStyleBox->currentIndex()+1)) {
+      if(Diag->GridPen.style()!=(Qt::PenStyle)(GridStyleBox->currentIndex()+1)) { untested();
       Diag->GridPen.setStyle((Qt::PenStyle)(GridStyleBox->currentIndex()+1));
       changed = true;
     }
-    if((Diag->name() != "Smith") && (Diag->name() != "Polar")) {
+    //if((Diag->name() != "Smith") && (Diag->name() != "Polar"))
+	 {
       if(Diag->zAxis.Label.isEmpty())
         Diag->zAxis.Label = ""; // can be not 0 and empty!
       if(yrLabel->text().isEmpty()) yrLabel->setText("");
-      if(Diag->zAxis.Label != yrLabel->text()) {
+      if(Diag->zAxis.Label != yrLabel->text()) { untested();
         Diag->zAxis.Label = yrLabel->text();
         changed = true;
       }
     }
 
-    if(Diag->name().left(4) == "Rect") {
+//    if(Diag->name().left(4) == "Rect") {
       if(Diag->xAxis.log != GridLogX->isChecked()) {
         Diag->xAxis.log = GridLogX->isChecked();
         changed = true;
       }
-      if(Diag->yAxis.log != GridLogY->isChecked()) {
+      if(Diag->yAxis.log != GridLogY->isChecked()) { untested();
         Diag->yAxis.log = GridLogY->isChecked();
         changed = true;
       }
-      if(Diag->zAxis.log != GridLogZ->isChecked()) {
+      if(Diag->zAxis.log != GridLogZ->isChecked()) { untested();
         Diag->zAxis.log = GridLogZ->isChecked();
         changed = true;
       }
-    }
+//    }
 
-    if((Diag->name() == "Smith") || (Diag->name() == "ySmith") ||
-				  (Diag->name() == "PS"))
-      if(stopY->text().toDouble() < 1.0)
-        stopY->setText("1");
+//    if((Diag->name() == "Smith") || (Diag->name() == "ySmith") ||
+//				  (Diag->name() == "PS"))
+//      if(stopY->text().toDouble() < 1.0)
+//        stopY->setText("1");
 
-    if(Diag->name() == "SP")
-      if(stopZ->text().toDouble() < 1.0)
-        stopZ->setText("1");
+//    if(Diag->name() == "SP")
+//      if(stopZ->text().toDouble() < 1.0)
+//        stopZ->setText("1");
 
-    if(Diag->xAxis.autoScale == manualX->isChecked()) {
+    if(Diag->xAxis.autoScale == manualX->isChecked()) { untested();
       Diag->xAxis.autoScale = !(manualX->isChecked());
       changed = true;
     }
 
     // Use string compares for all floating point numbers, in
     // order to avoid rounding problems.
-    if(QString::number(Diag->xAxis.limit_min) != startX->text()) {
+    if(QString::number(Diag->xAxis.limit_min) != startX->text()) { untested();
       Diag->xAxis.limit_min = startX->text().toDouble();
       changed = true;
     }
-    if(QString::number(Diag->xAxis.step) != stepX->text()) {
+    if(QString::number(Diag->xAxis.step) != stepX->text()) { untested();
       Diag->xAxis.step = stepX->text().toDouble();
       changed = true;
     }
-    if(QString::number(Diag->xAxis.limit_max) != stopX->text()) {
+    if(QString::number(Diag->xAxis.limit_max) != stopX->text()) { untested();
       Diag->xAxis.limit_max = stopX->text().toDouble();
       changed = true;
     }
-    if(Diag->yAxis.autoScale == manualY->isChecked()) {
+    if(Diag->yAxis.autoScale == manualY->isChecked()) { untested();
       Diag->yAxis.autoScale = !(manualY->isChecked());
       changed = true;
     }
-    if(QString::number(Diag->yAxis.limit_min) != startY->text()) {
+    if(QString::number(Diag->yAxis.limit_min) != startY->text()) { untested();
       Diag->yAxis.limit_min = startY->text().toDouble();
       changed = true;
     }
-    if(QString::number(Diag->yAxis.step) != stepY->text()) {
+    if(QString::number(Diag->yAxis.step) != stepY->text()) { untested();
       Diag->yAxis.step = stepY->text().toDouble();
       changed = true;
     }
-    if(QString::number(Diag->yAxis.limit_max) != stopY->text()) {
+    if(QString::number(Diag->yAxis.limit_max) != stopY->text()) { untested();
       Diag->yAxis.limit_max = stopY->text().toDouble();
       changed = true;
     }
-    if(Diag->zAxis.autoScale == manualZ->isChecked()) {
+    if(Diag->zAxis.autoScale == manualZ->isChecked()) { untested();
       Diag->zAxis.autoScale = !(manualZ->isChecked());
       changed = true;
     }
-    if(QString::number(Diag->zAxis.limit_min) != startZ->text()) {
+    if(QString::number(Diag->zAxis.limit_min) != startZ->text()) { untested();
       Diag->zAxis.limit_min = startZ->text().toDouble();
       changed = true;
     }
-    if(QString::number(Diag->zAxis.step) != stepZ->text()) {
+    if(QString::number(Diag->zAxis.step) != stepZ->text()) { untested();
       Diag->zAxis.step = stepZ->text().toDouble();
       changed = true;
     }
-    if(QString::number(Diag->zAxis.limit_max) != stopZ->text()) {
+    if(QString::number(Diag->zAxis.limit_max) != stopZ->text()) { untested();
       Diag->zAxis.limit_max = stopZ->text().toDouble();
       changed = true;
     }
 
 #if 0 //BUG
     if(hideInvisible)
-      if(((Rect3DDiagram*)Diag)->hideLines != hideInvisible->isChecked()) {
+      if(((Rect3DDiagram*)Diag)->hideLines != hideInvisible->isChecked()) { untested();
         ((Rect3DDiagram*)Diag)->hideLines = hideInvisible->isChecked();
         changed = true;
       }
 
     if(rotationX)
-      if(((Rect3DDiagram*)Diag)->rotX != rotationX->text().toInt()) {
+      if(((Rect3DDiagram*)Diag)->rotX != rotationX->text().toInt()) { untested();
         ((Rect3DDiagram*)Diag)->rotX = rotationX->text().toInt();
         changed = true;
       }
 
     if(rotationY)
-      if(((Rect3DDiagram*)Diag)->rotY != rotationY->text().toInt()) {
+      if(((Rect3DDiagram*)Diag)->rotY != rotationY->text().toInt()) { untested();
         ((Rect3DDiagram*)Diag)->rotY = rotationY->text().toInt();
         changed = true;
       }
 
     if(rotationZ)
-      if(((Rect3DDiagram*)Diag)->rotZ != rotationZ->text().toInt()) {
+      if(((Rect3DDiagram*)Diag)->rotZ != rotationZ->text().toInt()) { untested();
         ((Rect3DDiagram*)Diag)->rotZ = rotationZ->text().toInt();
         changed = true;
       }
@@ -1175,15 +1217,21 @@ void DiagramDialog::slotButtApply()
 
   Diag->Graphs.clear();   // delete the graphs
   Graphs.setAutoDelete(false);
-  for(Graph *pg = Graphs.first(); pg != 0; pg = Graphs.next())
+  for(Graph *pg = Graphs.first(); pg != 0; pg = Graphs.next()){ untested();
     Diag->Graphs.append(pg);  // transfer the new graphs to diagram
+  }
   Graphs.clear();
   Graphs.setAutoDelete(true);
 
   Diag->loadGraphData(defaultDataSet);
   ((SchematicDoc*)parent())->viewport()->repaint();
   copyDiagramGraphs();
-  if(changed) transfer = true;   // changes have been applied ?
+
+  // what?
+  if(changed){ untested();
+	  transfer = true;
+  }else{ untested();
+  }
 }
 
 
@@ -1209,7 +1257,7 @@ void DiagramDialog::reject()
 
 // --------------------------------------------------------------------------
 void DiagramDialog::slotSetColor()
-{
+{ untested();
   QColor c = QColorDialog::getColor(
               misc::getWidgetBackgroundColor(ColorButt),this);
   if(!c.isValid()) return;
@@ -1226,7 +1274,7 @@ void DiagramDialog::slotSetColor()
 
 // --------------------------------------------------------------------------
 void DiagramDialog::slotSetGridColor()
-{
+{ untested();
   QColor c = QColorDialog::getColor(
               misc::getWidgetBackgroundColor(GridColorButt),this);
   if(!c.isValid()) return;
@@ -1238,7 +1286,7 @@ void DiagramDialog::slotSetGridColor()
  Is set if the graph input line changes.
 */
 void DiagramDialog::slotResetToTake(const QString& s)
-{
+{ untested();
   int i = GraphList->currentRow();
   if(i < 0) return;   // return, if no item selected
 
@@ -1254,21 +1302,27 @@ void DiagramDialog::slotResetToTake(const QString& s)
 */
 void DiagramDialog::slotSetProp2(const QString& s)
 {
-  int i = GraphList->currentRow();
-  if(i < 0) return;   // return, if no item selected
+	int i = GraphList->currentRow();
+	if(i < 0){
+		return;   // return, if no item selected
+	}else{
 
-  Graph *g = Graphs.at(i);
-  if(Diag->name() == "Tab") g->Precision = s.toInt();
-  else  g->Thick = s.toInt();
-  changed = true;
-  toTake  = false;
+		Graph *g = Graphs.at(i);
+		//  if(Diag->name() == "Tab"){
+		//  g->Precision = s.toInt();
+		//  } else {
+		g->Thick = s.toInt();
+		//	}
+		changed = true;
+		toTake  = false;
+	}
 }
 
 /*!
  Is called if the user changes the number mode.
 */
 void DiagramDialog::slotSetNumMode(int Mode)
-{
+{ untested();
   int i = GraphList->currentRow();
   if(i < 0) return;   // return, if no item selected
 
@@ -1282,14 +1336,14 @@ void DiagramDialog::slotSetNumMode(int Mode)
  Is called when the "show grid" checkbox is changed.
 */
 void DiagramDialog::slotSetGridBox(int state)
-{
-  if(state == 2) {
+{ untested();
+  if(state == 2) { untested();
     GridColorButt->setEnabled(true);
     GridStyleBox->setEnabled(true);
     GridLabel1->setEnabled(true);
     GridLabel2->setEnabled(true);
   }
-  else {
+  else { untested();
     GridColorButt->setEnabled(false);
     GridStyleBox->setEnabled(false);
     GridLabel1->setEnabled(false);
@@ -1301,7 +1355,7 @@ void DiagramDialog::slotSetGridBox(int state)
  Is called if the user changes the graph style (combobox).
 */
 void DiagramDialog::slotSetGraphStyle(int style)
-{
+{ untested();
   int i = GraphList->currentRow();
   if(i < 0) return;   // return, if no item selected
 
@@ -1316,7 +1370,7 @@ void DiagramDialog::slotSetGraphStyle(int style)
  Makes a copy of all graphs in the diagram.
 */
 void DiagramDialog::copyDiagramGraphs()
-{
+{ untested();
   foreach(Graph *pg, Diag->Graphs)
     Graphs.append(pg->sameNewOne());
 }
@@ -1325,7 +1379,7 @@ void DiagramDialog::copyDiagramGraphs()
  Is called if the combobox changes that defines which y axis uses the graph.
 */
 void DiagramDialog::slotSetYAxis(int axis)
-{
+{ untested();
   int i = GraphList->currentRow();
   if(i < 0) return;   // return, if no item selected
 
@@ -1339,13 +1393,14 @@ void DiagramDialog::slotSetYAxis(int axis)
 void DiagramDialog::slotManualX(int state)
 {
   if(state == 2) {
-    if((Diag->name().left(4) == "Rect") || (Diag->name() == "Curve"))
+    // if((Diag->name().left(4) == "Rect") || (Diag->name() == "Curve")){
       startX->setEnabled(true);
+	 // }else{
+	 // }
     stopX->setEnabled(true);
     if(GridLogX) if(GridLogX->isChecked())  return;
     stepX->setEnabled(true);
-  }
-  else {
+  } else {
     startX->setEnabled(false);
     stepX->setEnabled(false);
     stopX->setEnabled(false);
@@ -1356,13 +1411,15 @@ void DiagramDialog::slotManualX(int state)
 void DiagramDialog::slotManualY(int state)
 {
   if(state == 2) {
-    if((Diag->name().left(4) == "Rect") || (Diag->name() == "Curve")||(Diag->name()=="Phasor")  || (Diag->name()=="Waveac"))
+//    if((Diag->name().left(4) == "Rect") || (Diag->name() ==
+//    "Curve")||(Diag->name()=="Phasor")  || (Diag->name()=="Waveac")){
       startY->setEnabled(true);
+//  }
     stopY->setEnabled(true);
     if(GridLogY) if(GridLogY->isChecked())  return;
     stepY->setEnabled(true);
   }
-  else {
+  else { untested();
     startY->setEnabled(false);
     stepY->setEnabled(false);
     stopY->setEnabled(false);
@@ -1373,13 +1430,15 @@ void DiagramDialog::slotManualY(int state)
 void DiagramDialog::slotManualZ(int state)
 {
   if(state == 2) {
-    if((Diag->name().left(4) == "Rect") || (Diag->name() == "Curve")||(Diag->name()=="Phasor")  || (Diag->name()=="Waveac"))
+//    if((Diag->name().left(4) == "Rect") || (Diag->name() ==
+//    "Curve")||(Diag->name()=="Phasor")  || (Diag->name()=="Waveac")){
       startZ->setEnabled(true);
+//}
     stopZ->setEnabled(true);
     if(GridLogZ) if(GridLogZ->isChecked())  return;
     stepZ->setEnabled(true);
   }
-  else {
+  else { untested();
     startZ->setEnabled(false);
     stepZ->setEnabled(false);
     stopZ->setEnabled(false);
@@ -1390,17 +1449,17 @@ void DiagramDialog::slotManualZ(int state)
  Is called if the current tab of the QTabWidget changes.
 */
 void DiagramDialog::slotChangeTab(QWidget*)
-{
+{ untested();
   if(stepX == 0) return;   // defined ?
-  if(GridLogX) {
+  if(GridLogX) { untested();
     if(GridLogX->isChecked())  stepX->setEnabled(false);
     else  if(manualX->isChecked())  stepX->setEnabled(true);
   }
-  if(GridLogY) {
+  if(GridLogY) { untested();
     if(GridLogY->isChecked())  stepY->setEnabled(false);
     else  if(manualY->isChecked())  stepY->setEnabled(true);
   }
-  if(GridLogZ) {
+  if(GridLogZ) { untested();
     if(GridLogZ->isChecked())  stepZ->setEnabled(false);
     else  if(manualZ->isChecked())  stepZ->setEnabled(true);
   }
@@ -1411,7 +1470,7 @@ void DiagramDialog::slotChangeTab(QWidget*)
  Is called when the slider for rotation angle is changed.
 */
 void DiagramDialog::slotNewRotX(int Value)
-{
+{ untested();
   rotationX->setText(QString::number(Value));
   DiagCross->rotX = float(Value) * pi/180.0;
   DiagCross->update();
@@ -1421,7 +1480,7 @@ void DiagramDialog::slotNewRotX(int Value)
  Is called when the slider for rotation angle is changed.
 */
 void DiagramDialog::slotNewRotY(int Value)
-{
+{ untested();
   rotationY->setText(QString::number(Value));
   DiagCross->rotY = float(Value) * pi/180.0;
   DiagCross->update();
@@ -1431,7 +1490,7 @@ void DiagramDialog::slotNewRotY(int Value)
  Is called when the slider for rotation angle is changed.
 */
 void DiagramDialog::slotNewRotZ(int Value)
-{
+{ untested();
   rotationZ->setText(QString::number(Value));
   DiagCross->rotZ = float(Value) * pi/180.0;
   DiagCross->update();
@@ -1441,7 +1500,7 @@ void DiagramDialog::slotNewRotZ(int Value)
  Is called when the number (text) for rotation angle is changed.
 */
 void DiagramDialog::slotEditRotX(const QString& Text)
-{
+{ untested();
   SliderRotX->setValue(Text.toInt());
   DiagCross->rotX = Text.toFloat() * pi/180.0;
   DiagCross->update();
@@ -1451,7 +1510,7 @@ void DiagramDialog::slotEditRotX(const QString& Text)
  Is called when the number (text) for rotation angle is changed.
 */
 void DiagramDialog::slotEditRotY(const QString& Text)
-{
+{ untested();
   SliderRotY->setValue(Text.toInt());
   DiagCross->rotY = Text.toFloat() * pi/180.0;
   DiagCross->update();
@@ -1461,7 +1520,7 @@ void DiagramDialog::slotEditRotY(const QString& Text)
  Is called when the number (text) for rotation angle is changed.
 */
 void DiagramDialog::slotEditRotZ(const QString& Text)
-{
+{ untested();
   SliderRotZ->setValue(Text.toInt());
   DiagCross->rotZ = Text.toFloat() * pi/180.0;
   DiagCross->update();

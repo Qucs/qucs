@@ -1108,9 +1108,9 @@ void TaskElementDialog::slotApplyInput()
  } // end if (item !=0)
 
   if(changed) {
-    int dx, dy;
 
 #if 0
+    int dx, dy;
     Comp->textSize(dx, dy);
     if(tx_Dist != 0) {
       Comp->tx += tx_Dist-dx;

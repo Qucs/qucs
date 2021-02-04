@@ -61,8 +61,9 @@ void MarkerDialog::attach(Object *pm_)
   g->addWidget(NumberBox, 1, 1);
 
   assert(pMarker->diag());
-  if(pMarker->diag()->name().count("Smith")) // BUG
-  {
+
+#if 0 // what?
+  if(pMarker->diag()->name().count("Smith")) {
     //S parameter also displayed as Z, need Z0 here
     SourceImpedance = new QLineEdit();
     SourceImpedance->setText(QString::number(pMarker->Z0));
@@ -87,7 +88,10 @@ void MarkerDialog::attach(Object *pm_)
 
     g->addWidget(new QLabel("Extra parameters"),3,0);
     g->addWidget(ZYSelectBox,3,1);
+   }else{
    }
+#endif
+
   
   TransBox = new QCheckBox(tr("transparent"));
   TransBox->setChecked(pMarker->transparent);
@@ -124,8 +128,8 @@ void MarkerDialog::slotAcceptValues()
   }
   assert(pMarker->diag());
 
-   if(pMarker->diag()->name().count("Smith")) // BUG: need generic MarkerDialog.
-   {
+#if 0 // BUG: need generic MarkerDialog.
+   if(pMarker->diag()->name().count("Smith")) {
       double SrcImp = SourceImpedance->text().toDouble();
       if(SrcImp != pMarker->Z0)
       {
@@ -139,7 +143,9 @@ void MarkerDialog::slotAcceptValues()
         (ZPCheckBox->isChecked()) * Marker::SHOW_ZP;
 
     changed = true;
+   }else{
    }
+#endif
 
   if(NumberBox->currentIndex() != pMarker->numMode) {
     pMarker->numMode = NumberBox->currentIndex();
