@@ -25,19 +25,6 @@
 
 namespace {
 
-class DiagramVariable : public Data {
-public:
-	DiagramVariable() : Data(){}
-	DiagramVariable(DiagramVariable const& e) : Data(e){}
-
-public: // Element
-	Element* clone() const override{
-		return new DiagramVariable(*this);
-	}
-	void paint(ViewPainter*) const{}
-
-}v0;
-Dispatcher<Data>::INSTALL p0(&dataDispatcher, "diagramvariable", &v0);
 
 	// todo: share?
 class DiagramWidget : public QWidget{

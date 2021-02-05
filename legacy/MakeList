@@ -33,6 +33,7 @@ LEGACY_SRC = \
 	rectdiagram.cpp \
 	root.cpp \
 	schematic_format.cpp \
+	smithdiagram.cpp \
 	simulator.cpp \
 	subcircuit.cpp \
 	verilogfile.cpp \
@@ -41,7 +42,6 @@ LEGACY_SRC = \
 NOTYET_SRC = \
 	polardiagram.cpp \
 	psdiagram.cpp \
-	smithdiagram.cpp \
 	timingdiagram.cpp \
 	truthdiagram.cpp \
 	phasordiagram.cpp \
@@ -53,7 +53,6 @@ HDR = \
 	markerdialog.h \
 	marker.h \
 	rect3ddiagram.h \
-	smithdiagram.h \
 	polardiagram.h \
 	psdiagram.h
 

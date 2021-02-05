@@ -35,6 +35,12 @@ public:
   void finishMarkerCoordinates(float&, float&) const;
   bool insideDiagram(float, float) const;
 
+public: // legacy cruft.
+  QList<Graph *>  Graphs;
+  QList<Arc *>    Arcs;
+  QList<Line *>   Lines;
+  QList<Text *>   Texts;
+
 protected:
   void clip(Graph::iterator&) const;
 };

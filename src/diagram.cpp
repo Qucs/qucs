@@ -63,6 +63,8 @@ Diagram::Diagram(Diagram const& p)
     Bounding_y2(p.Bounding_y2),
     Name(p.Name) // yikes.
 {
+
+#if 0
     Arcs.clear();
     for(auto p1 : p.Arcs) {untested();
 	    Arcs.append(new Arc(*p1));
@@ -71,6 +73,7 @@ Diagram::Diagram(Diagram const& p)
     for(auto p1 : p.Lines) {
 	    Lines.append(new Line(*p1));
     }
+#endif
 
 	 new_subckt();
 	 for (auto i : *p._subckt){
@@ -200,6 +203,7 @@ void Diagram::set_param_by_index(index_t i, std::string const& v)
 void Diagram::paintDiagram(ViewPainter *p)
 {itested();
 
+#if 0
   { // does not paint anything?
     // paint all arcs (1 pixel larger to compensate for strange circle method)
     foreach(Arc *pa, Arcs) { untested();
@@ -215,11 +219,9 @@ void Diagram::paintDiagram(ViewPainter *p)
   }
 
     // draw all graphs
-#if 0
   foreach(Graph *pg, Graphs) {itested();
       pg->paint(p, cx(), cy());
   }
-#endif
 
     // keep track of painter state
     p->save();
@@ -241,6 +243,7 @@ void Diagram::paintDiagram(ViewPainter *p)
 
     // restore painter state
     p->restore();
+#endif
 
 #if 1
     // draws some box with corners to resize.
@@ -248,7 +251,7 @@ void Diagram::paintDiagram(ViewPainter *p)
     if(1) {itested();
       int x_, y_;
       float fx_, fy_;
-      p->map(cx(), cy()-y2, x_, y_);
+   //   p->map(cx(), cy()-y2, x_, y_);
       fx_ = float(x2)*p->Scale + 10;
       fy_ = float(y2)*p->Scale + 10;
 
@@ -326,7 +329,7 @@ void Diagram::createAxisLabels()
     encode_String(xAxis.Label, Str);
     w = metrics.width(Str) >> 1;
     if(w > wmax)  wmax = w;
-    Texts.append(new Text(x-w, y, Str, Qt::black, 12.0));
+    // Texts.append(new Text(x-w, y, Str, Qt::black, 12.0));
   }
   Bounding_y2 = 0;
   Bounding_y1 = y - LineSpacing;
@@ -367,7 +370,7 @@ void Diagram::createAxisLabels()
     encode_String(yAxis.Label, Str);
     w = metrics.width(Str) >> 1;
     if(w > wmax)  wmax = w;
-    Texts.append(new Text(x, y-w, Str, Qt::black, 12.0, 0.0, 1.0));
+    // Texts.append(new Text(x, y-w, Str, Qt::black, 12.0, 0.0, 1.0));
     x -= LineSpacing;
   }
   if(Bounding_x1 < -x) Bounding_x1 = -x;
@@ -407,7 +410,7 @@ void Diagram::createAxisLabels()
     encode_String(zAxis.Label, Str);
     w = metrics.width(Str) >> 1;
     if(w > wmax)  wmax = w;
-    Texts.append(new Text(x, y+w, Str, Qt::black, 12.0, 0.0, -1.0));
+    // Texts.append(new Text(x, y+w, Str, Qt::black, 12.0, 0.0, -1.0));
   }
   x -= x2;
   if(Bounding_x2 < x){
@@ -956,9 +959,9 @@ void Diagram::updateGraphData()
  * FIXME: must invalidate markers.
  */
 // obsolete.
+#if 0
 int Graph::loadDatFile(const QString&)
 {itested();
-#if 0
   Graph* g = this;
   QFile file;
   QString Variable;
@@ -1193,9 +1196,9 @@ if(Variable.right(3) != ".X ") { // not "digital"
 
   lastLoaded = QDateTime::currentDateTime();
   return 2;
-#endif
   return 0;
 }
+#endif
 
 #if 0 // obsolete
 int Graph::loadIndepVarData(const QString& Variable,
@@ -1308,6 +1311,7 @@ bool Diagram::sameDependencies(Graph const*, Graph const*) const
 }
 
 // ------------------------------------------------------------
+#if 0 // tabdiagram?
 int Diagram::checkColumnWidth(const QString& Str,
 		const FontMetrics& metrics, int colWidth, int x, int y)
 {
@@ -1325,6 +1329,7 @@ int Diagram::checkColumnWidth(const QString& Str,
   }
   return colWidth;
 }
+#endif
 
 // ------------------------------------------------------------
 //void Diagram::setCenter(int x, int y, bool relative)
@@ -1371,7 +1376,8 @@ void Diagram::finishMarkerCoordinates(float& fCX, float& fCY) const
 }
 
 // ------------------------------------------------------------
-QString Diagram::save()
+// BUG
+QString Diagram::save() const
 {
   QString s = "<"+Name+" "+QString::number(cx())+" "+QString::number(cy())+" ";
   s += QString::number(x2)+" "+QString::number(y2)+" ";
@@ -1408,6 +1414,8 @@ QString Diagram::save()
 
   // labels can contain spaces -> must be last items in the line
   s += " \""+xAxis.Label+"\" \""+yAxis.Label+"\" \""+zAxis.Label+"\" \""+sfreq+"\">\n";
+
+  return s;
 
 #if 0
   foreach(Graph *pg, Graphs)
@@ -1557,6 +1565,8 @@ bool Diagram::load(const QString& Line, istream_t& stream)
   zAxis.Label = s.section('"',5,5);   // yLabel right
 
   Graph *pg;
+  return true;
+  // rest is done in lang_sch now.
   // .......................................................
   // load graphs of the diagram
   while(!stream.atEnd()) {
@@ -1851,8 +1861,10 @@ if(Axis->log) { untested();
 
   if(back) z = y2;
   while((z <= y2) && (z >= 0)) {    // create all grid lines
+#if 0
     if(Axis->GridOn)  if(z < y2)  if(z > 0)
       Lines.prepend(new Line(0, z, x2, z, GridPen));  // y grid
+#endif
 
     if((zD < 1.5*zDstep) || (z == 0)) { untested();
       tmp = misc::StringNiceNum(zD);
@@ -1860,6 +1872,7 @@ if(Axis->log) { untested();
 
       w = metrics.width(tmp);  // width of text
       if(maxWidth < w) maxWidth = w;
+#if 0
       if(x0 > 0)
         Texts.append(new Text(x0+7, z-6, tmp)); // text aligned left
       else
@@ -1867,6 +1880,7 @@ if(Axis->log) { untested();
 
       // y marks
       Lines.append(new Line(x0-5, z, x0+5, z, QPen(Qt::black,0)));
+#endif
     }
 
     zD += zDstep;
@@ -1894,16 +1908,16 @@ else {  // not logarithmical
 
      w = metrics.width(tmp);  // width of text
       if(maxWidth < w) maxWidth = w;
-      if(x0 > 0)
-	Texts.append(new Text(x0+8, z-6, tmp));  // text aligned left
-      else
-	Texts.append(new Text(-w-7, z-6, tmp));  // text aligned right
+///       if(x0 > 0)
+/// 	Texts.append(new Text(x0+8, z-6, tmp));  // text aligned left
+///       else
+/// 	Texts.append(new Text(-w-7, z-6, tmp));  // text aligned right
       GridNum += GridStep;
 
 
-    if(Axis->GridOn)  if(z < y2)  if(z > 0)
-      Lines.prepend(new Line(0, z, x2, z, GridPen));  // y grid
-    Lines.append(new Line(x0-5, z, x0+5, z, QPen(Qt::black,0))); // y marks
+///     if(Axis->GridOn)  if(z < y2)  if(z > 0)
+///       Lines.prepend(new Line(0, z, x2, z, GridPen));  // y grid
+///    Lines.append(new Line(x0-5, z, x0+5, z, QPen(Qt::black,0))); // y marks
     zD += zDstep;
     z = int(zD);
   }

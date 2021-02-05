@@ -136,14 +136,15 @@ private: // NetLang
 private: // local
 	Element* parseItem(istream_t& s, Element* x) const override;
 	Data* parseData(istream_t& s, Data* x) const;
+	void printTaskElement(TaskElement const*, ostream_t&) const;
 
 private: // local
-  void printTaskElement(TaskElement const*, ostream_t&) const; // override?
+  void printElement(Element const*, ostream_t&) const override;
   void printSymbol(Symbol const*, ostream_t&) const override;
   void printSubckt(SubcktBase const*, ostream_t&) const;
   void printComponent(Component const*, ostream_t&) const;
   void printPainting(Painting const*, ostream_t&) const override {incomplete();}
-  void printDiagram(Symbol const*, ostream_t&) const override {incomplete();}
+  void printDiagram(Diagram const*, ostream_t&) const override {incomplete();}
 }qucslang;
 static Dispatcher<DocumentFormat>::INSTALL p(&languageDispatcher, "qucsator", &qucslang);
 /* -------------------------------------------------------------------------------- */
@@ -393,6 +394,16 @@ static void printLegacyTaskElement(LegacyTaskElement const* c, ostream_t& s)
 	}
 	s << "\n";
 }
+/* -------------------------------------------------------------------------------- */
+void QucsatorLang::printElement(Element const* c, ostream_t& s) const
+{
+	if (auto t=dynamic_cast<const TaskElement*>(c)) {
+		printTaskElement(t, s);
+	}else{
+		incomplete();
+	}
+}
+/* -------------------------------------------------------------------------------- */
 void QucsatorLang::printTaskElement(TaskElement const* c, ostream_t& s) const
 {itested();
 	if(auto t=dynamic_cast<LegacyTaskElement const*>(c)){

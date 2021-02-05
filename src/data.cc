@@ -19,6 +19,12 @@ Data::~Data()
 	CommonData::attach(nullptr, &_common);
 }
 /* -------------------------------------------------------------------------------- */
+std::string Data::get_param_by_name(std::string const&) const
+{
+	unreachable();
+	return "wrong";
+}
+/* -------------------------------------------------------------------------------- */
 CommonData::~CommonData()
 {
 	assert(_attach_count==0);

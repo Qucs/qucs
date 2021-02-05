@@ -973,9 +973,7 @@ void DiagramDialog::slotTakeVar(QTableWidgetItem* Item)
   }
 }
 
-/*!
-  Is called if a graph text is clicked in the ListBox.
-*/
+// a graph text is clicked in the ListBox.
 void DiagramDialog::slotSelectGraph(QListWidgetItem *item)
 { untested();
 	if(!item) { untested();
@@ -1004,8 +1002,9 @@ void DiagramDialog::SelectGraph(Data *g)
 
 //  if(Diag->name() != "Tab") {
 //    if(Diag->name() != "Truth") {
+	std::string a = g->get_param_by_name("thick");
+	Property2->setText(QString_(a));
 #if 0 // use params.
-      Property2->setText(QString::number(g->Thick));
       misc::setPickerColor(ColorButt, g->Color);
       PropertyBox->setCurrentIndex(g->Style);
       if(yAxisBox) { untested();

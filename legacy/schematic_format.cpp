@@ -293,13 +293,15 @@ void LegacySchematicFormat::do_it(istream_t& cs, SchematicModel* m)
 	for(auto pd : diagrams){
 		auto d = dynamic_cast<Diagram const*>(pd);
 		auto dd = const_cast<Diagram*>(d); // HACK (old iface)
-		stream << "  " << dd->save() << "\n";
+		L->printItem(stream, dd);
 	}
+#if 0
 	for(auto pd : section(m, ":Diagrams:")){
 		auto d = dynamic_cast<Diagram const*>(pd);
 		auto dd = const_cast<Diagram*>(d); // HACK (old iface)
 		stream << "  " << dd->save() << "\n";
 	}
+#endif
 	stream << "</Diagrams>\n";
 
 	stream << "<Paintings>\n";

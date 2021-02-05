@@ -24,6 +24,7 @@
 #include "sckt_base.h"
 #include "place.h"
 #include "qio.h"
+#include "data.h"
 #include "legacy_task_element.h"
 
 #ifdef DO_TRACE
@@ -104,8 +105,6 @@ class LegacySchematicLanguage : public SchematicLanguage {
 public:
 	LegacySchematicLanguage(bool mod=false) : SchematicLanguage(), _lib_mod(mod){
 	}
-private: // stuff saved from schematic_file.cpp
-	Diagram* loadDiagram(Diagram* d, istream_t& /*, DiagramList *List */) const;
 private: // stuff from component.cc
 	void loadProperties(QTextStream& stream, SchematicSymbol& m) const;
 //	Component* parseComponentObsoleteCallback(const QString& _s, Component* c) const;
@@ -118,17 +117,20 @@ private: // overrides
    DEV_DOT* parseCommand(istream_t&, DEV_DOT*) const override;
 
 private: // local/incomplete
+	Diagram* parseDiagram(Diagram* d, istream_t& /*, DiagramList *List */) const;
 	Symbol* parseSymbol(istream_t&, Symbol*) const;
 //	Element* loadElement_(const QString& _s, Element* e) const;
 	void printLegacyTaskElement(LegacyTaskElement const*, ostream_t&) const;
 	Element* parseElement(istream_t&, Element*) const;
+	void printTaskElement(TaskElement const*, ostream_t&) const;
+	void printData(Data const*, ostream_t&) const;
 
 private:
 	void printSymbol(Symbol const*, ostream_t&) const override;
-	void printTaskElement(TaskElement const*, ostream_t&) const override;
+	void printElement(Element const*, ostream_t&) const override;
 	void printPainting(Painting const*, ostream_t&) const override;
 	void printSubckt(SubcktBase const*, ostream_t&) const override;
-   void printDiagram(Symbol const*, ostream_t&) const override {incomplete();}
+   void printDiagram(Diagram const*, ostream_t&) const override;
 	bool _lib_mod; // HACK HACK
 }d0;
 static Dispatcher<DocumentLanguage>::INSTALL
@@ -246,7 +248,7 @@ void LegacySchematicLanguage::parse_top_item(istream_t& stream, SchematicModel* 
 }
 /*--------------------------------------------------------------------------*/
 // TODO: remove. not getting here for new-style diagrams
-Diagram* LegacySchematicLanguage::loadDiagram(Diagram* d, istream_t& stream)const
+Diagram* LegacySchematicLanguage::parseDiagram(Diagram* d, istream_t& stream)const
 {
 	QString Line = QString::fromStdString(stream.fullString());
 	QString cstr;
@@ -283,6 +285,19 @@ Diagram* LegacySchematicLanguage::loadDiagram(Diagram* d, istream_t& stream)cons
 			// return nullptr; // no. just use the half parsed thing.
 		}else{
 		}
+
+		auto& cs = stream;
+		while(true){ untested();
+			cs.read_line();
+			trace2("diag cmd" , cs.fullstring(), type);
+			if(cs.umatch(std::string("</")+type+">")){
+				break;
+			}else{
+				trace2("Rect parse", label(), cs.fullstring());
+				cs.skipbl();
+				new__instance(cs, d, d->scope());
+			}
+		}
 		return d;
 	}
 
@@ -298,9 +313,46 @@ static std::string mangle(std::string t)
 	return t.substr(0, pos);
 }
 /*--------------------------------------------------------------------------*/
+void LegacySchematicLanguage::printDiagram(Diagram const* x, ostream_t& cs) const
+{
+	cs << "  " << x->save(); // BUG
+	Element const* e = x;
+	for(auto ii : *e->scope()){ untested();
+		printItem(cs, ii);
+	}
+	cs << "  </" << x->label() << ">\n";
+}
+/*--------------------------------------------------------------------------*/
 void LegacySchematicLanguage::printSubckt(SubcktBase const*, ostream_t&) const
 { untested();
 	unreachable();
+}
+/*--------------------------------------------------------------------------*/
+// catchall for non-circuit stuff? let's see.
+void LegacySchematicLanguage::printElement(Element const* c, ostream_t& s) const
+{
+	if(auto t=dynamic_cast<TaskElement const*>(c)){
+		return printTaskElement(t, s);
+	}else if(auto d=dynamic_cast<Data const*>(c)){
+		return printData(d, s);
+	}else{
+		// painting here?
+		incomplete();
+	}
+}
+/*--------------------------------------------------------------------------*/
+static void print_params(ostream_t& s, Data const* x)
+{
+	for(index_t i=0; i<x->param_count(); ++i){
+		s << " " << x->param_value(i);
+	}
+}
+/*--------------------------------------------------------------------------*/
+void LegacySchematicLanguage::printData(Data const* x, ostream_t& s) const
+{
+	s << "\t<\"" << x->label() << "\"";
+	print_params(s, x);
+	s << ">\n";
 }
 /*--------------------------------------------------------------------------*/
 void LegacySchematicLanguage::printTaskElement(TaskElement const* c, ostream_t& s) const
@@ -641,7 +693,7 @@ Element* LegacySchematicLanguage::parseElement(istream_t& cmd, Element* x) const
 	x->setLabel(s);
 
 	for(index_t i=0; i<x->param_count(); ++i){
-		cmd >> s;
+		s = cmd.ctos(">", "=", ">");
 		x->set_param_by_index(i, s);
 	}
 	return x;
@@ -1059,7 +1111,7 @@ Element* LegacySchematicLanguage::parseItem(istream_t& c, Element* e) const
 	}else if(auto t=dynamic_cast<TaskElement*>(e)){
 		loadTaskElement(l, t);
 	}else if(auto d=dynamic_cast<Diagram*>(e)){
-		loadDiagram(d, c);
+		parseDiagram(d, c);
 	}else if(auto s=dynamic_cast<Painting*>(e)){
 		::parsePainting(l, s);
 	}else if(auto s=dynamic_cast<DEV_DOT*>(e)){
@@ -1142,6 +1194,7 @@ std::string LegacySchematicLanguage::findType(istream_t& c) const
 	}else if('-' == type.at(0)){
 		return "Wire";
 	}else if('"' == type.at(0)){
+		trace1("findType diagramvariable", c.fullString());
 		return "diagramvariable";
 	}else{
 		trace3("findType", c.fullString(), typestring, type.at(0));

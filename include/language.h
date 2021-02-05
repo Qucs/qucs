@@ -14,6 +14,7 @@ class Painting;
 class SchematicModel;
 class SubcktBase;
 class Symbol;
+class Diagram;
 class TaskElement;
 class ostream_t;
 
@@ -39,10 +40,10 @@ public:
   const Element* find_proto(const std::string&, const Element*) const;
 private: //called by printItem
   virtual void printPainting(Painting const*, ostream_t&) const = 0;
-  virtual void printDiagram(Symbol const*, ostream_t&) const = 0;
+  virtual void printDiagram(Diagram const*, ostream_t&) const = 0;
   virtual void printSymbol(Symbol const*, ostream_t&) const = 0;
   virtual void printSubckt(SubcktBase const*, ostream_t&) const = 0;
-  virtual void printTaskElement(TaskElement const*, ostream_t&) const = 0;
+  virtual void printElement(Element const*, ostream_t&) const = 0;
 //  virtual void print_comment(ostream_t&, const DEV_COMMENT const*){incomplete();}
   virtual void print_command(ostream_t&, const DEV_DOT*) const{incomplete();}
 };

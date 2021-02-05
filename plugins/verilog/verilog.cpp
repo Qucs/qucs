@@ -52,14 +52,15 @@ static std::string netLabel(Node const* nn)
 }
 /* -------------------------------------------------------------------------------- */
 class Verilog : public DocumentLanguage {
-	void printTaskElement(TaskElement const*, ostream_t&) const override;
+	void printElement(Element const*, ostream_t&) const override;
 	void printSymbol(Symbol const*, ostream_t&) const override;
 	void printSubckt(SubcktBase const*, ostream_t&) const override;
 	void printPainting(Painting const*, ostream_t&) const override;
 	void print_command(ostream_t&, DEV_DOT const*) const override;
-	void printDiagram(Symbol const*, ostream_t&) const override {incomplete();}
+	void printDiagram(Diagram const*, ostream_t&) const override {incomplete();}
 
-private:
+private: // local
+	void printTaskElement(TaskElement const*, ostream_t&) const;
 	void print_ports_short(ostream_t& o, const Symbol* x) const;
 
 private: //DocumentLanguage
@@ -202,12 +203,20 @@ void Verilog::printSubckt(SubcktBase const* x, ostream_t& o) const
 		o << "// missing sckt in " << x->label() << "\n";
 	}
 }
-/*!
- * verilog does not know about commands
- */
+/*--------------------------------------------------------------------------*/
+void Verilog::printElement(Element const* c, ostream_t& s) const
+{
+	if(auto t=dynamic_cast<TaskElement const*>(c)){
+		printTaskElement(t, s);
+	}else{
+		incomplete();
+	}
+}
+/*--------------------------------------------------------------------------*/
+// verilog does not know about commands
 void Verilog::printTaskElement(TaskElement const* c, ostream_t& s) const
 {
-  s << "//" << c->label() << "\n";
+	s << "//" << c->label() << "\n";
 }
 /*--------------------------------------------------------------------------*/
 void Verilog::printSymbol(Symbol const* sym, ostream_t& s) const

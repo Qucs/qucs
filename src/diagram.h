@@ -111,7 +111,7 @@ public:
 //  void setName(QString const& n){ Name = n; }
 
 public:
-  QString save(); // obsolete callback
+  QString save() const; // obsolete callback
 
 public: // Parameters
 	virtual unsigned param_count() const;
@@ -154,9 +154,9 @@ public: // BUG/incomplete
   QPen    GridPen;
 
 //  QList<Graph *>  Graphs;
-  QList<Arc *>    Arcs;
-  QList<Line *>   Lines;
-  QList<Text *>   Texts;
+//  QList<Arc *>    Arcs;
+//  QList<Line *>   Lines;
+//  QList<Text *>   Texts;
 
   QString sfreq;
   double *freq=nullptr;

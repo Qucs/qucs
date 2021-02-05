@@ -44,6 +44,12 @@ public:
 
   void createAxisLabels() {};   // no labels in this diagram
 
+public: // legacy cruft.
+  QList<Graph *>  Graphs;
+  QList<Arc *>    Arcs;
+  QList<Line *>   Lines;
+  QList<Text *>   Texts;
+
 protected:
   void calcData(Graph*) {};  // no graph data
 }D;

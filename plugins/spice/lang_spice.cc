@@ -31,11 +31,11 @@ private: // NetLang
   Element* parseItem(istream_t&, Element*) const override {incomplete(); return nullptr;}
 
 private: // local
-  void printTaskElement(TaskElement const*, ostream_t&) const { untested(); }
+  void printElement(Element const*, ostream_t&) const override { untested(); }
   void printSymbol(Symbol const*, ostream_t&) const override;
   void printSubckt(SubcktBase const*, ostream_t&) const {untested(); }
   void printPainting(Painting const*, ostream_t&) const override { untested(); }
-  void printDiagram(Symbol const*, ostream_t&) const override { untested();}
+  void printDiagram(Diagram const*, ostream_t&) const override { untested();}
 }d0;
 static Dispatcher<DocumentLanguage>::INSTALL p(&languageDispatcher, "spice", &d0);
 /*--------------------------------------------------------------------------*/

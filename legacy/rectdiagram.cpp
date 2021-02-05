@@ -64,6 +64,11 @@ private:
 //    w->move(_cx, _cy);
 //    return w;
 //  }
+public: // legacy cruft.
+  QList<Graph *>  Graphs;
+  QList<Arc *>    Arcs;
+  QList<Line *>   Lines;
+  QList<Text *>   Texts;
 
 protected:
   void clip(Graph::iterator &) const;

@@ -54,6 +54,11 @@ public:
   tPoint3D *Mem;   // memory for all points during hidden line algorithm
   tPoint3D *pMem;  // current position in "Mem"
 
+public: // legacy cruft.
+  QList<Graph *>  Graphs;
+  QList<Arc *>    Arcs;
+  QList<Line *>   Lines;
+  QList<Text *>   Texts;
 
 protected:
   void calcData(Graph*);

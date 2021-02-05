@@ -28,9 +28,9 @@ private: // NetLang
   Element* parseItem(istream_t&, Element*) const {incomplete(); return nullptr; }
 
 private: // Language
-  void printTaskElement(TaskElement const*, ostream_t&) const override {incomplete();}
+  void printElement(Element const*, ostream_t&) const override {incomplete();}
   void printPainting(Painting const*, ostream_t&) const override {incomplete();}
-  void printDiagram(Symbol const*, ostream_t&) const override {incomplete();}
+  void printDiagram(Diagram const*, ostream_t&) const override {incomplete();}
   void printSymbol(Symbol const*, ostream_t&) const override {incomplete();}
   void printSubckt(SubcktBase const*, ostream_t&) const override {incomplete();}
   void printItem(ostream_t&, Element const*) const override;

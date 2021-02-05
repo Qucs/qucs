@@ -29,13 +29,38 @@
 # include <ieeefp.h>
 #endif
 
-#include "smithdiagram.h"
 #include "misc.h"
-// #include "../dialogs/matchdialog.h" // For r2z function
-//
+#include "diagram.h"
 #include "obsolete_paintings.h"
+#include "qucs_globals.h"
+#include "module.h"
 
 namespace{
+
+class SmithDiagram : public Diagram  {
+public: 
+  SmithDiagram(int _cx=0, int _cy=0, bool ImpMode=true);
+ ~SmithDiagram();
+
+  Element* clone() const {return new SmithDiagram(*this);}
+  static Element* info(QString&, char* &, bool getNewOne=false);
+  static Element* info_y(QString&, char* &, bool getNewOne=false);
+  int  calcDiagram();
+  void calcLimits();
+  void calcCoordinate(const double*, const double*, const double*, float*, float*, Axis const*) const;
+  QString extraMarkerText(Marker const*) const;
+public: // legacy cruft.
+  QList<Graph *>  Graphs;
+  QList<Arc *>    Arcs;
+  QList<Line *>   Lines;
+  QList<Text *>   Texts;
+  void calcSmithAxisScale(Axis*, int&, int&){incomplete();}
+  void createSmithChart(Axis*, int Mode=7){incomplete();}
+
+}D;
+Dispatcher<Diagram>::INSTALL p(&diagram_dispatcher, "Smith", &D);
+Module::INSTALL pp("diagrams", &D);
+
 const double pi = 3.1415926535897932384626433832795029;  /* pi   */
 void p2c(double &Real, double &Imag) {
   double Real_ = Real;

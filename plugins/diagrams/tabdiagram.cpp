@@ -25,6 +25,7 @@
 #include "some_font_stuff.h"
 /*--------------------------------------------------------------------------*/
 namespace{
+/*--------------------------------------------------------------------------*/
 class DiagramWidget : public QPlainTextEdit{
 public:
 	DiagramWidget(Diagram* d)

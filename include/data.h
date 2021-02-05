@@ -82,6 +82,10 @@ public:
 	}
 
 	virtual void refresh() const{ untested(); }
+
+public:
+	virtual std::string get_param_by_name(std::string const&) const;
+
 protected:
 	void attach(CommonData const* d) const {
 		CommonData::attach(d, &_common);

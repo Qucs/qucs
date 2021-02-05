@@ -2,7 +2,6 @@
 TARGET = diagrams
 
 RAW_SRCS = \
-	diag_var.cpp \
 	rectdiagram.cpp \
 	tabdiagram.cpp
 

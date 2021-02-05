@@ -42,7 +42,7 @@ void DocumentLanguage::printItem(ostream_t& s, Element const* c) const
 		s << "unreachable, no item\n";
 		// assert(c);
 	}else if (auto C=dynamic_cast<const TaskElement*>(c)) {
-		printTaskElement(C, s);
+		printElement(C, s);
 	}else if (auto C=dynamic_cast<const SubcktBase*>(c)) {
 		if(C->is_device()){
 			printSymbol(C, s);
@@ -53,10 +53,12 @@ void DocumentLanguage::printItem(ostream_t& s, Element const* c) const
 		printSymbol(C, s);
 	}else if (auto C=dynamic_cast<const DEV_DOT*>(c)) {
 		print_command(s, C);
-	}else if (auto C=dynamic_cast<const Painting*>(c)) {
-		printPainting(C, s);
-	}else if (dynamic_cast<const Data*>(c)) {
-		// omit data.
+	}else if (auto d=dynamic_cast<const Diagram*>(c)) {
+		printDiagram(d, s);
+	}else if (auto p=dynamic_cast<const Painting*>(c)) {
+		printPainting(p, s);
+	}else if (auto d=dynamic_cast<const Data*>(c)) {
+		printElement(d, s);
 	}else{
 		incomplete();
 	}

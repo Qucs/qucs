@@ -133,6 +133,7 @@ QString Graph::save()
 }
 
 // ---------------------------------------------------------------------
+// obsolete. use variables.
 bool Graph::load(const QString& _s)
 {
   bool ok;
