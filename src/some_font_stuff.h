@@ -8,7 +8,7 @@
 // need some cleanup. but at least it works...
 
 // obsolete.
-inline int get_some_width(QString const& stmp)
+inline int get_some_width(QString const&)
 {
 	incomplete(); // crashes.
 	return 17;

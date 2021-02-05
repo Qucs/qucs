@@ -24,7 +24,6 @@
 - resurrect diagrams as QWidgets
 - hide text during symbols drag
 - movable (tx, ty) and editable text
-- adjust selection bits after "wire optimisation"
 - connect error message handling (Object)
 - named nets and parse qucsator models
 - use dispatcher in Module::INSTALL
@@ -34,12 +33,17 @@
 - refactor VHDLcode
 - qucsator process namesspace issue (important?)
 
+stuff that broke along the way
+- copy and paste
+- wire segment selection
+
 wishlist/optional
 - parse verilog schematic and round trip
 - make code more (human) readable where possible
 - could add CMake at some point
 
 done?
+- adjust selection bits after "wire optimisation" (almost)
 - fix parameters in "Lib" style components
 - untangle tAC and other callbacks
 - parameters in root circuit

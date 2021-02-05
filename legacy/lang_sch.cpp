@@ -119,8 +119,9 @@ private: // overrides
 
 private: // local/incomplete
 	Symbol* parseSymbol(istream_t&, Symbol*) const;
-	Element* loadElement_(const QString& _s, Element* e) const;
+//	Element* loadElement_(const QString& _s, Element* e) const;
 	void printLegacyTaskElement(LegacyTaskElement const*, ostream_t&) const;
+	Element* parseElement(istream_t&, Element*) const;
 
 private:
 	void printSymbol(Symbol const*, ostream_t&) const override;
@@ -629,6 +630,23 @@ Place const* place_at(pos_t p, Symbol* m)
 
 }
 /*--------------------------------------------------------------------------*/
+Element* LegacySchematicLanguage::parseElement(istream_t& cmd, Element* x) const
+{
+	trace1("LegacySchematicLanguage::parseElement", cmd.fullstring());
+
+	cmd.skip1('<');
+	std::string s;
+	cmd >> s;
+
+	x->setLabel(s);
+
+	for(index_t i=0; i<x->param_count(); ++i){
+		cmd >> s;
+		x->set_param_by_index(i, s);
+	}
+	return x;
+}
+/*--------------------------------------------------------------------------*/
 // decluttered parseComponentObsoleteCallback
 Symbol* LegacySchematicLanguage::parseSymbol(istream_t& cs, Symbol* sym) const
 {
@@ -1046,6 +1064,9 @@ Element* LegacySchematicLanguage::parseItem(istream_t& c, Element* e) const
 		::parsePainting(l, s);
 	}else if(auto s=dynamic_cast<DEV_DOT*>(e)){
 		return parseCommand(c, s);
+	}else if(auto s=dynamic_cast<Element*>(e)){
+		// Data here?
+		return parseElement(c, s);
 	}else{ untested();
 		return DocumentLanguage::parseItem(c, e);
 	}
@@ -1095,9 +1116,8 @@ DEV_DOT* LegacySchematicLanguage::parseCommand(istream_t& c, DEV_DOT* x) const
 	}else{
 	}
 
-	//istream_t c(istream_t::_STRING, Line.toStdString());
+
 	Command::cmdproc(c, scope); // new__instance??
-	// assert(false);
 
 	delete x;
 	return nullptr;
@@ -1121,6 +1141,8 @@ std::string LegacySchematicLanguage::findType(istream_t& c) const
 		return "Wire";
 	}else if('-' == type.at(0)){
 		return "Wire";
+	}else if('"' == type.at(0)){
+		return "diagramvariable";
 	}else{
 		trace3("findType", c.fullString(), typestring, type.at(0));
 	}

@@ -1,6 +1,6 @@
 /***************************************************************************
     copyright            : (C) 2003, 2004, 2005 by Michael Margraf
-                               2020 Felix Salfelder
+                               2020, 2021 Felix Salfelder
  ***************************************************************************/
 
 /***************************************************************************
@@ -12,7 +12,7 @@
  *                                                                         *
  ***************************************************************************/
 
-// Diagrams: elements that show data.
+// Diagram: Visualise data.
 //
 /*
   \todo Should probably use QFontMetrics::boundingRect(QString).width instead
@@ -38,8 +38,6 @@
 #include "schematic_doc.h"
 #include "platform.h"
 #include "qio.h"
-
-// #include "diagrams/rect3ddiagram.h" // BUG
 #include "misc.h"
 
 #include <QTextStream>
@@ -65,7 +63,6 @@ Diagram::Diagram(Diagram const& p)
     Bounding_y2(p.Bounding_y2),
     Name(p.Name) // yikes.
 {
-
     Arcs.clear();
     for(auto p1 : p.Arcs) {untested();
 	    Arcs.append(new Arc(*p1));
@@ -74,11 +71,18 @@ Diagram::Diagram(Diagram const& p)
     for(auto p1 : p.Lines) {
 	    Lines.append(new Line(*p1));
     }
+
+	 new_subckt();
+	 for (auto i : *p._subckt){
+		 assert(i);
+		 _subckt->push_back(i->clone());
+	 }
 }
 
 Diagram::Diagram(int cx, int cy)
   : Element(cx, cy)
 {
+	new_subckt();
   
   // x1, x2, y1, y2 are the selectable boundings of the diagram, but these
   // are the real boundings. They are set in "createAxisLabels()".
@@ -120,6 +124,8 @@ Diagram::~Diagram()
 {
   if(freq!=nullptr) delete[] freq;
   freq= nullptr;
+
+  delete _subckt;
 }
 
 void Diagram::paint(ViewPainter *p) const
@@ -208,12 +214,12 @@ void Diagram::paintDiagram(ViewPainter *p)
 
   }
 
-
     // draw all graphs
-  foreach(Graph *pg, Graphs)
-  {itested();
+#if 0
+  foreach(Graph *pg, Graphs) {itested();
       pg->paint(p, cx(), cy());
   }
+#endif
 
     // keep track of painter state
     p->save();
@@ -257,7 +263,13 @@ void Diagram::paintDiagram(ViewPainter *p)
 #endif
 }
 
-void Diagram::paintMarkers(ViewPainter *p, bool paintAll)
+void Diagram::new_subckt()
+{
+	assert(!_subckt);
+	_subckt = new SchematicModel();
+}
+
+void Diagram::paintMarkers(ViewPainter *, bool paintAll)
 {itested();
   incomplete();
 #if 0
@@ -328,6 +340,7 @@ void Diagram::createAxisLabels()
   y = y2>>1;
   if(yAxis.Label.isEmpty()) {itested();
     // draw left y-label for all graphs ------------------------------
+#if 0
     foreach(Graph *pg, Graphs) {itested();
       if(pg->yAxisNo != 0)  continue;
       if(pg->cPointsY) {itested();
@@ -349,6 +362,7 @@ void Diagram::createAxisLabels()
       }
       x -= LineSpacing;
     }
+#endif
   }else{ untested();
     encode_String(yAxis.Label, Str);
     w = metrics.width(Str) >> 1;
@@ -363,6 +377,7 @@ void Diagram::createAxisLabels()
   y = y2>>1;
   if(zAxis.Label.isEmpty()) {itested();
     // draw right y-label for all graphs ------------------------------
+#if 0
     foreach(Graph *pg, Graphs) {itested();
       if(pg->yAxisNo != 1)  continue;
       if(pg->cPointsY) {itested();
@@ -387,6 +402,7 @@ void Diagram::createAxisLabels()
       }
       x += LineSpacing;
     }
+#endif
   }else{ untested();
     encode_String(zAxis.Label, Str);
     w = metrics.width(Str) >> 1;
@@ -444,7 +460,8 @@ Marker* Diagram::setMarker(int x, int y)
 { untested();
   if(getSelected(x, y)) { untested();
     // test all graphs of the diagram
-    foreach(Graph *pg,Graphs) { untested();
+#if 0
+    foreach(Graph *pg, Graphs) { untested();
       int n  = pg->getSelected(x-cx(), cy()-y); // sic!
       if(n >= 0) { untested();
 	assert(pg->parentDiagram() == this);
@@ -453,6 +470,7 @@ Marker* Diagram::setMarker(int x, int y)
 	return pm;
       }
     }
+#endif
   }
   return NULL;
 }
@@ -834,12 +852,14 @@ void Diagram::loadGraphData(const QString& defaultDataSet)
   yAxis.max = zAxis.max = xAxis.max = -DBL_MAX;
 
   int No=0;
+#if 0
   foreach(Graph *pg, Graphs) {itested();
     qDebug() << "load GraphData load" << defaultDataSet << pg->Var;
     if(pg->loadDatFile(defaultDataSet) != 1)   // load data, determine max/min values
       No++;
     getAxisLimits(pg);
   }
+#endif
 
   if(No <= 0) {   // All dataset files unchanged ?
     yAxis.numGraphs = yNum;  // rebuild scrollbar position
@@ -874,8 +894,11 @@ void Diagram::recalcGraphData()
   yAxis.numGraphs = zAxis.numGraphs = 0;
 
   // get maximum and minimum values
-  foreach(Graph *pg, Graphs)
+#if 0
+  foreach(Graph *pg, Graphs){
     getAxisLimits(pg);
+  }
+#endif
 
   if(xAxis.min > xAxis.max) { untested();
     xAxis.min = 0.0;
@@ -902,6 +925,7 @@ void Diagram::updateGraphData()
 {itested();
   int valid = calcDiagram();   // do not calculate graph data if invalid
 
+#if 0
   foreach(Graph *pg, Graphs) {itested();
     pg->clear();
     if((valid & (pg->yAxisNo+1)) != 0)
@@ -911,14 +935,17 @@ void Diagram::updateGraphData()
       pg->cPointsY = 0;
     }
   }
+#endif
 
   createAxisLabels();  // virtual function
 
   // Setting markers must be done last, because in 3D diagram "Mem"
   // is released in "createAxisLabels()".
+#if 0
   foreach(Graph *pg, Graphs){itested();
     pg->createMarkerText();
   }
+#endif
 }
 
 // --------------------------------------------------------------------------
@@ -1382,8 +1409,12 @@ QString Diagram::save()
   // labels can contain spaces -> must be last items in the line
   s += " \""+xAxis.Label+"\" \""+yAxis.Label+"\" \""+zAxis.Label+"\" \""+sfreq+"\">\n";
 
+#if 0
   foreach(Graph *pg, Graphs)
     s += pg->save()+"\n";
+#else
+    s += "legacy. does not work\n";
+#endif
 
   s += "  </"+Name+">";
   return s;
@@ -1540,18 +1571,18 @@ bool Diagram::load(const QString& Line, istream_t& stream)
 
       // .......................................................
       // load markers of the diagram
-      pg = Graphs.last();
-      if(!pg){ untested();
-      	return false;
-      }else{ untested();
-      }
-      assert(pg->parentDiagram() == this);
-      Marker *pm = new Marker(pg);
+      // pg = Graphs.last();
+      // if(!pg){ untested();
+      // 	return false;
+      // }else{ untested();
+      // }
+      // assert(pg->parentDiagram() == this);
+      Marker *pm = new Marker(nullptr);
       if(!pm->load(s)) { untested();
 	delete pm;
 	return false;
       }
-      pg->Markers.append(pm);
+//      pg->Markers.append(pm);
       continue;
     }
 
@@ -1561,7 +1592,7 @@ bool Diagram::load(const QString& Line, istream_t& stream)
       delete pg;
       return false;
     }
-    Graphs.append(pg);
+    // Graphs.append(pg);
   }
   return false;   // end tag missing
 }

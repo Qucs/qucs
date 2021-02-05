@@ -43,7 +43,7 @@ public:
 		// TODO: default according to properties in .sch file?
 		_dat = dataDispatcher.clone("datfiles");
 		assert(a);
-		_dat->setLabel("dat");
+		_dat->setLabel("datfiles");
 		subckt()->push_back(_dat);
 #endif
   }

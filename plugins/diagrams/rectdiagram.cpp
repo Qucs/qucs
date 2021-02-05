@@ -1,5 +1,5 @@
 /***************************************************************************
-    copyright            : (C) 2020 Felix Salfelder
+    copyright            : (C) 2020, 2021 Felix Salfelder
  ***************************************************************************/
 
 /***************************************************************************
@@ -17,11 +17,27 @@
 #include "module.h"
 #include "qio.h"
 #include "qt_compat.h"
+#include "language.h"
+#include "data.h"
 
 #include <QPlainTextEdit>
 #include <QLineEdit>
 
 namespace {
+
+class DiagramVariable : public Data {
+public:
+	DiagramVariable() : Data(){}
+	DiagramVariable(DiagramVariable const& e) : Data(e){}
+
+public: // Element
+	Element* clone() const override{
+		return new DiagramVariable(*this);
+	}
+	void paint(ViewPainter*) const{}
+
+}v0;
+Dispatcher<Data>::INSTALL p0(&dataDispatcher, "diagramvariable", &v0);
 
 	// todo: share?
 class DiagramWidget : public QWidget{
@@ -54,7 +70,7 @@ public:
 // must be a factory, because cant instanciate QtObject statically
 class RectDiagram : public Diagram  {
 private:
-	RectDiagram(RectDiagram const& c) : Diagram(c), _widget(c._widget) {}
+	RectDiagram(RectDiagram const& c);
 public:
 	explicit RectDiagram() : Diagram(), _widget(nullptr){}
 	~RectDiagram(){}
@@ -89,6 +105,17 @@ private:
 Dispatcher<Diagram>::INSTALL p(&diagram_dispatcher, "Rect", &D);
 Module::INSTALL pp("diagrams", &D);
 /*--------------------------------------------------------------------------*/
+RectDiagram::RectDiagram(RectDiagram const& c)
+  : Diagram(c), _widget(c._widget)
+{
+	assert(scope());
+#if 0 // could use own datatype. let's see
+	Element* v = v0.clone();
+	v->setLabel("diagramvariable");
+	assert(scope());
+	scope()->push_back(v);
+#endif
+}
 /*--------------------------------------------------------------------------*/
 // obsolete.
 bool RectDiagram::load(const QString& Line, istream_t& stream)
@@ -187,7 +214,9 @@ bool RectDiagram::load(const QString& Line, istream_t& stream)
 	yAxis.Label = s.section('"',3,3);   // yLabel left
 	zAxis.Label = s.section('"',5,5);   // yLabel right
 
-	Graph *pg;
+	return true; // use new__instance, below.
+
+//	Graph *pg;
 	// .......................................................
 	// load graphs of the diagram
 	while(!stream.atEnd()) {
@@ -202,6 +231,7 @@ bool RectDiagram::load(const QString& Line, istream_t& stream)
 
 			// .......................................................
 			// load markers of the diagram
+#if 0
 			pg = Graphs.last();
 			if(!pg){ untested();
 				return false;
@@ -223,6 +253,7 @@ bool RectDiagram::load(const QString& Line, istream_t& stream)
 				return false;
 			}
 			Graphs.append(pg);
+#endif
 		}
 	}
 	return false;   // end tag missing
@@ -265,12 +296,15 @@ static Diagram* parseDiagram(RectDiagram* d, istream_t& cmd)
 class RectDiagramCmd : public Command  {
 	void do_it(istream_t& cs, SchematicModel* scope){
 		trace1("<Rect cmd" , cs.fullstring());
-		auto d = prechecked_cast<RectDiagram*>(D.clone());
-		assert(d);
+		auto e = prechecked_cast<RectDiagram*>(D.clone());
+		assert(e);
 
 #if 1
-		parseDiagram(d, cs);
-#else // later
+		parseDiagram(e, cs);
+#endif
+#if 1
+		auto lang = languageDispatcher["leg_sch"];
+		assert(lang);
 		while(true){
 			cs.read_line();
 			trace1("<Rect cmd" , cs.fullstring());
@@ -279,11 +313,11 @@ class RectDiagramCmd : public Command  {
 			}else{
 				trace2("Rect parse", label(), cs.fullstring());
 				cs.skipbl();
-				lang->new__instance(cs, sym, e->scope());
+				lang->new__instance(cs, e, e->scope());
 			}
 		}
 #endif
-		scope->push_back(d);
+		scope->push_back(e);
 	}
 }C;
 Dispatcher<Diagram>::INSTALL p1(&commandDispatcher, "Rect", &C);

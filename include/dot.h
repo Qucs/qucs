@@ -31,7 +31,7 @@ class DEV_DOT : public Element {
 private:
   std::string	_s;
   explicit DEV_DOT(const DEV_DOT& p)
-    :Element(p), _s(p._s), _scope(p._scope) {}//{set_constant(true);}
+    :Element(p), _s(p._s), _scope(p._scope), _c(p._c) {}//{set_constant(true);}
 public:
   explicit	DEV_DOT()		:Element() {}//{set_constant(true);}
 private: // override virtual
@@ -43,11 +43,14 @@ public: // override
   DEV_DOT* clone()const override {return new DEV_DOT(*this);}
   SchematicModel* scope() override;
 public:
+  void set(Command const* c) {_c = c;}
   void set(const std::string& S) {_s = S;}
-  void set_scope(SchematicModel* s){_scope = s;}
+  void set_scope(SchematicModel* s){_scope = s;} // yikes.
   const std::string& s()const {return _s;}
+  Command const* c() const {return _c;}
 private:
   SchematicModel* _scope;
+  Command const* _c{nullptr};
 };
 /*--------------------------------------------------------------------------*/
 inline SchematicModel* DEV_DOT::scope()

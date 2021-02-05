@@ -105,9 +105,11 @@ class QWidget;
 /*--------------------------------------------------------------------------*/
 class SchematicModel;
 /*--------------------------------------------------------------------------*/
+// Element: has a position.
+// TODO: base on sth like card with params but no position.
 class Element : public Object {
 public:
-	friend class ElementGraphics;
+	friend class ElementGraphics; // BUG?
 	typedef rect_t Rect;
 protected:
 	Element(Element const&);
@@ -165,6 +167,11 @@ public:
 	}
 //	virtual QString const& description() const{return incomplete_description;}
 	virtual char const* iconBasename() const{return nullptr;}
+
+public: // params
+	virtual unsigned param_count()const{return 0;}
+	virtual void set_param_by_index(index_t, std::string const&){}
+	virtual std::string param_value(unsigned) const{return "incomplete";}
 
 public: // compatibility
 	virtual bool legacyTransformHack() const{

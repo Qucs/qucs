@@ -25,7 +25,7 @@
 #include "qio.h"
 
 #define DEV_DOT Dot
-
+/*--------------------------------------------------------------------------*/
 Element* DocumentLanguage::parseItem(istream_t& s, Element* c) const
 { untested();
   if (DEV_DOT* d = dynamic_cast<DEV_DOT*>(c)) { untested();
@@ -35,7 +35,7 @@ Element* DocumentLanguage::parseItem(istream_t& s, Element* c) const
 	  return nullptr;
   }
 }
-
+/*--------------------------------------------------------------------------*/
 void DocumentLanguage::printItem(ostream_t& s, Element const* c) const
 {
 	if(!c){ untested();
@@ -61,9 +61,9 @@ void DocumentLanguage::printItem(ostream_t& s, Element const* c) const
 		incomplete();
 	}
 }
-
+/*--------------------------------------------------------------------------*/
 // borrowed from u_lang.h
-void DocumentLanguage::new__instance(istream_t& cmd, Symbol* /*sckt?*/ owner,
+void DocumentLanguage::new__instance(istream_t& cmd, Element* owner,
 		SchematicModel* Scope) const
 {
 	assert(Scope);
@@ -124,17 +124,21 @@ Element const* DocumentLanguage::find_proto(const std::string& Name, const Eleme
 #endif
   if (p) {
     return p;
-  }else if ((commandDispatcher[Name])) {
-    auto d=new DEV_DOT;	//BUG// memory leak
+  }else if (auto cmd = commandDispatcher[Name]) {
+    auto d = new DEV_DOT;	//BUG// memory leak
+	 d->set(cmd);
 //	 d->setOwner(Scope); // really??
 	 return d;
-  }else if ((p = element_dispatcher[Name])) {
+  }else if ((p = element_dispatcher[Name])) { untested();
+	  // TaskElements are here... (move to Data?)
     return p;
   }else if ((p = symbol_dispatcher[Name])) {
     return p;
   }else if ((p = painting_dispatcher[Name])) {
     return p;
   }else if ((p = diagram_dispatcher[Name])) {
+    return p;
+  }else if ((p = dataDispatcher[Name])) {
     return p;
   }else{
 	  trace1("try more", Name);
@@ -163,6 +167,7 @@ Element const* DocumentLanguage::find_proto(const std::string& Name, const Eleme
     }
     if ((commandDispatcher[s])) { untested();
       return new DEV_DOT; //BUG// we will look it up twice, //BUG// memory leak
+		 // d->set(cmd);?
     }else{ untested();
       return NULL;
     }

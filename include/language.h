@@ -34,7 +34,7 @@ public:
 	  untested(); return nullptr;
   }
   virtual std::string findType(istream_t&) const = 0;
-  void new__instance(istream_t& cmd, Symbol* /*sckt?*/ owner,
+  void new__instance(istream_t& cmd, Element* owner,
                      SchematicModel* Scope) const;
   const Element* find_proto(const std::string&, const Element*) const;
 private: //called by printItem

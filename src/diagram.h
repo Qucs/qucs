@@ -125,6 +125,9 @@ public: // Parameters
 		throw qucs::ExceptionCantFind( label(), std::to_string(n), "params");
 	}
 
+public:
+	SchematicModel* scope(){ return _subckt; }
+
 public: // ??!
   virtual void paintDiagram(ViewPainter* p);
   void paintMarkers(ViewPainter* p, bool paintAll = true);
@@ -150,7 +153,7 @@ private: // internals
 public: // BUG/incomplete
   QPen    GridPen;
 
-  QList<Graph *>  Graphs;
+//  QList<Graph *>  Graphs;
   QList<Arc *>    Arcs;
   QList<Line *>   Lines;
   QList<Text *>   Texts;
@@ -184,6 +187,9 @@ protected:
 
   virtual void calcData(Graph*);
 
+private:
+	void new_subckt();
+
 public: // from mouseactions.cpp
   virtual bool scrollTo(int, int, int){return false;}
   virtual int scroll(int){return 0;}
@@ -201,6 +207,8 @@ private:
   int Bounding_x1, Bounding_x2, Bounding_y1, Bounding_y2;
 protected:
   QString Name; // the label, but sometimes the type. yikes.
+private:
+  SchematicModel* _subckt{nullptr};
 }; // Diagram
 
 #endif

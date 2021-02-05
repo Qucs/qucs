@@ -184,6 +184,7 @@ int TabDiagram::calcDiagram()
 
 //  Graph *firstGraph;
 
+#if 0
   QListIterator<Graph *> ig(Graphs);
   Graph *g = 0;
   if (ig.hasNext()) // point to first graph
@@ -196,6 +197,7 @@ int TabDiagram::calcDiagram()
       Texts.append(new Text(x-4, y2-2, Str)); // independent variable
     return 0;
   }
+#endif
 
 //  int NumAll=0;   // how many numbers per column
 //  int NumLeft=0;  // how many numbers could not be written

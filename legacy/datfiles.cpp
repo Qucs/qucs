@@ -62,7 +62,8 @@ public:
 			std::string fn = dir + "/" + DataSet.toStdString();
 			trace1("prepare", fn);
 			dat->set_param_by_name("filename", fn); // really?
-			dat->setLabel(DataSet.toStdString());
+			auto l = DataSet.size();
+			dat->setLabel(DataSet.toStdString().substr(0, l-4));
 			assert(dat->label()!="");
 
 			try{

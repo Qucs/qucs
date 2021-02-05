@@ -19,6 +19,7 @@
 #include "schematic_doc.h"
 #include "platform.h"
 #include "misc.h"
+#include "qucs_globals.h" // TODO: ask diagram instead.
 
 #include <cmath>
 #include <assert.h>
@@ -108,6 +109,7 @@ DiagramDialog::DiagramDialog(QucsDoc* d)
 // this is needed to be able to attach CommonData to
 // dropdown menu items
 Q_DECLARE_METATYPE(CommonData const*)
+Q_DECLARE_METATYPE(Data*)
 
 class DataChooser : public QComboBox{
 public:
@@ -156,7 +158,10 @@ private:
 			}
 			if(nonempty){ untested();
 				std::string label = dir->label();
-				addItem(QString_(prefix));
+				QVariant shared = QVariant::fromValue<CommonData const*>(dir); // BUG: *tach.
+
+				addItem(QString_(prefix), shared);
+//				addItem(QString_(prefix));
 			}else{ untested();
 			}
 		}else{ untested();
@@ -170,20 +175,25 @@ public:
 // BUG: disentangle different diagram types
 void DiagramDialog::attach(ElementGraphics* g)
 { untested();
-	auto d = g->operator->();
+// edit a copy of the element,
+// display the copy in the schematic while the dialog is open.
+	_orig = g;
+	_clone = g->clone();
+	auto d = element(_clone);
 	assert(d);
-  Diag = prechecked_cast<Diagram*>(d);
-  assert(Diag);
-  Graphs.setAutoDelete(true);
-  copyDiagramGraphs();   // why??
-  if(schematic()){ untested();
-	  const SchematicDoc* s = dynamic_cast<const SchematicDoc*>(schematic());
-	  assert(s);
-	  QFileInfo Info(s->docName());
-	  defaultDataSet = Info.path() + QDir::separator() + s->DataSet;
-  }else{ untested();
-	  defaultDataSet = "unknown";
-  }
+
+	Diagram* diag = prechecked_cast<Diagram*>(d);
+	assert(diag);
+
+	if(schematic()){ untested();
+		const SchematicDoc* s = dynamic_cast<const SchematicDoc*>(schematic());
+		assert(s);
+		QFileInfo Info(s->docName());
+		defaultDataSet = Info.path() + QDir::separator() + s->DataSet;
+	}else{ untested();
+		defaultDataSet = "unknown";
+	}
+
   setWindowTitle(tr("Edit Diagram Properties"));
   changed = false;
   transfer = false;  // have changes be applied ? (used by "Cancel")
@@ -276,6 +286,7 @@ void DiagramDialog::attach(ElementGraphics* g)
   }else if(Diag->name() == "Truth") { untested();
 	  // ??
   }else{ untested();
+#endif
     Label1 = new QLabel(tr("Color:"));
     Box2Layout->addWidget(Label1);
     ColorButt = new QPushButton("");
@@ -294,12 +305,12 @@ void DiagramDialog::attach(ElementGraphics* g)
 
     PropertyBox->addItem(tr("dash line"));
     PropertyBox->addItem(tr("dot line"));
-    if(Diag->name() != "Time") { untested();
+//    if(Diag->name() != "Time") { untested();
       PropertyBox->addItem(tr("long dash line"));
       PropertyBox->addItem(tr("stars"));
       PropertyBox->addItem(tr("circles"));
       PropertyBox->addItem(tr("arrows"));
-    }
+//    }
 
     connect(PropertyBox, SIGNAL(activated(int)),
 			 SLOT(slotSetGraphStyle(int)));
@@ -314,7 +325,7 @@ void DiagramDialog::attach(ElementGraphics* g)
     Property2->setMaxLength(2);
     Property2->setText("0");
 
-    if((Diag->name()=="Rect") || (Diag->name()=="PS") || (Diag->name()=="SP") || (Diag->name()=="Curve")) { untested();
+//    if((Diag->name()=="Rect") || (Diag->name()=="PS") || (Diag->name()=="SP") || (Diag->name()=="Curve")) { untested();
       Label4 = new QLabel(tr("y-Axis:"));
       Box2Layout->addWidget(Label4);
       Label4->setEnabled(false);
@@ -324,7 +335,8 @@ void DiagramDialog::attach(ElementGraphics* g)
       yAxisBox->addItem(NameZ);
       yAxisBox->setEnabled(false);
       connect(yAxisBox, SIGNAL(activated(int)), SLOT(slotSetYAxis(int)));
-    }
+//    }
+#if 0
   }
 #endif // init_stuff
 
@@ -353,18 +365,22 @@ void DiagramDialog::attach(ElementGraphics* g)
   ChooseData = new DataChooser;
 
 	// diag lives in main, for some reason. go up twice.
-	auto oo = dynamic_cast<Element const*>(Diag->mutable_owner());
-	assert(oo);
-	oo = dynamic_cast<Element const*>(oo->mutable_owner());
-	assert(oo);
-	assert(oo->scope());
-	ChooseData->setScope(oo->scope());
-	DataGroupLayout->addWidget(ChooseData);
+  {
+	  Diagram* diag = prechecked_cast<Diagram*>(element(_orig));
+	  assert(diag);
+	  auto oo = dynamic_cast<Element const*>(diag->mutable_owner());
+	  assert(oo);
+	  oo = dynamic_cast<Element const*>(oo->mutable_owner());
+	  assert(oo);
+	  assert(oo->scope());
+	  ChooseData->setScope(oo->scope());
+	  DataGroupLayout->addWidget(ChooseData);
+  }
 
   // todo: replace by QTableWidget
   // see https://gist.github.com/ClemensFMN/8955411
 
-    Name = QString::fromStdString(Diag->label());
+    Name = QString::fromStdString(diag->label());
     connect(ChooseData, SIGNAL(activated(int)), SLOT(slotReadVars(int)));
     ChooseVars = new QTableWidget(1, 3);
     ChooseVars->verticalHeader()->setVisible(false);
@@ -385,7 +401,7 @@ void DiagramDialog::attach(ElementGraphics* g)
 
     connect(ChooseVars, &QTableWidget::itemDoubleClicked, this, &DiagramDialog::slotTakeVar);
 
-  QGroupBox *GraphGroup = new QGroupBox(tr("Graph"));
+  QGroupBox *GraphGroup = new QGroupBox(tr("Data"));
   Box1Layout->addWidget(GraphGroup);
   QVBoxLayout *GraphGroupLayout = new QVBoxLayout();
   GraphGroup->setLayout(GraphGroupLayout);
@@ -393,16 +409,16 @@ void DiagramDialog::attach(ElementGraphics* g)
   GraphGroupLayout->addWidget(GraphList);
   connect(GraphList, SIGNAL(itemClicked(QListWidgetItem*)), SLOT(slotSelectGraph(QListWidgetItem*)));
   connect(GraphList, SIGNAL(itemDoubleClicked(QListWidgetItem*)), SLOT(slotDeleteGraph()));
-  QPushButton *NewButt = new QPushButton(tr("New Graph"));
+  QPushButton *NewButt = new QPushButton(tr("New Variable"));
   GraphGroupLayout->addWidget(NewButt);
   connect(NewButt, SIGNAL(clicked()), SLOT(slotNewGraph()));
-  QPushButton *DelButt = new QPushButton(tr("Delete Graph"));
+  QPushButton *DelButt = new QPushButton(tr("Delete Variable"));
   GraphGroupLayout->addWidget(DelButt);
   connect(DelButt, SIGNAL(clicked()), SLOT(slotDeleteGraph()));
 
   t->addTab(Tab1, tr("Data"));
 
-  // Tab #2...........................................................
+{ // makeTab2...........................................................
   int Row = 0;
   if(1) { // } Diag->name().at(0) != 'T') {  // not tabular or timing diagram
     QWidget *Tab2 = new QWidget(t);
@@ -446,7 +462,7 @@ void DiagramDialog::attach(ElementGraphics* g)
       connect(GridColorButt, SIGNAL(clicked()), SLOT(slotSetGridColor()));
       gp->addWidget(GridColorButt, Row, 1);
       Row++;
-      misc::setPickerColor(GridColorButt, Diag->GridPen.color());
+      misc::setPickerColor(GridColorButt, diag->GridPen.color());
 
       GridLabel2 = new QLabel(tr("Grid Style: "), Tab2);
       gp->addWidget(GridLabel2, Row, 0);
@@ -458,19 +474,22 @@ void DiagramDialog::attach(ElementGraphics* g)
       GridStyleBox->addItem(tr("dash dot dot line"));
       gp->addWidget(GridStyleBox, Row, 1);
       Row++;
-      GridStyleBox->setCurrentIndex(Diag->GridPen.style()-1);
+      GridStyleBox->setCurrentIndex(diag->GridPen.style()-1);
     
-      GridOn->setChecked(Diag->xAxis.GridOn);
-      if(!Diag->xAxis.GridOn) slotSetGridBox(0);
+      GridOn->setChecked(diag->xAxis.GridOn);
+      if(!diag->xAxis.GridOn) slotSetGridBox(0);
       connect(GridOn, SIGNAL(stateChanged(int)), SLOT(slotSetGridBox(int)));
 //  }
 
     // ...........................................................
-    xLabel->setText(Diag->xAxis.Label);
-    ylLabel->setText(Diag->yAxis.Label);
-    if(yrLabel)  yrLabel->setText(Diag->zAxis.Label);
+    xLabel->setText(diag->xAxis.Label);
+    ylLabel->setText(diag->yAxis.Label);
+    if(yrLabel) {
+		 yrLabel->setText(diag->zAxis.Label);
+	 }else{
+	 }
 
-//    if((Diag->name().left(4) == "Rect") || (Diag->name() == "Curve")) {
+//    if((diag->name().left(4) == "Rect") || (diag->name() == "Curve")) {
       GridLogX = new QCheckBox(tr("logarithmical X Axis Grid"), Tab2);
       gp->addWidget(GridLogX, Row, 0);
       Row++;
@@ -485,16 +504,17 @@ void DiagramDialog::attach(ElementGraphics* g)
 
       // ...........................................................
       // transfer the diagram properties to the dialog
-      GridLogX->setChecked(Diag->xAxis.log);
-      GridLogY->setChecked(Diag->yAxis.log);
-      GridLogZ->setChecked(Diag->zAxis.log);
+      GridLogX->setChecked(diag->xAxis.log);
+      GridLogY->setChecked(diag->yAxis.log);
+      GridLogZ->setChecked(diag->zAxis.log);
 
-//    } else{
+//    }else{
 //		 // 3d??
 //		 GridLogX = GridLogY = GridLogZ = 0;
 //	 }
 
     t->addTab(Tab2, tr("Properties"));
+// tab2 end??
 
     // Tab #3 - Limits ...........................................................
     QWidget *Tab3 = new QWidget();
@@ -567,7 +587,7 @@ void DiagramDialog::attach(ElementGraphics* g)
     QWidget *VBox7 = new QWidget();
     axisYLayout->addWidget(VBox7);
     QVBoxLayout *VBox7Layout = new QVBoxLayout();
-//    if((Diag->name()=="Smith") || (Diag->name()=="ySmith") || (Diag->name()=="PS")){
+//    if((diag->name()=="Smith") || (diag->name()=="ySmith") || (diag->name()=="PS")){
 //		 VBox7Layout->addWidget(new QLabel(tr("number")));
 //	 }else{
 		 VBox7Layout->addWidget(new QLabel(tr("step")));
@@ -614,7 +634,7 @@ void DiagramDialog::attach(ElementGraphics* g)
     QWidget *VBox11 = new QWidget();
     axisZLayout->addWidget(VBox11);
     QVBoxLayout *VBox11Layout = new QVBoxLayout();
-//    if(Diag->name() == "SP"){
+//    if(diag->name() == "SP"){
 		 VBox11Layout->addWidget(new QLabel(tr("number")));
 //	 } else {
 //		 VBox11Layout->addWidget(new QLabel(tr("step")));
@@ -643,34 +663,34 @@ void DiagramDialog::attach(ElementGraphics* g)
 
     // ...........................................................
     // transfer the diagram properties to the dialog
-    if(Diag->xAxis.autoScale)  slotManualX(0);
+    if(diag->xAxis.autoScale)  slotManualX(0);
     else  manualX->setChecked(true);
-    if(Diag->yAxis.autoScale)  slotManualY(0);
+    if(diag->yAxis.autoScale)  slotManualY(0);
     else  manualY->setChecked(true);
-    if(Diag->zAxis.autoScale)  slotManualZ(0);
+    if(diag->zAxis.autoScale)  slotManualZ(0);
     else  manualZ->setChecked(true);
 
-    Diag->calcLimits();    // inserts auto-scale values if not manual
+    diag->calcLimits();    // inserts auto-scale values if not manual
 
-    startX->setText(QString::number(Diag->xAxis.limit_min));
-    stepX->setText(QString::number(Diag->xAxis.step));
-    stopX->setText(QString::number(Diag->xAxis.limit_max));
+    startX->setText(QString::number(diag->xAxis.limit_min));
+    stepX->setText(QString::number(diag->xAxis.step));
+    stopX->setText(QString::number(diag->xAxis.limit_max));
 
-    startY->setText(QString::number(Diag->yAxis.limit_min));
-    stepY->setText(QString::number(Diag->yAxis.step));
-    stopY->setText(QString::number(Diag->yAxis.limit_max));
+    startY->setText(QString::number(diag->yAxis.limit_min));
+    stepY->setText(QString::number(diag->yAxis.step));
+    stopY->setText(QString::number(diag->yAxis.limit_max));
 
-    startZ->setText(QString::number(Diag->zAxis.limit_min));
-    stepZ->setText(QString::number(Diag->zAxis.step));
-    stopZ->setText(QString::number(Diag->zAxis.limit_max));
+    startZ->setText(QString::number(diag->zAxis.limit_min));
+    stepZ->setText(QString::number(diag->zAxis.step));
+    stopZ->setText(QString::number(diag->zAxis.limit_max));
 
 #if 0
-	if((Diag->name() == "Smith") || (Diag->name() == "ySmith") ||
-			(Diag->name() == "Polar")) {
+	if((diag->name() == "Smith") || (diag->name() == "ySmith") ||
+			(diag->name() == "Polar")) {
 		axisZ->setEnabled(false);
-	}else if(Diag->name().left(4) != "Rect") {
+	}else if(diag->name().left(4) != "Rect") {
 		// cartesian 2D and 3D
-		if((Diag->name() != "Curve")) {
+		if((diag->name() != "Curve")) {
 			axisX->setEnabled(false);
 			startY->setEnabled(false);
 			startZ->setEnabled(false);
@@ -684,6 +704,7 @@ void DiagramDialog::attach(ElementGraphics* g)
 	  // tabular or some Truth? not here.
 	  stepX = 0;
   }
+} // tab2
 
   connect(t, SIGNAL(currentChanged(QWidget*)), SLOT(slotChangeTab(QWidget*)));
   // ...........................................................
@@ -719,23 +740,37 @@ void DiagramDialog::attach(ElementGraphics* g)
 
   // ...........................................................
   // put all graphs into the ListBox
-  Graph* currentGraph = nullptr;
-  Row = 0;
-  foreach(Graph *pg, Diag->Graphs) { untested();
-    GraphList->insertItem(Row, pg->Var);
-    if(pg == currentGraph) { untested();
-      GraphList->setCurrentRow(Row);   // select current graph
-      SelectGraph(currentGraph);
-    }
-    Row++;
-  }
+  //refreshListBox(diag, GraphList)
+  {
+	  Data* currentGraph = nullptr;
+	  index_t Row = 0;
+	  if(diag->scope()){
+		  for(auto pg : *diag->scope()) { untested();
+			  if(!pg){
+				  unreachable();
+			  }else if(auto dd=dynamic_cast<Data*>(pg)){
+				  trace1("refreshList", pg->label());
+				  auto qv = QVariant::fromValue<Data*>(dd);
+				  auto I = new QListWidgetItem(QString_(pg->label()));
+				  I->setData(Qt::UserRole, qv);
+				  GraphList->insertItem(Row, I);
+				  if(pg == currentGraph) { untested();
+					  GraphList->setCurrentRow(Row);   // select current graph
+					  SelectGraph(currentGraph);
+				  }
+				  Row++;
+			  }
+		  }
+	  }else{
+	  }
 
-  if(ColorButt) { untested();
-    if(!currentGraph) { untested();
-      QColor selectedColor(DefaultColors[GraphList->count()%NumDefaultColors]);
-      misc::setPickerColor(ColorButt, selectedColor);
-    }
-  }else{ untested();
+	  if(ColorButt) { untested();
+		  if(!currentGraph) { untested();
+			  QColor selectedColor(DefaultColors[GraphList->count()%NumDefaultColors]);
+			  misc::setPickerColor(ColorButt, selectedColor);
+		  }
+	  }else{ untested();
+	  }
   }
 }
 
@@ -780,6 +815,7 @@ void DiagramDialog::slotReadVars(int)
 
 //  QFileInfo Info(defaultDataSet); // TODO
   QVariant cv = ChooseData->currentData();
+  trace1("readVars", ChooseData->currentText());
   CommonData const* common = cv.value<CommonData const*>();
 
   QString Line, tmp, Var;
@@ -831,13 +867,18 @@ void DiagramDialog::slotReadVars(int)
 /*--------------------------------------------------------------------------*/
 
 // ------------------------------------------------------------------------
-// Inserts the double-clicked variable into the Graph Input Line at the
-// cursor position. If the Graph Input is empty, then the variable is
+// Add the double-clicked variable to the Diagram. Refresh the list.
+//
+// What does this mean?
+// If the Graph Input is empty, then the variable is
 // also inserted as graph.
 void DiagramDialog::slotTakeVar(QTableWidgetItem* Item)
 { untested();
   GraphInput->blockSignals(true);
-  if(toTake) GraphInput->setText("");
+  if(toTake){
+	  GraphInput->setText("");
+  }else{
+  }
 
   GraphInput->cursorPosition();
   //QString s="";
@@ -849,22 +890,30 @@ void DiagramDialog::slotTakeVar(QTableWidgetItem* Item)
   auto s1 = QString_(xr->label());
 
   QFileInfo Info(defaultDataSet);
-  if(ChooseData->currentText() != Info.completeBaseName())
+  if(ChooseData->currentText() != Info.completeBaseName()){
     s1 = ChooseData->currentText() + ":" + s1;
+  }else{
+  }
   GraphInput->setText(s1);
 
   //if(s.isEmpty()) { untested();
-    GraphList->addItem(GraphInput->text());////insertItem(i, GraphInput->text());
-    GraphList->setCurrentRow(GraphList->count()-1);
+	GraphList->addItem(GraphInput->text());////insertItem(i, GraphInput->text());
+	GraphList->setCurrentRow(GraphList->count()-1);
 
-    Graph *g = new Graph(Diag, GraphInput->text());   // create a new graph
+#if 0
+	// what?
+	 Graph *g = new Graph(diag, GraphInput->text());   // create a new graph
+#else
+	 // TODO: ask diagram. use suitable type.
+	Data* g = dataDispatcher.clone("diagramvariable");
+#endif
 
 //    if(Diag->name() != "Tab") {
 //      if(Diag->name() != "Truth") {
-        g->Color = misc::getWidgetBackgroundColor(ColorButt);
-        g->Thick = Property2->text().toInt();
-        QColor selectedColor(DefaultColors[GraphList->count()%NumDefaultColors]);
-        misc::setPickerColor(ColorButt, selectedColor);
+//        g->set_param_by_name("color", misc::getWidgetBackgroundColor(ColorButt).toString());
+	g->set_param_by_name("thick", Property2->text().toStdString());
+	QColor selectedColor(DefaultColors[GraphList->count()%NumDefaultColors]);
+	misc::setPickerColor(ColorButt, selectedColor);
 
 #if 0
 		  // HB hack. does not work.
@@ -875,29 +924,40 @@ void DiagramDialog::slotTakeVar(QTableWidgetItem* Item)
 		  }
 #endif
 
-        g->Style = toGraphStyle(PropertyBox->currentIndex());
-        assert(g->Style!=GRAPHSTYLE_INVALID);
-        if(yAxisBox) { untested();
-          g->yAxisNo = yAxisBox->currentIndex();
-          yAxisBox->setEnabled(true);
-          Label4->setEnabled(true);
-        }
-//        else if(Diag->name() == "Rect3D"){
+	g->set_param_by_name("style", std::to_string(PropertyBox->currentIndex())); // see graphstyle enum.
+//        assert(g->Style!=GRAPHSTYLE_INVALID); // why?
+	if(yAxisBox) { untested();
+		// TODO axes could be objects instead.
+		g->set_param_by_name("yaxisno", std::to_string(yAxisBox->currentIndex()));
+		yAxisBox->setEnabled(true);
+		Label4->setEnabled(true);
+	}
+			  // TODO axes could be objects instead. needed for 3d plot?
+			  //        else if(Diag->name() == "Rect3D"){
 //			  g->yAxisNo = 1;
 //		  }
-        else{ untested();
-		  }
+	else{ untested();
+	}
 
-        Label3->setEnabled(true);
-        ColorButt->setEnabled(true);
-//      }
+	Label3->setEnabled(true);
+	ColorButt->setEnabled(true);
+//      } // truth hack
 //    } else
-      if(0){
-      g->Precision = Property2->text().toInt();
-      g->numMode   = PropertyBox->currentIndex();
-    }
+	if(0){
+		g->set_param_by_name("precision", Property2->text().toStdString());
+		g->set_param_by_name("nummode", std::to_string(PropertyBox->currentIndex()));
+	}
 
-    Graphs.append(g);
+	auto d = element(_clone);
+	assert(d);
+
+	Diagram* diag = prechecked_cast<Diagram*>(d);
+	assert(diag);
+	assert(diag->scope());
+	diag->scope()->push_back(g);
+
+  //  Graphs.append(g);
+  //
     changed = true;
     toTake  = true;
   //}
@@ -909,6 +969,7 @@ void DiagramDialog::slotTakeVar(QTableWidgetItem* Item)
     PropertyBox->setEnabled(true);
     Label2->setEnabled(true);
     Property2->setEnabled(true);
+  }else{
   }
 }
 
@@ -917,25 +978,33 @@ void DiagramDialog::slotTakeVar(QTableWidgetItem* Item)
 */
 void DiagramDialog::slotSelectGraph(QListWidgetItem *item)
 { untested();
-  if(item == 0) { untested();
-    GraphList->clearSelection();
-    return;
-  }
-
-  SelectGraph (Graphs.at (GraphList->currentRow()));
+	if(!item) { untested();
+		GraphList->clearSelection();
+		return;
+	}else{
+		trace1("click", item->text());
+		QListWidgetItem* i = GraphList->currentItem();
+		QVariant v = i->data(Qt::UserRole);
+		Data* g = v.value<Data*>();
+		assert(g);
+		SelectGraph(g);
+	}
 }
 
 /*!
   Puts the text of the selected graph into the line edit.
 */
-void DiagramDialog::SelectGraph(Graph *g)
+void DiagramDialog::SelectGraph(Data *g)
 { untested();
+	assert(GraphInput);
+	assert(g);
   GraphInput->blockSignals(true);
-  GraphInput->setText(g->Var);
+  GraphInput->setText(QString_(g->label()));
   GraphInput->blockSignals(false);
 
 //  if(Diag->name() != "Tab") {
 //    if(Diag->name() != "Truth") {
+#if 0 // use params.
       Property2->setText(QString::number(g->Thick));
       misc::setPickerColor(ColorButt, g->Color);
       PropertyBox->setCurrentIndex(g->Style);
@@ -944,6 +1013,7 @@ void DiagramDialog::SelectGraph(Graph *g)
         yAxisBox->setEnabled(true);
         Label4->setEnabled(true);
       }
+#endif
 
       Label3->setEnabled(true);
       ColorButt->setEnabled(true);
@@ -1023,8 +1093,12 @@ void DiagramDialog::slotDeleteGraph()
 }
 
 // --------------------------------------------------------------------------
+// why not pick data from listing?!
+// add later. maybe.
 void DiagramDialog::slotNewGraph()
 { untested();
+	incomplete();
+#if 0
   assert(Diag);
   if(GraphInput->text().isEmpty()) return;
 
@@ -1052,6 +1126,7 @@ void DiagramDialog::slotNewGraph()
   Graphs.append(g);
   changed = true;
   toTake  = false;
+#endif
 }
 
 /*!
@@ -1067,6 +1142,13 @@ void DiagramDialog::slotButtOK()
 //  todo: tabdiagram/truthtable override
 void DiagramDialog::slotButtApply()
 {
+#if 1
+	incomplete();
+	//TODO: execute swap command
+#else
+	// obsolete
+	// TODO: remove. or move.
+
   {
     if(Diag->xAxis.Label.isEmpty())
       Diag->xAxis.Label = ""; // can be not 0 and empty!
@@ -1225,13 +1307,14 @@ void DiagramDialog::slotButtApply()
 
   Diag->loadGraphData(defaultDataSet);
   ((SchematicDoc*)parent())->viewport()->repaint();
-  copyDiagramGraphs();
+  // copyDiagramGraphs();
 
   // what?
   if(changed){ untested();
 	  transfer = true;
   }else{ untested();
   }
+#endif
 }
 
 
@@ -1356,16 +1439,20 @@ void DiagramDialog::slotSetGridBox(int state)
 */
 void DiagramDialog::slotSetGraphStyle(int style)
 { untested();
-  int i = GraphList->currentRow();
-  if(i < 0) return;   // return, if no item selected
-
-  Graph *g = Graphs.at(i);
-  g->Style = toGraphStyle(style);
-  assert(g->Style!=GRAPHSTYLE_INVALID);
-  changed = true;
-  toTake  = false;
+	int i = GraphList->currentRow();
+	if(i < 0){
+		// if no item selected
+		return;
+	}else{
+		Graph *g = Graphs.at(i);
+		g->Style = toGraphStyle(style);
+		assert(g->Style!=GRAPHSTYLE_INVALID);
+		changed = true;
+		toTake  = false;
+	}
 }
 
+#if 0
 /*!
  Makes a copy of all graphs in the diagram.
 */
@@ -1374,6 +1461,7 @@ void DiagramDialog::copyDiagramGraphs()
   foreach(Graph *pg, Diag->Graphs)
     Graphs.append(pg->sameNewOne());
 }
+#endif
 
 /*!
  Is called if the combobox changes that defines which y axis uses the graph.

@@ -47,8 +47,6 @@ using namespace std;
 QString mySpinBox::textFromValue(int Val) const
 { untested();
   if (Values == NULL) return "";
-
-  qDebug() << "Values + Val" << *(Values+Val) << endl;
   return QString::number(*(Values+Val));
 }
 

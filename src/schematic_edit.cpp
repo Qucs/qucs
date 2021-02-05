@@ -456,7 +456,7 @@ void SchematicEdit::qSwap(ElementGraphics* gfx, Element* e)
 	ng->setSelected(gfx->isSelected());
 	assert(!ng->has_port_values());
 	{// ?
-		assert(!element(ng)->scope());
+		// assert(!element(ng)->scope()); no. diagrams have sub-objects.
 		_scn.addItem(ng);
 		assert(!ng->isVisible());
 	}

@@ -37,6 +37,7 @@ class QListWidgetItem;
 class QTableWidget;
 class QListWidget;
 class DataChooser;
+class Data;
 
 
 class DiagramDialog : public SchematicDialog {
@@ -93,9 +94,8 @@ protected slots:
   virtual void reject();
 
 protected:
-  virtual void SelectGraph(Graph*);
+  virtual void SelectGraph(Data*);
 
-  Diagram *Diag;
   QString defaultDataSet;
   QString Var2;
   int loc;
@@ -127,6 +127,10 @@ protected:
   Cross3D     *DiagCross;
   bool changed, transfer, toTake;
   Q3PtrList<Graph>  Graphs;
+
+private:
+  ElementGraphics /*const??*/ * _orig;
+  ElementGraphics* _clone;
 };
 
 #endif
