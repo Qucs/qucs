@@ -27,6 +27,7 @@
 #include "module.h"
 #include "sckt_base.h"
 #include "qio.h"
+#include "factory.h"
 #include "components/component.h" // BUG
 
 
@@ -38,22 +39,27 @@ namespace {
 //
 // BUG: split into factory, instance and proto.
 // ( this is a subcircuit instance )
-class Subcircuit : public Component /*BUG*/ {
+class Subcircuit : public Component /*BUG*/, public SymbolFactory {
 public:
   Subcircuit();
  ~Subcircuit() {};
 
 private:
   Subcircuit(Subcircuit const&x);
+  Subcircuit(Subcircuit const&x, SchematicModel* hack);
 //  Component* newOne();
 
 public: // obsolete.
   static Element* info(QString&, char* &, bool getNewOne=false);
 
 private:
-  Element* clone() const override{
+  Element* clone() const override{ untested();
 	  trace0("Subcircuit::clone");
 	  return new Subcircuit(*this);
+  }
+  Element* clone_instance() const override{ untested();
+	  trace0("Subcircuit::clone_instance");
+	  return new Subcircuit(*this, _scope);
   }
 
 public:
@@ -98,7 +104,7 @@ private: // overrides
 
 private:
 	std::string _subPath;
-	SchematicModel* _protoscope; // stash prototypes here.
+	SchematicModel* _protoscope; // stash prototypes here. (use Factory::_scope?)
 }d0; // Subcircuit
 static Dispatcher<Symbol>::INSTALL p(&symbol_dispatcher, "LegacySub", &d0);
 static Module::INSTALL pp("stuff", &d0);
@@ -144,11 +150,17 @@ Subcircuit::Subcircuit(Subcircuit const&x) : Component(x),
 
   setTypeName("Sub");
 
-  // HACK.
-  if(auto oo = prechecked_cast<SubcktBase*>(x.mutable_owner())){
-	  _protoscope = oo->subckt();
-  }else{
-  }
+  new_subckt(); // triggers sckt expansion
+}
+/*--------------------------------------------------------------------------*/
+Subcircuit::Subcircuit(Subcircuit const&x, SchematicModel* hack) : Component(x),
+	_subPath(x._subPath), _protoscope(hack)
+{
+  Props.append(new Property("File", "", false,
+		QObject::tr("name of qucs schematic file")));
+
+  setTypeName("Sub");
+
   new_subckt(); // triggers sckt expansion
 }
 /*--------------------------------------------------------------------------*/

@@ -14,6 +14,7 @@
 #include "qucs_globals.h"
 #include "data.h"
 #include "sckt_base.h"
+#include "factory.h"
 /*--------------------------------------------------------------------------*/
 namespace{
 /*--------------------------------------------------------------------------*/
@@ -36,6 +37,9 @@ public:
     assert(a);
     _sub->setLabel("Sub");
     _sub->setOwner(this);
+	 auto f = dynamic_cast<SymbolFactory*>(_sub);
+	 assert(f);
+	 f->_scope = scope();
     subckt()->push_back(_sub);
 
 #if 1
