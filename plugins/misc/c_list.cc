@@ -41,8 +41,7 @@ namespace {
 void list_save(CS& cmd, ostream_t& out, CARD_LIST* scope)
 {
   assert(scope);
-  // CARD_LIST::card_list.precalc_first();
-  scope->precalc_first();
+  scope->prepare();
   for(auto i: *scope){
     trace1("list??", i->label());
   }

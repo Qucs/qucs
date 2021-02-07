@@ -19,15 +19,18 @@
 #include "qt_compat.h"
 #include "language.h"
 #include "data.h"
+#include "output.h"
 
 #include <QPlainTextEdit>
 #include <QLineEdit>
+#include <qcustomplot.h>
 
 namespace {
 
 
 	// todo: share?
-class DiagramWidget : public QWidget{
+// class DiagramWidget : public QWidget
+class DiagramWidget : public QCustomPlot {
 public:
 	DiagramWidget(Diagram* d)
 	: _diag(d){ untested();
@@ -37,9 +40,148 @@ public:
 		trace2("DiagramWidget", br.tl(), br.br());
 		setGeometry(br.toRectF().toRect()); // this only sets the SIZE.
 		                          // origin is in topleft corner.
-										  //
-//		setPlainText("RECTDIAGRAM");
+		refresh_plots();
 	}
+
+private:
+	void copy_graph_data_(CommonData const* p, int i){
+		auto pp=prechecked_cast<SimOutputData const*>(p);
+		assert(pp);
+		assert(i<=graphCount());
+		if(i==graphCount()){ untested();
+			QCustomPlot::addGraph();
+		}else{ untested();
+		}
+		auto g = graph(graphCount()-1);
+		trace1("var copy", pp->numDeps());
+		if(pp->numDeps()==1){
+			auto d = pp->dep(0);
+			auto dd = dynamic_cast<SimOutputData const*>(d);
+			assert(dd);
+
+			int num = pp->size();
+			QVector<double> x(num), y(num);
+			trace3("var copy", num, pp->min(), pp->max()); // does not work
+			int ii = 0;
+			double minx = 1e99;
+			double maxx = -1e99;
+			for (auto xx : *dd){
+				x[ii] = xx.second.real();
+				trace1("var copy", x[ii]);
+				minx = std::min(x[ii], minx);
+				maxx = std::max(x[ii], maxx);
+				++ii;
+			}
+			assert(ii==num);
+			ii = 0;
+			double miny = 1e99;
+			double maxy = -1e99;
+			for (auto yy : *pp){
+				y[ii] = yy.second.real();
+				trace1("var copy", y[ii]);
+				miny = std::min(y[ii], miny);
+				maxy = std::max(y[ii], maxy);
+				++ii;
+			}
+
+			g->setData(x, y);
+
+			trace2("range", minx, maxx);
+			trace2("range", miny, maxy);
+			QCustomPlot::xAxis->setRange(minx, maxx);
+			QCustomPlot::yAxis->setRange(miny, maxy);
+
+
+		}else{
+			incomplete();
+		}
+
+	}
+	void copy_graph_data(CommonData const* p, int i){
+		auto pp=prechecked_cast<SimOutputData const*>(p);
+		assert(pp);
+		assert(i<=graphCount());
+		if(i==graphCount()){ untested();
+			QCustomPlot::addGraph();
+		}else{ untested();
+		}
+		auto g = graph(graphCount()-1);
+		trace1("var copy", pp->numDeps());
+		if(pp->numDeps()==1){
+
+			int num = pp->size();
+			QVector<double> x(num), y(num);
+			trace3("var copy", num, pp->min(), pp->max()); // does not work
+			int ii = 0;
+			double minx = 1e99;
+			double maxx = -1e99;
+			double miny = 1e99;
+			double maxy = -1e99;
+			for (auto xx : *pp){
+				x[ii] = xx.first;
+				y[ii] = xx.second.real();
+				trace1("var copy", x[ii]);
+				minx = std::min(x[ii], minx);
+				maxx = std::max(x[ii], maxx);
+				miny = std::min(y[ii], miny);
+				maxy = std::max(y[ii], maxy);
+				++ii;
+			}
+			assert(ii==num);
+
+			g->setData(x, y);
+
+			trace2("range", minx, maxx);
+			trace2("range", miny, maxy);
+			QCustomPlot::xAxis->setRange(minx, maxx);
+			QCustomPlot::yAxis->setRange(miny, maxy);
+
+
+		}else{
+			incomplete();
+		}
+
+	}
+
+	void add_data(Data const* d, int i){
+		if(d->common()){
+			trace1("var diagscope", d->label());
+			CommonData const* p=nullptr;
+			CommonData::attach(d->common(), &p);
+			copy_graph_data(p, i);
+			CommonData::detach(&p);
+		}
+	}
+
+	void refresh_plots(){
+		int k = 0;
+		for(auto i : *_diag->scope()){
+			if(auto d=prechecked_cast<Data const*>(i)){
+				add_data(d, k);
+				++k;
+			}else{
+				trace1("diagscope", i->label());
+			}
+		}
+	}
+
+	void mousePressEvent(QMouseEvent* e) override{
+		QWidget::mousePressEvent(e);
+	}
+	void mouseMoveEvent(QMouseEvent* e) override{
+		QWidget::mouseMoveEvent(e);
+	}
+#if 0
+	void  paintEvent(QPaintEvent *ev) override{
+		assert(_diag);
+		trace1("DiagramWidget::paint", _diag->label());
+		assert(_diag->scope());
+		for(auto i : *_diag->scope()){
+			trace1("diagscope", i->label());
+		}
+		QCustomPlot::paintEvent(ev);
+	}
+#endif
 // 	QSize sizeHint() const override{
 // 		return QSize(30,30);
 // 	}
@@ -67,14 +209,17 @@ public:
 	Element* clone() const override{
 		return new RectDiagram(*this);
 	}
-
 	index_t param_count() const{ return 4; }
+
 private:
-	// is this needed?
-	pos_t center() const override{
-		return Element::center();
+	void prepare() override{
+		trace1("RectDiagram:prepare", label());
+		assert(scope());
+		Diagram::prepare();
 	}
 
+private:
+	// does not work.
 	QWidget* newWidget(){ itested();
 		trace2("rect newWidget", label(), y2);
 		if(_widget){ untested();
@@ -82,7 +227,6 @@ private:
 			_widget = new RectDiagramWidget(this);
 			_widget->move(0, -y2); // gaah. the origin must be in the top left corner.
 		}
-		//w->move(_cx, _cy-y2); // gaah. the origin must be in the top left corner.
 		return _widget;
 	}
 

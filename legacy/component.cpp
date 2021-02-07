@@ -128,7 +128,7 @@ private:
 
 private:
   ElementGraphics* _gfx;
-  Component const* _comp;
+  Component* _comp; // should be a copy?
 };
 
 const int Component::num_component_params = 2; // tx and ty.
@@ -2141,8 +2141,8 @@ void ComponentDialog::reject()
 void ComponentDialog::slotApplyInput()
 {
   assert(_comp);
-  auto C = _comp->clone();
-  C->setOwner( _comp->mutable_owner() );
+  auto C = _comp->clone(); // TODO: clone during attach?
+  C->set_owner(_comp->owner());
   auto Comp = prechecked_cast<Component*>(C);
   assert(Comp);
 

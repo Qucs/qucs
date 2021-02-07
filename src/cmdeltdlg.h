@@ -106,9 +106,9 @@ private:
 
   void updateCompPropsList(void);
 
-private:
-  ElementGraphics* _gfx;
-  TaskElement const* _comp;
+private: // todo
+  ElementGraphics* _gfx; // orig?
+  TaskElement* _comp; // clone?
 };
 
 #endif

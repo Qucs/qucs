@@ -2325,6 +2325,13 @@ bool Diagram::pressElement(SchematicDoc* Doc, Element*& selElem, QMouseEvent* Ev
 	return drawn;
 }
 
+void Diagram::prepare()
+{
+	for(auto i : *scope()){
+		i->prepare();
+	}
+}
+
 QDialog* Diagram::schematicWidget(QucsDoc* Doc) const
 { untested();
   trace0("Component::editElement");

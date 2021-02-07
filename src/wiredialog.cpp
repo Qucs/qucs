@@ -177,7 +177,7 @@ void WireDialog::slotApplyInput()
 {
   assert(_comp);
   auto C = _comp->clone();
-  C->setOwner( _comp->mutable_owner() );
+  C->set_owner(_comp->owner());
   auto Comp = prechecked_cast<Symbol*>(C);
   assert(Comp);
 

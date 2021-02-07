@@ -78,7 +78,7 @@ void SchematicModel::erase(Element* what)
 Element* SchematicModel::detach(Element* what)
 {
 	assert(what);
-	assert(what->mutable_owner());
+	assert(what->owner());
 	std::string l = what->label();
 
 	if(_map.find(l) == _map.end()){
@@ -104,7 +104,7 @@ Element* SchematicModel::detach(Element* what)
 		unreachable();
 	}
 
-	what->setOwner(nullptr);
+	what->set_owner(nullptr);
 	return what;
 }
 /*--------------------------------------------------------------------------*/
@@ -219,7 +219,7 @@ static Place const* place_at(pos_t p, Symbol* m)
 	auto i = scope->find_(ps);
 	Place const* ret = nullptr;
 
-	assert(m->mutable_owner());
+	assert(m->owner());
 
 	if(i == scope->end()){
 	}else if(auto p=dynamic_cast<Place const*>(*i)){
@@ -236,7 +236,7 @@ static Place const* place_at(pos_t p, Symbol* m)
 		s->setPosition(p);
 		s->setTypeName("place");
 		s->setLabel(ps);
-		s->setOwner(m->mutable_owner());
+		s->set_owner(m->owner());
 		s->set_port_by_index(0, ps);
 		scope->push_back(s);
 
@@ -296,12 +296,21 @@ Node const* SchematicModel::portValue(unsigned i) const
 	}
 }
 /*--------------------------------------------------------------------------*/
-void SchematicModel::setOwner(Element* o)
+void SchematicModel::prepare()
+{
+	for(auto pc : _cl){
+		assert(pc);
+		trace2("prepare", pc->label(), pc);
+		pc->prepare();
+	}
+}
+/*--------------------------------------------------------------------------*/
+void SchematicModel::set_owner(Element* o)
 {
 	for(auto pc : _cl){
 		assert(pc);
 		trace3("set_owner", pc->label(), pc, o);
-		pc->setOwner(o);
+		pc->set_owner(o);
 		const Element* sym = pc;
 		assert(sym->owner() == o);
 	}
@@ -393,11 +402,6 @@ size_t numWires(SchematicModel const& m)
 		}
 	}
 	return r;
-}
-/*--------------------------------------------------------------------------*/
-void SchematicModel::precalc_first()
-{
-	incomplete();
 }
 /*--------------------------------------------------------------------------*/
 size_t SchematicModel::numNets() const

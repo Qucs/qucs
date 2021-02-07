@@ -49,7 +49,7 @@ private:
   QLineEdit *CompNameEdit;
 //  QLineEdit   *edit, *NameEdit;
   ElementGraphics* _gfx;
-  Symbol const* _comp;
+  Symbol* _comp; // const? gfx?
   bool _changed;
 };
 

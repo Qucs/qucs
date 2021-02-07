@@ -60,7 +60,7 @@ public:
 			auto dat = dataDispatcher.clone("datfile"); // really? table?
 			assert(dat);
 			std::string fn = dir + "/" + DataSet.toStdString();
-			trace1("prepare", fn);
+			trace1("datlisting prepare", fn);
 			dat->set_param_by_name("filename", fn); // really?
 			auto l = DataSet.size();
 			dat->setLabel(DataSet.toStdString().substr(0, l-4));

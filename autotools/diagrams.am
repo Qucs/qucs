@@ -25,6 +25,7 @@
 include ../../autotools/common.mk
 
 inst_LTLIBRARIES = diagrams.la
+LDADD = ${LIBS}
 
 # MOCHEADERS = diagramdialog.h  markerdialog.h
 MOCFILES = $(MOCHEADERS:.h=.moc.cpp)

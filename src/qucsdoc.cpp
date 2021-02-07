@@ -351,7 +351,7 @@ Simulator* QucsDoc::simulatorInstance(std::string const& which)
 
 		if(proto){
 			sim = proto->clone();
-			sim->setOwner(root());
+			sim->set_owner(root());
 			scope()->push_back(sim);
 		}else{
 			incomplete();

@@ -395,7 +395,7 @@ public:
 	NewElementCommand(SchematicDoc& ctx, ElementGraphics* gfx)
 	: SchematicEdit(*ctx.sceneHACK()) { untested();
 		assert(gfx->scene());
-		assert(!element(gfx)->mutable_owner());
+		assert(!element(gfx)->owner());
 		gfx->hide();
 //		ctx.takeOwnership(element(gfx)); // BUG?
 		// elment->setOwner(ctx)...?

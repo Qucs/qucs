@@ -80,12 +80,12 @@ void DocumentLanguage::new__instance(istream_t& cmd, Element* owner,
 				trace0("new__instance found dot .. ");
 				DEV_DOT* new_instance = p->clone();
 				delete p;
-				new_instance->setOwner(owner); // owner is null, usually.
+				new_instance->set_owner(owner); // owner is null, usually.
 				new_instance->set_scope(Scope); // needed??
 				parseItem(cmd, new_instance);
 			}else if (Element* new_instance = proto->clone_instance()) {
 				trace0("new__instance no dot .. ");
-				new_instance->setOwner(owner); // owner is null, usually.
+				new_instance->set_owner(owner); // owner is null, usually.
 				Element* o = parseItem(cmd, new_instance);
 
 				if (Element* x=dynamic_cast<Element*>(o)) {
@@ -129,7 +129,7 @@ Element const* DocumentLanguage::find_proto(const std::string& Name, const Eleme
   }else if (auto cmd = commandDispatcher[Name]) {
     auto d = new DEV_DOT;	//BUG// memory leak
 	 d->set(cmd);
-//	 d->setOwner(Scope); // really??
+//	 d->set_owner(Scope); // really??
 	 return d;
   }else if ((p = element_dispatcher[Name])) { untested();
 	  // TaskElements are here... (move to Data?)

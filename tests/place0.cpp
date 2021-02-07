@@ -15,7 +15,7 @@ void test0()
 
 	Symbol* wp = symbol_dispatcher.clone("place");
 	assert(wp);
-	wp->setOwner(root);
+	wp->set_owner(root);
 
 	auto pl = prechecked_cast<Place*>(wp);
 
@@ -26,7 +26,7 @@ void test0()
 
 	wp = symbol_dispatcher.clone("Wire");
 	assert(wp);
-	wp->setOwner(root);
+	wp->set_owner(root);
 	wp->set_port_by_index(0, "a");
 	assert(pl->node_degree()==1);
 	wp->set_port_by_index(0, "");

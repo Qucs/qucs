@@ -89,7 +89,7 @@ private:
 
 private:
 	ElementGraphics* _gfx;
-	Symbol const* _sym; // needed?
+	Symbol* _sym; // needed?
 };
 /*--------------------------------------------------------------------------*/
 /*--------------------------------------------------------------------------*/
@@ -102,12 +102,12 @@ SymbolDialog::SymbolDialog(QucsDoc* d) : SchematicDialog(d)
 void SymbolDialog::attach(ElementGraphics* gfx)
 {
 	assert(gfx);
-	Element const* c = &**gfx;
+	Element* c = element(gfx);
 	if(_sym){
 		incomplete();
 	}else{
 	}
-	_sym = prechecked_cast<Symbol const*>(c);
+	_sym = prechecked_cast<Symbol*>(c);
 	assert(_sym);
 	_gfx = gfx;
 	QString s;
@@ -582,7 +582,7 @@ void SymbolDialog::slotApplyInput()
 	auto e = _sym->clone();
 	auto new_sym=prechecked_cast<Symbol*>(e);
 	assert(new_sym);
-	new_sym->setOwner( _sym->mutable_owner() );
+	new_sym->set_owner(_sym->owner());
 
 	unsigned old_show = atoi(new_sym->paramValue("$param_display").c_str());
 	trace1("old_show", old_show);
@@ -625,12 +625,14 @@ void SymbolDialog::slotApplyInput()
 	}else{
 	}
 
+	// TODO: do this properly, and move to base class.
+	// what is an undoable operation? does it require apply button?
 	if(changed) {
 		auto cmd = new SwapSymbolCommand(_gfx, new_sym);
 		execute(cmd);
 
-		Element const* c = &**_gfx;
-		_sym = prechecked_cast<Symbol const*>(c);
+		Element* c = element(_gfx);
+		_sym = prechecked_cast<Symbol*>(c); // was const.
 		assert(_sym);
 
 		if ( (int) _sym->paramCount() != prop->rowCount()) {

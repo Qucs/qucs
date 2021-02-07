@@ -319,8 +319,8 @@ ElementGraphics* ElementGraphics::newPort(pos_t where) const
 			assert(scene());
 			scene()->addItem(ng);
 			((QGraphicsItem*)ng)->hide(); // yikes.
-			assert(_e->mutable_owner());
-			u->setOwner(_e->mutable_owner());
+			assert(_e->owner());
+			u->set_owner(_e->owner());
 		}else{
 		}
 
@@ -330,9 +330,9 @@ ElementGraphics* ElementGraphics::newPort(pos_t where) const
 			SchematicModel const* sc=u->subckt();
 			for(auto c : sc->wires() /*BUG*/ ){ untested();
 				auto cg = new ElementGraphics(c->clone());
-				assert(_e->mutable_owner());
-				assert(!element(cg)->mutable_owner());
-				element(cg)->setOwner(_e->mutable_owner());
+				assert(_e->owner());
+				assert(!element(cg)->owner());
+				element(cg)->set_owner(_e->owner());
 				assert(!cg->scene());
 				cg->setParentItem(ng);
 				assert(cg->scene());
@@ -356,8 +356,8 @@ ElementGraphics* ElementGraphics::newUnion(ElementGraphics const* s) const
 //			assert(!dynamic_cast<Place const*>(_e));
 			trace1("new union2", u);
 			ng = new ElementGraphics(u);
-			assert(_e->mutable_owner());
-//			u->setOwner(_e->mutable_owner());
+			assert(_e->owner());
+//			u->set_owner(_e->owner());
 //			ng->setParentItem(scene());
 			scene()->addItem(ng);
 		}else{itested();
@@ -372,8 +372,8 @@ ElementGraphics* ElementGraphics::newUnion(ElementGraphics const* s) const
 		if(Symbol* u = c->newUnion(symbol(s)) ){ untested();
 			trace3("new union", u, symbol(s)->typeName(), symbol(s)->label());
 			ng = new ElementGraphics(u);
-			assert(_e->mutable_owner());
-//			u->setOwner(_e->mutable_owner());
+			assert(_e->owner());
+//			u->set_owner(_e->owner());
 //			ng->setParentItem(scene());
 			scene()->addItem(ng);
 		}else{itested();
@@ -638,7 +638,7 @@ void ElementGraphics::show()
 
 #if 0
 	assert(!_e->owner());
-	_e->setOwner(subckt());
+	_e->set_owner(subckt());
 	subckt()->push_back(_e);
 #endif
 	// TODO

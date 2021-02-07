@@ -5,6 +5,8 @@ RAW_SRCS = \
 	rectdiagram.cpp \
 	tabdiagram.cpp
 
+LIBS = -lqcustomplot
+
 NOTYET = \
 	curvediagram.cpp \
 	markerdialog.cpp \

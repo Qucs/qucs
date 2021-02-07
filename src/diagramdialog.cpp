@@ -368,9 +368,9 @@ void DiagramDialog::attach(ElementGraphics* g)
   {
 	  Diagram* diag = prechecked_cast<Diagram*>(element(_orig));
 	  assert(diag);
-	  auto oo = dynamic_cast<Element const*>(diag->mutable_owner());
+	  auto oo = dynamic_cast<Element const*>(diag->owner());
 	  assert(oo);
-	  oo = dynamic_cast<Element const*>(oo->mutable_owner());
+	  oo = dynamic_cast<Element const*>(oo->owner());
 	  assert(oo);
 	  assert(oo->scope());
 	  ChooseData->setScope(oo->scope());

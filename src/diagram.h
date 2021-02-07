@@ -104,6 +104,7 @@ protected:
 	  auto br = boundingRect();
 	  return rect_t(br);
   }
+  void prepare() override;
 
 public:
 //  QString const& name() const{ incomplete(); return Name;}

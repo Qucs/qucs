@@ -197,14 +197,11 @@ public: // friend ElementGraphics?
 	void detachFromModel();
 
 public:
-	Object const* owner() const{return _owner;}
-	Object* mutable_owner() const{return _owner;}
-
-protected:
-	Object* owner(){ return _owner;}
+	Element const* owner() const{return _owner;}
+	Element* owner(){return _owner;}
 
 public:
-	void setOwner(Object* e) { assert(!_owner || e==_owner || !e); _owner=e;}
+	void set_owner(Element* e) { assert(!_owner || e==_owner || !e); _owner=e;}
 	const Element* find_looking_out(const std::string& name)const;
 	const Element* find_in_parent_scope(const std::string& name)const;
 	const Element* find_in_my_scope(const std::string& name)const;
@@ -216,7 +213,7 @@ protected: // BUG in Painting
 	int x1, y1;
 
 private:
-	Object* _owner; // could be const all the way??
+	Element* _owner; // can't be const it seems.
 	std::string _type;
 }; // Element
 /*--------------------------------------------------------------------------*/

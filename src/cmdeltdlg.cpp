@@ -864,8 +864,8 @@ void TaskElementDialog::reject()
 void TaskElementDialog::slotApplyInput()
 {
   assert(_comp);
-  auto C = _comp->clone();
-  C->setOwner( _comp->mutable_owner() );
+  Element* C = _comp->clone();
+  C->set_owner(_comp->owner());
   auto Comp = prechecked_cast<TaskElement*>(C);
   assert(Comp);
 

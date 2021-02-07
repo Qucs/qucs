@@ -528,11 +528,11 @@ ElementGraphics* SchematicScene::new_place(pos_t const& p)
 		                           + "_" + std::to_string(getY(p));
 
 		{ // something_like_new_instance
-			assert(!cl->mutable_owner());
+			assert(!cl->owner());
 			doc()->addElement(cl);
 //			cl->setOwner(root);
 //			scope()->push_back(cl);
-			assert(cl->mutable_owner());
+			assert(cl->owner());
 			cl->setPosition(p);
 			cl->setLabel(place_name);
 			cl->set_port_by_index(0, place_name);
@@ -563,7 +563,7 @@ static inline Symbol const* symbol(ElementGraphics const* p)
 /*--------------------------------------------------------------------------*/
 void SchematicScene::connectPorts(Symbol* c)
 { untested();
-	assert(c->mutable_owner());
+	assert(c->owner());
 
 	for(unsigned i=0; c->portExists(i); ++i){
 //		assert(portValue()==""); // ?
@@ -573,7 +573,7 @@ void SchematicScene::connectPorts(Symbol* c)
 			std::string n = q->port_value(0);
 			trace3("connectPorts", c->label(), i, n);
 
-			assert(c->mutable_owner());
+			assert(c->owner());
 			c->set_port_by_index(i, n);
 		}catch(qucs::Exception const&){ untested();
 			// pass.

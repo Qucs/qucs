@@ -653,7 +653,7 @@ Place const* place_at(pos_t p, Symbol* m)
 	auto i = scope->find_(ps);
 	Place const* ret = nullptr;
 
-	assert(m->mutable_owner());
+	assert(m->owner());
 
 	if(i == scope->end()){
 	}else if(auto p=dynamic_cast<Place const*>(*i)){
@@ -670,7 +670,7 @@ Place const* place_at(pos_t p, Symbol* m)
 		s->setPosition(p);
 		s->setTypeName("place");
 		s->setLabel(ps);
-		s->setOwner(m->mutable_owner());
+		s->set_owner(m->owner());
 		s->set_port_by_index(0, ps);
 		scope->push_back(s);
 
@@ -1141,7 +1141,7 @@ DEV_DOT* LegacySchematicLanguage::parseCommand(istream_t& c, DEV_DOT* x) const
 #endif
 
 #if 0
-  if(auto o=dynamic_cast<Element*>(x->mutable_owner())){ untested();
+  if(auto o=dynamic_cast<Element*>(x->owner())){ untested();
 	  assert(scope == x->scope());
   }else{ untested();
 	  // yikes. getting here from c_get.
@@ -1470,7 +1470,7 @@ class DiagramCommand : public Command{
 			sym = dynamic_cast<SubcktBase*>(sc);
 			assert(sym);
 			sym->setLabel("main");
-			//sym->setOwner(..);
+			//sym->set_owner(..);
 			s->pushBack(sym);
 			assert(s);
 		}
@@ -1491,7 +1491,7 @@ class DiagramCommand : public Command{
 			}
 		}
 
-		e->scope()->setOwner(sym);
+		e->scope()->set_owner(sym);
 		trace1("Diag parse", e->scope()->size());
 	}
 }d4;
@@ -1516,7 +1516,7 @@ class WireCommand : public Command{
 			sym = dynamic_cast<SubcktBase*>(sc);
 			assert(sym);
 			sym->setLabel("main");
-			//sym->setOwner(..);
+			//sym->set_owner(..);
 			s->pushBack(sym);
 			assert(s);
 		}

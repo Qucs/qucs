@@ -11,7 +11,7 @@ static Place const* place_at(pos_t p, Symbol* m)
 	auto i = scope->find_(ps);
 	Place const* ret = nullptr;
 
-	assert(m->mutable_owner());
+	assert(m->owner());
 
 	if(i == scope->end()){
 	}else if(auto p=dynamic_cast<Place const*>(*i)){
@@ -28,7 +28,7 @@ static Place const* place_at(pos_t p, Symbol* m)
 		s->setPosition(p);
 		s->setTypeName("place");
 		s->setLabel(ps);
-		s->setOwner(m->mutable_owner());
+		s->set_owner(m->owner());
 		s->set_port_by_index(0, ps);
 		scope->push_back(s);
 
@@ -42,7 +42,7 @@ static Place const* place_at(pos_t p, Symbol* m)
 
 static void connect_push(Element* root, Symbol* sym)
 {
-	sym->setOwner(root);
+	sym->set_owner(root);
 // 	M.connect(sym);
 	for(unsigned i=0; i<sym->numPorts(); ++i){
 		pos_t p = sym->nodePosition(i);

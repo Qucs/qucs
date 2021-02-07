@@ -28,19 +28,19 @@ public:
     auto a = symbol_dispatcher.clone("subckt_proto");
     assert(a);
     a->setLabel("main");
-    a->setOwner(this);
+    a->set_owner(this);
     subckt()->push_back(a);
 
-    // Sub components in this circuit.
-	 // instance used when parsing a netlist.
-    _sub = symbol_dispatcher.clone("LegacySub");
-    assert(a);
-    _sub->setLabel("Sub");
-    _sub->setOwner(this);
-	 auto f = dynamic_cast<SymbolFactory*>(_sub);
-	 assert(f);
-	 f->_scope = scope();
-    subckt()->push_back(_sub);
+		// Sub components in this circuit.
+		// instance used when parsing a netlist.
+		_sub = symbol_dispatcher.clone("LegacySub");
+		assert(a);
+		_sub->setLabel("Sub");
+		_sub->set_owner(this);
+		auto f = dynamic_cast<SymbolFactory*>(_sub);
+		assert(f);
+		f->_scope = scope();
+		subckt()->push_back(_sub);
 
 #if 1
 		// dat file access...

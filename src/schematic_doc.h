@@ -92,7 +92,7 @@ public:
   typedef QList<ElementGraphics*> EGPList;
 public:
   SchematicDoc(QucsApp* /*BUG?*/, const QString&, QWidget* owner);
- ~SchematicDoc();
+  ~SchematicDoc();
 
   void setName(const QString&);
   void setChanged(bool, bool fillStack=false, char Op='*');
@@ -105,6 +105,10 @@ public:
 
   float textCorr();
   bool sizeOfFrame(int&, int&);
+
+private: // QucsDoc.
+	void new_root();
+
 private: //temporary/obsolete
   void sizeOfAll(int&a, int&b, int&c, int&d){
 	  assert(_model);

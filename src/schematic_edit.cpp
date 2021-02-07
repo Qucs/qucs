@@ -227,7 +227,7 @@ void SchematicEdit::do_it_first()
 			trace1("collision during merge attempt", done_del.size());
 			// done with this one, others have been queued.
 		}else{
-			trace3("done insert, show", gfx, e->label(), e->mutable_owner());
+			trace3("done insert, show", gfx, e->label(), e->owner());
 			gfx->show_();
 			done_ins.push_back(gfx);
 		}
@@ -314,10 +314,10 @@ bool SchematicEdit::addmerge(ElementGraphics* new_elt, T& del_done)
 			collision = true;
 			trace2("hiding", element(gfxi)->label(), gfxi);
 
-			assert(element(gfxi)->mutable_owner());
+			assert(element(gfxi)->owner());
 			assert(gfxi->isVisible());
 			gfxi->hide();
-			assert(!element(gfxi)->mutable_owner());
+			assert(!element(gfxi)->owner());
 
 			del_done.push_back(gfxi);
 			auto nc = n->childItems();
@@ -450,7 +450,7 @@ void SchematicEdit::qInsert(ElementGraphics* gfx)
 // turn swap into add/delete
 void SchematicEdit::qSwap(ElementGraphics* gfx, Element* e)
 {
-	assert(!e->mutable_owner());
+	assert(!e->owner());
 
 	auto ng = new ElementGraphics(e);
 	ng->setSelected(gfx->isSelected());

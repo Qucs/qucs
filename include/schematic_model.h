@@ -133,7 +133,8 @@ public:
 //	QString const& devType() const;
 
 public:
-	void setOwner(Element* s);
+	void prepare(); // precalc_first?
+	void set_owner(Element* s);
 //	int  prepareNetlist(ostream_t&, QStringList&, QPlainTextEdit*,
 //			bool creatingLib, NetLang const&);
 //	TaskElement* loadtaskElement(const QString& _s, TaskElement* c) const;
@@ -234,9 +235,6 @@ private:
 	const SchematicModel* _parent;
 	std::multimap<std::string, Element*> _map;
 	mutable ParamList* _params;
-
-public:
-	void precalc_first();
 
 public: // for now.
 //	friend class SchematicDoc;

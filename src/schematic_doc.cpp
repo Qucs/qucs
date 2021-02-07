@@ -38,20 +38,7 @@ SchematicDoc::SchematicDoc(QucsApp* App_/*BUG?*/, const QString& Name_, QWidget*
   qDebug() << "SchematicDoc::SchematicDoc" << Name_;
 
   // ...........................................................
-  // create empty schematic... (clear?)
-  auto root = symbol_dispatcher.clone("schematic_root");
-  _root = dynamic_cast<SubcktBase*>(root);
-  assert(_root);
-
-  { // hack?
-	  _model = _root->subckt();
-	  auto e = (*_model->find_("main"));
-	  _main = dynamic_cast<SubcktBase*>(e);
-	  assert(_main);
-	  assert(_main->makes_own_scope()); // for now.
-	  _model = e->scope();
-	  assert(_model);
-  }
+  new_root();
   // ...........................................................
 
   _mouseActions = new SchematicActions(*this);
@@ -188,44 +175,53 @@ bool SchematicDoc::loadDocument()
 /*--------------------------------------------------------------------------*/
 bool SchematicDoc::loadDocument(QString& /*BUG*/ file)
 {itested();
-	incomplete();
-  QString Line;
-  istream_t stream(istream_t::_WHOLE_FILE, file.toStdString());
+	assert(_model);
+	QString Line;
+	istream_t stream(istream_t::_WHOLE_FILE, file.toStdString());
 
-#if 0
-  // read header **************************
-  do {itested();
-    if(stream.atEnd()) {itested();
-      file.close(); // BUG
-      return true;
-    }
-
-    Line = QString::fromStdString(stream.read_line());
-  } while(Line.isEmpty());
-#endif
-
-  Line = Line.mid(16, Line.length()-17);
-
-  parse(stream);
-  for(auto i : *_model){
-	  trace1("postload addElement", i->label());
-	 scene()->addElement(i);
-  }
-  return true;
+	parse(stream);
+	_model->prepare();
+	for(auto i : *_model){
+		trace1("postload addElement", i->label());
+		scene()->addElement(i);
+	}
+	return true;
 }
+/*--------------------------------------------------------------------------*/
+void SchematicDoc::new_root()
+{
+	delete _root;
+  // create empty schematic... (clear?)
+  auto root = symbol_dispatcher.clone("schematic_root");
+  _root = dynamic_cast<SubcktBase*>(root);
+  assert(_root);
+  _root->setLabel("SchematicDoc");
 
+  { // hack?
+	  _model = _root->subckt();
+	  auto e = (*_model->find_("main"));
+	  _main = dynamic_cast<SubcktBase*>(e);
+	  assert(_main);
+	  assert(_main->makes_own_scope());
+	  assert(_main->owner()==_root);
+	  _model = e->scope();
+	  assert(_model);
+  }
+}
+/*--------------------------------------------------------------------------*/
 // why both?!
 bool SchematicDoc::load()
 {itested();
   delete _root;
   _root = nullptr;
 
+  new_root();
+#if 0
   auto root = symbol_dispatcher.clone("schematic_root");
   _root = dynamic_cast<SubcktBase*>(root);
   assert(_root);
-  _root->setOwner(this); //needed?
+//  _root->set_owner(this); //needed?
 
-  _root->setParameter("$filename", docName().toStdString());
 
   {
 	  _model = _root->subckt();
@@ -236,6 +232,8 @@ bool SchematicDoc::load()
 	  _model = e->scope();
 	  assert(_model);
   }
+#endif
+  _root->setParameter("$filename", docName().toStdString());
 
   if(!loadDocument()){ untested();
     return false;
@@ -830,8 +828,8 @@ void SchematicDoc::sceneRemoveItem(ElementGraphics* x)
 /*--------------------------------------------------------------------------*/
 void SchematicDoc::addElement(Element* x)
 {
-	assert(!x->mutable_owner());
-	x->setOwner(_main);
+	assert(!x->owner());
+	x->set_owner(_main);
 	_model->push_back(x);
 
 	if(auto c=dynamic_cast<Symbol*>(x)){
