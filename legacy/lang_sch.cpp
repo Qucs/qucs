@@ -1181,7 +1181,9 @@ std::string LegacySchematicLanguage::findType(istream_t& c) const
 	auto Line = QString::fromStdString(l);
 
 	Line = Line.trimmed();
-	if(Line.at(0) != '<') {
+	if(Line.size() == 0){ untested();
+		return "";
+	}else if(Line.at(0) != '<') { untested();
 		return "unknown_type";
 	}else{
 	}

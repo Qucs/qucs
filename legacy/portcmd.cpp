@@ -52,6 +52,7 @@ class PortSym : public Command{
 		s->push_back(dot);
 
 		auto ps = painting_dispatcher.clone("PortSym");
+		assert(ps);
 		ps->setPosition(pos_t(cx,cy));
 		s->push_back(ps);
 

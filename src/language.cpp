@@ -69,8 +69,7 @@ void DocumentLanguage::new__instance(istream_t& cmd, Element* owner,
 		SchematicModel* Scope) const
 {
 	assert(Scope);
-	if (cmd.atEnd()) {
-		unreachable(); // some bogus loop condition
+	if (cmd.is_end()) { untested();
 		return;
 	}else{
 		std::string type = findType(cmd);
