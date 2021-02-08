@@ -14,14 +14,14 @@
 #include "qucs_app.h"
 #include "qucs_globals.h"
 #include "module.h"
-#include "painting.h"
+#include "../legacy_painting.h"
 #include "schematic_doc.h"
 #include "some_font_stuff.h"
 
 #include <QPainter>
 
 namespace{
-class PortSymbol : public Painting  {
+class PortSymbol : public LegacyPainting  {
 public:
   PortSymbol();
   ~PortSymbol();
@@ -48,10 +48,10 @@ public:
 };
 
 PortSymbol D;
-Dispatcher<Painting>::INSTALL p(&painting_dispatcher, "PortSym", &D);
+Dispatcher<Element>::INSTALL p(&element_dispatcher, "PortSym", &D);
 Module::INSTALL pp("paintings", &D);
 
-PortSymbol::PortSymbol() : Painting()
+PortSymbol::PortSymbol() : LegacyPainting()
 {
 	// setTypeName(".Portsym");
   Name = ".PortSym ";

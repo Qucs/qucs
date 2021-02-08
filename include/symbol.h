@@ -92,7 +92,7 @@ public: // construct
 	virtual ~Symbol();
 
 protected: // Element
-	void paint(ViewPainter*) const;
+	void paint(ViewPainter*) const override;
 	QDialog* schematicWidget(QucsDoc*) const override;
 
 public: // Element

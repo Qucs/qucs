@@ -28,6 +28,7 @@ LEGACY_SRC = \
 	signon.cc \
 	symbolcmd.cpp \
 	idcmd.cpp \
+	painting.cpp \
 	propertiescmd.cpp \
 	rect3ddiagram.cpp \
 	rectdiagram.cpp \

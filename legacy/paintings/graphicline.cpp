@@ -23,16 +23,16 @@
 #include <QPushButton>
 #include <QLineEdit>
 #include <QComboBox>
-#include "painting.h"
+#include "../legacy_painting.h"
 
 #include <QPen>
 
 namespace{
 
 
-class GraphicLine : public Painting  {
+class GraphicLine : public LegacyPainting  {
 private:
-  GraphicLine(GraphicLine const& g) : Painting(g), Pen(g.Pen){
+  GraphicLine(GraphicLine const& g) : LegacyPainting(g), Pen(g.Pen){
   }
 public:
   GraphicLine();
@@ -65,7 +65,7 @@ public:
 
   QPen   Pen;
 }D;
-Dispatcher<Painting>::INSTALL p(&painting_dispatcher, "Line", &D);
+Dispatcher<Painting>::INSTALL p(&element_dispatcher, "Line", &D);
 Module::INSTALL pp("paintings", &D);
 
 GraphicLine::GraphicLine()

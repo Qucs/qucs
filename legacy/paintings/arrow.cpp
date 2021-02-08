@@ -1,9 +1,6 @@
 /***************************************************************************
-                                arrow.cpp
-                               -----------
-    begin                : Sun Nov 23 2003
     copyright            : (C) 2003 by Michael Margraf
-    email                : michael.margraf@alumni.tu-berlin.de
+                               2020, 2021 Felix Salfelder
  ***************************************************************************/
 
 /***************************************************************************
@@ -15,10 +12,7 @@
  *                                                                         *
  ***************************************************************************/
 
-/*!
-  \class Arrow
-  \brief The Arrow class implements the arrow painting
-*/
+// An arrow painting
 
 #include "arrowdialog.h"
 #include "schematic_doc.h" // BUG
@@ -31,13 +25,14 @@
 #include <QPushButton>
 #include <QComboBox>
 #include "qucs_globals.h"
+#include "../legacy_painting.h"
 #include "painting.h"
 
 #include <QPen>
 
 namespace{
 
-class Arrow : public Painting  {
+class Arrow : public LegacyPainting  {
 public:
   Arrow();
  ~Arrow();
@@ -77,7 +72,7 @@ public:
 };
 
 
-Arrow::Arrow() : Painting()
+Arrow::Arrow() : LegacyPainting()
 {
   Name = "Arrow ";
   Pen = QPen(QColor());
@@ -96,7 +91,7 @@ Arrow::~Arrow()
 }
 
 Arrow D;
-Dispatcher<Painting>::INSTALL p(&painting_dispatcher, "Arrow", &D);
+Dispatcher<Element>::INSTALL p(&element_dispatcher, "Arrow", &D);
 //Module::INSTALL pp("paintings", &D);
 // --------------------------------------------------------------------------
 void Arrow::paint(ViewPainter *p)
@@ -181,6 +176,7 @@ void Arrow::getCenter(int& x, int &y)
 
 // --------------------------------------------------------------------------
 // Sets the center of the painting to x/y.
+#if 0
 void Arrow::setCenter(int x, int y, bool relative)
 {
 	 auto cx=Element::cx();
@@ -189,6 +185,7 @@ void Arrow::setCenter(int x, int y, bool relative)
   if(relative) { cx += x;  cy += y; }
   else { cx = x-(x2>>1);  cy = y-(y2>>1); }
 }
+#endif
 
 // --------------------------------------------------------------------------
 #if 0

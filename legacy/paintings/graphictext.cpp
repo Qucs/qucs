@@ -30,13 +30,54 @@
 
 #include <cmath>
 
+#include "../legacy_painting.h"
+
+#include <QColor>
+#include <QFont>
+#include <QString>
+
+
 namespace{
+class GraphicText : public LegacyPainting {
+public:
+  GraphicText();
+ ~GraphicText();
+
+  void paintScheme(SchematicDoc*);
+  void getCenter(int&, int&);
+//  void setCenter(int, int, bool relative=false);
+
+  Element* newOne() const {return new GraphicText(*this);}
+  Element* clone() const {return new GraphicText(*this);}
+
+  static Element* info(QString&, char* &, bool getNewOne=false);
+  bool load(const QString&);
+  QString save();
+  QString saveCpp();
+  QString saveJSON();
+  void paint(ViewPainter*);
+  void MouseMoving(SchematicDoc*, int, int, int, int, SchematicDoc*, int, int, bool);
+  bool MousePressing();
+  bool getSelected(float, float, float);
+  void Bounding(int&, int&, int&, int&);
+
+  void rotate();
+  void mirrorX();
+  void mirrorY();
+  bool Dialog();
+
+  QColor   Color;
+  QFont    Font;
+  QString  Text;
+  int      Angle;
+};
+
 GraphicText D;
-Dispatcher<Painting>::INSTALL p(&painting_dispatcher, "Text", &D);
+Dispatcher<Element>::INSTALL p(&element_dispatcher, "Text", &D);
 Module::INSTALL pp("paintings", &D);
 }
 
-GraphicText::GraphicText() : Painting()
+GraphicText::GraphicText() : LegacyPainting()
 {
   Name = "Text ";
   Color = QColor(0,0,0);

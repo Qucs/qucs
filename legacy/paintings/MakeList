@@ -10,6 +10,7 @@ SRCS = \
 	graphictext.cpp \
 	graphictextdialog.cpp \
 	id_text.cpp \
+	painting.cpp \
 	portsymbol.cpp \
 	rectangle.cpp
 

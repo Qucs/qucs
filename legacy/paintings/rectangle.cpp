@@ -14,7 +14,7 @@
 #include "filldialog.h"
 #include "misc.h"
 #include "schematic_doc.h"
-#include "painting.h"
+#include "../legacy_painting.h"
 #include "qucs_globals.h"
 #include "module.h"
 
@@ -25,13 +25,13 @@
 #include <QCheckBox>
 
 namespace{
-class Rectangle : public Painting  {
+class Rectangle : public LegacyPainting  {
 public:
   Rectangle(bool _filled=false);
  ~Rectangle();
 
 private:
-  Rectangle(Rectangle const& p) : Painting(p) {}
+  Rectangle(Rectangle const& p) : LegacyPainting(p) {}
   Element* clone() const { return new Rectangle(*this); }
 
   void paintScheme(SchematicDoc*) const;
@@ -61,11 +61,11 @@ private:
   QBrush Brush;    // filling style/color
   bool  filled;    // filled or not (for "getSelected" etc.)
 }d0;
-Dispatcher<Painting>::INSTALL p(&painting_dispatcher, "Rectangle", &d0);
+Dispatcher<Element>::INSTALL p(&element_dispatcher, "Rectangle", &d0);
 Module::INSTALL pp("paintings", &d0);
 
-#if 1
-Rectangle::Rectangle(bool _filled) : Painting()
+#if 1 // yikes.
+Rectangle::Rectangle(bool _filled) : LegacyPainting()
 {
   Name = "Rectangle ";
   Pen = QPen(QColor());

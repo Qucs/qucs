@@ -20,6 +20,7 @@
 
 #include "conductor.h"
 #include "diagram.h" // BUG?
+#include "legacy_painting.h"
 #include "painting.h"
 #include "place.h"
 #include "sckt_base.h"
@@ -222,8 +223,8 @@ void LegacySchematicFormat::do_it(istream_t& cs, SchematicModel* m)
 			assert(cc->subckt());
 			for(auto sp : *cc->subckt()){
 				// BUG callback
-				if(auto pp = dynamic_cast<Painting const*>(sp)){
-					auto mp = const_cast<Painting*>(pp); // yikes.
+				if(auto pp = dynamic_cast<LegacyPainting const*>(sp)){
+					auto mp = const_cast<LegacyPainting*>(pp); // yikes.
 					stream << "  <" << mp->save() << ">\n";
 				}else{
 				}

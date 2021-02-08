@@ -135,8 +135,8 @@ Element const* DocumentLanguage::find_proto(const std::string& Name, const Eleme
     return p;
   }else if ((p = symbol_dispatcher[Name])) {
     return p;
-  }else if ((p = painting_dispatcher[Name])) {
-    return p;
+//  }else if ((p = painting_dispatcher[Name])) {
+//    return p;
   }else if ((p = diagram_dispatcher[Name])) {
     return p;
   }else if ((p = dataDispatcher[Name])) {

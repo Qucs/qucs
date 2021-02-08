@@ -20,6 +20,7 @@ HDR = \
 	node.h \
 	object.h \
 	output.h \
+	painting.h \
 	parameter.h \
 	place.h \
 	platform.h \

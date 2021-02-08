@@ -17,7 +17,7 @@
 #include "misc.h"
 #include "qucs_globals.h"
 #include "module.h"
-#include "painting.h"
+#include "../legacy_painting.h"
 
 #include <QPainter>
 #include <QPushButton>
@@ -27,7 +27,7 @@
 
 namespace{
 
-class Ellipse : public Painting  {
+class Ellipse : public LegacyPainting  {
 public:
   Ellipse(bool _filled=false);
  ~Ellipse();
@@ -58,10 +58,10 @@ public:
   QBrush Brush;    // filling style/color
   bool  filled;    // filled or not (for "getSelected" etc.)
 }D;
-Dispatcher<Painting>::INSTALL p(&painting_dispatcher, "Ellipse", &D);
+Dispatcher<Painting>::INSTALL p(&element_dispatcher, "Ellipse", &D);
 Module::INSTALL pp("paintings", &D);
 
-Ellipse::Ellipse(bool _filled) : Painting()
+Ellipse::Ellipse(bool _filled) : LegacyPainting()
 {
   Name = "Ellipse ";
   Pen = QPen(QColor());

@@ -117,9 +117,6 @@ private:
   Node const* portValue(unsigned)const {unreachable(); return nullptr;}
   void setPort(unsigned, Node*){incomplete();}
 
-public: // obsolete.
-  SchematicModel* subckt(){return _subckt;}
-
 private:
   Symbol* _sub;
   Data* _dat;

@@ -39,7 +39,6 @@ CPP_SRC = \
 	object.cpp \
 	octave_window.cpp \
 	output.cpp \
-	painting.cpp \
 	place.cpp \
 	port.cpp \
 	printerwriter.cpp \
@@ -126,7 +125,6 @@ HDR1 = \
 	optimizedialog.h \
 	spicedialog.h \
 	spicefile.h \
-	painting.h \
 	printerwriter.h \
 	projectView.h \
 	property.h \

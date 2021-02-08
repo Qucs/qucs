@@ -68,7 +68,7 @@ class IdCommand : public Command{
 			i += 2;
 		}
 
-		auto ps = painting_dispatcher.clone(".ID");
+		auto ps = element_dispatcher.clone(".ID");
 		assert(ps);
 		trace3("ID push", label, cx, cy);
 		ps->setPosition(pos_t(cx,cy));

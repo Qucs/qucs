@@ -16,7 +16,7 @@
 #include "schematic_model.h" /// hmm
 #include "qucs_globals.h"
 #include "task_element.h"
-#include "painting.h"
+#include "legacy_painting.h"
 #include "diagram.h" // BUG
 #include "docfmt.h" // BUG
 #include "dot.h"
@@ -34,15 +34,18 @@
 static void parsePainting(QString Line, Painting*p)
 {
 	assert(p);
+	auto lp=dynamic_cast<LegacyPainting*>(p);
 	// BUG: callback
-	if(!p->load(Line)) { untested();
-		trace2("ERROR parsePainting", Line, p->label());
+	if(!lp){ untested();
+		incomplete();
+	}else if(!lp->load(Line)) { untested();
+		trace2("ERROR parsePainting", Line, lp->label());
 		incomplete();
 		// QMessageBox::critical(0, QObject::tr("Error"), QObject::tr("Format Error:\nWrong 'painting' line format!"));
 		throw qucs::Exception("cannot parse painting");
 
 	}else{
-		trace2("parsePainting", Line, p->center());
+//		trace2("parsePainting", Line, p->center());
 	}
 }
 /*--------------------------------------------------------------------------*/
@@ -141,7 +144,7 @@ static Dispatcher<DocumentLanguage>::INSTALL
 /*--------------------------------------------------------------------------*/
 /*--------------------------------------------------------------------------*/
 static Component* parseComponentObsoleteCallback(const QString& _s, Component* c);
-static TaskElement* loadtaskElement(const QString& _s, TaskElement* c);
+//static TaskElement* loadtaskElement(const QString& _s, TaskElement* c);
 /*--------------------------------------------------------------------------*/
 static std::list<Element*> implicit_hack;
 /*--------------------------------------------------------------------------*/
@@ -414,10 +417,14 @@ void LegacySchematicLanguage::printLegacyTaskElement(LegacyTaskElement const* c,
 	s << ">\n";
 }
 /*--------------------------------------------------------------------------*/
-void LegacySchematicLanguage::printPainting(Painting const* pp, ostream_t& s) const
+void LegacySchematicLanguage::printPainting(Painting const* p, ostream_t& s) const
 {
-	auto mp = const_cast<Painting*>(pp);
-	s << "  <" << mp->save() << ">\n";
+	if(auto pp=dynamic_cast<LegacyPainting const*>(p)){
+		auto mp = const_cast<LegacyPainting*>(pp);
+		s << "  <" << mp->save() << ">\n";
+	}else{
+		incomplete();
+	}
 }
 /*--------------------------------------------------------------------------*/
 static void printArgs(Symbol const* sym, ostream_t& s)

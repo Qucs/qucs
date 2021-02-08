@@ -14,7 +14,7 @@
 #include "schematic_doc.h" // BUG
 #include "qucs_globals.h"
 #include "module.h"
-#include "painting.h"
+#include "../legacy_painting.h"
 
 // yikes.
 #include <QPainter>
@@ -54,7 +54,7 @@ struct SubParameter {
 
 
 // not sure what this is.
-class ID_Text : public Painting  {
+class ID_Text : public LegacyPainting  {
 public:
   ID_Text(int cx_=0, int cy_=0);
   ~ID_Text();
@@ -81,11 +81,11 @@ public:
   QList<SubParameter *> Parameter;
 };
 ID_Text D;
-Dispatcher<Painting>::INSTALL p(&painting_dispatcher, ".ID", &D);
+Dispatcher<Element>::INSTALL p(&element_dispatcher, ".ID", &D);
 Module::INSTALL pp("paintings", &D);
 }
 
-ID_Text::ID_Text(int cx_, int cy_) : Painting(cx_, cy_)
+ID_Text::ID_Text(int cx_, int cy_) : LegacyPainting(cx_, cy_)
 {
   Name = ".ID ";
   x2 = y2 = 20;

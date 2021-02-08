@@ -11,4 +11,3 @@ Dispatcher<Symbol> symbol_dispatcher;
 Dispatcher<Data> dataDispatcher;
 Dispatcher<DocumentLanguage> languageDispatcher;
 Dispatcher<Element> element_dispatcher;
-Dispatcher<Painting> painting_dispatcher;

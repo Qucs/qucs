@@ -11,16 +11,15 @@
  *   (at your option) any later version.                                   *
  *                                                                         *
  ***************************************************************************/
-#include "painting.h"
+#include "legacy_painting.h"
 
-Painting::Painting()
+LegacyPainting::LegacyPainting() : Element(), Painting()
 {
-//  Type = isPainting;
   State = 0;
   setLabel(Name.toStdString()); // legacy hack
 }
 
-void Painting::Bounding(int& _x1, int& _y1, int& _x2, int& _y2)
+void LegacyPainting::Bounding(int& _x1, int& _y1, int& _x2, int& _y2)
 {
 	unreachable();
 	_x1 = _x2 = _y1 = _y2 = 0;
@@ -28,7 +27,7 @@ void Painting::Bounding(int& _x1, int& _y1, int& _x2, int& _y2)
 //  _x2 = _cx+x2;  _y2 = _cy+y2;
 }
 
-QString Painting::toPenString (int pen) {
+QString LegacyPainting::toPenString (int pen) {
   switch (pen) {
   case Qt::NoPen: return "Qt::NoPen";
   case Qt::SolidLine: return "Qt::SolidLine";
@@ -41,7 +40,7 @@ QString Painting::toPenString (int pen) {
   return "Qt::NoPen";
 }
 
-QString Painting::toBrushString (int brush) {
+QString LegacyPainting::toBrushString (int brush) {
   switch (brush) {
   case Qt::NoBrush: return "Qt::NoBrush";
   case Qt::SolidPattern: return "Qt::SolidPattern";

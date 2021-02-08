@@ -14,9 +14,10 @@
 #include "filldialog.h"
 #include "qucs_app.h"
 #include "misc.h"
-#include "painting.h"
+#include "../legacy_painting.h"
 #include "module.h"
 #include "qucs_globals.h"
+#include "viewpainter.h"
 
 #include <QPainter>
 #include <QPushButton>
@@ -26,7 +27,7 @@
 #include <cmath>
 
 namespace{
-class EllipseArc : public Painting  {
+class EllipseArc : public LegacyPainting  {
 public:
   EllipseArc();
  ~EllipseArc();
@@ -56,10 +57,10 @@ public:
   QPen  Pen;
   int   Angle, ArcLen;   // start angle and arc length
 }d0;
-Dispatcher<Painting>::INSTALL p(&painting_dispatcher, "EArc", &d0);
+Dispatcher<Element>::INSTALL p(&element_dispatcher, "EArc", &d0);
 Module::INSTALL pp("paintings", &d0);
 
-EllipseArc::EllipseArc() : Painting()
+EllipseArc::EllipseArc() : LegacyPainting()
 {
   Name = "EArc ";
   Pen = QPen(QColor());

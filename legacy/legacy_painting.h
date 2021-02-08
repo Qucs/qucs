@@ -1,6 +1,6 @@
 /***************************************************************************
     copyright            : (C) 2003 by Michael Margraf
-                               2020 Felix Salfelder
+                               2020, 2021 Felix Salfelder
  ***************************************************************************/
 
 /***************************************************************************
@@ -12,18 +12,22 @@
  *                                                                         *
  ***************************************************************************/
 
-#ifndef PAINTING_H
-#define PAINTING_H
+#ifndef LEGACY_PAINTING_H
+#define LEGACY_PAINTING_H
 
 #include "element.h"
-#include "viewpainter.h"
+#include "painting.h"
+#include <QString> // BUG: Name
+#include <QPen> // BUG: SetSomeStuff
 
+class QString;
+class QPen;
 
-class Painting : public Element  {
+class LegacyPainting : public Element, public Painting {
 public:
-  Painting();
-  Painting(int cx, int cy) : Element(cx, cy) {}
- ~Painting() {}
+  LegacyPainting();
+  LegacyPainting(int cx, int cy) : Element(cx, cy) {}
+ ~LegacyPainting() {}
 
   virtual void getCenter(int&, int &) {}
   virtual bool getSelected(float, float, float) { return false; }
@@ -61,15 +65,15 @@ public:
   QString name() const{return Name;}
 
 private: // Element?
-  void paint(ViewPainter* p) const {
-	  auto c = const_cast<Painting*>(this);
+  void paint(ViewPainter* p) const override {
+	  auto c = const_cast<LegacyPainting*>(this);
 	  c->paint(p);
   }
   virtual void paint(ViewPainter*){}
   rect_t bounding_rect() const override {itested();
 	  int x1_, y1_, x2_, y2_;
 
-	  auto p = const_cast<Painting*>(this);
+	  auto p = const_cast<LegacyPainting*>(this);
 	  p->Bounding(x1_, y1_, x2_, y2_);
 	  return rect_t(x1, y1, x2-x1, y2-y1);
   }
