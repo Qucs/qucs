@@ -245,6 +245,10 @@ void Verilog::printSymbol(Symbol const* sym, ostream_t& s) const
 	{
 		auto label = sym->label();
 		auto type = sym->typeName();
+		if(sym->common()){ untested();
+			type = sym->common()->modelname(); // "netlist mode"
+		}else{ untested();
+		}
 		// : is not allowed in verilog
       std::replace( type.begin(), type.end(), ':', '$');
 		s << QString::fromStdString(type) << " ";
@@ -275,7 +279,7 @@ void VS::printSymbol(Symbol const* sym, ostream_t& s) const
 {
 	{
 		auto label = sym->label();
-		auto type = sym->typeName();
+		auto type = sym->typeName(); // dev_type_key
 		// : is not allowed in verilog
       std::replace( type.begin(), type.end(), ':', '$');
 		s << QString::fromStdString(type) << " ";

@@ -1,6 +1,6 @@
 # Qucs
 ## declarations 1
-# unresolved symbol wire
+# unresolved symbol (unreachable)
 ## declarations end
 
 R:R2 _net3 _net5 R="10k" Temp="26.85" Tc1="0.0" Tc2="0.0" Tnom="26.85"

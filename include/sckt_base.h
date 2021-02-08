@@ -46,6 +46,9 @@ private: // Symbol
 	Port& port(unsigned i) override;
 
 public:
+	std::string dev_type()const override;
+
+public:
 	virtual bool makes_own_scope()const  {return false;}
 	SchematicModel const* subckt() const{ return _subckt; }
 	SchematicModel* subckt(){ return _subckt; }

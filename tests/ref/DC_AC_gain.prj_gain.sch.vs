@@ -13,7 +13,7 @@ Vdc #(.$xposition(210), .$yposition(370), .$tx(18), .$ty(18), .U(-2.5 V)) V6(net
 //AC1
 //DC1
 Eqn #(.$xposition(360), .$yposition(370), .$tx(-23), .$ty(-23), .Gain(dB(Output.v/Input.v)), .Phase(phase(Output.v/Input.v)), .Export(yes)) Eqn1();
-Sub$singleOPV #(.$xposition($xposition), .$yposition($yposition), .$tx($tx), .$ty($ty), .File(singleOPV.sch)) OPV1(net_160_240, net_160_200, net_210_170, net_210_270, net_260_220);
+Sub #(.$xposition($xposition), .$yposition($yposition), .$tx($tx), .$ty($ty), .File(singleOPV.sch)) OPV1(net_160_240, net_160_200, net_210_170, net_210_270, net_260_220);
 R #(.$xposition(130), .$yposition(310), .$tx(-26), .$ty(-26), .R(1.7k), .Temp(26.85), .Tc1(0.0), .Tc2(0.0), .Tnom(26.85), .Symbol(european)) R3(net_160_310, net_100_310);
 wire #(.$xposition(260), .$yposition(220)) noname(net_260_220, net_290_220);
 wire #(.$xposition(40), .$yposition(260)) noname(net_40_260, net_40_270);

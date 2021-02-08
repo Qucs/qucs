@@ -4,7 +4,7 @@ Vdc #(.$xposition(140), .$yposition(250), .$tx(18), .$ty(18), .U(1 V)) V1(net_14
 GND #(.$xposition(140), .$yposition(320), .$tx(0), .$ty(0)) anonymous_gnd_hack_0(net_140_320);
 R #(.$xposition(340), .$yposition(250), .$tx(15), .$ty(15), .R(50 Ohm), .Temp(26.85), .Tc1(0.0), .Tc2(0.0), .Tnom(26.85), .Symbol(US)) R1(net_340_220, net_340_280);
 //DC1
-Sub$short_circuit #(.$xposition($xposition), .$yposition($yposition), .$tx($tx), .$ty($ty), .File(short_circuit.sch)) SC1(net_280_200, net_220_200);
+Sub #(.$xposition($xposition), .$yposition($yposition), .$tx($tx), .$ty($ty), .File(short_circuit.sch)) SC1(net_280_200, net_220_200);
 wire #(.$xposition(140), .$yposition(280)) noname(net_140_280, net_140_300);
 wire #(.$xposition(140), .$yposition(300)) noname(net_140_300, net_140_320);
 wire #(.$xposition(140), .$yposition(300)) noname(net_140_300, net_340_300);

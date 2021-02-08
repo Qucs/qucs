@@ -176,38 +176,32 @@ private:
 	Property _section;
 	Property _component;
 	mutable SchematicModel const* _paint; // just caching
-}d0;
+}d0; // LibComp
 static Dispatcher<Symbol>::INSTALL p2(&symbol_dispatcher, "LegacyLibProto", &d0);
 /*--------------------------------------------------------------------------*/
+/*--------------------------------------------------------------------------*/
+class CommonLib : public CommonComponent{
+public:
+	explicit CommonLib(int i=0) : CommonComponent(i) {}
+private:
+	CommonComponent* clone() const override{
+		return new CommonLib(*this);
+	}
+};
+CommonLib cl(CC_STATIC_);
 /*--------------------------------------------------------------------------*/
 // Lib instance. TODO: use paramset + common
 class Lib : public Symbol{
 public:
-	explicit Lib(Symbol const* p)
-	  : Symbol(), _tx(0), _ty(0), _parent(p) {
-		 setTypeName("Lib"); // really?
-		 new_subckt(); // hmm, maybe not.
-
-		 if(p){
-			 _ports.resize(p->numPorts());
-		 }else{
-			 unreachable();
-		 }
-	}
-	explicit Lib():Symbol(), _tx(0), _ty(0), _parent(nullptr) {
-		setTypeName("Lib"); // really?
+	explicit Lib(Symbol const* p);
+	explicit Lib(CommonComponent* c=nullptr)
+		: Symbol(),
+		 _tx(0), _ty(0), _parent(nullptr) {
+		setTypeName("Lib");
+		attach_common(c);
 		new_subckt(); // hmm.
 	}
-	Lib( Lib const& l)
-	  : Symbol(l), _tx(l._tx), _ty(l._ty),
-	    _section(l._section),
-	    _component(l._component),
-		 _parent(l._parent),
-		 _ports(l._ports.size())
-	{
-		new_subckt(); // hmm. copy?
-		              // todo: move all the model stuff into common (more work)
-	}
+	Lib(Lib const& l);
 
 private: // Element
 	Symbol* clone()const override{
@@ -405,7 +399,8 @@ private:
 		_ports.resize(numPorts());
 		trace2("Lib::attachProto", numPorts(), _ports.size());
 		// also prepare parameters here.
-		setTypeName(t);
+		set_dev_type(t); // use common maybe?
+		setTypeName("Lib"); // assert?
 
 		for(auto i : _params){
 			delete i;
@@ -453,8 +448,35 @@ private:
 	std::vector<Port> _ports;
 	std::vector<std::string> _param_names; // could be common?
 	std::vector<PARA_BASE*> _params; // could be common
-}D; // Lib
+}; // Lib
+Lib D(&cl);
 static Dispatcher<Symbol>::INSTALL p(&symbol_dispatcher, "Lib", &D);
+/*--------------------------------------------------------------------------*/
+Lib::Lib(Symbol const* p)
+	  : Symbol(), _tx(0), _ty(0), _parent(p)
+{
+	setTypeName("Lib"); // really?
+	new_subckt(); // hmm, maybe not.
+
+	if(p){
+		_ports.resize(p->numPorts());
+		assert(p->common());
+		attach_common(p->common()->clone());
+	}else{
+		unreachable();
+	}
+}
+/*--------------------------------------------------------------------------*/
+Lib::Lib(Lib const& l)
+	: Symbol(l), _tx(l._tx), _ty(l._ty),
+	_section(l._section),
+	_component(l._component),
+	_parent(l._parent),
+	_ports(l._ports.size())
+{
+	new_subckt(); // hmm. copy?
+	// todo: move all the model stuff into common (more work)
+}
 /*--------------------------------------------------------------------------*/
 /*--------------------------------------------------------------------------*/
 // partially tAC. build a new sckt proto.

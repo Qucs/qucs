@@ -162,6 +162,10 @@ static void printSymbol_(Symbol const* c, ostream_t& s)
 
 	{
 		std::string type = c->typeName();
+		if(c->common()){ untested();
+			type = c->common()->modelname(); // "netlist mode"
+		}else{ untested();
+		}
 		std::string hack_type = mangleType(type);
 
 		s << type << ":" << c->label();
@@ -460,6 +464,10 @@ void QucsatorLang::printComponent(Component const* c, ostream_t& s) const
 		}
 	}else{
 		std::string type = c->typeName();
+		if(c->common()){ untested();
+			type = c->common()->modelname(); // "netlist mode"
+		}else{ untested();
+		}
 		std::string hack_type = mangleType(type);
 
 		s << type << ":" << c->label();

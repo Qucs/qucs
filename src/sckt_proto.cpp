@@ -1,5 +1,5 @@
 /***************************************************************************
-    copyright            : (C) 2019, 2020 Felix Salfelder
+    copyright            : (C) 2019, 2020, 2021 Felix Salfelder
  ***************************************************************************/
 
 /***************************************************************************
@@ -17,6 +17,7 @@
 #include "sckt_base.h"
 #include "schematic_model.h"
 #include "qucs_globals.h"
+#include <memory>
 
 typedef unsigned index_t;
 /*--------------------------------------------------------------------------*/
@@ -25,8 +26,9 @@ namespace {
 class CommonSubckt : public CommonComponent{
 public:
 	explicit CommonSubckt(int x)
-		: CommonComponent(x),
-        _subckt() {}
+		: CommonComponent(x){
+		_subckt = std::make_shared<SchematicModel>();
+	}
 	~CommonSubckt(){
 		for(auto& p : _ports){
 			delete p;
@@ -34,11 +36,10 @@ public:
 		}
 	}
 public:
-	SchematicModel* subckt(){ return &_subckt; }
+	SchematicModel* subckt(){ return _subckt.get(); }
 	CommonComponent* clone()const override{
-		assert(false); // not yet.
 		incomplete();
-		return new CommonSubckt(0);
+		return new CommonSubckt(*this);
 	}
    bool operator==(const CommonComponent&)const override{
 		return false;
@@ -62,7 +63,7 @@ public:
 		return _ports.size();
 	}
 private:
-	SchematicModel _subckt;
+	std::shared_ptr<SchematicModel> _subckt;
 	std::vector<Port*> _ports;
 };
 CommonSubckt comms(CC_STATIC_);
@@ -71,7 +72,7 @@ pos_t const& CommonSubckt::portPosition(index_t i) const
 {
 	// TODO: find a port connected to the node at position i..
 	//  (maybe use precalc?)
-	auto p = _subckt.portValue(i); // BUG.
+	auto p = _subckt->portValue(i); // BUG.
 	if(p){ untested();
 		incomplete();
 		// return p->position();
@@ -107,7 +108,7 @@ private:
 //	SchematicModel const* scope() const override { return &sm; }
 //
 private: // bug, feature? is this a Symbol??
-	rect_t bounding_rect() const{};
+	rect_t bounding_rect() const{ return rect_t();};
 	void paint(ViewPainter*) const{};
 
 private: // Symbol

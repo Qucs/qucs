@@ -268,6 +268,7 @@ void Symbol::new_subckt()
 /*--------------------------------------------------------------------------*/
 Symbol::~Symbol()
 {
+	detach_common();
 	delete _subckt;
 	_subckt = nullptr;
 }
@@ -356,6 +357,19 @@ void Symbol::setParameter(std::string const& name, std::string const& v)
 // 	setParameter(pos, v);
 // }
 /*--------------------------------------------------------------------------*/
+CommonComponent::CommonComponent(const CommonComponent& p)
+  :Object(p),
+//   _tnom_c(p._tnom_c),
+//   _dtemp(p._dtemp),
+//   _temp_c(p._temp_c),
+//   _mfactor(p._mfactor),
+//   _value(p._value),
+   _modelname(p._modelname),
+//   _model(p._model),
+   _attach_count(0)
+{
+}
+/*--------------------------------------------------------------------------*/
 CommonComponent::CommonComponent(int c)
   :Object(),
 //   _tnom_c(NOT_INPUT),
@@ -363,7 +377,7 @@ CommonComponent::CommonComponent(int c)
 //   _temp_c(NOT_INPUT),
 //   _mfactor(1),
 //   _value(0),
-//   _modelname(),
+   _modelname("(empty)"),
 //   _model(0),
    _attach_count(c)
 {
@@ -372,7 +386,10 @@ CommonComponent::CommonComponent(int c)
 CommonComponent::~CommonComponent()
 {
   trace1("common,destruct", _attach_count);
-  assert(_attach_count == 0 || _attach_count == CC_STATIC_);
+  if(_attach_count == 0 || _attach_count == CC_STATIC_){ untested();
+  }else{
+	  unreachable(); // BUG
+  }
 }
 /*--------------------------------------------------------------------------*/
 void CommonComponent::attach_common(CommonComponent*c, CommonComponent**to)
@@ -427,8 +444,8 @@ void CommonComponent::detach_common(CommonComponent** from)
 /*--------------------------------------------------------------------------*/
 bool CommonComponent::operator==(const CommonComponent& x)const
 {
-  return true;
-//  (_modelname == x._modelname
+  return true
+	  && _modelname == x._modelname;
 //	  && _model == x._model
 //	  && _tnom_c == x._tnom_c
 //	  && _dtemp == x._dtemp
@@ -459,4 +476,21 @@ std::string Symbol::port_value(unsigned i) const
 	Port const& p = port(i);
 	return p.nodeLabel();
 }
+/*--------------------------------------------------------------------------*/
+void Symbol::set_dev_type(const std::string& new_type)
+{
+	if (common()) {
+		if (new_type != typeName()) {
+			CommonComponent* c = common()->clone();
+			assert(c);
+			c->set_modelname(new_type);
+			attach_common(c);
+		}else{
+		}
+	}else{
+		assert(false); // for now
+		// CARD::set_dev_type(new_type);
+	}
+}
+/*--------------------------------------------------------------------------*/
 /*--------------------------------------------------------------------------*/

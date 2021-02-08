@@ -48,7 +48,7 @@ public:
 
   void attach_model(const Symbol*)const;
 //  CommonComponent& attach(const MODEL_CARD* m) {_model = m; return *this;}
-//  void set_modelname(const std::string& n) {_modelname = n;}
+  void set_modelname(const std::string& n) {_modelname = n;}
 
   virtual CommonComponent* clone()const = 0;
 
@@ -73,13 +73,13 @@ public: // also, not yet
   virtual bool  operator==(const CommonComponent&x)const;
 
   bool operator!=(const CommonComponent& x)const {return !(*this == x);}
-//  std::string	      modelname()const	{return _modelname;}
+  std::string	      modelname()const	{return _modelname;}
 //  const MODEL_CARD*   model()const	{assert(_model); return _model;}
 //  bool		      has_model()const	{return _model;}
 //   const PARAMETER<double>& mfactor()const {return _mfactor;}
 //   const PARAMETER<double>& value()const {return _value;}
 private:
-//  std::string	_modelname;
+  std::string	_modelname;
 //  mutable const MODEL_CARD* _model;
   int		_attach_count;
 };
@@ -127,6 +127,9 @@ public:
 
 // protected: // needed in netlister. public use in parse...
 	virtual SchematicModel* scope();
+
+	void set_dev_type(const std::string& new_type);
+	virtual std::string dev_type()const{ return "(unreachable)";}
 
 public: // Parameters
 	virtual unsigned paramCount()const;

@@ -20,6 +20,12 @@ void SubcktBase::new_subckt()
 	_subckt = new SchematicModel();
 }
 /*--------------------------------------------------------------------------*/
+std::string SubcktBase::dev_type()const
+{
+	assert(common());
+	return common()->modelname();
+}
+/*--------------------------------------------------------------------------*/
 pos_t SubcktBase::portPosition(unsigned i) const
 {
 	std::string n = portName(i);

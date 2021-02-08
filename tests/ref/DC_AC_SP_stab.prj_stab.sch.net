@@ -1,6 +1,6 @@
 # Qucs
 ## declarations 1
-# unresolved symbol wire
+# unresolved symbol (unreachable)
 ## declarations end
 
 Vdc:V1 _net2 gnd U="15 V"

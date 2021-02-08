@@ -33,6 +33,16 @@
 
 namespace {
 
+// possibly not needed.
+class CommonSub : public CommonComponent{
+public:
+	explicit CommonSub(int i=0) : CommonComponent(i) {}
+private:
+	CommonComponent* clone() const override{
+		return new CommonSub(*this);
+	}
+};
+CommonSub cs(CC_STATIC_);
 // BUG: must derive from subckt_model (or so)
 // Subcircuit is used as "subcircuit instance"..
 // but a subcircuit instance is not a Component...
@@ -41,16 +51,21 @@ namespace {
 // ( this is a subcircuit instance )
 class Subcircuit : public Component /*BUG*/, public SymbolFactory {
 public:
-  Subcircuit();
- ~Subcircuit() {};
+	explicit Subcircuit(CommonComponent* s);
+	~Subcircuit() {};
 
 private:
   Subcircuit(Subcircuit const&x);
   Subcircuit(Subcircuit const&x, SchematicModel* hack);
 //  Component* newOne();
 
-public: // obsolete.
-  static Element* info(QString&, char* &, bool getNewOne=false);
+// public: // obsolete.
+//   static Element* info(QString&, char* &, bool getNewOne=false);
+  std::string dev_type()const {
+	return "Sub";
+  }
+
+/*--------------------------------------------------------------------------*/
 
 private:
   Element* clone() const override{ untested();
@@ -105,19 +120,24 @@ private: // overrides
 private:
 	std::string _subPath;
 	SchematicModel* _protoscope; // stash prototypes here. (use Factory::_scope?)
-}d0; // Subcircuit
+	std::string _filename; // "File" parameter.
+}; // Subcircuit
+Subcircuit d0(&cs);
 static Dispatcher<Symbol>::INSTALL p(&symbol_dispatcher, "LegacySub", &d0);
 static Module::INSTALL pp("stuff", &d0);
 /*--------------------------------------------------------------------------*/
-Subcircuit::Subcircuit() : Component(), // gaah sckt_base
+Subcircuit::Subcircuit(CommonComponent* cc)
+	: Component(), // gaah sckt_base(cc)?
 	_protoscope(nullptr)
 {
+	attach_common(cc);
   Type = isComponent;   // both analog and digital
   Description = QObject::tr("subcircuit");
 
 //  Props.append(new Property("File", "", false,
 //		QObject::tr("name of qucs schematic file")));
 
+  set_dev_type("Sub");
   setTypeName("Sub");
 
   // Do NOT call createSymbol() here. But create port to let it rotate.
@@ -304,13 +324,18 @@ int Subcircuit::loadSymbol(const QString& DocName)
     Line = Line.trimmed();
   } while(Line.isEmpty());
 
-  if(Line.left(16) != "<Qucs Schematic ")  // wrong file type ?
+  if(Line.left(16) != "<Qucs Schematic "){
+	  // wrong file type ?
     return -3;
+  }else{
+  }
 
   Line = Line.mid(16, Line.length()-17);
   VersionTriplet SymbolVersion = VersionTriplet(Line);
-  if (SymbolVersion > QucsVersion) // wrong version number ?
+  if (SymbolVersion > QucsVersion){
     return -4;
+  }else{
+  }
 
   // read content *************************
   while(!stream.atEnd()) {
@@ -330,7 +355,8 @@ int Subcircuit::loadSymbol(const QString& DocName)
       y1 -= 4;
       y2 += 4;
       return z;      // return number of ports
-    }
+    }else{
+	 }
 
     Line = Line.trimmed();
     if(Line.at(0) != '<') return -5;
@@ -525,14 +551,10 @@ QString Subcircuit::getSubcircuitFile(SchematicModel const* scp) const
 /*--------------------------------------------------------------------------*/
 void Subcircuit::build()
 {
-	if(owner()){
-		createSymbol(); // BUG. multiple symbols, but embedded into Component
-							 // swap by proper symbols later.
-		proto(nullptr);
-	}else{ untested();
-		trace1("no owner in subckt", label());
-		incomplete(); // ?
-	}
+	assert(owner()); // really?
+	createSymbol(); // BUG. multiple symbols, but embedded into Component
+	// swap by proper symbols later.
+	proto(nullptr);
 }
 /*--------------------------------------------------------------------------*/
 void Subcircuit::proto(SchematicModel const* scope)
@@ -551,7 +573,7 @@ void Subcircuit::proto(SchematicModel const* scope)
 	if(p){
 		trace1("cached", typeName());
 	}else{
-		trace2("not cached", typeName(), scope);
+		trace3("not cached", typeName(), scope, dev_type());
 //		Symbol const* ownersym = dynamic_cast<Symbol const*>(owner());
 //		auto* s = new SubcktProto(this);
 		Symbol* ss = symbol_dispatcher.clone("subckt_proto");
@@ -559,19 +581,22 @@ void Subcircuit::proto(SchematicModel const* scope)
 		assert(s);
 
 		build_sckt(s);
+		trace3("Subcircuit built proto", s->typeName(), owner(), s->common()->modelname());
 		assert(!s->subckt());
 		assert(ss->scope());
 
 		QString t = Props.first()->Value;
-		trace2("Subcircuit::proto", t, owner());
-
-		for(auto i : *ss->scope()){
-			trace1("proto", i->label());
-		}
 		
-		s->setLabel(typeName());
-		trace2("sckt::proto install", typeName(), s->typeName());
+		s->setLabel(typeName()); // so we can find it.
+		s->set_dev_type(typeName());
+		trace3("sckt::proto install", label(), this, s->common());
+		trace3("sckt::proto install", typeName(), s->typeName(), s->common()->modelname());
+		trace3("sckt::proto install", typeName(), s->dev_type(), dev_type());
+		assert(s->dev_type() == typeName());
+		setTypeName("Sub"); // key.
 
+		assert(s->common());
+		attach_common(s->common()->clone());
 		_protoscope->pushBack(s);
 
 		p = s;
@@ -635,6 +660,7 @@ void Subcircuit::build_sckt(SubcktBase* proto) const
 #endif
 
 	proto->setTypeName(s.toStdString());
+	assert(proto->common());
 }
 
 bool Subcircuit::portExists(index_t i) const
@@ -671,7 +697,8 @@ void Subcircuit::setParameter(unsigned i, std::string const& value)
 	if(i==num_component_params + Symbol::paramCount()){
 		std::string newTypeName = "Sub" + typesep + v.left(v.length()-4).toStdString();
 		trace2("Subcircuit::setParameter", v, newTypeName);
-		setTypeName(newTypeName);
+		set_dev_type(newTypeName);
+		setTypeName(newTypeName); // needed? should be Sub.
 		build(); // tmp hack.
 		trace2("Subcircuit::setParameter2", v, newTypeName);
 	}else{ untested();

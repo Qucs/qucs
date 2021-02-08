@@ -36,11 +36,15 @@ public:
 		_sub = symbol_dispatcher.clone("LegacySub");
 		assert(a);
 		_sub->setLabel("Sub");
+		_sub->set_dev_type("Sub"); // why?
 		_sub->set_owner(this);
 		auto f = dynamic_cast<SymbolFactory*>(_sub);
 		assert(f);
 		f->_scope = scope();
 		subckt()->push_back(_sub);
+
+		assert(_sub->common());
+		assert(_sub->common()->modelname()=="Sub");
 
 #if 1
 		// dat file access...

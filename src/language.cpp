@@ -130,7 +130,7 @@ Element const* DocumentLanguage::find_proto(const std::string& Name, const Eleme
 	 d->set(cmd);
 //	 d->set_owner(Scope); // really??
 	 return d;
-  }else if ((p = element_dispatcher[Name])) { untested();
+  }else if ((p = element_dispatcher[Name])) {
 	  // TaskElements are here... (move to Data?)
     return p;
   }else if ((p = symbol_dispatcher[Name])) {

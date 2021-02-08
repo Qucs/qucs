@@ -315,8 +315,7 @@ void LegacyNetlister::prepareSave(ostream_t& stream, SchematicModel const* m,
 			// isAnalog = true;
 			allTypes |= isAnalogComponent;
 			NumPorts = -1;
-		}
-		else { untested();
+		}else{ untested();
 			if(NumPorts < 1 && isTruthTable) { untested();
 				//  ErrText->appendPlainText(
 				//     QObject::tr("ERROR: Digital simulation needs at least one digital source."));
@@ -520,9 +519,22 @@ void LegacyNetlister::throughAllComps(ostream_t&, SchematicModel const* scope_,
 		if(dynamic_cast<SubcktBase const*>(sym)){ untested();
 			trace2("is sckt?", sym->label(), sym->typeName());
 			incomplete();
-		}else if(sym && sym->subckt()){ // really??
-			auto key = sym->typeName();
-			trace2("need declaration?", sym->label(), key);
+		}else if(sym && sym->common()){
+			// linked to a model go find it.
+			std::string key = sym->common()->modelname();
+			trace3("need shared declaration?", sym->label(), key, sym);
+
+			// Element const* proto = sym->find_looking_out(key);
+			Element const* proto = _qucslang->find_proto(key, sym);
+			auto& d = declarations[key];
+
+			// only one proto per key
+			assert(!d || d == proto);
+		  	d = proto;
+		}else if(sym && sym->subckt()){ untested();
+			// really??
+			std::string key = sym->dev_type();
+			trace3("need declaration?", sym->label(), key, sym);
 
 			// Element const* proto = sym->find_looking_out(key);
 			Element const* proto = _qucslang->find_proto(key, sym);
