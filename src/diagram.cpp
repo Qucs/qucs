@@ -131,6 +131,7 @@ Diagram::~Diagram()
   delete _subckt;
 }
 
+#if 0
 void Diagram::paint(ViewPainter *p) const
 {itested();
 
@@ -139,6 +140,7 @@ void Diagram::paint(ViewPainter *p) const
   // d->paintMarkers(p); // markers must/will become sub-objects.
   Element::paint(p);
 }
+#endif
 
 index_t Diagram::param_count() const
 {

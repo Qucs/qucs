@@ -38,7 +38,6 @@ private: // override virtual
   std::string   value_name()const	{untested();return "";}
   char		id_letter()const	{untested();return '\0';}
   std::string	dev_type()const		{untested();return "dotcard";}
-  void paint(ViewPainter*) const override{}
 public: // override
   DEV_DOT* clone()const override {return new DEV_DOT(*this);}
   SchematicModel* scope() override;

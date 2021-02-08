@@ -19,6 +19,7 @@
 #include "exception.h"
 #include "geometry.h"
 #include "exception.h"
+#include "painting.h"
 /*--------------------------------------------------------------------------*/
 class QPainter;
 class NodeMap;
@@ -84,7 +85,7 @@ private:
 };
 /*--------------------------------------------------------------------------*/
 /*--------------------------------------------------------------------------*/
-class Symbol : public Element{
+class Symbol : public Element, public Painting {
 protected:
 	explicit Symbol(Symbol const&);
 public: // construct

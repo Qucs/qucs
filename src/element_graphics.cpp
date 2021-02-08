@@ -270,26 +270,29 @@ void ElementGraphics::attachElement(Element* e)
 void ElementGraphics::paint(QPainter *p, const QStyleOptionGraphicsItem *o,
 		QWidget* w)
 {itested();
-	assert(_e);
-	ViewPainter v(p); // TODO
-	_e->paint(&v);
 	assert(p);
+	ViewPainter v(p); // TODO
 
-	auto br = boundingRect();
+	if(auto pp=dynamic_cast<Painting const*>(_e)){
+		pp->paint(&v);
 
-	if(isSelected()){itested();
-		// p->fillRect(br, QColor("grey"));
-		p->setPen(QPen(Qt::darkGray,3));
-		p->drawRoundedRect(br, 3, 3);
-	}else{itested();
+		auto br = boundingRect();
+
+		if(isSelected()){itested();
+			// p->fillRect(br, QColor("grey"));
+			p->setPen(QPen(Qt::darkGray,3));
+			p->drawRoundedRect(br, 3, 3);
+		}else{itested();
 #ifdef DO_TRACE_
-		p->setPen(QPen(Qt::green,3));
-		p->drawRoundedRect(br, 3, 3);
-		p->drawEllipse(-3, -3, 6, 6);
+			p->setPen(QPen(Qt::green,3));
+			p->drawRoundedRect(br, 3, 3);
+			p->drawEllipse(-3, -3, 6, 6);
 #endif
+		}
+	}else{
+		unreachable();
 	}
 
-	(void) p;
 	(void) o;
 	(void) w;
 	// QGraphicsItem::paint(p, o, w); //?
@@ -477,8 +480,11 @@ SchematicScene* ElementGraphics::scene() const
 /*--------------------------------------------------------------------------*/
 QRectF ElementGraphics::boundingRect() const
 {itested();
-	assert(_e);
-	return _e->bounding_rect().toRectF();
+	if(auto pp=dynamic_cast<Painting const*>(_e)){
+		return QRectF_(pp->bounding_rect().toRectF());
+	}else{ untested();
+		return QRectF();
+	}
 }
 /*--------------------------------------------------------------------------*/
 QRectF ElementGraphics::absoluteBoundingRect() const

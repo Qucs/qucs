@@ -36,10 +36,13 @@ public:
 	: _diag(d){ untested();
 		assert(d);
 		Element const*e = d;
-		auto br(e->bounding_rect());
-		trace2("DiagramWidget", br.tl(), br.br());
-		setGeometry(br.toRectF().toRect()); // this only sets the SIZE.
-		                          // origin is in topleft corner.
+		if(auto p=dynamic_cast<Painting const*>(e)){
+			auto br(p->bounding_rect());
+			trace2("DiagramWidget", br.tl(), br.br());
+			setGeometry(br.toRectF().toRect()); // this only sets the SIZE.
+											  // origin is in topleft corner.
+		}else{
+		}
 		refresh_plots();
 	}
 

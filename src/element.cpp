@@ -46,6 +46,7 @@ void Element::getCenter(int&x, int&y) const
 	y = _position.second;
 }
 
+#if 0 // fixed?
 // pure? maybe not. there could be non-paintable elements...
 void Element::paint(ViewPainter* p) const
 {
@@ -67,7 +68,6 @@ rect_t Element::bounding_rect() const
 	return rect_t(0,0,0,0);
 }
 
-#if 0
 void Element::attachToModel()
 {itested();
 	assert(false); // obsolete, hopefully

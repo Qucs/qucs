@@ -339,6 +339,7 @@ void LegacySchematicLanguage::printElement(Element const* c, ostream_t& s) const
 	}else if(auto d=dynamic_cast<Data const*>(c)){
 		return printData(d, s);
 	}else{
+		trace1("printElement??", c->label());
 		// painting here?
 		incomplete();
 	}
@@ -692,6 +693,11 @@ Place const* place_at(pos_t p, Symbol* m)
 Element* LegacySchematicLanguage::parseElement(istream_t& cmd, Element* x) const
 {
 	trace1("LegacySchematicLanguage::parseElement", cmd.fullstring());
+
+//	if(auto s=dynamic_cast<LegacyPainting*>(e)){
+//		return ::parsePainting(l, s);
+//	}else{
+//	}
 
 	cmd.skip1('<');
 	std::string s;
@@ -1119,10 +1125,10 @@ Element* LegacySchematicLanguage::parseItem(istream_t& c, Element* e) const
 		loadTaskElement(l, t);
 	}else if(auto d=dynamic_cast<Diagram*>(e)){
 		parseDiagram(d, c);
-	}else if(auto s=dynamic_cast<Painting*>(e)){
-		::parsePainting(l, s);
 	}else if(auto s=dynamic_cast<DEV_DOT*>(e)){
 		return parseCommand(c, s);
+	}else if(auto s=dynamic_cast<LegacyPainting*>(e)){
+		::parsePainting(l, s);
 	}else if(auto s=dynamic_cast<Element*>(e)){
 		// Data here?
 		return parseElement(c, s);

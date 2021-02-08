@@ -46,6 +46,10 @@ private:
 	void setParameter(int, std::string const&){ untested();
 	}
 
+private: // BUG? a SubcktBase is a Painting...
+	virtual rect_t bounding_rect() const override{ unreachable(); return rect_t();}
+	virtual void paint(ViewPainter*) const override{ unreachable(); }
+
 private: // Sckt
 	bool makes_own_scope()const override { return true;}
 	SchematicModel* scope() override{

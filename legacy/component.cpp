@@ -328,7 +328,7 @@ void Component::paint(ViewPainter *p) const
   int cx = 0; // cx_(); // "positionX"
   int cy = 0; // cy_(); // "positionY"
 //  int a, b, xb, yb;
-  Element::paint(p);
+//  Element::paint(p);
   QFont f = p->font();   // save current font
   QFont newFont = f;
   if(dynamic_cast<TaskElement const*>(this)) { untested();

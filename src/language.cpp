@@ -55,10 +55,10 @@ void DocumentLanguage::printItem(ostream_t& s, Element const* c) const
 		print_command(s, C);
 	}else if (auto d=dynamic_cast<const Diagram*>(c)) {
 		printDiagram(d, s);
-	}else if (auto p=dynamic_cast<const Painting*>(c)) {
-		printPainting(p, s);
 	}else if (auto d=dynamic_cast<const Data*>(c)) {
 		printElement(d, s);
+	}else if (auto p=dynamic_cast<const Painting*>(c)) {
+		printPainting(p, s);
 	}else{
 		incomplete();
 	}

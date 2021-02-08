@@ -49,7 +49,7 @@ static const char _typesep = ':';
 /// }
 /// #endif
 /* -------------------------------------------------------------------------------- */
-// temporary kludge.
+// temporary kludge. why Symbol?
 class QucsatorScktHack : public Symbol {
 private:
 	QucsatorScktHack(QucsatorScktHack const&) = default;
@@ -75,6 +75,10 @@ private: // Symbol
 			return Symbol::paramValue(name);
 		}
 	}
+
+private: // BUG? a SubcktBase is a Painting...
+	virtual rect_t bounding_rect() const override{ unreachable(); return rect_t();}
+	virtual void paint(ViewPainter*) const override{ unreachable(); }
 
 private:
 	std::string _text;

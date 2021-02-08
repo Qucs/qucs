@@ -238,7 +238,7 @@ void LegacySchematicFormat::do_it(istream_t& cs, SchematicModel* m)
 		if(dynamic_cast<Conductor const*>(pc)){
 			unreachable();
 			//wires.push_back(pc);
-		}else if(dynamic_cast<Painting const*>(pc)){
+		}else if(dynamic_cast<LegacyPainting const*>(pc)){
 			unreachable();
 			paintings.push_back(pc);
 		}else if(pc->label()=="main"){
@@ -251,6 +251,12 @@ void LegacySchematicFormat::do_it(istream_t& cs, SchematicModel* m)
 						wires.push_back(ii);
 					}else if(dynamic_cast<Diagram const*>(ii)){
 						diagrams.push_back(ii);
+					}else if(dynamic_cast<Symbol const*>(ii)){
+						stream << "  ";
+						L->printItem(stream, ii);
+					}else if(dynamic_cast<TaskElement const*>(ii)){
+						stream << "  ";
+						L->printItem(stream, ii);
 					}else if(dynamic_cast<Painting const*>(ii)){
 						paintings.push_back(ii);
 					}else{

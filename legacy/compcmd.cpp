@@ -49,6 +49,11 @@ private: // Symbol
 		}
 	}
 	Port& port(unsigned) override {incomplete(); throw "incomplete";}
+
+private: // BUG? a SubcktBase is a Painting...
+	virtual rect_t bounding_rect() const override{ unreachable(); return rect_t();}
+	virtual void paint(ViewPainter*) const override{ unreachable(); }
+
 public: // same as in sckt_proto
 	SchematicModel* scope(){ untested(); return subckt();}
 	SchematicModel const* scope() const{ untested(); return subckt();}

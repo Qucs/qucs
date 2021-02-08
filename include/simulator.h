@@ -56,9 +56,6 @@ public:
   virtual NetLang const* netLang() const{return nullptr;}
   virtual DocumentFormat const* netLister() const{return nullptr;}
 //  virtual SimOutputData const* results(){}
-//
-private: // Element
-  void paint(ViewPainter*) const override{ untested(); }
 
 public:
   void attachDoc(QucsDoc*);

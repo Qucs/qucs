@@ -64,6 +64,10 @@ private: // Symbol
     }
   }
 
+private: // BUG? a SubcktBase is a Painting...
+  virtual rect_t bounding_rect() const override{ unreachable(); }
+  virtual void paint(ViewPainter*) const override{ unreachable(); }
+
 private: // SchematicSymbol
   SchematicModel* scope(){
     return subckt();

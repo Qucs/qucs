@@ -54,6 +54,8 @@ ComponentListWidgetItem::ComponentListWidgetItem(Element const* e)
 	assert(e);
 	QString File = e->iconBasename();
 	QString Name = QString::fromStdString(e->label());
+	Painting const* p = dynamic_cast<Painting const*>(e);
+	assert(p);
 
 ////	if(auto s=dynamic_cast<Symbol const*>(e)){
 ////		Name = QString::fromStdString(s->typeName());
@@ -62,8 +64,8 @@ ComponentListWidgetItem::ComponentListWidgetItem(Element const* e)
 //	setIcon( QPixmap(":/bitmaps/" + File + ".png"));
 
 	static const int N = 128;
-	QRectF br = e->bounding_rect().toRectF();
-	QRectF bb = e->bounding_rect().toRectF();
+	QRectF br = p->bounding_rect().toRectF();
+	QRectF bb = p->bounding_rect().toRectF();
 	auto bbc = bb.center();
 	QRectF bbt = bb.transposed();
 	bbt.moveCenter(bbc);
@@ -71,9 +73,9 @@ ComponentListWidgetItem::ComponentListWidgetItem(Element const* e)
 	assert(bbt.center() == bb.center());
 	assert(bb.height() == bb.width());
 
-	QPixmap p(N, N);
-	p.fill();
-	QPainter* q = new QPainter(&p);
+	QPixmap pix(N, N);
+	pix.fill();
+	QPainter* q = new QPainter(&pix);
 
 	QPointF center(N/2, N/2);
 	q->translate(center);
@@ -83,7 +85,6 @@ ComponentListWidgetItem::ComponentListWidgetItem(Element const* e)
 
 	ViewPainter v(q);
 
-	e->paint(&v);
 #if 0
 	auto sym = dynamic_cast<SchematicSymbol const*>(e);
 
@@ -100,11 +101,11 @@ ComponentListWidgetItem::ComponentListWidgetItem(Element const* e)
 	}
 
 #else
-	e->paint(&v);
+	p->paint(&v);
 #endif
 
 	delete q;
-	setIcon(p);
+	setIcon(pix);
 
 	setText(Name);
 	setToolTip("element: " + Name);

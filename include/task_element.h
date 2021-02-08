@@ -16,6 +16,7 @@
 #include "platform.h"
 #include "element.h"
 #include "exception.h"
+#include "painting.h"
 class ComponentDialog;//really??
 class Property;
 
@@ -28,7 +29,7 @@ class QString; // BUG
 class QPen; // BUG
 class QBrush; // BUG
 /* -------------------------------------------------------------------------------- */
-class TaskElement : public Element {
+class TaskElement : public Element, public Painting {
 protected:
   TaskElement(const TaskElement&);
   explicit TaskElement();

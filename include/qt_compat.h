@@ -26,8 +26,10 @@
 #include <QColor>
 #include <QDir>
 #include <QFont>
+#include <QRectF>
 #endif
 
+#include "geometry.h"
 #include "io_trace.h"
 
 #ifndef QT_MAJOR_VERSION
@@ -457,6 +459,10 @@ inline std::string str_(QFont const& c)
 {
 	auto cc = c.toString();
 	return cc.toStdString();
+}
+inline QRectF QRectF_(rect_t const& p)
+{
+	return QRectF(p.tl().first, p.tl().second, p.w(), p.h());
 }
 
 #endif

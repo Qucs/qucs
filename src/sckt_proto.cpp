@@ -105,6 +105,10 @@ public: // repeat (why?!)
 private:
 	Port& port(unsigned) override;
 //	SchematicModel const* scope() const override { return &sm; }
+//
+private: // bug, feature? is this a Symbol??
+	rect_t bounding_rect() const{};
+	void paint(ViewPainter*) const{};
 
 private: // Symbol
 	pos_t portPosition(unsigned) const;

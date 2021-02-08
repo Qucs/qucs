@@ -1059,6 +1059,10 @@ public:
 		new_subckt();
 	}
 
+private: // BUG/feature. a SubcktBase is a Painting...
+	rect_t bounding_rect() const override{unreachable();}
+	void paint(ViewPainter*) const override{unreachable();}
+
 private:
 	virtual Port& port(unsigned){ assert(false); return *new Port(); }
 };

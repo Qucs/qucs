@@ -132,7 +132,6 @@ public: // make old variables accessible
 	void setObsoleteType(int){
 		unreachable();
 	}
-	virtual rect_t bounding_rect() const;
 
 public: // UI stuff.
 #if 0 // TODO (QucsDoc is not a QWidget yet);
@@ -150,12 +149,12 @@ public: // other stuff
 	void setCenter(pos_t const& c){ incomplete(); _position = c; }
 	void setPosition(pos_t const& c){ _position = c; }
 	virtual void getCenter(int&, int&) const; // BUG
-	virtual void paint(ViewPainter*) const = 0;
 
 	// BUG: remove "center"
 	// BUG: not virtual
 	virtual pos_t center()const;
 
+	// move to painting?
 	pos_t position()const{
 		return _position;
 	}

@@ -34,6 +34,10 @@ namespace{
 class Wires : public SubcktBase{
 private:
 	Port& port(unsigned){ throw "unreachable";}
+
+private: // BUG? a SubcktBase is a Painting...
+	virtual rect_t bounding_rect() const override{ unreachable(); return rect_t(); }
+	virtual void paint(ViewPainter*) const override{ unreachable(); }
 };
 /*--------------------------------------------------------------------------*/
 class Wire : public Symbol, public Conductor {

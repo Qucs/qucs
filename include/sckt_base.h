@@ -16,6 +16,7 @@
 #include "symbol.h"
 #include <vector>
 /*--------------------------------------------------------------------------*/
+// TODO: a symbol is a painting. does it make sense?
 class SubcktBase : public Symbol {
 public:
 	explicit SubcktBase() {} // HACK

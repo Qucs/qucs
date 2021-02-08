@@ -139,8 +139,10 @@ private:
 		rect_t r;
 		for (auto i : *subckt()){ itested();
 			trace1("cnp br", i->label());
-			auto c = i->center();
-			r |= i->bounding_rect() + c;
+			if(auto p=dynamic_cast<Painting const*>(i)){
+				auto c = i->center(); // p!
+				r |= p->bounding_rect() + c;
+			}
 		}
 		trace3("cnp br", subckt()->size(), r.tl(), r.br());
 		return r;

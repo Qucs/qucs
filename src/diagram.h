@@ -93,7 +93,7 @@ public:
   virtual QString extraMarkerText(Marker const*) const {return "";}
   
 private:
-  virtual void paint(ViewPainter*) const override;
+//   virtual void paint(ViewPainter*) const override; // not necessarily
 //  pos_t center() const override;
 //  void    getCenter(int&, int&); //override; //remove this.
   QDialog* schematicWidget(QucsDoc* Doc) const override;

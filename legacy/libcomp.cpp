@@ -105,19 +105,26 @@ private:
 			assert(p);
 			Element const* e = p;
 //			trace2("br", e->boundingRect().topLeft(), e->boundingRect().bottomRight());
-			auto c = e->center();
-			br |= ( e->bounding_rect() + c );
+			if(auto p = dynamic_cast<Painting const*>(e)){
+				auto c = e->center(); // p!
+				incomplete(); // BUG. honour p->legacyTransformhack
+				br |= ( p->bounding_rect() + c );
+			}
 		}
 		trace4("LibComp::br", label(), paintings()->size(), br.tl(), br.br());
 		return br;
 	}
 	void paint(ViewPainter* v) const override{ untested();
 		assert(paintings());
-		for(auto p : *paintings()){ untested();
-			v->save();
-			v->translate(p->position());
-			p->paint(v);
-			v->restore();
+		for(auto e : *paintings()){ untested();
+			incomplete(); // BUG. honour p->legacyTransformhack
+			if(auto p = dynamic_cast<Painting const*>(e)){
+				v->save();
+				v->translate(e->position());
+				p->paint(v);
+				v->restore();
+			}else{
+			}
 		}
 	}
 
@@ -206,16 +213,16 @@ private: // Element
 	Symbol* clone()const override{
 		return new Lib(*this);
 	}
-	void paint(ViewPainter* p) const override{ untested();
+	void paint(ViewPainter* v) const override{ untested();
 		// if(has_common()){untested();
 		//   common()->paint(p);
 		// }else
-		if(_parent){untested();
-			// no-op?
-			((Element*)_parent)->paint(p);
+		if(auto p = dynamic_cast<Painting const*>(_parent)){
+			// no-op? is the painting a sub-object?
+			p->paint(v);
 		}else{ untested();
 		}
-		Symbol::paint(p);
+		Symbol::paint(v);
 	}
 	rect_t bounding_rect() const override{ untested();
 		// if(has_common()){untested();

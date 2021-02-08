@@ -94,12 +94,12 @@ private: // Symbol
 			return rect_t();
 		}
 	}
-	void paint(ViewPainter* p) const override{ untested();
-		if(_proto){untested();
-			((Element*)_proto)->paint(p);
+	void paint(ViewPainter* v) const override{ untested();
+		if(auto p=dynamic_cast<Painting const*>(_proto)){untested();
+			p->paint(v);
 		}else{ untested();
 		}
-		Symbol::paint(p);
+		Symbol::paint(v);
 	}
 
 private: // Symbol
