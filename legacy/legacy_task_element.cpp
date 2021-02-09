@@ -48,6 +48,9 @@ LegacyTaskElement::LegacyTaskElement(LegacyTaskElement const& p)
   for(auto i : p.Props){
     Props.append(new Property(*i));
   }
+  for(auto i : p.Texts){
+    Texts.append(new Text(*i));
+  }
   isActive = COMP_IS_ACTIVE; // bug.
 }
 
@@ -189,13 +192,8 @@ bool TaskElement::getSelected(int x_, int y_)
 #endif
 
 // -------------------------------------------------------
-rect_t LegacyTaskElement::bounding_rect() const
-{
-	incomplete();
-	return rect_t();
-}
 void LegacyTaskElement::paint(ViewPainter *p) const
-{
+{ untested();
 	int x2=0; int y2=0; //?
   int cx = center().first;
   int cy = center().second;
@@ -206,31 +204,32 @@ void LegacyTaskElement::paint(ViewPainter *p) const
     unsigned size;
 
 #if 1
-    if(!Texts.isEmpty()){
-      size = Texts.first()->Size;
-    }else{
+//    if(!Texts.isEmpty()){
+//      size = Texts.first()->Size;
+//    }else{
       // possibly incomplete.
-      size = 1;
-    }
-    newFont.setPointSizeF(p->Scale * size);
+      size = 20;
+//    }
+	 auto scale = 1;
+    newFont.setPointSizeF(scale * size);
     newFont.setWeight(QFont::DemiBold);
     p->setFont(newFont);
-    p->map(cx, cy, x, y);
+    p->map(0, 0, x, y);
 
     p->setPen(QPen(Qt::darkBlue,2));
     a = b = 0;
-    QRect r, t;
+    QRect t;
     foreach(Text *pt, Texts) {
       t.setRect(x, y+b, 0, 0);
-      p->drawText(t, Qt::AlignLeft|Qt::TextDontClip, pt->s, &r);
-      b += r.height();
-      if(a < r.width())  a = r.width();
-    }
-    xb = a + int(12.0*p->Scale);
-    yb = b + int(10.0*p->Scale);
-    x2 = x1+25 + int(float(a) / p->Scale);
-    y2 = y1+23 + int(float(b) / p->Scale);
-    if(ty < y2+1) if(ty > y1-r.height())  ty = y2 + 1;
+      p->drawText(t, Qt::AlignLeft|Qt::TextDontClip, pt->s, &_bb);
+      b += _bb.height();
+      if(a < _bb.width())  a = _bb.width();
+   }
+    xb = a + int(12.0*scale);
+    yb = b + int(10.0*scale);
+    x2 = x1+25 + int(float(a) / scale);
+    y2 = y1+23 + int(float(b) / scale);
+    if(ty < y2+1) if(ty > y1-_bb.height())  ty = y2 + 1;
 
     p->map(-1, 0, x, y);
     p->map(-6, -5, a, b);
@@ -281,10 +280,10 @@ void LegacyTaskElement::paint(ViewPainter *p) const
 #endif
 } // TaskElement::paint
 
-rect_t TaskElement::bounding_rect() const
+rect_t LegacyTaskElement::bounding_rect() const
 {
 	incomplete();
-	return rect_t();
+	return rect_t(_bb.marginsAdded(QMargins(5,5,10,10)));
 }
 // -------------------------------------------------------
 // For output on a printer device.

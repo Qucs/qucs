@@ -167,46 +167,65 @@ std::string TaskElement::param_value_by_name(std::string const& n) const
 rect_t TaskElement::bounding_rect() const
 {
 	incomplete();
-	return rect_t();
+	int m=5;
+	return rect_t(-m,-m,120+2*m,50+2*m);
 }
 /* -------------------------------------------------------------------------------- */
 void TaskElement::paint(ViewPainter *p) const
 {
 	int x2=0; int y2=0; //?
-  int cx = center().first;
-  int cy = center().second;
+  int cx = 0; // center().first;
+  int cy = 0; // center().second;
   int x, y, a, b, xb, yb;
   QFont f = p->font();   // save current font
   QFont newFont = f;
-  {   // is simulation component (dc, ac, ...)
+  {
     unsigned size;
 
-#if 0
-    if(!Texts.isEmpty()){
-      size = Texts.first()->Size;
-    }else{
+#if 1
+//    if(!Texts.isEmpty()){
+//      size = Texts.first()->Size;
+//    }else{
       // possibly incomplete.
-      size = 1;
-    }
-    newFont.setPointSizeF(p->Scale * size);
+      size = 20;
+//    }
+    newFont.setPointSizeF(size);
     newFont.setWeight(QFont::DemiBold);
     p->setFont(newFont);
     p->map(cx, cy, x, y);
 
+	 std::string desc_short = caption();
+
     p->setPen(QPen(Qt::darkBlue,2));
     a = b = 0;
-    QRect r, t;
-    foreach(Text *pt, Texts) {
-      t.setRect(x, y+b, 0, 0);
-      p->drawText(t, Qt::AlignLeft|Qt::TextDontClip, pt->s, &r);
-      b += r.height();
-      if(a < r.width())  a = r.width();
-    }
-    xb = a + int(12.0*p->Scale);
-    yb = b + int(10.0*p->Scale);
-    x2 = x1+25 + int(float(a) / p->Scale);
-    y2 = y1+23 + int(float(b) / p->Scale);
-    if(ty < y2+1) if(ty > y1-r.height())  ty = y2 + 1;
+    QRect t, r;
+    t.setRect(x, y+b, 0, 0);
+    p->drawText(t, Qt::AlignLeft|Qt::TextDontClip, QString_(desc_short), &r);
+
+//    foreach(Text *pt, Texts) {
+//      p->drawText(t, Qt::AlignLeft|Qt::TextDontClip, pt->s, &r);
+//      b += r.height();
+//      if(a < r.width())  a = r.width();
+//    }
+//
+	  if(a < r.width()){
+		  a = r.width();
+	  }else{
+	  }
+	  if(b < r.height()){
+		  b = r.height();
+	  }else{
+	  }
+
+	 int scale = 10;
+    xb = a + 10;
+    yb = b + 5;
+    x2 = x1+25 + int(float(a) / scale);
+    y2 = y1+23 + int(float(b) / scale);
+    if(ty < y2+1 && ty > y1-r.height()){
+		 ty = y2 + 1;
+	 }else{
+	 }
 
     p->map(-1, 0, x, y);
     p->map(-6, -5, a, b);
@@ -236,7 +255,9 @@ void TaskElement::paint(ViewPainter *p) const
       y += p->LineSpacing;
     }
   }
+#endif
 
+#if 0
   if(isActive == COMP_IS_OPEN)
     p->setPen(QPen(Qt::red,0));
   else if(isActive & COMP_IS_SHORTEN)
@@ -245,12 +266,6 @@ void TaskElement::paint(ViewPainter *p) const
     p->drawRect(+x1, +y1, x2-x1+1, y2-y1+1);
     p->drawLine(+x1, +y1, +x2, +y2);
     p->drawLine(+x1, +y2, +x2, +y1);
-  }
-
-  // draw component bounding box
-  if(isSelected()) {
-    p->setPen(QPen(Qt::darkGray,3));
-    p->drawRoundRect(cx+x1, cy+y1, x2-x1, y2-y1);
   }
 #endif
 } // TaskElement::paint

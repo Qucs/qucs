@@ -38,8 +38,10 @@ public:
 
   virtual void recreate(SchematicDoc*) {};
   // QString getNetlist();
+  std::string const& caption() const {return _caption;}
+  void setCaption(std::string const&c) {_caption=c;}
 
-private:
+protected:
   virtual rect_t bounding_rect() const override;
   void    paint(ViewPainter*) const;
   QDialog* schematicWidget(QucsDoc* Doc) const;
@@ -98,6 +100,8 @@ protected:
   // void copyComponent(Component*);
   // Property * getProperty(const QString&);
   // SchematicDoc* containingSchematic;
+private:
+  std::string _caption;
 };
 /* -------------------------------------------------------------------------------- */
 /* -------------------------------------------------------------------------------- */

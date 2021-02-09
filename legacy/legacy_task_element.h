@@ -39,8 +39,8 @@ public:
   // QString getNetlist();
 
 private:
-  virtual rect_t bounding_rect() const override;
-  void    paint(ViewPainter*) const;
+  void paint(ViewPainter*) const;
+  rect_t bounding_rect() const override;
   QDialog* schematicWidget(QucsDoc* Doc) const;
 
 	virtual index_t param_count() const;
@@ -83,6 +83,8 @@ protected:
   // void copyComponent(Component*);
   // Property * getProperty(const QString&);
   // SchematicDoc* containingSchematic;
+private:
+  mutable QRect _bb; // HACK
 };
 /* -------------------------------------------------------------------------------- */
 /* -------------------------------------------------------------------------------- */
