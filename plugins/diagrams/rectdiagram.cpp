@@ -27,7 +27,6 @@
 
 namespace {
 
-
 	// todo: share?
 // class DiagramWidget : public QWidget
 class DiagramWidget : public QCustomPlot {
@@ -39,7 +38,7 @@ public:
 		if(auto p=dynamic_cast<Painting const*>(e)){
 			auto br(p->bounding_rect());
 			trace2("DiagramWidget", br.tl(), br.br());
-			setGeometry(br.toRectF().toRect()); // this only sets the SIZE.
+			setGeometry(QRectF_(br).toRect()); // this only sets the SIZE.
 											  // origin is in topleft corner.
 		}else{
 		}
@@ -200,7 +199,7 @@ public:
 };
 /*--------------------------------------------------------------------------*/
 // must be a factory, because cant instanciate QtObject statically
-class RectDiagram : public Diagram  {
+class RectDiagram : public Diagram, public Painting  {
 private:
 	RectDiagram(RectDiagram const& c);
 public:
@@ -215,6 +214,21 @@ public:
 	index_t param_count() const{ return 4; }
 
 private:
+	rect_t bounding_rect() const override{
+//		Diagram const* cd = this;
+//		Diagram* d=const_cast<Diagram*>(cd);
+//		d->Bounding(x1_, y1_, x2_, y2_); // eek
+
+		QPointF tl(0, -y2); // eek
+		QPointF br(x2, 0);
+		return rect_t(QRectF(tl, br));
+	}
+   void paint(ViewPainter* v) const override{
+		Diagram const* cd = this;
+		Diagram* d=const_cast<Diagram*>(cd);
+		d->paintDiagram(v);
+//		Element::paint(p);
+	}
 	void prepare() override{
 		trace1("RectDiagram:prepare", label());
 		assert(scope());
