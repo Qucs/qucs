@@ -43,7 +43,6 @@ private: // Command
 private: // DocumentFormat
   void load(istream_t&, Object*) const override{ incomplete(); }
 private:
-//  mutable std::map<std::string, Element*> declarations;
   mutable std::vector<QString> netLabels;
   DocumentLanguage const* lang;
 //  mutable SchematicModel const* modelhack;
@@ -62,7 +61,6 @@ void VerilogNetlister::do_it(istream_t& cs, SchematicModel* o)
 	lang = languageDispatcher["verilog"];
 	assert(lang);
 
-	std::map<std::string, Element const*> declarations;
 	std::string fn;
 	cs >> fn;
 
