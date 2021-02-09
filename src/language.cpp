@@ -79,8 +79,14 @@ void DocumentLanguage::new__instance(istream_t& cmd, Element* owner,
 				trace0("new__instance found dot .. ");
 				DEV_DOT* new_instance = p->clone();
 				delete p;
+
+				{ // get rid of it, eventually.
+					assert(owner);
+					assert(owner->scope() == Scope);
+					new_instance->set_scope(Scope);
+				}
+
 				new_instance->set_owner(owner); // owner is null, usually.
-				new_instance->set_scope(Scope); // needed??
 				parseItem(cmd, new_instance);
 			}else if (Element* new_instance = proto->clone_instance()) {
 				trace0("new__instance no dot .. ");

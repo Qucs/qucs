@@ -36,6 +36,16 @@ class QString;
 /*--------------------------------------------------------------------------*/
 namespace{
 /*--------------------------------------------------------------------------*/
+class CommonLib : public CommonComponent{
+public:
+	explicit CommonLib(int i=0) : CommonComponent(i) {}
+private:
+	CommonComponent* clone() const override{
+		return new CommonLib(*this);
+	}
+};
+CommonLib cl(CC_STATIC_);
+/*--------------------------------------------------------------------------*/
 SchematicModel empty;
 // this is a prototype
 class LibComp : public SubcktBase {
@@ -52,6 +62,7 @@ public:
 	    _paint(nullptr) {
 		new_subckt();
 		// _paint = new PaintingList(); // BUG
+		attach_common(&cl);
 	}
 	~LibComp() { incomplete(); };
 	Symbol* clone() const override{return new LibComp(*this);}
@@ -179,16 +190,6 @@ private:
 }d0; // LibComp
 static Dispatcher<Symbol>::INSTALL p2(&symbol_dispatcher, "LegacyLibProto", &d0);
 /*--------------------------------------------------------------------------*/
-/*--------------------------------------------------------------------------*/
-class CommonLib : public CommonComponent{
-public:
-	explicit CommonLib(int i=0) : CommonComponent(i) {}
-private:
-	CommonComponent* clone() const override{
-		return new CommonLib(*this);
-	}
-};
-CommonLib cl(CC_STATIC_);
 /*--------------------------------------------------------------------------*/
 // Lib instance. TODO: use paramset + common
 class Lib : public Symbol{
@@ -456,7 +457,7 @@ Lib::Lib(Symbol const* p)
 	  : Symbol(), _tx(0), _ty(0), _parent(p)
 {
 	setTypeName("Lib"); // really?
-	new_subckt(); // hmm, maybe not.
+	// new_subckt(); // hmm, maybe not.
 
 	if(p){
 		_ports.resize(p->numPorts());
@@ -598,6 +599,7 @@ QString LibComp::vhdlCode(int)
 /*--------------------------------------------------------------------------*/
 Symbol* LibComp::clone_instance() const
 {
+	assert(common());
 	return new Lib(this);
 }
 /*--------------------------------------------------------------------------*/
