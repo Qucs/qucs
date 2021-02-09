@@ -46,7 +46,7 @@ public:
 	explicit MouseActionSelect(MouseActions& ctx)
 		: MouseAction(ctx) {}
 
-private: // override
+private: // MouseAction
 //	cmd* activate(QAction* sender) override;
 	cmd* move(QEvent*) override;
 	cmd* press(QEvent*) override;
@@ -55,13 +55,6 @@ private: // override
 	// cmd* enter(QEvent*) override;
 	cmd* dblclk(QEvent*) override;
 
-#if 0
-private: // rectangles?  // this was in MouseActions. BUG. remove
-	int MAx1;
-	int MAy1;
-	int MAx2;
-	int MAy2;
-#endif
 private:
 	void showSchematicWidget(QWidget*, ElementGraphics*);
 	cmd* release_left(QEvent*);

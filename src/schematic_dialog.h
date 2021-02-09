@@ -76,13 +76,11 @@ public:
 private:
 	virtual void updateCompPropsList(void){}
 protected:
-	SchematicDoc* schematic(){ untested();
-		return Doc;
-	}
+	SchematicDoc* schematic();
 	void execute(QUndoCommand* c);
 
 private:
-	SchematicDoc* Doc;
+//	SchematicDoc* Doc;
 };
 
 #endif

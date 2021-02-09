@@ -13,6 +13,7 @@
 #include "symbol.h"
 #include "settings.h"
 #include "schematic_dialog.h"
+#include "schematic_edit.h"
 #include "qt_compat.h"
 
 #include <QLabel>
@@ -29,7 +30,7 @@
 #include <QEvent>
 #include <QKeyEvent>
 #include <QDebug>
-#include "swap.h"
+#include "swap_gfx.h"
 /*--------------------------------------------------------------------------*/
 class SymbolDialog : public SchematicDialog {
 public:
@@ -66,7 +67,7 @@ public:
 	bool eventFilter(QObject *obj, QEvent *event);
 
 private:
-	QVBoxLayout *_all;
+	QVBoxLayout *_all{nullptr};
 	QTableWidget  *prop;
 	QLineEdit   *edit, *NameEdit, *CompNameEdit;
 	QLabel      *Name, *Description;
@@ -88,8 +89,9 @@ private:
 	void updateCompPropsList(void);
 
 private:
-	ElementGraphics* _gfx;
-	Symbol* _sym; // needed?
+	ElementGraphics* _gfx{nullptr};
+	ElementGraphics* _gfxclone{nullptr};
+	Symbol* _sym{nullptr};
 };
 /*--------------------------------------------------------------------------*/
 /*--------------------------------------------------------------------------*/
@@ -101,18 +103,23 @@ SymbolDialog::SymbolDialog(QucsDoc* d) : SchematicDialog(d)
 /*--------------------------------------------------------------------------*/
 void SymbolDialog::attach(ElementGraphics* gfx)
 {
+	trace1("attach", element(gfx)->label());
 	assert(gfx);
-	Element* c = element(gfx);
-	if(_sym){
+	_gfx = gfx;
+
+	if(_gfxclone){
 		incomplete();
 	}else{
+		_gfxclone = gfx->clone();
 	}
+	Element* c = element(_gfxclone);
+
 	_sym = prechecked_cast<Symbol*>(c);
 	assert(_sym);
-	_gfx = gfx;
 	QString s;
 	setAllVisible = true; // state when toggling properties visibility
 
+	delete _all; // BUG?: maybe recycle it.
 	_all = new QVBoxLayout; // to provide neccessary size
 	this->setLayout(_all);
 	_all->setContentsMargins(1,1,1,1);
@@ -124,15 +131,14 @@ void SymbolDialog::attach(ElementGraphics* gfx)
 	gp1 = new QGridLayout();
 	_all->addLayout(gp1);
 
-
 	// ...........................................................
 	// BUG: memory leak
-	gp1->addWidget(new QLabel(QString::fromStdString(_sym->label())), 0,0,1,2);
+	gp1->addWidget(new QLabel(QString_(_sym->label()), this), 0,0,1,2);
 
-	QHBoxLayout *h5 = new QHBoxLayout;
+	QHBoxLayout *h5 = new QHBoxLayout(this);
 	h5->setSpacing(5);
 
-	h5->addWidget(new QLabel(tr("Name:")) );
+	h5->addWidget(new QLabel(tr("Name:"), this) );
 
 	CompNameEdit = new QLineEdit;
 	h5->addWidget(CompNameEdit);
@@ -140,10 +146,10 @@ void SymbolDialog::attach(ElementGraphics* gfx)
 	// CompNameEdit->setValidator(ValRestrict);
 	connect(CompNameEdit, SIGNAL(returnPressed()), SLOT(slotButtOK()));
 
-	showName = new QCheckBox(tr("display in schematic"));
+	showName = new QCheckBox(tr("display in schematic"), this);
 	h5->addWidget(showName);
 
-	QWidget *hTop = new QWidget;
+	QWidget *hTop = new QWidget(this);
 	hTop->setLayout(h5);
 
 	gp1->addWidget(hTop,1,0);
@@ -152,12 +158,12 @@ void SymbolDialog::attach(ElementGraphics* gfx)
 	gp1->addWidget(PropertyBox,2,0);
 
 	// H layout inside the GroupBox
-	QHBoxLayout *hProps = new QHBoxLayout;
+	QHBoxLayout *hProps = new QHBoxLayout(this);
 	PropertyBox->setLayout(hProps);
 
 	// left pane
-	QWidget *vboxPropsL = new QWidget;
-	QVBoxLayout *vL = new QVBoxLayout;
+	QWidget *vboxPropsL = new QWidget(this);
+	QVBoxLayout *vL = new QVBoxLayout(this);
 	vboxPropsL->setLayout(vL);
 
 	/// \todo column min width
@@ -278,7 +284,6 @@ void SymbolDialog::attach(ElementGraphics* gfx)
 	incomplete();
 //	showName->setChecked(_sym->showName);
 	updateCompPropsList();
-
 
 	/// \todo add key up/down brose and select prop
 	connect(prop, SIGNAL(itemClicked(QTableWidgetItem*)),
@@ -579,15 +584,16 @@ void SymbolDialog::reject()
 void SymbolDialog::slotApplyInput()
 {
 	assert(_sym);
-	auto e = _sym->clone();
-	auto new_sym=prechecked_cast<Symbol*>(e);
-	assert(new_sym);
-	new_sym->set_owner(_sym->owner());
+	auto e = element(_gfxclone);
 
-	unsigned old_show = atoi(new_sym->paramValue("$param_display").c_str());
+	auto sym_clone = prechecked_cast<Symbol*>(e);
+	assert(sym_clone);
+	sym_clone->set_owner(_sym->owner());
+
+	unsigned old_show = atoi(sym_clone->paramValue("$param_display").c_str());
 	trace1("old_show", old_show);
 
-	if(new_sym->showLabel() != showName->isChecked()) {
+	if(sym_clone->showLabel() != showName->isChecked()) {
 		incomplete();
 //		sym->showLabel() = showName->isChecked();
 		changed = true;
@@ -598,7 +604,8 @@ void SymbolDialog::slotApplyInput()
 	if(CompNameEdit->text().isEmpty()){
 		CompNameEdit->setText(QString::fromStdString(_sym->label()));
 	}else if(CompNameEdit->text().toStdString() != _sym->label()) {
-		new_sym->setLabel(CompNameEdit->text().toStdString());
+		trace1("change_label", CompNameEdit->text().toStdString());
+		sym_clone->setLabel(CompNameEdit->text().toStdString());
 		changed = true;
 	}
 
@@ -614,7 +621,8 @@ void SymbolDialog::slotApplyInput()
 		new_show |= display;
 
 		if(_sym->paramValue(row) != value) {
-			new_sym->setParameter(row, value);
+			trace2("symbol apply", row, value);
+			sym_clone->setParameter(row, value);
 			changed = true;
 		}else{
 		}
@@ -625,19 +633,32 @@ void SymbolDialog::slotApplyInput()
 	}else{
 	}
 
+	// changed == !(element(gfx) == element(clonegfx));
+
 	// TODO: do this properly, and move to base class.
 	// what is an undoable operation? does it require apply button?
 	if(changed) {
-		auto cmd = new SwapSymbolCommand(_gfx, new_sym);
+		trace2("symbol changed", element(_gfx)->label(), element(_gfxclone)->label());
+		auto scene = _gfx->scene();
+		assert(scene);
+		scene->addItem(_gfxclone);
+
+		auto cmd = new SwapElementGfx(_gfx, _gfxclone);
 		execute(cmd);
 
 		Element* c = element(_gfx);
 		_sym = prechecked_cast<Symbol*>(c); // was const.
 		assert(_sym);
 
-		if ( (int) _sym->paramCount() != prop->rowCount()) {
-			updateCompPropsList();
-		}
+//		if ( (int) _sym->paramCount() != prop->rowCount()) {
+//			updateCompPropsList();
+//		}else{
+//		}
+
+		auto cl = _gfxclone;
+		_gfxclone = nullptr;
+		_gfx = nullptr;
+		attach(cl); // rebuilds it all. may be a bug.
 	}else{
 	}
 }
@@ -696,7 +717,7 @@ void SymbolDialog::enableButtons()
 /*--------------------------------------------------------------------------*/
 QDialog* Symbol::schematicWidget(QucsDoc* Doc) const
 { untested();
-  return new SymbolDialog(Doc); // memory leak?
+  return new SymbolDialog(Doc); // memory leak? no. Doc is parent.
 }
 /*--------------------------------------------------------------------------*/
 /*--------------------------------------------------------------------------*/

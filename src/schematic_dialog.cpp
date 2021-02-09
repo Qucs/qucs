@@ -15,15 +15,22 @@
 /*--------------------------------------------------------------------------*/
 void SchematicDialog::execute(QUndoCommand* c)
 {
-	Doc->executeCommand(c);
+	assert(schematic());
+	schematic()->executeCommand(c);
 }
 /*--------------------------------------------------------------------------*/
 SchematicDialog::SchematicDialog(QucsDoc* d)
-  : QDialog(prechecked_cast<SchematicDoc*>(d))
+  : QDialog(prechecked_cast<SchematicDoc*>(d)) // sets parent.
 {
   assert(d);
-  Doc=dynamic_cast<SchematicDoc*>(d);
-  assert(Doc);
+  assert(schematic() == d);
+}
+/*--------------------------------------------------------------------------*/
+SchematicDoc* SchematicDialog::schematic()
+{ untested();
+	auto p = prechecked_cast<SchematicDoc*>(parentWidget());
+	assert(p);
+	return p;
 }
 /*--------------------------------------------------------------------------*/
 /*--------------------------------------------------------------------------*/

@@ -169,6 +169,28 @@ Element* ElementGraphics::cloneElement() const
 	}
 }
 /*--------------------------------------------------------------------------*/
+static void redo_children(ElementGraphics* g)
+{
+	if(auto sym = dynamic_cast<Symbol const*>(element(g))){
+		for(auto c : g->childItems()){
+			delete c;
+		}
+
+		new ElementText(g);
+
+		if(auto s = sym->subckt()){ untested();
+			for(auto o : *s){untested();
+				if(auto i=dynamic_cast<Element*>(o)){
+					QGraphicsItem* cg = new ElementGraphics(i->clone());
+					cg->setParentItem(g);
+				}else{
+				}
+			}
+		}else{ untested();
+		}
+	}
+}
+/*--------------------------------------------------------------------------*/
 void ElementGraphics::attachElement(Element* e)
 {itested();
 	assert(e);
@@ -232,17 +254,9 @@ void ElementGraphics::attachElement(Element* e)
 			// need to disentangle show/show_/hide/attach.
 		}
 		trace2("attached proxy", this, w);
-	}else if(!sym){ untested();
-	}else if(auto s = sym->subckt()){ untested();
-		_elementText = new ElementText(this);
-		for(auto o : *s){untested();
-			if(auto i=dynamic_cast<Element*>(o)){
-				QGraphicsItem* cg = new ElementGraphics(i->clone());
-				cg->setParentItem(this);
-			}
-		}
-	}else{ untested();
-		_elementText = new ElementText(this);
+	}else if(sym){ untested();
+		redo_children(this);
+	}else{
 	}
 	trace1("ElementGraphics unpacked", childItems().size());
 
@@ -581,6 +595,8 @@ void ElementGraphics::init_ports()
 // show? restore? init?
 void ElementGraphics::show_()
 {
+	trace1("show", _e->label());
+	redo_children(this);
 	assert(!isVisible());
 	assert(scene());
 	assert(!_e->owner());

@@ -190,6 +190,9 @@ MouseAction const* QucsDoc::activeAction() const
 /* -------------------------------------------------------------------------------- */
 void QucsDoc::executeCommand(QUndoCommand* c)
 {
+	// TODO: what if there are multiple views to a scene?
+	// is mouseActions == scene?
+
 	if(mouseActions()){itested();
 		mouseActions()->executeCommand(c);
 		// setChanged();

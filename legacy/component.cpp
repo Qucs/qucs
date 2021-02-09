@@ -1521,10 +1521,12 @@ std::string Component::paramName(unsigned i) const
   }
 }
 /*--------------------------------------------------------------------------*/
+// BUG BUG BUG decouple.
 QDialog* Component::schematicWidget(QucsDoc* Doc) const
 { untested();
   trace0("Component::editElement");
-  return new ComponentDialog(Doc); // memory leak?
+  return Symbol::schematicWidget(Doc); // for now
+  return new ComponentDialog(Doc); //does not work yet.
 }
 /*--------------------------------------------------------------------------*/
 /*--------------------------------------------------------------------------*/

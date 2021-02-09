@@ -61,7 +61,7 @@ protected:
 		}
 	}
 	void qInsert(ElementGraphics* eg);
-	void qSwap(ElementGraphics* eg, Element* e);
+	void qSwap(ElementGraphics* eg, Element* e); // BUG?
 
 private: // QUndoCommand
 	void undo() override {itested();

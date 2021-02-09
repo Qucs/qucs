@@ -34,6 +34,8 @@ class Schematic;
 // something happens to the mouse on a schematic
 // BUG: wrong file. schematic_mouse.h maybe?
 // FIXME: why Mouse? User??
+//
+// (it is a mode. not an action.)
 class MouseAction {
 public:
 	typedef QUndoCommand cmd;
@@ -86,8 +88,6 @@ protected:
    bool isConductor(pos_t const&) const;
 
 protected: // UC
-	//template<class T>
-	//void possibly_merge_symbols(pos_t remove_at, T& rem, T& add);
 	QList<ElementGraphics*> items(const QPointF &pos,
                                  Qt::ItemSelectionMode mode=Qt::IntersectsItemShape,
                                  Qt::SortOrder order = Qt::DescendingOrder) const;
@@ -97,7 +97,7 @@ protected: // UC
 private:
 	MouseActions& _ctx;
 	QAction* _sender;
-};
+}; // MouseAction
 
 
 // a mouse action on an element (first attempt)
