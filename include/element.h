@@ -169,7 +169,9 @@ public:
 
 public: // params
 	virtual unsigned param_count()const{return 0;}
-	virtual void set_param_by_index(index_t, std::string const&){}
+	virtual void set_param_by_index(index_t, std::string const&);
+	virtual void set_param_by_name(std::string const& name, std::string const& v);
+	virtual std::string get_param_by_name(std::string const& n) const;
 	virtual std::string param_value(unsigned) const{return "incomplete";}
 
 public: // compatibility

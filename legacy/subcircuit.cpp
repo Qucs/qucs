@@ -91,6 +91,7 @@ private: // Symbol
   bool portExists(unsigned) const override;
   std::string const& portName(unsigned) const override;
 
+  void set_param_by_name(std::string const& name, std::string const& value) override;
   void setParameter(std::string const& name, std::string const& value);
   void setParameter(unsigned i, std::string const& value) override;
   unsigned paramCount() const override;
@@ -682,13 +683,19 @@ std::string const& Subcircuit::portName(index_t) const
 
 static const std::string typesep(":");
 
-void Subcircuit::setParameter(std::string const& name, std::string const& value)
+void Subcircuit::set_param_by_name(std::string const& name, std::string const& value)
 {
 	if(name=="$SUB_PATH"){
 		_subPath = value;
 	}else{
 		Component::setParameter(name, value);
 	}
+}
+
+// obsolete.
+void Subcircuit::setParameter(std::string const& name, std::string const& value)
+{
+	return set_param_by_name(name, value);
 }
 
 void Subcircuit::setParameter(unsigned i, std::string const& value)

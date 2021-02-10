@@ -33,18 +33,27 @@ public:
 
 		// Sub components in this circuit.
 		// instance used when parsing a netlist.
-		_sub = symbol_dispatcher.clone("LegacySub");
+		_sub = element_dispatcher.clone("LegacySub");
+		if(!_sub){ // legacy
+			Symbol* sub = symbol_dispatcher.clone("LegacySub");
+
+			assert(sub);
+			sub->setLabel("Sub");
+			sub->set_dev_type("Sub"); // why?
+			_sub = sub;
+		}else{ untested();
+			_sub->setLabel("Sub"); // why?
+		}
+
 		assert(a);
-		_sub->setLabel("Sub");
-		_sub->set_dev_type("Sub"); // why?
 		_sub->set_owner(this);
 		auto f = dynamic_cast<SymbolFactory*>(_sub);
 		assert(f);
 		f->_scope = scope();
 		subckt()->push_back(_sub);
 
-		assert(_sub->common());
-		assert(_sub->common()->modelname()=="Sub");
+//		assert(_sub->common());
+//		assert(_sub->common()->modelname()=="Sub");
 
 #if 1
 		// dat file access...
@@ -59,9 +68,24 @@ public:
 
 private: // Symbol
   Symbol* clone() const{return new sda(*this);}
+  std::string get_param_by_name(std::string const& n) const override{
+	  if(n == "$filename"){ untested();
+		  return _full_path;
+	  }else{ untested();
+		  throw qucs::ExceptionCantFind(n, label());
+	  }
+  }
   void setParameter(std::string const& n, std::string const& v){
-    if(n == "$filename"){
-      _sub->setParameter("$SUB_PATH", v); // BUG. only pass search path
+    if(n == "$filename") { untested();
+		 _full_path = v;
+		 auto pos = v.find_last_of("/");
+		 assert(pos!=std::string::npos);
+		 if(dynamic_cast<Symbol const*>(_sub)){
+			 // legacy hack
+			 _sub->set_param_by_name("$SUB_PATH", v);
+		 }else{
+			 _sub->set_param_by_name("$SUB_PATH", v.substr(0, pos)); // TODO: handle include paths...
+		 }
       _dat->set_param_by_name("$schematic_filename", v);
     }else{ untested();
       SubcktBase::setParameter(n, v);
@@ -126,8 +150,9 @@ private:
   void setPort(unsigned, Node*){incomplete();}
 
 private:
-  Symbol* _sub;
-  Data* _dat;
+ 	Element* _sub{nullptr};
+	Data* _dat;
+	std::string _full_path;
 }d0;
 static Dispatcher<Symbol>::INSTALL p(&symbol_dispatcher, "schematic_root", &d0);
 /*--------------------------------------------------------------------------*/

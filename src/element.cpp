@@ -98,6 +98,20 @@ SchematicModel* Element::scope()
 	}
 }
 /*--------------------------------------------------------------------------*/
+void Element::set_param_by_index(index_t i, std::string const&)
+{
+	throw qucs::ExceptionCantFind(label(), "parameter " + std::to_string(i), label());
+}
+/*--------------------------------------------------------------------------*/
+void Element::set_param_by_name(std::string const& name, std::string const&)
+{
+	throw qucs::ExceptionCantFind("parameter " + name, label());
+}
+/*--------------------------------------------------------------------------*/
+std::string Element::get_param_by_name(std::string const& name) const{
+	throw qucs::ExceptionCantFind("parameter " + name, label());
+}
+/*--------------------------------------------------------------------------*/
 pos_t /* const & */ Element::center()const
 {
 	return pos_t(cx(), cy());
