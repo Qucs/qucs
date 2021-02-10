@@ -138,6 +138,14 @@ private:
 }d0;
 static Dispatcher<DocumentLanguage>::INSTALL
     p0(&languageDispatcher, "leg_sch", &d0);
+/*--------------------------------------------------------------------------*/
+struct set_default{
+	set_default(){
+		OPT::language = &d0;
+	}
+}sd;
+/*--------------------------------------------------------------------------*/
+	 // obsolete??
 LegacySchematicLanguage d1(true);
 static Dispatcher<DocumentLanguage>::INSTALL
     p1(&languageDispatcher, "legacy_lib", &d1);
@@ -241,13 +249,14 @@ static bool obsolete_wireload(Symbol* w, const QString& sc)
 	return true;
 }
 /*--------------------------------------------------------------------------*/
-void LegacySchematicLanguage::parse_top_item(istream_t& stream, SchematicModel* sckt) const
+void LegacySchematicLanguage::parse_top_item(istream_t& cmd, SchematicModel* sckt) const
 {
 	QString Line;
 	assert(sckt);
 	Symbol* owner = nullptr;
 
-	new__instance(stream, owner, sckt);
+	cmd.get_line("qucs-sch>");
+	new__instance(cmd, owner, sckt);
 }
 /*--------------------------------------------------------------------------*/
 // TODO: remove. not getting here for new-style diagrams
@@ -716,7 +725,7 @@ Element* LegacySchematicLanguage::parseElement(istream_t& cmd, Element* x) const
 Symbol* LegacySchematicLanguage::parseSymbol(istream_t& cs, Symbol* sym) const
 {
 	QString Line = QString::fromStdString( cs.fullString());
-	trace1("LegacySchematicLanguage::parseItem", Line);
+	trace1("LegacySchematicLanguage::parseSymbol", Line);
 
 	QString l = Line.trimmed();
 	if(l.isEmpty()) { untested();
@@ -1103,6 +1112,10 @@ static TaskElement* loadTaskElement(const QString& _s, TaskElement* c)
 /*--------------------------------------------------------------------------*/
 Element* LegacySchematicLanguage::parseItem(istream_t& c, Element* e) const
 {
+	if(auto s=dynamic_cast<DEV_DOT*>(e)){
+		return parseCommand(c, s);
+	}else{
+	}
 	QString Line = QString::fromStdString( c.fullString());
 	trace1("LegacySchematicLanguage::parseItem", Line);
 
@@ -1197,6 +1210,9 @@ std::string LegacySchematicLanguage::findType(istream_t& c) const
 	if(Line.size() == 0){ untested();
 		return "";
 	}else if(Line.at(0) != '<') { untested();
+		std::string r;
+		c >> r;
+		return r;
 		return "unknown_type";
 	}else{
 	}

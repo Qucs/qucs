@@ -52,29 +52,30 @@ AboutDialog::AboutDialog(QWidget *parent)
     : QDialog(parent)
 {
   currAuths = {{
-    "Felix Salfelder - " + tr("Qt5 port, modularity, refactoring")
+    "Felix Salfelder - "      + tr("Qt5 port, maintenance, modularity, refactoring"),
+    "Al Davis - "             + tr("Data structures, library, technology")
   }};
   
   prevDevs = {{
-    "Andrea Zonca - " + tr("temperature model for rectangular waveguide"),
+    "Andrea Zonca - "         + tr("temperature model for rectangular waveguide"),
     "Andr\xe9s Mart\xednez Mera - " + tr("RF design tools"),
-    "Bastien Roucaries - " + tr("bondwire and rectangular waveguide model implementation"),
-    "Claudio Girardi - " + tr("testing, general fixes"),
-    "Clemens Novak - " + tr("GUI programmer"),
-    "Frans Schreuder - " + tr("GUI programmer, release"),
-    "Gopala Krishna A - " + tr("GUI programmer, Qt4 porter"),
+    "Bastien Roucaries - "    + tr("bondwire and rectangular waveguide model"),
+    "Claudio Girardi - "      + tr("testing, general fixes"),
+    "Clemens Novak - "        + tr("GUI programmer"),
+    "Frans Schreuder - "      + tr("GUI programmer, release"),
+    "Gopala Krishna A - "     + tr("GUI programmer, Qt4 porter"),
     "Guilherme Brondani Torri - " + tr("GUI programmer"),
-    "Gunther Kraut - " + tr("equation solver contributions, exponential sources, author of documentation"),
-    "Helene Parruitte - " + tr("programmer of the Verilog-AMS interface (qucsator?)"),
-    "Jens Flucke - " + tr("webpages and translator"),
-    "Michael Margraf - " + tr("founder of the project, GUI programmer"),
-    "Mike Brinson - " + tr("testing, modelling and documentation, tutorial contributor"),
-    "Raimund Jacob - " + tr("tester and applyer of Stefan's patches, author of documentation"),
-    "Richard Crozier - " + tr("testing, modelling, Octave."),
-    "Stefan Jahn - " + tr("Programmer of simulator (qucsator)"),
-    "Toyoyuki Ishikawa - " + tr("some filter synthesis code and attenuator synthesis"),
-    "Vadim Kuznetsov - " + tr("filter synthesis (qucs-activefilter)"),
-    "Vincent Habchi - " + tr("coplanar line and filter synthesis code, documentation contributor"),
+    "Gunther Kraut - "        + tr("solver contributions, exponential sources, documentation"),
+    "Helene Parruitte - "     + tr("Verilog-AMS interface component"),
+    "Jens Flucke - "          + tr("webpages and translator"),
+    "Michael Margraf - "      + tr("founder of the project, GUI programmer"),
+    "Mike Brinson - "         + tr("testing, modelling and documentation, tutorials"),
+    "Raimund Jacob - "        + tr("tester and applyer of Stefan's patches, documentation"),
+    "Richard Crozier - "      + tr("testing, modelling, Octave."),
+    "Stefan Jahn - "          + tr("Programmer of simulator (qucsator)"),
+    "Toyoyuki Ishikawa - "    + tr("some filter synthesis code and attenuator synthesis"),
+    "Vadim Kuznetsov - "      + tr("filter synthesis (qucs-activefilter)"),
+    "Vincent Habchi - "       + tr("coplanar line and filter synthesis code, documentation"),
     "You-Tang Lee (YodaLee) - " + tr("GUI programmer, Qt4 porter")
   }};
 

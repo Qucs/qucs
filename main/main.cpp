@@ -43,6 +43,7 @@
 #include "qio.h"
 #include "qt_compat.h"
 #include "message.h"
+#include "sckt_base.h"
 
 #ifdef _WIN32
 #include <Windows.h>  //for OutputDebugString
@@ -64,6 +65,16 @@ void setSimulator(char const* name)
     exit(1);
   }
 }
+
+static void command(std::string const& cmd, SubcktBase* scope)
+{
+	assert(scope);
+	assert(scope->subckt());
+	istream_t cs(istream_t::_STRING, cmd);
+	assert(OPT::language);
+	OPT::language->new__instance(cs, scope, scope->scope());
+}
+/* -------------------------------------------------------------------------------- */
 
 /*!
  * \brief qucsMessageOutput handles qDebug, qWarning, qCritical, qFatal.
@@ -109,16 +120,20 @@ void doNetlist(QString schematic_fn, std::string netlist, Command* fmt)
 	assert(root);
 	root->setParameter("$filename", sfn); // BUG: PATH.
 	root->setLabel(sfn);
-
-	SchematicModel* cl = root->subckt(); // scope?
-	assert(cl);
+	auto o = dynamic_cast<SubcktBase*>(root);
+	assert(o);
+	assert(o->scope());
 
 	std::string cs = "get " + sfn;
-	CMD::command(cs, cl);
+#if 1
+	command(cs, o);
+#else
+	CMD::command(cs, o->scope());
+#endif
 
 	istream_t cs2(istream_t::_STRING, netlist);
 	assert(fmt);
-	fmt->do_it(cs2, cl);
+	fmt->do_it(cs2, o->scope());
 }
 /*--------------------------------------------------------------------------*/
 void attach_single(std::string const& what)

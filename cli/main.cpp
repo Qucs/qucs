@@ -272,9 +272,10 @@ int main(int argc, const char *argv[])
     for (;;) {
       if (!sigsetjmp(env.p, true)) {
 	try {
-	  if (OPT::language) {
+	  if (OPT::language) { untested();
+	    trace1("parse", cmd.fullstring());
 	    OPT::language->parse_top_item(cmd, &static_model);
-	  }else{
+	  }else{ untested();
 	    CMD::cmdproc(cmd.get_line(I_PROMPT), &static_model);
 	  }
 	}catch (qucs::Exception_End_Of_Input& e) {

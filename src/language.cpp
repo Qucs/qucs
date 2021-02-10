@@ -81,9 +81,12 @@ void DocumentLanguage::new__instance(istream_t& cmd, Element* owner,
 				delete p;
 
 				{ // get rid of it, eventually.
-					assert(owner);
-					assert(owner->scope() == Scope);
+				//	assert(owner);
+				//	assert(owner->scope() == Scope);
 					new_instance->set_scope(Scope);
+					if(new_instance->owner()){
+						assert(Scope == new_instance->owner()->scope());
+					}
 				}
 
 				new_instance->set_owner(owner); // owner is null, usually.
@@ -108,7 +111,7 @@ void DocumentLanguage::new__instance(istream_t& cmd, Element* owner,
 /*--------------------------------------------------------------------------*/
 Element const* DocumentLanguage::find_proto(const std::string& Name, const Element* Scope) const
 {
-	trace1("fp", Name);
+	trace1("find_proto", Name);
 	Element const* p=nullptr;
 	if(Scope){
 		try {
@@ -133,8 +136,8 @@ Element const* DocumentLanguage::find_proto(const std::string& Name, const Eleme
     return p;
   }else if (auto cmd = commandDispatcher[Name]) {
     auto d = new DEV_DOT;	//BUG// memory leak
-	 d->set(cmd);
-//	 d->set_owner(Scope); // really??
+	 trace1("DOT", Name);
+	 d->set(cmd); // really?
 	 return d;
   }else if ((p = element_dispatcher[Name])) {
 	  // TaskElements are here... (move to Data?)

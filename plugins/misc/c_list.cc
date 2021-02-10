@@ -152,6 +152,7 @@ class CMD_LIST : public Command {
 public:
   void do_it(CS& cmd, CARD_LIST* Scope)
   {
+    trace1("list", cmd.fullstring());
 //    list_save(cmd, IO::mstdout, Scope);
     ostream_t out(stdout);
     list_save(cmd, out, Scope);

@@ -90,7 +90,7 @@ public:
   const std::string substr(size_t i)const {return ((_cmd.length()>=i) ? _cmd.substr(i) : "");}
   const std::string substr(size_t i, size_t n)const	{return _cmd.substr(i,n);}
   const std::string tail()const			{return substr(_cnt);}
-  char		    peek()const			{return _cmd[_cnt];}
+  char		    peek()const			{return _cmd.c_str()[_cnt];}
 
   // status - may consume whitespace only
   bool	      ns_more()const	{return peek()!='\0';}
