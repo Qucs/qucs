@@ -35,7 +35,6 @@ DEFAULT_COMPONENTS = \
 	rlcg.cpp \
 	rs_flipflop.cpp \
 	source_ac.cpp \
-	spicedialog.cpp \
 	switch.cpp \
 	symtrafo.cpp \
 	thyristor.cpp \

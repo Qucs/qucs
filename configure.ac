@@ -843,6 +843,7 @@ AC_CONFIG_FILES([
     examples/schematics/Makefile:autotools/schematics.in
     plugins/Makefile:autotools/plugins.in
     plugins/diagrams/Makefile:autotools/diagrams.in
+    plugins/gui/Makefile:autotools/gui.in
     plugins/misc/Makefile:autotools/misc.in
     plugins/verilog/Makefile:autotools/verilog.in
     plugins/spice/Makefile:autotools/spice.in

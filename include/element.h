@@ -50,7 +50,7 @@ class WireLabel;
 class SchematicDoc;
 class SchematicModel;
 class Symbol;
-class QDialog;
+class Widget;
 
 typedef unsigned index_t;
 
@@ -137,7 +137,7 @@ public: // UI stuff.
 #if 0 // TODO (QucsDoc is not a QWidget yet);
 	virtual QWidget* widget(QObject* parent) { return nullptr; }
 #else
-	virtual QDialog* schematicWidget(QucsDoc*) const { return nullptr; }
+	virtual Widget* schematicWidget(QucsDoc*) const { return nullptr; }
 	virtual QWidget* newWidget() {return nullptr;}
 #endif
 

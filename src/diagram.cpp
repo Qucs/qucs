@@ -2294,37 +2294,7 @@ double Diagram::wavevalX(int i) const
 bool Diagram::pressElement(SchematicDoc* Doc, Element*& selElem, QMouseEvent* Event)
 { untested();
   assert(false); // obsolete.
-
-	if(Event->button() != Qt::LeftButton){ untested();
-	  	return false; // sets drawn to false! (correct?)
-	}else{ untested();
-	}
-
-	Diagram *Diag = this;
-	QFileInfo Info(Doc->docName());
-	// dialog is Qt::WDestructiveClose !!!
-	incomplete();
-	DiagramDialog *dia = nullptr; // new DiagramDialog(Diag, Doc);
-
-	bool drawn=true;
-	if(dia->exec() == QDialog::Rejected) {  // don't insert if dialog canceled
-		Doc->viewport()->update();
-		drawn = false;
-	}else{ untested();
-	  incomplete();
-		// Doc->pushBack(Diag);
-//		Doc->enlargeView(Diag->cx(), Diag->cy()-Diag->y2_(), Diag->cx()+Diag->x2_(), Diag->cy());
-		Doc->setChanged(true, true);   // document has been changed
-
-		Doc->viewport()->repaint();
-	  	// the component is used, so create a new one ??
-		Diag = prechecked_cast<Diagram*>(Diag->clone());
-		assert(Diag);
-		Diag->paintScheme(Doc);
-		selElem = Diag;
-	}
-
-	return drawn;
+  return false;
 }
 
 void Diagram::prepare()
@@ -2334,10 +2304,12 @@ void Diagram::prepare()
 	}
 }
 
-QDialog* Diagram::schematicWidget(QucsDoc* Doc) const
+Widget* Diagram::schematicWidget(QucsDoc* Doc) const
 { untested();
   trace0("Component::editElement");
-  return new DiagramDialog(Doc); // memory leak?
+  incomplete();
+  return nullptr;
+//  return new DiagramDialog(Doc); // memory leak?
 }
 
 // TODO this is a diagram function.

@@ -16,14 +16,15 @@
 #include <stdlib.h>
 #include <cmath>
 
+#include "misc.h"
+#include "module.h"
 #include "node.h"
+#include "property.h"
 #include "qucs_app.h"
+#include "qucs_globals.h"
 #include "schematic_doc.h"
 #include "viewpainter.h"
-#include "module.h"
-#include "misc.h"
-#include "cmdeltdlg.h"
-#include "property.h"
+#include "widget.h"
 
 #include <QPen>
 #include <QString>
@@ -31,8 +32,7 @@
 #include <QPainter>
 #include <QDebug>
 
-#include "../legacy/obsolete_paintings.h" // BUG
-
+// #include "../legacy/obsolete_paintings.h" // BUG
 TaskElement::TaskElement(TaskElement const& p)
   : Element(p),
     //cx(p.cx),
@@ -75,10 +75,17 @@ SchematicModel* TaskElement::scope()
 	}
 }
 /*--------------------------------------------------------------------------*/
-QDialog* TaskElement::schematicWidget(QucsDoc* Doc) const
+Widget* TaskElement::schematicWidget() const
 { untested();
-  trace0("Component::editElement");
-  return new TaskElementDialog(Doc); // memory leak?
+	trace0("TE::schematicWidget");
+
+	Object const* w = widget_dispatcher["TaskElementDialog"];
+	auto ww = dynamic_cast<Widget const*>(w);
+
+	assert(ww);
+	Widget* clone = ww->clone();
+	assert(clone);
+	return clone;
 }
 /*--------------------------------------------------------------------------*/
 
@@ -110,9 +117,9 @@ void TaskElement::entireBounds(int&, int&, int&, int&, float)
 //}
 //
 // -------------------------------------------------------
+#if 0
 int TaskElement::getTextSelected(int x_, int y_, float Corr)
 {
-#if 0
   x_ -= cx();
   y_ -= cy();
   if(x_ < tx) return -1;
@@ -142,9 +149,9 @@ int TaskElement::getTextSelected(int x_, int y_, float Corr)
   w = metrics.horizontalAdvance(pp->Name+"="+pp->Value);
   if(x_ > w) return -1; // clicked past the property text end - selection invalid
   return Props.at()+1;  // number the property
-#endif
   return 0;
 }
+#endif
 /* -------------------------------------------------------------------------------- */
 std::string TaskElement::param_value_by_name(std::string const& n) const
 {

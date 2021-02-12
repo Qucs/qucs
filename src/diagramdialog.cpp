@@ -103,7 +103,10 @@ static const int NumDefaultColors = 8;
 DiagramDialog::DiagramDialog(QucsDoc* d)
 	: SchematicDialog(d)
 { untested();
-  setAttribute(Qt::WA_DeleteOnClose);
+	if(auto w=dynamic_cast<QDialog*>(this)){
+		w->setAttribute(Qt::WA_DeleteOnClose);
+	}else{
+	}
 }
 
 // this is needed to be able to attach CommonData to

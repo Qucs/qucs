@@ -44,7 +44,7 @@ public:
 protected:
   virtual rect_t bounding_rect() const override;
   void    paint(ViewPainter*) const;
-  QDialog* schematicWidget(QucsDoc* Doc) const;
+  Widget* schematicWidget() const;
 
 public:
   void    paintScheme(SchematicDoc*) const;

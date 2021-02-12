@@ -4,6 +4,7 @@
 
 SUBDIRS = \
 	diagrams \
+	gui \
 	misc \
 	verilog \
 	spice

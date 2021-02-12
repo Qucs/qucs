@@ -150,6 +150,7 @@ void attach_default_plugins()
   attach_single("legacy/paintings");
   CMD::command("loadlegacylib", nullptr);
   attach_single("plugins/misc");
+  attach_single("plugins/gui");
 
  // not yet. legacy diagrams are now part of legacy (above)
  // new diagrams: load manually.

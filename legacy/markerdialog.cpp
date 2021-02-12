@@ -1,6 +1,4 @@
 /***************************************************************************
-                          markerdialog.cpp  -  description
-                             -------------------
     begin                : Wed April 21 2004
     copyright            : (C) 2003 by Michael Margraf
     email                : michael.margraf@alumni.tu-berlin.de

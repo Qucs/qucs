@@ -12,25 +12,76 @@
  *                                                                         *
  ***************************************************************************/
 
-#include "wiredialog.h"
-#include "qucs_app.h"
-#include "schematic_doc.h"
+#ifndef WIREDIALOG_H
+#define WIREDIALOG_H
+
 #include "misc.h"
-#include <QLineEdit>
+#include "qucs_app.h"
+#include "schematic_dialog.h"
+#include "schematic_doc.h"
+#include "swap.h"
+#include "qucs_globals.h"
+#include "wiredialog.h"
+#include "widget.h"
+
 #include <QLabel>
+#include <QLineEdit>
 #include <QRegExpValidator>
 #include <QVBoxLayout>
-#include "swap.h"
+#include <QWidget>
+#include <QPluginLoader>
+/*--------------------------------------------------------------------------*/
+namespace {
+// Q_NAMESPACE // not needed?
+/*--------------------------------------------------------------------------*/
+class WireDialog : public QDialog, public SchematicDialog {
+    Q_OBJECT
+//    Q_PLUGIN_METADATA(IID "...." FILE "somestuff.json")
+    Q_INTERFACES(SchematicDialog)
+public:
+  explicit WireDialog();
+  WireDialog(WireDialog const&);
+  ~WireDialog();
 
-WireDialog::WireDialog(QucsDoc* d)
-	: SchematicDialog(d),
+  void attach(ElementGraphics* c) override;
+
+private:
+	Widget* clone() const override{
+		incomplete(); // does not copy.
+		SchematicDialog* wd = new WireDialog();
+		return wd;
+	}
+
+protected slots:
+    void reject();
+    bool eventFilter(QObject *obj, QEvent *event);
+	 void slotButtOK();
+	 void slotButtCancel();
+	 void slotApplyInput();
+
+private:
+  QValidator* _labelValidator;
+  QVBoxLayout* _all;
+  QLineEdit *CompNameEdit;
+//  QLineEdit   *edit, *NameEdit;
+  ElementGraphics* _gfx;
+  Symbol* _comp; // const? gfx?
+  bool _changed;
+};
+// this does not work
+// "Must construct a QApplication before a QWidget". d'uh
+// WireDialog p;
+// static Dispatcher<Object>::INSTALL p1(&widget_dispatcher, "WireDialog", &p);
+/*--------------------------------------------------------------------------*/
+WireDialog::WireDialog()
+	: SchematicDialog(),
      CompNameEdit(nullptr),
      _changed(false)
 {
   resize(450, 250);
   setWindowTitle(tr("Edit Wire Properties"));
 }
-
+/*--------------------------------------------------------------------------*/
 void WireDialog::attach(ElementGraphics* gfx)
 {
   trace0("WireDialog::attach");
@@ -116,13 +167,13 @@ void WireDialog::attach(ElementGraphics* gfx)
   _changed = false;
 
 }
-
+/*--------------------------------------------------------------------------*/
 WireDialog::~WireDialog()
 {
   delete _all;
   delete _labelValidator;
 }
-
+/*--------------------------------------------------------------------------*/
 // check if Enter is pressed while the ComboEdit has focus
 // in case, behave as for the LineEdits
 // (QComboBox by default does not handle the Enter/Return key)
@@ -214,3 +265,16 @@ void WireDialog::slotApplyInput()
 }
 /*--------------------------------------------------------------------------*/
 /*--------------------------------------------------------------------------*/
+class DialogFactory : public Widget {
+	Widget* clone() const override{
+		SchematicDialog* wd = new WireDialog();
+		return wd;
+	}
+}F;
+static Dispatcher<Widget>::INSTALL p1(&widget_dispatcher, "WireDialog", &F);
+/*--------------------------------------------------------------------------*/
+} // namespace
+/*--------------------------------------------------------------------------*/
+/*--------------------------------------------------------------------------*/
+
+#endif

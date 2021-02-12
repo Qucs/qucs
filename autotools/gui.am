@@ -1,15 +1,13 @@
 ## Process this file with automake to produce Makefile.in
 #
-# stuff.am
+# Automake input file.
 #
-# rules used in other makefiles
-#
-# Author: Felix
-# Copyright (C) 2017 QUCS team
+# Copyright (C) 2015 Felix Salfelder felix@salfelder.org
+# Copyright (C) 2018 Felix Salfelder felix@salfelder.org
 #
 # This is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
-# the Free Software Foundation; either version 2, or (at your option)
+# the Free Software Foundation; either version 8, or (at your option)
 # any later version.
 #
 # This software is distributed in the hope that it will be useful,
@@ -23,33 +21,22 @@
 # Boston, MA 02110-1301, USA.
 #
 
-include MakeList
+include ../../autotools/common.mk
 
-all: ${TARGET:%=_}
+inst_LTLIBRARIES = gui.la
 
-# FIXME: this is platform dependent.
-SOEXT=.so
+AM_CPPFLAGS += $(X11_INCLUDES) $(QT_CFLAGS)
 
-_: | ${TARGET}.la
-	test -L _ || ${LN_S} .libs/${TARGET}${SOEXT} $@
+gui_la_LDFLAGS = -module -avoid-version
+gui_la_CPPFLAGS = $(AM_CPPFLAGS)
+gui_la_CPPFLAGS += $(QT_INCLUDES)
 
+# is this necessary?
+gui_la_SOURCES = ${QT_PLUGIN_SRC}
+BUILT_SOURCES = ${gui_la_SOURCES}
 
-SUFFIXES = .qrc
+noinst_HEADERS = $(HDR)
 
-.qrc.cpp:
-	$(RCC) -o $@ $<
-
-
-# TODO: does not make sense anymore.
-$(MOCFILES): $(top_builddir)/qt_version
-
-AM_CXXFLAGS = ${CXXFLAGS} -fPIC
-AM_CPPFLAGS = -I$(top_srcdir)/include
-
-# BUG
-AM_CPPFLAGS += -I$(top_srcdir)/src
-EXTRA_DIST += MakeList
-
-# simplify paths
-here_rel = $(subst ${abs_top_srcdir},,${abs_srcdir})
-instdir = $(pkglibdir)/$(here_rel)/..
+# TODO: drop -I[..]/src
+.h.cc:
+	$(MOC) -I${top_srcdir}/include -I${top_srcdir}/src -DQT_MAJOR_VERSION=${QT_MAJOR_VERSION} -o $@ $< # 2

@@ -1,0 +1,12 @@
+
+TARGET = gui
+
+#  non-.h does not work with moc.
+#      .h does not work in autotools
+# use .cc for now, but this is NOT the source.
+QT_PLUGIN_SRC = \
+	taskeltdlg.cc \
+	symboldialog.cc \
+	wiredialog.cc
+
+EXTRA_DIST = ${QT_PLUGIN_SRC:%.cc=%.h}

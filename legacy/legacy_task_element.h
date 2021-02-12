@@ -39,9 +39,9 @@ public:
   // QString getNetlist();
 
 private:
-  void paint(ViewPainter*) const;
-  rect_t bounding_rect() const override;
-  QDialog* schematicWidget(QucsDoc* Doc) const;
+	void paint(ViewPainter*) const;
+	rect_t bounding_rect() const override;
+	Widget* schematicWidget(QucsDoc* Doc) const;
 
 	virtual index_t param_count() const;
 	virtual std::string param_name(index_t n) const;

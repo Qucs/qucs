@@ -10,11 +10,16 @@
  *   (at your option) any later version.                                   *
  *                                                                         *
  ***************************************************************************/
+#ifndef SYMBOLDIALG_H
+#define SYMBOLDIALG_H
+
 #include "symbol.h"
 #include "settings.h"
 #include "schematic_dialog.h"
+#include "symboldialog.h"
 #include "schematic_edit.h"
 #include "qt_compat.h"
+#include "qucs_globals.h"
 
 #include <QLabel>
 #include <QLayout>
@@ -32,31 +37,52 @@
 #include <QDebug>
 #include "swap_gfx.h"
 /*--------------------------------------------------------------------------*/
-class SymbolDialog : public SchematicDialog {
+namespace {
+
+class SymbolDialog : public QDialog, public SchematicDialog {
+    Q_OBJECT
+    Q_INTERFACES(SchematicDialog)
 public:
-	SymbolDialog(QucsDoc*);
+	explicit SymbolDialog();
 	~SymbolDialog();
+	Widget* clone() const override{
+		incomplete(); // does not copy.
+		SchematicDialog* wd = new SymbolDialog();
+		return wd;
+	}
 
 	void attach(ElementGraphics* c) override;
 
-private: // slot overrides.
+private slots:
 	void slotButtOK();
 	void slotButtCancel();
-	void slotSelectProperty(QTableWidgetItem *item);
+	void slotSelectProperty(QTableWidgetItem * /*item*/);
 	void slotApplyInput();
-	void slotApplyState(int State);
+	void slotApplyState(int /* State */);
+	void slotBrowseFile(){incomplete();}
+	void slotEditFile(){incomplete();}
+	void slotApplyChange(const QString& /*Text*/);
 	void slotApplyProperty();
 	void slotApplyPropName();
 
-	void slotParamEntered();
-	void slotSimEntered(int);
-	void slotValuesEntered();
-	void slotStartEntered();
-	void slotStopEntered();
-	void slotStepEntered();
-	void slotNumberEntered();
+	void slotButtAdd(){incomplete();}
+	void slotButtRem(){incomplete();}
 
-	void slotApplyChange(const QString& Text);
+	void slotButtUp(){incomplete();}
+	void slotButtDown(){incomplete();}
+
+	void slotSimTypeChange(int){incomplete();}
+	void slotNumberChanged(const QString&){incomplete();}
+	void slotStepChanged(const QString&){incomplete();}
+
+	void slotParamEntered();
+//	void slotSimEntered(int);
+	void slotValuesEntered();
+//	void slotStartEntered();
+//	void slotStopEntered(){incomplete();}
+//	void slotStepEntered(){incomplete();}
+	void slotNumberEntered();
+	void slotHHeaderClicked(int /*headerIdx*/){incomplete();}
 
 public:
 	void enableButtons();
@@ -95,7 +121,7 @@ private:
 };
 /*--------------------------------------------------------------------------*/
 /*--------------------------------------------------------------------------*/
-SymbolDialog::SymbolDialog(QucsDoc* d) : SchematicDialog(d)
+SymbolDialog::SymbolDialog() : SchematicDialog()
 {
 	resize(450, 250);
 	setWindowTitle(tr("Edit Component Properties"));
@@ -672,31 +698,31 @@ void SymbolDialog::slotParamEntered()
 	}
 }
 /*--------------------------------------------------------------------------*/
-void SymbolDialog::slotSimEntered(int)
-{
-	unreachable();
-	editParam->setFocus();
-}
+//void SymbolDialog::slotSimEntered(int)
+//{
+//	unreachable();
+//	editParam->setFocus();
+//}
 /*--------------------------------------------------------------------------*/
 void SymbolDialog::slotValuesEntered()
 {
 	slotButtOK();
 }
 /*--------------------------------------------------------------------------*/
-void SymbolDialog::slotStartEntered()
-{
-	editStop->setFocus();
-}
+// void SymbolDialog::slotStartEntered()
+// {
+// 	editStop->setFocus();
+// }
 /*--------------------------------------------------------------------------*/
-void SymbolDialog::slotStopEntered()
-{
-	editStep->setFocus();
-}
+//void SymbolDialog::slotStopEntered()
+//{
+//	editStep->setFocus();
+//}
 /*--------------------------------------------------------------------------*/
-void SymbolDialog::slotStepEntered()
-{
-	editNumber->setFocus();
-}
+//void SymbolDialog::slotStepEntered()
+//{
+//	editNumber->setFocus();
+//}
 /*--------------------------------------------------------------------------*/
 void SymbolDialog::slotNumberEntered()
 {
@@ -715,9 +741,15 @@ void SymbolDialog::enableButtons()
 	ButtDown->setEnabled(true);
 }
 /*--------------------------------------------------------------------------*/
-QDialog* Symbol::schematicWidget(QucsDoc* Doc) const
-{ untested();
-  return new SymbolDialog(Doc); // memory leak? no. Doc is parent.
+class DialogFactory : public Widget /*?*/ {
+	Widget* clone() const override{
+		SchematicDialog* wd = new SymbolDialog();
+		return wd;
+	}
+}F;
+static Dispatcher<Widget>::INSTALL p1(&widget_dispatcher, "SymbolDialog", &F);
+/*--------------------------------------------------------------------------*/
+/*--------------------------------------------------------------------------*/
 }
-/*--------------------------------------------------------------------------*/
-/*--------------------------------------------------------------------------*/
+
+#endif

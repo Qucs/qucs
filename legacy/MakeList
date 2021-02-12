@@ -20,7 +20,6 @@ LEGACY_SRC = \
 	legacy_task_element.cpp \
 	libcomp.cpp \
 	libfiles.cpp \
-	markerdialog.cpp \
 	modelcmd.cpp \
 	paramset.cpp \
 	portcmd.cpp \
@@ -41,6 +40,9 @@ LEGACY_SRC = \
 	tabdiagram.cpp
 
 NOTYET_SRC = \
+	markerdialog.cpp \
+	optimizedialog.cpp \
+	optimizedialog.h \
 	polardiagram.cpp \
 	psdiagram.cpp \
 	timingdiagram.cpp \

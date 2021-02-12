@@ -41,7 +41,6 @@
 OptimizeDialog::OptimizeDialog(QucsDoc* d) : SchematicDialog(d)
 {
   setWindowTitle(tr("Edit Optimization Properties"));
-
 }
 
 void OptimizeDialog::attach(Object*)

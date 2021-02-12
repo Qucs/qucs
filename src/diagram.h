@@ -96,7 +96,7 @@ private:
 //   virtual void paint(ViewPainter*) const override; // not necessarily
 //  pos_t center() const override;
 //  void    getCenter(int&, int&); //override; //remove this.
-  QDialog* schematicWidget(QucsDoc* Doc) const override;
+  Widget* schematicWidget(QucsDoc* Doc) const override;
   virtual QRectF boundingRect() const; // { unreachable(); return QRectF(); }
 
 protected:

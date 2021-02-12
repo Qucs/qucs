@@ -18,7 +18,8 @@
 #include "node.h"
 #include "geometry.h"
 #include "viewpainter.h"
-/*--------------------------------------------------------------------------*/
+#include "qucs_globals.h"
+
 #include <QVBoxLayout>
 #include <QTableWidget>
 #include <QComboBox>
@@ -114,24 +115,10 @@ void Symbol::set_port_by_index(index_t num, std::string const& ext_name)
 }
 /*--------------------------------------------------------------------------*/
 // connect to a node. (connectPort?)
-Node* Symbol::connectNode(unsigned i, NodeMap&nm)
+Node* Symbol::connectNode(index_t i, NodeMap&nm)
 {
 	incomplete(); // obsolete;
 	return nullptr;
-
-#if 0
-	trace2("connectNode", label(), i);
-	pos_t p = nodePosition(i);
-	Node* n = &nm.at(p);
-	assert(n->hasNet());
-
-	trace0("connectNode set port");
-
-	Port& mp = port(i); // hmm setPort(...) instead?
-	mp.connect(n /*,this*/);
-
-	return n;
-#endif
 }
 /*--------------------------------------------------------------------------*/
 void set_port_by_name(std::string const& name, std::string const& value)
@@ -491,6 +478,19 @@ void Symbol::set_dev_type(const std::string& new_type)
 		assert(false); // for now
 		// CARD::set_dev_type(new_type);
 	}
+}
+/*--------------------------------------------------------------------------*/
+Widget* Symbol::schematicWidget(QucsDoc* Doc) const
+{ untested();
+	trace0("Symbol::schematicWidget");
+
+	Object const* w = widget_dispatcher["SymbolDialog"];
+	auto ww = dynamic_cast<Widget const*>(w);
+
+	assert(ww);
+	Widget* clone = ww->clone();
+	assert(clone);
+	return clone;
 }
 /*--------------------------------------------------------------------------*/
 /*--------------------------------------------------------------------------*/

@@ -30,6 +30,12 @@ public:
 private:
   void init();
 
+	Widget* schematicWidget(QucsDoc* Doc) const override
+	{
+		// no edit dialog. tmp hack?
+		return nullptr;
+	}
+
 private: // Symbol
 	void set_port_by_index(index_t i, std::string const& value);
 

@@ -5,7 +5,6 @@ CPP_SRC = \
 	globals.cpp \
 	attach.cpp \
 	c__cmd.cc \
-	cmdeltdlg.cpp \
 	component_widget.cpp \
 	conductor.cpp \
 	cursors.cpp \
@@ -63,14 +62,12 @@ CPP_SRC = \
 	settings.cpp \
 	simulator.cpp \
 	symbol.cpp \
-	symboldialog.cpp \
 	syntax.cpp \
 	task_element.cpp \
 	textdoc.cpp \
 	u_parameter.cc \
 	viewpainter.cpp \
 	wire.cpp \
-	wiredialog.cpp \
 	wirelabel.cpp
 
 QMOCHEADERS = \
@@ -82,14 +79,12 @@ QMOCHEADERS = \
 	schematic_doc.h \
 	schematic_scene.h \
 	textdoc.h \
-	schematic_dialog.h \
 	qucs_tabs.h \
 	qucs_app.h
 
 DIALG_MOCHEADERS = \
 	aboutdialog.h \
 	changedialog.h \
-	diagramdialog.h \
 	digisettingsdialog.h \
 	exportdialog.h \
 	importdialog.h \
@@ -108,8 +103,8 @@ DIALG_MOCHEADERS = \
 	vasettingsdialog.h
 
 HDR1 = \
+	diagramdialog.h \
 	actions.h \
-	cmdeltdlg.h \
 	docfmt.h \
 	dynamic_cc.h \
 	element_graphics.h \
@@ -122,7 +117,6 @@ HDR1 = \
 	net.h \
 	netlist.h \
 	nodemap.h \
-	optimizedialog.h \
 	spicedialog.h \
 	spicefile.h \
 	printerwriter.h \
@@ -136,7 +130,6 @@ HDR1 = \
 	schematic_edit.h \
 	swap.h \
 	some_font_stuff.h \
-	wiredialog.h \
 	wirelabel.h
 
 # must be installed. but later
@@ -178,9 +171,8 @@ DIALOG_SRC = \
 
 # dialogs related to components
 # sort out later.
-DIALOG_SRC2 = \
-	diagramdialog.cpp \
-	optimizedialog.cpp
+NOTYET_DIALOG_SRC2 = \
+	diagramdialog.cpp
 
 
 UI_FILES = searchdialog.ui

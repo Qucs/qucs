@@ -23,6 +23,7 @@ class DocumentLanguage;
 class Data;
 class Symbol;
 class Command;
+class Widget;
 
 extern INTERFACE Dispatcher<Element> element_dispatcher;
 extern INTERFACE Dispatcher<Command> commandDispatcher;
@@ -30,5 +31,6 @@ extern INTERFACE Dispatcher<Diagram> diagram_dispatcher;
 extern INTERFACE Dispatcher<DocumentLanguage> languageDispatcher;
 extern INTERFACE Dispatcher<Data> dataDispatcher;
 extern INTERFACE Dispatcher<Symbol> symbol_dispatcher;
+extern INTERFACE Dispatcher<Object> widget_dispatcher;
 
 #endif

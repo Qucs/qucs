@@ -12,13 +12,13 @@
  *                                                                         *
  ***************************************************************************/
 #include "nodemap.h"
-#include "wiredialog.h"
 #include "qucs_globals.h"
 #include "geometry.h"
 #include "schematic_model.h"
 #include <QPainter>
 #include "qt_compat.h" // geometry?
 #include "l_compar.h"
+#include "widget.h"
 
 #include "viewpainter.h"
 #include "wirelabel.h"
@@ -55,7 +55,7 @@ private: // Element
 	Wire* clone() const override{
 		return new Wire(*this);
 	}
-	QDialog* schematicWidget(QucsDoc*) const override;
+	Widget* schematicWidget(QucsDoc*) const override;
 	void paint(ViewPainter*) const override;
 	rect_t bounding_rect() const override;
 
@@ -356,10 +356,18 @@ Symbol* Wire::newUnion(Symbol const* s) const
 	return nullptr;
 }
 /*--------------------------------------------------------------------------*/
-QDialog* Wire::schematicWidget(QucsDoc* Doc) const
+// NOT HERE ? //
+Widget* Wire::schematicWidget(QucsDoc* Doc) const
 { untested();
-	trace0("Component::editElement");
-	return new WireDialog(Doc); // memory leak?
+	trace0("Wire::schematicWidget");
+
+	Object const* w = widget_dispatcher["WireDialog"];
+	auto ww = dynamic_cast<Widget const*>(w);
+
+	assert(ww);
+	Widget* clone = ww->clone();
+	assert(clone);
+	return clone;
 }
 /*--------------------------------------------------------------------------*/
 void Wire::paint(ViewPainter *p) const
@@ -518,7 +526,7 @@ void Wire::set_port_by_index(index_t i, std::string const& value)
 }
 // ----------------------------------------------------------------
 void Wire::connectNode(index_t i)
-{
+{ untested();
 	assert(scope());
 	assert(scope()->nodes());
 	auto& nm = *scope()->nodes();

@@ -33,12 +33,9 @@
 #include "qucs_globals.h"
 
 #include "changedialog.h"
-//#include "components/component.h" // BUG
-
-/*--------------------------------------------------------------------------*/
+#include "widget.h"
 /*--------------------------------------------------------------------------*/
 #include "action/zoom.cpp" // for now.
-/*--------------------------------------------------------------------------*/
 #include "action/wire.cpp" // for now.
 /*--------------------------------------------------------------------------*/
 class MouseActionSelect : public MouseAction{
@@ -56,7 +53,7 @@ private: // MouseAction
 	cmd* dblclk(QEvent*) override;
 
 private:
-	void showSchematicWidget(QWidget*, ElementGraphics*);
+	void showSchematicWidget(Widget*, ElementGraphics*);
 	cmd* release_left(QEvent*);
 
 protected:
@@ -90,8 +87,9 @@ QUndoCommand* MouseActionSelect::dblclk(QEvent* evt)
 	}else{ untested();
 	}
 
+	// BUG: don't ask elt.
 	if(!elt){ untested();
-	}else if(auto ew = elt->schematicWidget(&doc())){ untested();
+	}else if(auto ew = elt->schematicWidget(nullptr)){ untested();
 		trace0("got editElement");
 		assert(gfx);
 		showSchematicWidget(ew, gfx);
@@ -104,11 +102,16 @@ QUndoCommand* MouseActionSelect::dblclk(QEvent* evt)
 }
 /*--------------------------------------------------------------------------*/
 // not sure I like this.
-void MouseActionSelect::showSchematicWidget(QWidget* ew, ElementGraphics* gfx)
+void MouseActionSelect::showSchematicWidget(Widget* ew, ElementGraphics* gfx)
 {
 	if(auto eew=dynamic_cast<SchematicDialog*>(ew)){ untested();
 		assert(gfx);
 		eew->attach(gfx);
+	}else{
+	}
+
+	if(auto eew=dynamic_cast<QDialog*>(ew)){ untested();
+		eew->setParent(&doc(), Qt::Dialog);
 		if(eew->exec() != 1){ untested();
 			// done=true;   // dialog is WDestructiveClose
 		}else{ untested();

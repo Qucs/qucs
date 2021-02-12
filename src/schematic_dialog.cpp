@@ -13,22 +13,27 @@
 #include "schematic_dialog.h"
 #include "schematic_doc.h"
 /*--------------------------------------------------------------------------*/
+SchematicDialog::SchematicDialog()
+    : Widget()
+{
+}
+/*--------------------------------------------------------------------------*/
+SchematicDialog::SchematicDialog(SchematicDialog const& d)
+    : Widget(d)
+{
+}
+/*--------------------------------------------------------------------------*/
 void SchematicDialog::execute(QUndoCommand* c)
 {
 	assert(schematic());
 	schematic()->executeCommand(c);
 }
 /*--------------------------------------------------------------------------*/
-SchematicDialog::SchematicDialog(QucsDoc* d)
-  : QDialog(prechecked_cast<SchematicDoc*>(d)) // sets parent.
-{
-  assert(d);
-  assert(schematic() == d);
-}
-/*--------------------------------------------------------------------------*/
 SchematicDoc* SchematicDialog::schematic()
 { untested();
-	auto p = prechecked_cast<SchematicDoc*>(parentWidget());
+	auto t = prechecked_cast<QWidget*>(this);
+	assert(t);
+	auto p = prechecked_cast<SchematicDoc*>(t->parentWidget());
 	assert(p);
 	return p;
 }

@@ -27,6 +27,7 @@ class PaintingList;
 class Net;
 class Symbol;
 class ElementList;
+class Widget;
 /*--------------------------------------------------------------------------*/
 enum {CC_STATIC_=27342};
 static std::string invalid_ = "invalid";
@@ -94,7 +95,7 @@ public: // construct
 
 protected: // Element
 	void paint(ViewPainter*) const override;
-	QDialog* schematicWidget(QucsDoc*) const override;
+	Widget* schematicWidget(QucsDoc*) const override;
 
 public: // Element
 	pos_t center()const override;

@@ -27,7 +27,6 @@
 #include "viewpainter.h"
 #include "module.h"
 #include "misc.h"
-#include "cmdeltdlg.h"
 #include "property.h"
 #include "legacy_task_element.h"
 
@@ -116,10 +115,13 @@ int LegacyTaskElement::textSize(int& _dx, int& _dy)
   return 0;
 }
 /*--------------------------------------------------------------------------*/
-QDialog* LegacyTaskElement::schematicWidget(QucsDoc* Doc) const
+Widget* LegacyTaskElement::schematicWidget(QucsDoc* Doc) const
 { untested();
   trace0("Component::editElement");
-  return new TaskElementDialog(Doc); // memory leak?
+  incomplete();
+  return nullptr;
+
+  // return new TaskElementDialog(Doc); // memory leak?
 }
 /*--------------------------------------------------------------------------*/
 
