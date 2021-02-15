@@ -13,7 +13,6 @@
  ***************************************************************************/
 
 #include "qucs_app.h"
-#include "schematic_doc.h"
 #include "misc.h"
 
 #include <QTextStream>
@@ -27,6 +26,7 @@
 #include "module.h"
 #include "sckt_base.h"
 #include "qio.h"
+#include "schematic_lang.h" // BUG
 #include "factory.h"
 #include "components/component.h" // BUG
 
@@ -259,7 +259,7 @@ void Subcircuit::createSymbol() // SchematicModel const& scope)
 			  }
 		  }
 	  }else{
-		  No = SchematicDoc::testFile(FileName);
+		  No = 17; // SchematicDoc::testFile(FileName);
 		  if(No < 0)  No = 0;
 		  Ports.clear();
 		  defaultSymbol(No);  // no symbol was found -> create standard symbol

@@ -110,17 +110,17 @@ private: // actions. here?
 	  cut();
   }
   void actionSelect(QAction*) override;
-  void actionEditActivate(QAction*) override;
-  void actionEditDelete(QAction*) override;
   void actionEditPaste(QAction*) override;
   void actionZoomIn(QAction*) override;
 
-  // BUG: qucsDoc
-  void actionEditUndo(QAction*) override{
+private: // QucsDoc
+  void slotEditActivate(QAction*) override;
+  void slotEditDelete(QAction*) override;
+  void slotEditUndo(QAction*) override{
     viewport()->setFocus();
 	 QPlainTextEdit::undo();
   }
-  void actionEditRedo(QAction*) override{
+  void slotEditRedo(QAction*) override{
 	  viewport()->setFocus();
 	  QPlainTextEdit::redo();
   }

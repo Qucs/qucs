@@ -14,7 +14,6 @@
 #include "command.h"
 #include "qio.h"
 #include "schematic_model.h"
-#include "schematic_doc.h"
 #include "qucs_globals.h"
 #include "parameter.h"
 /*--------------------------------------------------------------------------*/

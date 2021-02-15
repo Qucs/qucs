@@ -12,7 +12,6 @@
  ***************************************************************************/
 #include "changedialog.h"
 #include "node.h"
-#include "schematic_doc.h"
 
 #include <QLabel>
 #include <QLineEdit>

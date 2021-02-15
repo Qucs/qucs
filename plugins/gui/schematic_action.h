@@ -14,27 +14,26 @@
 #ifndef QUCS_SCHEMATIC_ACTION
 #define QUCS_SCHEMATIC_ACTION
 /*--------------------------------------------------------------------------*/
-#include "mouseactions.h"
+#include "doc_actions.h"
 #include "schematic_edit.h"
 /*--------------------------------------------------------------------------*/
-class SchematicDoc;
+class QucsDoc;
 /*--------------------------------------------------------------------------*/
 // merge into scene altogether?
 class SchematicActions : public MouseActions{
 public:
-	explicit SchematicActions(SchematicDoc& d);
+	explicit SchematicActions(QucsDoc* d);
 	~SchematicActions();
 
 private: // MouseActions
 	// void handle(QEvent*) override;
+	void setControls(QucsDoc* ctx) override;
 
 protected: // Doc stuff
-	SchematicDoc* doc(); // TODO: scene!!
+	QucsDoc* doc();
 	SchematicScene const* scene()const;
 	void updateViewport();
-	QPoint snapToGrid(QPointF const&p) const{
-		return scene()->snapToGrid(p);
-	}
+	QPoint snapToGrid(QPointF const&p) const;
 
 public: // actions... private?
 	     // not yet. still toggled from outside
@@ -54,6 +53,15 @@ public: // actions... private?
 	MouseAction* maInsertEqn;
 	MouseAction* maZoomIn;
 	// MouseAction* maZoomOut; // not a mouseaction
+	
+	// all in one go?? how?
+	QAction* _actionSelect{nullptr};
+	QAction* _actionRotate{nullptr};
+	QAction* _actionMX{nullptr};
+	QAction* _actionMY{nullptr};
+	QAction* _actionInsertGround{nullptr};
+	QAction* _actionInsertWire{nullptr};
+	QAction* _actionInsertPort{nullptr};
 };
 /*--------------------------------------------------------------------------*/
 /*--------------------------------------------------------------------------*/

@@ -43,7 +43,7 @@
 
 #include "qucs_app.h"
 #include "qucsdoc.h"
-#include "mouseactions.h"
+#include "doc_actions.h"
 #include "messagedock.h"
 #include "module.h"
 #include "projectView.h"
@@ -52,12 +52,10 @@
 // BUG: cleanup dialogs. how?!
 #include "savedialog.h"
 #include "newprojdialog.h"
-#include "settingsdialog.h"
 #include "digisettingsdialog.h"
 #include "vasettingsdialog.h"
 #include "qucssettingsdialog.h"
 #include "searchdialog.h"
-#include "sweepdialog.h"
 #include "labeldialog.h"
 #include "matchdialog.h"
 #include "simmessage.h"
@@ -65,6 +63,7 @@
 #include "octave_window.h"
 #include "printerwriter.h"
 #include "imagewriter.h"
+#include "widget.h"
 
 #include "settings.h"
 #include "../qucs-lib/qucslib_common.h" // BUG
@@ -121,11 +120,6 @@ QucsApp::QucsApp()
   move  (QucsSettings.x,  QucsSettings.y);
   resize(QucsSettings.dx, QucsSettings.dy);
 
-  MouseMoveAction = 0;
-  MousePressAction = 0;
-  MouseReleaseAction = 0;
-  MouseDoubleClickAction = 0;
-
   initView();
   initActions();
   initMenuBar();
@@ -145,7 +139,7 @@ QucsApp::QucsApp()
   // creates a document called "untitled"
   DocumentTab->createEmptySchematic("");
 
-  select->setChecked(true);  // switch on the 'select' action
+//  select->setChecked(true);  // switch on the 'select' action
   switchSchematicDoc(true);  // "untitled" document is schematic
 
   lastExportFilename = QDir::homePath() + QDir::separator() + "export.png";
@@ -1349,7 +1343,7 @@ bool QucsApp::gotoPage(const QString& Name)
 
   if(d) { untested();
     // open page found
-    d->becomeCurrent(true);
+    // d->becomeCurrent(); called from showEvent.
     DocumentTab->setCurrentIndex(i);  // make new document the current
     return true;
   }else{itested();
@@ -1716,10 +1710,10 @@ void QucsApp::slotChangeView(QucsDoc *w)
     Doc = (QucsDoc*)d;
     // update menu entries, etc. if neccesary
     magAll->setDisabled(true); // here?
-    if(cursorLeft->isEnabled()){ untested();
-      switchSchematicDoc (false); // Doc->expose??
-    }else{ untested();
-    }
+    /// if(cursorLeft->isEnabled()){ untested();
+    ///   switchSchematicDoc (false); // Doc->expose??
+    /// }else{ untested();
+    /// }
 #if 0
   } else if(auto d=dynamic_cast<SchematicDoc*>(w)){ untested();
     incomplete();
@@ -1740,7 +1734,7 @@ void QucsApp::slotChangeView(QucsDoc *w)
   }
 
   assert(Doc);
-  Doc->becomeCurrent(true);
+//  Doc->becomeCurrent();
   // view->drawn = false;
 
   HierarchyHistory.clear();
@@ -1769,8 +1763,10 @@ void QucsApp::slotFileSettings ()
       d->exec ();
     }
   }else{ untested();
-    SettingsDialog * d = new SettingsDialog ((SchematicDoc *) w);
-    d->exec ();
+    incomplete();; //ask dispatcher
+//    check: is this about Properties?
+//    SettingsDialog * d = new SettingsDialog ((SchematicDoc *) w);
+//    d->exec ();
   }
   // view->drawn = false;
 }
@@ -2100,7 +2096,7 @@ void QucsApp::slotChangePage(QString& DocName, QString& DataDisplay)
       file.close();
     }
 
-    d->becomeCurrent(true);
+//    d->becomeCurrent();
   }
 
 
@@ -2127,14 +2123,15 @@ void QucsApp::slotToPage()
     return;
   }
 
-  if(d->docName().right(2) == ".m" ||
-     d->docName().right(4) == ".oct") { untested();
-    slotViewOctaveDock(true);
-  }else{ untested();
-      QString dn=d->docName();
-    slotChangePage(dn, d->DataDisplay);
-    d->setDocName(dn);
-  }
+//  use expose event (or so).
+//  if(d->docName().right(2) == ".m" ||
+//     d->docName().right(4) == ".oct") { untested();
+//    slotViewOctaveDock(true);
+//  }else{ untested();
+//      QString dn=d->docName();
+//    slotChangePage(dn, d->DataDisplay);
+//    d->setDocName(dn);
+//  }
 }
 
 // -------------------------------------------------------------------
@@ -2160,15 +2157,19 @@ void QucsApp::slotOpenContent(const QModelIndex &idx)
     updateRecentFilesList(Info.absoluteFilePath());
     slotUpdateRecentFiles();
 
-    if(note.isEmpty())     // is subcircuit ?
-      if(extName == "sch") return;
+    if(!note.isEmpty()){
+    }else if(extName == "sch") {
+      // is subcircuit
+      return; // BUG
+    }else{
+    }
 
-    select->blockSignals(true);  // switch on the 'select' action ...
-    select->setChecked(true);
-    select->blockSignals(false);
-
-    activeAction = select;
-    MouseMoveAction = 0;
+    // BUG: do in "showEvent"
+  //  select->blockSignals(true);  // switch on the 'select' action ...
+  //  select->setChecked(true);
+  //  select->blockSignals(false);
+  //   activeAction = select;
+  //
 #if 0
     MousePressAction = &MouseActions::MPressSelect;
     MouseReleaseAction = &MouseActions::MReleaseSelect;
@@ -2346,6 +2347,8 @@ void QucsApp::slotSelectLibComponent(QTreeWidgetItem *item)
 // from schematic to text document or vice versa.
 void QucsApp::switchSchematicDoc (bool SchematicMode)
 {itested();
+#if 0 // needed? just don't switch maybe.
+
   // switch our scroll key actions on/off according to SchematicMode
   cursorLeft->setEnabled(SchematicMode);
   cursorRight->setEnabled(SchematicMode);
@@ -2375,6 +2378,7 @@ void QucsApp::switchSchematicDoc (bool SchematicMode)
 #endif
   }
 
+#if 0
   selectMarker->setEnabled (SchematicMode);
   alignTop->setEnabled (SchematicMode);
   alignBottom->setEnabled (SchematicMode);
@@ -2388,7 +2392,7 @@ void QucsApp::switchSchematicDoc (bool SchematicMode)
   moveText->setEnabled (SchematicMode);
   filePrintFit->setEnabled (SchematicMode);
   editRotate->setEnabled (SchematicMode);
-  editMirror->setEnabled (SchematicMode);
+  // editMirror->setEnabled (SchematicMode);
   editMirrorY->setEnabled (SchematicMode);
   intoH->setEnabled (SchematicMode);
   popH->setEnabled (SchematicMode);
@@ -2399,6 +2403,7 @@ void QucsApp::switchSchematicDoc (bool SchematicMode)
   insGround->setEnabled (SchematicMode);
   insEquation->setEnabled (SchematicMode);
   setMarker->setEnabled (SchematicMode);
+#endif
 
   exportAsImage->setEnabled (SchematicMode); // only export schematic, no text
 
@@ -2406,11 +2411,13 @@ void QucsApp::switchSchematicDoc (bool SchematicMode)
   insEntity->setEnabled (!SchematicMode);
 
   buildModule->setEnabled(!SchematicMode); // only build if VA document
+#endif
 }
 
 // ---------------------------------------------------------
 void QucsApp::switchEditMode(bool SchematicMode)
 { untested();
+# if 0 // use plugin.
   fillComboBox(SchematicMode);
   slotSetCompView(0);
 
@@ -2429,17 +2436,18 @@ void QucsApp::switchEditMode(bool SchematicMode)
   // no search in "symbol painting mode" as only paintings should be used
   CompSearch->setEnabled(SchematicMode);
   CompSearchClear->setEnabled(SchematicMode);
+#endif
 }
 
 // ---------------------------------------------------------
 // // obsolete
+#if 0
 void QucsApp::changeSchematicSymbolMode(SchematicDoc *)
 { untested();
 
   // TODO: close currentwidget->document and reopen schematicSymbol (or the
   // other way round).
   // (SymbolDoc is no longer a "mode", but a document type).
-#if 0
   if(Doc->isSymbolMode()) { untested();
     // go into select modus to avoid placing a forbidden element
     select->setChecked(true);
@@ -2448,8 +2456,8 @@ void QucsApp::changeSchematicSymbolMode(SchematicDoc *)
   }else{ untested();
     switchEditMode(true);
   }
-#endif
 }
+#endif
 
 // ---------------------------------------------------------
 bool QucsApp::isTextDocument(QucsDoc const*w)
@@ -2836,9 +2844,11 @@ void QucsApp::slotSaveSchematicToGraphicsFile(bool diagram)
 }
 
 // #########################################################################
-
-
-QucsDoc* newSchematicDoc(QucsApp*, QString const&, QWidget*); // tmp hack.
+// // tmp hack.
+// QucsDoc* newSchematicDoc(QucsApp* a, QString const& b, QWidget* o)
+// {
+// 	return new SchematicDoc(a, b, o);
+// }
 
 QucsDoc *QucsTabWidget::createEmptySchematic(const QString &name)
 {itested();
@@ -2846,21 +2856,25 @@ QucsDoc *QucsTabWidget::createEmptySchematic(const QString &name)
   QFileInfo Info(name);
   assert(App);
 
-#if 1
+#if 0
   QucsDoc *d = newSchematicDoc(App, name, this);
   QWidget* w = dynamic_cast<QWidget*>(d);
-#else // need something like this.
-  Element* e = symbol_dispatcher.clone("schematic_root");
-  assert(e);
-  e->setParam("name", name.toStdString());
-  Qwidget* w = e->newWidget();
-  w->setParentWidget(this);
-  assert(w);
-  QucsDoc* d = dynamic_cast<QucsDoc*>(w);
-#endif
-
   assert(d);
   assert(w);
+#else // need something like this.
+  Widget* o = widget_dispatcher.clone("SchematicDoc");
+  assert(o);
+//  e->setParam("name", name.toStdString());
+  assert(o);
+  QucsDoc* d = dynamic_cast<QucsDoc*>(o);
+  assert(d);
+  QWidget* w = dynamic_cast<QWidget*>(o);
+  assert(w);
+  d->setParent(this);
+  trace1("setname??", name);
+  d->setName(name); // it's actually the (full?) filename?
+#endif
+
   int i = addTab(w, QPixmap(":/bitmaps/empty.xpm"), name.isEmpty() ? QObject::tr("untitled") : Info.fileName());
   setCurrentIndex(i);
   return d;
@@ -2925,12 +2939,12 @@ void QucsTabWidget::slotCxMenuCopyPath()
 { untested();
   // copy the document full path to the clipboard
   QClipboard *cb = QApplication::clipboard();
-  cb->setText(docName);
+  cb->setText(docName());
 }
 
 void QucsTabWidget::slotCxMenuOpenFolder()
 { untested();
-  QFileInfo Info(docName);
+  QFileInfo Info(docName());
   QDesktopServices::openUrl(QUrl::fromLocalFile(Info.canonicalPath()));
 }
 

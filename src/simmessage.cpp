@@ -35,7 +35,6 @@
 #include "module.h"
 #include "qucs_app.h"
 #include "textdoc.h"
-#include "schematic_doc.h"
 #include "misc.h"
 #include "qucs_globals.h"
 #include "docfmt.h"

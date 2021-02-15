@@ -9,6 +9,7 @@ class Qucsator;
 }
 
 // BUG must be anonymous
+// see dialogs for how to do it properly
 class QucsatorProcess : public QProcess {
 	Q_OBJECT;
 public:

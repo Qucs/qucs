@@ -11,4 +11,4 @@ Dispatcher<Symbol> symbol_dispatcher;
 Dispatcher<Data> dataDispatcher;
 Dispatcher<DocumentLanguage> languageDispatcher;
 Dispatcher<Element> element_dispatcher;
-Dispatcher<Object> widget_dispatcher;
+Dispatcher<Widget> widget_dispatcher;

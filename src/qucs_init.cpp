@@ -47,73 +47,73 @@ void QucsApp::initActions()
   assert(!fileNewIcon.isNull());
   fileNew = new QAction(fileNewIcon, tr("Document"), this);
   fileNew->setShortcut(Qt::CTRL+Qt::Key_N);
-  fileNew->setStatusTip(tr("Creates a new document"));
+  fileNew->setStatusTip(tr("Create a new document"));
   fileNew->setWhatsThis(
-	        tr("New\n\nCreates a new schematic or data display document"));
+	        tr("New\n\nCreate a new schematic or data display document"));
   connect(fileNew, SIGNAL(triggered()), SLOT(slotFileNew()));
 
   fileNewNoDD = new QAction(QIcon((":/bitmaps/filenew.png")), tr("Stand-alone Document"), this);
   fileNewNoDD->setShortcut(Qt::CTRL+Qt::SHIFT+Qt::Key_H);
-  fileNewNoDD->setStatusTip(tr("Creates a new stand-alone document"));
+  fileNewNoDD->setStatusTip(tr("Create a new stand-alone document"));
   fileNewNoDD->setWhatsThis(
-	        tr("New\n\nCreates a new stand-alone schematic or data display document"));
+	        tr("New\n\nCreate a new stand-alone schematic or data display document"));
   connect(fileNewNoDD, SIGNAL(triggered()), SLOT(slotFileNewNoDD()));
 
   textNew = new QAction(QIcon((":/bitmaps/textnew.png")), tr("&Text Document"), this);
   textNew->setShortcut(Qt::CTRL+Qt::SHIFT+Qt::Key_V);
-  textNew->setStatusTip(tr("Creates a new text document"));
-  textNew->setWhatsThis(tr("New Text\n\nCreates a new text document"));
+  textNew->setStatusTip(tr("Create a new text document"));
+  textNew->setWhatsThis(tr("New Text\n\nCreate a new text document"));
   connect(textNew, SIGNAL(triggered()), SLOT(slotTextNew()));
 
   fileOpen = new QAction(QIcon((":/bitmaps/fileopen.png")),	tr("&Open..."), this);
   fileOpen->setShortcut(Qt::CTRL+Qt::Key_O);
-  fileOpen->setStatusTip(tr("Opens an existing document"));
-  fileOpen->setWhatsThis(tr("Open File\n\nOpens an existing document"));
+  fileOpen->setStatusTip(tr("Open a document"));
+  fileOpen->setWhatsThis(tr("Open File\n\nOpen an existing document"));
   connect(fileOpen, SIGNAL(triggered()), SLOT(slotFileOpen()));
 
   fileSave = new QAction(QIcon((":/bitmaps/filesave.png")),	tr("&Save"), this);
   fileSave->setShortcut(Qt::CTRL+Qt::Key_S);
-  fileSave->setStatusTip(tr("Saves the current document"));
-  fileSave->setWhatsThis(tr("Save File\n\nSaves the current document"));
+  fileSave->setStatusTip(tr("Save the current document"));
+  fileSave->setWhatsThis(tr("Save File\n\nSave the current document"));
   connect(fileSave, SIGNAL(triggered()), SLOT(slotFileSave()));
 
   fileSaveAs = new QAction(tr("Save as..."), this);
   fileSaveAs->setShortcut(Qt::CTRL+Qt::Key_Minus);
   fileSaveAs->setStatusTip(
-	tr("Saves the current document under a new filename"));
+	tr("Save the current document under a new filename"));
   fileSaveAs->setWhatsThis(
-	tr("Save As\n\nSaves the current document under a new filename"));
+	tr("Save As\n\nSave the current document under a new filename"));
   connect(fileSaveAs, SIGNAL(triggered()), SLOT(slotFileSaveAs()));
 
   fileSaveAll = new QAction(QIcon((":/bitmaps/filesaveall.png")),	tr("Save &All"), this);
   fileSaveAll->setShortcut(Qt::CTRL+Qt::Key_Plus);
-  fileSaveAll->setStatusTip(tr("Saves all open documents"));
-  fileSaveAll->setWhatsThis(tr("Save All Files\n\nSaves all open documents"));
+  fileSaveAll->setStatusTip(tr("Save all open documents"));
+  fileSaveAll->setWhatsThis(tr("Save All Files\n\nSave all open documents"));
   connect(fileSaveAll, SIGNAL(triggered()), SLOT(slotFileSaveAll()));
 
   fileClose = new QAction(QIcon((":/bitmaps/fileclose.png")), tr("&Close"), this);
   fileClose->setShortcut(Qt::CTRL+Qt::Key_W);
-  fileClose->setStatusTip(tr("Closes the current document"));
-  fileClose->setWhatsThis(tr("Close File\n\nCloses the current document"));
+  fileClose->setStatusTip(tr("Close the current document"));
+  fileClose->setWhatsThis(tr("Close File\n\nClose the current document"));
   connect(fileClose, SIGNAL(triggered()), SLOT(slotFileClose()));
 
   fileCloseOthers = new QAction(QIcon((":/bitmaps/fileclose.png")), tr("Close all but current"), this);
-  fileCloseOthers->setStatusTip(tr("Closes all documents except the current one"));
+  fileCloseOthers->setStatusTip(tr("Close all documents except the current one"));
   fileCloseOthers->setWhatsThis(tr("Close all but current\n\nCloses all documents except the current one"));
   connect(fileCloseOthers, SIGNAL(triggered()), SLOT(slotFileCloseOthers()));
 
   fileCloseAllLeft = new QAction(QIcon((":/bitmaps/fileclose.png")), tr("Close all left"), this);
-  fileCloseAllLeft->setStatusTip(tr("Closes all documents to the left of the current one"));
+  fileCloseAllLeft->setStatusTip(tr("Close all documents to the left of the current one"));
   fileCloseAllLeft->setWhatsThis(tr("Close all left\n\nCloses all documents to the left of the current one"));
   connect(fileCloseAllLeft, SIGNAL(triggered()), SLOT(slotFileCloseAllLeft()));
 
   fileCloseAllRight = new QAction(QIcon((":/bitmaps/fileclose.png")), tr("Close all right"), this);
-  fileCloseAllRight->setStatusTip(tr("Closes all documents to the right of the current one"));
+  fileCloseAllRight->setStatusTip(tr("Close all documents to the right of the current one"));
   fileCloseAllRight->setWhatsThis(tr("Close all right\n\nCloses all documents to the right of the current one"));
   connect(fileCloseAllRight, SIGNAL(triggered()), SLOT(slotFileCloseAllRight()));
 
   fileCloseAll = new QAction(QIcon((":/bitmaps/fileclose.png")), tr("Close &All"), this);
-  fileCloseAll->setStatusTip(tr("Closes all documents"));
+  fileCloseAll->setStatusTip(tr("Close all documents"));
   fileCloseAll->setWhatsThis(tr("Close All\n\nCloses all documents"));
   connect(fileCloseAll, SIGNAL(triggered()), SLOT(slotFileCloseAll()));
 
@@ -127,15 +127,15 @@ void QucsApp::initActions()
   connect(fileClearRecent, SIGNAL(triggered()), SLOT(slotClearRecentFiles()));
 
   fileExamples = new QAction(tr("&Examples"), this);
-  fileExamples->setStatusTip(tr("Opens a file explorer with example documents"));
+  fileExamples->setStatusTip(tr("Open a file explorer with example documents"));
   fileExamples->setWhatsThis(
-	        tr("Examples\n\nOpens a file explorer with example documents"));
+	        tr("Examples\n\nOpen a file explorer with example documents"));
   connect(fileExamples, SIGNAL(triggered()), SLOT(slotFileExamples()));
 
 
   symEdit = new QAction(tr("&Edit Circuit Symbol"), this);
   symEdit->setShortcut(Qt::Key_F9);
-  symEdit->setStatusTip(tr("Edits the symbol for this schematic"));
+  symEdit->setStatusTip(tr("Edit the symbol for this schematic"));
   symEdit->setWhatsThis(
 	tr("Edit Circuit Symbol\n\nEdits the symbol for this schematic"));
   connect(symEdit, SIGNAL(triggered()), SLOT(slotSymbolEdit()));
@@ -143,13 +143,13 @@ void QucsApp::initActions()
   fileSettings = new QAction(tr("&Document Settings..."), this);
   fileSettings->setShortcut(Qt::CTRL+Qt::Key_Period);
   fileSettings->setStatusTip(tr("Document Settings"));
-  fileSettings->setWhatsThis(tr("Settings\n\nSets properties of the file"));
+  fileSettings->setWhatsThis(tr("Settings\n\nSet properties of the file"));
   connect(fileSettings, SIGNAL(triggered()), SLOT(slotFileSettings()));
 
   filePrint = new QAction(QIcon((":/bitmaps/fileprint.png")), tr("&Print..."), this);
   filePrint->setShortcut(Qt::CTRL+Qt::Key_P);
   filePrint->setStatusTip(tr("Prints the current document"));
-  filePrint->setWhatsThis(tr("Print File\n\nPrints the current document"));
+  filePrint->setWhatsThis(tr("Print File\n\nPrint the current document"));
   connect(filePrint, SIGNAL(triggered()), SLOT(slotFilePrint()));
 
   filePrintFit = new QAction(tr("Print Fit to Page..."), this);
@@ -162,8 +162,8 @@ void QucsApp::initActions()
 
   fileQuit = new QAction(tr("E&xit"), this);
   fileQuit->setShortcut(Qt::CTRL+Qt::Key_Q);
-  fileQuit->setStatusTip(tr("Quits the application"));
-  fileQuit->setWhatsThis(tr("Exit\n\nQuits the application"));
+  fileQuit->setStatusTip(tr("Quit the application"));
+  fileQuit->setWhatsThis(tr("Exit\n\nQuit the application"));
   connect(fileQuit, SIGNAL(triggered()), SLOT(slotFileQuit()));
 
   applSettings = new QAction(tr("Application Settings..."), this);
@@ -177,7 +177,7 @@ void QucsApp::initActions()
   //refreshSchPath->setShortcut(Qt::CTRL+Qt::Key_Comma);
   refreshSchPath->setStatusTip(tr("Refresh Search Path"));
   refreshSchPath->setWhatsThis(
-    tr("Refresh Path\n\nRechecks the list of paths for subcircuit files."));
+    tr("Refresh Path\n\nRecheck the list of paths for subcircuit files."));
   connect(refreshSchPath, SIGNAL(triggered()), SLOT(slotRefreshSchPath()));
 
   alignTop = new QAction(tr("Align top"), this);
@@ -205,61 +205,14 @@ void QucsApp::initActions()
 	tr("Align right\n\nAlign selected elements to their right edge"));
   connect(alignRight, SIGNAL(triggered()), SLOT(slotAlignRight()));
 
-  distrHor = new QAction(tr("Distribute horizontally"), this);
-  distrHor->setStatusTip(tr("Distribute equally horizontally"));
-  distrHor->setWhatsThis(
-	tr("Distribute horizontally\n\n"
-	   "Distribute horizontally selected elements"));
-  connect(distrHor, SIGNAL(triggered()), SLOT(slotDistribHoriz()));
 
-  distrVert = new QAction(tr("Distribute vertically"), this);
-  distrVert->setStatusTip(tr("Distribute equally vertically"));
-  distrVert->setWhatsThis(
-	tr("Distribute vertically\n\n"
-	   "Distribute vertically selected elements"));
-  connect(distrVert, SIGNAL(triggered()), SLOT(slotDistribVert()));
-
-  centerHor = new QAction(tr("Center horizontally"), this);
-  centerHor->setStatusTip(tr("Center horizontally selected elements"));
-  centerHor->setWhatsThis(
-	tr("Center horizontally\n\nCenter horizontally selected elements"));
-  connect(centerHor, SIGNAL(triggered()), SLOT(slotCenterHorizontal()));
-
-  centerVert = new QAction(tr("Center vertically"), this);
-  centerVert->setStatusTip(tr("Center vertically selected elements"));
-  centerVert->setWhatsThis(
-	tr("Center vertically\n\nCenter vertically selected elements"));
-  connect(centerVert, SIGNAL(triggered()), SLOT(slotCenterVertical()));
-
-  onGrid = new QAction(tr("Set on Grid"), this);
-  onGrid->setShortcut(Qt::CTRL+Qt::Key_U);
-  onGrid->setStatusTip(tr("Sets selected elements on grid"));
-  onGrid->setWhatsThis(
-	tr("Set on Grid\n\nSets selected elements on grid"));
-  onGrid->setCheckable(true);
-  connect(onGrid, &QAction::toggled, this, &QucsApp::slotOnGrid);
-
-  moveText = new QAction(tr("Move Component Text"), this);
-  moveText->setShortcut(Qt::CTRL+Qt::Key_K);
-  moveText->setStatusTip(tr("Moves the property text of components"));
-  moveText->setWhatsThis(
-	tr("Move Component Text\n\nMoves the property text of components"));
-  moveText->setCheckable(true);
-  connect(moveText, &QAction::toggled, this, &QucsApp::slotMoveText);
-
-  changeProps = new QAction(tr("Replace..."), this);
-  changeProps->setShortcut(Qt::Key_F7);
-  changeProps->setStatusTip(tr("Replace component properties or VHDL code"));
-  changeProps->setWhatsThis(
-	tr("Replace\n\nChange component properties\nor\ntext in VHDL code"));
-  connect(changeProps, SIGNAL(triggered()), SLOT(slotChangeProps()));
 
   editCut = new QAction(QIcon((":/bitmaps/editcut.png")),	tr("Cu&t"), this);
   editCut->setShortcut(Qt::CTRL+Qt::Key_X);
   editCut->setStatusTip(
-	tr("Cuts out the selection and puts it into the clipboard"));
+	tr("Cut out the selection and put it into the clipboard"));
   editCut->setWhatsThis(
-	tr("Cut\n\nCuts out the selection and puts it into the clipboard"));
+	tr("Cut\n\nCut out the selection and put it into the clipboard"));
   connect(editCut, SIGNAL(triggered()), SLOT(slotEditCut()));
 
   editCopy = new QAction(QIcon((":/bitmaps/editcopy.png")), tr("&Copy"), this);
@@ -281,7 +234,7 @@ void QucsApp::initActions()
 
   editDelete = new QAction(QIcon((":/bitmaps/editdelete.png")), tr("&Delete"), this);
   editDelete->setShortcut(Qt::Key_Delete);
-  editDelete->setStatusTip(tr("Deletes the selected components"));
+  editDelete->setStatusTip(tr("Delete the selected components"));
   editDelete->setWhatsThis(tr("Delete\n\nDeletes the selected components"));
   editDelete->setCheckable(true);
   connect(editDelete, &QAction::toggled, this, &QucsApp::slotEditDelete);
@@ -289,7 +242,7 @@ void QucsApp::initActions()
   editFind = new QAction(tr("Find..."), this);
   editFind->setShortcut(Qt::CTRL+Qt::Key_F);
   editFind->setStatusTip(tr("Find a piece of text"));
-  editFind->setWhatsThis(tr("Find\n\nSearches for a piece of text"));
+  editFind->setWhatsThis(tr("Find\n\nSearch for a piece of text"));
   connect(editFind, SIGNAL(triggered()), SLOT(slotEditFind()));
 
 #if 0 // not yet?
@@ -308,66 +261,52 @@ void QucsApp::initActions()
   // file format target.
   exportAsImage = new QAction(tr("Export as image..."),this);
   connect(exportAsImage,SIGNAL(triggered()),SLOT(slotSaveSchematicToGraphicsFile()));
-  exportAsImage->setStatusTip(tr("Exports the current document to an image file"));
-  exportAsImage->setWhatsThis(tr("Export as image\n\nExports the current document to an image file"));
+  exportAsImage->setStatusTip(tr("Export the current document to an image file"));
+  exportAsImage->setWhatsThis(tr("Export as image\n\nExport the current document to an image file"));
 
-  // cursor left/right/up/down to move marker on a graph
-  // BUG: why can't we move Elements?!
-  // BUG: why is tnis not in SchematicDocument::init (or so?)
-  cursorLeft = new QShortcut(QKeySequence(Qt::Key_Left), this);
-  connect(cursorLeft, SIGNAL(activated()), SLOT(slotCursorLeft()));
-
-  cursorRight = new QShortcut(QKeySequence(Qt::Key_Right), this);
-  connect(cursorRight, SIGNAL(activated()), SLOT(slotCursorRight()));
-
-  cursorUp = new QShortcut(QKeySequence(Qt::Key_Up), this);
-  connect(cursorUp, SIGNAL(activated()), SLOT(slotCursorUp()));
-
-  cursorDown = new QShortcut(QKeySequence(Qt::Key_Down), this);
-  connect(cursorDown, SIGNAL(activated()), SLOT(slotCursorDown()));
 
   undo = new QAction(QIcon((":/bitmaps/undo.png")), tr("&Undo"), this);
   undo->setShortcut(Qt::CTRL+Qt::Key_Z);
-  undo->setStatusTip(tr("Undoes the last command"));
-  undo->setWhatsThis(tr("Undo\n\nMakes the last action undone"));
+  undo->setStatusTip(tr("Undo the last command"));
+  undo->setWhatsThis(tr("Undo\n\nMake the last action undone"));
   connect(undo, SIGNAL(triggered()), SLOT(slotEditUndo()));
 
   redo = new QAction(QIcon((":/bitmaps/redo.png")), tr("&Redo"), this);
   redo->setShortcut(Qt::CTRL+Qt::Key_Y);
-  redo->setStatusTip(tr("Redoes the last command"));
-  redo->setWhatsThis(tr("Redo\n\nRepeats the last action once more"));
+  redo->setStatusTip(tr("Redo the last command"));
+  redo->setWhatsThis(tr("Redo\n\nRepeat the last action once more"));
   connect(redo, SIGNAL(triggered()), SLOT(slotEditRedo()));
 
   projNew = new QAction(tr("&New Project..."), this);
   projNew->setShortcut(Qt::CTRL+Qt::SHIFT+Qt::Key_N);
-  projNew->setStatusTip(tr("Creates a new project"));
-  projNew->setWhatsThis(tr("New Project\n\nCreates a new project"));
+  projNew->setStatusTip(tr("Create a new project"));
+  projNew->setWhatsThis(tr("New Project\n\nCreate a new project"));
   connect(projNew, SIGNAL(triggered()), SLOT(slotButtonProjNew()));
 
   // why this? let's just "Open"
   projOpen = new QAction(tr("&Open Project..."), this);
 	projOpen->setShortcut(Qt::CTRL+Qt::SHIFT+Qt::Key_O);
-  projOpen->setStatusTip(tr("Opens an existing project"));
-  projOpen->setWhatsThis(tr("Open Project\n\nOpens an existing project"));
+  projOpen->setStatusTip(tr("Open an existing project"));
+  projOpen->setWhatsThis(tr("Open Project\n\nOpen an existing project"));
   connect(projOpen, SIGNAL(triggered()), SLOT(slotMenuProjOpen()));
 
   projDel = new QAction(tr("&Delete Project..."), this);
   projDel->setShortcut(Qt::CTRL+Qt::SHIFT+Qt::Key_D);
-  projDel->setStatusTip(tr("Deletes an existing project"));
-  projDel->setWhatsThis(tr("Delete Project\n\nDeletes an existing project"));
+  projDel->setStatusTip(tr("Delete an existing project"));
+  projDel->setWhatsThis(tr("Delete Project\n\nDelete an existing project"));
   connect(projDel, SIGNAL(triggered()), SLOT(slotMenuProjDel()));
 
   projClose = new QAction(tr("&Close Project"), this);
   projClose->setShortcut(Qt::CTRL+Qt::SHIFT+Qt::Key_W);
-  projClose->setStatusTip(tr("Closes the current project"));
-  projClose->setWhatsThis(tr("Close Project\n\nCloses the current project"));
+  projClose->setStatusTip(tr("Close the current project"));
+  projClose->setWhatsThis(tr("Close Project\n\nClose the current project"));
   connect(projClose, SIGNAL(triggered()), SLOT(slotMenuProjClose()));
 
   addToProj = new QAction(tr("&Add Files to Project..."), this);
   addToProj->setShortcut(Qt::CTRL+Qt::SHIFT+Qt::Key_A);
-  addToProj->setStatusTip(tr("Copies files to project directory"));
+  addToProj->setStatusTip(tr("Copy files to project directory"));
   addToProj->setWhatsThis(
-	tr("Add Files to Project\n\nCopies files to project directory"));
+	tr("Add Files to Project\n\nCopy files to project directory"));
   connect(addToProj, SIGNAL(triggered()), SLOT(slotAddToProject()));
 
   createLib = new QAction(tr("Create &Library..."), this);
@@ -434,15 +373,15 @@ void QucsApp::initActions()
 
   magPlus = new QAction(QIcon((":/bitmaps/viewmag+.png")),	tr("Zoom in"), this);
   magPlus->setShortcut(Qt::Key_Plus);
-  magPlus->setStatusTip(tr("Zooms into the current view"));
-  magPlus->setWhatsThis(tr("Zoom in\n\nZooms the current view"));
+  magPlus->setStatusTip(tr("Zoom into the current view"));
+  magPlus->setWhatsThis(tr("Zoom in\n\nZoom the current view"));
   magPlus->setCheckable(true);
   connect(magPlus, &QAction::toggled, this, &QucsApp::slotZoomIn);
 
   magMinus = new QAction(QIcon((":/bitmaps/viewmag-.png")), tr("Zoom out"), this);
   magMinus->setShortcut(Qt::Key_Minus);
-  magMinus->setStatusTip(tr("Zooms out the current view"));
-  magMinus->setWhatsThis(tr("Zoom out\n\nZooms out the current view"));
+  magMinus->setStatusTip(tr("Zoom out the current view"));
+  magMinus->setWhatsThis(tr("Zoom out\n\nZoom out the current view"));
   connect(magMinus, SIGNAL(triggered()), SLOT(slotZoomOut()));
 
   QAction *escape = new QAction(this);
@@ -450,18 +389,13 @@ void QucsApp::initActions()
   connect(escape, SIGNAL(triggered()), SLOT(slotEscape()));
   this->addAction(escape);
 
+#if 0
   select = new QAction(QIcon((":/bitmaps/pointer.png")), tr("Select"), this);
   select->setStatusTip(tr("Activate select mode"));
   select->setWhatsThis(tr("Select\n\nActivates select mode"));
   select->setCheckable(true);
   connect(select, &QAction::toggled, this, &QucsApp::slotSelect);
-
-  selectAll = new QAction(tr("Select All"), this);
-  selectAll->setShortcut(Qt::CTRL+Qt::Key_A);
-  selectAll->setStatusTip(tr("Selects all elements"));
-  selectAll->setWhatsThis(
-	tr("Select All\n\nSelects all elements of the document"));
-  connect(selectAll, SIGNAL(triggered()), SLOT(slotSelectAll()));
+#endif
 
   selectMarker = new QAction(tr("Select Markers"), this);
   selectMarker->setShortcut(Qt::CTRL+Qt::SHIFT+Qt::Key_M);
@@ -469,30 +403,6 @@ void QucsApp::initActions()
   selectMarker->setWhatsThis(
 	tr("Select Markers\n\nSelects all diagram markers of the document"));
   connect(selectMarker, SIGNAL(triggered()), SLOT(slotSelectMarker()));
-
-  editRotate = new QAction(QIcon((":/bitmaps/rotate_ccw.png")), tr("Rotate"), this);
-  editRotate->setShortcut(Qt::CTRL+Qt::Key_R);
-  editRotate->setStatusTip(tr("Rotates the selected component by 90\x00B0"));
-  editRotate->setWhatsThis(
-    tr("Rotate\n\nRotates the selected component by 90\x00B0 counter-clockwise"));
-  editRotate->setCheckable(true);
-  connect(editRotate, &QAction::toggled, this, &QucsApp::slotEditRotate);
-
-  editMirror = new QAction(QIcon((":/bitmaps/mirror.png")), tr("Mirror Y"), this);
-  editMirror->setShortcut(Qt::CTRL+Qt::Key_J);
-  editMirror->setStatusTip(tr("Mirror the selected item vertically"));
-  editMirror->setWhatsThis(
-	tr("Mirror Y\n\nMirror the selected item vertically"));
-  editMirror->setCheckable(true);
-  connect(editMirror, &QAction::toggled, this, &QucsApp::slotEditMirrorX);
-
-  editMirrorY = new QAction(QIcon((":/bitmaps/mirrory.png")), tr("Mirror X"), this);
-  editMirrorY->setShortcut(Qt::CTRL+Qt::Key_M);
-  editMirrorY->setStatusTip(tr("Mirror selected items horizontally"));
-  editMirrorY->setWhatsThis(
-	tr("Mirror X\n\nMirrors selected items horizontally"));
-  editMirrorY->setCheckable(true);
-  connect(editMirrorY, &QAction::toggled, this, &QucsApp::slotEditMirrorY);
 
   intoH = new QAction(QIcon((":/bitmaps/bottom.png")), tr("Go into Subcircuit"), this);
   intoH->setShortcut(Qt::CTRL+Qt::Key_I);
@@ -509,48 +419,6 @@ void QucsApp::initActions()
   connect(popH, SIGNAL(triggered()), SLOT(slotPopHierarchy()));
   popH->setEnabled(false);  // only enabled if useful !!!!
 
-  editActivate = new QAction(QIcon((":/bitmaps/deactiv.png")),	tr("Deactivate/Activate"), this);
-  editActivate->setShortcut(Qt::CTRL+Qt::Key_D);
-  editActivate->setStatusTip(tr("Deactivate/Activate selected components"));
-  editActivate->setWhatsThis(
-	tr("Deactivate/Activate\n\nDeactivate/Activate the selected components"));
-  editActivate->setCheckable(true);
-  connect(editActivate, &QAction::toggled, this, &QucsApp::slotEditActivate);
-
-  insEquation = new QAction(QIcon((":/bitmaps/equation.png")),	tr("Insert Equation"), this);
-  insEquation->setShortcut(Qt::CTRL+Qt::Key_Less);
-  insEquation->setStatusTip(tr("Inserts an equation"));
-  insEquation->setWhatsThis(
-	tr("Insert Equation\n\nInserts a user defined equation"));
-  insEquation->setCheckable(true);
-  connect(insEquation, &QAction::toggled, this, &QucsApp::slotInsertEquation);
-
-  insGround = new QAction(QIcon((":/bitmaps/ground.png")), tr("Insert Ground"), this);
-  insGround->setShortcut(Qt::CTRL+Qt::Key_G);
-  insGround->setStatusTip(tr("Inserts a ground symbol"));
-  insGround->setWhatsThis(tr("Insert Ground\n\nInserts a ground symbol"));
-  insGround->setCheckable(true);
-  connect(insGround, &QAction::toggled, this, &QucsApp::slotInsertGround);
-
-  insPort = new QAction(QIcon((":/bitmaps/port.png")),	tr("Insert Port"), this);
-  insPort->setStatusTip(tr("Inserts a port symbol"));
-  insPort->setWhatsThis(tr("Insert Port\n\nInserts a port symbol"));
-  insPort->setCheckable(true);
-  connect(insPort, &QAction::toggled, this, &QucsApp::slotInsertPort);
-
-  insWire = new QAction(QIcon((":/bitmaps/wire.png")),	tr("Wire"), this);
-  insWire->setShortcut(Qt::CTRL+Qt::Key_E);
-  insWire->setStatusTip(tr("Inserts a wire"));
-  insWire->setWhatsThis(tr("Wire\n\nInserts a wire"));
-  insWire->setCheckable(true);
-  connect(insWire, &QAction::toggled, this, &QucsApp::slotSetWire);
-
-  insLabel = new QAction(QIcon((":/bitmaps/nodename.png")), tr("Wire Label"), this);
-  insLabel->setShortcut(Qt::CTRL+Qt::Key_L);
-  insLabel->setStatusTip(tr("Inserts a wire or pin label"));
-  insLabel->setWhatsThis(tr("Wire Label\n\nInserts a wire or pin label"));
-  insLabel->setCheckable(true);
-  connect(insLabel, &QAction::toggled, this, &QucsApp::slotInsertLabel);
 
   insEntity = new QAction(tr("VHDL entity"), this);
   insEntity->setShortcut(Qt::CTRL+Qt::Key_Space);
@@ -559,67 +427,65 @@ void QucsApp::initActions()
 	tr("VHDL entity\n\nInserts the skeleton of a VHDL entity"));
   connect(insEntity, SIGNAL(triggered()), SLOT(slotInsertEntity()));
 
-  callEditor = new QAction(tr("Text Editor"), this);
-  callEditor->setShortcut(Qt::CTRL+Qt::Key_1);
-  callEditor->setStatusTip(tr("Starts the Qucs text editor"));
-  callEditor->setWhatsThis(tr("Text editor\n\nStarts the Qucs text editor"));
-  connect(callEditor, SIGNAL(triggered()), SLOT(slotCallEditor()));
+//  callEditor = new QAction(tr("Text Editor"), this);
+//  callEditor->setShortcut(Qt::CTRL+Qt::Key_1);
+//  callEditor->setStatusTip(tr("Starts the Qucs text editor"));
+//  callEditor->setWhatsThis(tr("Text editor\n\nStart the Qucs text editor"));
+//  connect(callEditor, SIGNAL(triggered()), SLOT(slotCallEditor()));
 
-  callFilter = new QAction(tr("Filter synthesis"), this);
-  callFilter->setShortcut(Qt::CTRL+Qt::Key_2);
-  callFilter->setStatusTip(tr("Starts QucsFilter"));
-  callFilter->setWhatsThis(tr("Filter synthesis\n\nStarts QucsFilter"));
-  connect(callFilter, SIGNAL(triggered()), SLOT(slotCallFilter()));
+//  callFilter = new QAction(tr("Filter synthesis"), this);
+//  callFilter->setShortcut(Qt::CTRL+Qt::Key_2);
+//  callFilter->setStatusTip(tr("Starts QucsFilter"));
+//  callFilter->setWhatsThis(tr("Filter synthesis\n\nStarts QucsFilter"));
+//  connect(callFilter, SIGNAL(triggered()), SLOT(slotCallFilter()));
 
-  callActiveFilter = new QAction(tr("Active filter synthesis"),this);
-  callActiveFilter->setShortcut(Qt::CTRL+Qt::Key_3);
-  callActiveFilter->setStatusTip(tr("Starts QucsActiveFilter"));
-  callActiveFilter->setWhatsThis(tr("Active filter synthesis\n\nStarts QucsActiveFilter"));
-  connect(callActiveFilter, SIGNAL(triggered()), SLOT(slotCallActiveFilter()));
+//  callActiveFilter = new QAction(tr("Active filter synthesis"),this);
+//  callActiveFilter->setShortcut(Qt::CTRL+Qt::Key_3);
+//  callActiveFilter->setStatusTip(tr("Starts QucsActiveFilter"));
+//  callActiveFilter->setWhatsThis(tr("Active filter synthesis\n\nStarts QucsActiveFilter"));
+//  connect(callActiveFilter, SIGNAL(triggered()), SLOT(slotCallActiveFilter()));
 
-  callLine = new QAction(tr("Line calculation"), this);
-  callLine->setShortcut(Qt::CTRL+Qt::Key_4);
-  callLine->setStatusTip(tr("Starts QucsTrans"));
-  callLine->setWhatsThis(
-		tr("Line calculation\n\nStarts transmission line calculator"));
-  connect(callLine, SIGNAL(triggered()), SLOT(slotCallLine()));
+//  callLine = new QAction(tr("Line calculation"), this);
+//  callLine->setShortcut(Qt::CTRL+Qt::Key_4);
+//  callLine->setStatusTip(tr("Starts QucsTrans"));
+//  callLine->setWhatsThis(
+//		tr("Line calculation\n\nStarts transmission line calculator"));
+//  connect(callLine, SIGNAL(triggered()), SLOT(slotCallLine()));
 
-  callLib = new QAction(tr("Component Library"), this);
-  callLib->setShortcut(Qt::CTRL+Qt::Key_5);
-  callLib->setStatusTip(tr("Starts QucsLib"));
-  callLib->setWhatsThis(
-		tr("Component Library\n\nStarts component library program"));
-  connect(callLib, SIGNAL(triggered()), SLOT(slotCallLibrary()));
+//  callLib = new QAction(tr("Component Library"), this);
+//  callLib->setShortcut(Qt::CTRL+Qt::Key_5);
+//  callLib->setStatusTip(tr("Starts QucsLib"));
+//  callLib->setWhatsThis(
+//		tr("Component Library\n\nStarts component library program"));
+//  connect(callLib, SIGNAL(triggered()), SLOT(slotCallLibrary()));
 
-  callMatch = new QAction(tr("Matching Circuit"), this);
-  callMatch->setShortcut(Qt::CTRL+Qt::Key_6);
-  callMatch->setStatusTip(tr("Creates Matching Circuit"));
-  callMatch->setWhatsThis(
-	tr("Matching Circuit\n\nDialog for Creating Matching Circuit"));
-  connect(callMatch, SIGNAL(triggered()), SLOT(slotCallMatch()));
+//  callMatch = new QAction(tr("Matching Circuit"), this);
+//  callMatch->setShortcut(Qt::CTRL+Qt::Key_6);
+//  callMatch->setStatusTip(tr("Create Matching Circuit"));
+//  callMatch->setWhatsThis(
+//	tr("Matching Circuit\n\nDialog for Creating Matching Circuit"));
+//  connect(callMatch, SIGNAL(triggered()), SLOT(slotCallMatch()));
 
-  callAtt = new QAction(tr("Attenuator synthesis"), this);
-  callAtt->setShortcut(Qt::CTRL+Qt::Key_7);
-  callAtt->setStatusTip(tr("Starts QucsAttenuator"));
-  callAtt->setWhatsThis(
-	tr("Attenuator synthesis\n\nStarts attenuator calculation program"));
-  connect(callAtt, SIGNAL(triggered()), SLOT(slotCallAtt()));
+//  callAtt = new QAction(tr("Attenuator synthesis"), this);
+//  callAtt->setShortcut(Qt::CTRL+Qt::Key_7);
+//  callAtt->setStatusTip(tr("Start QucsAttenuator"));
+//  callAtt->setWhatsThis(
+//	tr("Attenuator synthesis\n\nStart attenuator calculation program"));
+//  connect(callAtt, SIGNAL(triggered()), SLOT(slotCallAtt()));
 
-  callRes = new QAction(tr("Resistor color codes"), this);
-  callRes->setShortcut(Qt::CTRL+Qt::Key_8);
-  callRes->setStatusTip(tr("Starts Qucs resistor color codes"));
-  callRes->setWhatsThis(
-  tr("Resistor color codes\n\nStarts standard resistor color code computation program"));
-  connect(callRes, SIGNAL(triggered()), SLOT(slotCallRes()));
+//  callRes = new QAction(tr("Resistor color codes"), this);
+//  callRes->setShortcut(Qt::CTRL+Qt::Key_8);
+//  callRes->setStatusTip(tr("Starts Qucs resistor color codes"));
+//  callRes->setWhatsThis(
+//  tr("Resistor color codes\n\nStarts standard resistor color code computation program"));
+//  connect(callRes, SIGNAL(triggered()), SLOT(slotCallRes()));
 
-
-  callPowerComb = new QAction(tr("Power combining"), this);
-  callPowerComb->setShortcut(Qt::CTRL+Qt::Key_9);
-  callPowerComb->setStatusTip(tr("Starts Qucs power combining tool"));
-  callPowerComb->setWhatsThis(
-  tr("Power combining synthesis\n\nStarts power combining synthesis tool"));
-  connect(callPowerComb, SIGNAL(triggered()), SLOT(slotCallPowerComb()));
-
+//  callPowerComb = new QAction(tr("Power combining"), this);
+//  callPowerComb->setShortcut(Qt::CTRL+Qt::Key_9);
+//  callPowerComb->setStatusTip(tr("Starts Qucs power combining tool"));
+//  callPowerComb->setWhatsThis(
+//  tr("Power combining synthesis\n\nStarts power combining synthesis tool"));
+//  connect(callPowerComb, SIGNAL(triggered()), SLOT(slotCallPowerComb()));
 
   simulate = new QAction(QIcon((":/bitmaps/gear.png")), tr("Simulate"), this);
   simulate->setShortcut(Qt::Key_F2);
@@ -642,53 +508,45 @@ void QucsApp::initActions()
 	tr("Calculate DC bias\n\nCalculate DC bias and show it"));
   connect(dcbias, &QAction::triggered, DocumentTab, &QucsTabWidget::slotDCbias);
 
-  setMarker = new QAction(QIcon((":/bitmaps/marker.png")),	tr("Set Marker on Graph"), this);
-  setMarker->setShortcut(Qt::CTRL+Qt::Key_B);
-  setMarker->setStatusTip(tr("Sets a marker on a diagram's graph"));
-  setMarker->setWhatsThis(
-	tr("Set Marker\n\nSets a marker on a diagram's graph"));
-  setMarker->setCheckable(true);
-  connect(setMarker, &QAction::toggled, this, &QucsApp::slotSetMarker);
-
   showMsg = new QAction(tr("Show Last Messages"), this);
   showMsg->setShortcut(Qt::Key_F5);
-  showMsg->setStatusTip(tr("Shows last simulation messages"));
+  showMsg->setStatusTip(tr("Show last simulation messages"));
   showMsg->setWhatsThis(
-        tr("Show Last Messages\n\nShows the messages of the last simulation"));
+        tr("Show Last Messages\n\nShow the messages of the last simulation"));
   connect(showMsg, SIGNAL(triggered()), SLOT(slotShowLastMsg()));
 
   showNet = new QAction(tr("Show Last Netlist"), this);
   showNet->setShortcut(Qt::Key_F6);
-  showNet->setStatusTip(tr("Shows last simulation netlist"));
+  showNet->setStatusTip(tr("Show last simulation netlist"));
   showNet->setWhatsThis(
 	tr("Show Last Netlist\n\nShows the netlist of the last simulation"));
   connect(showNet, &QAction::toggled, this, &QucsApp::slotShowLastNetlist);
 
   viewToolBar = new QAction(tr("Tool&bar"), this);
   viewToolBar->setCheckable(true);
-  viewToolBar->setStatusTip(tr("Enables/disables the toolbar"));
+  viewToolBar->setStatusTip(tr("Enable/disable the toolbar"));
   viewToolBar->setWhatsThis(tr("Toolbar\n\nEnables/disables the toolbar"));
   connect(viewToolBar, SIGNAL(toggled(bool)), SLOT(slotViewToolBar(bool)));
 
   viewStatusBar = new QAction(tr("&Statusbar"), this);
   viewStatusBar->setCheckable(true);
-  viewStatusBar->setStatusTip(tr("Enables/disables the statusbar"));
+  viewStatusBar->setStatusTip(tr("Enable/disable the statusbar"));
   viewStatusBar->setWhatsThis(
 	tr("Statusbar\n\nEnables/disables the statusbar"));
   connect(viewStatusBar, SIGNAL(toggled(bool)), SLOT(slotViewStatusBar(bool)));
 
   viewBrowseDock = new QAction(tr("&Dock Window"), this);
   viewBrowseDock->setCheckable(true);
-  viewBrowseDock->setStatusTip(tr("Enables/disables the browse dock window"));
+  viewBrowseDock->setStatusTip(tr("Enable/disable the browse dock window"));
   viewBrowseDock->setWhatsThis(
-	tr("Browse Window\n\nEnables/disables the browse dock window"));
+	tr("Browse Window\n\nEnables/disable the browse dock window"));
   connect(viewBrowseDock, SIGNAL(toggled(bool)), SLOT(slotViewBrowseDock(bool)));
 
   viewOctaveDock = new QAction(tr("&Octave Window"), this);
   viewOctaveDock->setCheckable(true);
-  viewOctaveDock->setStatusTip(tr("Shows/hides the Octave dock window"));
+  viewOctaveDock->setStatusTip(tr("Show/hide the Octave dock window"));
   viewOctaveDock->setWhatsThis(
-      tr("Octave Window\n\nShows/hides the Octave dock window"));
+      tr("Octave Window\n\nShow/hide the Octave dock window"));
   connect(viewOctaveDock, SIGNAL(toggled(bool)), SLOT(slotViewOctaveDock(bool)));
 
   helpOnline = new QAction(tr("Qucs-Help website"), this);
@@ -704,7 +562,7 @@ void QucsApp::initActions()
 
   helpAboutQt = new QAction(tr("About Qt..."), this);
   helpAboutQt->setStatusTip(tr("About Qt"));
-  helpAboutQt->setWhatsThis(tr("About Qt\n\nAbout Qt by Trolltech"));
+  helpAboutQt->setWhatsThis(tr("About Qt\n\nAbout Qt"));
   connect(helpAboutQt, SIGNAL(triggered()), qApp, SLOT(aboutQt()));
 }
 
@@ -758,52 +616,52 @@ void QucsApp::initMenuBar()
 
   // forward to QAction instances. effectively simulate button presses.
   editMenu = new QMenu(tr("&Edit"));  // menuBar entry editMenu
-  editMenu->addAction(undo);
-  editMenu->addAction(redo);
-  editMenu->addSeparator();
-  editMenu->addAction(editCut);
-  editMenu->addAction(editCopy);
-  editMenu->addAction(editPaste);
-  editMenu->addAction(editDelete);
-  editMenu->addSeparator();
-  editMenu->addAction(select);
-  editMenu->addAction(selectAll);
-  editMenu->addAction(selectMarker);
-  editMenu->addAction(editFind);
-  editMenu->addAction(changeProps);
-  editMenu->addAction(editRotate);
-  editMenu->addAction(editMirror);
-  editMenu->addAction(editMirrorY);
-  editMenu->addAction(editActivate);
+//  editMenu->addAction(undo);
+//  editMenu->addAction(redo);
+//  editMenu->addSeparator();
+//  editMenu->addAction(editCut);
+//  editMenu->addAction(editCopy);
+//  editMenu->addAction(editPaste);
+//  editMenu->addAction(editDelete);
+//  editMenu->addSeparator();
+//  editMenu->addAction(select);
+//  editMenu->addAction(selectAll); // why not qucsDoc?
+//  editMenu->addAction(selectMarker);
+//  editMenu->addAction(editFind);
+//  editMenu->addAction(changeProps);
+//  editMenu->addAction(editRotate);
+//  editMenu->addAction(editMirror);
+//  editMenu->addAction(editMirrorY);
+//  editMenu->addAction(editActivate);
   editMenu->addSeparator();
   editMenu->addAction(intoH);
   editMenu->addAction(popH);
   menuBar()->addMenu(editMenu);
 
   alignMenu = new QMenu(tr("P&ositioning"));  // menuBar entry alignMenu
-  alignMenu->addAction(moveText);
-  alignMenu->addAction(onGrid);
-  alignMenu->addSeparator();
-  alignMenu->addAction(centerHor);
-  alignMenu->addAction(centerVert);
-  alignMenu->addSeparator();
-  alignMenu->addAction(alignTop);
-  alignMenu->addAction(alignBottom);
-  alignMenu->addAction(alignLeft);
-  alignMenu->addAction(alignRight);
-  alignMenu->addSeparator();
-  alignMenu->addAction(distrHor);
-  alignMenu->addAction(distrVert);
+//  alignMenu->addAction(moveText);
+//  alignMenu->addAction(onGrid);
+//  alignMenu->addSeparator();
+//  alignMenu->addAction(centerHor);
+//  alignMenu->addAction(centerVert);
+//  alignMenu->addSeparator();
+//  alignMenu->addAction(alignTop);
+//  alignMenu->addAction(alignBottom);
+//  alignMenu->addAction(alignLeft);
+//  alignMenu->addAction(alignRight);
+//  alignMenu->addSeparator();
+//  alignMenu->addAction(distrHor);
+//  alignMenu->addAction(distrVert);
   menuBar()->addMenu(alignMenu);
 
   insMenu = new QMenu(tr("&Insert"));  // menuBar entry insMenu
-  insMenu->addAction(insWire);
-  insMenu->addAction(insLabel);
-  insMenu->addAction(insEquation);
-  insMenu->addAction(insGround);
-  insMenu->addAction(insPort);
-  insMenu->addAction(setMarker);
-  insMenu->addAction(insEntity);
+//  insMenu->addAction(insWire);
+//  insMenu->addAction(insLabel);
+//  insMenu->addAction(insEquation);
+//  insMenu->addAction(insGround);
+//  insMenu->addAction(insPort);
+//  insMenu->addAction(setMarker);
+//  insMenu->addAction(insEntity);
   menuBar()->addMenu(insMenu);
 
   projMenu = new QMenu(tr("&Project"));  // menuBar entry projMenu
@@ -826,35 +684,35 @@ void QucsApp::initMenuBar()
   menuBar()->addMenu(projMenu);
 
   toolMenu = new QMenu(tr("&Tools"));  // menuBar entry toolMenu
-  toolMenu->addAction(callEditor);
-  toolMenu->addAction(callFilter);
-  toolMenu->addAction(callActiveFilter);
-  toolMenu->addAction(callLine);
-  toolMenu->addAction(callLib);
-  toolMenu->addAction(callMatch);
-  toolMenu->addAction(callAtt);
-  toolMenu->addAction(callRes);
-  toolMenu->addAction(callPowerComb);
+//  toolMenu->addAction(callEditor);
+//  toolMenu->addAction(callFilter);
+//  toolMenu->addAction(callActiveFilter);
+//  toolMenu->addAction(callLine);
+//  toolMenu->addAction(callLib);
+//  toolMenu->addAction(callMatch);
+//  toolMenu->addAction(callAtt);
+//  toolMenu->addAction(callRes);
+//  toolMenu->addAction(callPowerComb);
   menuBar()->addMenu(toolMenu);
 
   simMenu = new QMenu(tr("&Simulation"));  // menuBar entry simMenu
-  simMenu->addAction(simulate);
-  simMenu->addAction(dpl_sch);
-  simMenu->addAction(dcbias);
-  simMenu->addAction(showMsg);
-  simMenu->addAction(showNet);
+//  simMenu->addAction(simulate);
+//  simMenu->addAction(dpl_sch);
+//  simMenu->addAction(dcbias);
+//  simMenu->addAction(showMsg);
+//  simMenu->addAction(showNet);
   menuBar()->addMenu(simMenu);
 
   viewMenu = new QMenu(tr("&View"));  // menuBar entry viewMenu
-  viewMenu->addAction(magAll);
-  viewMenu->addAction(magOne);
-  viewMenu->addAction(magPlus);
-  viewMenu->addAction(magMinus);
-  viewMenu->addSeparator();
-  viewMenu->addAction(viewToolBar);
-  viewMenu->addAction(viewStatusBar);
-  viewMenu->addAction(viewBrowseDock);
-  viewMenu->addAction(viewOctaveDock);
+//  viewMenu->addAction(magAll);
+//  viewMenu->addAction(magOne);
+//  viewMenu->addAction(magPlus);
+//  viewMenu->addAction(magMinus);
+//  viewMenu->addSeparator();
+//  viewMenu->addAction(viewToolBar);
+//  viewMenu->addAction(viewStatusBar);
+//  viewMenu->addAction(viewBrowseDock);
+//  viewMenu->addAction(viewOctaveDock);
   menuBar()->addMenu(viewMenu);
 
   helpMenu = new QMenu(tr("&Help"));  // menuBar entry helpMenu
@@ -958,24 +816,24 @@ void QucsApp::initToolBar()
   viewToolbar->addAction(magMinus);
   addToolBar(viewToolbar);
 
-  workToolbar = new QToolBar(tr("Work"));
-  workToolbar->addAction(select);
-  workToolbar->addAction(editActivate);
-  workToolbar->addAction(editMirror);
-  workToolbar->addAction(editMirrorY);
-  workToolbar->addAction(editRotate);
-  workToolbar->addAction(intoH);
-  workToolbar->addAction(popH);
-  workToolbar->addAction(insWire);
-  workToolbar->addAction(insLabel);
-  workToolbar->addAction(insEquation);
-  workToolbar->addAction(insGround);
-  workToolbar->addAction(insPort);
-  workToolbar->addAction(simulate);
-  workToolbar->addAction(dpl_sch);
-  workToolbar->addAction(setMarker);
-  workToolbar->addSeparator();    // <<<=======================
-  addToolBar(workToolbar);
+  _workToolBar = new QToolBar(tr("Work"));
+//  _workToolBar->addAction(select);
+//  _workToolBar->addAction(editActivate);
+//  _workToolBar->addAction(editMirror);
+//  _workToolBar->addAction(editMirrorY);
+//  _workToolBar->addAction(editRotate);
+//  _workToolBar->addAction(intoH);
+//  _workToolBar->addAction(popH);
+//  _workToolBar->addAction(insWire);
+//  _workToolBar->addAction(insLabel);
+//  _workToolBar->addAction(insEquation);
+//  _workToolBar->addAction(insGround);
+//  _workToolBar->addAction(insPort);
+//  _workToolBar->addAction(simulate);
+//  _workToolBar->addAction(dpl_sch);
+//  _workToolBar->addAction(setMarker);
+//  _workToolBar->addSeparator();    // <<<=======================
+  addToolBar(_workToolBar);
 }
 
 // ----------------------------------------------------------
@@ -1056,7 +914,7 @@ void QucsApp::slotViewToolBar(bool toggle)
   fileToolbar->setVisible(toggle);
   editToolbar->setVisible(toggle);
   viewToolbar->setVisible(toggle);
-  workToolbar->setVisible(toggle);
+  _workToolBar->setVisible(toggle);
 }
 
 // ----------------------------------------------------------
@@ -1098,21 +956,5 @@ void QucsApp::slotToggleOctave(bool on)
   viewOctaveDock->setChecked(on);
   viewOctaveDock->blockSignals(false);
 }
-
-// ----------------------------------------------------------
-// here? TODO
-#if 0
-void QucsApp::connectToolbar(QucsDoc* a)
-{
-	// toolbar->something(a)?
-
-  disconnect(editDelete);
-  a->connectAction(editDelete);
-  ...
-
-  //connect(editDelete, &QAction::toggled, this, &QucsApp::slotEditDelete);
-  //connect(editDelete, &QAction::toggled, this, &QucsApp::slotToggle);
-}
-#endif
 // ----------------------------------------------------------
 // ----------------------------------------------------------

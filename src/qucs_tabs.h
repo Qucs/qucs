@@ -33,10 +33,12 @@ private slots:
 public slots:
   void slotDCbias();
 
+private: // BUG
+  QString docName(); // name of the document where context menu was opened
+
 private:
-  int contextTabIndex; // index of tab where context menu was opened
-  QString docName; // name of the document where context menu was opened
-  QucsApp *App; // the main application - parent widget
+  int contextTabIndex; // what?
+  QucsApp *App; // BUG
 };
 
 #endif

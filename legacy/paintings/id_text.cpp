@@ -11,7 +11,7 @@
  *   (at your option) any later version.                                   *
  *                                                                         *
  ***************************************************************************/
-#include "schematic_doc.h" // BUG
+#include "viewpainter.h"
 #include "qucs_globals.h"
 #include "module.h"
 #include "../legacy_painting.h"
@@ -62,7 +62,6 @@ public:
 	  return new ID_Text(*this);
   }
 
-  void paintScheme(SchematicDoc*);
   void getCenter(int&, int&);
 
   bool load(const QString&);

@@ -446,7 +446,6 @@ bool CommonComponent::operator==(const CommonComponent& x)const
 /*--------------------------------------------------------------------------*/
 // symbolwidget.cpp?
 // #include "qucs_app.h"
-#include "schematic_doc.h"
 #include "misc.h"
 
 #include <cmath>
@@ -488,7 +487,7 @@ Widget* Symbol::schematicWidget(QucsDoc* Doc) const
 	auto ww = dynamic_cast<Widget const*>(w);
 
 	assert(ww);
-	Widget* clone = ww->clone();
+	Widget* clone = ww->clone(); // BUG. not here.
 	assert(clone);
 	return clone;
 }

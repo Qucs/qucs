@@ -13,7 +13,8 @@
  ***************************************************************************/
 
 #include "element.h"
-#include "schematic_doc.h"
+#include "schematic_model.h"
+//#include "schematic_doc.h"
 
 Element::Element() : _position(0, 0), _owner(nullptr)
 {
@@ -170,6 +171,7 @@ const Element* Element::find_in_parent_scope(const std::string& name)const
 #include "diagram.h"
 #include "wirelabel.h"
 #include "task_element.h"
+#include "node.h"
 #include "painting.h"
 
 // Component* component(Element* e){ return dynamic_cast<Component*>(e); }

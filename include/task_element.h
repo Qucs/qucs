@@ -36,7 +36,7 @@ protected:
 public:
   virtual ~TaskElement() {};
 
-  virtual void recreate(SchematicDoc*) {};
+//  virtual void recreate(SchematicDoc*) {};
   // QString getNetlist();
   std::string const& caption() const {return _caption;}
   void setCaption(std::string const&c) {_caption=c;}
@@ -47,7 +47,7 @@ protected:
   Widget* schematicWidget() const;
 
 public:
-  void    paintScheme(SchematicDoc*) const;
+ // void    paintScheme(SchematicDoc*) const;
   void    print(ViewPainter*, float);
 //  void    setCenter(int, int, bool relative=false);
   void    getCenter(int&, int&);

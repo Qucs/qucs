@@ -34,7 +34,7 @@
 
 #include "qucs_app.h"
 #include "node.h"
-#include "schematic_doc.h"
+// #include "schematic_doc.h"
 #include "module.h"
 #include "misc.h"
 #include "io_trace.h"
@@ -50,10 +50,6 @@
 bool SchematicDoc::loadProperties(QTextStream *stream)
 #endif
 // // TODO: move to frame::setParameters
-void SchematicDoc::setFrameText(int, QString)
-{
-  incomplete();
-}
 #if 0
 {
   if(s != FrameText[idx]){
@@ -76,6 +72,7 @@ void SchematicDoc::setFrameText(int, QString)
 // ----------------------------------------------------------
 // Check whether this file is a qucs file and whether it is an subcircuit.
 // It returns the number of subcircuit ports.
+#if 0
 int SchematicDoc::testFile(const QString& DocName)
 {
   incomplete(); // not SchematicDoc.
@@ -142,9 +139,11 @@ int SchematicDoc::testFile(const QString& DocName)
   }
   return -5;  // component field not closed
 }
+#endif
 
 // ---------------------------------------------------
 // Collects the signal names for digital simulations.
+#if 0
 void SchematicModel::collectDigitalSignals(void)
 {
   incomplete();
@@ -159,6 +158,7 @@ void SchematicModel::collectDigitalSignals(void)
 //    }
 //  }
 }
+#endif
 
 //#include <iostream>
 

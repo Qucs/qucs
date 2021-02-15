@@ -11,7 +11,7 @@
  *                                                                         *
  ***************************************************************************/
 #include "schematic_dialog.h"
-#include "schematic_doc.h"
+#include "qucsdoc.h"
 /*--------------------------------------------------------------------------*/
 SchematicDialog::SchematicDialog()
     : Widget()
@@ -25,15 +25,15 @@ SchematicDialog::SchematicDialog(SchematicDialog const& d)
 /*--------------------------------------------------------------------------*/
 void SchematicDialog::execute(QUndoCommand* c)
 {
-	assert(schematic());
-	schematic()->executeCommand(c);
+	assert(doc());
+	doc()->executeCommand(c);
 }
 /*--------------------------------------------------------------------------*/
-SchematicDoc* SchematicDialog::schematic()
+QucsDoc* SchematicDialog::doc()
 { untested();
 	auto t = prechecked_cast<QWidget*>(this);
 	assert(t);
-	auto p = prechecked_cast<SchematicDoc*>(t->parentWidget());
+	auto p = prechecked_cast<QucsDoc*>(t->parentWidget());
 	assert(p);
 	return p;
 }

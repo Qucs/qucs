@@ -32,7 +32,7 @@ public:
   EllipseArc();
  ~EllipseArc();
 
-  void paintScheme(SchematicDoc*);
+  void paintScheme(Schematic*);
   void getCenter(int&, int&);
 //  void setCenter(int, int, bool relative=false);
 

@@ -18,6 +18,9 @@
 
 #include <QEvent>
 #include <QUndoCommand>
+#include <QGraphicsView>
+#include "qucsdoc.h"
+#include "action.h"
 
 class MouseActionZoomIn : public MouseAction{
 public:
@@ -57,7 +60,7 @@ QUndoCommand* MouseActionZoomIn::press(QEvent* e)
 	
 	//grabKeyboard();  // no keyboard inputs during move actions
 	                 // why not redirect events to mode?!
-	doc().zoomBy(1.5);
+	doc()->zoomBy(1.5);
 
 	
 //  Doc->viewport()->update();
@@ -105,7 +108,10 @@ QUndoCommand* MouseActionZoomIn::release(QEvent* e)
 	  QucsMain->MouseMoveAction = &MouseActions::MMoveZoomIn;
 	  QucsMain->MouseReleaseAction = 0;
 #endif
-	  doc().releaseKeyboard();  // allow keyboard inputs again
+	  if(auto v=dynamic_cast<QGraphicsView*>(doc())){
+		  v->releaseKeyboard();  // allow keyboard inputs again
+	  }else{
+	  }
 
   }else{ untested();
   }

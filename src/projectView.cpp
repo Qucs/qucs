@@ -21,8 +21,9 @@
  *
  */
 
+#include "qt_compat.h"
 #include "projectView.h"
-#include "schematic_doc.h"
+// #include "schematic_doc.h"
 
 #include <QString>
 #include <QStringList>
@@ -142,24 +143,20 @@ ProjectView::refresh()
 
     if(extName == "dat") {
       APPEND_CHILD(0, columnData);
-    }
-    else if(extName == "dpl") {
+    }else if(extName == "dpl") {
       APPEND_CHILD(1, columnData);
-    }
-    else if(extName == "v") {
+    }else if(extName == "v") {
       APPEND_CHILD(2, columnData);
-    }
-    else if(extName == "va") {
+    }else if(extName == "va") {
       APPEND_CHILD(3, columnData);
-    }
-    else if((extName == "vhdl") || (extName == "vhd")) {
+    }else if((extName == "vhdl") || (extName == "vhd")) {
       APPEND_CHILD(4, columnData);
-    }
-    else if((extName == "m") || (extName == "oct")) {
+    }else if((extName == "m") || (extName == "oct")) {
       APPEND_CHILD(5, columnData);
-    }
-    else if(extName == "sch") {
+    }else if(extName == "sch") {
       // test if it's a valid schematic file
+		incomplete();
+#if 0
       int n = SchematicDoc::testFile(workPath.filePath(fileName));
       if(n >= 0) {
         if(n > 0) { // is a subcircuit
@@ -167,6 +164,7 @@ ProjectView::refresh()
         }
         APPEND_CHILD(6, columnData);
       }
+#endif
     }
     else {
       APPEND_CHILD(7, columnData);

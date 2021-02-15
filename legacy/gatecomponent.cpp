@@ -1,7 +1,7 @@
 #include "components/component.h" // BUG
 #include "node.h"
 #include "qucs_app.h"
-#include "schematic_doc.h"
+#include "qucsdoc.h"
 #include "viewpainter.h"
 #include "module.h"
 #include "misc.h"

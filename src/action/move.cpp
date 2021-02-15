@@ -14,8 +14,8 @@
 class MoveSelection : public SchematicEdit {
 public:
 	template<class IT>
-	MoveSelection(QPoint delta, SchematicDoc& ctx, IT selection)
-	: SchematicEdit(*ctx.sceneHACK()) { itested();
+	MoveSelection(QPoint delta, SchematicScene* ctx, IT selection)
+	: SchematicEdit(ctx) { itested();
 		trace1("MoveSelection", delta);
 		size_t k = 0;
 		for(auto i : selection){itested();

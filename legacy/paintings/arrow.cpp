@@ -15,7 +15,8 @@
 // An arrow painting
 
 #include "arrowdialog.h"
-#include "schematic_doc.h" // BUG
+#include "qucsdoc.h" // BUG
+#include "viewpainter.h"
 #include "misc.h"
 #include <cmath>
 
@@ -38,7 +39,6 @@ public:
  ~Arrow();
 
   void paint(ViewPainter*);
-  void paintScheme(SchematicDoc*);
   void getCenter(int&, int&);
   void setCenter(int, int, bool relative=false);
 
@@ -55,7 +55,6 @@ public:
   bool getSelected(float, float, float);
   void Bounding(int&, int&, int&, int&);
   bool resizeTouched(float, float, float);
-  void MouseResizeMoving(int, int, SchematicDoc*);
 
   void rotate();
   void mirrorX();
@@ -154,6 +153,7 @@ void Arrow::paint(ViewPainter *p)
 }
 
 // --------------------------------------------------------------------------
+#if 0
 void Arrow::paintScheme(SchematicDoc *p)
 {
 	 auto cx=Element::cx();
@@ -163,6 +163,7 @@ void Arrow::paintScheme(SchematicDoc *p)
   p->PostPaintEvent(_Line, cx+x2, cy+y2, cx+xp1, cy+yp1,0,0,false);
   p->PostPaintEvent(_Line, cx+x2, cy+y2, cx+xp2, cy+yp2,0,0,false);
 }
+#endif
 
 // --------------------------------------------------------------------------
 void Arrow::getCenter(int& x, int &y)
@@ -329,6 +330,7 @@ bool Arrow::resizeTouched(float fX, float fY, float len)
 
 // --------------------------------------------------------------------------
 // Mouse move action during resize.
+#if 0
 void Arrow::MouseResizeMoving(int x, int y, SchematicDoc *p)
 {
 	 auto cx=Element::cx();
@@ -341,6 +343,7 @@ void Arrow::MouseResizeMoving(int x, int y, SchematicDoc *p)
   calcArrowHead();
   paintScheme(p);  // paint new painting
 }
+#endif
 
 // --------------------------------------------------------------------------
 void Arrow::calcArrowHead()

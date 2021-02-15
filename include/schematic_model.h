@@ -35,7 +35,6 @@
 /*--------------------------------------------------------------------------*/
 class Node;
 class NetList; // BUG
-class SchematicDoc;
 class QPlainTextEdit; //??!
 class QGraphicsScene; // bug?
 class QFileInfo; // BUG

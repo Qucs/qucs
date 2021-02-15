@@ -18,7 +18,7 @@
 #include "misc.h"
 #include "qucs_app.h"
 #include "schematic_dialog.h"
-#include "schematic_doc.h"
+// #include "schematic_doc.h"
 #include "swap.h"
 #include "qucs_globals.h"
 #include "wiredialog.h"
@@ -257,9 +257,10 @@ void WireDialog::slotApplyInput()
 
     _comp = Comp; //  = component(_gfx);
 
-    auto V=schematic()->viewport();
-    assert(V);
-    V->repaint();
+	 // cmd takes care of this
+    // auto V=schematic()->viewport();
+    // assert(V);
+    // V->repaint();
   }else{
   }
 }

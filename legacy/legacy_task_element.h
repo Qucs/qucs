@@ -27,6 +27,7 @@ class Arc;
 class QString;
 class QPen;
 class QBrush;
+class Schematic; // obsolete.
 /* -------------------------------------------------------------------------------- */
 class LegacyTaskElement : public TaskElement {
 protected:
@@ -35,7 +36,7 @@ protected:
 public:
   virtual ~LegacyTaskElement() {};
 
-  virtual void recreate(SchematicDoc*) {};
+//  virtual void recreate(SchematicDoc*) {};
   // QString getNetlist();
 
 private:

@@ -1,7 +1,7 @@
 /***************************************************************************
 Copyright (C) 2006 by Michael Margraf <michael.margraf@alumni.tu-berlin.de>
               2014 by Guilherme Brondani Torri <guitorri@gmail.com>
-              2020 Felix Salfelder
+              2020, 2021 Felix Salfelder
 
  ***************************************************************************/
 
@@ -14,6 +14,8 @@ Copyright (C) 2006 by Michael Margraf <michael.margraf@alumni.tu-berlin.de>
  *                                                                         *
  ***************************************************************************/
 
+// text document
+
 #include <QAction>
 #include <QMessageBox>
 #include <QTextStream>
@@ -23,21 +25,19 @@ Copyright (C) 2006 by Michael Margraf <michael.margraf@alumni.tu-berlin.de>
 #include "syntax.h"
 #include "misc.h"
 
-/*!
- * \file textdoc.cpp
- * \brief Implementation of the TextDoc class.
- */
-
 // tmp hack.
 QucsDoc* newTextDoc(QucsApp& a /*BUG*/, QString const& b, QWidget* owner)
 {
-	return new TextDoc(&a, b, owner);
+	incomplete();
+	return nullptr;
+	// return new TextDoc(&a, b, owner);
 }
 
 TextDoc::TextDoc(QucsApp *parent, const QString& initial_name, QWidget* owner)
    : QPlainTextEdit(),
-     QucsDoc(parent, initial_name, owner)
+     QucsDoc()
 {
+	incomplete();
   App = parent; // BUG? should be in base class.
   TextFont = QFont("Courier New");
 //  TextFont.setPointSize(QucsSettings.font.pointSize()-1);
@@ -205,15 +205,16 @@ bool TextDoc::loadSettings (void)
  */
 void TextDoc::setName (const QString& Name_)
 {
-  setDocName(Name_);
-  setLanguage (docName());
+	incomplete();
+  // setFileName(Name_);
+  // setLanguage (docName());
 
-  QFileInfo Info (docName());
+  // QFileInfo Info (docName());
 
-  DataSet = Info.completeBaseName() + ".dat";
-  DataDisplay = Info.completeBaseName() + ".dpl";
-  if(Info.suffix() == "m" || Info.suffix() == "oct")
-    SimTime = "1";
+  // DataSet = Info.completeBaseName() + ".dat";
+  // DataDisplay = Info.completeBaseName() + ".dpl";
+  // if(Info.suffix() == "m" || Info.suffix() == "oct")
+  //   SimTime = "1";
 }
 
 /*!
@@ -611,15 +612,16 @@ void TextDoc::refreshLanguage()
 
 void TextDoc::actionSelect(QAction*)
 {
-	incomplete(); // toggle?!
-	viewport()->setFocus();
-//	toggleAction(s);
-	selectAction()->blockSignals(true);
-	selectAction()->setChecked(true);
-	selectAction()->blockSignals(false);
+	incomplete(); // select action does not exist in textdoc.
+	              // ... not yet?
+//	viewport()->setFocus();
+////	toggleAction(s);
+//	selectAction()->blockSignals(true);
+//	selectAction()->setChecked(true);
+//	selectAction()->blockSignals(false);
 }
 
-void TextDoc::actionEditActivate(QAction*)
+void TextDoc::slotEditActivate(QAction*)
 {
 	commentSelected();
 	// toggleAction(s);
@@ -630,7 +632,7 @@ void TextDoc::actionEditActivate(QAction*)
 	// App->editActivate->blockSignals (false);
 }
 
-void TextDoc::actionEditDelete(QAction*)
+void TextDoc::slotEditDelete(QAction*)
 {
 	viewport()->setFocus();
 	textCursor().deleteChar();

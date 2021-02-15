@@ -19,7 +19,7 @@
 #include "docfmt.h" // <<
 #include "qucs_globals.h"
 #include "settings.h" //??
-#include "schematic_doc.h"
+//#include "schematic_doc.h"
 #include "place.h"
 #include "nodemap.h"
 //#include "dat.h"
@@ -27,6 +27,7 @@
 #include "legacy_task_element.h"
 #include "components/component.h" // yikes
 #include "lang_dat_hack.cpp"
+#include "language.cpp"
 /* -------------------------------------------------------------------------------- */
 namespace {
 /* -------------------------------------------------------------------------------- */

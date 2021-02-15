@@ -43,10 +43,9 @@
 
 #include "librarydialog.h"
 #include "qucs_app.h"//?
-#include "schematic_doc.h" //??
 #include "qucs_globals.h"
 
-extern SubMap FileList;
+// extern SubMap FileList;
 
 LibraryDialog::LibraryDialog(QWidget *parent)
 			: QDialog(parent)

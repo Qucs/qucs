@@ -675,7 +675,7 @@ void ElementGraphics::hide()
 	assert(_e);
 	_selected = QGraphicsItem::isSelected();
 	assert(isVisible());
-	auto l=childItems();
+	auto l = childItems();
 	trace1("ElementGraphics hide", childItems().size());
 	for(auto i: childItems()){
 		if(auto p = dynamic_cast<QGraphicsProxyWidget*>(i)){

@@ -20,7 +20,7 @@ public:
   ~SwapElementGfx(){
   }
   SwapElementGfx(ElementGraphics* g, ElementGraphics* g_new) :
-	  SchematicEdit(*prechecked_cast<SchematicScene*>(g->scene()))
+	  SchematicEdit(prechecked_cast<SchematicScene*>(g->scene()))
   {
     assert(g);
     assert(g_new);

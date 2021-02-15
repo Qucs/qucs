@@ -12,11 +12,14 @@
  ***************************************************************************/
 
 #include "schematic_scene.h"
-#include "schematic_doc.h"
 #include "qt_compat.h"
 #include "qucs_globals.h"
 #include "place.h"
+#include "qucsdoc.h"
+#include "conductor.h"
+#include "element_graphics.h"
 
+#include <math.h> // fmod
 #include <QFileInfo>
 #include <QGraphicsSceneDragDropEvent>
 #include <QGraphicsProxyWidget>
@@ -89,16 +92,16 @@ SchematicScene::SchematicScene(QObject *parent)
 {
 }
 /*--------------------------------------------------------------------------*/
-SchematicDoc* SchematicScene::doc()
+QucsDoc* SchematicScene::doc()
 {
 	assert(parent());
-	return dynamic_cast<SchematicDoc*>(parent());
+	return dynamic_cast<QucsDoc*>(parent());
 }
 /*--------------------------------------------------------------------------*/
-SchematicDoc const* SchematicScene::doc() const
+QucsDoc const* SchematicScene::doc() const
 {
 	assert(parent());
-	return dynamic_cast<SchematicDoc const*>(parent());
+	return dynamic_cast<QucsDoc const*>(parent());
 }
 /*--------------------------------------------------------------------------*/
 SchematicScene::~SchematicScene()
@@ -472,6 +475,7 @@ QList<ElementGraphics*> SchematicScene::items(
 	return *EL;
 }
 /*--------------------------------------------------------------------------*/
+// remove?
 SchematicModel* SchematicScene::scope()
 {
 	assert(doc());

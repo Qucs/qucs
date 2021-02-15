@@ -39,11 +39,11 @@
 #include <QMimeData>
 
 #include "qucs_app.h"
-#include "schematic_doc.h"
+//#include "schematic_doc.h"
 #include "node.h"
 #include "textdoc.h"
 #include "viewpainter.h"
-#include "mouseactions.h"
+// #include "mouseactions.h"
 #include "misc.h"
 #include "qucs_globals.h"
 #include "io_trace.h"
@@ -55,286 +55,6 @@ class QPrinter;
 
 //ElementList SymbolComps;
 
-void SchematicDoc::printCursorPosition(int x, int y)
-{itested();
-  QPoint p(x,y);
-  QPointF mp=mapToScene(p);
-  _app->printCursorPosition(mp.x(),mp.y());
-}
-
-// ---------------------------------------------------
-bool SchematicDoc::createSubcircuitSymbol()
-{ untested();
-  incomplete();
-#if 0
-  // If the number of ports is not equal, remove or add some.
-  unsigned int countPort = adjustPortNumbers();
-
-  // If a symbol does not yet exist, create one.
-  if(symbolPaintings().count() != countPort)
-    return false;
-
-  int h = 30*((countPort-1)/2) + 10;
-
-  Painting* txt=painting_dispatcher.clone("ID_Text");
-  assert(txt);
-  txt->setArgs2Int(-20, h+4); // fix later.
-  symbolPaintings().prepend(txt);
-
-  Painting* pp;
-
-  pp = painting_dispatcher.clone("GraphicsLine");
-  assert(pp);
-  pp->setSomeStuff(-20, -h, 40,  0, QPen(Qt::darkBlue,2));
-  symbolPaintings().append(pp);
-
-  pp = painting_dispatcher.clone("GraphicsLine");
-  pp->setSomeStuff( 20, -h,  0,2*h, QPen(Qt::darkBlue,2));
-  symbolPaintings().append(pp);
-
-  pp = painting_dispatcher.clone("GraphicsLine");
-  pp->setSomeStuff(-20,  h, 40,  0, QPen(Qt::darkBlue,2));
-  symbolPaintings().append(pp);
-
-  pp = painting_dispatcher.clone("GraphicsLine");
-  pp->setSomeStuff(-20, -h,  0,2*h, QPen(Qt::darkBlue,2));
-  symbolPaintings().append(pp);
-
-  unsigned int i=0, y = 10-h;
-  while(i<countPort) { untested();
-    i++;
-    pp = painting_dispatcher.clone("GraphicsLine");
-    pp->setSomeStuff(-30, y, 10, 0, QPen(Qt::darkBlue,2));
-    symbolPaintings().append(pp);
-    symbolPaintings().at(i)->setCenter(-30,  y);
-
-    if(i == countPort)  break;
-    i++;
-    pp = painting_dispatcher.clone("GraphicsLine");
-    pp->setSomeStuff( 20, y, 10, 0, QPen(Qt::darkBlue,2));
-    symbolPaintings().append(pp);
-    symbolPaintings().at(i)->setCenter(30,  y);
-    y += 60;
-  }
-#endif
-  return true;
-}
-// ---------------------------------------------------
-// // expose tab?
-// same as showEvent?
-void SchematicDoc::becomeCurrent(bool update)
-{itested();
-  emit signalCursorPosChanged(0, 0);
-
-  // update appropriate menu entry
-  if (isSymbolMode()) { untested();
-    incomplete(); // SymbolDoc.
-    if (docName().right(4) == ".sym") { untested();
-      _app->symEdit->setText(tr("Edit Text"));
-      _app->symEdit->setStatusTip(tr("Edits the Text"));
-      _app->symEdit->setWhatsThis(tr("Edit Text\n\nEdits the text file"));
-    }else{ untested();
-      _app->symEdit->setText(tr("Edit Schematic"));
-      _app->symEdit->setStatusTip(tr("Edits the schematic"));
-      _app->symEdit->setWhatsThis(tr("Edit Schematic\n\nEdits the schematic"));
-    }
-  }else{itested();
-    _app->symEdit->setText(tr("Edit Circuit Symbol"));
-    _app->symEdit->setStatusTip(tr("Edits the symbol for this schematic"));
-    _app->symEdit->setWhatsThis(
-	tr("Edit Circuit Symbol\n\nEdits the symbol for this schematic"));
-  }
-
-  {itested();
-    incomplete();
-#if 0
-    Nodes = &DocNodes;
-    Wires = &DocWires;
-    Diagrams = &DocDiags;
-    Paintings = &DocPaints;
-    Components = &DocComps;
-
-    emit signalUndoState(undoActionIdx != 0);
-    emit signalRedoState(undoActionIdx != undoAction.size()-1);
-#endif
-    if(update){itested();
-      incomplete();
-      reloadGraphs();   // load recent simulation data
-    }else{itested();
-    }
-  }
-}
-
-// ---------------------------------------------------
-void SchematicDoc::setName (const QString& Name_)
-{ untested();
-  setDocName(Name_);
-  QFileInfo Info (docName());
-  QString base = Info.completeBaseName ();
-  QString ext = Info.suffix();
-  DataSet = base + ".dat";
-  Script = base + ".m";
-  if (ext != "dpl")
-    DataDisplay = base + ".dpl";
-  else
-    DataDisplay = base + ".sch";
-}
-
-// ---------------------------------------------------
-// Sets the document to be changed or not to be changed.
-void SchematicDoc::setChanged(bool , bool , char)
-{itested();
-  unreachable(); // moved to doc::execute
-
-
-  // ................................................
-  #if 0 // -> SymbolDoc
-  if(isSymbolMode()) {  // for symbol edit mode
-    while(undoSymbol.size() > undoSymbolIdx + 1) { untested();
-      delete undoSymbol.last();
-      undoSymbol.pop_back();
-    }
-
-    undoSymbol.append(new QString(createSymbolUndoString(Op)));
-    undoSymbolIdx++;
-
-    emit signalUndoState(true);
-    emit signalRedoState(false);
-
-    while(static_cast<unsigned int>(undoSymbol.size()) > QucsSettings.maxUndo) { // "while..." because
-      delete undoSymbol.first();
-      undoSymbol.pop_front();
-      undoSymbolIdx--;
-    }
-    return;
-  }
-#endif
-
-  // ................................................
-  // for schematic edit mode
-//  while(undoAction.size() > undoActionIdx + 1) { untested();
-//    delete undoAction.last();
-//    undoAction.pop_back();
-//  }
-
-//  if(Op == 'm') {   // only one for move marker
-//    if (undoAction.at(undoActionIdx)->at(0) == Op) { untested();
-//      delete undoAction.last();
-//      undoAction.pop_back();
-//      undoActionIdx--;
-//    }
-//  }
-
-#if 0 // obsolete?
-  undoAction.append(new QString(createUndoString(Op)));
-  undoActionIdx++;
-
-  emit signalUndoState(true);
-  emit signalRedoState(false);
-
-  while(static_cast<unsigned int>(undoAction.size()) > QucsSettings.maxUndo) { // "while..." because
-    delete undoAction.first(); // "maxUndo" could be decreased meanwhile
-    undoAction.pop_front();
-    undoActionIdx--;
-  }
-  return;
-#endif
-}
-
-// -----------------------------------------------------------
-//
-  // Values exclude border of 1.5cm at each side.
-    // DIN A5 landscape
-    // DIN A5 portrait
-    // DIN A4 landscape
-    // DIN A4 portrait
-    // DIN A3 landscape
-    // DIN A3 portrait
-    // letter landscape
-    // letter portrait
-static int frameX[10]= {0, 1020, 765, 1530, 1020, 2295, 1530, 1414, 1054 };
-static int frameY[10]= {0, 765, 1020, 1020, 1530, 1530, 2295, 1054, 1414 };
-
-bool SchematicDoc::sizeOfFrame(int& xall, int& yall)
-{ untested();
-  int i = showFrame();
-  if(!i) { untested();
-    // don't show? why does it not have a size?!
-    return false;
-  }else if(i<9) { untested();
-    xall = frameX[i];
-    yall = frameY[i];
-    return true;
-  }else{ untested();
-    return false;
-  }
-}
-
-// -----------------------------------------------------------
-void SchematicDoc::paintFrame(ViewPainter *p)
-{ untested();
-  // dimensions:  X cm / 2.54 * 144
-  int xall, yall;
-  if(!sizeOfFrame(xall, yall))
-    return;
-  p->setPen(QPen(Qt::darkGray,1));
-  //p->setPen(QPen(Qt::black,0));
-  int d = p->LineSpacing + int(4.0 * p->Scale);
-  int x1_, y1_, x2_, y2_;
-  p->map(xall, yall, x1_, y1_);
-  x2_ = int(xall * p->Scale) + 1;
-  y2_ = int(yall * p->Scale) + 1;
-  p->drawRect(x1_, y1_, -x2_, -y2_);
-  p->drawRect(x1_-d, y1_-d, 2*d-x2_, 2*d-y2_);
-
-  int z;
-  int step = xall / ((xall+127) / 255);
-  for(z=step; z<=xall-step; z+=step) { untested();
-    p->map(z, 0, x2_, y2_);
-    p->drawLine(x2_, y2_, x2_, y2_+d);
-    p->drawLine(x2_, y1_-d, x2_, y1_);
-  }
-  char Letter[2] = "1";
-  for(z=step/2+5; z<xall; z+=step) { untested();
-    p->drawText(Letter, z, 3, 0);
-    p->map(z, yall+3, x2_, y2_);
-    p->drawText(x2_, y2_-d, 0, 0, Qt::TextDontClip, Letter);
-    Letter[0]++;
-  }
-
-  step = yall / ((yall+127) / 255);
-  for(z=step; z<=yall-step; z+=step) { untested();
-    p->map(0, z, x2_, y2_);
-    p->drawLine(x2_, y2_, x2_+d, y2_);
-    p->drawLine(x1_-d, y2_, x1_, y2_);
-  }
-  Letter[0] = 'A';
-  for(z=step/2+5; z<yall; z+=step) { untested();
-    p->drawText(Letter, 5, z, 0);
-    p->map(xall+5, z, x2_, y2_);
-    p->drawText(x2_-d, y2_, 0, 0, Qt::TextDontClip, Letter);
-    Letter[0]++;
-  }
-
-  // draw text box with text
-  p->map(xall-340, yall-3, x1_, y1_);
-  p->map(xall-3,   yall-3, x2_, y2_);
-  x1_ -= d;  x2_ -= d;
-  y1_ -= d;  y2_ -= d;
-  d = int(6.0 * p->Scale);
-  z = int(200.0 * p->Scale);
-  y1_ -= p->LineSpacing + d;
-  p->drawLine(x1_, y1_, x2_, y1_);
-  p->drawText(x1_+d, y1_+(d>>1), 0, 0, Qt::TextDontClip, _frameText[2]);
-  p->drawLine(x1_+z, y1_, x1_+z, y1_ + p->LineSpacing+d);
-  p->drawText(x1_+d+z, y1_+(d>>1), 0, 0, Qt::TextDontClip, _frameText[3]);
-  y1_ -= p->LineSpacing + d;
-  p->drawLine(x1_, y1_, x2_, y1_);
-  p->drawText(x1_+d, y1_+(d>>1), 0, 0, Qt::TextDontClip, _frameText[1]);
-  y1_ -= (_frameText[0].count('\n')+1) * p->LineSpacing + d;
-  p->drawRect(x2_, y2_, x1_-x2_-1, y1_-y2_-1);
-  p->drawText(x1_+d, y1_+(d>>1), 0, 0, Qt::TextDontClip, _frameText[0]);
-}
 
 // -----------------------------------------------------------
 #if QT_VERSION < 0x050000
@@ -462,7 +182,6 @@ void SchematicDoc::drawContents(QPainter *p, int, int, int, int)
   }
   PostedPaintEvents.clear();
 }
-#endif
 
 void SchematicDoc::PostPaintEvent (PE pe, int x1, int y1, int x2, int y2, int a, int b, bool PaintOnViewport)
 { itested();
@@ -471,81 +190,11 @@ void SchematicDoc::PostPaintEvent (PE pe, int x1, int y1, int x2, int y2, int a,
   updateViewport();
   update();
 }
+#endif
 
 // -----------------------------------------------------------
-void SchematicDoc::print(QPrinter*, QPainter *Painter, bool printAll, bool fitToPage)
-{ untested();
-#ifndef USE_SCROLLVIEW
-  (void) Painter;
-  (void) printAll;
-  (void) fitToPage;
-  incomplete(); // does not work with qt5
-#else
-  QPaintDevice *pdevice = device();
-  float printerDpiX = (float)pdevice->logicalDpiX();
-  float printerDpiY = (float)pdevice->logicalDpiY();
-  float printerW = (float)pdevice->width();
-  float printerH = (float)pdevice->height();
-  QPainter pa(viewport());
-  float screenDpiX = (float)pa.device()->logicalDpiX();
-  float screenDpiY = (float)pa.device()->logicalDpiY();
-  float PrintScale = 0.5;
-  sizeOfAll(UsedX1, UsedY1, UsedX2, UsedY2);
-  int marginX = (int)(40 * printerDpiX / screenDpiX);
-  int marginY = (int)(40 * printerDpiY / screenDpiY);
 
-  if(fitToPage) { untested();
-
-    float ScaleX = float((printerW - 2*marginX) /
-                   float((UsedX2-UsedX1) * printerDpiX)) * screenDpiX;
-    float ScaleY = float((printerH - 2*marginY) /
-                   float((UsedY2-UsedY1) * printerDpiY)) * screenDpiY;
-
-    if(showFrame()){ untested();
-        int xall, yall;
-        sizeOfFrame(xall, yall);
-        ScaleX = ((float)(printerW - 2*marginX) /
-                       (float)(xall * printerDpiX)) * screenDpiX;
-        ScaleY = ((float)(printerH - 2*marginY) /
-                       (float)(yall * printerDpiY)) * screenDpiY;
-    }
-
-    if(ScaleX > ScaleY)
-      PrintScale = ScaleY;
-    else
-      PrintScale = ScaleX;
-  }
-
-
-  //bool selected;
-  ViewPainter p;
-  int StartX = UsedX1;
-  int StartY = UsedY1;
-  if(showFrame()) { untested();
-    if(UsedX1 > 0)  StartX = 0;
-    if(UsedY1 > 0)  StartY = 0;
-  }
-
-  float PrintRatio = printerDpiX / screenDpiX;
-  QFont oldFont = Painter->font();
-  QFont printFont = Painter->font();
-#ifdef __MINGW32__
-  printFont.setPointSizeF(printFont.pointSizeF()/PrintRatio);
-  Painter->setFont(printFont);
-#endif
-  p.init(Painter, PrintScale * PrintRatio,
-         -StartX, -StartY, -marginX, -marginY, PrintScale, PrintRatio);
-
-  if(!isSymbolMode())
-    paintFrame(&p);
-
-  paintSchToViewpainter(&p,printAll,false,screenDpiX,printerDpiX);
-
-  Painter->setFont(oldFont);
-#endif
-}
-
-
+#if 0
 void SchematicDoc::paintSchToViewpainter(ViewPainter *p, bool printAll, bool toImage, int screenDpiX, int printerDpiX)
 { untested();
   (void) toImage;
@@ -670,52 +319,20 @@ void SchematicDoc::paintSchToViewpainter(ViewPainter *p, bool printAll, bool toI
     }
 #endif
 }
-
-// -----------------------------------------------------------
-// ---------------------------------------------------
-
-// ---------------------------------------------------
-
-// -----------------------------------------------------------
-// Enlarge the viewport area if the coordinates x1-x2/y1-y2 exceed the
-// visible area.
-//
-// same as center on union(current, rectangle(xy))??
-// // implemented in QGraphicsView::ensureVisible, it seems
-void SchematicDoc::enlargeView(int , int, int, int )
-{ untested();
-  incomplete();
-#if 0
-  int dx=0, dy=0;
-  (void) (dx+dy);
-  if(x1 < UsedX1) UsedX1 = x1;
-  if(y1 < UsedY1) UsedY1 = y1;
-  if(x2 > UsedX2) UsedX2 = x2;
-  if(y2 > UsedY2) UsedY2 = y2;
-
-  if(x1 < ViewX1) { untested();
-    dx = int(Scale * float(ViewX1-x1+40));
-    ViewX1 = x1-40;
-  }
-  if(y1 < ViewY1) { untested();
-    dy = int(Scale * float(ViewY1-y1+40));
-    ViewY1 = y1-40;
-  }
-  if(x2 > ViewX2) ViewX2 = x2+40;
-  if(y2 > ViewY2) ViewY2 = y2+40;
-
-  TODO("Fix resizeContents");
-  /// \todo resizeContents(int(Scale*float(ViewX2 - ViewX1)),
-  /// 		int(Scale*float(ViewY2 - ViewY1)));
-  ///scrollBy(dx,dy);
 #endif
-}
+
+// -----------------------------------------------------------
+// ---------------------------------------------------
+
+// ---------------------------------------------------
+
 
 // ---------------------------------------------------
 // Sets an arbitrary coordinate onto the next grid coordinate.
 // BUG: fp?
 
 // ---------------------------------------------------
+#if 0
 void SchematicDoc::paintGrid(ViewPainter *, int , int, int, int )
 { untested();
 #if 0 // obsolete
@@ -783,12 +400,13 @@ float SchematicDoc::textCorr()
   return (Scale / float(metrics.lineSpacing()));
 #endif
 }
+#endif
 
 // ---------------------------------------------------
 // use boundingRect instead
+#if 0
 void SchematicModel::sizeOfAll(int& xmin, int& ymin, int& xmax, int& ymax, float) const
 {itested();
-#if 0
   xmin=INT_MAX;
   ymin=INT_MAX;
   xmax=INT_MIN;
@@ -878,35 +496,18 @@ void SchematicModel::sizeOfAll(int& xmin, int& ymin, int& xmax, int& ymax, float
     if(y1 < ymin) ymin = y1;
     if(y2 > ymax) ymax = y2;
   }
-#endif
 }
+#endif
 
 // ---------------------------------------------------
-// Updates the graph data of all diagrams (load from data files).
-void SchematicDoc::reloadGraphs()
-{itested();
-  incomplete();
+
+// ---------------------------------------------------
+
+
+// ---------------------------------------------------
+
+
 #if 0
-  QFileInfo Info(docName());
-  for(auto pd : diagrams()){itested();
-    pd->loadGraphData(Info.path()+QDir::separator()+DataSet);
-  }
-#endif
-}
-
-// ---------------------------------------------------
-// Cut function, copy followed by deletion
-void SchematicDoc::cut()
-{ untested();
-  copy();
-  deleteElements(); //delete selected elements
-  viewport()->update();
-}
-
-
-// ---------------------------------------------------
-
-
 // ---------------------------------------------------
 // If the port number of the schematic and of the symbol are not
 // equal add or remove some in the symbol.
@@ -1153,6 +754,7 @@ int SchematicDoc::adjustPortNumbers()
 #endif
   return 0;
 }
+#endif
 
 // ---------------------------------------------------
 #if 0 // does not work
@@ -1254,10 +856,10 @@ bool SchematicDoc::redo()
 
 // ---------------------------------------------------
 // Sets selected elements on grid.
+#if 0
 bool SchematicDoc::elementsOnGrid()
 { untested();
   incomplete();
-#if 0
   int x, y, No;
   bool count = false;
   WireLabel *pl, *pLabel;
@@ -1396,11 +998,12 @@ bool SchematicDoc::elementsOnGrid()
 #endif
   if(count) setChanged(true, true);
   return count;
-#endif
   return 0;
 }
+#endif
 
 // ---------------------------------------------------
+#if 0
 void SchematicDoc::switchPaintMode()
 { untested();
   // BUG. this messes with SchematicModel functions
@@ -1426,6 +1029,7 @@ void SchematicDoc::switchPaintMode()
   tmp = UsedY2; UsedY2 = tmpUsedY2; tmpUsedY2 = tmp;
   */
 }
+#endif
 
 
 // *********************************************************************
@@ -1435,6 +1039,7 @@ void SchematicDoc::switchPaintMode()
 // *********************************************************************
 
 
+#if 0
 // -----------------------------------------------------------
 // Scrolls the visible area upwards and enlarges or reduces the view
 // area accordingly.
@@ -1596,6 +1201,8 @@ void SchematicDoc::slotScrollRight()
   updateViewport();
   // App->view->drawn = false;
 }
+
+#endif
 
 
 // *********************************************************************

@@ -270,12 +270,12 @@ QList<ElementGraphics*> SchematicEdit::items(
            const QPointF &pos, Qt::ItemSelectionMode mode,
            Qt::SortOrder order) const
 {
-	return _scn.items(pos, mode, order);
+	return _scn->items(pos, mode, order);
 }
 /*--------------------------------------------------------------------------*/
 QList<ElementGraphics*> SchematicEdit::items(QRectF const& r) const
 { untested();
-	return _scn.items(r);
+	return _scn->items(r);
 }
 /*--------------------------------------------------------------------------*/
 void stash_more_places(Symbol* s)
@@ -339,7 +339,7 @@ bool SchematicEdit::addmerge(ElementGraphics* new_elt, T& del_done)
 					auto cc = g->clone();
 					assert(cc);
 					assert(!cc->isVisible());
-					_scn.addItem(cc);
+					_scn->addItem(cc);
 					assert(!cc->isVisible());
 					assert(!element(cc)->scope());
 					c->setParentItem(nullptr);
@@ -435,7 +435,7 @@ void SchematicEdit::qInsert(ElementGraphics* gfx)
 	assert(!dynamic_cast<Place const*>(element(gfx)));
 
 	assert(!gfx->isVisible());
-	assert(gfx->scene() == &_scn); // wrong?
+	assert(gfx->scene() == _scn); // wrong?
 	_ins.push_back(gfx);
 
 #ifndef NDEBUG
@@ -457,7 +457,7 @@ void SchematicEdit::qSwap(ElementGraphics* gfx, Element* e)
 	assert(!ng->has_port_values());
 	{// ?
 		// assert(!element(ng)->scope()); no. diagrams have sub-objects.
-		_scn.addItem(ng);
+		_scn->addItem(ng);
 		assert(!ng->isVisible());
 	}
 

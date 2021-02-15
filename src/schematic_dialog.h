@@ -42,7 +42,7 @@ protected slots: // needed?
 	virtual bool eventFilter(QObject * /*obj*/, QEvent * /*event*/){return false;}
 
 protected:
-	SchematicDoc* schematic();
+	QucsDoc* doc();
 	void execute(QUndoCommand* c);
 };
 /*--------------------------------------------------------------------------*/

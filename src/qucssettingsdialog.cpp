@@ -31,7 +31,7 @@
 #include <QVBoxLayout>
 #include "qucs_app.h"
 #include "textdoc.h"
-#include "schematic_doc.h"
+#include "qt_compat.h"
 #include "misc.h"
 #include "qucs_tabs.h" // ??
 
@@ -523,13 +523,14 @@ void QucsSettingsDialog::slotApply()
         while((w=App->DocumentTab->widget(No++)) != 0) {
 			  auto Doc = dynamic_cast<QucsDoc const*>(w);
 			  assert(Doc);
-          QWidget *vp;
-          if(QucsApp::isTextDocument(Doc)) {
-            vp = ((TextDoc*)w)->viewport();
-          } else {
-            vp = ((SchematicDoc*)w)->viewport();
-          }
-          misc::setWidgetBackgroundColor(vp, QColor_(QucsSettings.BGColor));
+          //QWidget *vp;
+          //if(QucsApp::isTextDocument(Doc)) {
+          //  vp = ((TextDoc*)w)->viewport();
+          //} else {
+          //  vp = ((SchematicDoc*)w)->viewport();
+          //}
+			 incomplete();
+          // Doc->setWidgetBackgroundColor(vp, QColor_(QucsSettings.BGColor));
         }
         changed = true;
     }

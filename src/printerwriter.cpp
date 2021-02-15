@@ -21,7 +21,7 @@
  */
 
 #include "printerwriter.h"
-#include "schematic_doc.h"
+//#include "schematic_doc.h"
 #include "textdoc.h"
 #include "qucs_app.h"
 
@@ -49,7 +49,7 @@ PrinterWriter::~PrinterWriter()
 
 //allow user pass parameter and print document
 void PrinterWriter::noGuiPrint(
-		SchematicDoc* doc, QString printFile,
+		QucsDoc const* doc, QString printFile,
 		QString page, int dpi, QString color,
 		QString orientation)
 {

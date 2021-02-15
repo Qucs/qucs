@@ -14,6 +14,7 @@
 #include <QClipboard>
 #include "docfmt.h"
 #include "sckt_base.h"
+#include "language.h"
 #include "qio.h"
 
 static const std::string cnp_lang = "leg_sch";
@@ -21,7 +22,7 @@ static const std::string cnp_lang = "leg_sch";
 // TODO: "NewElementCommand", deduplicate
 class PasteCommand : public SchematicEdit {
 public:
-	PasteCommand(SchematicScene& ctx, ElementGraphics* gfx)
+	PasteCommand(SchematicScene* ctx, ElementGraphics* gfx)
 	: SchematicEdit(ctx) { untested();
 		setText("Paste $n elements"); // tr?
 		trace1("paste it", element(gfx)->label());
@@ -46,7 +47,7 @@ public:
 				c->setPos((p + pos).toPoint());
 
 				{ // move to qInsert?
-					ctx.addItem(c);
+					ctx->addItem(c);
 					c->setVisible(false);
 				}
 
@@ -177,10 +178,10 @@ QUndoCommand* MouseActionPaste::activate(QObject* sender)
 		               _gfx->boundingRect().bottomRight(), _gfx->childItems().count());
 
 
-  doc().sceneAddItem(_gfx);
+  sceneAddItem(_gfx);
 
   if(1){
-	  QPoint p = doc().mapFromGlobal(QCursor::pos());
+	  QPoint p = view()->mapFromGlobal(QCursor::pos());
 	  auto sp = mapToScene(p);
 	  _gfx->setPos(sp.x(), sp.y());
 	  //_gfx->show();
@@ -226,12 +227,13 @@ QUndoCommand* MouseActionPaste::makeNew(QEvent* ev)
 
 	if(auto se=dynamic_cast<QGraphicsSceneMouseEvent*>(ev)){ untested();
 		QPointF pos = se->scenePos();
-		QPoint xx = doc().snapToGrid(pos);
+		QPoint xx = scene()->snapToGrid(pos);
 		_gfx->setPos(xx);
 	}else{ untested();
 	}
 
-	cmd* c = new PasteCommand(*doc().sceneHACK(), _gfx);
+	assert(_gfx->scene() == scene());
+	cmd* c = new PasteCommand(scene(), _gfx);
 	_gfx->hide();
 	// scene->remove(_gfx);
 	delete _gfx;
@@ -246,7 +248,7 @@ QUndoCommand* MouseActionPaste::makeNew(QEvent* ev)
 QUndoCommand* MouseActionPaste::deactivate()
 { untested();
 	// assert(!attached);
-	doc().sceneRemoveItem(_gfx);
+	sceneRemoveItem(_gfx);
 	delete _gfx; // CHECK: who owns _elt?
 	_gfx = nullptr;
 	incomplete();
@@ -266,7 +268,7 @@ QUndoCommand* MouseActionPaste::move(QEvent* ev)
 		sp = mapToScene(wp.toPoint());
 	}else if(auto ee=dynamic_cast<QGraphicsSceneMouseEvent*>(ev)){ untested();
 		sp = ee->scenePos();
-		sp = doc().snapToGrid(sp);
+		sp = scene()->snapToGrid(sp);
 	}else{ untested();
 		unreachable();
 	}
@@ -294,8 +296,8 @@ QUndoCommand* MouseActionPaste::enter(QEvent* ev)
 	
 	auto wp = ee->localPos();
 
-	SchematicDoc* d = &doc();
-	auto sp = d->mapToScene(wp.toPoint());
+//	SchematicDoc* d = &doc();
+	auto sp = view()->mapToScene(wp.toPoint());
 
 	assert(_gfx);
 

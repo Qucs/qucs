@@ -17,7 +17,7 @@
 #include "components/component.h"
 #include "node.h"
 #include "qucs_app.h"
-#include "schematic_doc.h"
+#include "qucsdoc.h"
 #include "viewpainter.h"
 #include "module.h"
 #include "misc.h"
@@ -331,9 +331,7 @@ void Component::paint(ViewPainter *p) const
 //  Element::paint(p);
   QFont f = p->font();   // save current font
   QFont newFont = f;
-  if(dynamic_cast<TaskElement const*>(this)) { untested();
-    unreachable();
-  }else{itested();
+  {itested();
     // normal components go here
     assert(!Model.size() || Model.at(0) != '.');
 

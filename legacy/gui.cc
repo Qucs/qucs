@@ -69,7 +69,9 @@ class g: public Command{
 		auto QucsMain = new QucsApp();
 
 		QucsMain->show();
-		QucsMain->openFileAtStartup(QString::fromStdString(filename));
+		auto fn = QString_(filename);
+		trace1("open", fn);
+		QucsMain->openFileAtStartup(fn);
 		int result = a.exec();
 		exit(result); // FIXME: throw exception_exit or so
 		//saveApplSettings(QucsMain);

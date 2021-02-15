@@ -15,7 +15,7 @@
 #include "qucs_globals.h"
 #include "module.h"
 #include "../legacy_painting.h"
-#include "schematic_doc.h"
+#include "viewpainter.h"
 #include "some_font_stuff.h"
 
 #include <QPainter>
@@ -30,7 +30,7 @@ public:
   }
   void setSomeArgsHack(int cx_, int cy_, const QString& numberStr_,  const QString& nameStr_);
 
-  void paintScheme(SchematicDoc*);
+  void paintScheme(Schematic*);
   void getCenter(int&, int&);
 //  void setCenter(int, int, bool relative=false);
 

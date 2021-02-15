@@ -15,7 +15,6 @@
  *                                                                         *
  ***************************************************************************/
 #include "sweepdialog.h"
-#include "schematic_doc.h"
 #include "qucs_app.h"
 
 #include <QGridLayout>

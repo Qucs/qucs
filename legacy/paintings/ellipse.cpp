@@ -47,7 +47,6 @@ public:
 //  bool MousePressing();
   bool getSelected(float, float, float);
   bool resizeTouched(float, float, float);
-  void MouseResizeMoving(int, int, SchematicDoc*);
 
   void rotate();
   void mirrorX();
@@ -285,9 +284,9 @@ bool Ellipse::resizeTouched(float fX, float fY, float len)
 
 // --------------------------------------------------------------------------
 // Mouse move action during resize.
+#if 0
 void Ellipse::MouseResizeMoving(int, int, SchematicDoc *)
 { untested();
-#if 0
   paintScheme(p);  // erase old painting
   switch(State) {
     case 0: x2 = x-cx; y2 = y-cy; // lower right corner
@@ -302,8 +301,8 @@ void Ellipse::MouseResizeMoving(int, int, SchematicDoc *)
   if(x2 < 0) { State ^= 1; x2 *= -1; cx -= x2; }
   if(y2 < 0) { State ^= 2; y2 *= -1; cy -= y2; }
 
-#endif
 }
+#endif
 
 // --------------------------------------------------------------------------
 // fx/fy are the precise coordinates, gx/gy are the coordinates set on grid.

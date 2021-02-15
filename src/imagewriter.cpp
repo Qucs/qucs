@@ -20,7 +20,7 @@
  *
  */
 
-#include "schematic_doc.h"
+// #include "schematic_doc.h"
 #include "imagewriter.h"
 #include "exportdialog.h"
 
@@ -37,9 +37,9 @@ ImageWriter::~ImageWriter()
 {
 }
 
-void
-ImageWriter::noGuiPrint(QWidget *doc, QString printFile, QString color)
+void ImageWriter::noGuiPrint(QWidget *doc, QString printFile, QString color)
 {
+#if 0
   SchematicDoc *sch = static_cast<SchematicDoc*>(doc);
   const int bourder = 30;
   int w,h,wsel,hsel,
@@ -118,6 +118,7 @@ ImageWriter::noGuiPrint(QWidget *doc, QString printFile, QString color)
         "Use PNG, SVG or PDF format!\n");
     return;
   }
+#endif
 }
 
 QString ImageWriter::getLastSavedFile()
@@ -296,6 +297,7 @@ int ImageWriter::print(QucsDoc const*)
   return 0;
 }
 
+#if 0
 void ImageWriter::getSchWidthAndHeight(SchematicDoc *sch, int &w, int &h, int &xmin, int &ymin)
 {
     int xmax,ymax;
@@ -314,7 +316,6 @@ void ImageWriter::getSchWidthAndHeight(SchematicDoc *sch, int &w, int &h, int &x
 
 void ImageWriter::getSelAreaWidthAndHeight(SchematicDoc *, int &, int &, int&, int&)
 {
-#if 0
     int xmin= INT_MAX,
         ymin= INT_MAX,
         xmax= INT_MIN,
@@ -391,8 +392,8 @@ void ImageWriter::getSelAreaWidthAndHeight(SchematicDoc *, int &, int &, int&, i
     hsel = abs(ymax - ymin);
     xmin_sel_ = xmin;
     ymin_sel_ = ymin;
-#endif
 }
+#endif
 
 // Compare object (component, diagram, etc) coordinates and
 // current corner coordinates and update it

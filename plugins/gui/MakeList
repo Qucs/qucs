@@ -7,6 +7,15 @@ TARGET = gui
 QT_PLUGIN_SRC = \
 	taskeltdlg.cc \
 	symboldialog.cc \
+	schematic_doc.cc \
+	schematic_action.cpp \
 	wiredialog.cc
+
+MORE_LATER = \
+	changedialog.cpp \
+	settingsdialog.h \
+	settingsdialog.cpp \
+	sweepdialog.cpp \
+	sweepdialog.h
 
 EXTRA_DIST = ${QT_PLUGIN_SRC:%.cc=%.h}

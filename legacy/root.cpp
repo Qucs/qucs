@@ -15,6 +15,7 @@
 #include "data.h"
 #include "sckt_base.h"
 #include "factory.h"
+#include "widget.h"
 /*--------------------------------------------------------------------------*/
 namespace{
 /*--------------------------------------------------------------------------*/
@@ -79,8 +80,10 @@ private: // Symbol
     if(n == "$filename") { untested();
 		 _full_path = v;
 		 auto pos = v.find_last_of("/");
-		 assert(pos!=std::string::npos);
-		 if(dynamic_cast<Symbol const*>(_sub)){
+		 if(pos==std::string::npos){
+			 // something wrong.
+			 assert(false);
+		 }else if(dynamic_cast<Symbol const*>(_sub)){
 			 // legacy hack
 			 _sub->set_param_by_name("$SUB_PATH", v);
 		 }else{
@@ -148,6 +151,19 @@ private:
   }
   Node const* portValue(unsigned)const {unreachable(); return nullptr;}
   void setPort(unsigned, Node*){incomplete();}
+
+  Widget* schematicWidget(QucsDoc* Doc) const { untested();
+	  trace0("root::schematicWidget");
+
+	  Widget const* w = widget_dispatcher["SchematicDoc"];
+	  auto ww = dynamic_cast<Widget const*>(w);
+
+	  assert(ww);
+	  Widget* clone = ww->clone();
+	  assert(clone);
+	  return clone;
+  }
+
 
 private:
  	Element* _sub{nullptr};

@@ -175,8 +175,8 @@ Dispatcher<Symbol>::INSTALL p(&symbol_dispatcher, "__ma_ghostwire", &w);
 class MakeWire : public SchematicEdit {
 public:
 	template<class IT>
-	MakeWire(SchematicDoc& ctx, IT wires)
-	: SchematicEdit(*ctx.sceneHACK()){ itested();
+	MakeWire(SchematicScene* ctx, IT wires)
+	: SchematicEdit(ctx){ itested();
 		trace1("newwire", wires.size());
 		size_t k = 0;
 
@@ -186,7 +186,7 @@ public:
 				auto eg = new ElementGraphics(e);
 
 				{ // BUG: not here/one call or do later?
-					ctx.sceneAddItem(eg);
+					ctx->addItem(eg);
 					eg->setVisible(false);
 //					ctx.takeOwnership(e);
 				}
@@ -273,14 +273,15 @@ QUndoCommand* MouseActionWire::activate(QObject* sender)
 	assert(!_gfx.size());
 	new_gfx();
 	_phase = 1;
-	_oldcursor = doc().cursor();
+	assert(view());
+	_oldcursor = view()->cursor();
 	setCursor(crosshair()); // Qt::CrossCursor);
 	return MouseAction::activate(sender);
 }
 /*--------------------------------------------------------------------------*/
 QUndoCommand* MouseActionWire::deactivate()
 {itested();
-	doc().setCursor(_oldcursor);
+	view()->setCursor(_oldcursor);
 	for(auto i: _gfx){ untested();
 		delete i;
 	}
@@ -363,7 +364,7 @@ QUndoCommand* MouseActionWire::move(QEvent* e)
 	}else if(auto se=dynamic_cast<QGraphicsSceneMouseEvent*>(e)){itested();
 		QPointF pos = se->scenePos(); // mapToScene(ev->pos());
 
-		QPoint xx = doc().snapToGrid(pos);
+		QPoint xx = scene()->snapToGrid(pos);
 		float fX = getX(xx);
 		float fY = getY(xx);
 
@@ -393,7 +394,7 @@ QUndoCommand* MouseActionWire::press1(QGraphicsSceneMouseEvent* ev)
 	QPointF pos = ev->scenePos(); // mapToScene(ev->pos());
 	float fX = pos.x();
 	float fY = pos.y();
-	QPoint xx = doc().snapToGrid(pos);
+	QPoint xx = scene()->snapToGrid(pos);
 	fX = getX(xx);
 	fY = getY(xx);
 
@@ -408,7 +409,11 @@ QUndoCommand* MouseActionWire::press1(QGraphicsSceneMouseEvent* ev)
 	e->setParameter("y1", std::to_string(fY));
 
 	cur->prepareGeometryChange();
-	doc().sceneAddItem(cur); // show, does not attach.
+
+	if(auto d=dynamic_cast<QGraphicsView*>(doc())){
+		d->scene()->addItem(cur); // show, does not attach.
+	}else{
+	}
 
 	//Doc->PostPaintEvent (_DotLine);
 	//Doc->PostPaintEvent (_NotRop);
@@ -455,7 +460,7 @@ QUndoCommand* MouseActionWire::finish()
 		}
 		delete(i);
 	}
-	QUndoCommand* c = new MakeWire(doc(), new_wires);
+	QUndoCommand* c = new MakeWire(scene(), new_wires);
 	_gfx.clear();
 
 // 	_phase=1; ??
@@ -471,7 +476,8 @@ QUndoCommand* MouseActionWire::press2(QGraphicsSceneMouseEvent* ev)
 	assert(ev);
 	QPointF pos = ev->scenePos(); // mapToScene(ev->pos());
 
-	QPoint xx = doc().snapToGrid(pos);
+	// why scene? view? doc?
+	QPoint xx = scene()->snapToGrid(pos);
 	auto fX = getX(xx);
 	auto fY = getY(xx);
 	pos_t p(fX, fY);
@@ -491,7 +497,7 @@ QUndoCommand* MouseActionWire::press2(QGraphicsSceneMouseEvent* ev)
 		e->setParameter("y1", std::to_string(fY));
 
 		cur->prepareGeometryChange();
-		doc().sceneAddItem(cur); // show, does not attach.
+		sceneAddItem(cur); // show, does not attach.
 	}
 
 	/// \todo paintAim(Doc,MAx2,MAy2); //ALYS - added missed aiming cross

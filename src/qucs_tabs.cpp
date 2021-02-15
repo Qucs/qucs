@@ -37,7 +37,7 @@ void QucsTabWidget::showContextMenu(const QPoint& point)
     // get the document where the context menu was opened
     QucsDoc *d = App->getDoc(contextTabIndex);
     // save the document name (full path)
-    docName = d->docName();
+    // docName = d->docName();
 
 #define APPEND_MENU(action, slot, text)         \
   QAction *action = new QAction(tr(text), &menu);    \
@@ -56,11 +56,21 @@ void QucsTabWidget::showContextMenu(const QPoint& point)
 
     // a not-yet-saved document does not have a name/full path
     // so copying full path or opening containing folder does not make sense
-    ActionCxMenuCopyPath->setEnabled(!docName.isEmpty());
-    ActionCxMenuOpenFolder->setEnabled(!docName.isEmpty());
+    ActionCxMenuCopyPath->setEnabled(!docName().isEmpty());
+    ActionCxMenuOpenFolder->setEnabled(!docName().isEmpty());
 
     menu.exec(tabBar()->mapToGlobal(point));
   }
+}
+/*--------------------------------------------------------------------------*/
+QString QucsTabWidget::docName()
+{
+	if(current()){
+		return current()->docName();
+	}else{
+		unreachable();
+		return "notaqucsdoc";
+	}
 }
 /*--------------------------------------------------------------------------*/
 QucsDoc* QucsTabWidget::current()

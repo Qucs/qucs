@@ -31,7 +31,6 @@ class QPushButton;
 class QProgressBar;
 class QFile;
 class Component;
-class SchematicDoc;
 
 // #define SPEEDUP_PROGRESSBAR
 

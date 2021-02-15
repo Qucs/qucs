@@ -15,12 +15,11 @@
 
 #include "simulator.h"
 #include "node.h"
-#include <QString>
 #include "qucs_globals.h"
 #include "task_element.h"
 #include "docfmt.h"
 #include "schematic_model.h"
-#include "schematic_doc.h" // BUG
+//#include "schematic_doc.h" // BUG
 #include "schematic_lang.h"
 #include "exception.h"
 #include "net.h"
@@ -28,6 +27,9 @@
 #include "settings.h"
 #include "sckt_base.h"
 #include "qio.h"
+
+#include <QString>
+#include <QFile>
 
 extern tQucsSettings QucsSettings;  // bug, settings.h
 /* -------------------------------------------------------------------------------- */
@@ -59,7 +61,7 @@ private: // legacy implementation
 private: // overrides
   void load(istream_t&, Object*) const override;
 private:
-  mutable SubMap FileList; // BUG (maybe not)
+//  mutable SubMap FileList; // BUG (maybe not)
   mutable DocumentLanguage* _qucslang;
 }LNL;
 static Dispatcher<Command>::INSTALL p1(&commandDispatcher, "qucsator|legacy_nl", &LNL);
@@ -369,7 +371,7 @@ void LegacyNetlister::createNetlist(ostream_t& stream,
 
 	bool isAnalog=true;
 //	bool isVerilog=false;
-	FileList.clear();
+	// FileList.clear();
 
 	// it seems that legacy qucsator does not do recursive prototypes.
 	// (do it properly in alternative netlister).
@@ -604,10 +606,11 @@ void LegacyNetlister::throughAllComps(ostream_t&, SchematicModel const* scope_,
 				throw "incomplete_exception_something_about_SPICE";
 			}
 			QString f = "some_filename"; // pc->getSubcircuitFile();
-			SubMap::Iterator it = FileList.find(f);
-			if(it != FileList.end())
-				continue;   // insert each spice component just one time
-			FileList.insert(f, SubFile("CIR", f));
+
+//			SubMap::Iterator it = FileList.find(f);
+//			if(it != FileList.end())
+//				continue;   // insert each spice component just one time
+//			FileList.insert(f, SubFile("CIR", f));
 
 			// SpiceFile *sf = (SpiceFile*)pc;
 			incomplete();

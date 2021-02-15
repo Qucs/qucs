@@ -21,11 +21,12 @@
  */
 
 #ifndef IMAGEWRITER_H_
-#define IMAGEWRITER_H_ value
+#define IMAGEWRITER_H_
 
 #include <QString>
 
 class QWidget;
+class QucsDoc;
 
 class ImageWriter
 {
@@ -42,8 +43,8 @@ private:
   bool onlyDiagram;
   QString lastExportFilename;
 
-  void getSchWidthAndHeight(SchematicDoc *sch, int &w, int &h, int &xmin, int &ymin);
-  void getSelAreaWidthAndHeight(SchematicDoc *sch, int &wsel, int& hsel, int& xmin_sel_, int& ymin_sel_);
+//   void getSchWidthAndHeight(SchematicDoc *sch, int &w, int &h, int &xmin, int &ymin);
+//   void getSelAreaWidthAndHeight(SchematicDoc *sch, int &wsel, int& hsel, int& xmin_sel_, int& ymin_sel_);
   void updateMinMax(int &xmin, int &xmax, int &ymin, int &ymax, int x1, int x2, int y1m, int y2);
 };
 

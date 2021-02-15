@@ -1,10 +1,14 @@
 /* (c) 2020 Felix Salfelder
  * GPLv3+
  */
-#include "mouseactions.h" // BUG
+#include "action.h" // BUG
 #include "io_trace.h"
-#include "schematic_doc.h"
+#include "qucsdoc.h"
+#include "doc_actions.h"
+#include "platform.h"
 #include <QAction>
+#include <QMouseEvent>
+#include <QGraphicsView>
 #include <QGraphicsSceneEvent> // probably bug
 #include "component_widget.h" // bug
 #include <QStringLiteral> //bug
@@ -88,35 +92,68 @@ QUndoCommand* MouseAction::handle(QEvent* e)
   }
 }
 // SchematicMouseAction::doc?
-SchematicDoc const& MouseAction::doc() const
+QucsDoc const* MouseAction::doc() const
 {itested();
   auto cc = const_cast<MouseAction*>(this);
   return cc->doc();
 }
 
-SchematicDoc& MouseAction::doc()
+SchematicScene* MouseAction::scene()
+{untested();
+	auto cc = dynamic_cast<QGraphicsView*>(doc());
+	
+	if(!cc){ untested();
+	}else if(auto s = dynamic_cast<SchematicScene*>(cc->scene())){ untested();
+		return s;
+	}else{ untested();
+	}
+	return nullptr;
+}
+
+QGraphicsView* MouseAction::view()
 {itested();
-  QucsDoc* c=&_ctx.doc();
+  auto cc = dynamic_cast<QGraphicsView*>(doc());
+  if(cc){
+	  return cc;
+  }else{
+	  return nullptr;
+  }
+}
+
+QucsDoc* MouseAction::doc()
+{itested();
+  QucsDoc* c = _ctx.doc();
+  return c;
+#if 0
   auto cc = dynamic_cast<SchematicDoc*>(c);
   assert(cc);
   return *cc;
+#endif
 }
 
+#include <QGraphicsView>
 QPointF MouseAction::mapToScene(QPoint const& p) const
 {
-  return doc().mapToScene(p);
+	// BUG
+	if(auto s=dynamic_cast<QGraphicsView const*>(this)){ untested();
+		return s->mapToScene(p);
+	}else{
+		assert(false); // for now.
+	}
 }
 
 void MouseAction::updateViewport()
 {itested();
   ctx().updateViewport(); // use a signal?
 }
+
+// what does it do??
 void MouseActions::updateViewport()
 {itested();
-
-  SchematicDoc* s = dynamic_cast<SchematicDoc*>(&doc());
-  if(s){
-    s->updateViewport(); // use a signal?
+  auto s = dynamic_cast<QGraphicsView*>(doc());
+  if(!s){ untested();
+  }else if(s->viewport()){ untested();
+    s->viewport()->update(); // use a signal?
   }else{ untested();
   }
 }
@@ -146,7 +183,13 @@ void MouseAction::uncheck()
 /*--------------------------------------------------------------------------*/
 SchematicScene const* MouseAction::scene() const
 {
-	return doc().scene();
+	auto s = dynamic_cast<QGraphicsView const*>(doc());
+	if(!s){
+	}else if(auto ss=dynamic_cast<SchematicScene const*>(s->scene())){
+		return ss;
+	}else{
+	}
+	return nullptr;
 }
 /*--------------------------------------------------------------------------*/
 // isPlace?

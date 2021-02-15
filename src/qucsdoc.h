@@ -22,7 +22,7 @@
 #include <QTextStream> // tmp: used as baseclass, should be member.
 #include <assert.h>
 
-#include "object.h"
+#include "widget.h"
 #include "actions.h"
 #include "io_trace.h"
 
@@ -41,24 +41,30 @@ class SchematicModel;
 class Simulator;
 class SubcktBase;
 
-class QucsDoc : public Object {
+class QucsDoc : public Widget {
 protected:
 	QucsDoc(const QucsDoc&);
+	explicit QucsDoc(); // QucsApp*, const QString&, QWidget* owner);
 public:
-  explicit QucsDoc(QucsApp*, const QString&, QWidget* owner);
+//  explicit QucsDoc(QucsApp*, const QString&, QWidget* owner);
   virtual ~QucsDoc();
+  virtual void setParent(QWidget*) = 0;
 
 public:
   bool saveAs();
 
-  virtual void  setName(const QString&) {};
-  virtual bool  load() { return true; };
-  virtual int   save() { return 0; };
-  virtual void  print(QPrinter*, QPainter*, bool, bool) {};
-  virtual void  becomeCurrent(bool){ unreachable(); }
-  virtual float zoomBy(float) { return 1.0; };
-  virtual void  showAll() {};
-  virtual void  showNoZoom() {};
+	virtual void  setName(const QString&) {incomplete();}
+	virtual void  setFileName(const QString&x) {incomplete(); _name=x;}
+	virtual bool  load() { return true; }
+	virtual int   save() { return 0; }
+	virtual void  print(QPrinter*, QPainter*, bool, bool) const {}
+	virtual float zoomBy(float) { return 1.0; }
+	virtual void  showAll() {}
+	virtual void  showNoZoom() {}
+	virtual bool handleMouseActions(QEvent* e) {return false;}
+	virtual void addElement(Element*);
+
+	virtual SchematicModel* model();
 
   static QString fileSuffix (const QString&);
   QString fileSuffix (void);
@@ -66,11 +72,25 @@ public:
   QString fileBase (void);
 
 private:
-  QString DocName;
+  QucsApp* app();
+
+protected:
+	void setEventHandler(MouseActions* a) { _eventHandler = a; }
+	MouseActions* eventHandler() { return _eventHandler;}
+	void showEvent(QShowEvent*);
+	void hideEvent(QHideEvent*);
 
 public:
-  void setDocName(QString x){ DocName=x; }
-  QString docName() const{ return DocName; }
+	void addToolBarAction(QAction* a);
+
+private:
+  QString _name; // actually, filename?!
+
+public:
+  void setDocFile(std::string const& x);
+  QString docName() const{ return _name; }
+  virtual QPoint gridSize() const{ unreachable(); return QPoint(0, 0); }
+  virtual QPoint setOnGrid(int x, int y) const{ unreachable(); return QPoint(x, y); }
 
   QString DataSet;     // name of the default dataset
   QString DataDisplay; // name of the default data display
@@ -79,7 +99,7 @@ public:
   QDateTime lastSaved;
 
 //  float Scale;
-  QucsApp* _app;
+  QucsApp* _app{nullptr}; /// yikes.
   bool DocChanged;
   bool SimOpenDpl;   // open data display after simulation ?
   bool SimRunScript; // run script after simulation ?
@@ -88,7 +108,7 @@ public:
   int  tmpPosX, tmpPosY;
 
 protected:
-  Simulator* simulatorInstance(std::string const& which="");
+	Simulator* simulatorInstance(std::string const& which="");
 
 protected: // why not directly connect to undostack slots?!
   virtual void undo();
@@ -99,13 +119,18 @@ protected:
 //  void toggleAction(QAction* sender);
 
 public: // actions: These somehow correspond to buttons.
+	void slotToolBar(QAction* a);
+
+
+#if 1	// obsolete
         // needs cleanup... better use qt signals, but where?
 	virtual void actionSelect(QAction*) { unreachable(); }
 	virtual void actionCopy(QAction*) { unreachable(); }
 	virtual void actionCut(QAction*) { unreachable(); }
-	virtual void actionEditActivate(QAction*) { unreachable(); }
-	virtual void actionEditUndo(QAction*) { unreachable(); }
-	virtual void actionEditRedo(QAction*) { unreachable(); }
+
+	virtual void slotEditUndo(QAction*) = 0;
+	virtual void slotEditRedo(QAction*) = 0;
+
 	virtual void actionSelectAll(QAction*) { unreachable(); }
 	virtual void actionChangeProps(QAction*) { unreachable(); }
 
@@ -118,10 +143,6 @@ public: // actions: These somehow correspond to buttons.
 	virtual void actionExportGraphAsCsv(){ unreachable();}
 
 	virtual void actionOnGrid(QAction*) {unreachable();}
-	virtual void actionEditRotate(QAction*) {unreachable();}
-	virtual void actionEditMirrorX(QAction*) {unreachable();}
-	virtual void actionEditMirrorY(QAction*) {unreachable();}
-	virtual void actionEditDelete(QAction*) {unreachable();}
 	virtual void actionEditPaste(QAction*) {unreachable();}
 	virtual void actionSetWire(QAction*) {unreachable();}
 	virtual void actionInsertLabel(QAction*) {unreachable();}
@@ -133,6 +154,9 @@ public: // actions: These somehow correspond to buttons.
 	virtual void actionMoveText(QAction*) {unreachable();}
 	virtual void actionZoomIn(QAction*) { unreachable(); }
 	virtual void actionSelectElement(QObject*) {untested(); }
+#endif
+	virtual void slotEditDelete(QAction*) = 0;
+	virtual void slotEditActivate(QAction*) = 0;
 
 	void uncheckActive();
 
@@ -140,15 +164,16 @@ public: // actions: These somehow correspond to buttons.
 	virtual void slotDCbias(); // why "slot"? maybe later.
 
 protected: // cleaning up debris
-	QAction* selectAction();
-	virtual MouseActions* mouseActions();
+//	QAction* selectAction(); really??
+	// virtual MouseActions* mouseActions();
 public:
-	MouseActions const* mouseActions() const;
+//	MouseActions const* mouseActions() const;
 	virtual QMouseEvent snapToGrid(QMouseEvent* e) const{
 		assert(e);
 		return QMouseEvent(*e);
 	}
 	void executeCommand(QUndoCommand*);
+
 private:
 	void setActiveAction(MouseAction* a);
 	MouseAction* activeAction();
@@ -159,7 +184,7 @@ public: // hmm
    virtual void reloadGraphs() {} // fix later.
 
 public:
-	void possiblyToggleAction(MouseAction* a, QAction* sender);
+	void possiblyToggleAction(MouseAction* a, QObject* sender);
 	MouseAction const* activeAction() const;
 
 	CommonData* qucsData(std::string const& key);
@@ -178,6 +203,7 @@ public: // really??
 
 private:
 	QWidget* _owner;
+	MouseActions* _eventHandler{nullptr};
 }; // QucsDoc
 
 #endif

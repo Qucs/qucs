@@ -20,6 +20,8 @@
 #include "qt_compat.h"
 #include "../legacy_task_element.h"
 
+class Schematic;
+
 namespace{
 
 class TR_Sim : public LegacyTaskElement  {
@@ -29,7 +31,7 @@ public:
   ~TR_Sim();
   Element* clone() const{return new TR_Sim(*this);}
   static Element* info(QString&, char* &, bool getNewOne=false);
-  void recreate(SchematicDoc*);
+  void recreate(Schematic*);
 
   std::string typeName() const{
     return "TR";
@@ -120,7 +122,7 @@ Element* TR_Sim::info(QString& Name, char* &BitmapFile, bool getNewOne)
 }
 #endif
 
-void TR_Sim::recreate(SchematicDoc*)
+void TR_Sim::recreate(Schematic*)
 {
   Property *pp = Props.first();
   if((pp->Value == "list") || (pp->Value == "const")) {

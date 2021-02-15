@@ -15,6 +15,7 @@
 #ifndef QUCS_TASKELTDLG_H
 #define QUCS_TASKELTDLG_H
 
+#include "qt_compat.h"
 #include "task_element.h"
 #include "platform.h"
 #include "schematic_dialog.h"
@@ -26,7 +27,6 @@
 
 //#include "qucs_app.h"
 #include "qucs_globals.h"
-#include "schematic_doc.h"
 #include "property.h"
 #include "misc.h"
 
@@ -64,7 +64,7 @@ namespace {
 
 class TaskElementDialog : public QDialog, public SchematicDialog {
     Q_OBJECT
-    Q_INTERFACES(SchematicDialog)
+//    Q_INTERFACES(SchematicDialog) // no effect.
 public:
   TaskElementDialog();
   ~TaskElementDialog();
@@ -667,14 +667,14 @@ bool TaskElementDialog::eventFilter(QObject *obj, QEvent *event)
   return QDialog::eventFilter(obj, event); // standard event processing
 }
 
+#if 0
 // Updates component property list. Useful for MultiViewComponents (really?)
 void TaskElementDialog::updateCompPropsList()
 {
-	auto Comp=_comp;
+	auto Comp = _comp;
     int last_prop=0; // last property not to put in ListView
         // ...........................................................
         // if simulation component: .TR, .AC, .SW, (.SP ?)
-#if 0
     if( (Comp->typeName() != "DC") && (Comp->typeName() != "HB") &&
        (Comp->typeName() != "Digi") && (Comp->typeName() != "ETR")) {
         if(Comp->typeName() == "SW") {   // parameter sweep
@@ -685,7 +685,6 @@ void TaskElementDialog::updateCompPropsList()
             last_prop += 4;  // remember last property for ListView
     }else{
 	 }
-#endif
 
     QString s;
     int row=0; // row counter
@@ -740,6 +739,7 @@ void TaskElementDialog::updateCompPropsList()
     }else{
     }
 }
+#endif
 
 // -------------------------------------------------------------------------
 // Is called if a property is selected.
@@ -1008,7 +1008,7 @@ void TaskElementDialog::slotApplyInput()
   }
 
   QString tmp;
-  Component *pc = nullptr;
+  void *pc = nullptr;
   if(CompNameEdit->text().isEmpty()){
     CompNameEdit->setText(QString::fromStdString(Comp->label()));
   }else if(CompNameEdit->text().toStdString() != Comp->label()) {
@@ -1269,9 +1269,10 @@ void TaskElementDialog::slotApplyInput()
     // maybe do in ElementGraohics::attach?
 //    schematic()->recreateSymbol(Comp);
 //
-    auto V=schematic()->viewport();
-    assert(V);
-    V->repaint();
+//    cmd takes care of this.
+//    auto V = schematic()->viewport();
+//    assert(V);
+//    V->repaint();
 #if 0
     if ( (int) Comp->Props.count() != prop->rowCount()) { // If props count was changed after recreation
       Q_ASSERT(prop->rowCount() >= 0);

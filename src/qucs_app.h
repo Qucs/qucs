@@ -35,7 +35,6 @@
  */
 
 class QucsDoc;
-class SchematicDoc;
 class TextDoc;
 class SimMessage; // BUG
 class MouseActions;
@@ -88,10 +87,6 @@ extern VersionTriplet QucsVersion;
 bool loadSettings();
 bool saveApplSettings();
 
-// function pointers used with mouse actions handling
-typedef void (MouseActions::*pMouseFunc) (SchematicDoc*, QMouseEvent*);
-typedef void (MouseActions::*pMouseFunc2) (SchematicDoc*, QMouseEvent*);
-
 class QucsFileSystemModel : public QFileSystemModel {
   Q_OBJECT
 public:
@@ -130,12 +125,6 @@ public:
 
   QLineEdit *editText;  // for edit component properties on schematic
   SearchDialog *SearchDia;  // global in order to keep values
-
-  // current mouse methods
-  void (MouseActions::*MouseMoveAction) (SchematicDoc*, QMouseEvent*);
-  void (MouseActions::*MousePressAction) (SchematicDoc*, QMouseEvent*);
-  void (MouseActions::*MouseDoubleClickAction) (SchematicDoc*, QMouseEvent*);
-  void (MouseActions::*MouseReleaseAction) (SchematicDoc*, QMouseEvent*);
 
 protected:
   void closeEvent(QCloseEvent*);
@@ -219,42 +208,7 @@ signals:
 public: // called directly from Schematic... bug?
   void hideEdit(){ slotHideEdit(); }
 
-public:
-//  MouseActions *view;
-  QucsTabWidget *DocumentTab;
-  QListWidget *CompComps;
-  QTreeWidget *libTreeWidget;
-
-  // menu appearing by right mouse button click on content listview
-  QMenu *ContentMenu;
-
-  // corresponding actions
-  QAction *ActionCMenuOpen, *ActionCMenuCopy, *ActionCMenuRename, *ActionCMenuDelete, *ActionCMenuInsert;
-
-  QAction *fileNew, *fileNewNoDD, *textNew, *fileNewDpl, *fileOpen, *fileSave, *fileSaveAs,
-          *fileSaveAll, *fileClose, *fileCloseOthers, *fileCloseAllLeft, *fileCloseAllRight,
-          *fileCloseAll, *fileExamples, *fileSettings, *filePrint, *fileQuit,
-          *projNew, *projOpen, *projDel, *projClose, *applSettings, *refreshSchPath,
-          *editCut, *editCopy, *magAll, *magOne, *magMinus, *filePrintFit,
-          *symEdit, *intoH, *popH, *simulate, *dpl_sch, *undo, *redo, *dcbias;
-
-  QAction *exportAsImage;
-
-  QAction *activeAction;    // pointer to the action selected by the user
-
 private:
-// ********* Widgets on the main area **********************************
-  QDockWidget     *dock;
-  QTabWidget      *TabView;
-  QDockWidget     *octDock;
-  OctaveWindow    *octave;
-  MessageDock     *messageDock;
-
-  QListView       *Projects;
-  ProjectView     *Content;
-
-  QLineEdit       *CompSearch;
-  QPushButton     *CompSearchClear;
   QComboBox       *CompChoose;
 
 // ********** Properties ************************************************
@@ -278,7 +232,7 @@ private:
   void fillComboBox(bool);
   void switchSchematicDoc(bool);
   void switchEditMode(bool);
-  void changeSchematicSymbolMode(SchematicDoc*);
+//  void changeSchematicSymbolMode(SchematicDoc*);
   bool recurRemove(const QString &);
   void closeFile(int);
 
@@ -321,6 +275,47 @@ private:
   void initToolBar();    // creates the toolbars
   void initStatusBar();  // setup the statusbar
 
+public:
+  void addWorkToolbarAction(QAction* a);
+  void clearWorkToolbar();
+
+public:
+//  MouseActions *view;
+  QucsTabWidget *DocumentTab;
+  QListWidget *CompComps;
+  QTreeWidget *libTreeWidget;
+
+  // menu appearing by right mouse button click on content listview
+  QMenu *ContentMenu;
+
+  // corresponding actions
+  QAction *ActionCMenuOpen, *ActionCMenuCopy, *ActionCMenuRename, *ActionCMenuDelete, *ActionCMenuInsert;
+
+  QAction *fileNew, *fileNewNoDD, *textNew, *fileNewDpl, *fileOpen, *fileSave, *fileSaveAs,
+          *fileSaveAll, *fileClose, *fileCloseOthers, *fileCloseAllLeft, *fileCloseAllRight,
+          *fileCloseAll, *fileExamples, *fileSettings, *filePrint, *fileQuit,
+          *projNew, *projOpen, *projDel, *projClose, *applSettings, *refreshSchPath,
+          *editCut, *editCopy, *magAll, *magOne, *magMinus, *filePrintFit,
+          *symEdit, *intoH, *popH, *simulate, *dpl_sch, *undo, *redo, *dcbias;
+
+  QAction *exportAsImage;
+
+  QAction *activeAction;    // pointer to the action selected by the user
+
+private:
+// ********* Widgets on the main area **********************************
+  QDockWidget     *dock;
+  QTabWidget      *TabView;
+  QDockWidget     *octDock;
+  OctaveWindow    *octave;
+  MessageDock     *messageDock;
+
+  QListView       *Projects;
+  ProjectView     *Content;
+
+  QLineEdit       *CompSearch;
+  QPushButton     *CompSearchClear;
+
   QAction *helpAboutApp, *helpAboutQt, *viewToolBar, *viewStatusBar,
           *viewBrowseDock, *viewOctaveDock;
 
@@ -334,62 +329,61 @@ private:
   // submenus for the PDF documents
   QMenu *helpTechnical, *helpReport, *helpTutorial;
 
-  QToolBar *fileToolbar, *editToolbar, *viewToolbar, *workToolbar;
+  QToolBar *fileToolbar, *editToolbar, *viewToolbar;
+  QToolBar *_workToolBar; // Toolbar?
 
-  // Shortcuts for scolling schematic / TextEdit
-  // This is rather cumbersome -> Make this with a QScrollView instead??
-  QShortcut *cursorUp, *cursorLeft, *cursorRight, *cursorDown;
 
   QLabel *WarningLabel, *PositionLabel;  // labels in status bar
 
 public: // Toolbar?
   void editFile(const QString&);
 
-  QAction *insWire, *insLabel, *insGround, *insPort, *insEquation, *magPlus,
-          *editRotate, *editMirror, *editMirrorY, *editPaste, *select,
-          *editActivate, *wire, *editDelete, *setMarker, *onGrid, *moveText,
+  QAction *magPlus, *editPaste,
+          *editActivate, *wire, *editDelete,
           *helpOnline, *callEditor, *callFilter, *callLine, *callActiveFilter,
-          *showMsg, *showNet, *alignTop, *alignBottom, *alignLeft, *alignRight,
-          *distrHor, *distrVert, *selectAll, *callLib, *callMatch, *changeProps,
+          *showMsg, *showNet, *alignTop, *alignBottom, *alignLeft, *alignRight;
+  QAction *callLib, *callMatch, // TODO: call tool.
+			 *changeProps,
           *addToProj, *editFind, *insEntity, *selectMarker, *callPowerComb,
           *createLib, *importData, *graph2csv, *createPkg, *extractPkg,
           *callAtt, *callRes, *centerHor, *centerVert, *loadModule, *buildModule;
 
-  QAction* selectAction(){ return select; }
+//  QAction* selectAction(){ return select; }
 
-public slots: // BUG. why is this here? (fix later)
-  void slotEditRotate();  // rotate the selected items
-  void slotEditMirrorX(); // mirror the selected items about X axis
-  void slotEditMirrorY(); // mirror the selected items about Y axis
+public slots: // Doc
+              // possible improvement: turn doc into QObject?
+//  void slotToolBar();
+
+public slots: // obsolete slots
   void slotEditCut();         // put marked object into clipboard and delete it
   void slotEditCopy();        // put the marked object into the clipboard
   void slotEditPaste();   // paste the clipboard into the document
   void slotEditDelete();  // delete the selected items
-  void slotInsertEquation();
-  void slotInsertGround();
-  void slotInsertPort();
-  void slotInsertEntity();
-  void slotSetWire();
+//  void slotInsertEquation();
+//  void slotInsertGround();
+//  void slotInsertPort();
+//  void slotInsertEntity();
+//  void slotSetWire();
   void slotEscape();
-  void slotSelect();
-  void slotEditActivate();
-  void slotInsertLabel();
-  void slotSetMarker();
-  void slotOnGrid();      // set selected elements on grid
-  void slotMoveText();    // move property text of components
+//  void slotSelect();
+//  void slotEditActivate();
+//  void slotInsertLabel();
+//  void slotSetMarker();
+//  void slotOnGrid();      // set selected elements on grid
+//  void slotMoveText();    // move property text of components
   void slotZoomIn();
   void slotEditUndo();    // makes the last operation undone
   void slotEditRedo();    // makes the last undo undone
   void slotEditFind();    // searches for a piece of text
-  void slotAlignTop();    // align selected elements with respect to top
-  void slotAlignBottom(); // align selected elements with respect to bottom
-  void slotAlignLeft();   // align selected elements with respect to left
-  void slotAlignRight();  // align selected elements with respect to right
-  void slotDistribHoriz();// distribute horizontally selected elements
-  void slotDistribVert(); // distribute vertically selected elements
-  void slotCenterHorizontal();
-  void slotCenterVertical();
-  void slotSelectAll();
+//  void slotAlignTop();    // align selected elements with respect to top
+//  void slotAlignBottom(); // align selected elements with respect to bottom
+//  void slotAlignLeft();   // align selected elements with respect to left
+//  void slotAlignRight();  // align selected elements with respect to right
+//  void slotDistribHoriz();// distribute horizontally selected elements
+//  void slotDistribVert(); // distribute vertically selected elements
+//  void slotCenterHorizontal();
+//  void slotCenterVertical();
+//  void slotSelectAll();
   void slotSelectMarker();
   void slotShowLastMsg();
   void slotShowLastNetlist();

@@ -33,7 +33,7 @@ public:
 		}
 	};
 protected:
-	explicit SchematicEdit(SchematicScene& s)
+	explicit SchematicEdit(SchematicScene* s)
 	  : QUndoCommand(), _first(true), _scn(s) {}
 	SchematicEdit(SchematicEdit const&) = delete;
 
@@ -88,10 +88,10 @@ private:
                                  Qt::SortOrder order = Qt::DescendingOrder) const;
 	Node const* nodeAt(pos_t const&) const;
 	SchematicScene const* scene() const{
-		return &_scn;
+		return _scn;
 	}
 	SchematicScene* scene(){
-		return &_scn;
+		return _scn;
 	}
 
 private:
@@ -99,7 +99,7 @@ private:
 	list_t _del;
 	std::vector<swap_t*> _swap;
 	bool _first;
-	SchematicScene& _scn;
+	SchematicScene* _scn;
 	std::set<ElementGraphics*> _check_places;
 };
 /*--------------------------------------------------------------------------*/

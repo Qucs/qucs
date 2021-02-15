@@ -133,7 +133,7 @@ public: // ??!
   virtual void paintDiagram(ViewPainter* p);
   void paintMarkers(ViewPainter* p, bool paintAll = true);
 //  void    setCenter(int, int, bool relative=false);
-  void    paintScheme(SchematicDoc*) const;
+//  void    paintScheme(SchematicDoc*) const;
   void    Bounding(int&, int&, int&, int&);
   bool    getSelected(int, int);
   bool    resizeTouched(float, float, float);
@@ -199,7 +199,7 @@ public: // from mouseactions.cpp
   }
 
   // returns drawn, for now.
-  bool pressElement(SchematicDoc* Doc, Element*& selElem, QMouseEvent* Event);
+//  bool pressElement(SchematicDoc* Doc, Element*& selElem, QMouseEvent* Event);
 
 protected: // FIXME
   int x2;

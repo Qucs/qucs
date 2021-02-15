@@ -22,9 +22,10 @@
 #include "property.h"
 #include "qucs_app.h"
 #include "qucs_globals.h"
-#include "schematic_doc.h"
 #include "viewpainter.h"
 #include "widget.h"
+#include "task_element.h"
+#include "qt_compat.h"
 
 #include <QPen>
 #include <QString>
@@ -32,7 +33,6 @@
 #include <QPainter>
 #include <QDebug>
 
-// #include "../legacy/obsolete_paintings.h" // BUG
 TaskElement::TaskElement(TaskElement const& p)
   : Element(p),
     //cx(p.cx),

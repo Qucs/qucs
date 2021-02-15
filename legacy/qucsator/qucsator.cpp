@@ -19,11 +19,14 @@
 #include "docfmt.h" // <<
 #include "qucs_globals.h"
 #include "settings.h" //??
-#include "schematic_doc.h"
+//#include "schematic_doc.h"
 #include <QProcess>
 #include "qucsator.h"
 #include "painting.h"
 #include "qio.h"
+#include "node.h"
+#include "qucsdoc.h"
+#include "qt_compat.h"
 /* -------------------------------------------------------------------------------- */
 namespace {
 /* -------------------------------------------------------------------------------- */
@@ -133,7 +136,7 @@ public: // QProcess callback.
 
 private:
 	QString DataSet;
-	QFile _netlistFile;
+//	QFile _netlistFile;
 	QucsatorProcess _process;
 	QProcess::ProcessState _oldState;
 	Data* _dat{nullptr};
@@ -179,7 +182,6 @@ void Qucsator::do_it(istream_t& cs, SchematicModel const* scope)
 
 	message(QucsMsgLog, "writing " + f.toStdString() + "...");
 
-	auto d = dynamic_cast<SchematicDoc const*>(doc()); // BUG.
 
 	auto dl = commandDispatcher["legacy_nl"];
 	std::string s = "netlist mode=" + what + " " + f.toStdString();
@@ -189,11 +191,13 @@ void Qucsator::do_it(istream_t& cs, SchematicModel const* scope)
 	if(scope){itested();
 		hack = const_cast<SchematicModel*>(scope);
 	}else{ untested();
-		incomplete();
-		// HACK
-		assert(d);
-		assert(d->root());
-		hack = const_cast<SchematicModel*>(d->root()->subckt());
+		assert(false);
+//	auto d = dynamic_cast<SchematicDoc const*>(doc()); // BUG.
+//		incomplete();
+//		// HACK
+//		assert(d);
+//		assert(d->root());
+//		hack = const_cast<SchematicModel*>(d->root()->subckt());
 	}
 	assert(hack);
 	trace1("qucsator", nlcmd.fullstring());

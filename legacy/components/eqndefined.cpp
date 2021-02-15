@@ -16,7 +16,7 @@
  ***************************************************************************/
 #include "eqndefined.h"
 #include "qucs_app.h"
-#include "schematic_doc.h"
+#include "qucsdoc.h"
 #include "some_font_stuff.h"
 
 #include <QFileInfo>

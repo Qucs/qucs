@@ -36,18 +36,18 @@
 #include "projectView.h"
 #include "qucs_app.h"
 #include "textdoc.h"
-#include "mouseactions.h"
+#include "doc_actions.h"
 #include "messagedock.h"
 
 // BUG: untangle dialogs
-#include "matchdialog.h"
-#include "changedialog.h"
-#include "searchdialog.h"
-#include "librarydialog.h"
-#include "loaddialog.h"
-#include "importdialog.h"
-#include "packagedialog.h"
-#include "aboutdialog.h"
+// #include "matchdialog.h"
+// #include "changedialog.h"
+// #include "searchdialog.h"
+// #include "librarydialog.h"
+// #include "loaddialog.h"
+// #include "importdialog.h"
+// #include "packagedialog.h"
+// #include "aboutdialog.h"
 //
 
 #include "module.h"
@@ -188,68 +188,26 @@ void QucsApp::slotSelectComponent(QListWidgetItem *item)
 }
 
 // -----------------------------------------------------------------------
-void QucsApp::slotOnGrid()
+// needed, because QucsDoc is not a QWidget.
+// perhaps attach an action handler and get rid of this.
+#if 0
+void QucsApp::slotToolBar()
 {
   ASSIGN_STUFF
-  qd->actionOnGrid(s);
+  qd->slotToolBar(s);
 }
+#endif
 // -----------------------------------------------------------------------
-void QucsApp::slotEditRotate()
-{
-  ASSIGN_STUFF
-  qd->actionEditRotate(s);
-}
 // -----------------------------------------------------------------------
-void QucsApp::slotEditMirrorX()
-{ untested();
-  ASSIGN_STUFF
-  qd->actionEditMirrorX(s);
-}
 // -----------------------------------------------------------------------
-void QucsApp::slotEditMirrorY()
-{ untested();
-  ASSIGN_STUFF
-  qd->actionEditMirrorY(s);
-}
+//void QucsApp::slotEditMirrorY()
+//{ untested();
+//  ASSIGN_STUFF
+//  qd->actionEditMirrorY(s);
+//}
 // -----------------------------------------------------------------------
 // TODO?   comment out the selected text on a text document
 // \todo update the status or tooltip message
-void QucsApp::slotEditActivate()
-{
-  ASSIGN_STUFF
-  qd->actionEditActivate(s);
-}
-// ------------------------------------------------------------------------
-void QucsApp::slotEditDelete()
-{
-  ASSIGN_STUFF
-  qd->actionEditDelete(s);
-}
-// -----------------------------------------------------------------------
-void QucsApp::slotSetWire()
-{
-  ASSIGN_STUFF
-  qd->actionSetWire(s);
-}
-// -----------------------------------------------------------------------
-void QucsApp::slotInsertLabel()
-{
-  ASSIGN_STUFF
-  qd->actionInsertLabel(s);
-}
-// -----------------------------------------------------------------------
-void QucsApp::slotSetMarker()
-{
-  ASSIGN_STUFF
-  qd->actionSetMarker(s);
-}
-// -----------------------------------------------------------------------
-void QucsApp::slotMoveText()
-{
-  ASSIGN_STUFF
-  qd->actionMoveText(s);
-}
-// -----------------------------------------------------------------------
 void QucsApp::slotZoomIn()
 {
   ASSIGN_STUFF
@@ -258,17 +216,11 @@ void QucsApp::slotZoomIn()
 // -----------------------------------------------------------------------
 void QucsApp::slotEscape()
 {
-  // what?!
-  select->setChecked(true);
+  incomplete(); // context?!
+  // select->setChecked(true);
   slotSearchClear();
 }
 // -----------------------------------------------------------------------
-void QucsApp::slotSelect()
-{
-  ASSIGN_STUFF
-  qd->actionSelect(s);
-}
-// --------------------------------------------------------------------
 void QucsApp::slotEditCut()
 {
   statusBar()->showMessage(tr("Cutting selection..."));
@@ -296,128 +248,24 @@ void QucsApp::slotEditPaste()
   qd->actionEditPaste(s);
 }
 // -----------------------------------------------------------------------
-void QucsApp::slotInsertEntity ()
+void QucsApp::slotEditDelete()
 {
   ASSIGN_STUFF
-  qd->actionInsertEntity(s);
+  qd->slotEditDelete(s);
 }
 // -----------------------------------------------------------------------
-void QucsApp::slotInsertEquation()
-{
-  ASSIGN_STUFF
-  qd->actionInsertEquation(s);
-}
-// -----------------------------------------------------------------------
-void QucsApp::slotInsertGround()
-{
-  ASSIGN_STUFF
-  qd->actionInsertGround(s);
-}
-// -----------------------------------------------------------------------
-void QucsApp::slotInsertPort()
-{
-  ASSIGN_STUFF
-  qd->actionInsertPort(s);
-}
-// --------------------------------------------------------------
 void QucsApp::slotEditUndo()
 {
   ASSIGN_STUFF
-  qd->actionEditUndo(s);
+  qd->slotEditUndo(s);
 }
 // --------------------------------------------------------------
 void QucsApp::slotEditRedo()
 {
   ASSIGN_STUFF
-  qd->actionEditRedo(s);
+  qd->slotEditRedo(s);
 }
 // --------------------------------------------------------------
-void QucsApp::slotAlignTop()
-{
-  QucsDoc *qd = DocumentTab->current();
-  assert(qd);
-
-  qd->actionAlign(0); // BUG use enum
-}
-// --------------------------------------------------------------
-void QucsApp::slotAlignBottom()
-{
-  QucsDoc *qd = DocumentTab->current();
-  assert(qd);
-
-  qd->actionAlign(1); // BUG use enum
-}
-
-// --------------------------------------------------------------
-// Is called, when "Align left" action is triggered.
-void QucsApp::slotAlignLeft()
-{
-  QucsDoc *qd = DocumentTab->current();
-  assert(qd);
-
-  qd->actionAlign(2);
-}
-
-// --------------------------------------------------------------
-// Is called, when "Align right" action is triggered.
-void QucsApp::slotAlignRight()
-{
-  QucsDoc *qd = DocumentTab->current();
-  assert(qd);
-
-  qd->actionAlign(3);
-}
-
-// --------------------------------------------------------------
-// Is called, when "Distribute horizontally" action is triggered.
-void QucsApp::slotDistribHoriz()
-{
-  QucsDoc *qd = DocumentTab->current();
-  assert(qd);
-
-  qd->actionDistrib(0);
-}
-
-// --------------------------------------------------------------
-// Is called, when "Distribute vertically" action is triggered.
-void QucsApp::slotDistribVert()
-{
-  QucsDoc *qd = DocumentTab->current();
-  assert(qd);
-
-  qd->actionDistrib(1);
-}
-
-// --------------------------------------------------------------
-// Is called, when "Center horizontally" action is triggered.
-void QucsApp::slotCenterHorizontal()
-{
-  QucsDoc *qd = DocumentTab->current();
-  assert(qd);
-
-  qd->actionAlign(4);
-}
-
-// --------------------------------------------------------------
-// Is called, when "Center vertically" action is triggered.
-void QucsApp::slotCenterVertical()
-{
-  QucsDoc *qd = DocumentTab->current();
-  assert(qd);
-
-  qd->actionAlign(5);
-}
-
-// ---------------------------------------------------------------------
-// Is called when the "select all" action is triggered.
-void QucsApp::slotSelectAll()
-{
-  hideEdit();
-
-  ASSIGN_STUFF
-  qd->actionSelectAll(s);
-}
-
 // ---------------------------------------------------------------------
 // Is called when the "select markers" action is triggered.
 // schematic only
@@ -429,9 +277,7 @@ void QucsApp::slotSelectMarker()
   qd->actionSelectMarker();
 }
 
-
 extern QString lastDirOpenSave; // to remember last directory and file
-
 // ------------------------------------------------------------------------
 ///
 /// \brief QucsApp::editFile
@@ -549,8 +395,10 @@ void QucsApp::slotCallLibrary()
 // Is called to show a dialog for creating matching circuits.
 void QucsApp::slotCallMatch()
 {
-  MatchDialog *d = new MatchDialog(this);
-  d->exec();
+  incomplete();
+  // ask dispatcher
+//  MatchDialog *d = new MatchDialog(this);
+//  d->exec();
 }
 
 // ------------------------------------------------------------------------
@@ -788,9 +636,10 @@ void QucsApp::slotCreateLib()
     return;
   }
 
-  LibraryDialog *d = new LibraryDialog(this);
-  d->fillSchematicList(Content->exportSchematic());
-  d->exec();
+  incomplete(); // ask dispatcher.
+  // LibraryDialog *d = new LibraryDialog(this);
+  // d->fillSchematicList(Content->exportSchematic());
+  // d->exec();
 }
 
 // -----------------------------------------------------------
@@ -801,10 +650,12 @@ void QucsApp::slotImportData()
   if(ProjName.isEmpty()) {
     QMessageBox::critical(this, tr("Error"), tr("Please open project first!"));
     return;
+  }else{
   }
 
-  ImportDialog *d = new ImportDialog(this);
-  d->exec();
+  incomplete(); // ask dispatcher
+  // ImportDialog *d = new ImportDialog(this);
+  // d->exec();
 }
 
 // -----------------------------------------------------------
@@ -842,18 +693,21 @@ void QucsApp::slotCreatePackage()
 {
   slotHideEdit(); // disable text edit of component property
 
-  PackageDialog *d = new PackageDialog(this, true);
-  d->exec();
+  incomplete(); // ask dispatcher
+  ///PackageDialog *d = new PackageDialog(this, true);
+  ///d->exec();
 }
 
 // ----------------------------------------------------------
 void QucsApp::slotExtractPackage()
 {
   slotHideEdit(); // disable text edit of component property
-  PackageDialog *d = new PackageDialog(this, false);
-  d->show();
-  d->extractPackage();
-  readProjects();
+
+  incomplete(); //ask dispatcher
+  // PackageDialog *d = new PackageDialog(this, false);
+  // d->show();
+  // d->extractPackage();
+  // readProjects();
 }
 
 void QucsApp::slotOpenRecent()
@@ -1110,8 +964,10 @@ void QucsApp::slotBuildModule()
 // ----------------------------------------------------------
 void QucsApp::slotHelpAbout()
 {
-  AboutDialog *ad = new AboutDialog(this);
-  ad->exec();
+
+  incomplete(); // ask dispatcher
+  // AboutDialog *ad = new AboutDialog(this);
+  // ad->exec();
 }
 
 // vim:ts=8:sw=2:noet

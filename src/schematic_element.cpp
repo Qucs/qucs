@@ -14,164 +14,12 @@
 #include <stdlib.h>
 #include <limits.h>
 
-#include "schematic_doc.h"
-#include "mouseactions.h"
-#include "qt_compat.h"
-#include <QDebug>
-#include "platform.h"
 #include "io_trace.h"
-
-
-/* *******************************************************************
-   *****                                                         *****
-   *****              Actions handling the nodes                 *****
-   *****                                                         *****
-   ******************************************************************* */
+#include "doc_actions.h"
+#include "platform.h"
+#include "qt_compat.h"
 
 /*--------------------------------------------------------------------------*/
-// obsolete
-Node* SchematicDoc::selectedNode(int , int )
-{
-#if 0
-    for(auto pn : nodes()){
-        if(pn->getSelected(x, y))
-            return pn;
-    }
-#endif
-    return nullptr;
-}
-/*--------------------------------------------------------------------------*/
-// Splits the wire "*pw" into two pieces by the node "*pn".
-//
-// why return Wire*??
-// BUG Node* Wire::splitWire(x, y, NodeList&)
-#if 0
-Wire* SchematicModel::splitWire(Wire *pw, Node *pn)
-{
-    incomplete();
-    Wire *newWire = new Wire(pn->cx_(), pn->cy_(), pw->x2_(), pw->y2_(), pn, pw->portValue(1));
-    // newWire->setSelected(pw->isSelected());
-
-    pw->x2__() = pn->cx_();
-    pw->y2__() = pn->cy_();
-    pw->setPortByIndex(1, pn);
-
-    newWire->portValue(1)->prependConnection(newWire);
-    pn->prependConnection(pw);
-    pn->prependConnection(newWire);
-    newWire->portValue(1)->connectionsRemove(pw);
-    wires().append(newWire);
-
-    if(pw->Label)
-        if((pw->Label->cx_() > pn->cx_()) || (pw->Label->cy_() > pn->cy_()))
-        {
-            newWire->Label = pw->Label;   // label goes to the new wire
-            pw->Label = 0;
-            newWire->Label->pOwner = newWire;
-        }
-
-    return newWire;
-    return 0;
-}
-#endif
-/*--------------------------------------------------------------------------*/
-#if 0
-// Deletes the wire 'w'.
-void SchematicModel::deleteWire(Wire *)
-{
-    if(w->portValue(0)->degree() == 1) {
-//        if(w->portValue(0)->Label) delete w->portValue(0)->Label;
-         incomplete();
-        // nodes().removeRef(w->portValue(0));     // delete node 1 if open
-    } else {
-        w->portValue(0)->connectionsRemove(w);   // remove connection
-        if(w->portValue(0)->degree() == 2)
-            oneTwoWires(w->portValue(0));  // two wires -> one wire
-    }
-
-    if(w->portValue(1)->degree() == 1)
-    {
-//        if(w->portValue(1)->Label) delete w->portValue(1)->Label;
-	incomplete();
-	// nodes().removeRef(w->portValue(1));     // delete node 2 if open
-    }
-    else
-    {
-        w->portValue(1)->connectionsRemove(w);   // remove connection
-        if(w->portValue(1)->degree() == 2)
-            oneTwoWires(w->portValue(1));  // two wires -> one wire
-    }
-
-#if 0
-    if(w->Label) {
-        delete w->Label;
-        w->Label = 0;
-    }
-#endif
-}
-#endif
-
-// ---------------------------------------------------
-// BUG: does not copy
-int SchematicDoc::copyWires(int& x1, int& y1, int& x2, int& y2,
-                         QList<Element *> *ElementCache)
-{
-    incomplete();
-    (void) (x1+y1+x2+y2);
-    (void) ElementCache;
-    return 0;
-#if 0
-    int count=0;
-    Node *pn;
-    Wire *pw;
-    WireLabel *pl;
-    for(pw = wires().first(); pw != 0; )  // find bounds of all selected wires
-        if(pw->isSelected())
-        {
-            if(pw->x1_() < x1) x1 = pw->x1_();
-            if(pw->x2_() > x2) x2 = pw->x2_();
-            if(pw->y1_() < y1) y1 = pw->y1_();
-            if(pw->y2_() > y2) y2 = pw->y2_();
-
-            count++;
-            ElementCache->append(pw);
-
-            // rescue non-selected node labels
-            pn = pw->portValue(0);
-            if(pn->Label)
-                if(pn->degree() < 2)
-                {
-                    ElementCache->append(pn->Label);
-
-                    // Don't set pn->Label->pOwner=0 , so text position stays unchanged.
-                    // But remember its wire.
-                    pn->Label->pOwner = (Node*)pw;
-                    pn->Label = 0;
-                }
-            pn = pw->portValue(1);
-            if(pn->Label)
-                if(pn->degree() < 2)
-                {
-                    ElementCache->append(pn->Label);
-
-                    // Don't set pn->Label->pOwner=0 , so text position stays unchanged.
-                    // But remember its wire.
-                    pn->Label->pOwner = (Node*)pw;
-                    pn->Label = 0;
-                }
-
-            pl = pw->Label;
-            pw->Label = 0;
-            deleteWire(pw);
-            pw->Label = pl;    // restore wire label
-            pw = wires().current();
-        }
-        else pw = wires().next();
-
-    return count;
-#endif
-}
-
 
 /* *******************************************************************
    *****                                                         *****
@@ -179,9 +27,9 @@ int SchematicDoc::copyWires(int& x1, int& y1, int& x2, int& y2,
    *****                                                         *****
    ******************************************************************* */
 
+#if 0
 Marker* SchematicDoc::setMarker(int x, int y)
 {
-#if 0
   // only diagrams ...
   for(auto pd : diagrams()){
     if(Marker* m=pd->setMarker(x,y)){
@@ -189,9 +37,9 @@ Marker* SchematicDoc::setMarker(int x, int y)
       return m;
     }
   }
-#endif
   return NULL;
 }
+#endif
 
 // ---------------------------------------------------
 // Moves the marker pointer left/right on the graph.
@@ -208,7 +56,6 @@ void SchematicDoc::markerLeftRight(bool left, Q3PtrList<ElementGraphics> *Elemen
 
     if(acted)  setChanged(true, true, 'm');
 }
-#endif
 
 // ---------------------------------------------------
 // Move the marker pointer up/down on the more-dimensional graph.
@@ -225,6 +72,7 @@ void SchematicDoc::markerUpDown(bool up, Q3PtrList<ElementGraphics> *Elements)
     if(acted)  setChanged(true, true, 'm');
 }
 
+#endif
 
 /* *******************************************************************
    *****                                                         *****
@@ -573,7 +421,6 @@ void SchematicDoc::markerUpDown(bool up, Q3PtrList<ElementGraphics> *Elements)
     return ElementMouseAction(pe_1st);
 #endif
 }
-#endif
 
 void SchematicDoc::highlightWireLabels ()
 {
@@ -705,36 +552,6 @@ void SchematicDoc::highlightWireLabels ()
     }
 #endif
 }
-
-// ---------------------------------------------------
-// flags elements that lie within the rectangle x1/y1, x2/y2.
-// return the number of elements selected.
-// flag?! is is the shift key?
-#if 0 // needed?
-int SchematicDoc::selectElements(int x1, int y1, int x2, int y2, bool flag)
-{
-    incomplete(); // obsolete. use QT
-    return 0;
-    QRectF bb(x1, y1, x2, y2);
-    int n=0;
-
-    // flag seems to be shift or so
-    for(auto i : scene()->selectedItems()){
-	if(!flag){
-	    i->setSelected(false);
-	}else{
-	    ++n;
-	}
-    }
-    
-    auto sel=scene()->items(bb, Qt::ContainsItemBoundingRect);
-    for(auto i : sel){
-	if(!i->isSelected()){
-	    i->setSelected(true);
-	    ++n;
-	}
-    }
-    return n;
 #endif
 
 #if 0 // SCROLLVIEW code
@@ -896,161 +713,15 @@ int SchematicDoc::selectElements(int x1, int y1, int x2, int y2, bool flag)
 
 // ---------------------------------------------------
 // Selects all markers.
+#if 0
 void SchematicDoc::selectMarkers()
 {
     incomplete();
-#if 0
     for(auto pd : diagrams()){
         foreach(Graph *pg, pd->Graphs)
             foreach(Marker *pm, pg->Markers)
                 pm->setSelected();
     }
-#endif
-}
-
-// ---------------------------------------------------
-// For moving elements: If the moving element is connected to a not
-// moving element, insert two wires. If the connected element is already
-// a wire, use this wire. Otherwise create new wire.
-// use WireList?! SchematicModel?
-#if 0
-void SchematicDoc::newMovingWires(QList<Element*> *p, Node *pn, int pos)
-{
-    Element *pe;
-
-    if(pn->hasState(8))  // Were new wires already inserted ?
-        return;
-    pn->setState(8);
-
-    for (;;) {
-        if(pn->hasState(16)){
-            break;
-	}
-
-        pe = pn->firstConnection();
-        if(pe == 0)  return;
-
-        if(pn->degree() > 1)
-            break;
-        if(pe->Type != isWire)  // is it connected to exactly one wire ?
-            break;
-
-        // .................................................
-        long  mask = 1, invMask = 3;
-        Wire *pw2=0, *pw = (Wire*)pe;
-
-        Node *pn2 = pw->portValue(0);
-        if(pn2 == pn) pn2 = pw->portValue(1);
-
-        if(pn2->degree() == 2) // two existing wires connected ?
-            if((pn2->State & (8+4)) == 0)
-            {
-                Element *pe2 = pn2->firstConnection();
-                if(pe2 == pe) pe2 = pn2->lastConnection();
-                // connected wire connected to exactly one wire ?
-                if(pe2->Type == isWire)
-                    pw2  = (Wire*)pe2;
-            }
-
-        // .................................................
-        // reuse one wire
-        p->insert(pos, pw);
-        pw->portValue(0)->connectionsRemove(pw);   // remove connection 1
-        pw->portValue(0)->State |= 16+4;
-        pw->portValue(1)->connectionsRemove(pw);   // remove connection 2
-        pw->portValue(1)->State |= 16+4;
-        wires().take(wires().findRef(pw));
-
-        if(pw->isHorizontal()) mask = 2;
-
-        if(pw2 == 0)    // place new wire between component and old wire
-        {
-            pn = pn2;
-            mask ^= 3;
-            invMask = 0;
-        }
-
-        if(pw->portValue(0) != pn)
-        {
-            pw->portValue(0)->State |= mask;
-            pw->setPortByIndex(0, (Node*)(uintptr_t)mask);
-            pw->portValue(1)->State |= invMask;
-            pw->setPortByIndex(1, (Node*)(uintptr_t)invMask);  // move port 2 completely
-        }
-        else
-        {
-            pw->portValue(0)->State |= invMask;
-            pw->setPortByIndex(0, (Node*)(uintptr_t)invMask);
-            pw->portValue(1)->State |= mask;
-            pw->setPortByIndex(1, (Node*)(uintptr_t)mask);
-        }
-
-        invMask ^= 3;
-        // .................................................
-        // create new wire ?
-#if 0 // the logic is entirely screwed.
-        if(pw2 == 0)
-        {
-            if(pw->portValue(0) != (Node*)(uintptr_t)mask)
-                p->insert(pos,
-                          new Wire(pw->x2_(), pw->y2_(), pw->x2_(), pw->y2_(), (Node*)(uintptr_t)mask, (Node*)(uintptr_t)invMask));
-            else
-                p->insert(pos,
-                          new Wire(pw->x1_(), pw->y1_(), pw->x1_(), pw->y1_(), (Node*)(uintptr_t)mask, (Node*)(uintptr_t)invMask));
-            return;
-        }
-#endif
-
-
-        // .................................................
-        // reuse a second wire
-        p->insert(pos, pw2);
-        pw2->portValue(0)->connectionsRemove(pw2);   // remove connection 1
-        pw2->portValue(0)->State |= 16+4;
-        pw2->portValue(1)->connectionsRemove(pw2);   // remove connection 2
-        pw2->portValue(1)->State |= 16+4;
-        wires().take(wires().findRef(pw2));
-
-        if(pw2->portValue(0) != pn2)
-        {
-            pw2->setPortByIndex(0, (Node*)0);
-            pw2->portValue(1)->State |= mask;
-            pw2->setPortByIndex(1, (Node*)(uintptr_t)mask);
-        }
-        else
-        {
-            pw2->portValue(0)->State |= mask;
-            pw2->setPortByIndex(0, (Node*)(uintptr_t)mask);
-            pw2->setPortByIndex(1, (Node*)0);
-        }
-        return;
-    }
-
-#if 0 // does not make sense.
-    // only x2 moving
-    p->insert(pos, new Wire(pn->cx_(), pn->cy_(), pn->cx_(), pn->cy_(), (Node*)0, (Node*)1));
-    // x1, x2, y2 moving
-    p->insert(pos, new Wire(pn->cx_(), pn->cy_(), pn->cx_(), pn->cy_(), (Node*)1, (Node*)3));
-#endif
-}
-#endif
-
-#ifndef USE_SCROLLVIEW
-// SchematicScene?
-void SchematicDoc::deselectElements()
-{ untested();
-    qDebug() << "deselectElements";
-    assert(scene());
-    while(scene()->selectedItems().size()){ untested();
-	auto i=scene()->selectedItems().first();
-	if(auto x=dynamic_cast<ElementGraphics*>(i)){ untested();
-	    // BUG: selected state is stored in element.
-	    x->setSelected(false);
-	    i->setSelected(false);
-	}else{ unreachable();
-	}
-    }
-
 }
 #endif
 
@@ -1246,22 +917,6 @@ QList<ElementGraphics*> SchematicDoc::cropSelectedElements()
 // ---------------------------------------------------
 // BUG: collect stuff in Qlist
 #if 0
-bool SchematicDoc::copyComps2WiresPaints(int& x1, int& y1, int& x2, int& y2,
-                                      QList<Element *> *ElementCache)
-{
-    x1=INT_MAX;
-    y1=INT_MAX;
-    x2=INT_MIN;
-    y2=INT_MIN;
-    copyLabels(x1, y1, x2, y2, ElementCache);   // must be first of all !
-    copyComponents2(x1, y1, x2, y2, ElementCache);
-    copyWires(x1, y1, x2, y2, ElementCache);
-    copyPaintings(x1, y1, x2, y2, ElementCache);
-
-    if(y1 == INT_MAX) return false;  // no element selected
-    return true;
-}
-#endif
 
 // ---------------------------------------------------
 // Used in "aligning()", "distributeHorizontal()", "distributeVertical()".
@@ -1584,14 +1239,15 @@ bool SchematicDoc::aligning(int Mode)
 #endif
     return true;
 }
+#endif
 
 /*!
  * \brief SchematicDoc::distributeHorizontal sort selection horizontally
  * \return True if sorted
  */
+#if 0
 bool SchematicDoc::distributeHorizontal()
 {
-#if 0
     int x1, y1, x2, y2;
     int bx1, by1, bx2, by2;
     QList<Element *> ElementCache;
@@ -1706,7 +1362,6 @@ bool SchematicDoc::distributeHorizontal()
     if(count < 2) return false;
 
     setChanged(true, true);
-#endif
     return true;
 }
 
@@ -1716,7 +1371,6 @@ bool SchematicDoc::distributeHorizontal()
  */
 bool SchematicDoc::distributeVertical()
 {
-#if 0
     int x1, y1, x2, y2;
     int bx1, by1, bx2, by2;
     QList<Element *> ElementCache;
@@ -1821,9 +1475,9 @@ bool SchematicDoc::distributeVertical()
     if(count < 2) return false;
 
     setChanged(true, true);
-#endif
     return true;
 }
+#endif
 
 
 /* *******************************************************************
@@ -2031,32 +1685,14 @@ void SchematicModel::recreateSymbol(Symbol *Comp)
 }
 #endif
 // ---------------------------------------------------
-void SchematicDoc::insertElement(Element *)
-{
-    assert(false);
-#if 0
-  if(Component* x=dynamic_cast<Component*>(c)){
-    // legacy code
-    insertComponent(x);
-  }else if(TaskElement* x=dynamic_cast<TaskElement*>(c)){
-      (void)x;
-    incomplete();
-//    insertSymbol(x);
-  }else if(Symbol* x=dynamic_cast<Symbol*>(c)){
-      incomplete();
-      (void)x;
-//    insertSymbol(x);
-  }
-#endif
-}
 
 // ---------------------------------------------------
 
 // ---------------------------------------------------
 // TODO: actions & rectangle select?
+#if 0
 void SchematicDoc::activateCompsWithinRect(int, int, int, int)
 {
-#if 0
     bool changed = false;
     int  cx1, cy1, cx2, cy2, a;
     // exchange rectangle coordinates to obtain x1 < x2 and y1 < y2
@@ -2098,11 +1734,9 @@ void SchematicDoc::activateCompsWithinRect(int, int, int, int)
     }
 
     if(changed)  setChanged(true, true);
-#endif
 }
 
 // ---------------------------------------------------
-#if 0
 bool SchematicDoc::activateSpecifiedComponent(int x, int y)
 {
     incomplete();
@@ -2249,11 +1883,11 @@ Component* MouseActions::selectCompText(SchematicDoc* Doc, int x_, int y_, int& 
 #endif
 
 // ---------------------------------------------------
+#if 0
 //  what does this do?!
 Component* SchematicDoc::searchSelSubcircuit()
 {
     Component *sub=0;
-#if 0
     for(auto pc : components()) {
         if(!pc->isSelected()) continue;
 
@@ -2265,9 +1899,9 @@ Component* SchematicDoc::searchSelSubcircuit()
         if(sub != 0) return 0;    // more than one subcircuit selected
         sub = pc;
     }
-#endif
     return sub;
 }
+#endif
 
 // ---------------------------------------------------
 #if 0 // this does not work
@@ -2364,12 +1998,12 @@ void SchematicDoc::copyComponents2(int& x1, int& y1, int& x2, int& y2,
    *****                                                         *****
    ******************************************************************* */
 
+#if 0 // this is obsolete. (hooray!) just use the net label
 // Test, if wire connects wire line with more than one label and delete
 // all further labels. Also delete all labels if wire line is grounded.
 void SchematicDoc::oneLabel(Node *)
 {
 
-#if 0 // this is obsolete. (hooray!) just use the net label
     Wire *pw;
     Node *pn, *pNode;
     Element *pe;
@@ -2443,7 +2077,6 @@ void SchematicDoc::oneLabel(Node *)
         }
 #endif
     }
-#endif
 }
 
 // ---------------------------------------------------
@@ -2563,6 +2196,7 @@ void SchematicDoc::insertNodeLabel(WireLabel *)
     }
 #endif
 }
+#endif
 
 // ---------------------------------------------------
 // why?!

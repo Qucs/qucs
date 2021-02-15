@@ -14,16 +14,13 @@
 // derived from various Qucs "MouseAction" etc.
 
 #include <QAction>
-#include <QMessageBox> // BUG
-// #include <QLineEdit> // BUG?
-// #include <QRegExp> // BUG?
 #include <QRegExpValidator>
 #include <QFileDialog>
 #include <QUndoCommand>
 #include <QGraphicsSceneEvent>
 #include <QGraphicsItem>
 
-#include "schematic_doc.h"
+#include "node.h"
 #include "qucs_app.h"
 #include "misc.h"
 #include "qucs_globals.h"
@@ -32,16 +29,105 @@
 #include "schematic_edit.h"
 #include "qucs_globals.h"
 
-#include "changedialog.h"
+//#include "changedialog.h"
 #include "widget.h"
 /*--------------------------------------------------------------------------*/
 #include "action/zoom.cpp" // for now.
 #include "action/wire.cpp" // for now.
 /*--------------------------------------------------------------------------*/
+// TODO: why are actions implemented twice?
+// one button and one event handler. and random glue all over the place
+/*--------------------------------------------------------------------------*/
+// inherit from DocAction??
+/*--------------------------------------------------------------------------*/
+class ActionSelect : public QAction{
+public:
+	explicit ActionSelect(QObject* parent) : QAction(parent) { untested();
+		setIcon(QIcon(":/bitmaps/pointer.png"));
+		setText(tr("Select"));
+		setStatusTip(tr("Activate select mode"));
+		setWhatsThis(tr("Select\n\nActivates select mode"));
+		setCheckable(true);
+	}
+};
+/*--------------------------------------------------------------------------*/
+class ActionRotate : public QAction{
+public:
+	explicit ActionRotate(QObject* parent) : QAction(parent) { untested();
+		setIcon(QIcon(":/bitmaps/rotate_ccw.png"));
+		setText(tr("Rotate"));
+		setShortcut(Qt::CTRL+Qt::Key_R);
+		setStatusTip(tr("Rotates the selected component by 90\x00B0"));
+		setWhatsThis(tr("Rotate\n\nRotates the section by 90\x00B0 counter-clockwise"));
+		setCheckable(true);
+	}
+};
+/*--------------------------------------------------------------------------*/
+class ActionMirrorX : public QAction{
+public:
+	explicit ActionMirrorX(QObject* parent) : QAction(parent) { untested();
+  		setIcon(QIcon(":/bitmaps/mirror.png"));
+		setText(tr("Mirror Y"));
+		setShortcut(Qt::CTRL+Qt::Key_J);
+		setStatusTip(tr("Mirror the selected item vertically"));
+		setWhatsThis(tr("Mirror Y\n\nMirror the selected item vertically"));
+		setCheckable(true);
+	}
+};
+/*--------------------------------------------------------------------------*/
+class ActionMirrorY : public QAction{
+public:
+	explicit ActionMirrorY(QObject* parent) : QAction(parent) { untested();
+		setIcon(QIcon(":/bitmaps/mirrory.png"));
+		setText(tr("Mirror X"));
+		setShortcut(Qt::CTRL+Qt::Key_M);
+		setStatusTip(tr("Mirror selected items horizontally"));
+		setWhatsThis(tr("Mirror X\n\nMirrors selected items horizontally"));
+		setCheckable(true);
+	}
+};
+/*--------------------------------------------------------------------------*/
+class ActionInsertPort : public QAction{
+public:
+	explicit ActionInsertPort(QObject* parent) : QAction(parent) { untested();
+		setIcon(QIcon(":/bitmaps/port.png"));
+		setText(tr("Insert Port"));
+		setStatusTip(tr("Insert a port symbol"));
+		setWhatsThis(tr("Insert Port\n\nInsert a port symbol"));
+		setCheckable(true);
+	}
+};
+/*--------------------------------------------------------------------------*/
+class ActionInsertWire : public QAction{
+public:
+	explicit ActionInsertWire(QObject* parent) : QAction(parent) { untested();
+		setIcon(QIcon(":/bitmaps/wire.png"));
+		setText(tr("Wire"));
+		setShortcut(Qt::CTRL+Qt::Key_E);
+		setStatusTip(tr("Insert a wire"));
+		setWhatsThis(tr("Wire\n\nInsert a wire"));
+		setCheckable(true);
+	}
+};
+/*--------------------------------------------------------------------------*/
+class ActionInsertGround : public QAction{
+public:
+	explicit ActionInsertGround(QObject* parent) : QAction(parent) { untested();
+		setIcon(QIcon(":/bitmaps/ground.png"));
+		setText(tr("Insert Ground"));
+		setShortcut(Qt::CTRL+Qt::Key_G);
+		setStatusTip(tr("Insert a ground symbol"));
+		setWhatsThis(tr("Insert Ground\n\nInsert a ground symbol"));
+		setCheckable(true);
+	}
+};
+/*--------------------------------------------------------------------------*/
 class MouseActionSelect : public MouseAction{
 public:
 	explicit MouseActionSelect(MouseActions& ctx)
-		: MouseAction(ctx) {}
+		: MouseAction(ctx) {
+			assert(scene());
+		}
 
 private: // MouseAction
 //	cmd* activate(QAction* sender) override;
@@ -56,18 +142,9 @@ private:
 	void showSchematicWidget(Widget*, ElementGraphics*);
 	cmd* release_left(QEvent*);
 
-protected:
-	void setPos1(QPointF pos){ untested();
-		_pos1 = pos;
-	}
-	QPointF const& pos1() const{ untested();
-		return _pos1;
-	}
-
 private: // more decoupling
 	//ElementMouseAction focusElement;
 	bool isMoveEqual; //?
-	QPointF _pos1;
 }; // MouseActionSelect
 /*--------------------------------------------------------------------------*/
 QUndoCommand* MouseActionSelect::dblclk(QEvent* evt)
@@ -111,7 +188,7 @@ void MouseActionSelect::showSchematicWidget(Widget* ew, ElementGraphics* gfx)
 	}
 
 	if(auto eew=dynamic_cast<QDialog*>(ew)){ untested();
-		eew->setParent(&doc(), Qt::Dialog);
+		eew->setParent(view(), Qt::Dialog);
 		if(eew->exec() != 1){ untested();
 			// done=true;   // dialog is WDestructiveClose
 		}else{ untested();
@@ -154,14 +231,14 @@ QUndoCommand* MouseActionSelCmd<CMD>::activate(QObject* sender)
 {itested();
 	MouseAction::activate(sender); // ...
 
-	_oldcursor = doc().cursor();
+	_oldcursor = view()->cursor();
 	setCursor(Qt::CrossCursor);
 
-	auto s = doc().selectedItems();
+	auto s = scene()->selectedItems();
 	bool selected = !s.empty();
 
 	if(selected){itested();
-		auto cmd = new CMD(doc(), s);
+		auto cmd = new CMD(scene(), s);
 		return cmd;
 	}else{ untested();
 		return nullptr;
@@ -176,7 +253,7 @@ QUndoCommand* MouseActionSelCmd<CMD>::press(QEvent* e)
 	}else if(auto i = dynamic_cast<ItemEvent*>(e)){ untested();
 		QList<ElementGraphics*> l;
 		l.push_back(&i->item());
-		return new CMD(doc(), l);
+		return new CMD(scene(), l);
 	}else{ untested();
 		trace1("delete::scene unknown sender", e->type());
 		return nullptr;
@@ -196,8 +273,8 @@ QUndoCommand* MouseActionSelCmd<CMD>::release(QEvent*)
 class DeleteSelection : public SchematicEdit {
 public:
 	template<class IT>
-	DeleteSelection(SchematicDoc& ctx, IT deletelist)
-	  : SchematicEdit(*ctx.sceneHACK()) { untested();
+	DeleteSelection(SchematicScene* ctx, IT deletelist)
+	  : SchematicEdit(ctx) { untested();
 		size_t k = 0;
 
 		qDelete(deletelist);
@@ -299,8 +376,8 @@ template<class T>
 class TransformSelection : public SchematicEdit {
 public:
 	template<class IT>
-	TransformSelection(SchematicDoc& ctx, IT selection, T const& t)
-	: SchematicEdit(*ctx.sceneHACK()){itested();
+	TransformSelection(SchematicScene* ctx, IT selection, T const& t)
+	: SchematicEdit(ctx){itested();
 		size_t k = 0;
 		// TODO: bounding box center?
 		QRectF bb;
@@ -337,7 +414,7 @@ class RotateSelectionTransform : public TransformSelection<qucsSymbolTransform>{
 	typedef TransformSelection<qucsSymbolTransform> base;
 public:
 	template<class IT>
-	RotateSelectionTransform(SchematicDoc& ctx, IT selection)
+	RotateSelectionTransform(SchematicScene* ctx, IT selection)
 	  : base(ctx, selection, ninety_degree_transform) {}
 };
 /*--------------------------------------------------------------------------*/
@@ -345,7 +422,7 @@ class MirrorXaxisSelection : public TransformSelection<qucsSymbolTransform>{
 	typedef TransformSelection<qucsSymbolTransform> base;
 public:
 	template<class IT>
-	MirrorXaxisSelection(SchematicDoc& ctx, IT selection)
+	MirrorXaxisSelection(SchematicScene* ctx, IT selection)
 	  : base(ctx, selection, transformFlipHorizontally) {}
 };
 /*--------------------------------------------------------------------------*/
@@ -353,15 +430,15 @@ class MirrorYaxisSelection : public TransformSelection<qucsSymbolTransform>{
 	typedef TransformSelection<qucsSymbolTransform> base;
 public:
 	template<class IT>
-	MirrorYaxisSelection(SchematicDoc& ctx, IT selection)
+	MirrorYaxisSelection(SchematicScene* ctx, IT selection)
 	  : base(ctx, selection, transformFlipVertically) {}
 };
 /*--------------------------------------------------------------------------*/
 typedef MouseActionSelCmd<DeleteSelection> MouseActionDelete;
 typedef MouseActionSelCmd<DeleteSelection> MouseActionActivate; // TODO
 typedef MouseActionSelCmd<RotateSelectionTransform> MouseActionRotate;
-typedef MouseActionSelCmd<MirrorXaxisSelection> MouseActionMirrorXaxis;
-typedef MouseActionSelCmd<MirrorYaxisSelection> MouseActionMirrorYaxis;
+typedef MouseActionSelCmd<MirrorXaxisSelection> HandleMirrorX;
+typedef MouseActionSelCmd<MirrorYaxisSelection> HandleMirrorY;
 /*--------------------------------------------------------------------------*/
 class MouseActionNewElement : public MouseAction{
 public:
@@ -388,13 +465,12 @@ private:
 /*--------------------------------------------------------------------------*/
 class NewElementCommand : public SchematicEdit {
 public:
-	NewElementCommand(SchematicDoc& ctx, ElementGraphics* gfx)
-	: SchematicEdit(*ctx.sceneHACK()) { untested();
+	NewElementCommand(SchematicScene* ctx, ElementGraphics* gfx)
+	: SchematicEdit(ctx) { untested();
 		assert(gfx->scene());
+		assert(gfx->scene() == ctx); // why pass scene then??
 		assert(!element(gfx)->owner());
 		gfx->hide();
-//		ctx.takeOwnership(element(gfx)); // BUG?
-		// elment->setOwner(ctx)...?
 		setText("NewElement" /*element(gfx)->label()*/); // tr?
 		trace0("NewElementCommand::NewElementCommand");
 		qInsert(gfx);
@@ -442,18 +518,25 @@ QUndoCommand* MouseActionNewElement::makeNew(QEvent* ev)
 
 	if(auto se=dynamic_cast<QGraphicsSceneMouseEvent*>(ev)){ untested();
 		QPointF pos = se->scenePos();
-		QPoint xx = doc().snapToGrid(pos);
+		QPoint xx = scene()->snapToGrid(pos);
 		_gfx->setPos(xx);
 	}else{
 	}
 
-	cmd* c = new NewElementCommand(doc(), _gfx);
+	assert(scene() == _gfx->scene()); // why both?
+	cmd* c = new NewElementCommand(scene(), _gfx);
 	// _gfx = nullptr;
 
 	{ untested();
 		_gfx = _gfx->clone(); // new ElementGraphics(elt);
-		doc().sceneAddItem(_gfx); // does not attach.
+		scene()->addItem(_gfx); // does not attach.
 		assert(!element(_gfx)->scope());
+	}
+
+	if(_gfx->isVisible()){ untested();
+		// BUG? should addItem make visible?
+	}else{ untested();
+		_gfx->show();
 	}
 
 	ev->accept();
@@ -463,7 +546,7 @@ QUndoCommand* MouseActionNewElement::makeNew(QEvent* ev)
 QUndoCommand* MouseActionNewElement::deactivate()
 { untested();
 	// assert(!attached);
-	doc().sceneRemoveItem(_gfx);
+	scene()->removeItem(_gfx);
 	delete _gfx; // CHECK: who owns _elt?
 	_gfx = nullptr;
 	incomplete();
@@ -473,7 +556,6 @@ QUndoCommand* MouseActionNewElement::deactivate()
 QUndoCommand* MouseActionNewElement::move(QEvent* ev)
 { itested();
 	QPointF sp;
-	trace1("move", ev->type());
 	if(auto ee=dynamic_cast<QMouseEvent*>(ev)){ untested();
 		unreachable();
 		QPointF wp;
@@ -482,11 +564,12 @@ QUndoCommand* MouseActionNewElement::move(QEvent* ev)
 	}else if(auto ee=dynamic_cast<QGraphicsSceneMouseEvent*>(ev)){ untested();
 		sp = ee->scenePos();
 
-		QPoint xx = doc().snapToGrid(sp);
+		QPoint xx = scene()->snapToGrid(sp);
 		sp = xx;
 	}else{ untested();
 		unreachable();
 	}
+	trace2("MouseActionNewElement::move", ev->type(), sp);
 
 	if(_gfx){ itested();
 		_gfx->setPos(sp.x(), sp.y());
@@ -500,14 +583,15 @@ QUndoCommand* MouseActionNewElement::move(QEvent* ev)
 /*--------------------------------------------------------------------------*/
 QUndoCommand* MouseActionNewElement::enter(QEvent* ev)
 { untested();
-	trace1("new enter", ev->type());
 	auto ee = prechecked_cast<QEnterEvent*>(ev);
 	assert(ee);
 	
 	auto wp = ee->localPos();
 
-	SchematicDoc* d = &doc();
+	auto d = dynamic_cast<QGraphicsView const*>(doc());
+	assert(d);
 	auto sp = d->mapToScene(wp.toPoint());
+	trace2("MouseActionNewElement::enter", ev->type(), sp);
 
 	Element* elt;
 	if(!_gfx){ untested();
@@ -522,9 +606,17 @@ QUndoCommand* MouseActionNewElement::enter(QEvent* ev)
 	}else{ untested();
 		_gfx->setPos(sp.x(), sp.y());
 	}
+
+	assert(scene());
+	scene()->addItem(_gfx);
+
+	if(_gfx->isVisible()){ untested();
+		// BUG?
+	}else{ untested();
+		_gfx->show(); // ??
+	}
 	
-//	scene().addItem(_gfx);
-	doc().sceneAddItem(_gfx);
+//	doc().sceneAddItem(_gfx);
 
 	ev->accept();
 	return nullptr;
@@ -868,7 +960,8 @@ QUndoCommand* MouseActionSelect::release_left(QEvent *e)
 
 	cmd* c = nullptr;
 
-	auto s = doc().selectedItems();
+	assert(scene());
+	auto s = scene()->selectedItems();
 	if(s.isEmpty()){ untested();
 	}else{itested();
 
@@ -884,7 +977,7 @@ QUndoCommand* MouseActionSelect::release_left(QEvent *e)
 
 		if(fX || fY){itested();
 			trace1("possible move", delta);
-			c = new MoveSelection(delta, doc(), s);
+			c = new MoveSelection(delta, scene(), s);
 		}else{itested();
 		}
 	}
@@ -905,15 +998,14 @@ QUndoCommand* MouseActionSelect::release_left(QEvent *e)
 	}else{itested();
 	}
 
-	doc().releaseKeyboard();
+	view()->releaseKeyboard();
 //	Doc->highlightWireLabels ();
 	updateViewport();
 	// drawn = false;
 	return c;
 } // select::release
 /*--------------------------------------------------------------------------*/
-/*--------------------------------------------------------------------------*/
-SchematicActions::SchematicActions(SchematicDoc& ctx)
+SchematicActions::SchematicActions(QucsDoc* ctx)
   : MouseActions(ctx)
 {itested();
 
@@ -943,14 +1035,44 @@ SchematicActions::SchematicActions(SchematicDoc& ctx)
 	maInsertElement = new MouseActionNewElement(*this);
 
 	maActivate = new MouseActionActivate(*this);
-	maMirrorXaxis = new MouseActionMirrorXaxis(*this);
-	maMirrorYaxis = new MouseActionMirrorYaxis(*this);
+	maMirrorXaxis = new HandleMirrorX(*this);
+	maMirrorYaxis = new HandleMirrorY(*this);
 	maRotate = new MouseActionRotate(*this);
 	maEditPaste = new MouseActionPaste(*this);
+
+#if 0
+  connect(editMirror, &QAction::toggled, this, &QucsApp::slotEditMirrorX);
+#endif
 
 	// this was in App previously, and scattered across a couple of pointer hacks.
 	// possibly initialised to "select". recheck.
 	_maCurrent = maSelect;
+
+//	_actionMirrorX = new ActionMirrorX(); // not yet
+
+	_actionSelect = new ActionSelect(this);
+	_actionRotate = new ActionRotate(this);
+	_actionMX = new ActionMirrorX(this);
+	_actionMY = new ActionMirrorY(this);
+	_actionInsertGround = new ActionInsertGround(this);
+	_actionInsertWire = new ActionInsertWire(this);
+	_actionInsertPort = new ActionInsertPort(this);
+
+} // SchematicActions::SchematicActions
+/*--------------------------------------------------------------------------*/
+void SchematicActions::setControls(QucsDoc* ctx)
+{
+//	ctx->_toolbar->add(_actionSelect); ??
+//	// All in one go?? (how?)
+	ctx->addToolBarAction(_actionSelect);
+	ctx->addToolBarAction(_actionRotate);
+	ctx->addToolBarAction(_actionMX);
+	ctx->addToolBarAction(_actionMY);
+	ctx->addToolBarAction(_actionInsertGround);
+	ctx->addToolBarAction(_actionInsertWire);
+	ctx->addToolBarAction(_actionInsertPort);
+
+	// TODO: menu...
 }
 /*--------------------------------------------------------------------------*/
 SchematicActions::~SchematicActions()
@@ -969,16 +1091,14 @@ SchematicActions::~SchematicActions()
 /*--------------------------------------------------------------------------*/
 SchematicScene const* SchematicActions::scene() const
 { untested();
-	auto d=dynamic_cast<SchematicDoc const*>(&_doc);
+	auto d = dynamic_cast<QGraphicsView const*>(_doc);
 	assert(d);
-	return d->scene();
+	return dynamic_cast<SchematicScene const*>(d->scene());
 }
 /*--------------------------------------------------------------------------*/
-SchematicDoc* SchematicActions::doc()
+QucsDoc* SchematicActions::doc()
 { untested();
-	auto d=dynamic_cast<SchematicDoc*>(&_doc);
-	assert(d);
-	return d;
+	return _doc;
 }
 /*--------------------------------------------------------------------------*/
 void SchematicActions::updateViewport()
@@ -986,111 +1106,15 @@ void SchematicActions::updateViewport()
 	doc()->updateViewport();	
 }
 /*--------------------------------------------------------------------------*/
+QPoint SchematicActions::snapToGrid(QPointF const&p) const
+{
+	return scene()->snapToGrid(p);
+}
 /*--------------------------------------------------------------------------*/
 
 QRegExp Expr_CompProp;
 QRegExpValidator Val_CompProp(Expr_CompProp, 0);
 
-// forward to mouseActions... TODO rearrange.
-void SchematicDoc::actionInsertGround(QAction* sender)
-{ untested();
-	possiblyToggleAction(schematicActions().maInsertGround, sender);
-}
-/*--------------------------------------------------------------------------*/
-void SchematicDoc::actionInsertEquation(QAction* sender)
-{
-	possiblyToggleAction(schematicActions().maInsertEqn, sender);
-}
-/*--------------------------------------------------------------------------*/
-void SchematicDoc::actionInsertPort(QAction* sender)
-{ untested();
-	possiblyToggleAction(schematicActions().maInsertPort, sender);
-}
-/*--------------------------------------------------------------------------*/
-void SchematicDoc::actionSelect(QAction* sender)
-{itested();
-	// sender is a button. maSelect is an action. connect the two.
-	// this looks a bit redundant (but later...)
-	possiblyToggleAction(schematicActions().maSelect, sender);
-
-} // SchematicDoc::actionSelect
-/*--------------------------------------------------------------------------*/
-void SchematicDoc::actionOnGrid(QAction* sender)
-{ untested();
-	possiblyToggleAction(schematicActions().maOnGrid, sender);
-//  performToggleAction(on, App->onGrid, &SchematicDoc::elementsOnGrid,
-//		&MouseActions::MMoveOnGrid, &MouseActions::MPressOnGrid);
-}
-
-void SchematicDoc::actionEditRotate(QAction* sender)
-{ untested();
-	possiblyToggleAction(schematicActions().maRotate, sender);
-//  performToggleAction(on, App->editRotate, &SchematicDoc::rotateElements,
-//		&MouseActions::MMoveRotate, &MouseActions::MPressRotate);
-}
-
-void SchematicDoc::actionEditMirrorX(QAction* sender)
-{ untested();
-	possiblyToggleAction(schematicActions().maMirrorYaxis, sender);
-//  performToggleAction(on, App->editMirror, &SchematicDoc::mirrorXComponents,
-//		&MouseActions::MMoveMirrorX, &MouseActions::MPressMirrorX);
-}
-
-void SchematicDoc::actionEditMirrorY(QAction* sender)
-{ untested();
-	possiblyToggleAction(schematicActions().maMirrorXaxis, sender);
-//  performToggleAction(on, App->editMirrorY, &SchematicDoc::mirrorYComponents,
-//		&MouseActions::MMoveMirrorY, &MouseActions::MPressMirrorY);
-}
-
-void SchematicDoc::actionEditActivate(QAction* sender)
-{ untested();
-	possiblyToggleAction(schematicActions().maActivate, sender);
-}
-
-void SchematicDoc::actionEditDelete(QAction* sender)
-{ untested();
-	possiblyToggleAction(schematicActions().maDelete, sender);
-
-	updateViewport();
-//  assert(mouseActions());
-//  mouseActions()->setDrawn(false);
-}
-
-void SchematicDoc::actionSetWire(QAction* sender)
-{itested();
-	possiblyToggleAction(schematicActions().maWire, sender);
-}
-
-void SchematicDoc::actionInsertLabel(QAction*)
-{ untested();
-//  possiblyToggleAction(schematicActions().maInsertLabel, sender);
-  incomplete();
-//  performToggleAction(on, App->insLabel, 0,
-//		&MouseActions::MMoveLabel, &MouseActions::MPressLabel);
-  // mouseAction = mouseActions().maInsLabel;
-}
-
-void SchematicDoc::actionSetMarker(QAction*)
-{ untested();
-  incomplete();
-//  performToggleAction(on, App->setMarker, 0,
-//		&MouseActions::MMoveMarker, &MouseActions::MPressMarker);
-  // mouseAction = mouseActions().maSetMarker;
-}
-
-void SchematicDoc::actionMoveText(QAction*)
-{ untested();
-  incomplete();
-//  performToggleAction(on, App->moveText, 0,
-//		&MouseActions::MMoveMoveTextB, &MouseActions::MPressMoveText);
-  // mouseAction = mouseActions().maMoveText;
-}
-
-void SchematicDoc::actionZoomIn(QAction* sender)
-{ untested();
-	possiblyToggleAction(schematicActions().maZoomIn, sender);
-}
 
 #if 0 // obsolete.
 void SchematicDoc::actionInsertEquation(QAction*)
@@ -1132,346 +1156,6 @@ void SchematicDoc::actionInsertEquation(QAction*)
   App->MousePressAction = &MouseActions::MPressElement;
 }
 #endif
-
-void SchematicDoc::actionEditPaste(QAction* sender)
-{ untested();
-	possiblyToggleAction(schematicActions().maEditPaste, sender);
-#if 0
-	// if it's not a text doc, prevent the user from editing
-	// while we perform the paste operation
-	App->hideEdit();
-
-	if(!on) { untested();
-		App->MouseMoveAction = 0;
-		App->MousePressAction = 0;
-		App->MouseReleaseAction = 0;
-		App->MouseDoubleClickAction = 0;
-		App->activeAction = 0;   // no action active
-		if(mouseActions().wasDrawn()) { untested();
-			viewport()->update();
-		}
-		return;
-	}else{ untested();
-        }
-
-	if(!mouseActions()->pasteElements(this)) { untested();
-		App->editPaste->blockSignals(true); // do not call toggle slot
-		App->editPaste->setChecked(false);       // set toolbar button off
-		App->editPaste->blockSignals(false);
-		return;   // if clipboard empty
-	}else{ untested();
-        }
-
-	uncheckActive();
-	App->activeAction = App->editPaste;
-
-        mouseActions().setDrawn(false)
-	App->MouseMoveAction = &MouseActions::MMovePaste;
-	mouseActions()->movingRotated = 0;
-	App->MousePressAction = 0;
-	App->MouseReleaseAction = 0;
-	App->MouseDoubleClickAction = 0;
-
-#endif
-}
-
-void SchematicDoc::actionSelectElement(QObject*e)
-{ untested();
-  schematicActions().maInsertElement->activate(e);
-  possiblyToggleAction(schematicActions().maInsertElement, nullptr);
-}
-
-// is this still in use?
-void SchematicDoc::actionEditUndo(QAction*)
-{itested();
-  // really?
-	assert(_app);
-  _app->hideEdit(); // disable text edit of component property
-
-  undo();
-  updateViewport();
-  assert(mouseActions());
-  setDrawn(false);
-}
-
-// is this still in use?
-void SchematicDoc::actionEditRedo(QAction*)
-{ untested();
-	assert(_app);
-  _app->hideEdit(); // disable text edit of component property
-
-  redo();
-  updateViewport();
-  setDrawn(false);
-}
-
-void SchematicDoc::actionAlign(int what)
-{ untested();
-	assert(_app);
-  _app->hideEdit(); // disable text edit of component property
-
-  if(!aligning(what)){ untested();
-    QMessageBox::information(this, tr("Info"),
-		      tr("At least two elements must be selected !"));
-  }
-  updateViewport();
-  assert(mouseActions());
-  setDrawn(false);
-}
-
-void SchematicDoc::actionDistrib(int d)
-{ untested();
-  assert(_app);
-  _app->hideEdit(); // disable text edit of component property
-
-  if (d==0){ untested();
-	  distributeHorizontal();
-  }else if(d==1){ untested();
-	  distributeVertical();
-  }else{ untested();
-	  unreachable();
-  }
-  updateViewport();
-  setDrawn(false);
-}
-
-void SchematicDoc::actionSelectAll(QAction*)
-{ untested();
-	incomplete();
-    // selectElements(INT_MIN, INT_MIN, INT_MAX, INT_MAX, true);
-    updateViewport();
-}
-
-void SchematicDoc::actionSelectMarker()
-{ untested();
-	assert(_app);
-  _app->hideEdit(); // disable text edit of component property
-
-  selectMarkers();
-  updateViewport();
-  setDrawn(false);
-}
-
-void SchematicDoc::actionChangeProps(QAction*)
-{ untested();
-	ChangeDialog *d = new ChangeDialog(this);
-	if(d->exec() == QDialog::Accepted) { untested();
-		setChanged(true, true);
-		updateViewport();
-	}
-}
-
-void SchematicDoc::actionCursor(arrow_dir_t)
-{ untested();
-	incomplete();
-#ifdef USE_SCROLLVIEW
-	int sign = 1;
-
-	if(dir==arr_left){ untested();
-		sign = -1;
-	}
-
-	if(App->editText->isHidden()) { untested();
-		// for edit of component property ?
-		auto movingElements = cropSelectedElements();
-		int markerCount=0;
-		for(auto const& i : movingElements){ untested();
-			if(marker(i)){ untested();
-				++markerCount;
-			}
-		}
-
-		if((movingElements.count() - markerCount) < 1) { // all selections are markers
-			incomplete();
-#if 0
-			if(markerCount > 0) {  // only move marker if nothing else selected
-				markerMove(dir, &movingElements);
-			} else if(dir==arr_up) { untested();
-				// nothing selected at all
-				if(scrollUp(verticalScrollBar()->singleStep()))
-					scrollBy(0, -verticalScrollBar()->singleStep());
-			} else if(dir==arr_down) { untested();
-				if(scrollDown(-verticalScrollBar()->singleStep()))
-					scrollBy(0, verticalScrollBar()->singleStep());
-			} else if(dir==arr_left) { untested();
-				if(scrollLeft(horizontalScrollBar()->singleStep()))
-					scrollBy(-horizontalScrollBar()->singleStep(), 0);
-			} else if(dir==arr_right) { untested();
-				if(scrollRight(-horizontalScrollBar()->singleStep()))
-					scrollBy(horizontalScrollBar()->singleStep(), 0);
-			}else{ untested();
-				// unreachable. TODO: switch
-			}
-
-			updateViewport();
-			mouseActions()->drawn = false;
-#endif
-		}else if(dir==arr_up || dir==arr_down){ untested();
-			// some random selection, put it back
-			mouseActions()->moveElements(movingElements, 0, ((dir==arr_up)?-1:1) * GridY);
-			mouseActions()->MAx3 = 1;  // sign for moved elements
-			mouseActions()->endElementMoving(this, &movingElements);
-		}else if(dir==arr_left || dir==arr_right){ untested();
-			mouseActions()->moveElements(movingElements, sign*GridX, 0);
-			mouseActions()->MAx3 = 1;  // sign for moved elements
-			mouseActions()->endElementMoving(this, &movingElements);
-		}else{ untested();
-			//unreachable(); //TODO: switch.
-		}
-
-	}else if(dir==arr_up){ // BUG: redirect.
-		if(mouseActions()->MAx3 == 0) return;  // edit component namen ?
-		Component *pc = component(mouseActions()->focusElement);
-		Property *pp = pc->Props.at(mouseActions()->MAx3-1);  // current property
-		int Begin = pp->Description.indexOf('[');
-		if(Begin < 0) return;  // no selection list ?
-		int End = pp->Description.indexOf(App->editText->text(), Begin); // current
-		if(End < 0) return;  // should never happen
-		End = pp->Description.lastIndexOf(',', End);
-		if(End < Begin) return;  // was first item ?
-		End--;
-		int Pos = pp->Description.lastIndexOf(',', End);
-		if(Pos < Begin) Pos = Begin;   // is first item ?
-		Pos++;
-		if(pp->Description.at(Pos) == ' ') Pos++; // remove leading space
-		App->editText->setText(pp->Description.mid(Pos, End-Pos+1));
-		App->editText->selectAll();
-	}else if(dir==arr_down) { // BUG: redirect.
-		if(mouseActions()->MAx3 == 0) return;  // edit component namen ?
-		Component *pc = component(mouseActions()->focusElement);
-		Property *pp = pc->Props.at(mouseActions()->MAx3-1);  // current property
-		int Pos = pp->Description.indexOf('[');
-		if(Pos < 0) return;  // no selection list ?
-		Pos = pp->Description.indexOf(App->editText->text(), Pos); // current list item
-		if(Pos < 0) return;  // should never happen
-		Pos = pp->Description.indexOf(',', Pos);
-		if(Pos < 0) return;  // was last item ?
-		Pos++;
-		if(pp->Description.at(Pos) == ' ') Pos++; // remove leading space
-		int End = pp->Description.indexOf(',', Pos);
-		if(End < 0) {  // is last item ?
-			End = pp->Description.indexOf(']', Pos);
-			if(End < 0) return;  // should never happen
-		}
-		App->editText->setText(pp->Description.mid(Pos, End-Pos));
-		App->editText->selectAll();
-	}else{ untested();
-
-	}
-#endif
-} // actionCursor
-
-void SchematicDoc::actionApplyCompText()
-{ untested();
-#if 0 // what is focusElement??
-	auto Doc=this;
-	auto editText=App->editText;
-
-	QString s;
-	QFont f = QucsSettings.font;
-	f.setPointSizeF(Scale * float(f.pointSize()) );
-	editText->setFont(f);
-
-	Property  *pp = 0;
-	Component *pc = component(mouseActions()->focusElement);
-	if(!pc) return;  // should never happen
-	mouseActions()->MAx1 = pc->cx_() + pc->tx;
-	mouseActions()->MAy1 = pc->cy_() + pc->ty;
-
-	int z, n=0;  // "n" is number of property on screen
-	pp = pc->Props.first();
-	for(z=mouseActions()->MAx3; z>0; z--) {  // calculate "n"
-		if(!pp) {  // should never happen
-			App->hideEdit();
-			return;
-		}
-		if(pp->display) n++;   // is visible ?
-		pp = pc->Props.next();
-	}
-
-	pp = 0;
-	if(mouseActions()->MAx3 > 0)  pp = pc->Props.at(mouseActions()->MAx3-1); // current property
-	else s = pc->name();
-
-	if(!editText->isHidden()) {   // is called the first time ?
-		// no -> apply value to current property
-		if(mouseActions()->MAx3 == 0) {   // component name ?
-			if(!editText->text().isEmpty())
-				if(pc->name() != editText->text()) { untested();
-					auto pc2=Doc->find_component( editText->text());
-					if(!pc2) { untested();
-						pc->obsolete_name_override_hack( editText->text() );
-						setChanged(true, true);  // only one undo state
-					}
-				}
-		}
-		else if(pp) {  // property was applied
-			if(pp->Value != editText->text()) { untested();
-				pp->Value = editText->text();
-				recreateSymbol(pc);  // because of "Num" and schematic symbol
-				setChanged(true, true); // only one undo state
-			}
-		}
-
-		n++;     // next row on screen
-		(mouseActions()->MAx3)++;  // next property
-		pp = pc->Props.at(mouseActions()->MAx3-1);  // search for next property
-
-		viewport()->update();
-                mouseActions().setDrawn(false);
-
-		if(!pp) {     // was already last property ?
-			App->hideEdit();
-			return;
-		}
-
-
-		while(!pp->display) {  // search for next visible property
-			(mouseActions()->MAx3)++;  // next property
-			pp = pc->Props.next();
-			if(!pp) {     // was already last property ?
-				App->hideEdit();
-				return;
-			}
-		}
-	}
-
-	// avoid seeing the property text behind the line edit
-	if(pp)  // Is it first property or component name ?
-		s = pp->Value;
-	editText->setMinimumWidth(editText->fontMetrics().width(s)+4);
-
-  incomplete();
-  /// Doc->contentsToViewport(int(Doc->Scale * float(view->MAx1 - Doc->ViewX1)),
-  ///			 int(Doc->Scale * float(view->MAy1 - Doc->ViewY1)),
-  ///	 view->MAx2, view->MAy2);
-	editText->setReadOnly(false);
-	if(pp) {  // is it a property ?
-		s = pp->Value;
-		mouseActions()->MAx2 += editText->fontMetrics().width(pp->Name+"=");
-		if(pp->Description.indexOf('[') >= 0)  // is selection list ?
-			editText->setReadOnly(true);
-		Expr_CompProp.setPattern("[^\"]*");
-		if(!pc->showName) n--;
-	}
-	else   // it is the component name
-		Expr_CompProp.setPattern("[\\w_]+");
-	Val_CompProp.setRegExp(Expr_CompProp);
-	editText->setValidator(&Val_CompProp);
-
-	z = editText->fontMetrics().lineSpacing();
-	mouseActions()->MAy2 += n*z;
-	editText->setText(s);
-	misc::setWidgetBackgroundColor(editText, QucsSettings.BGColor);
-	editText->setFocus();
-	editText->selectAll();
-	// make QLineEdit editable on mouse click
-	QPoint p = QPoint(mouseActions()->MAx2, mouseActions()->MAy2);
-	editText->setParent(Doc->viewport());
-	App->editText->setGeometry(p.x(), p.y(), App->editText->width(), App->editText->height());
-	App->editText->show();
-#endif
-}
 
 /*--------------------------------------------------------------------------*/
 /*--------------------------------------------------------------------------*/

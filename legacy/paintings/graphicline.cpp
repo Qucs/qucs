@@ -1,6 +1,4 @@
 /***************************************************************************
-                              graphicline.cpp
-                             -----------------
     copyright            : (C) 2003 by Michael Margraf
                                2018, 2020 Felix Salfelder
  ***************************************************************************/
@@ -17,7 +15,7 @@
 #include "misc.h"
 #include "qucs_globals.h"
 #include "module.h"
-#include "schematic_doc.h" // BUG
+#include "viewpainter.h"
 
 #include <QPainter>
 #include <QPushButton>
@@ -51,12 +49,10 @@ public:
   QString saveCpp();
   QString saveJSON();
   void paint(ViewPainter*) const override;
-  void MouseMoving(SchematicDoc*, int, int, int, int, SchematicDoc*, int, int, bool);
   bool MousePressing();
   bool getSelected(float, float, float);
   void Bounding(int&, int&, int&, int&);
   bool resizeTouched(float, float, float);
-  void MouseResizeMoving(int, int, SchematicDoc*);
 
   void rotate();
   void mirrorX();
@@ -268,26 +264,26 @@ bool GraphicLine::resizeTouched(float fX, float fY, float len)
 
 // --------------------------------------------------------------------------
 // Mouse move action during resize.
+#if 0
 void GraphicLine::MouseResizeMoving(int, int, SchematicDoc *)
 {
-#if 0
 
   paintScheme(p);  // erase old painting
   if(State == 1) { x2 += cx-x; y2 += cy-y; cx = x; cy = y; } // move beginning
   else { x2 = x-cx;  y2 = y-cy; }  // move ending
 
   paintScheme(p);  // paint new painting
-#endif
 }
+#endif
 
 // --------------------------------------------------------------------------
 // fx/fy are the precise coordinates, gx/gy are the coordinates set on grid.
 // x/y are coordinates without scaling.
+#if 0
 void GraphicLine::MouseMoving(
 	SchematicDoc *pAppaintScale, int, int, int gx, int gy,
 	SchematicDoc *p, int x, int y, bool drawn)
 {
-#if 0
   if(State > 0) {
     if(State > 1)
       paintScale->PostPaintEvent(_Line, cx, cy, cx+x2, cy+y2);  // erase old painting
@@ -310,8 +306,8 @@ void GraphicLine::MouseMoving(
   p->PostPaintEvent(_Line, x1+27, y1, x1+15, y1+12,0,0,true);  // paint new cursor symbol
   p->PostPaintEvent(_Line, x1+25, y1-2, x1+29, y1+2,0,0,true);
   p->PostPaintEvent(_Line, x1+13, y1+10, x1+17, y1+14,0,0,true);
-#endif
 }
+#endif
 
 // --------------------------------------------------------------------------
 bool GraphicLine::MousePressing()

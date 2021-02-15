@@ -47,7 +47,6 @@ class Node;
 class QucsDoc;
 class QPainter;
 class WireLabel;
-class SchematicDoc;
 class SchematicModel;
 class Symbol;
 class Widget;
@@ -127,7 +126,7 @@ public: // make old variables accessible
 
 	int const& x1_() const { return x1; }
 	int const& y1_() const { return y1; }
-	void snapToGrid(SchematicDoc& s);
+//	void snapToGrid(SchematicDoc& s);
 
 	void setObsoleteType(int){
 		unreachable();

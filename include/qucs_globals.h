@@ -31,6 +31,6 @@ extern INTERFACE Dispatcher<Diagram> diagram_dispatcher;
 extern INTERFACE Dispatcher<DocumentLanguage> languageDispatcher;
 extern INTERFACE Dispatcher<Data> dataDispatcher;
 extern INTERFACE Dispatcher<Symbol> symbol_dispatcher;
-extern INTERFACE Dispatcher<Object> widget_dispatcher;
+extern INTERFACE Dispatcher<Widget> widget_dispatcher;
 
 #endif

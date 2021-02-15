@@ -29,7 +29,7 @@ public:
  ~AC_Sim();
   Element* clone() const{return new AC_Sim(*this);}
   static Element* info(QString&, char* &, bool getNewOne=false);
-  void recreate(SchematicDoc*);
+  void recreate(Schematic*);
 
   std::string typeName() const{
     return "AC";
@@ -98,7 +98,7 @@ Element* AC_Sim::info(QString& Name, char* &BitmapFile, bool getNewOne)
 }
 #endif
 
-void AC_Sim::recreate(SchematicDoc*)
+void AC_Sim::recreate(Schematic*)
 {
   Property *pp = Props.first();
   if((pp->Value == "list") || (pp->Value == "const")) {

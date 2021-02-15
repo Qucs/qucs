@@ -17,11 +17,11 @@
 #include "painting.h"
 #include "qt_compat.h"
 #include "qucs_app.h"
-#include "schematic_doc.h"
 #include "sckt_base.h"
 #include "property.h"
 #include "parameter.h"
 #include "dot.h"
+#include "viewpainter.h"
 
 #include <limits.h>
 

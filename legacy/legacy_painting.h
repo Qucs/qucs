@@ -22,6 +22,7 @@
 
 class QString;
 class QPen;
+class Schematic; // obsolete.
 
 class LegacyPainting : public Element, public Painting {
 public:
@@ -46,12 +47,12 @@ public: // legacy anonymous stuff.
 public:
   virtual bool load(const QString&) { return true; };
   virtual QString save() /*const*/ =0;
-  virtual void MouseMoving(SchematicDoc*, int, int, int, int,
-                           SchematicDoc*, int, int, bool) {}
+//  virtual void MouseMoving(SchematicDoc*, int, int, int, int,
+//                           SchematicDoc*, int, int, bool) {}
   virtual bool MousePressing() { return false; }
   virtual void Bounding(int&, int&, int&, int&);
   virtual bool resizeTouched(float, float, float) { return false; }
-  virtual void MouseResizeMoving(int, int, SchematicDoc*) {}
+//  virtual void MouseResizeMoving(int, int, SchematicDoc*) {}
 
   virtual void rotate() {}
   virtual void mirrorX() {}

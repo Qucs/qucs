@@ -11,7 +11,7 @@
  *                                                                         *
  ***************************************************************************/
 
-#include "schematic_doc.h"
+//#include "schematic_doc.h"
 #include "schematic_lang.h"
 #include "qucs_globals.h"
 #include "nodemap.h"
@@ -21,6 +21,8 @@
 #include "parameter.h"
 #include "painting.h" // BUG
 #include "place.h" // BUG?
+#include "diagram.h" // BUG?
+#include "task_element.h" // BUG?
 /*--------------------------------------------------------------------------*/
 /*--------------------------------------------------------------------------*/
 // getting here in CLI mode

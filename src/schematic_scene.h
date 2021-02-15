@@ -33,13 +33,13 @@
 #include "qt_compat.h"
 #include "viewpainter.h"
 
-class Symbol;
-class Place;
 class Element;
 class ElementGraphics;
 class Node;
-class SchematicDoc;
+class Place;
+class QucsDoc;
 class SchematicModel;
+class Symbol;
 
 // TODO: merge schematic mouse actions into this.
 class SchematicScene : public QGraphicsScene
@@ -109,8 +109,8 @@ private:
   void selectAll(bool v=true);
 
 protected:
-	SchematicDoc* doc();
-	SchematicDoc const* doc() const;
+	QucsDoc* doc();
+	QucsDoc const* doc() const;
 
 private:
   bool event(QEvent* e) override;

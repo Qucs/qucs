@@ -1,6 +1,4 @@
 /***************************************************************************
-                              graphictext.cpp
-                             -----------------
     copyright            : (C) 2003 by Michael Margraf
  ***************************************************************************/
 
@@ -17,7 +15,8 @@
 #include "viewpainter.h"
 #include "graphictext.h"
 #include "graphictextdialog.h"
-#include "schematic_doc.h" // BUG
+#include "viewpainter.h"
+#include "qt_compat.h"
 #include "misc.h"
 #include "qucs_globals.h"
 #include "module.h"
@@ -43,7 +42,7 @@ public:
   GraphicText();
  ~GraphicText();
 
-  void paintScheme(SchematicDoc*);
+  void paintScheme(Schematic*);
   void getCenter(int&, int&);
 //  void setCenter(int, int, bool relative=false);
 
@@ -56,7 +55,7 @@ public:
   QString saveCpp();
   QString saveJSON();
   void paint(ViewPainter*);
-  void MouseMoving(SchematicDoc*, int, int, int, int, SchematicDoc*, int, int, bool);
+  void MouseMoving(Schematic*, int, int, int, int, Schematic*, int, int, bool);
   bool MousePressing();
   bool getSelected(float, float, float);
   void Bounding(int&, int&, int&, int&);
@@ -146,7 +145,7 @@ void GraphicText::paint(ViewPainter *p)
 }
 
 // -----------------------------------------------------------------------
-void GraphicText::paintScheme(SchematicDoc *p)
+void GraphicText::paintScheme(Schematic *p)
 {
 	incomplete();
   // FIXME #warning QMatrix wm = p->worldMatrix();
@@ -155,7 +154,7 @@ void GraphicText::paintScheme(SchematicDoc *p)
 // FIXME #warning 		wm.dy() + double(cy) * wm.m22());
   // FIXME #warning p->setWorldMatrix(Mat);
   // FIXME #warning p->rotate(-Angle);
-  p->PostPaintEvent(_Rect, 0, 0, x2, y2);
+  //p->PostPaintEvent(_Rect, 0, 0, x2, y2);
 
   // FIXME #warning p->setWorldMatrix(wm);
 }
@@ -252,6 +251,7 @@ QString GraphicText::save()
 }
 
 // --------------------------------------------------------------------------
+#if 0
 QString GraphicText::saveCpp()
 {
 	   auto cx=Element::cx();
@@ -286,13 +286,14 @@ QString GraphicText::saveJSON()
       arg(cos(pi * Angle / 180.0)).arg(sin(pi * Angle / 180.0));
   return s;
 }
+#endif
 
 // -----------------------------------------------------------------------
 // fx/fy are the precise coordinates, gx/gy are the coordinates set on grid.
 // x/y are coordinates without scaling.
 void GraphicText::MouseMoving(
-	SchematicDoc*, int, int, int , int,
-	SchematicDoc *, int , int, bool)
+	Schematic*, int, int, int , int,
+	Schematic*, int , int, bool)
 {
 #if 0
   // FIXME #warning p->setPen(Qt::SolidLine);

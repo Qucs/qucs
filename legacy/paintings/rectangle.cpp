@@ -13,7 +13,7 @@
  ***************************************************************************/
 #include "filldialog.h"
 #include "misc.h"
-#include "schematic_doc.h"
+#include "viewpainter.h"
 #include "../legacy_painting.h"
 #include "qucs_globals.h"
 #include "module.h"
@@ -34,7 +34,6 @@ private:
   Rectangle(Rectangle const& p) : LegacyPainting(p) {}
   Element* clone() const { return new Rectangle(*this); }
 
-  void paintScheme(SchematicDoc*) const;
   void getCenter(int&, int&);
   void setCenter(int, int, bool relative=false);
 
@@ -50,7 +49,6 @@ private:
   bool MousePressing();
   bool getSelected(float, float, float);
   bool resizeTouched(float, float, float);
-  void MouseResizeMoving(int, int, SchematicDoc*);
 
   void rotate();
   void mirrorX();
@@ -301,10 +299,10 @@ bool Rectangle::resizeTouched(float fX, float fY, float len)
 
 // --------------------------------------------------------------------------
 // Mouse move action during resize.
+#if 0
 void Rectangle::MouseResizeMoving(int , int , SchematicDoc *)
 {
 incomplete();
-#if 0
   paintScheme(p);  // erase old painting
   switch(State) {
     case 0: x2 = x-cx; y2 = y-cy; // lower right corner
@@ -320,8 +318,8 @@ incomplete();
   if(y2 < 0) { State ^= 2; y2 *= -1; cy -= y2; }
 
   paintScheme(p);  // paint new painting
-#endif
 }
+#endif
 
 // --------------------------------------------------------------------------
 // fx/fy are the precise coordinates, gx/gy are the coordinates set on grid.

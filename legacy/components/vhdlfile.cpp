@@ -16,7 +16,7 @@
  ***************************************************************************/
 #include "vhdlfile.h"
 #include "qucs_app.h"
-#include "schematic_doc.h"
+#include "qucsdoc.h"
 #include "misc.h"
 #include "qio.h"
 

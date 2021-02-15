@@ -15,25 +15,25 @@
 #include <QFileInfo>
 #include <QAction>
 
+#include "action.h"
 #include "qucsdoc.h"
-#include "mouseactions.h"
+#include "doc_actions.h"
 #include "simmessage.h"
 #include "qucs_app.h"
 #include <QUndoStack>
 #include "qio.h" // tmp?
 #include "simulator.h"
 #include "sckt_base.h"
+#include "qt_compat.h"
 
+void QucsDoc::setDocFile(std::string const& filename)
+{ untested();
+	_name = QString_(filename);
+  QFileInfo Info(_name);
+  if(!_name.isEmpty()) { untested();
+    _name = Info.absoluteFilePath();
 
-QucsDoc::QucsDoc(QucsApp* App_, const QString& Name_, QWidget* o)
-   : _app(App_),
-	  _owner(o)
-{
-  GridOn = true;
-  DocName = Name_;
-  QFileInfo Info(DocName);
-  if(!DocName.isEmpty()) {
-    DocName = Info.absoluteFilePath();
+	 // properties.set("filename", _name); ??
     QString base = Info.completeBaseName();
     QString ext = Info.suffix();
 
@@ -44,11 +44,23 @@ QucsDoc::QucsDoc(QucsApp* App_, const QString& Name_, QWidget* o)
     Script = base + ".m";          // name of the default script
     if(ext != "dpl")
       DataDisplay = base + ".dpl"; // name of default data display
-    else {
+    else { untested();
       DataDisplay = base + ".sch"; // name of default schematic
       GridOn = false;              // data display without grid (per default)
     }
+  }else{ untested();
   }
+}
+
+QucsDoc::QucsDoc() : Widget() // (QucsApp* App_, const QString& Name_, QWidget* o)
+//   : _app(App_),
+//	  _owner(o)
+{ untested();
+  GridOn = true;
+  _name = "unnamed"; // name? filename?
+
+  // setDocName(...)?
+
   SimOpenDpl = true;
   SimRunScript = false;
 
@@ -58,12 +70,17 @@ QucsDoc::QucsDoc(QucsApp* App_, const QString& Name_, QWidget* o)
 }
 
 QucsDoc::~QucsDoc()
+{ untested();
+}
+
+void QucsDoc::slotToolBar(QAction* a)
 {
+	incomplete();
 }
 
 // really?!
 void QucsDoc::undo()
-{
+{ untested();
 	QUndoStack* u = undoStack();
 	if(u){itested();
 		u->undo();
@@ -75,52 +92,56 @@ void QucsDoc::undo()
 }
 
 void QucsDoc::redo()
-{
+{ untested();
 	QUndoStack* u = undoStack();
-	if(u){
+	if(u){ untested();
 		u->redo();
-	}else{
+	}else{ untested();
 	}
 }
 
 QString QucsDoc::fileSuffix (const QString& Name)
-{
+{ untested();
   QFileInfo Info (Name);
   return Info.suffix();
 }
 
 QString QucsDoc::fileSuffix (void)
-{
-  return fileSuffix (DocName);
+{ untested();
+  return fileSuffix (_name);
 }
 
 QString QucsDoc::fileBase (const QString& Name)
-{
+{ untested();
   QFileInfo Info (Name);
   return Info.completeBaseName();
 }
 
 QString QucsDoc::fileBase (void)
-{
-  return fileBase (DocName);
+{ untested();
+  return fileBase (_name);
 }
 
+#if 0
 // cleanup debris
 QAction* QucsDoc::selectAction()
-{
+{ untested();
 	unreachable();
 	assert(_app);
   	return _app->select;
 }
+#endif
 
+// set mode??
 void QucsDoc::setActiveAction(MouseAction* a)
-{
-	if(mouseActions()){itested();
-		mouseActions()->setActive(a);
+{ untested();
+	if(eventHandler()){ untested();
+		eventHandler()->setActive(a);
 	}else{ untested();
 	}
 }
 
+#if 0
 MouseActions const* QucsDoc::mouseActions() const
 { untested();
 	auto ma = const_cast<MouseActions*>(mouseActions());
@@ -131,13 +152,87 @@ MouseActions* QucsDoc::mouseActions()
 { untested();
 	return nullptr;
 }
+#endif
 
+QucsApp* QucsDoc::app()
+{ untested();
+	QObject* w = dynamic_cast<QWidget*>(this);
+	while(w){ untested();
+		if(auto a = dynamic_cast<QucsApp*>(w)){ untested();
+			return a;
+		}else{ untested();
+			w = w->parent();
+		}
+	}
+}
+
+// QWidget* QucsDoc::workToolbar()
+// { untested();
+// 	if(app()){ untested();
+// 		return app()->workToolbar();
+// 	}else{ untested();
+// 		return nullptr;
+// 	}
+// }
+
+void QucsDoc::showEvent(QShowEvent* ev)
+{
+	if(_eventHandler){
+		_eventHandler->setControls(this);
+	}else{
+	}
+}
+
+void QucsDoc::hideEvent(QHideEvent* ev)
+{ untested();
+	if(app()){ untested();
+		// necessary?
+		// when hiding a qucsdoc, shouldn't all children become invisible?
+		// (does not seem to work)
+		app()->clearWorkToolbar();
+	}else{ untested();
+	}
+}
+
+// void QucsDoc::addToolBar(QToolBar* a)
+// {
+// }
+
+void QucsDoc::addToolBarAction(QAction* a)
+{ untested();
+	assert(a);
+	if(auto w=dynamic_cast<QWidget*>(this)){ untested();
+		// assert(a->parent()==w);
+		// no. move dto schematicAction
+	}else{ untested();
+	}
+
+	if(app()){ untested();
+		// TODO: add toolbar in one piece.
+		app()->addWorkToolbarAction(a);
+	}else{ untested();
+	}
+
+	if(auto w=dynamic_cast<QWidget*>(this)){ untested();
+		// should not have messed with it.
+		// assert(a->parent()==w);
+	}else{ untested();
+	}
+}
 // similar to former Schematic::performtoggleaction. but take care of actions,
 // and deal with undoable commands.
 // https://www.walletfox.com/course/qundocommandexample.php?
 // https://stackoverflow.com/questions/32973326/qgraphicsscene-how-to-map-item-movements-into-qundocommand
-void QucsDoc::possiblyToggleAction(MouseAction* a, QAction* sender)
-{
+void QucsDoc::possiblyToggleAction(MouseAction* a, QObject* s)
+{ untested();
+	auto sender = dynamic_cast<QAction*>(s);
+	if(!sender){ // assert?
+		incomplete();
+		return;
+	}else{
+	}
+
+	trace3("possiblyToggle", a, sender, sender->text());
 	QUndoCommand* cmd = nullptr;
 	assert(a);
 	if(!sender){ untested();
@@ -174,52 +269,63 @@ void QucsDoc::possiblyToggleAction(MouseAction* a, QAction* sender)
 // SchematicDoc has input modes coupled to "MouseActions" that deal with user input.
 // TextDoc also has modes, but somehow redirects input to another widget.
 MouseAction* QucsDoc::activeAction()
-{
-	if(mouseActions()){ untested();
-		return mouseActions()->activeAction();
+{ untested();
+	if(eventHandler()){ untested();
+		return eventHandler()->activeAction();
 	}else{ untested();
 		return nullptr;
 	}
 }
 /* -------------------------------------------------------------------------------- */
 MouseAction const* QucsDoc::activeAction() const
-{
+{ untested();
 	auto d = const_cast<QucsDoc*>(this);
 	return d->activeAction();
 }
 /* -------------------------------------------------------------------------------- */
+void QucsDoc::addElement(Element*)
+{ untested();
+	incomplete();
+}
+/* -------------------------------------------------------------------------------- */
+SchematicModel* QucsDoc::model()
+{ untested();
+	incomplete();
+	return nullptr;
+}
+/* -------------------------------------------------------------------------------- */
 void QucsDoc::executeCommand(QUndoCommand* c)
-{
+{ untested();
 	// TODO: what if there are multiple views to a scene?
 	// is mouseActions == scene?
 
-	if(mouseActions()){itested();
-		mouseActions()->executeCommand(c);
+	if(eventHandler()){itested();
+		eventHandler()->executeCommand(c); // really?
 		// setChanged();
-		if(!DocChanged){
+		if(!DocChanged){ untested();
 			emit signalFileChanged(true);
-		}else{
+		}else{ untested();
 			// TODO: unset Changed in undo.
 		}
 		DocChanged = c;
 
 		showBias = -1;   // schematic changed => bias points may be invalid
-	}else{
+	}else{ untested();
 	}
 }
 /* -------------------------------------------------------------------------------- */
 CommonData* QucsDoc::qucsData(std::string const& /*key*/)
-{
+{ untested();
 	return nullptr; // _data[key];
 }
 /* -------------------------------------------------------------------------------- */
 void QucsDoc::slotDCbias()
-{
+{ untested();
 	incomplete();
 }
 /* -------------------------------------------------------------------------------- */
 void QucsDoc::slotSimulate()
-{
+{ untested();
   incomplete();
 } // QucsDoc::slotSimulate
 /* -------------------------------------------------------------------------------- */
@@ -227,7 +333,7 @@ void QucsDoc::slotSimulate()
 #include <QFileDialog>
 #include <QMessageBox>
 bool QucsDoc::saveAs()
-{
+{ untested();
 	int n = -1;
 	QString s;
 	QString Filter = QWidget::tr("Schematic") + " (*.sch);;" + QWidget::tr("Any File")+" (*)";
@@ -236,14 +342,14 @@ bool QucsDoc::saveAs()
 		s = docName();
 		Info.setFile(s);
 		// which is default directory ?
-		if(!s.isEmpty()) {
+		if(!s.isEmpty()) { untested();
 #if 0
 		}else if(!ProjName.isEmpty()) { untested();
 			s = QucsSettings.QucsWorkDir.path();
-		}else if(!lastDirOpenSave.isEmpty()){
+		}else if(!lastDirOpenSave.isEmpty()){ untested();
 			s = lastDirOpenSave;
 #endif
-		} else{
+		} else{ untested();
 			s = QDir::currentPath();
 		}
 
@@ -258,9 +364,9 @@ bool QucsDoc::saveAs()
 				QDir(QString::fromStdString(QucsSettings.QucsWorkDir)).absolutePath(),
 				Filter);
 
-		if(s.isEmpty()) {
+		if(s.isEmpty()) { untested();
 			return false;
-		}else{
+		}else{ untested();
 		}
 
 		Info.setFile(s);               // try to guess the best extension ...
@@ -269,7 +375,7 @@ bool QucsDoc::saveAs()
 		if(ext.isEmpty() || !extlist.contains(ext)) { untested();
 			incomplete();
 			// if no extension was specified or is unknown
-		}else{
+		}else{ untested();
 		}
 
 		Info.setFile(s);
@@ -278,14 +384,14 @@ bool QucsDoc::saveAs()
 					QWidget::tr("The file '")+Info.fileName()+QWidget::tr("' already exists!\n")+
 					QWidget::tr("Saving will overwrite the old one! Continue?"),
 					QWidget::tr("No"), QWidget::tr("Yes"), QWidget::tr("Cancel"));
-			if(n == 2){
+			if(n == 2){ untested();
 				return false;    // cancel
-			}else if(n == 0) {
+			}else if(n == 0) { untested();
 				// try again?
 				continue;
-			}else{
+			}else{ untested();
 			}
-		}else{
+		}else{ untested();
 		}
 
 #if 0 // incomplete
@@ -304,17 +410,17 @@ bool QucsDoc::saveAs()
 
 	auto W = dynamic_cast<QWidget*>(this);
 
-	if(auto o=prechecked_cast<QTabWidget*>(_owner)){
+	if(auto o=prechecked_cast<QTabWidget*>(_owner)){ untested();
 		o->setTabText(o->indexOf(W), s); // misc::properFileName(s));
 		// lastDirOpenSave = Info.absolutePath();  // remember last directory and file
-	}else{
+	}else{ untested();
 	}
 
 
 	n = save();   // SAVE
-	if(n < 0){
+	if(n < 0){ untested();
 		return false;
-	}else{
+	}else{ untested();
 	}
 
 //	updatePortNumber(Doc, n);
@@ -328,17 +434,17 @@ bool QucsDoc::saveAs()
 #include "simulator.h"
 /* -------------------------------------------------------------------------------- */
 void Simulator::attachDoc(QucsDoc /* const?? */ * d)
-{
+{ untested();
 	_doc = d;
 }
 /* -------------------------------------------------------------------------------- */
 #if 1
 // FIXME.
 Simulator* QucsDoc::simulatorInstance(std::string const& which)
-{
-	if (!scope()){
+{ untested();
+	if (!scope()){ untested();
 		return nullptr;
-	}else{
+	}else{ untested();
 	}
 	auto i = scope()->find_(which);
 	Simulator* sim=nullptr;
@@ -349,19 +455,19 @@ Simulator* QucsDoc::simulatorInstance(std::string const& which)
 		if(which!=""){ untested();
 			auto d = dataDispatcher[which];
 			proto = dynamic_cast<Simulator*>(d);
-		}else{
+		}else{ untested();
 		}
 
-		if(proto){
+		if(proto){ untested();
 			sim = proto->clone();
 			sim->set_owner(root());
 			scope()->push_back(sim);
-		}else{
+		}else{ untested();
 			incomplete();
 		}
 	}else if(auto s=dynamic_cast<Simulator*>(*i)){ untested();
 		sim = s;
-	}else{
+	}else{ untested();
 	}
 
 	return sim;
@@ -369,27 +475,27 @@ Simulator* QucsDoc::simulatorInstance(std::string const& which)
 #endif
 /* -------------------------------------------------------------------------------- */
 void setParameter(std::string const&, std::string const&)
-{
+{ untested();
 	incomplete();
 }
 /* -------------------------------------------------------------------------------- */
 SchematicModel* QucsDoc::scope()
-{
-	if(root()){
+{ untested();
+	if(root()){ untested();
 		return root()->scope();
-	}else{
+	}else{ untested();
 		return nullptr;
 	}
 }
 /* -------------------------------------------------------------------------------- */
 SchematicModel const* QucsDoc::scope() const
-{
+{ untested();
 	auto d = const_cast<QucsDoc*>(this);
 	return d->scope();
 }
 /* -------------------------------------------------------------------------------- */
 SubcktBase const* QucsDoc::root() const
-{
+{ untested();
 	auto d = const_cast<QucsDoc*>(this);
 	return d->root();
 }
@@ -400,12 +506,12 @@ SubcktBase const* QucsDoc::root() const
 // Now a project might have prototypes (e.g. user library) that are not global,
 // they are stashed here.
 void QucsDoc::installElement(Element const* e)
-{
+{ untested();
 	trace1("installElement", e->label());
 	auto& p = _protos[e->label()];
-	if(p){
+	if(p){ untested();
 		delete p;
-	}else{
+	}else{ untested();
 	}
 	p = e;
 }

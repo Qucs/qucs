@@ -20,7 +20,6 @@
 #include "node.h"
 #include "qucs_app.h"
 #include "mnemo.h"
-#include "schematic_doc.h"
 
 #include <QGridLayout>
 #include <QVBoxLayout>

@@ -32,10 +32,11 @@
 #include <locale.h>
 
 #include "diagram.h"
+#include "schematic_model.h"
 #include "diagramdialog.h"
 #include "qucs_app.h"
 #include "mnemo.h"
-#include "schematic_doc.h"
+// #include "schematic_doc.h"
 #include "platform.h"
 #include "qio.h"
 #include "misc.h"
@@ -286,10 +287,6 @@ void Diagram::paintMarkers(ViewPainter *, bool paintAll)
 }
 
 // ------------------------------------------------------------
-void Diagram::paintScheme(SchematicDoc *p) const
-{ untested();
-  p->PostPaintEvent(_Rect, cx(), cy()-y2, x2, y2);
-}
 
 /*!
    Put axis labels into the text list.
@@ -2290,12 +2287,6 @@ double Diagram::wavevalX(int i) const
     return i*xAxis.up/(sc*50); 
 }
 */
-
-bool Diagram::pressElement(SchematicDoc* Doc, Element*& selElem, QMouseEvent* Event)
-{ untested();
-  assert(false); // obsolete.
-  return false;
-}
 
 void Diagram::prepare()
 {
