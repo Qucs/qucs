@@ -35,7 +35,6 @@
  */
 
 class QucsDoc;
-class TextDoc;
 class SimMessage; // BUG
 class MouseActions;
 class SearchDialog;

@@ -28,13 +28,15 @@
 #include <QHBoxLayout>
 
 #include "digisettingsdialog.h"
-#include "textdoc.h"
 #include "misc.h"
 
 
-DigiSettingsDialog::DigiSettingsDialog(TextDoc *Doc_)
-                  : QDialog(Doc_) 
+DigiSettingsDialog::DigiSettingsDialog(QucsDoc *Doc_)
+                  : QDialog(nullptr) 
 {
+	auto w = dynamic_cast<QWidget*>(Doc_);
+	QDialog::setParent(w);
+
   Doc = Doc_;
   setWindowTitle(tr("Document Settings"));
 

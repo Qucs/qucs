@@ -39,11 +39,8 @@
 #include <QMimeData>
 
 #include "qucs_app.h"
-//#include "schematic_doc.h"
 #include "node.h"
-#include "textdoc.h"
 #include "viewpainter.h"
-// #include "mouseactions.h"
 #include "misc.h"
 #include "qucs_globals.h"
 #include "io_trace.h"

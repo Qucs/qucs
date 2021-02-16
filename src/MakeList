@@ -63,7 +63,6 @@ CPP_SRC = \
 	symbol.cpp \
 	syntax.cpp \
 	task_element.cpp \
-	textdoc.cpp \
 	u_parameter.cc \
 	viewpainter.cpp \
 	wire.cpp \
@@ -76,13 +75,11 @@ QMOCHEADERS = \
 	octave_window.h \
 	projectView.h \
 	schematic_scene.h \
-	textdoc.h \
 	qucs_tabs.h \
 	qucs_app.h
 
 DIALG_MOCHEADERS = \
 	aboutdialog.h \
-	digisettingsdialog.h \
 	exportdialog.h \
 	importdialog.h \
 	labeldialog.h \
@@ -94,8 +91,7 @@ DIALG_MOCHEADERS = \
 	qucssettingsdialog.h \
 	savedialog.h \
 	searchdialog.h \
-	simmessage.h \
-	vasettingsdialog.h
+	simmessage.h
 
 HDR1 = \
 	diagramdialog.h \
@@ -145,7 +141,6 @@ HDR2 = \
 # plugins? lets see
 DIALOG_SRC = \
 	aboutdialog.cpp \
-	digisettingsdialog.cpp \
 	exportdialog.cpp \
 	importdialog.cpp \
 	labeldialog.cpp \
@@ -157,8 +152,7 @@ DIALOG_SRC = \
 	qucssettingsdialog.cpp \
 	savedialog.cpp \
 	searchdialog.cpp \
-	simmessage.cpp \
-	vasettingsdialog.cpp
+	simmessage.cpp
 
 # dialogs related to components
 # sort out later.

@@ -1,7 +1,4 @@
 /***************************************************************************
-                                syntax.h
-                               ----------
-    begin                : Sat Mar 11 2006
     copyright            : (C) 2006 by Michael Margraf
     email                : michael.margraf@alumni.tu-berlin.de
  ***************************************************************************/
@@ -10,16 +7,16 @@
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU General Public License as published by  *
- *   the Free Software Foundation; either version 2 of the License, or     *
+ *   the Free Software Foundation; either version 3 of the License, or     *
  *   (at your option) any later version.                                   *
  *                                                                         *
  ***************************************************************************/
 
-#ifndef SYNTAX_H
-#define SYNTAX_H
+#ifndef QUCS_SYNTAX_H
+#define QUCS_SYNTAX_H
 
-#include "textdoc.h"
 #include <QSyntaxHighlighter>
+#include "qucsdoc.h"
 
 enum language_type {
   LANG_NONE = 0,
@@ -36,7 +33,7 @@ enum textstate_type {
 
 class SyntaxHighlighter : public QSyntaxHighlighter {
 public:
- SyntaxHighlighter(TextDoc*);
+ SyntaxHighlighter(QucsDoc*);
  virtual ~SyntaxHighlighter();
 
  void setLanguage(int);
@@ -44,7 +41,7 @@ public:
 
 private:
   int language;
-  TextDoc *Doc;
+  QucsDoc *Doc;
 
   struct HighlightingRule
      {

@@ -16,29 +16,163 @@ Copyright (C) 2006 by Michael Margraf <michael.margraf@alumni.tu-berlin.de>
 
 // text document
 
-#include <QAction>
-#include <QMessageBox>
-#include <QTextStream>
+#ifndef QUCS_TEXTDOC_H
+#define QUCS_TEXTDOC_H
 
 #include "qucs_app.h"
+#include "qucs_globals.h"
 #include "textdoc.h"
 #include "syntax.h"
 #include "misc.h"
+#include "qucsdoc.h"
+#include "searchdialog.h" // BUG
 
-// tmp hack.
-QucsDoc* newTextDoc(QucsApp& a /*BUG*/, QString const& b, QWidget* owner)
+#include <QAction>
+#include <QMessageBox>
+#include <QTextStream>
+#include <QPlainTextEdit>
+#include <QFont>
+
+class SyntaxHighlighter;
+class QString;
+
+namespace {
+
+// device type flags
+#define DEV_BJT      0x0001
+#define DEV_MOS      0x0002
+#define DEV_MASK_DEV 0x00FF
+#define DEV_DIG      0x0100
+#define DEV_ANA      0x0200
+#define DEV_ALL      0x0300
+#define DEV_MASK_TYP 0xFF00
+#define DEV_DEF      0x0200 // default value
+
+class TextDoc : public QPlainTextEdit, public QucsDoc {
+	Q_OBJECT
+public:
+	TextDoc();
+	~TextDoc ();
+	void setParent(QWidget* w) override;
+	void  setName (const QString&) override;
+	Widget* clone() const override{ untested();
+		QucsDoc* wd = new TextDoc();
+		return wd;
+	}
+
+  bool  load ();
+  int   save ();
+  float zoomBy (float);
+  void  showNoZoom ();
+  void  becomeCurrent (bool);
+  bool  loadSimulationTime (QString&);
+  void  commentSelected ();
+  void  insertSkeleton ();
+  void  setLanguage (int);
+  void  setLanguage (const QString&);
+  QString getModuleName (void);
+
+
+  QFont TextFont;
+
+  bool simulation;   // simulation or module
+  QString Library;   // library this document belongs to
+  QString Libraries; // libraries to be linked with
+  QString ShortDesc; // icon description
+  QString LongDesc;  // component description
+  QString Icon;      // icon file
+  bool recreate;     // recreate output file
+  int devtype;       // device type
+
+  bool SetChanged;
+  int language;
+
+  bool loadSettings (void);
+  bool saveSettings (void);
+  void refreshLanguage(void);
+
+  QMenu* createStandardContextMenu();
+
+signals:
+  void signalCursorPosChanged(int, int);
+  void signalFileChanged(bool);
+  void signalUndoState(bool);
+  void signalRedoState(bool);
+
+public slots:
+  void search(const QString &str, bool CaseSensitive, bool wordOnly, bool backward);
+  void replace(const QString &str, const QString &str2, bool needConfirmed,
+               bool CaseSensitive, bool wordOnly, bool backward);
+  void slotCursorPosChanged ();
+  void slotSetChanged ();
+
+private:
+  SyntaxHighlighter * syntaxHighlight;
+
+private: // actions. here?
+  void actionCopy(QAction*) override{
+	  copy();
+  }
+  void actionCut(QAction*) override{
+	  cut();
+  }
+  void actionSelect(QAction*) override;
+  void actionEditPaste(QAction*) override;
+  void actionZoomIn(QAction*) override;
+
+private: // QucsDoc
+  void slotEditActivate(QAction*) override;
+  void slotEditDelete(QAction*) override;
+  void slotEditUndo(QAction*) override{
+    viewport()->setFocus();
+	 QPlainTextEdit::undo();
+  }
+  void slotEditRedo(QAction*) override{
+	  viewport()->setFocus();
+	  QPlainTextEdit::redo();
+  }
+
+  void actionInsertEntity(QAction*) override;
+  void actionSelectAll(QAction*) override{
+	  viewport()->setFocus();
+	  //->selectAll(true);
+	  selectAll();
+  }
+  void actionChangeProps(QAction*) override;
+
+
+private slots:
+  void highlightCurrentLine();
+  bool baseSearch(const QString &, bool, bool, bool);
+
+private: // TODO
+  float Scale;
+};
+
+inline void TextDoc::actionInsertEntity(QAction*)
 {
-	incomplete();
-	return nullptr;
-	// return new TextDoc(&a, b, owner);
+  viewport()->setFocus ();
+  //TODO Doc->clearParagraphBackground (Doc->tmpPosX);
+  insertSkeleton ();
+
+  //int x, y;
+  //Doc->getCursorPosition (&x, &y);
+  //x = Doc->textCursor().blockNumber();
+  //y = Doc->textCursor().columnNumber();
+  slotCursorPosChanged();
 }
 
-TextDoc::TextDoc(QucsApp *parent, const QString& initial_name, QWidget* owner)
+TextDoc::TextDoc()
    : QPlainTextEdit(),
      QucsDoc()
 {
+}
+
+void TextDoc::setParent(QWidget* parent)
+{
+	assert(!parentWidget());
+	QPlainTextEdit::setParent(parent);
 	incomplete();
-  App = parent; // BUG? should be in base class.
   TextFont = QFont("Courier New");
 //  TextFont.setPointSize(QucsSettings.font.pointSize()-1);
   TextFont.setStyleHint(QFont::Courier);
@@ -53,7 +187,7 @@ TextDoc::TextDoc(QucsApp *parent, const QString& initial_name, QWidget* owner)
 
   tmpPosX = tmpPosY = 1;  // set to 1 to trigger line highlighting
   Scale = (float)TextFont.pointSize();
-  setLanguage (initial_name);
+  setLanguage ("ascii"); // initial_name);
 
   viewport()->setFocus();
 
@@ -92,8 +226,8 @@ TextDoc::~TextDoc()
   // if text document Tab is removed first, DocumentTab->currentIndex() will point to the previous tab and
   // setSaveIcon() (called by slotFileChanged() ) will wrongly change that tab icon
 
-  disconnect(this, SIGNAL(signalFileChanged(bool)), App, SLOT(slotFileChanged(bool)));
-  delete syntaxHighlight;
+//  disconnect(this, SIGNAL(signalFileChanged(bool)), App, SLOT(slotFileChanged(bool)));
+  delete syntaxHighlight; // what?
 }
 
 /*!
@@ -217,6 +351,23 @@ void TextDoc::setName (const QString& Name_)
   //   SimTime = "1";
 }
 
+#if 0 // TODO: copied from SchDoc
+void SchematicDoc::showEvent(QShowEvent*e)
+{untested();
+	{ // merge?
+	becomeCurrent();
+	QucsDoc::showEvent(e);
+	}
+
+	QGraphicsView::showEvent(e);
+}
+/*--------------------------------------------------------------------------*/
+void SchematicDoc::hideEvent(QHideEvent*e)
+{untested();
+	QucsDoc::hideEvent(e);
+	QGraphicsView::hideEvent(e);
+}
+#endif
 /*!
  * \brief TextDoc::becomeCurrent sets text document as current
  *
@@ -225,6 +376,8 @@ void TextDoc::setName (const QString& Name_)
  */
 void TextDoc::becomeCurrent (bool)
 {
+	incomplete();
+#if 0
   slotCursorPosChanged();
   viewport()->setFocus ();
 
@@ -259,6 +412,7 @@ void TextDoc::becomeCurrent (bool)
   }
   App->simulate->setEnabled (true);
   App->editActivate->setEnabled (true);
+#endif
 }
 
 bool TextDoc::baseSearch(const QString &str, bool CaseSensitive, bool wordOnly, bool backward)
@@ -364,15 +518,15 @@ QMenu *TextDoc::createStandardContextMenu()
   QMenu *popup = QPlainTextEdit::createStandardContextMenu();
 
    if (language != LANG_OCTAVE) {
-     ((QWidget *)popup)->addAction(App->fileSettings);
-   }
+		incomplete();
+		// ((QWidget *)popup)->addAction(App->fileSettings);
+   }else{
+	}
    return popup;
 }
 
-/*!
- * \brief TextDoc::load loads a text document
- * \return true/false if the document was opened with success
- */
+// load a text document
+// return true/false if the document was opened with success (throw??)
 bool TextDoc::load ()
 {
   QFile file (docName());
@@ -660,5 +814,22 @@ void TextDoc::actionZoomIn(QAction*)
 void TextDoc::actionChangeProps(QAction*)
 {
 	viewport()->setFocus();
-	App->SearchDia->initSearch(this, textCursor().selectedText(), true);
+
+#if 0
+	//App->SearchDia->initSearch(this, textCursor().selectedText(), true);
+#else	
+	// _searchDia->initSearch(this, textCursor().selectedText(), true);
+#endif
 }
+
+class Factory : public Widget {
+	Widget* clone() const override{ untested();
+		TextDoc* wd = new TextDoc();
+		return wd;
+	}
+}F;
+static Dispatcher<Widget>::INSTALL p1(&widget_dispatcher, "TextDoc", &F);
+
+} // namespace
+
+#endif

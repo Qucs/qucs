@@ -1,7 +1,4 @@
 /***************************************************************************
-                              syntax.cpp
-                             ------------
-    begin                : Sat Mar 11 2006
     copyright            : (C) 2006 by Michael Margraf
     email                : michael.margraf@alumni.tu-berlin.de
  ***************************************************************************/
@@ -10,23 +7,26 @@
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU General Public License as published by  *
- *   the Free Software Foundation; either version 2 of the License, or     *
+ *   the Free Software Foundation; either version 3 of the License, or     *
  *   (at your option) any later version.                                   *
  *                                                                         *
  ***************************************************************************/
 
-// *****************************************************************
-// *********                                              **********
-// *********  The class that does the syntax highlighting **********
-// *********                                              **********
-// *****************************************************************
+// syntax highlighting in qucsdoc
 
-#include "textdoc.h"
 #include "syntax.h"
+#include "qucsdoc.h"
+#include <QWidget>
 
-
-SyntaxHighlighter::SyntaxHighlighter(TextDoc *textEdit) : QSyntaxHighlighter(textEdit)
+SyntaxHighlighter::SyntaxHighlighter(QucsDoc *textEdit)
+    : QSyntaxHighlighter(dynamic_cast<QWidget*>(textEdit)) // yikes.
 {
+#if 0
+	auto w = dynamic_cast<QWidget*>(textEdit);
+	assert(w);
+	QSyntaxHighlighter->setParent(w);
+#endif
+
   Doc = textEdit;
   language = LANG_NONE;
 

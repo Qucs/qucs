@@ -1,34 +1,28 @@
 /***************************************************************************
-                            messagedock.cpp
-                            ---------------
-    begin                : Tue Mar 11 2014
     copyright            : (C) 2014 by Guilherme Brondani Torri
-    email                : guitorri AT gmail DOT com
  ***************************************************************************/
 
 /***************************************************************************
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU General Public License as published by  *
- *   the Free Software Foundation; either version 2 of the License, or     *
+ *   the Free Software Foundation; either version 3 of the License, or     *
  *   (at your option) any later version.                                   *
  *                                                                         *
  ***************************************************************************/
+
+// some means to provide feedback, akin to a console window.
+// but it lacks a command prompt...
 
 #include "messagedock.h"
 
 #include "qucs_app.h"
 #include "qucsdoc.h"
-#include "textdoc.h"
 
 #include <QDockWidget>
 #include <QDebug>
 #include <QTextBlock>
-
-/*!
- * \file messagedock.cpp
- * \brief Definition of the MessageDock class.
- */
+#include <QPlainTextEdit>
 
 /*!
  * \brief MessageDock::MessageDock constructor
@@ -213,10 +207,12 @@ void MessageDock::slotCursor()
 
         // grab active text document
 		  incomplete();
-        TextDoc * d = nullptr; // (TextDoc*)QucsMain->getDoc();
+//        TextDoc * d = nullptr; // (TextDoc*)QucsMain->getDoc();
 
-        QTextCursor cursor = d->textCursor();
-        int pos = d->document()->findBlockByLineNumber(gotoLine-1).position();
+		  incomplete(); // go through qucsDoc?
+        QTextCursor cursor; //  = d->textCursor();
+        int pos; //  = d->document()->findBlockByLineNumber(gotoLine-1).position();
+
         cursor.setPosition(pos);
 
         // Highligt a give line
@@ -228,12 +224,15 @@ void MessageDock::slotCursor()
         selection.cursor = cursor;
 
         // get existing
-        extraSelections.append(d->extraSelections());
+		  incomplete();
+//        extraSelections.append(d->extraSelections());
 
         // append new
         extraSelections.append(selection);
 
         // color the selections on the active document
+		  incomplete();
+#if 0
         d->setExtraSelections(extraSelections);
 
         //move focus to VA code
@@ -241,6 +240,7 @@ void MessageDock::slotCursor()
         //move cursor to highlighted line
 //        d->setCursor(d->document()->);
         d->setTextCursor(cursor);
+#endif
     }
 
     /// \todo add line numbers to TextDoc, highlight as the cursor moves

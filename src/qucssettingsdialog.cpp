@@ -1,8 +1,6 @@
 /***************************************************************************
-    begin                : Sun May 23 2004
     copyright            : (C) 2003 by Michael Margraf
-    email                : michael.margraf@alumni.tu-berlin.de
-    copyright            : (C) 2016 by Qucs Team (see AUTHORS file)
+                               2016 by Qucs Team (see AUTHORS file)
 
  ***************************************************************************/
 
@@ -15,10 +13,7 @@
  *                                                                         *
  ***************************************************************************/
 
-/*!
- * \file qucssettingsdialog.cpp
- * \brief Implementation of the Application Settings dialog
- */
+ //  Application Settings dialog
 
 #ifdef HAVE_CONFIG_H
 # include <config.h>
@@ -30,7 +25,7 @@
 #include <QGridLayout>
 #include <QVBoxLayout>
 #include "qucs_app.h"
-#include "textdoc.h"
+#include "qucsdoc.h"
 #include "qt_compat.h"
 #include "misc.h"
 #include "qucs_tabs.h" // ??

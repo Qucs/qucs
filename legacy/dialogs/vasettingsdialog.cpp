@@ -1,6 +1,4 @@
 /***************************************************************************
-                           vasettingsdialog.cpp
-                          ----------------------
     begin                : Sun Oct 26 2009
     copyright            : (C) 2009 by Stefan Jahn
     email                : stefa@lkcc.org

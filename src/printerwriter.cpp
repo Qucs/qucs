@@ -21,9 +21,8 @@
  */
 
 #include "printerwriter.h"
-//#include "schematic_doc.h"
-#include "textdoc.h"
 #include "qucs_app.h"
+#include "qucsdoc.h"
 
 #include <QPrinter>
 #include <QPainter>

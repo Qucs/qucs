@@ -49,11 +49,9 @@
 #include "projectView.h"
 #include "component_widget.h"
 
-// BUG: cleanup dialogs. how?!
+// TODO dialogs are plugins.
 #include "savedialog.h"
 #include "newprojdialog.h"
-#include "digisettingsdialog.h"
-#include "vasettingsdialog.h"
 #include "qucssettingsdialog.h"
 #include "searchdialog.h"
 #include "labeldialog.h"
@@ -95,10 +93,6 @@ typedef enum {
     Libraries,
 } TabViewTabs;
 
-
-/*!
- * \brief QucsApp::QucsApp main application
- */
 QucsApp::QucsApp()
 {itested();
   setWindowTitle("Qucs " PACKAGE_VERSION);
@@ -566,7 +560,7 @@ QucsDoc* QucsApp::getDoc(int No)
   return dynamic_cast<QucsDoc*>(w);
 }
 /*--------------------------------------------------------------------------*/
-// Return a pointer to the QucsDoc object whose file name is "Name".
+// Find QucsDoc whose file name is "Name".
 QucsDoc * QucsApp::findDoc (QString File, int * Pos)
 {itested();
   QucsDoc * d;
@@ -584,8 +578,7 @@ QucsDoc * QucsApp::findDoc (QString File, int * Pos)
   }
   return 0;
 }
-
-// ---------------------------------------------------------------
+/*--------------------------------------------------------------------------*/
 // Put the component groups into the ComboBox. It is possible to
 // only put the paintings in it, because of "symbol painting mode".
 
@@ -1705,8 +1698,9 @@ void QucsApp::slotChangeView(QucsDoc *w)
   editText->setHidden (true); // disable text edit of component property
   auto Doc = w;
   // for text documents
+#if 0
   if (isTextDocument (w)) { untested();
-    TextDoc *d = (TextDoc*)w;
+    // TextDoc *d = (TextDoc*)w;
     Doc = (QucsDoc*)d;
     // update menu entries, etc. if neccesary
     magAll->setDisabled(true); // here?
@@ -1714,7 +1708,6 @@ void QucsApp::slotChangeView(QucsDoc *w)
     ///   switchSchematicDoc (false); // Doc->expose??
     /// }else{ untested();
     /// }
-#if 0
   } else if(auto d=dynamic_cast<SchematicDoc*>(w)){ untested();
     incomplete();
     Doc = (QucsDoc*)d;
@@ -1729,14 +1722,11 @@ void QucsApp::slotChangeView(QucsDoc *w)
       switchSchematicDoc(true);
       changeSchematicSymbolMode(d);
     }
-#endif
   }else{itested();
   }
+#endif
 
   assert(Doc);
-//  Doc->becomeCurrent();
-  // view->drawn = false;
-
   HierarchyHistory.clear();
   popH->setEnabled(false);
 }
@@ -1747,6 +1737,15 @@ void QucsApp::slotFileSettings ()
   editText->setHidden (true); // disable text edit of component property
 
   QucsDoc* w = DocumentTab->current();
+
+  if(w){
+    incomplete();
+//    w->slotFileSettings(); // just connect directly?!
+  }else{
+  }
+
+#if 0 // TODO;
+
   if (isTextDocument (w)) { untested();
     QucsDoc * Doc = (QucsDoc *) ((TextDoc *) w);
     QString ext = Doc->fileSuffix ();
@@ -1754,13 +1753,20 @@ void QucsApp::slotFileSettings ()
     if (ext == "m" || ext == "oct") { untested();
     }else if (ext == "va") { untested();
     // Verilog-A properties
+#if 1
+    // TODO: show widget VASettingsDialog
+#else
       VASettingsDialog * d = new VASettingsDialog ((TextDoc *) w);
       d->exec ();
-    }
+#endif
+    }else{ untested();
     // VHDL and Verilog-HDL properties
-    else { untested();
+#if 1
+    // TODO: show widget DigiSettingsDialog
+#else
       DigiSettingsDialog * d = new DigiSettingsDialog ((TextDoc *) w);
       d->exec ();
+#endif
     }
   }else{ untested();
     incomplete();; //ask dispatcher
@@ -1769,6 +1775,7 @@ void QucsApp::slotFileSettings ()
 //    d->exec ();
   }
   // view->drawn = false;
+#endif
 }
 
 // --------------------------------------------------------------
@@ -2856,14 +2863,7 @@ QucsDoc *QucsTabWidget::createEmptySchematic(const QString &name)
   QFileInfo Info(name);
   assert(App);
 
-#if 0
-  QucsDoc *d = newSchematicDoc(App, name, this);
-  QWidget* w = dynamic_cast<QWidget*>(d);
-  assert(d);
-  assert(w);
-#else // need something like this.
   Widget* o = widget_dispatcher.clone("SchematicDoc");
-  assert(o);
 //  e->setParam("name", name.toStdString());
   assert(o);
   QucsDoc* d = dynamic_cast<QucsDoc*>(o);
@@ -2873,24 +2873,28 @@ QucsDoc *QucsTabWidget::createEmptySchematic(const QString &name)
   d->setParent(this);
   trace1("setname??", name);
   d->setName(name); // it's actually the (full?) filename?
-#endif
 
   int i = addTab(w, QPixmap(":/bitmaps/empty.xpm"), name.isEmpty() ? QObject::tr("untitled") : Info.fileName());
   setCurrentIndex(i);
   return d;
 }
 
-// tmp hack.. remove when no longer used (see below).
-// this is not a substitute for an include statement.
-QucsDoc* newTextDoc(QucsApp&, QString const&, QWidget*);
-
 QucsDoc *QucsTabWidget::createEmptyTextDoc(const QString &name)
 {itested();
   // create a text document
   QFileInfo Info(name);
-  QucsDoc *d = newTextDoc(*App, name, this);
-  QWidget* w = dynamic_cast<QWidget*>(d);
+  // QucsDoc *d = newTextDoc(*App, name, this);
+  Widget* o = widget_dispatcher.clone("TextDoc");
+//  e->setParam("name", name.toStdString());
+  assert(o);
+  QucsDoc* d = dynamic_cast<QucsDoc*>(o);
+  assert(d);
+  QWidget* w = dynamic_cast<QWidget*>(o);
   assert(w);
+  d->setParent(this);
+  trace1("setname??", name);
+  d->setName(name); // it's actually the (full?) filename?
+
   int i = addTab(w, QPixmap(":/bitmaps/empty.xpm"), name.isEmpty() ? QObject::tr("untitled") : Info.fileName());
   setCurrentIndex(i);
   return d;

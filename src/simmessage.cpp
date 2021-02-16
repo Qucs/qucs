@@ -34,7 +34,7 @@
 #include "simmessage.h"
 #include "module.h"
 #include "qucs_app.h"
-#include "textdoc.h"
+#include "qucsdoc.h"
 #include "misc.h"
 #include "qucs_globals.h"
 #include "docfmt.h"

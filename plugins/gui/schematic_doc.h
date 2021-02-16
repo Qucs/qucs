@@ -1131,7 +1131,7 @@ float SchematicDoc::zoom(float)
 
 // why is this here and not in SchematicScene?
 void SchematicDoc::mouseMoveEvent(QMouseEvent *e)
-{itested();
+{untested();
   assert(e);
   if(e->isAccepted()){ itested();
   }else{itested();
@@ -2359,7 +2359,7 @@ void SchematicDoc::actionApplyCompText()
 void SchematicDoc::printCursorPosition(int x, int y)
 {itested();
   QPoint p(x,y);
-  QPointF mp=mapToScene(p);
+  QPointF mp = mapToScene(p);
   if(_app){ untested();
 	  // BUG. signal status bar?
 	  _app->printCursorPosition(mp.x(),mp.y());

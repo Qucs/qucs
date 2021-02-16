@@ -1,2 +1,5 @@
 
 	spicedialog.cpp \
+	digisettingsdialog.cpp \
+	digisettingsdialog.h \
+	vasettingsdialog.h

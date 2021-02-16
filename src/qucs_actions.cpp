@@ -35,20 +35,9 @@
 
 #include "projectView.h"
 #include "qucs_app.h"
-#include "textdoc.h"
+#include "qucsdoc.h"
 #include "doc_actions.h"
 #include "messagedock.h"
-
-// BUG: untangle dialogs
-// #include "matchdialog.h"
-// #include "changedialog.h"
-// #include "searchdialog.h"
-// #include "librarydialog.h"
-// #include "loaddialog.h"
-// #include "importdialog.h"
-// #include "packagedialog.h"
-// #include "aboutdialog.h"
-//
 
 #include "module.h"
 #include "misc.h"
@@ -494,8 +483,13 @@ void QucsApp::showHTML(const QString& Page)
 // Is called when the find action is triggered.
 void QucsApp::slotEditFind()
 {
+#if 0
   SearchDia->initSearch(DocumentTab->current(),
       ((TextDoc *)DocumentTab->current())->textCursor().selectedText(), false);
+#else
+  incomplete();
+//  display SearchDialog widget
+#endif
 }
 
 // --------------------------------------------------------------
