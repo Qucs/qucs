@@ -39,14 +39,9 @@ qucs_real_CPPFLAGS = ${AM_CPPFLAGS} $(QT_CFLAGS) \
 		-DQUCS_PLUGPATH=\"${pkglibdir}\" \
 		-DQUCS_PREFIX=\"${prefix}\"
 
-if COND_WIN32
-qucs_real_LDADD = \
-	../src/libqucs.la
-else
 qucs_real_LDADD = \
 	../src/libqucs.la \
 	$(X11_LIBS) $(QT_LIBS)
-endif
 
 if COND_MACOSX
 qucs_apple_PROGRAMS = qucs.real
