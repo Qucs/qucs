@@ -30,6 +30,7 @@
 //#include <QTextStream> // BUG
 #include "io_trace.h"
 #define CS istream_t
+#define AP_MOD AP_MOD_
 /*--------------------------------------------------------------------------*/
 INTERFACE char* getcmd(const char*,char*,int);
 /*--------------------------------------------------------------------------*/

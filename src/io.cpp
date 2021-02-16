@@ -78,7 +78,8 @@ istream_t::istream_t(istream_t::STRING, const std::string&s )
 	: _file(nullptr), _cmd(s), _cnt(0), _ok(true), _stream(nullptr)
 {
 	auto qs = new QString(QString::fromStdString(s)); // BUG: memory leak.
-	_stream = new QTextStream(qs);
+	_stream = new QTextStream(qs); // yikes.
+	_length = s.size();
 }
 /*--------------------------------------------------------------------------*/
 istream_t::istream_t(istream_t::STDIN)
