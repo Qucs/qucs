@@ -297,7 +297,7 @@ protected slots:
   // void slotScrollDown();
   // void slotScrollLeft();
   // void slotScrollRight();
-  void printCursorPosition(int x_, int y_);
+//  void printCursorPosition(int x_, int y_);
 
 private:
   bool dragIsOkay;
@@ -736,8 +736,8 @@ void SchematicDoc::setParent(QWidget* owner)
   */
 
   {itested();
-    connect(this, SIGNAL(signalCursorPosChanged(int, int)), 
-        this, SLOT(printCursorPosition(int, int)));
+//    connect(this, SIGNAL(signalCursorPosChanged(int, int)), 
+//        STATUSBAR, SLOT(printCursorPosition(int, int)));
     /** \todo
     connect(this, SIGNAL(horizontalSliderPressed()), 
         App_, SLOT(slotHideEdit()));
@@ -996,9 +996,10 @@ QMouseEvent SchematicDoc::snapToGrid(QMouseEvent* e)const
 	  auto modifiers = e->modifiers();
 	  auto source = e->source();
 
-	  // if snapToGrid?
+	  // this snaps to the wrong grid, anyway
+	  trace1("SchematicDoc::snapToGrid1", localPos);
 	  localPos = setOnGrid(localPos.x(), localPos.y());
-	  trace1("SchematicDoc::snapToGrid", localPos);
+	  trace1("SchematicDoc::snapToGrid2", localPos);
 	  auto ee = QMouseEvent(type, localPos, windowPos, screenPos, button, buttons, modifiers, source);
 	  return ee;
 }
@@ -1131,14 +1132,16 @@ float SchematicDoc::zoom(float)
 
 // why is this here and not in SchematicScene?
 void SchematicDoc::mouseMoveEvent(QMouseEvent *e)
-{untested();
+{itested();
   assert(e);
-  if(e->isAccepted()){ itested();
-  }else{itested();
-	  auto ee = snapToGrid(e);
+  if(e->isAccepted()){ untested();
+  }else{untested();
+	  auto xx = mapToScene(e->pos());
+	  auto gg = snapToGrid(xx);
 
 	  // move actions go through here.
-	  signalCursorPosChanged(ee.localPos().x(), ee.localPos().y());
+	  // signalCursorPosChanged(xx.x(), xx.y());
+	  printCursorPosition(gg.x(), gg.y());
 	  QGraphicsView::mouseMoveEvent(e);
   }
 
@@ -2356,16 +2359,12 @@ void SchematicDoc::actionApplyCompText()
 }
 #endif
 /*--------------------------------------------------------------------------*/
-void SchematicDoc::printCursorPosition(int x, int y)
-{itested();
-  QPoint p(x,y);
-  QPointF mp = mapToScene(p);
-  if(_app){ untested();
-	  // BUG. signal status bar?
-	  _app->printCursorPosition(mp.x(),mp.y());
-  }else{ untested();
-  }
-}
+// void SchematicDoc::printCursorPosition(int x, int y)
+// {itested();
+// 	QPoint p(x,y);
+// 	QPointF mp = mapToScene(p);
+// 	QucsDoc::printCursorPosition(mp.x(),mp.y());
+// }
 
 // ---------------------------------------------------
 bool SchematicDoc::createSubcircuitSymbol()

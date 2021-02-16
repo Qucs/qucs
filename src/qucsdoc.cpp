@@ -174,6 +174,14 @@ QucsApp* QucsDoc::app()
 // 		return nullptr;
 // 	}
 // }
+void QucsDoc::printCursorPosition(int x, int y)
+{
+	if(app()){ untested();
+	// BUG. signal status bar?
+		app()->printCursorPosition(x, y);
+	}else{ untested();
+	}
+}
 
 void QucsDoc::showEvent(QShowEvent* ev)
 {

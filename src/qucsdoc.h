@@ -65,6 +65,7 @@ public:
 	virtual void addElement(Element*);
 
 	virtual SchematicModel* model();
+	void printCursorPosition(int x, int y);
 
   static QString fileSuffix (const QString&);
   QString fileSuffix (void);
