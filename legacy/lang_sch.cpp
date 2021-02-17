@@ -1209,7 +1209,7 @@ std::string LegacySchematicLanguage::findType(istream_t& c) const
 	Line = Line.trimmed();
 	if(Line.size() == 0){ untested();
 		return "";
-	}else if(Line.at(0) != '<') { untested();
+	}else if(Line.at(0) != '<') {
 		std::string r;
 		c >> r;
 		return r;

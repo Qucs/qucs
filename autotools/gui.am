@@ -36,7 +36,3 @@ gui_la_SOURCES = ${QT_PLUGIN_SRC}
 BUILT_SOURCES = ${gui_la_SOURCES}
 
 noinst_HEADERS = $(HDR)
-
-# TODO: drop -I[..]/src
-.h.cc:
-	$(MOC) -I${top_srcdir}/include -I${top_srcdir}/src -DQT_MAJOR_VERSION=${QT_MAJOR_VERSION} -o $@ $< # 2

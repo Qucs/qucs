@@ -1,7 +1,8 @@
 TARGET = qucsator
 
-# todo: cleanup moc hack (?) and remove
-EXTRA_DIST = \
-	qucsator.h
+QT_PLUGIN_SRC = \
+	qucsator.cc
+
+EXTRA_DIST =
 
 RAW_SRC =

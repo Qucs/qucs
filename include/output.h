@@ -52,12 +52,12 @@ public:
 		SimOutputDir const* dir(){
 			return dynamic_cast<SimOutputDir const*>(container_t::iterator::operator*().second);
 		}
-		container_t::value_type operator*(){ untested(); return container_t::iterator::operator*(); }
+		container_t::value_type operator*(){ return container_t::iterator::operator*(); }
 	};
 	class const_iterator : protected container_t::const_iterator{
 	public:
 		const_iterator(const_iterator const& p) : container_t::const_iterator(p) { untested(); }
-		const_iterator(iterator const& p) : container_t::const_iterator(p) { untested(); }
+		const_iterator(iterator const& p) : container_t::const_iterator(p) { }
 //		explicit const_iterator(const container_t::iterator& p) : container_t::const_iterator(p) {}
 		explicit const_iterator(const container_t::const_iterator& p) : container_t::const_iterator(p) {}
 
@@ -66,7 +66,7 @@ public:
 		CommonData const* operator*(){
 			return container_t::const_iterator::operator*().second;
 		}
-		bool operator==(const_iterator const&x) const {untested();
+		bool operator==(const_iterator const&x) const {
 			return container_t::const_iterator(*this)==(container_t::const_iterator(x));
 		}
 		bool operator!=(const_iterator const&x) const {
@@ -96,8 +96,8 @@ public:
 	const_iterator end() const {
 		return const_iterator(_d.end());
 	}
-	iterator begin() { untested(); return _d.begin(); }
-	iterator end() { untested(); return _d.end(); }
+	iterator begin() { return _d.begin(); }
+	iterator end() { return _d.end(); }
 	size_t size() const {
 		return _d.size();
 	}

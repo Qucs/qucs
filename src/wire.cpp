@@ -526,7 +526,7 @@ void Wire::set_port_by_index(index_t i, std::string const& value)
 }
 // ----------------------------------------------------------------
 void Wire::connectNode(index_t i)
-{ untested();
+{
 	assert(scope());
 	assert(scope()->nodes());
 	auto& nm = *scope()->nodes();

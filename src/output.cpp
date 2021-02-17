@@ -28,7 +28,7 @@ SimOutputDir::SimOutputDir(const SimOutputDir& s) : _d(s._d)
 }
 /* -------------------------------------------------------------------------------- */
 void SimOutputDir::push_back(CommonData const* d)
-{ untested();
+{
 	assert(d);
 	assert(d->label()!="");
 

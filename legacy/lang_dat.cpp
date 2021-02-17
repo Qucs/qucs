@@ -65,7 +65,7 @@ static void print_deps(ostream_t& s, SimOutputData const* dd)
 /* -------------------------------------------------------------------------------- */
 void DatLang::printCommonData(CommonData const* c, ostream_t& s) const
 {
-	if(auto dd=dynamic_cast<SimOutputData const*>(c)){ untested();
+	if(auto dd=dynamic_cast<SimOutputData const*>(c)){
 		if(dd->numDeps()){
 			s << "<var dep " << dd->label();
 			print_deps(s,dd);
@@ -73,7 +73,7 @@ void DatLang::printCommonData(CommonData const* c, ostream_t& s) const
 		}else{
 			s << "<var indep " << dd->label() << " " << dd->size() << ">\n";
 		}
-		for(auto p : *dd){ untested();
+		for(auto p : *dd){
 //			auto x = p.first;
 			auto i = p.second;
 			s << "  " << i.real() << "+i*" << i.imag() << "\n";
@@ -81,7 +81,7 @@ void DatLang::printCommonData(CommonData const* c, ostream_t& s) const
 		s << "</var>\n";
 	}else if(auto sod=dynamic_cast<SimOutputDir const*>(c)){
 		s << "data from " << sod->label() << "\n";
-		for(auto i : *sod){ untested();
+		for(auto i : *sod){
 			printCommonData(i, s);
 		}
 	}else{
@@ -95,7 +95,7 @@ void DatLang::printData(Data const* c, ostream_t& s) const
 	s << " TODO " << c->label() << "\n";
 	CommonData const* cc = c->common();
 
-	if(cc){ untested();
+	if(cc){
 		printCommonData(cc, s);
 	}else{itested();
 	}

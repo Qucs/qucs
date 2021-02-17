@@ -37,7 +37,7 @@ void CommonData::attach(CommonData const* d, CommonData const** to)
 	assert(to);
 	if (d == *to) {
 		// The new and old are the same object.  Do nothing.
-	}else if (!d) {untested();
+	}else if (!d) {
 		// There is no new common.  probably a simple element
 		detach(to);
 	}else if (!*to) {
@@ -78,7 +78,7 @@ void CommonData::detach(CommonData const** from)
 		if ((**from)._attach_count == 0) {
 			trace1("delete", (**from)._attach_count);
 			delete *from;
-		}else{ untested();
+		}else{
 			trace1("nodelete", (**from)._attach_count);
 		}
 		*from = NULL;

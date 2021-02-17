@@ -247,7 +247,7 @@ void Verilog::printSymbol(Symbol const* sym, ostream_t& s) const
 		auto type = sym->typeName();
 		if(sym->common()){ untested();
 			type = sym->common()->modelname(); // "netlist mode"
-		}else{ untested();
+		}else{
 		}
 		// : is not allowed in verilog
       std::replace( type.begin(), type.end(), ':', '$');

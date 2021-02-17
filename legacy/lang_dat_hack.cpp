@@ -39,7 +39,7 @@ public:
 	const double& min()const {return Min;}
 	const double& max()const {return Max;}
 public: // only called from Graph. cleanup later.
-	void setLimit(const double& x){ untested();
+	void setLimit(const double& x){
 		if (Min>x) Min=x;
 		if (Max<x) Max=x;
 	}
@@ -105,20 +105,20 @@ public:
 private:
 	void clear();
 	SimOutputData const* refresh() override{incomplete(); return nullptr;}
-	virtual const_iterator begin() const { untested();
+	virtual const_iterator begin() const {
 		trace1("DatVar", numAxes());
 		incomplete();
 		auto a = axis(0);
-		if(a){ untested();
+		if(a){
 			return const_iterator(a->Points, _CPointsY.data());
 		}else{ untested();
 			return const_iterator(nullptr, nullptr);
 		}
 	}
-	virtual const_iterator end() const { untested();
+	virtual const_iterator end() const {
 		incomplete();
 		auto a = axis(0);
-		if(a){ untested();
+		if(a){
 			return const_iterator(a->Points + a->count, nullptr);
 		}else{ untested();
 			return const_iterator(nullptr, nullptr);
@@ -137,12 +137,12 @@ private:
 	CommonData const* dep(index_t) const override;
 
 public: // obsolete interface. don't use.
-	DataX const* axis(uint i) const override { untested();
+	DataX const* axis(uint i) const override {
 		trace2("datax axis", i, axis_count);
-		if (i<numAxes()){ untested();
+		if (i<numAxes()){
 			assert(i < CPointsX.size()); // ??
 		  	return CPointsX[i];
-		}else{ untested();
+		}else{
 			return NULL;
 		}
 	}
@@ -177,7 +177,7 @@ CommonData const* SimOutputDatVar::dep(index_t i) const
 static QByteArray QByteArray_(istream_t& cs)
 {
 	std::string s;
-	while(!cs.atEnd()){ untested();
+	while(!cs.atEnd()){
 		s += cs.fullstring() + "\n";
 		cs.read_line();
 	}
@@ -245,7 +245,7 @@ SimOutputDat::SimOutputDat(istream_t& cs)
 			const_iterator ee = end();
 			if(ff == ee){ untested();
 				message(QucsMsgWarning, "bogus deps in " + i.first + ": " + nn);
-			}else{ untested();
+			}else{
 				vv->_deps.push_back(nullptr);
 				attach(*ff, &vv->_deps.back());
 			}
@@ -263,7 +263,7 @@ SimOutputData const* SimOutputDat::refresh()
 // --------------------------------------------------------------------------
 // former "loadDatFile", former "loadVarData".
 SimOutputData const* SimOutputDatVar::refresh(QByteArray FileContent)
-{untested();
+{
 	SimOutputDatVar* g = this;
 //	QFile file;
 	QString Variable;
@@ -298,7 +298,7 @@ SimOutputData const* SimOutputDatVar::refresh(QByteArray FileContent)
 	clear(); // oops?
 	if(Variable.isEmpty()){ untested();
 		return NULL;
-	}else{ untested();
+	}else{
 	}
 
 #if 0 // FIXME encapsulation. implement digital waves later.
@@ -317,7 +317,7 @@ SimOutputData const* SimOutputDatVar::refresh(QByteArray FileContent)
 	trace1("FileString", FileString);
 	if(!FileString){ untested();
 		return 0;
-	}else{ untested();
+	}else{
 	}
 	char *pPos = FileString+FileContent.size()-1;
 	if(*pPos > ' ')  if(*pPos != '>')  return 0;
@@ -347,7 +347,7 @@ SimOutputData const* SimOutputDatVar::refresh(QByteArray FileContent)
 	if(!pFile){ untested();
 		incomplete();
 		return 0;   // data not found
-	}else{ untested();
+	}else{
 	}
 
 	bool ok=true;
@@ -364,10 +364,10 @@ SimOutputData const* SimOutputDatVar::refresh(QByteArray FileContent)
 	pFile = pPos+1;
 	trace2("DBG", Variable, isIndep);
 	if(!isIndep) {itested();
-	}else{ untested();
+	}else{
 	}
 
-	if(isIndep) { untested();
+	if(isIndep) {
 		// create independent variable
 		counter = Line.toInt(&ok);  // get number of values
 		CPointsX.push_back(new DataX("number", 0, counter));
@@ -609,7 +609,7 @@ int SimOutputDatVar::loadIndepVarData(std::string const& Variable,
     *pEnd = 0;
     Line = QString(pPos);
     *pEnd = '>';
-  }else{ untested();
+  }else{
   }
 
 
@@ -658,13 +658,13 @@ public:
 	explicit DatFile() : Data(){itested();
 		setLabel("datfile");
 	}
-	DatFile(DatFile const&d) : Data(d){ untested(); }
+	DatFile(DatFile const&d) : Data(d){ }
 
 private:
-	DatFile* clone() const override { untested(); return new DatFile(*this); }
+	DatFile* clone() const override { return new DatFile(*this); }
 
-	void set_param_by_name(std::string const& n, std::string const& v) override{ untested();
-		if(n=="filename"){ untested();
+	void set_param_by_name(std::string const& n, std::string const& v) override{
+		if(n=="filename"){
 			_fileName = v;
 		}else{ untested();
 			incomplete();

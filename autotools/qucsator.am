@@ -3,14 +3,14 @@ include ../../autotools/common.mk
 
 inst_LTLIBRARIES = qucsator.la
 
-# HACK. use MakeList
-qucsator_la_SOURCES = qucsator.cpp qucsator.moc.cpp
+qucsator_la_SOURCES = ${QT_PLUGIN_SRC}
 
 qucsator_la_LDFLAGS = -module -avoid-version
 # qucsator_la_CPPFLAGS = $(AM_CPPFLAGS)
 # need Qt for TextStream. (BUG?)
 qucsator_la_CPPFLAGS = $(AM_CPPFLAGS) $(QT_INCLUDES)
 # qucsator_la_LIBADD = $(QT_LIBS)
+BUILT_SOURCES = ${qucsator_la_SOURCES}
 
 # BUG
 AM_CPPFLAGS += $(X11_INCLUDES) $(QT_CFLAGS)

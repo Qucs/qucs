@@ -373,7 +373,7 @@ CommonComponent::CommonComponent(int c)
 CommonComponent::~CommonComponent()
 {
   trace1("common,destruct", _attach_count);
-  if(_attach_count == 0 || _attach_count == CC_STATIC_){ untested();
+  if(_attach_count == 0 || _attach_count == CC_STATIC_){
   }else{
 	  unreachable(); // BUG
   }

@@ -53,3 +53,7 @@ EXTRA_DIST += MakeList
 # simplify paths
 here_rel = $(subst ${abs_top_srcdir},,${abs_srcdir})
 instdir = $(pkglibdir)/$(here_rel)/..
+
+# TODO: drop -I[..]/src
+.h.cc:
+	$(MOC) -I${top_srcdir}/include -I${top_srcdir}/src -DQT_MAJOR_VERSION=${QT_MAJOR_VERSION} -o $@ $< # 2
