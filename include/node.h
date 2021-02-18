@@ -46,8 +46,6 @@ public:
   bool hasPorts() const{ return _ports; }
   unsigned numPorts() const{ return _ports; }
 
-  bool isNet(pos_t const&) const override;
-
 private:
   const index_t _index;
   unsigned _ports; // number of ports connecting to this node

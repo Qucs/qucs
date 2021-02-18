@@ -7,7 +7,7 @@ C #(.C(1 pF), .V(), .Symbol(neutral)) C1(gnd, P1);
 endmodule // main
 
 //else?
-module :SymbolSection:();
+module :SymbolSection:(_net1, _net0);
 painting incomplete
 // .port_ x=-30 y=0 n=1 label=:port2
 painting incomplete

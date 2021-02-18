@@ -91,9 +91,10 @@ QString const& Symbol::netLabel(unsigned i) const
 }
 #endif
 /*--------------------------------------------------------------------------*/
-void Symbol::set_port_by_name(std::string const& name, std::string const& value)
+void Symbol::set_port_by_name(std::string const&, std::string const&)
 {
 	incomplete();
+	assert(false);
 }
 /*--------------------------------------------------------------------------*/
 void Symbol::set_port_by_index(index_t num, std::string const& ext_name)
@@ -124,11 +125,7 @@ Node* Symbol::connectNode(index_t i, NodeMap&nm)
 void set_port_by_name(std::string const& name, std::string const& value)
 {
 	incomplete();
-}
-/*--------------------------------------------------------------------------*/
-void set_port_by_index(index_t i, std::string const& value)
-{
-	incomplete();
+	assert(false);
 }
 /*--------------------------------------------------------------------------*/
 Node* Symbol::disconnectNode(unsigned i, NodeMap&)
@@ -181,7 +178,7 @@ Port const& Symbol::port(unsigned i) const
 }
 /*--------------------------------------------------------------------------*/
 std::string Symbol::paramValue(std::string const& n) const
-{
+{ untested();
 	if(n=="$xposition"){
 		return std::to_string(cx());
 	}else if(n=="$yposition"){
@@ -305,7 +302,7 @@ void Symbol::setParameter(unsigned n, std::string const& v)
 	}else if(n<Symbol::paramCount()){
 		unreachable();
 	}else{
-		throw qucs::ExceptionCantFind( label(), std::to_string(n), "params");
+		throw qucs::ExceptionCantFind(label(), std::to_string(n), "params");
 	}
 }
 /*--------------------------------------------------------------------------*/
@@ -327,7 +324,7 @@ void Symbol::setParameter(std::string const& name, std::string const& v)
 		_vflip = atoi(v.c_str());
 		assert(_hflip==1 || _hflip==-1);
 	}else{
-		throw qucs::ExceptionCantFind( label(), name, "params");
+		throw qucs::ExceptionCantFind(label(), name, "params");
 	}
 }
 /*--------------------------------------------------------------------------*/

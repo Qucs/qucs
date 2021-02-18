@@ -45,7 +45,7 @@ public: //pair?
   std::list<Conductor*>::iterator connectionsEnd(){
 	  return _adj.end();
   }
-  virtual bool isNet(pos_t const&) const = 0;
+  virtual bool isNet(pos_t const&) const{untested(); return false;} // obsolete??
   virtual Symbol* newUnion(const Symbol*) const{ return nullptr; }
 
 public:

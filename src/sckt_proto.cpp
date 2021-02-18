@@ -208,11 +208,12 @@ pos_t SubcktProto::portPosition(index_t i) const
 #endif
 }
 /*--------------------------------------------------------------------------*/
-Node const* SubcktProto::portValue(index_t i) const
+Node const* SubcktProto::portValue(index_t) const
 {
-	trace2("sckt_proto::portValue", subckt()->numPorts(), i);
-	// return node[i]->net()??
-	return subckt()->portValue(i);
+	assert(false);
+//	trace2("sckt_proto::portValue", subckt()->numPorts(), i);
+//	// return node[i]->net()??
+//	return subckt()->portValue(i);
 }
 /*--------------------------------------------------------------------------*/
 SubcktProto::SubcktProto(Element const*)

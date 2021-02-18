@@ -775,7 +775,7 @@ Symbol* LegacySchematicLanguage::parseSymbol(istream_t& cs, Symbol* sym) const
 		qDebug() << "cx" << cx;
 		if(!ok){ untested();
 			throw qucs::Exception("xposition parse");
-		}else{
+		}else{ untested();
 			sym->setParameter("$xposition", std::to_string(cx));
 			//	sym->setParameter(3, std::to_string(cx));
 		}

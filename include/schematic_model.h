@@ -159,37 +159,15 @@ public: // container
 public: // compat? test? debug?
 	size_t nodeCount() const {return numNodes();}
 	size_t numberOfNets() const{ return numNets(); }
-
-public:
 	size_t numNodes() const;
 	size_t numNets() const;
 
-public: // why?
+public: // obsolete?
 	Node* insertNode(int x, int y, Element* owner);
-
-public: // scene interaction
-//	void toScene(QGraphicsScene& s, QList<ElementGraphics*>* l=nullptr) const;
-
-private:
-//	ElementList& components(); // possibly "devices". lets see.
-	CmdEltList& commands();
 
 public:
 	NodeMap* nodes() const;
-//	bool isNode(pos_t p) const{
-//		assert(nodes());
-//		return nodes()->find_at(p);
-//	}
-//	Node const* nodeAt(pos_t p) const{
-//		assert(nodes());
-//		return nodes()->find_at(p);
-//	}
-//	WireList const& wires() const;
 //	NodeMap const* nodes() const;
-//	ElementList const& components() const;
-
-//	Symbol const* findProto(QString const& what) const;
-//	void cacheProto(Symbol const* what) const;
 
 //	iterator find_(const std::string& short_name)
 //					{return find_again(short_name, begin());}
@@ -204,28 +182,13 @@ public:
 	const_iterator find_(const std::string& short_name)const
 					{return find_again(short_name, begin());}
 
-//	QString const& portType(int i) const{
-//		return PortTypes[i];
-//	}
-
-	unsigned numPorts() const;
-
-	// not so sure about these
-	void setPort(unsigned i, Node* n);
-	Node const* portValue(unsigned i) const;
-
 private:
 	ElementList _cl;
 	NetList* Nets;
 	NodeMap* _nm;
-//	SchematicSymbol* _symbol;
-//	QStringList PortTypes; // obsolete.
-	std::vector<Node*> _ports; // -> symbol?
 //	QFileInfo FileInfo;
-//	QString DevType; // BUG move to parent
 
-public:
-	// HACK
+public: // HACK
 	unsigned nextIdx(std::string const& s) const;
 	ParamList* params();
 	ParamList const* params() const;
@@ -234,13 +197,7 @@ private:
 	const SchematicModel* _parent;
 	std::multimap<std::string, Element*> _map;
 	mutable ParamList* _params;
-
-public: // for now.
-//	friend class SchematicDoc;
-//	friend class NodeMap;
-//	friend class SchematicEdit;
-//	friend class SchematicSymbol;
-}; // schematicmodel
+}; // SchematicModel
 /*--------------------------------------------------------------------------*/
 SchematicModel::fat_iterator findbranch(istream_t&, SchematicModel::fat_iterator);
 /*--------------------------------------------------------------------------*/

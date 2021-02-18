@@ -36,12 +36,6 @@ Node::~Node()
   assert(!degree());
 }
 /*--------------------------------------------------------------------------*/
-bool Node::isNet(pos_t const& p) const
-{
-  unreachable(); // obsolete
-  return false;
-  //return p == _position;
-}
 #if 0
 // -------------------------------------------------------------
 TODO: untangle Label <-> Node

@@ -59,10 +59,6 @@ private:
 	std::string dev_type()const override { untested();
 		return "Sub";
 	}
-	Port& port(index_t i) override{itested();
-		assert(i < _ports.size());
-		return _ports[i];
-	}
 
 public:
 	Element* clone() const override{ untested();
@@ -91,6 +87,14 @@ public:
 public:
 	pos_t portPosition(index_t i) const override{ untested();
 		trace2("Paramset::portPosition", i, common());
+		if(auto s=dynamic_cast<Symbol const*>(_painting)){ untested();
+			assert(i < s->numPorts());
+			auto p = s->portPosition(i);
+			trace3("Paramset::portPosition", i, s->numPorts(), p);
+			return p;
+		}else{ untested();
+			assert(false);
+		}
 		auto cs = prechecked_cast<CommonSubckt const*>(common());
 		if(cs){ untested();
 			return cs->portPosition(i);
@@ -149,6 +153,10 @@ private: // Symbol
 private: // overrides
 	index_t numPorts() const override{
 		return _ports.size();
+	}
+	Port& port(index_t i) override{itested();
+		assert(i < _ports.size());
+		return _ports[i];
 	}
 
 public:
@@ -213,12 +221,14 @@ Element* SubFactory::clone_instance() const
 	return new_instance;
 }
 /*--------------------------------------------------------------------------*/
+#if 0
 Paramset::Paramset(CommonComponent* cc)
 	: Symbol() // sckt?
 { untested();
 	attach_common(cc);
 	setTypeName("Sub"); // dev_type_key.
 }
+#endif
 /*--------------------------------------------------------------------------*/
 // use common params eventually.
 std::string Paramset::paramName(index_t i) const
@@ -239,11 +249,12 @@ std::string Paramset::paramName(index_t i) const
 Paramset::Paramset(Paramset const&x)
   : Symbol(x),
     _factory(x._factory),
-    _painting(x._painting),
 	 _tx(x._tx),
-	 _ty(x._ty)
+	 _ty(x._ty),
+    _painting(x._painting)
 { untested();
-  setTypeName("Sub"); // dev_type_key
+	setTypeName("Sub"); // dev_type_key
+	_ports.resize(x._ports.size());
 }
 /*--------------------------------------------------------------------------*/
 // void Paramset::set_dev_type(const std::string& new_type){ untested();
@@ -342,7 +353,7 @@ void Paramset::init(Symbol const* proto)
 	// find painting...
 	if(!symsect){
 	}else if(symsect->scope()->size()){
-		trace1("got painting from symbol section", symsect->scope()->size());
+		trace2("got painting from symbol section", symsect->scope()->size(), symsect->numPorts());
 		_painting = symsect;
 		// check nuber f ports??
 	}else{
@@ -370,6 +381,7 @@ void Paramset::init(Symbol const* proto)
 // TODO: factory needs a refresh hook.
 Symbol const* SubFactory::newSymbol(std::string const& fn) const
 { untested();
+	trace1("SubFactory::newSymbol", fn);
 //	QString FileName(Props.getFirst()->Value);
 	auto dotplace = fn.find_last_of(".");
 	std::string type_name;
@@ -464,6 +476,7 @@ static void parse_portcmd(istream_t& cs, SubcktBase* s)
 /*--------------------------------------------------------------------------*/
 void SubFactory::build_sckt(istream_t& cs, SubcktBase* proto) const
 { untested();
+	trace1("SubFactory::build_sckt", cs.fullstring());
 	assert(owner());
 
 	auto LL = languageDispatcher["leg_sch"]; // use command instead?
@@ -483,48 +496,55 @@ void SubFactory::build_sckt(istream_t& cs, SubcktBase* proto) const
 	assert(!proto->numPorts());
 	assert(proto->common());
 
+	bool gotit = false;
 	auto ps = proto->scope(); // really?
 	assert(ps);
 	auto p_ = ps->find_(":SymbolSection:");
 	if(p_==ps->end()){
-
+		trace2("no SymbolSection", proto->label(), proto->numPorts());
 	}else if(auto p = dynamic_cast<SubcktBase const*>(*p_)){
-		if(p->scope()){
-			for(auto i : *p->scope()){
-				if(auto a=dynamic_cast<DEV_DOT*>(i)){
-					istream_t cs(istream_t::_STRING, a->s());
-					if(cs.umatch("parameter")){ // portparameter?
-						trace1("symbol parameter", a->s());
-						std::string name;
-						std::string defv;
-						cs >> name;
-						cs >> defv;
+		assert(p->scope());
+	
+		for(auto i : *p->scope()){
+			gotit = true;
+			if(auto a=dynamic_cast<DEV_DOT*>(i)){
+				istream_t cs(istream_t::_STRING, a->s());
+				if(cs.umatch("parameter")){ // portparameter?
+					trace1("symbol parameter", a->s());
+					std::string name;
+					std::string defv;
+					cs >> name;
+					cs >> defv;
 
-						try{
-							proto->set_param_by_name(name, defv);
-						}catch(qucs::ExceptionCantFind const&){
-							incomplete();
-						}
-						 // auto p = new PARAMETER<double>
-						 // *p = defv;
-						 // proto->_params.push_back(p);
-						 // proto->_param_names.push_back(name);
-					}else if(cs.umatch("portparameter")){
-					}else if(cs.umatch(".port_")){
-						trace1("symbol port", a->s());
-						parse_portcmd(cs, proto);
-					}else{
-						trace1("symbol other", a->s());
+					try{
+						proto->set_param_by_name(name, defv);
+					}catch(qucs::ExceptionCantFind const&){
+						incomplete();
 					}
+					 // auto p = new PARAMETER<double>
+					 // *p = defv;
+					 // proto->_params.push_back(p);
+					 // proto->_param_names.push_back(name);
+				}else if(cs.umatch("portparameter")){
+				}else if(cs.umatch(".port_")){
+					trace1("symbol port", a->s());
+					parse_portcmd(cs, proto);
 				}else{
+					trace1("symbol other", a->s());
 				}
+			}else{
 			}
-		}else{
-			incomplete(); // or no painting??
 		}
 
 	}else{
-		incomplete(); // or no painting??
+		unreachable(); // wrong type
+	}
+
+	if(!gotit){
+		incomplete();
+		trace2("build_sckt no Symbol", proto->label(), proto->numPorts());
+	}else{
+		trace2("build_sckt got Symbol", proto->label(), proto->numPorts());
 	}
 }
 /*--------------------------------------------------------------------------*/

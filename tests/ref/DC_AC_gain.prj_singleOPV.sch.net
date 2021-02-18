@@ -2,11 +2,11 @@
 ## declarations 0
 ## declarations end
 
-R:R1 _net12 _net1 R="4k" Temp="26.85" Tc1="0.0" Tc2="0.0" Tnom="26.85"
+R:R1 _net13 _net1 R="4k" Temp="26.85" Tc1="0.0" Tc2="0.0" Tnom="26.85"
 C:C1 _net1 P6 C="4p" V=""
 Port:P3 P3 P3 Num="3" Type=""
 Port:P4 P4 P4 Num="4" Type=""
 Port:P6 P6 P6 Num="5" Type=""
 Port:P1 P1 P1 Num="1" Type=""
 Port:P2 P2 P2 Num="2" Type=""
-Idc:I1 _net16 P3 I="5 uA"
+Idc:I1 _net17 P3 I="5 uA"

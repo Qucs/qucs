@@ -32,7 +32,7 @@ private:
 //	Port& port(unsigned) override {unreachable(); return *new Port();}
 public:
 	virtual pos_t portPosition(unsigned i) const;
-	virtual unsigned numPorts() const { incomplete(); return 0; }
+	virtual unsigned numPorts() const { return net_nodes(); }
 
 public: // Element
 	SchematicModel const* scope() const {
@@ -53,6 +53,7 @@ public:
 	SchematicModel const* subckt() const{ return _subckt; }
 	SchematicModel* subckt(){ return _subckt; }
 	void new_subckt();
+	index_t net_nodes() const{return _ports.size();}
 
 private:
 	std::vector<Port*> _ports;

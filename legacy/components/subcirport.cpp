@@ -241,8 +241,10 @@ void SubCirPort::setParameter(unsigned n, std::string const& vv)
 			// possibly missing more error handling
 			assert(scope());
 			assert(owner());
-			trace2("setting scope port", owner()->label(), pos);
-			scope()->setPort(pos, port(pos).value());
+			trace3("setting scope port", owner()->label(), pos, port(pos).value());
+			auto sb = prechecked_cast<SubcktBase*>(owner());
+			assert(sb);
+			sb->set_port_by_index(pos, port(pos).nodeLabel());
 			_pos = pos+1;
 		}else{
 			_pos = pos+1;

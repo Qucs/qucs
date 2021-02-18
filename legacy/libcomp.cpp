@@ -83,25 +83,25 @@ private:
 			return SubcktBase::paramValue(n);
 		}
 	}
-	unsigned numPorts() const override{
-		if(painting()){
-			return painting()->numPorts();
-		}else if(subckt()){
-			return subckt()->numPorts();
-		}else{ untested();
-			unreachable();
-			return 0;
-		}
-	}
-	virtual Port& port(unsigned) {unreachable(); return *new Port();}
-	pos_t portPosition(unsigned i) const override{
-	//	assert(subckt());
-	//	assert(subckt()->portValue(i));
-		// auto pos = subckt()->portValue(i)->position();
-		Symbol const* s = painting();
-		auto pos = s->portPosition(i);
-		return pos;
-	}
+//	unsigned numPorts() const override{
+//		if(painting()){
+//			return painting()->numPorts();
+//		}else if(subckt()){
+//			return subckt()->numPorts();
+//		}else{ untested();
+//			unreachable();
+//			return 0;
+//		}
+//	}
+//	virtual Port& port(unsigned) {unreachable(); return *new Port();}
+//	pos_t portPosition(unsigned i) const override{
+//	//	assert(subckt());
+//	//	assert(subckt()->portValue(i));
+//		// auto pos = subckt()->portValue(i)->position();
+//		Symbol const* s = painting();
+//		auto pos = s->portPosition(i);
+//		return pos;
+//	}
 
 	rect_t bounding_rect() const override{ untested();
 		// BUG. cache.
@@ -254,6 +254,10 @@ private: // Symbol
 		}else if(n=="Component"){ itested();
 			_component.Value = QString::fromStdString(v);
 			redo = true;
+		}else if(n=="$tx"){ untested();
+			incomplete();
+		}else if(n=="$ty"){ untested();
+			incomplete();
 		}else{itested();
 			Symbol::setParameter(n, v);
 		}

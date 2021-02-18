@@ -329,7 +329,7 @@ private:
   QMenu *helpTechnical, *helpReport, *helpTutorial;
 
   QToolBar *fileToolbar, *editToolbar, *viewToolbar;
-  QToolBar *_workToolBar; // Toolbar?
+  QToolBar *_docToolBar; // Toolbar?
 
 
   QLabel *WarningLabel, *PositionLabel;  // labels in status bar

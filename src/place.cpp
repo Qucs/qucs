@@ -19,6 +19,9 @@
 #include "geometry.h"
 #include "node.h"
 #include "place.h" // for now.
+#ifdef DO_TRACE
+#include "viewpainter.h"
+#endif
 /*--------------------------------------------------------------------------*/
 namespace{
 /*--------------------------------------------------------------------------*/
@@ -45,6 +48,8 @@ void Place::paint(ViewPainter* p) const
 		p->setPen(QPen(Qt::green, 2));
 	}
 	p->drawEllipse(-1, -1, 1, 1);
+#else
+	(void) p;
 #endif
 }
 /*--------------------------------------------------------------------------*/

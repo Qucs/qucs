@@ -816,7 +816,7 @@ void QucsApp::initToolBar()
   viewToolbar->addAction(magMinus);
   addToolBar(viewToolbar);
 
-  _workToolBar = new QToolBar(tr("Work"));
+  _docToolBar = new QToolBar(tr("Work"));
 //  _workToolBar->addAction(select);
 //  _workToolBar->addAction(editActivate);
 //  _workToolBar->addAction(editMirror);
@@ -833,7 +833,7 @@ void QucsApp::initToolBar()
 //  _workToolBar->addAction(dpl_sch);
 //  _workToolBar->addAction(setMarker);
 //  _workToolBar->addSeparator();    // <<<=======================
-  addToolBar(_workToolBar);
+  addToolBar(_docToolBar);
 }
 
 // ----------------------------------------------------------
@@ -914,7 +914,7 @@ void QucsApp::slotViewToolBar(bool toggle)
   fileToolbar->setVisible(toggle);
   editToolbar->setVisible(toggle);
   viewToolbar->setVisible(toggle);
-  _workToolBar->setVisible(toggle);
+  _docToolBar->setVisible(toggle);
 }
 
 // ----------------------------------------------------------

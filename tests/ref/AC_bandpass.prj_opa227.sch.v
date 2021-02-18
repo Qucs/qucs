@@ -11,7 +11,7 @@ GND #() *(gnd);
 endmodule // main
 
 //else?
-module :SymbolSection:();
+module :SymbolSection:(_net2, _net1, _net0);
 painting incomplete
 painting incomplete
 painting incomplete

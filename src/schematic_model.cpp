@@ -273,30 +273,31 @@ void SchematicModel::connect(Symbol* sym)
 }
 #endif
 /*--------------------------------------------------------------------------*/
-unsigned SchematicModel::numPorts() const
-{
-	assert(this);
-	trace1("SchematicModel::numPorts", this);
-	// incomplete
-	return _ports.size();
-}
+// BUG?
+//unsigned SchematicModel::numPorts() const
+//{
+//	assert(this);
+//	trace1("SchematicModel::numPorts", this);
+//	// incomplete
+//	return _ports.size();
+//}
 /*--------------------------------------------------------------------------*/
-void SchematicModel::setPort(unsigned i, Node* n)
-{
-	trace2("setPort", i, _ports.size());
-	_ports.resize(std::max(_ports.size(), size_t(i)+1));
-	_ports[i] = n;
-}
-/*--------------------------------------------------------------------------*/
-Node const* SchematicModel::portValue(unsigned i) const
-{
-	assert(i<numPorts());
-	if(_ports[i]){
-		return _ports[i];
-	}else{ untested();
-		return nullptr;
-	}
-}
+//void SchematicModel::setPort(unsigned i, Node* n)
+//{
+//	trace2("setPort", i, _ports.size());
+//	_ports.resize(std::max(_ports.size(), size_t(i)+1));
+//	_ports[i] = n;
+//}
+///*--------------------------------------------------------------------------*/
+//Node const* SchematicModel::portValue(unsigned i) const
+//{
+//	assert(i<numPorts());
+//	if(_ports[i]){
+//		return _ports[i];
+//	}else{ untested();
+//		return nullptr;
+//	}
+//}
 /*--------------------------------------------------------------------------*/
 void SchematicModel::prepare()
 {

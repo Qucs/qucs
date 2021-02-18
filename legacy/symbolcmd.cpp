@@ -26,15 +26,16 @@ namespace{
 /*--------------------------------------------------------------------------*/
 // stuff paintings in here
 // rename and move to library when ready?
+// similar to sckt_proto. but not quite. revisit later.
 class SymbolSection : public SubcktBase{
 public:
 	SymbolSection() : SubcktBase() {
 		new_subckt();
 	}
 	~SymbolSection(){
-		for(auto pp : _ports){
-			delete pp;
-		}
+//		for(auto pp : _ports){
+//			delete pp;
+//		}
 	}
 private:
 	SymbolSection(SymbolSection const& p) : SubcktBase(p) {
@@ -77,34 +78,39 @@ private: // BUG? a SubcktBase is a Painting...
 	}
 
 private: // Sckt
+//	index_t numPorts() const override{ untested();
+//		return _numports; in e_comp
+//	}
 	bool makes_own_scope()const override { return true;}
 	SchematicModel* scope() override{
 		return subckt();
 	}
 private: // Symbol
 	bool is_device() const override { return false; }
-	unsigned numPorts() const override{
-		if(subckt()){
-			return subckt()->numPorts();
-		}else{ untested();
-			unreachable();
-			return 0;
-		}
-	}
-	Port& port(unsigned i) override {
-		assert(scope());
-		if(_ports.size() > i){
-		}else{
-			_ports.resize(i+1);
-		}
 
-		if(_ports[i]){
-		}else{
-			_ports[i] = new Port();
-		}
-
-		return *_ports[i];
-	}
+	// sckt_base.
+//	unsigned numPorts() const override{
+//		if(subckt()){
+//			return subckt()->numPorts();
+//		}else{ untested();
+//			unreachable();
+//			return 0;
+//		}
+//	}
+//	Port& port(unsigned i) override {
+//		assert(scope());
+//		if(_ports.size() > i){
+//		}else{
+//			_ports.resize(i+1);
+//		}
+//
+//		if(_ports[i]){
+//		}else{
+//			_ports[i] = new Port();
+//		}
+//
+//		return *_ports[i];
+//	}
 	std::string const portName(index_t i) const override{ untested();
 		trace1("symbol portName", i);
 		return port_value(i);
@@ -113,8 +119,9 @@ public:
 	Symbol* clone() const override{
 		return new SymbolSection(*this);
 	}
-private: // FIXME. base
-	std::vector<Port*> _ports;
+private: // use e_comp
+// 	index_t _numports{0};
+//	std::vector<Port*> _ports;
 }symbolSection;
 /*--------------------------------------------------------------------------*/
 static void parse_dot(istream_t& cs, SubcktBase* s)
@@ -131,6 +138,7 @@ static void parse_dot(istream_t& cs, SubcktBase* s)
 		trace3("got port", x, y, s->numPorts());
 		trace3("symbol set port", n, l, cs.fullstring());
 		s->set_port_by_index(n, l);
+		trace1("port set", s->numPorts());
 		assert(l==s->port_value(n));
 	}else{
 	}

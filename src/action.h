@@ -12,8 +12,8 @@
  *                                                                         *
  ***************************************************************************/
 
-#ifndef MOUSEACTIONS_H
-#define MOUSEACTIONS_H
+#ifndef MOUSE_ACTION_H
+#define MOUSE_ACTION_H
 
 #include "element.h"
 #include "qt_compat.h"
