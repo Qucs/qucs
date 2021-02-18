@@ -16,7 +16,6 @@ Vac #(.U(1uV), .f(1 GHz), .Phase(0), .Theta(0)) V1(In, gnd);
 //AC1
 endmodule // main
 
-Sub #(.File()) Sub(unknown_net);
 //else?
 module :SymbolSection:();
 endmodule // :SymbolSection:

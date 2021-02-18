@@ -10,7 +10,6 @@ Port #(.Num(2), .Type(analog)) P2(P2, P2);
 GND #() *(gnd);
 endmodule // main
 
-Sub #(.File()) Sub(unknown_net);
 //else?
 module :SymbolSection:();
 painting incomplete

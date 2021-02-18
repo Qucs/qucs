@@ -9,7 +9,6 @@ Port #(.Num(2), .Type()) P2(P2, P2);
 Idc #(.I(5 uA)) I1(_net16, P3);
 endmodule // main
 
-Sub #(.File()) Sub(unknown_net);
 //else?
 module :SymbolSection:();
 painting incomplete

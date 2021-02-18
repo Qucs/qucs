@@ -55,7 +55,12 @@ ComponentListWidgetItem::ComponentListWidgetItem(Element const* e)
 	QString File = e->iconBasename();
 	QString Name = QString::fromStdString(e->label());
 	Painting const* p = dynamic_cast<Painting const*>(e);
-	assert(p);
+	if(p){
+	}else{
+		trace1("not a painting?", e->label());
+		return;
+
+	}
 
 ////	if(auto s=dynamic_cast<Symbol const*>(e)){
 ////		Name = QString::fromStdString(s->typeName());

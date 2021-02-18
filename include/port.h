@@ -25,6 +25,7 @@ class pos_t;
 class Port {
 private:
 public:
+  Port(Port const* p) : _node(p->_node) {assert(p);}
   Port(Port const& p) : _node(nullptr) {assert(!p._node);}
   explicit Port() : _node(nullptr) {}
   virtual ~Port();

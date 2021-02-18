@@ -19,13 +19,12 @@ R #(.R(1591 Ohm), .Temp(26.85), .Tc1(0.0), .Tc2(0.0), .Tnom(26.85), .Symbol(euro
 R #(.R(1.59 Ohm), .Temp(26.85), .Tc1(0.0), .Tc2(0.0), .Tnom(26.85), .Symbol(european)) R6(_net12, _net26);
 endmodule // main
 
-Sub #(.File()) Sub(unknown_net);
 //else?
 module :SymbolSection:();
 endmodule // :SymbolSection:
 
 //else?
-module Sub:opa227();
+module Sub:opa227(_net2, _net1, _net0);
 module :SymbolSection:();
 painting incomplete
 painting incomplete

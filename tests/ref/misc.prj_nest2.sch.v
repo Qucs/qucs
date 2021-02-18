@@ -6,7 +6,6 @@ GND #() *(gnd);
 C #(.C(1 pF), .V(), .Symbol(neutral)) C1(gnd, P2);
 endmodule // main
 
-Sub #(.File()) Sub(unknown_net);
 //else?
 module :SymbolSection:();
 painting incomplete

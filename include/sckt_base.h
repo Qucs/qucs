@@ -30,8 +30,8 @@ protected:
 private:
 	virtual Element* clone()const {unreachable(); return nullptr;}
 //	Port& port(unsigned) override {unreachable(); return *new Port();}
-	virtual pos_t portPosition(unsigned i) const;
 public:
+	virtual pos_t portPosition(unsigned i) const;
 	virtual unsigned numPorts() const { incomplete(); return 0; }
 
 public: // Element

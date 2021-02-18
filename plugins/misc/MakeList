@@ -9,6 +9,7 @@ RAW_SRCS = \
 	netlist.cpp \
 	get.cpp \
 	signon.cc \
-	simulate.cpp
+	simulate.cpp \
+	subcircuit.cpp
 
 EXTRA_DIST =

@@ -28,7 +28,6 @@ GND #() *(gnd);
 R #(.R(1k), .Temp(26.85), .Tc1(0.0), .Tc2(0.0), .Tnom(26.85), .Symbol(european)) RL(gnd, _net39);
 endmodule // main
 
-Sub #(.File()) Sub(unknown_net);
 //else?
 module :SymbolSection:();
 endmodule // :SymbolSection:

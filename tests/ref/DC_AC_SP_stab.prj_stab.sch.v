@@ -30,7 +30,6 @@ C #(.C(0.1 uF), .V(), .Symbol(neutral)) C1(_net21, gnd);
 C #(.C(5 uF), .V(), .Symbol(neutral)) C2(_net12, gnd);
 endmodule // main
 
-Sub #(.File()) Sub(unknown_net);
 //else?
 module :SymbolSection:();
 endmodule // :SymbolSection:

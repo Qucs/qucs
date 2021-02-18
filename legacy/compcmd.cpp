@@ -40,7 +40,7 @@ private:
 
 private: // Symbol
 	bool is_device() const override { return false; }
-	unsigned numPorts() const override{ untested();
+	index_t numPorts() const override{ untested();
 		if(subckt()){ untested();
 			return subckt()->numPorts();
 		}else{ untested();
@@ -67,6 +67,7 @@ class CompCommand : public Command{
 	void do_it(istream_t& cs, SchematicModel* s) override{
 		auto fullstring = cs.fullString();
 		trace1("CompCommand", fullstring);
+		assert(s);
 
 		SubcktBase* sym = nullptr;
 		auto p_ = s->find_("main");
@@ -82,15 +83,12 @@ class CompCommand : public Command{
 			sym = dynamic_cast<SubcktBase*>(sc);
 			assert(sym);
 			sym->setLabel("main");
-			//sym->setOwner(..);
 			s->pushBack(sym);
-			assert(s);
+			//sym->setOwner(..);
 		}
 
 		auto lang = languageDispatcher["legacy_lib"];
 		assert(lang);
-
-		Element* e = sym;
 
 		while(true){
 			cs.read_line();
@@ -98,17 +96,19 @@ class CompCommand : public Command{
 				break;
 			}else{
 				cs.skipbl();
-				trace2("compcmd", cs.fullstring(), e->scope()->size());
-				lang->new__instance(cs, sym, e->scope());
+				trace2("compcmd", cs.fullstring(), sym->scope()->size());
+				lang->new__instance(cs, sym, sym->scope());
 			}
 		}
 
 		trace1("find DOT", sym->label());
-		for(auto i : *e->scope()){
+		for(auto i : *sym->scope()){
 			if(auto d = dynamic_cast<Symbol*>(i)){
 				if(d->typeName() == "Port"){
 					auto v = d->port_value(0);
-					trace2("found a port", d->label(), v);
+					index_t kk = sym->numPorts();
+					trace3("found a port", d->label(), v, kk);
+					// sym->set_port_by_index(kk, d->label());
 				}else{
 				}
 			}else if(auto d = dynamic_cast<DEV_DOT*>(i)){ untested();

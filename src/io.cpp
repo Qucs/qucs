@@ -90,7 +90,6 @@ istream_t::istream_t(istream_t::STDIN)
 istream_t::istream_t(istream_t::WHOLE_FILE, const std::string& name)
 	: _file(nullptr), _cnt(0), _ok(true), _stream(nullptr)
 {
-	trace1("whole file", name);
 	auto qfn = QString::fromStdString(name);
 	auto d = new QFile(qfn); // BUG: memory leak. (get rid of QTextStream...)
 	d->open(QIODevice::ReadOnly);
@@ -104,7 +103,6 @@ istream_t::istream_t(istream_t::WHOLE_FILE, const std::string& name)
 /// borrowed from ap_*.cc
 int istream_t::ctoi()
 {
-	trace3("skipbl", fullString(), cursor(), _ok);
   int val = 0;
   int sign = 1;
 
@@ -127,7 +125,6 @@ int istream_t::ctoi()
 istream_t& istream_t::skipbl()
 {
   while (peek() && (!isgraph(peek()))) {
-	trace1("skipbl", peek());
     skip();
   }
   return *this;
@@ -143,7 +140,6 @@ istream_t& istream_t::skip1b(char t)
 /*--------------------------------------------------------------------------*/
 char istream_t::ctoc()
 {
-	trace1("ctoc", _cmd);
   char c=_cmd[_cnt];
   if(_cnt<=_cmd.size()) {
     ++_cnt;
@@ -164,6 +160,7 @@ istream_t& istream_t::skip1(const std::string& t)
 {
   if (match1(t)) {
     skip();
+	trace3("skip1", _cnt, _length, _cmd);
     assert(_ok);
   }else{
     _ok = false;
@@ -241,7 +238,6 @@ std::string istream_t::ctos(const std::string& term,
 
 	skipcom();
 	_ok = end_string > begin_string;
-	trace2("ctos", fullString(), s);
 	return s;
 #else
 	(void)term;
@@ -266,7 +262,6 @@ istream_t& istream_t::umatch(const std::string& s)
   const char* str2 = s.c_str();
   bool optional = 0;
 
-  trace2("umatch", s, tail());
 
   for (;;) {
     if ((!*str2) || (*str2 == '|')) {
@@ -296,7 +291,6 @@ istream_t& istream_t::umatch(const std::string& s)
 			++str2;
       }
     }else{
-		 trace3("mismatch", optional, str2, peek());
       // mismatch
       const char* bar = strchr(str2, '|');
       if (bar && (bar[-1] != '\\')) { untested();

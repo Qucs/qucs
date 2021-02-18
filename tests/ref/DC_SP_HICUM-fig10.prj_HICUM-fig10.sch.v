@@ -10,7 +10,6 @@ Vdc #(.U(2 V)) V2(_net0, gnd);
 Eqn #(.NFmin(10*log10(Fmin)), .NF(10*log10(F)), .Export(yes)) Eqn1();
 endmodule // main
 
-Sub #(.File()) Sub(unknown_net);
 //else?
 module :SymbolSection:();
 endmodule // :SymbolSection:

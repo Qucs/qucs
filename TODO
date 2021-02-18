@@ -31,7 +31,6 @@
 - implement symbol editor (standalone, not as "mode")
 - symbol text position / move text
 - refactor VHDLcode
-- qucsator process namesspace issue (important?)
 
 stuff that broke along the way
 - copy and paste

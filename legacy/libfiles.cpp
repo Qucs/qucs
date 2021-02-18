@@ -44,19 +44,19 @@ public:
 #endif
 	}
 private:
-	void do_it(istream_t&, SchematicModel*) override;
-	void load_single(std::string what);
-	void stash(Dispatcher<Symbol>::INSTALL* i){
+	void do_it(istream_t&, SchematicModel* scope) override;
+	void load_single(std::string what, SchematicModel* scope);
+	void stash(std::string const& t, Symbol* ssym, SchematicModel* scope) {
+		auto i = new Dispatcher<Symbol>::INSTALL(&symbol_dispatcher, t, ssym);
 		_stash.push_back(i);
 	}
 
 	std::vector<Dispatcher<Symbol>::INSTALL*> _stash;
-
 	std::vector<Module::INSTALL*> _mod;
 }l;
 Dispatcher<Command>::INSTALL p(&commandDispatcher, "loadlegacylib", &l);
 
-void LIB::load_single(std::string what)
+void LIB::load_single(std::string what, SchematicModel* scope)
 {
 	QString libPath = QString_(what);
 	libPath.chop(4); // remove extension
@@ -109,7 +109,7 @@ void LIB::load_single(std::string what)
 				L->load(stream, ssym);
 
 				trace1("Lib stashing", t);
-				stash(new Dispatcher<Symbol>::INSTALL(&symbol_dispatcher, t, ssym));
+				stash(t, ssym, scope);
 				new Module::INSTALL(parsedlib.name.toStdString(), ssym);
 			}catch(qucs::Exception const&){ untested();
 				trace0("not stashing");
@@ -118,7 +118,7 @@ void LIB::load_single(std::string what)
 
 			// trace3("Lib", c.modelString, type, c.definition);
 			// d'uh
-		}else{
+		}else if(type=="Sub"){
 			// TODO: new__instance does this.
 			Symbol* sym = symbol_dispatcher.clone("LegacyParamset");
 			sym->setParameter("modelstring", c.modelString.toStdString());
@@ -134,20 +134,21 @@ void LIB::load_single(std::string what)
 				// unreachable(); eventually
 				// possibly not ported yet.
 			}
+		}else{
 		}
 		// todo: memory leak.
 	}
 }
 
 
-void LIB::do_it(istream_t& cs, SchematicModel*)
+void LIB::do_it(istream_t& cs, SchematicModel* scope)
 {
 	cs >> "loadlegacylib";
 	std::string what;
 	cs >> what;
 
 	if(what!=""){
-		load_single(what);
+		load_single(what, scope);
 	}else{
 		QList<QPair<QString, bool> > LibFiles;
 		ComponentLibrary parsedlib;
@@ -181,7 +182,7 @@ void LIB::do_it(istream_t& cs, SchematicModel*)
 		for (int i = 0; i < LibFiles.count(); ++i ) {
 			// TODO: load_single
 			libPath = LibFiles[i].first;
-			load_single(libPath.toStdString());
+			load_single(libPath.toStdString(), scope);
 #if 0
 			libPath.chop(4); // remove extension
 			parsedlib.components.clear();

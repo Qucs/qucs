@@ -18,7 +18,6 @@ Vdc #(.U(1.1 V)) V1(_net17, gnd);
 GND #() *(gnd);
 endmodule // main
 
-Sub #(.File()) Sub(unknown_net);
 //else?
 module :SymbolSection:();
 endmodule // :SymbolSection:

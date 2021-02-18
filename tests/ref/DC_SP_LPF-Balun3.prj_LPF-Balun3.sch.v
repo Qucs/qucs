@@ -23,7 +23,6 @@ VProbe #() Pr1(_net29, gnd);
 GND #() *(gnd);
 endmodule // main
 
-Sub #(.File()) Sub(unknown_net);
 //else?
 module :SymbolSection:();
 endmodule // :SymbolSection:

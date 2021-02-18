@@ -26,20 +26,25 @@ std::string SubcktBase::dev_type()const
 	return common()->modelname();
 }
 /*--------------------------------------------------------------------------*/
-pos_t SubcktBase::portPosition(unsigned i) const
-{
+pos_t SubcktBase::portPosition(index_t i) const
+{ untested();
 	std::string n = portName(i);
-	SchematicModel const* s = subckt(); // scope?
+	trace3("SubcktBase::portPosition", i, label(), n);
+	//SchematicModel const* s = subckt(); // scope?
+	assert(makes_own_scope());
+	SchematicModel const* s = scope(); // scope?
 
 	if(s){
 //		return subckt()->portValue(i)->position();
-		auto i = s->find_(n);
-		if(i!=s->end()){
-			return (*i)->position();
+		auto ii = s->find_(n);
+		if(ii!=s->end()){
+			trace1("sckt_base port hit ", n);
+			return (*ii)->position();
 		}else{
+			trace2("sckt_base port miss", i, n);
 		}
-
 	}else{ untested();
+		trace2("sckt_base port miss", i, n);
 	}
 	unreachable();
 	return pos_t(0,0);

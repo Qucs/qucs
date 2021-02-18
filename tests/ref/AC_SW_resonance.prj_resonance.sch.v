@@ -8,7 +8,6 @@ L #(.L(13 nH), .I()) L1(Voltage, _net4);
 //AC1
 endmodule // main
 
-Sub #(.File()) Sub(unknown_net);
 //else?
 module :SymbolSection:();
 endmodule // :SymbolSection:

@@ -794,8 +794,7 @@ Symbol* LegacySchematicLanguage::parseSymbol(istream_t& cs, Symbol* sym) const
 		if(!ok){ untested();
 			throw qucs::Exception("tx parse");
 		}else{
-			(void)tmp;
-			//		sym->setParameter("$ttx", std::to_string(tmp));
+			sym->setParameter("$tx", std::to_string(tmp));
 		}
 
 		n  = s.section(' ',6,6);    // ty
@@ -803,8 +802,7 @@ Symbol* LegacySchematicLanguage::parseSymbol(istream_t& cs, Symbol* sym) const
 		if(!ok){ untested();
 			throw qucs::Exception("ty parse");
 		}else{
-			(void)tmp;
-			//		sym->setParameter("$tty", std::to_string(tmp));
+			sym->setParameter("$ty", std::to_string(tmp));
 		}
 
 		{

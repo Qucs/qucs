@@ -11,6 +11,7 @@ LEGACY_SRC = \
 	curvediagram.cpp \
 	compcmd.cpp \
 	datfiles.cpp \
+	default_symbol.cpp \
 	diagram.cpp \
 	equation.cpp \
 	gui.cc \
@@ -35,7 +36,6 @@ LEGACY_SRC = \
 	schematic_format.cpp \
 	smithdiagram.cpp \
 	simulator.cpp \
-	subcircuit.cpp \
 	verilogfile.cpp \
 	tabdiagram.cpp
 
@@ -49,6 +49,9 @@ NOTYET_SRC = \
 	truthdiagram.cpp \
 	phasordiagram.cpp \
 	waveac.cpp
+
+MAYBE_OBSOLETE = \
+	subcircuit.cpp
 
 HDR = \
 	obsolete_paintings.h \

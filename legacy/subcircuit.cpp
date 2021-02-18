@@ -673,7 +673,7 @@ bool Subcircuit::portExists(index_t i) const
 	return false;
 }
 
-static std::string invalid_="invalid";
+static std::string invalid_="sckt_port_invalid";
 std::string const& Subcircuit::portName(index_t) const
 { untested();
 	incomplete();

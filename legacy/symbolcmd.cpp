@@ -20,10 +20,9 @@
 #include "symbol.h"
 #include "dot.h"
 #include "sckt_base.h"
+#include "viewpainter.h"
 /*--------------------------------------------------------------------------*/
 namespace{
-/*--------------------------------------------------------------------------*/
-Port static_hack_port;
 /*--------------------------------------------------------------------------*/
 // stuff paintings in here
 // rename and move to library when ready?
@@ -47,8 +46,35 @@ private:
 	}
 
 private: // BUG? a SubcktBase is a Painting...
-	virtual rect_t bounding_rect() const override{ unreachable(); return rect_t();}
-	virtual void paint(ViewPainter*) const override{ unreachable(); }
+	rect_t bounding_rect() const override {
+		assert(subckt());
+		rect_t br; // cache??
+		for(auto p : *subckt()){ untested();
+			assert(p);
+			Element const* e = p;
+			//			trace2("br", e->boundingRect().topLeft(), e->boundingRect().bottomRight());
+			if(auto p = dynamic_cast<Painting const*>(e)){
+				auto c = e->center(); // p!
+				incomplete(); // BUG. honour p->legacyTransformhack
+				br |= ( p->bounding_rect() + c );
+			}
+		}
+		trace4("LibComp::br", label(), subckt()->size(), br.tl(), br.br());
+		return br;
+	}
+	void paint(ViewPainter* v) const override{ untested();
+		assert(subckt());
+		for(auto e : *subckt()){ untested();
+			incomplete(); // BUG. honour p->legacyTransformhack
+			if(auto p = dynamic_cast<Painting const*>(e)){
+				v->save();
+				v->translate(e->position());
+				p->paint(v);
+				v->restore();
+			}else{
+			}
+		}
+	}
 
 private: // Sckt
 	bool makes_own_scope()const override { return true;}
@@ -79,6 +105,10 @@ private: // Symbol
 
 		return *_ports[i];
 	}
+	std::string const portName(index_t i) const override{ untested();
+		trace1("symbol portName", i);
+		return port_value(i);
+	}
 public:
 	Symbol* clone() const override{
 		return new SymbolSection(*this);
@@ -99,8 +129,9 @@ static void parse_dot(istream_t& cs, SubcktBase* s)
 		Get(cs, "l{abel}", &l);
 
 		trace3("got port", x, y, s->numPorts());
-		trace3("pd", n, l, cs.fullstring());
+		trace3("symbol set port", n, l, cs.fullstring());
 		s->set_port_by_index(n, l);
+		assert(l==s->port_value(n));
 	}else{
 	}
 }

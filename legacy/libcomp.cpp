@@ -102,15 +102,10 @@ private:
 		auto pos = s->portPosition(i);
 		return pos;
 	}
-	//ElementList const* symbolPaintings() const override{
-	//	incomplete(); // need painting stash in sckt();
-	//	return nullptr; // &paintings();
-	//}
 
 	rect_t bounding_rect() const override{ untested();
 		// BUG. cache.
 		rect_t br;
-//		assert(symbolPaintings());
 		assert(paintings());
 		for(auto p : *paintings()){ untested();
 			assert(p);
@@ -125,6 +120,8 @@ private:
 		trace4("LibComp::br", label(), paintings()->size(), br.tl(), br.br());
 		return br;
 	}
+
+	// same in nonlegacy Sub...?
 	void paint(ViewPainter* v) const override{ untested();
 		assert(paintings());
 		for(auto e : *paintings()){ untested();
@@ -232,16 +229,7 @@ private: // Element
 	}
 
 private: // Symbol
-	ElementList const* symbolPaintings() const override{ untested();
-		if(_parent){itested();
-			assert( _parent->subckt());
-			incomplete();
-			return nullptr; // &_parent->subckt()->paintings(); // bug or feature?
-		}else{ untested();
-			return nullptr;
-		}
-	}
-	unsigned numPorts() const override{
+	index_t numPorts() const override{
 		if(_parent){itested();
 			trace2("Lib::numPorts", label(), _parent->numPorts());
 			return _parent->numPorts();
@@ -480,37 +468,6 @@ Lib::Lib(Lib const& l)
 }
 /*--------------------------------------------------------------------------*/
 /*--------------------------------------------------------------------------*/
-// partially tAC. build a new sckt proto.
-// does not fullymake sense.
-#if 0
-Symbol const* Lib::proto() const
-{
-   auto t = typeName();
-	auto p = find_looking_out(t);
-
-	if(auto sp = dynamic_cast<Symbol const*>(p)){ untested();
-		trace1("cached", typeName());
-		return sp;
-	}else{
-		trace1("not cached", typeName());
-
-		assert(false);
-#if 0
-		
-		// prototypes must be stashed in the project, as they are not global.
-		QucsDoc* project = getProject(this);
-
-		assert(_parent);
-		//if(auto o=dynamic_cast<SchematicSymbol*>(owner()))
-		project->cacheProto(_parent);
-#endif
-	}
-
-	assert(_parent);
-	return _parent;
-}
-#endif
-/*--------------------------------------------------------------------------*/
 // Makes the schematic symbol subcircuit with the correct number
 // of ports.
 #if 0
@@ -534,66 +491,6 @@ void LibComp::createSymbol()
     tx = x1+4;
     ty = y2+4;
   }
-}
-#endif
-/*--------------------------------------------------------------------------*/
-#if 0
-QString LibComp::netlist() const
-{ untested();
-  QString s = "Sub:"+Name;   // output as subcircuit
-
-  // output all node names
-  foreach(Port *p1, Ports)
-    s += " "+p1->Connection->name();   // node names
-
-  // output property
-  s += " Type=\""+createType()+"\"";   // type for subcircuit
-
-  // output user defined parameters
-  for(Property *pp = Props.at(2); pp != 0; pp = Props.next())
-    s += " "+pp->Name+"=\""+pp->Value+"\"";
-
-  return s + '\n';
-  return "";
-}
-#endif
-/*--------------------------------------------------------------------------*/
-#if 0
-QString LibComp::verilogCode(int)
-{ untested();
-  QString s = "  Sub_" + createType() + " " + Name + " (";
-
-  // output all node names
-  QListIterator<Port *> iport(Ports);
-  Port *pp = iport.next();
-  if(pp)  s += pp->Connection->name();
-  while (iport.hasNext()) { untested();
-    pp = iport.next();
-    s += ", "+pp->Connection->name();   // node names
-  }
-
-  s += ");\n";
-  return s;
-  return "";
-}
-#endif
-/*--------------------------------------------------------------------------*/
-#if 0
-QString LibComp::vhdlCode(int)
-{ untested();
-  QString s = "  " + Name + ": entity Sub_" + createType() + " port map (";
-
-  // output all node names
-  QListIterator<Port *> iport(Ports);
-  Port *pp = iport.next();
-  if(pp)  s += pp->Connection->name();
-  while (iport.hasNext()) { untested();
-    pp = iport.next();
-    s += ", "+pp->Connection->name();   // node names
-  }
-
-  s += ");\n";
-  return s;
 }
 #endif
 /*--------------------------------------------------------------------------*/

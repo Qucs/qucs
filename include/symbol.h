@@ -30,7 +30,6 @@ class ElementList;
 class Widget;
 /*--------------------------------------------------------------------------*/
 enum {CC_STATIC_=27342};
-static std::string invalid_ = "invalid";
 /*--------------------------------------------------------------------------*/
 // borrowed (modified) from e_compon.h
 class CommonComponent : public Object {
@@ -175,7 +174,7 @@ public: // Port stuff
 	// TODO: rethink Port/Node semantics
 	virtual unsigned numPorts() const = 0; // net_nodes?
 	virtual bool portExists(unsigned i) const{ return i<numPorts(); }
-	virtual /*?*/ std::string const& portName(unsigned) const{return invalid_; }
+	virtual /*?*/ std::string const portName(unsigned) const{return "invalid"; }
 
 public: // hierarchy. move to SubcktBase
 	SchematicModel const* subckt() const{ return _subckt; }

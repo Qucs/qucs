@@ -1,3 +1,4 @@
+// obsolete.
 
 #ifndef QUCS_PROPERTY_H
 #define QUCS_PROPERTY_H

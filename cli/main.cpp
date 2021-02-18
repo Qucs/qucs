@@ -72,7 +72,7 @@ struct JMP_BUF{
 static void sign_on(void)
 {
   std::cout <<
-    "Qucs : experimental CLI\n"
+    "Qacs : Qucs alternative command shell\n"
     "used for testing only\n"
     "This is free software, and you are welcome\n"
     "to redistribute it under the terms of \n"

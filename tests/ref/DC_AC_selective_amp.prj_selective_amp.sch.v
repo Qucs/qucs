@@ -19,7 +19,6 @@ Vdc #(.U(12 V)) V1(_net10, gnd);
 Eqn #(.Gain(dB(Output.v/Input.v)), .Export(yes)) Eqn1();
 endmodule // main
 
-Sub #(.File()) Sub(unknown_net);
 //else?
 module :SymbolSection:();
 endmodule // :SymbolSection:
