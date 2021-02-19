@@ -117,6 +117,8 @@ public:
 
 private: // QucsDoc.
 	void new_root();
+	QAction* createUndoAction() override;
+	QAction* createRedoAction() override;
 
 private: //temporary/obsolete
 #if 0
@@ -687,15 +689,29 @@ void SchematicDoc::expand()
   connect(_cursorDown, SIGNAL(activated()), SLOT(slotCursorDown()));
 }
 /*--------------------------------------------------------------------------*/
-
+QAction* SchematicDoc::createUndoAction()
+{
+	if(_undoStack){
+		return _undoStack->createUndoAction(this);
+	}else{ untested();
+		return nullptr; 
+	}
+}
 /*--------------------------------------------------------------------------*/
+QAction* SchematicDoc::createRedoAction()
+{
+	if(_undoStack){
+		return _undoStack->createRedoAction(this);
+	}else{ untested();
+		return nullptr; 
+	}
+}
 /*--------------------------------------------------------------------------*/
 void SchematicDoc::setParent(QWidget* owner)
 {itested();
 	assert(!parentWidget());
 	/// QucsDoc::setParent(owner); no. pure.
 	QGraphicsView::setParent(owner);
-
 
 	expand();
 
@@ -2465,16 +2481,6 @@ void SchematicDoc::becomeCurrent()
 
   {itested();
     incomplete();
-#if 0
-    Nodes = &DocNodes;
-    Wires = &DocWires;
-    Diagrams = &DocDiags;
-    Paintings = &DocPaints;
-    Components = &DocComps;
-
-    emit signalUndoState(undoActionIdx != 0);
-    emit signalRedoState(undoActionIdx != undoAction.size()-1);
-#endif
     /// if(update){itested();
     ///   incomplete();
     ///   reloadGraphs();   // load recent simulation data

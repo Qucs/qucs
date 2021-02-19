@@ -51,6 +51,18 @@ public:
 	}
 };
 /*--------------------------------------------------------------------------*/
+class ActionDelete : public QAction{
+public:
+	explicit ActionDelete(QObject* parent) : QAction(parent) { untested();
+		setIcon(QIcon(":/bitmaps/editdelete.png"));
+		setText(tr("&Delete"));
+		setShortcut(Qt::Key_Delete);
+		setStatusTip(tr("Delete the selected components"));
+		setWhatsThis(tr("Delete\n\nDeletes the selected components"));
+		setCheckable(true);
+	}
+};
+/*--------------------------------------------------------------------------*/
 class ActionRotate : public QAction{
 public:
 	explicit ActionRotate(QObject* parent) : QAction(parent) { untested();
@@ -131,7 +143,18 @@ private:
 		return new MouseActionSelCmd<CMD>(nullptr); // this?
 	}
 	QAction* createAction(QObject* parent) const override{ untested();
-		auto x = new ActionSelect(parent);
+		QAction* x=nullptr;
+		if(CMD::label() == "delete"){
+			x = new ActionDelete(parent);
+		}else if(CMD::label() == "rotate"){
+			x = new ActionRotate(parent);
+		}else if(CMD::label() == "mirrorX"){
+			x = new ActionMirrorX(parent);
+		}else if(CMD::label() == "mirrorY"){
+			x = new ActionMirrorY(parent);
+		}else{
+			x = new ActionSelect(parent);
+		}
 		connect(x, &QAction::toggled, this, &MouseAction::slotToggle);
 		return x;
 	}
@@ -209,6 +232,7 @@ public:
 
 		setText("delete " + QString::number(k) + " items");
 	}
+	static std::string label() { return "delete"; }
 }; // DeleteSelection
 typedef MouseActionSelCmd<DeleteSelection> MouseActionDelete;
 /*--------------------------------------------------------------------------*/
@@ -335,6 +359,7 @@ public:
 
 		setText("transform " + QString::number(k) + " items");
 	}
+	static std::string label(){ return T::label(); }
 }; // TransformSelection
 /*--------------------------------------------------------------------------*/
 static const rotate_after_mirror1_t ninety_degree_transform(90, false);
@@ -344,6 +369,8 @@ public:
 	template<class IT>
 	RotateSelectionTransform(SchematicScene* ctx, IT selection)
 	  : base(ctx, selection, ninety_degree_transform) {}
+
+	static std::string label() {return "rotate";}
 };
 /*--------------------------------------------------------------------------*/
 class MirrorXaxisSelection : public TransformSelection<qucsSymbolTransform>{
@@ -352,6 +379,8 @@ public:
 	template<class IT>
 	MirrorXaxisSelection(SchematicScene* ctx, IT selection)
 	  : base(ctx, selection, transformFlipHorizontally) {}
+
+	static std::string label() {return "mirrorX";}
 };
 /*--------------------------------------------------------------------------*/
 class MirrorYaxisSelection : public TransformSelection<qucsSymbolTransform>{
@@ -360,6 +389,8 @@ public:
 	template<class IT>
 	MirrorYaxisSelection(SchematicScene* ctx, IT selection)
 	  : base(ctx, selection, transformFlipVertically) {}
+
+	static std::string label() {return "mirrorY";}
 };
 /*--------------------------------------------------------------------------*/
 typedef MouseActionSelCmd<DeleteSelection> MouseActionDelete;
@@ -672,10 +703,6 @@ SchematicActions::SchematicActions(QucsDoc* ctx)
 	assert(ctx);
 	assert(doc());
 
-	// not entirely clear how to refactor this
-	// maybe dispatch mouse actions.
-	// or merge into QAction buttons (connect as needed?)
-
 	untested();
 	maDelete = new MouseActionDelete(this);
 	setParent_(maDelete, this);
@@ -738,6 +765,11 @@ SchematicActions::SchematicActions(QucsDoc* ctx)
 /*--------------------------------------------------------------------------*/
 void SchematicActions::setControls(QucsDoc* ctx)
 {
+	// ?
+	//MouseActions::setControls(ctx);
+	//{
+	//connect(undoStack , SIGNAL(canRedoChanged(bool)), redoAction, SLOT(setEnabled(bool)));
+	//}
 	auto p = dynamic_cast<QWidget*>(ctx); // prech?
 	assert(p);
 
@@ -771,6 +803,8 @@ void SchematicActions::setControls(QucsDoc* ctx)
 	b->addAction(A);
 	A = maInsertEqn->createAction(p);
 	b->addAction(A);
+
+
 
 	// TODO: menu...
 }

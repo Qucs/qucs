@@ -26,6 +26,7 @@
 #include "sckt_base.h"
 #include "qt_compat.h"
 
+/* -------------------------------------------------------------------------------- */
 void QucsDoc::setDocFile(std::string const& filename)
 { untested();
 	_name = QString_(filename);
@@ -51,7 +52,7 @@ void QucsDoc::setDocFile(std::string const& filename)
   }else{ untested();
   }
 }
-
+/* -------------------------------------------------------------------------------- */
 QucsDoc::QucsDoc() : Widget() // (QucsApp* App_, const QString& Name_, QWidget* o)
 //   : _app(App_),
 //	  _owner(o)
@@ -77,8 +78,21 @@ void QucsDoc::slotToolBar(QAction* a)
 {
 	incomplete();
 }
-
+/* -------------------------------------------------------------------------------- */
+#if 1
+/* -------------------------------------------------------------------------------- */
+void QucsDoc::redo()
+{
+	incomplete();
+}
+/* -------------------------------------------------------------------------------- */
+void QucsDoc::undo()
+{
+	incomplete();
+}
+#else
 // really?!
+// no. some qucsdocs come without undo stack. so undo/redo must be custom.
 void QucsDoc::undo()
 { untested();
 	QUndoStack* u = undoStack();
@@ -99,6 +113,7 @@ void QucsDoc::redo()
 	}else{ untested();
 	}
 }
+#endif
 
 QString QucsDoc::fileSuffix (const QString& Name)
 { untested();
@@ -184,15 +199,22 @@ void QucsDoc::printCursorPosition(int x, int y)
 	}else{ untested();
 	}
 }
-
+/* -------------------------------------------------------------------------------- */
 void QucsDoc::showEvent(QShowEvent* ev)
 {
 	if(_eventHandler){
 		_eventHandler->setControls(this);
 	}else{
 	}
-}
 
+	// not here.
+	if(app()){
+		// _undo_redo_bar = newToolBar();
+	}else{
+	}
+}
+/* -------------------------------------------------------------------------------- */
+// this is wrong. need some unbecomeCurrent hook...
 void QucsDoc::hideEvent(QHideEvent* ev)
 { untested();
 	if(app()){ untested();
@@ -201,6 +223,14 @@ void QucsDoc::hideEvent(QHideEvent* ev)
 		// (does not seem to work)
 		app()->clearWorkToolbar();
 	}else{ untested();
+	}
+
+	if(auto w=dynamic_cast<QWidget*>(this)){ untested();
+//		for(auto i : children()){
+//			trace0("hide");
+//			i->hide();
+//		}
+	}else{
 	}
 }
 
@@ -393,6 +423,7 @@ bool QucsDoc::saveAs()
 /* -------------------------------------------------------------------------------- */
 void Simulator::attachDoc(QucsDoc /* const?? */ * d)
 { untested();
+	incomplete();
 	_doc = d;
 }
 /* -------------------------------------------------------------------------------- */
@@ -457,22 +488,5 @@ SubcktBase const* QucsDoc::root() const
 	auto d = const_cast<QucsDoc*>(this);
 	return d->root();
 }
-/* -------------------------------------------------------------------------------- */
-#if 0
-// don't know how this works in legacy qucs. the tabs suggest that circuits
-// from different "projects" can be openened simultaneously.
-// Now a project might have prototypes (e.g. user library) that are not global,
-// they are stashed here.
-void QucsDoc::installElement(Element const* e)
-{ untested();
-	trace1("installElement", e->label());
-	auto& p = _protos[e->label()];
-	if(p){ untested();
-		delete p;
-	}else{ untested();
-	}
-	p = e;
-}
-#endif
 /* -------------------------------------------------------------------------------- */
 /* -------------------------------------------------------------------------------- */

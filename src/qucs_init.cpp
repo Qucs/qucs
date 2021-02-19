@@ -232,6 +232,7 @@ void QucsApp::initActions()
   editPaste->setCheckable(true);
   connect(editPaste, &QAction::toggled, this, &QucsApp::slotEditPaste);
 
+  // dup?
   editDelete = new QAction(QIcon((":/bitmaps/editdelete.png")), tr("&Delete"), this);
   editDelete->setShortcut(Qt::Key_Delete);
   editDelete->setStatusTip(tr("Delete the selected components"));

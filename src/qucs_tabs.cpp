@@ -2,9 +2,13 @@
 #include "qucsdoc.h"
 #include "qucs_app.h" // gaah
 #include "io_trace.h"
+#include "qucs_globals.h"
 
 #include <QTabBar>
 #include <QMenu>
+#include <QApplication> // BUG
+#include <QClipboard>
+#include <QDesktopServices>
 /*--------------------------------------------------------------------------*/
 /*--------------------------------------------------------------------------*/
 void QucsTabWidget::slotDCbias()
@@ -35,6 +39,7 @@ void QucsTabWidget::showContextMenu(const QPoint& point)
     QMenu menu(this);
 
     // get the document where the context menu was opened
+	 // yikes. why involve App?!
     QucsDoc *d = App->getDoc(contextTabIndex);
     // save the document name (full path)
     // docName = d->docName();
@@ -80,4 +85,100 @@ QucsDoc* QucsTabWidget::current()
 	assert(d);
 	return d;
 }
+/*--------------------------------------------------------------------------*/
+QucsDoc* QucsTabWidget::createEmptySchematic(const QString &name)
+{itested();
+  // create a schematic
+  QFileInfo Info(name);
+  assert(App);
+
+  Widget* o = widget_dispatcher.clone("SchematicDoc");
+//  e->setParam("name", name.toStdString());
+  assert(o);
+  QucsDoc* d = dynamic_cast<QucsDoc*>(o);
+  assert(d);
+  QWidget* w = dynamic_cast<QWidget*>(o);
+  assert(w);
+  d->setParent(this);
+  trace1("setname??", name);
+  d->setName(name); // it's actually the (full?) filename?
+
+  int i = addTab(w, QPixmap(":/bitmaps/empty.xpm"), name.isEmpty() ? QObject::tr("untitled") : Info.fileName());
+  setCurrentIndex(i);
+  return d;
+}
+/*--------------------------------------------------------------------------*/
+QucsDoc* QucsTabWidget::createEmptyTextDoc(const QString &name)
+{itested();
+  // create a text document
+  QFileInfo Info(name);
+  // QucsDoc *d = newTextDoc(*App, name, this);
+  Widget* o = widget_dispatcher.clone("TextDoc");
+//  e->setParam("name", name.toStdString());
+  assert(o);
+  QucsDoc* d = dynamic_cast<QucsDoc*>(o);
+  assert(d);
+  QWidget* w = dynamic_cast<QWidget*>(o);
+  assert(w);
+  d->setParent(this);
+  trace1("setname??", name);
+  d->setName(name); // it's actually the (full?) filename?
+
+  int i = addTab(w, QPixmap(":/bitmaps/empty.xpm"), name.isEmpty() ? QObject::tr("untitled") : Info.fileName());
+  setCurrentIndex(i);
+  return d;
+}
+
+void QucsTabWidget::setSaveIcon(bool state, int index)
+{ untested();
+  // set document tab icon to "smallsave.xpm" or "empty.xpm"
+  QString icon = (state)? ":/bitmaps/smallsave.xpm" : ":/bitmaps/empty.xpm";
+  if (index < 0) { untested();
+    index = currentIndex();
+  }
+  setTabIcon(index, QPixmap(icon));
+}
+
+void QucsTabWidget::slotCxMenuClose()
+{ untested();
+  // close tab where the context menu was opened
+  App->slotFileClose(contextTabIndex);
+}
+
+void QucsTabWidget::slotCxMenuCloseOthers()
+{ untested();
+  // close all tabs, except the one where the context menu was opened
+  App->closeAllFiles(contextTabIndex);
+}
+
+void QucsTabWidget::slotCxMenuCloseLeft()
+{ untested();
+  // close all tabs to the left of the current one
+  App->closeAllLeft(contextTabIndex);
+}
+
+void QucsTabWidget::slotCxMenuCloseRight()
+{ untested();
+  // close all tabs to the right of the current one
+  App->closeAllRight(contextTabIndex);
+}
+
+void QucsTabWidget::slotCxMenuCloseAll()
+{ untested();
+  App->slotFileCloseAll();
+}
+
+void QucsTabWidget::slotCxMenuCopyPath()
+{ untested();
+  // copy the document full path to the clipboard
+  QClipboard *cb = QApplication::clipboard();
+  cb->setText(docName());
+}
+
+void QucsTabWidget::slotCxMenuOpenFolder()
+{ untested();
+  QFileInfo Info(docName());
+  QDesktopServices::openUrl(QUrl::fromLocalFile(Info.canonicalPath()));
+}
+/*--------------------------------------------------------------------------*/
 /*--------------------------------------------------------------------------*/

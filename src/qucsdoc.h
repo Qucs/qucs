@@ -70,10 +70,13 @@ public:
 	virtual SchematicModel* model();
 	void printCursorPosition(int x, int y);
 
-  static QString fileSuffix (const QString&);
-  QString fileSuffix (void);
-  static QString fileBase (const QString&);
-  QString fileBase (void);
+	static QString fileSuffix (const QString&);
+	QString fileSuffix (void);
+	static QString fileBase (const QString&);
+	QString fileBase (void);
+
+	virtual QAction* createUndoAction(){ return nullptr; }
+	virtual QAction* createRedoAction(){ return nullptr; }
 
 private:
   QucsApp* app();
@@ -140,26 +143,30 @@ public: // actions: These somehow correspond to buttons.
 	virtual void actionChangeProps(QAction*) { unreachable(); }
 
 	// these are not implemented for qucstext, not called perhaps?
-	virtual void actionApplyCompText() { unreachable(); }
-	virtual void actionAlign(int) {unreachable();}
-	virtual void actionDistrib(int) {unreachable();}
-	virtual void actionSelectMarker() {unreachable();}
+//	virtual void actionApplyCompText() { unreachable(); }
+//	virtual void actionAlign(int) {unreachable();}
+//	virtual void actionDistrib(int) {unreachable();}
+//	virtual void actionSelectMarker() {unreachable();}
+//	virtual void actionExportGraphAsCsv(){ unreachable();}
+//
+//	virtual void actionOnGrid(QAction*) {unreachable();}
+//	virtual void actionSetWire(QAction*) {unreachable();}
+//	virtual void actionInsertLabel(QAction*) {unreachable();}
+//	virtual void actionInsertEquation(QAction*) {unreachable();}
+//	virtual void actionInsertPort(QAction*) {unreachable();}
+//	virtual void actionInsertGround(QAction*) {unreachable();}
+//	virtual void actionSetMarker(QAction*) {unreachable();}
+//	virtual void actionMoveText(QAction*) {unreachable();}
 	virtual void actionCursor(arrow_dir_t) { unreachable();}
-	virtual void actionExportGraphAsCsv(){ unreachable();}
-
-	virtual void actionOnGrid(QAction*) {unreachable();}
 	virtual void actionEditPaste(QAction*) {unreachable();}
-	virtual void actionSetWire(QAction*) {unreachable();}
-	virtual void actionInsertLabel(QAction*) {unreachable();}
-	virtual void actionInsertEquation(QAction*) {unreachable();}
-	virtual void actionInsertEntity(QAction*) {unreachable();}
-	virtual void actionInsertPort(QAction*) {unreachable();}
-	virtual void actionInsertGround(QAction*) {unreachable();}
-	virtual void actionSetMarker(QAction*) {unreachable();}
-	virtual void actionMoveText(QAction*) {unreachable();}
 	virtual void actionZoomIn(QAction*) { unreachable(); }
-	virtual void actionSelectElement(QObject*) {untested(); }
 #endif
+
+	// textdoc?
+	virtual void actionInsertEntity(QAction*) {unreachable();}
+
+	// this one has to do with the left "component toolbox"
+	virtual void actionSelectElement(QObject*) {untested(); }
 	virtual void slotEditDelete(QAction*) = 0;
 	virtual void slotEditActivate(QAction*) = 0;
 

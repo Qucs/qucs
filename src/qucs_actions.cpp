@@ -203,6 +203,7 @@ void QucsApp::slotZoomIn()
   qd->actionZoomIn(s);
 }
 // -----------------------------------------------------------------------
+// BUG: why does the schematicDoc not catch key presses??
 void QucsApp::slotEscape()
 {
   incomplete(); // context?!
@@ -263,7 +264,8 @@ void QucsApp::slotSelectMarker()
   QucsDoc *qd = DocumentTab->current();
   assert(qd);
 
-  qd->actionSelectMarker();
+  incomplete();
+//  qd->actionSelectMarker();
 }
 
 extern QString lastDirOpenSave; // to remember last directory and file
@@ -590,6 +592,7 @@ static Marker const* marker(Element const* e)
 #endif
 
 // -----------------------------------------------------------
+// BUG/feature? why does the widget not receive key presses?!
 void QucsApp::slotCursor(arrow_dir_t dir)
 {
   QucsDoc *qd = DocumentTab->current();
@@ -607,7 +610,9 @@ void QucsApp::slotApplyCompText()
   QucsDoc *qd = DocumentTab->current();
   assert(qd);
 
-  qd->actionApplyCompText();
+  incomplete(); // edit text differently with graphics stuff
+
+//  qd->actionApplyCompText();
 }
 
 
@@ -674,11 +679,12 @@ void QucsApp::slotExportSchematic()
 // // BUG this is a diagram slot.
 void QucsApp::slotExportGraphAsCsv()
 {
+  incomplete();
   QucsDoc* qd = DocumentTab->current();
   assert(qd);
 
   hideEdit();
-  qd->actionExportGraphAsCsv();
+//  qd->actionExportGraphAsCsv();
 }
 
 

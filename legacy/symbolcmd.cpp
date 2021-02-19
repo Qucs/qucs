@@ -50,13 +50,13 @@ private: // BUG? a SubcktBase is a Painting...
 	rect_t bounding_rect() const override {
 		assert(subckt());
 		rect_t br; // cache??
-		for(auto p : *subckt()){ untested();
+		for(auto p : *subckt()){ itested();
 			assert(p);
 			Element const* e = p;
 			//			trace2("br", e->boundingRect().topLeft(), e->boundingRect().bottomRight());
 			if(auto p = dynamic_cast<Painting const*>(e)){
 				auto c = e->center(); // p!
-				incomplete(); // BUG. honour p->legacyTransformhack
+				// incomplete(); // BUG. honour p->legacyTransformhack
 				br |= ( p->bounding_rect() + c );
 			}
 		}
