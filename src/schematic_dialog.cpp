@@ -31,9 +31,9 @@ void SchematicDialog::execute(QUndoCommand* c)
 /*--------------------------------------------------------------------------*/
 QucsDoc* SchematicDialog::doc()
 { untested();
-	auto t = prechecked_cast<QWidget*>(this);
+	auto t = dynamic_cast<QWidget*>(this); // prech?
 	assert(t);
-	auto p = prechecked_cast<QucsDoc*>(t->parentWidget());
+	auto p = dynamic_cast<QucsDoc*>(t->parentWidget()); // prech?
 	assert(p);
 	return p;
 }

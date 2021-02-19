@@ -1,6 +1,5 @@
 /***************************************************************************
-    begin                : 2018
-    copyright            : Qucs Team
+    copyright            : (C) 2020 Felix Salfelder
  ***************************************************************************/
 
 /***************************************************************************
@@ -11,19 +10,4 @@
  *   (at your option) any later version.                                   *
  *                                                                         *
  ***************************************************************************/
-/*!
- * \file actions.h
- * \Declaration of stuff related to actions.
- */
 
-#ifndef QUCS_ACTIONS_H
-#define QUCS_ACTIONS_H
-
-enum arrow_dir_t{
-  arr_up,
-  arr_down,
-  arr_left,
-  arr_right
-};
-
-#endif

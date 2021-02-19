@@ -101,6 +101,7 @@ public:
 		return new SchematicDoc( /*this?*/ );
 	}
 	void setParent(QWidget*) override;
+	void expand();
 
 	void setName(const QString&); // what is this?
 	void setChanged(bool, bool fillStack=false, char Op='*');
@@ -639,8 +640,12 @@ SchematicDoc::SchematicDoc()
      _main(nullptr),
      _undoStack(nullptr)
 { untested();
-
+}
+/*--------------------------------------------------------------------------*/
+void SchematicDoc::expand()
+{ untested();
 	new_root();
+	assert(!scene());
 	// ...........................................................
 	// HUH?
 	setSceneRect(-2000, -2000, 4000, 4000);
@@ -651,17 +656,20 @@ SchematicDoc::SchematicDoc()
 	
 	assert(scene());
 
+	{ untested();
+	}
 	auto h = new SchematicActions(this); // needs scene (bug?)
 	setEventHandler(h); // ActionHandler?
+	return;
 
 	// TODO: deduplicate??
-	connect(h->_actionSelect, &QAction::toggled, this, &SchematicDoc::slotSelect);
-	connect(h->_actionRotate, &QAction::toggled, this, &SchematicDoc::slotEditRotate);
-	connect(h->_actionMX, &QAction::toggled, this, &SchematicDoc::slotEditMirrorX);
-	connect(h->_actionMY, &QAction::toggled, this, &SchematicDoc::slotEditMirrorY);
-	connect(h->_actionInsertGround, &QAction::toggled, this, &SchematicDoc::slotInsertGround);
-	connect(h->_actionInsertWire, &QAction::toggled, this, &SchematicDoc::slotInsertWire);
-	connect(h->_actionInsertPort, &QAction::toggled, this, &SchematicDoc::slotInsertPort);
+//	connect(h->_actionSelect, &QAction::toggled, this, &SchematicDoc::slotSelect);
+//	connect(h->_actionRotate, &QAction::toggled, this, &SchematicDoc::slotEditRotate);
+//	connect(h->_actionMX, &QAction::toggled, this, &SchematicDoc::slotEditMirrorX);
+//	connect(h->_actionMY, &QAction::toggled, this, &SchematicDoc::slotEditMirrorY);
+//	connect(h->_actionInsertGround, &QAction::toggled, this, &SchematicDoc::slotInsertGround);
+//	connect(h->_actionInsertWire, &QAction::toggled, this, &SchematicDoc::slotInsertWire);
+//	connect(h->_actionInsertPort, &QAction::toggled, this, &SchematicDoc::slotInsertPort);
 
   // cursor left/right/up/down to move marker on a graph
   // BUG: why can't we move Elements?!
@@ -687,7 +695,9 @@ void SchematicDoc::setParent(QWidget* owner)
 	assert(!parentWidget());
 	/// QucsDoc::setParent(owner); no. pure.
 	QGraphicsView::setParent(owner);
-  // ...........................................................
+
+
+	expand();
 
   _undoStack = new QUndoStack();
 
@@ -985,6 +995,7 @@ QPoint SchematicDoc::snapToGrid(QPointF const& e)const
 { untested();
 	return setOnGrid(getX(e), getY(e));
 }
+
 QMouseEvent SchematicDoc::snapToGrid(QMouseEvent* e)const
 { untested();
 	  auto type = e->type();
@@ -1208,10 +1219,11 @@ bool SchematicDoc::event(QEvent* e)
 }
 
 bool SchematicDoc::handleMouseActions(QEvent* e)
-{ itested();
+{ untested();
 	if(mouseActions()){ untested();
 		return mouseActions()->handle(e);
-	}else{ itested();
+	}else{ untested();
+		// race?
 		unreachable();
 		return false;
 	}
@@ -1564,23 +1576,23 @@ QList<ElementGraphics*> SchematicDoc::selectedItems() const
 /*--------------------------------------------------------------------------*/
 void SchematicDoc::slotSelect()
 { untested();
-	possiblyToggleAction(schematicActions()->maSelect, sender());
+	eventHandler()->possiblyToggleAction(schematicActions()->maSelect, sender());
 }
 /*--------------------------------------------------------------------------*/
 void SchematicDoc::slotEditRotate()
 { untested();
-  possiblyToggleAction(schematicActions()->maRotate, sender());
+  eventHandler()->possiblyToggleAction(schematicActions()->maRotate, sender());
   //possiblyToggleAction(_actionRotate, sender); ?
 }
 // -----------------------------------------------------------------------
 void SchematicDoc::slotEditMirrorX()
 { untested();
-  possiblyToggleAction(schematicActions()->maMirrorYaxis, sender());
+  eventHandler()->possiblyToggleAction(schematicActions()->maMirrorYaxis, sender());
 }
 /*--------------------------------------------------------------------------*/
 void SchematicDoc::slotEditMirrorY()
 { untested();
-	possiblyToggleAction(schematicActions()->maMirrorXaxis, sender());
+	eventHandler()->possiblyToggleAction(schematicActions()->maMirrorXaxis, sender());
 }
 /*--------------------------------------------------------------------------*/
 void SchematicDoc::slotSimulate()
@@ -1821,17 +1833,17 @@ void SchematicDoc::slotEditRedo(QAction*)
 /*--------------------------------------------------------------------------*/
 void SchematicDoc::slotInsertGround()
 { untested();
-	possiblyToggleAction(schematicActions()->maInsertGround, sender());
+	eventHandler()->possiblyToggleAction(schematicActions()->maInsertGround, sender());
 }
 /*--------------------------------------------------------------------------*/
 void SchematicDoc::slotInsertEquation()
 { untested();
-	possiblyToggleAction(schematicActions()->maInsertEqn, sender());
+	eventHandler()->possiblyToggleAction(schematicActions()->maInsertEqn, sender());
 }
 /*--------------------------------------------------------------------------*/
 void SchematicDoc::slotInsertPort()
 { untested();
-	possiblyToggleAction(schematicActions()->maInsertPort, sender());
+	eventHandler()->possiblyToggleAction(schematicActions()->maInsertPort, sender());
 }
 /*--------------------------------------------------------------------------*/
 #if 0 // later turn into slots...
@@ -1857,12 +1869,12 @@ void SchematicDoc::actionEditRotate(QAction* sender)
 /*--------------------------------------------------------------------------*/
 void SchematicDoc::slotEditActivate(QAction* sender)
 {
-	possiblyToggleAction(schematicActions()->maActivate, sender);
+	eventHandler()->possiblyToggleAction(schematicActions()->maActivate, sender);
 }
 /*--------------------------------------------------------------------------*/
 void SchematicDoc::slotEditDelete(QAction* sender)
 { untested();
-	possiblyToggleAction(schematicActions()->maDelete, sender);
+	eventHandler()->possiblyToggleAction(schematicActions()->maDelete, sender);
 
 //	updateViewport();??
 //  assert(mouseActions());
@@ -1877,16 +1889,16 @@ void SchematicDoc::slotEditDelete(QAction* sender)
 // }
 void SchematicDoc::slotInsertWire()
 {itested();
-	possiblyToggleAction(schematicActions()->maWire, sender());
+//	auto s = prechecked_cast
+	assert(false);
+
+	// possiblyToggleAction(schematicActions()->maWire, sender());
 }
 
 void SchematicDoc::slotInsertLabel()
 { untested();
 //  possiblyToggleAction(schematicActions()->maInsertLabel, sender);
   incomplete();
-//  performToggleAction(on, App->insLabel, 0,
-//		&MouseActions::MMoveLabel, &MouseActions::MPressLabel);
-  // mouseAction = mouseActions().maInsLabel;
 }
 
 void SchematicDoc::slotSetMarker()
@@ -1914,7 +1926,7 @@ void SchematicDoc::slotZoomIn()
 
 void SchematicDoc::slotEditPaste()
 { untested();
-	possiblyToggleAction(schematicActions()->maEditPaste, sender());
+	eventHandler()->possiblyToggleAction(schematicActions()->maEditPaste, sender());
 #if 0
 	// if it's not a text doc, prevent the user from editing
 	// while we perform the paste operation
@@ -2131,7 +2143,7 @@ void SchematicDoc::actionSelectMarker()
 void SchematicDoc::slotChangeProps()
 { untested();
 	Widget* w = widget_dispatcher.clone("ChangeDialog");
-	auto d=prechecked_cast<QDialog*>(w);
+	auto d = dynamic_cast<QDialog*>(w); // prech?
 	assert(d);
 	d->setParent(this); // mode?
 	if(d->exec() == QDialog::Accepted) { untested();
@@ -2433,17 +2445,17 @@ void SchematicDoc::becomeCurrent()
   // update appropriate menu entry
   if (!_app) { untested();
 	  incomplete(); // decouple
-  }else if(isSymbolMode()) { untested();
-    incomplete(); // SymbolDoc.
-    if (docName().right(4) == ".sym") { untested();
-      _app->symEdit->setText(tr("Edit Text"));
-      _app->symEdit->setStatusTip(tr("Edits the Text"));
-      _app->symEdit->setWhatsThis(tr("Edit Text\n\nEdits the text file"));
-    }else{ untested();
-      _app->symEdit->setText(tr("Edit Schematic"));
-      _app->symEdit->setStatusTip(tr("Edits the schematic"));
-      _app->symEdit->setWhatsThis(tr("Edit Schematic\n\nEdits the schematic"));
-    }
+//  }else if(isSymbolMode()) { untested();
+//    incomplete(); // SymbolDoc.
+//    if (docName().right(4) == ".sym") { untested();
+//      _app->symEdit->setText(tr("Edit Text"));
+//      _app->symEdit->setStatusTip(tr("Edits the Text"));
+//      _app->symEdit->setWhatsThis(tr("Edit Text\n\nEdits the text file"));
+//    }else{ untested();
+//      _app->symEdit->setText(tr("Edit Schematic"));
+//      _app->symEdit->setStatusTip(tr("Edits the schematic"));
+//      _app->symEdit->setWhatsThis(tr("Edit Schematic\n\nEdits the schematic"));
+//    }
   }else{itested();
     _app->symEdit->setText(tr("Edit Circuit Symbol"));
     _app->symEdit->setStatusTip(tr("Edits the symbol for this schematic"));

@@ -133,13 +133,13 @@ QAction* QucsDoc::selectAction()
 #endif
 
 // set mode??
-void QucsDoc::setActiveAction(MouseAction* a)
-{ untested();
-	if(eventHandler()){ untested();
-		eventHandler()->setActive(a);
-	}else{ untested();
-	}
-}
+// void QucsDoc::setActiveAction(MouseAction* a)
+// { untested();
+// 	if(eventHandler()){ untested();
+// 		eventHandler()->setActive(a);
+// 	}else{ untested();
+// 	}
+// }
 
 #if 0
 MouseActions const* QucsDoc::mouseActions() const
@@ -164,6 +164,8 @@ QucsApp* QucsDoc::app()
 			w = w->parent();
 		}
 	}
+	unreachable();
+	return nullptr;
 }
 
 // QWidget* QucsDoc::workToolbar()
@@ -208,6 +210,8 @@ void QucsDoc::hideEvent(QHideEvent* ev)
 
 void QucsDoc::addToolBarAction(QAction* a)
 { untested();
+	incomplete();
+	return;
 	assert(a);
 	if(auto w=dynamic_cast<QWidget*>(this)){ untested();
 		// assert(a->parent()==w);
@@ -226,69 +230,6 @@ void QucsDoc::addToolBarAction(QAction* a)
 		// assert(a->parent()==w);
 	}else{ untested();
 	}
-}
-// similar to former Schematic::performtoggleaction. but take care of actions,
-// and deal with undoable commands.
-// https://www.walletfox.com/course/qundocommandexample.php?
-// https://stackoverflow.com/questions/32973326/qgraphicsscene-how-to-map-item-movements-into-qundocommand
-void QucsDoc::possiblyToggleAction(MouseAction* a, QObject* s)
-{ untested();
-	auto sender = dynamic_cast<QAction*>(s);
-	if(!sender){ // assert?
-		incomplete();
-		return;
-	}else{
-	}
-
-	trace3("possiblyToggle", a, sender, sender->text());
-	QUndoCommand* cmd = nullptr;
-	assert(a);
-	if(!sender){ untested();
-		setActiveAction(nullptr);
-		// cmd = a->activate(sender);
-		setActiveAction(a);
-	}else if(!sender->isCheckable()){ untested();
-		cmd = a->activate(sender);
-	}else if(sender->isChecked()){itested();
-		cmd = a->activate(sender);
-
-		if(cmd){itested();
-			sender->blockSignals(true);
-			sender->setChecked(false);
-			sender->blockSignals(false);
-			// possible 'delete' after select.
-			// don't do anything else
-			a->deactivate();
-		}else{itested();
-			// sender->setChecked(true); // assert?
-			setActiveAction(a);
-		}
-	}else{itested();
-		setActiveAction(nullptr);
-	}
-
-	if(cmd){itested();
-		executeCommand(cmd);
-	}else{itested();
-	}
-}
-/* -------------------------------------------------------------------------------- */
-// maybe this only works for SchematicDoc.
-// SchematicDoc has input modes coupled to "MouseActions" that deal with user input.
-// TextDoc also has modes, but somehow redirects input to another widget.
-MouseAction* QucsDoc::activeAction()
-{ untested();
-	if(eventHandler()){ untested();
-		return eventHandler()->activeAction();
-	}else{ untested();
-		return nullptr;
-	}
-}
-/* -------------------------------------------------------------------------------- */
-MouseAction const* QucsDoc::activeAction() const
-{ untested();
-	auto d = const_cast<QucsDoc*>(this);
-	return d->activeAction();
 }
 /* -------------------------------------------------------------------------------- */
 void QucsDoc::addElement(Element*)
@@ -320,6 +261,16 @@ void QucsDoc::executeCommand(QUndoCommand* c)
 		showBias = -1;   // schematic changed => bias points may be invalid
 	}else{ untested();
 	}
+}
+/* -------------------------------------------------------------------------------- */
+QToolBar* QucsDoc::newToolBar()
+{ untested();
+	auto p = dynamic_cast<QWidget*>(this);
+	assert(p);
+	auto t = new QToolBar(p);
+	assert(app());
+	app()->addToolBar(t);
+	return t;
 }
 /* -------------------------------------------------------------------------------- */
 CommonData* QucsDoc::qucsData(std::string const& /*key*/)
@@ -361,9 +312,8 @@ bool QucsDoc::saveAs()
 			s = QDir::currentPath();
 		}
 
-		// list of known file extensions
-		QString ext = "vhdl;vhd;v;va;sch;dpl;m;oct;net;qnet;txt";
-		QStringList extlist = ext.split (';');
+		QString known_ext = "vhdl;vhd;v;va;sch;dpl;m;oct;net;qnet;txt";
+		QStringList extlist = known_ext.split (';');
 
 		auto w = dynamic_cast<QWidget*>(this);
 		assert(w);
@@ -378,7 +328,7 @@ bool QucsDoc::saveAs()
 		}
 
 		Info.setFile(s);               // try to guess the best extension ...
-		ext = Info.suffix();
+		QString ext = Info.suffix();
 
 		if(ext.isEmpty() || !extlist.contains(ext)) { untested();
 			incomplete();

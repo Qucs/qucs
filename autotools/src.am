@@ -27,13 +27,6 @@ include ../autotools/common.mk
 
 AM_DEFAULT_SOURCE_EXT = .cpp
 
-SUBDIRS = \
-	. \
-	action \
-	bitmaps \
-	octave \
-	tests
-
 all-local: qucs
 
 qucs: Makefile

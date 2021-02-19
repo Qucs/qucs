@@ -1,5 +1,6 @@
 /***************************************************************************
-    author               : 2018, 2020 Felix Salfelder
+    copyright            : (C) 2003 by Michael Margraf
+                               2020, 2021 Felix Salfelder
  ***************************************************************************/
 
 /***************************************************************************
@@ -10,30 +11,19 @@
  *   (at your option) any later version.                                   *
  *                                                                         *
  ***************************************************************************/
-#ifndef QUCS_GLOBALS_H
-#define QUCS_GLOBALS_H
 
-#include "command.h"
-#include "dispatcher.h"
-#include "platform.h"
-#include "action.h"
+#ifndef QUCS_ACTION_H
+#define QUCS_ACTION_H
 
-class TaskElement;
-class Diagram;
-class DocumentLanguage;
-class Data;
-class Symbol;
-class Command;
-class Widget;
-class Action;
+#include "object.h"
 
-extern INTERFACE Dispatcher<Element> element_dispatcher;
-extern INTERFACE Dispatcher<Command> commandDispatcher;
-extern INTERFACE Dispatcher<Diagram> diagram_dispatcher;
-extern INTERFACE Dispatcher<DocumentLanguage> languageDispatcher;
-extern INTERFACE Dispatcher<Data> dataDispatcher;
-extern INTERFACE Dispatcher<Symbol> symbol_dispatcher;
-extern INTERFACE Dispatcher<Widget> widget_dispatcher;
-extern INTERFACE Dispatcher<Action> action_dispatcher;
+class QAction;
+class QObject;
+
+class Action : public Object{
+public:
+	virtual Action* clone() const = 0;
+	virtual QAction* createAction(QObject*) const = 0;
+};
 
 #endif

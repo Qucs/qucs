@@ -22,15 +22,16 @@ class QucsDoc;
 // merge into scene altogether?
 class SchematicActions : public MouseActions{
 public:
-	explicit SchematicActions(QucsDoc* d);
+	explicit SchematicActions(QucsDoc*);
 	~SchematicActions();
 
 private: // MouseActions
 	// void handle(QEvent*) override;
-	void setControls(QucsDoc* ctx) override;
+	void setControls(QucsDoc* ctx);
+	// void setParent(QWidget* ctx);
 
 protected: // Doc stuff
-	QucsDoc* doc();
+//	QucsDoc* doc();
 	SchematicScene const* scene()const;
 	void updateViewport();
 	QPoint snapToGrid(QPointF const&p) const;
@@ -39,7 +40,7 @@ public: // actions... private?
 	     // not yet. still toggled from outside
 	MouseAction* maDelete;
 	MouseAction* maSelect;
-	MouseAction* maWire;
+	MouseAction* maWire{nullptr};
 	MouseAction* maMirror;
 	MouseAction* maActivate;
 	MouseAction* maRotate;
@@ -55,13 +56,12 @@ public: // actions... private?
 	// MouseAction* maZoomOut; // not a mouseaction
 	
 	// all in one go?? how?
-	QAction* _actionSelect{nullptr};
-	QAction* _actionRotate{nullptr};
-	QAction* _actionMX{nullptr};
-	QAction* _actionMY{nullptr};
-	QAction* _actionInsertGround{nullptr};
-	QAction* _actionInsertWire{nullptr};
-	QAction* _actionInsertPort{nullptr};
+//	QAction* _actionSelect{nullptr};
+//	QAction* _actionRotate{nullptr};
+//	QAction* _actionMX{nullptr};
+//	QAction* _actionMY{nullptr};
+//	QAction* _actionInsertGround{nullptr};
+//	QAction* _actionInsertPort{nullptr};
 };
 /*--------------------------------------------------------------------------*/
 /*--------------------------------------------------------------------------*/

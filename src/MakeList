@@ -1,5 +1,11 @@
 # MakeList for Qucs
 # 2020 Felix Salfelder
+#
+SUBDIRS = \
+	. \
+	bitmaps \
+	octave \
+	tests
 
 CPP_SRC = \
 	globals.cpp \
@@ -12,6 +18,7 @@ CPP_SRC = \
 	diagram.cpp \
 	diag_var.cpp \
 	dispatcher.cc \
+	doc_actions.cpp \
 	element.cpp \
 	element_graphics.cpp \
 	findbr.cc \
@@ -30,7 +37,6 @@ CPP_SRC = \
 	mnemo.cpp \
 	module.cpp \
 	mouseaction.cpp \
-	mouseactions.cpp \
 	netlist.cpp \
 	node.cpp \
 	nodelabel.cpp \
@@ -72,11 +78,12 @@ QMOCHEADERS = \
 	component_widget.h \
 	doc_actions.h \
 	messagedock.h \
+	mouseaction.h \
 	octave_window.h \
 	projectView.h \
-	schematic_scene.h \
+	qucs_app.h \
 	qucs_tabs.h \
-	qucs_app.h
+	schematic_scene.h
 
 DIALG_MOCHEADERS = \
 	aboutdialog.h \

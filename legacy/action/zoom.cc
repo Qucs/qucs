@@ -17,16 +17,45 @@
 /*--------------------------------------------------------------------------*/
 
 #include <QEvent>
+#include <QGraphicsSceneMouseEvent>
 #include <QUndoCommand>
 #include <QGraphicsView>
-#include "qucsdoc.h"
-#include "action.h"
 
+#include "qucsdoc.h"
+#include "qucs_globals.h"
+#include "platform.h"
+#include "mouseaction.h"
+/*--------------------------------------------------------------------------*/
+namespace {
+/*--------------------------------------------------------------------------*/
+class ActionZoomIn : public QAction{
+public:
+	explicit ActionZoomIn(QObject* parent) : QAction(parent) { untested();
+		setIcon(QIcon(":/bitmaps/viewmag+.png"));
+		setText(tr("Zoom in"));
+		setShortcut(Qt::Key_Plus);
+		setStatusTip(tr("Zoom into the current view"));
+		setWhatsThis(tr("Zoom in\n\nZoom the current view"));
+		setCheckable(true);
+	}
+};
+ // connect(magPlus, &QAction:: triggered??, this, &QucsApp::slotZoomIn);
+/*--------------------------------------------------------------------------*/
 class MouseActionZoomIn : public MouseAction{
 public:
-	explicit MouseActionZoomIn(MouseActions& ctx)
-		: MouseAction(ctx) {itested();
+	explicit MouseActionZoomIn(QObject* parent=nullptr)
+	    : MouseAction(parent){ itested(); }
+
+private: // Action
+	Action* clone() const{
+		return new MouseActionZoomIn(nullptr); // this?
 	}
+	QAction* createAction(QObject* parent) const override{ untested();
+		auto x = new ActionZoomIn(parent);
+		connect(x, &QAction::triggered, this, &MouseAction::slotTrigger);
+		return x;
+	}
+
 private: // MouseAction
 	cmd* press(QEvent*) override;
 	cmd* release(QEvent*) override;
@@ -36,7 +65,8 @@ private:
 	int _MAx2;
 	int _MAy1;
 	int _MAy2;
-};
+}a;
+static Dispatcher<Widget>::INSTALL p1(&action_dispatcher, "ZoomIn", &a);
 /*--------------------------------------------------------------------------*/
 QUndoCommand* MouseActionZoomIn::press(QEvent* e)
 { untested();
@@ -75,7 +105,7 @@ QUndoCommand* MouseActionZoomIn::release(QEvent* e)
 
 	  _MAx1 = m->pos().x();
 	  _MAy1 = m->pos().y();
-	  TODO("Sort out contentsX");
+	  incomplete(); // ("Sort out contentsX");
 	  return nullptr; // not undoable.
 	  /**
 	  float DX = float(MAx2);
@@ -116,4 +146,6 @@ QUndoCommand* MouseActionZoomIn::release(QEvent* e)
   }else{ untested();
   }
   return nullptr;
+}
+
 }

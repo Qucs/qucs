@@ -1,0 +1,10 @@
+
+TARGET = action
+
+PLUGIN_SRC = \
+	move.cc \
+	select.cc \
+	wire.cc \
+	zoom.cc
+
+EXTRA_DIST = 

@@ -3,7 +3,6 @@
     license              : GPLv3+
  ***************************************************************************/
 #include "qucs_globals.h"
-//#include "painting.h"
 
 Dispatcher<Diagram> diagram_dispatcher;
 Dispatcher<Command> commandDispatcher;
@@ -12,3 +11,6 @@ Dispatcher<Data> dataDispatcher;
 Dispatcher<DocumentLanguage> languageDispatcher;
 Dispatcher<Element> element_dispatcher;
 Dispatcher<Widget> widget_dispatcher;
+
+// use command_dispatcher?
+Dispatcher<Action> action_dispatcher;

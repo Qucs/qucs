@@ -145,6 +145,7 @@ void attach_default_plugins()
 {
   attach_single("legacy");
   attach_single("legacy/qucsator");
+  attach_single("legacy/action");
 
   attach_single("legacy/components");
   attach_single("legacy/paintings");

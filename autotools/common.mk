@@ -57,3 +57,7 @@ instdir = $(pkglibdir)/$(here_rel)/..
 # TODO: drop -I[..]/src
 .h.cc:
 	$(MOC) -I${top_srcdir}/include -I${top_srcdir}/src -DQT_MAJOR_VERSION=${QT_MAJOR_VERSION} -o $@ $< # 2
+
+SUFFIXES += .moc.cpp
+.h.moc.cpp:
+	$(MOC) -I${top_srcdir}/include -I${top_srcdir}/src -DQT_MAJOR_VERSION=${QT_MAJOR_VERSION} -o $@ $< # 1

@@ -12,19 +12,22 @@
  *                                                                         *
  ***************************************************************************/
 
+// Baseclass for documents
+
 #ifndef QUCSDOC_H
 #define QUCSDOC_H
 
-#include "object.h"
 #include <QString>
+#include <QToolBar>
 #include <QDateTime>
 #include <QMouseEvent>
 #include <QTextStream> // tmp: used as baseclass, should be member.
 #include <assert.h>
 
-#include "widget.h"
 #include "actions.h"
 #include "io_trace.h"
+#include "object.h"
+#include "widget.h"
 
 class QAction;
 class QPainter;
@@ -47,11 +50,11 @@ protected:
 	explicit QucsDoc(); // QucsApp*, const QString&, QWidget* owner);
 public:
 //  explicit QucsDoc(QucsApp*, const QString&, QWidget* owner);
-  virtual ~QucsDoc();
-  virtual void setParent(QWidget*) = 0;
+	virtual ~QucsDoc();
+	virtual void setParent(QWidget*) = 0;
 
 public:
-  bool saveAs();
+	bool saveAs();
 
 	virtual void  setName(const QString&) {incomplete();}
 	virtual void  setFileName(const QString&x) {incomplete(); _name=x;}
@@ -61,7 +64,7 @@ public:
 	virtual float zoomBy(float) { return 1.0; }
 	virtual void  showAll() {}
 	virtual void  showNoZoom() {}
-	virtual bool handleMouseActions(QEvent* e) {return false;}
+	virtual bool handleMouseActions(QEvent*) {return false;}
 	virtual void addElement(Element*);
 
 	virtual SchematicModel* model();
@@ -82,10 +85,11 @@ protected:
 	void hideEvent(QHideEvent*);
 
 public:
+	QToolBar* newToolBar();
 	void addToolBarAction(QAction* a);
 
 private:
-  QString _name; // actually, filename?!
+  QString _name; // actually, filename?! use label. either way.
 
 public:
   void setDocFile(std::string const& x);
@@ -175,18 +179,12 @@ public:
 	}
 	void executeCommand(QUndoCommand*);
 
-private:
-	void setActiveAction(MouseAction* a);
-	MouseAction* activeAction();
-
 public: // hmm
 	virtual QUndoStack* undoStack(){return nullptr;}
    virtual void updateViewport() {}
    virtual void reloadGraphs() {} // fix later.
 
 public:
-	void possiblyToggleAction(MouseAction* a, QObject* sender);
-	MouseAction const* activeAction() const;
 
 	CommonData* qucsData(std::string const& key);
 	QWidget* ownerWidget(){return _owner;}

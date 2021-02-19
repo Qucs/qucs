@@ -1,7 +1,17 @@
-/* (c) 2020 Felix Salfelder
- * GPLv3+
- */
-#include "action.h" // BUG
+/***************************************************************************
+    copyright            : (C) 2020, 2021 Felix Salfelder
+ ***************************************************************************/
+
+/***************************************************************************
+ *                                                                         *
+ *   This program is free software; you can redistribute it and/or modify  *
+ *   it under the terms of the GNU General Public License as published by  *
+ *   the Free Software Foundation; either version 3 of the License, or     *
+ *   (at your option) any later version.                                   *
+ *                                                                         *
+ ***************************************************************************/
+
+#include "mouseaction.h"
 #include "io_trace.h"
 #include "qucsdoc.h"
 #include "doc_actions.h"
@@ -13,6 +23,7 @@
 #include "component_widget.h" // bug
 #include <QStringLiteral> //bug
 #include <QMimeData> //bug
+
 QUndoCommand* MouseAction::handle(QEvent* e)
 {itested();
 
@@ -98,6 +109,20 @@ QucsDoc const* MouseAction::doc() const
   return cc->doc();
 }
 
+void MouseAction::slotToggle() // QAction* sender)
+{ untested();
+	assert(ctx());
+	ctx()->possiblyToggleAction(this, sender());
+}
+
+void MouseAction::slotTrigger() // QAction* sender)
+{ untested();
+	incomplete();
+	assert(ctx());
+	assert(false);
+//	ctx()->possiblyToggleAction(this, sender());
+}
+
 SchematicScene* MouseAction::scene()
 {untested();
 	auto cc = dynamic_cast<QGraphicsView*>(doc());
@@ -122,7 +147,7 @@ QGraphicsView* MouseAction::view()
 
 QucsDoc* MouseAction::doc()
 {itested();
-  QucsDoc* c = _ctx.doc();
+  QucsDoc* c = ctx()->doc();
   return c;
 #if 0
   auto cc = dynamic_cast<SchematicDoc*>(c);
@@ -144,7 +169,8 @@ QPointF MouseAction::mapToScene(QPoint const& p) const
 
 void MouseAction::updateViewport()
 {itested();
-  ctx().updateViewport(); // use a signal?
+	assert(ctx());
+	ctx()->updateViewport(); // use a signal?
 }
 
 // what does it do??
@@ -206,4 +232,13 @@ bool MouseAction::isConductor(pos_t const&p) const
 	return scene()->isConductor(p);
 }
 /*--------------------------------------------------------------------------*/
+/*--------------------------------------------------------------------------*/
+MouseActions* MouseAction::ctx() const
+{
+	auto q = dynamic_cast<QObject const*>(this);
+	assert(q);
+	auto p = dynamic_cast<MouseActions*>(q->parent());
+	assert(p);
+	return p;
+}
 /*--------------------------------------------------------------------------*/

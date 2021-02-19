@@ -12,37 +12,35 @@
  *                                                                         *
  ***************************************************************************/
 
-#ifndef MOUSE_ACTION_H
-#define MOUSE_ACTION_H
+#ifndef QUCS_MOUSEACTION_H
+#define QUCS_MOUSEACTION_H
 
 #include "element.h"
+#include "action.h"
 #include "qt_compat.h"
 #include "schematic_scene.h"
 #include "element_graphics.h"
-#include <QEvent>
-#include <QAction>
 
 class Label;
 class MouseActions;
 class QAction;
+class QEvent;
 class QMenu;
 class QMouseEvent;
 class QPainter;
 class QUndoCommand;
 class Schematic;
 
-// something happens to the mouse on a schematic
-// BUG: wrong file. schematic_mouse.h maybe?
-// FIXME: this is rather a DocActionHandler it has modes...
-//
-// (it is a mode. not an action.)
-class MouseAction {
+
+// it is a mode. not an action...
+class MouseAction : public QObject, public Action {
+	Q_OBJECT
 public:
 	typedef QUndoCommand cmd;
 protected:
 public:
-	explicit MouseAction(MouseActions& ctx)
-		:_ctx(ctx), _sender(nullptr){}
+	explicit MouseAction(QObject* p=nullptr)
+		: Action(), _sender(nullptr){}
 	MouseAction(MouseAction const&) = delete;
 
 public:
@@ -67,8 +65,12 @@ public:
 
 	void uncheck();
 
+public slots:
+	void slotToggle(); // QAction* sender);
+	void slotTrigger(); // QAction* sender);
+
 protected:
-	MouseActions& ctx(){return _ctx;}
+	MouseActions* ctx() const;
 	QGraphicsView* view(); // what?
 	SchematicScene* scene(); // passed to UndoCommands (check: why?)
 
@@ -97,25 +99,10 @@ protected: // UC
 	Node const* nodeAt(pos_t) const;
 
 private:
-	MouseActions& _ctx;
+//	MouseActions& _ctx; parent?
 	QAction* _sender;
 }; // MouseAction
 
-extern QAction *formerAction;
-
-
 class Label;
 
-#if 0
-ElementGraphics* element(ElementMouseAction);
-Component* component(ElementMouseAction);
-WireLabel* wireLabel(ElementMouseAction);
-Diagram* diagram(ElementMouseAction);
-Painting* painting(ElementMouseAction);
-Graph* graph(ElementMouseAction);
-Marker* marker(ElementMouseAction);
-Node* node(ElementMouseAction);
-Label* label(ElementMouseAction);
-WireLabel* wireLabel(ElementMouseAction);
-#endif
 #endif

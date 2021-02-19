@@ -371,13 +371,6 @@ void QucsApp::initActions()
   magOne->setWhatsThis(tr("View 1:1\n\nShows the page content without magnification"));
   connect(magOne, SIGNAL(triggered()), SLOT(slotShowOne()));
 
-  magPlus = new QAction(QIcon((":/bitmaps/viewmag+.png")),	tr("Zoom in"), this);
-  magPlus->setShortcut(Qt::Key_Plus);
-  magPlus->setStatusTip(tr("Zoom into the current view"));
-  magPlus->setWhatsThis(tr("Zoom in\n\nZoom the current view"));
-  magPlus->setCheckable(true);
-  connect(magPlus, &QAction::toggled, this, &QucsApp::slotZoomIn);
-
   magMinus = new QAction(QIcon((":/bitmaps/viewmag-.png")), tr("Zoom out"), this);
   magMinus->setShortcut(Qt::Key_Minus);
   magMinus->setStatusTip(tr("Zoom out the current view"));
@@ -389,13 +382,6 @@ void QucsApp::initActions()
   connect(escape, SIGNAL(triggered()), SLOT(slotEscape()));
   this->addAction(escape);
 
-#if 0
-  select = new QAction(QIcon((":/bitmaps/pointer.png")), tr("Select"), this);
-  select->setStatusTip(tr("Activate select mode"));
-  select->setWhatsThis(tr("Select\n\nActivates select mode"));
-  select->setCheckable(true);
-  connect(select, &QAction::toggled, this, &QucsApp::slotSelect);
-#endif
 
   selectMarker = new QAction(tr("Select Markers"), this);
   selectMarker->setShortcut(Qt::CTRL+Qt::SHIFT+Qt::Key_M);
@@ -489,8 +475,8 @@ void QucsApp::initActions()
 
   simulate = new QAction(QIcon((":/bitmaps/gear.png")), tr("Simulate"), this);
   simulate->setShortcut(Qt::Key_F2);
-  simulate->setStatusTip(tr("Simulates the current schematic"));
-  simulate->setWhatsThis(tr("Simulate\n\nSimulates the current schematic"));
+  simulate->setStatusTip(tr("Simulates the current document"));
+  simulate->setWhatsThis(tr("Simulate\n\nSimulates the current document"));
   connect(simulate, SIGNAL(triggered()), SLOT(slotSimulate()));
 
   dpl_sch = new QAction(QIcon((":/bitmaps/rebuild.png")), tr("View Data Display/Schematic"), this);
@@ -696,9 +682,9 @@ void QucsApp::initMenuBar()
   menuBar()->addMenu(toolMenu);
 
   simMenu = new QMenu(tr("&Simulation"));  // menuBar entry simMenu
-//  simMenu->addAction(simulate);
+  simMenu->addAction(simulate);
 //  simMenu->addAction(dpl_sch);
-//  simMenu->addAction(dcbias);
+  simMenu->addAction(dcbias);
 //  simMenu->addAction(showMsg);
 //  simMenu->addAction(showNet);
   menuBar()->addMenu(simMenu);
@@ -790,7 +776,7 @@ incomplete();
 // ----------------------------------------------------------
 void QucsApp::initToolBar()
 {
-  fileToolbar = new QToolBar(tr("File"));
+  fileToolbar = new QToolBar(tr("File"), this);
   fileToolbar->addAction(fileNew);
   fileToolbar->addAction(textNew);
   fileToolbar->addAction(fileOpen);
@@ -800,7 +786,7 @@ void QucsApp::initToolBar()
   fileToolbar->addAction(filePrint);
   addToolBar(fileToolbar);
 
-  editToolbar = new QToolBar(tr("Edit"));
+  editToolbar = new QToolBar(tr("Edit"), this);
   editToolbar->addAction(editCut);
   editToolbar->addAction(editCopy);
   editToolbar->addAction(editPaste);
@@ -809,13 +795,15 @@ void QucsApp::initToolBar()
   editToolbar->addAction(redo);
   addToolBar(editToolbar);
 
-  viewToolbar = new QToolBar(tr("View"));
+  viewToolbar = new QToolBar(tr("View"), this);
   viewToolbar->addAction(magAll);
   viewToolbar->addAction(magOne);
   viewToolbar->addAction(magPlus);
   viewToolbar->addAction(magMinus);
+  viewToolbar->addAction(simulate); // for now.
   addToolBar(viewToolbar);
 
+  // this belongs to QucsDoc.
   _docToolBar = new QToolBar(tr("Work"));
 //  _workToolBar->addAction(select);
 //  _workToolBar->addAction(editActivate);
@@ -829,7 +817,6 @@ void QucsApp::initToolBar()
 //  _workToolBar->addAction(insEquation);
 //  _workToolBar->addAction(insGround);
 //  _workToolBar->addAction(insPort);
-//  _workToolBar->addAction(simulate);
 //  _workToolBar->addAction(dpl_sch);
 //  _workToolBar->addAction(setMarker);
 //  _workToolBar->addSeparator();    // <<<=======================

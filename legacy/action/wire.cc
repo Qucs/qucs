@@ -1,13 +1,37 @@
-// (c) 2020 Felix Salfelder
-// GPLv3+
+/***************************************************************************
+    copyright            : 2018, 2020, 2021 Felix Salfelder
+ ***************************************************************************/
 
+/***************************************************************************
+ *                                                                         *
+ *   This program is free software; you can redistribute it and/or modify  *
+ *   it under the terms of the GNU General Public License as published by  *
+ *   the Free Software Foundation; either version 3 of the License, or     *
+ *   (at your option) any later version.                                   *
+ *                                                                         *
+ ***************************************************************************/
+
+#ifndef QUCS_ACTION_WIRE_H
+#define QUCS_ACTION_WIRE_H
+/*--------------------------------------------------------------------------*/
 #include "qucs_globals.h"
 #include "symbol.h"
 #include "viewpainter.h"
 #include "schematic_model.h"
+#include "schematic_scene.h"
+#include "schematic_edit.h"
+#include "mouseaction.h"
+#include "qucsdoc.h"
+
+#include <QAction>
+#include <QGraphicsView>
+#include <QGraphicsSceneMouseEvent>
+#include <QMouseEvent>
+/*--------------------------------------------------------------------------*/
+extern QCursor& crosshair();
 /*--------------------------------------------------------------------------*/
 namespace{
-
+/*--------------------------------------------------------------------------*/
 // BUG/FEATURE. Wires can't go around the corner
 // wire under construction does. convert to pair of Wires eventually
 class WireUC : public Symbol /*subckt*/ {
@@ -64,7 +88,7 @@ void WireUC::paint(ViewPainter *p) const
 }
 /*--------------------------------------------------------------------------*/
 void WireUC::pushWire(pos_t p0, pos_t delta)
-{
+{ untested();
 	int x = getX(p0);
 	int y = getY(p0);
 	int mx = getX(delta);
@@ -103,24 +127,24 @@ void WireUC::expand()
 	new_subckt();
 	assert(subckt());
 
-	if(!_proto){
+	if(!_proto){ untested();
 		_proto	= symbol_dispatcher["Wire"];
-	}else{
+	}else{ untested();
 		unreachable();
 	}
 	assert(_proto);
 
 	auto pm = pmid();
 	pos_t delta = pm - _p0;
-	if(delta){
+	if(delta){ untested();
 		pushWire(_p0, delta);
-	}else{
+	}else{ untested();
 	}
 
 	delta = pm - _p1;
-	if(delta){
+	if(delta){ untested();
 		pushWire(_p1, delta);
-	}else{
+	}else{ untested();
 	}
 
 	SchematicModel const* sc = subckt();
@@ -168,10 +192,20 @@ void WireUC::setParameter(std::string const& n, std::string const& v)
 }
 /*--------------------------------------------------------------------------*/
 Dispatcher<Symbol>::INSTALL p(&symbol_dispatcher, "__ma_ghostwire", &w);
-
-} // namespace
-
-// namespace {
+/*--------------------------------------------------------------------------*/
+/*--------------------------------------------------------------------------*/
+class ActionInsertWire : public QAction{
+public:
+	explicit ActionInsertWire(QObject* parent) : QAction(parent) { untested();
+		setIcon(QIcon(":/bitmaps/wire.png"));
+		setText(tr("Wire"));
+		setShortcut(Qt::CTRL+Qt::Key_E);
+		setStatusTip(tr("Insert a wire"));
+		setWhatsThis(tr("Wire\n\nInsert a wire"));
+		setCheckable(true);
+	}
+};
+/*--------------------------------------------------------------------------*/
 class MakeWire : public SchematicEdit {
 public:
 	template<class IT>
@@ -216,11 +250,11 @@ private:
     // std::vector<ElementGraphics*> _gfx;
 }; // MakeWire
 /*--------------------------------------------------------------------------*/
-class MouseActionWire : public MouseAction{
+class MouseActionWire : public MouseAction {
 public:
-	explicit MouseActionWire(MouseActions& ctx)
-		: MouseAction(ctx), _mode(0), _phase(0) {itested();
-		_proto = symbol_dispatcher.clone("__ma_ghostwire");
+	explicit MouseActionWire()
+		: MouseAction(), _mode(0), _phase(0) {itested();
+		_proto = symbol_dispatcher.clone("__ma_ghostwire"); // BUG. not in constructor.
 		assert(_proto);
 	}
 
@@ -239,7 +273,7 @@ private: // legacy code
 private:
 	cmd* finish();
 	void toggleMode(){ untested();
-		if(!_gfx.size()){
+		if(!_gfx.size()){ untested();
 			incomplete(); // always keep a wireUC
 			return;
 		}
@@ -254,19 +288,24 @@ private:
 	}
 	void new_gfx();
 
+	Action* clone() const{ untested();
+		return new MouseActionWire(); // this?
+	}
+	QAction* createAction(QObject* parent) const override{ untested();
+		auto x = new ActionInsertWire(parent);
+		connect(x, &QAction::toggled, this, &MouseAction::slotToggle);
+		return x;
+	}
+
 private:
 	int _mode; // V/H
 	int _phase;
 
-	int _MAx1;
-	int _MAx3;
-	int _MAy3;
 	QCursor _oldcursor;
 	std::vector<ElementGraphics*> _gfx;
 	Element* _proto;
-};
-/*--------------------------------------------------------------------------*/
-extern QCursor& crosshair();
+}a0;
+static Dispatcher<Widget>::INSTALL p1(&action_dispatcher, "AddWire", &a0);
 /*--------------------------------------------------------------------------*/
 QUndoCommand* MouseActionWire::activate(QObject* sender)
 {itested();
@@ -314,17 +353,17 @@ QUndoCommand* MouseActionWire::dblclk(QEvent* e)
 { untested();
 	trace1("wire::dblclk1", _gfx.size());
 
-	if(_gfx.size()){
+	if(_gfx.size()){ untested();
 		delete _gfx.back();
 		_gfx.pop_back();
 		trace1("wire::dblclk2", _gfx.size());
-	}else{
+	}else{ untested();
 	}
 
 
-	if(_gfx.size()){
+	if(_gfx.size()){ untested();
 		return finish();
-	}else{
+	}else{ untested();
 		unreachable();
 		return nullptr;
 	}
@@ -410,9 +449,9 @@ QUndoCommand* MouseActionWire::press1(QGraphicsSceneMouseEvent* ev)
 
 	cur->prepareGeometryChange();
 
-	if(auto d=dynamic_cast<QGraphicsView*>(doc())){
+	if(auto d=dynamic_cast<QGraphicsView*>(doc())){ untested();
 		d->scene()->addItem(cur); // show, does not attach.
-	}else{
+	}else{ untested();
 	}
 
 	//Doc->PostPaintEvent (_DotLine);
@@ -425,9 +464,6 @@ QUndoCommand* MouseActionWire::press1(QGraphicsSceneMouseEvent* ev)
 	//}
 	// setDrawn(false);
 
-	_MAx1 = 0;   // paint wire corner first up, then left/right
-	_MAx3 = int(fX);
-	_MAy3 = int(fY);
 	//   Doc->snapToGrid(MAx3, MAy3);
 	//
 	//ALYS - draw aiming cross
@@ -445,7 +481,7 @@ QUndoCommand* MouseActionWire::press1(QGraphicsSceneMouseEvent* ev)
 }
 /*--------------------------------------------------------------------------*/
 QUndoCommand* MouseActionWire::finish()
-{
+{ untested();
 	trace1("finish", _gfx.size());
 	std::list<Element*> new_wires;
 	for(auto& i: _gfx){itested();
@@ -506,4 +542,7 @@ QUndoCommand* MouseActionWire::press2(QGraphicsSceneMouseEvent* ev)
 	return c;
 }
 /*--------------------------------------------------------------------------*/
+} // namespace
 /*--------------------------------------------------------------------------*/
+/*--------------------------------------------------------------------------*/
+#endif

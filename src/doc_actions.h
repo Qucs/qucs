@@ -17,16 +17,18 @@
 #ifndef QUCS_DOC_ACTIONS
 #define QUCS_DOC_ACTIONS
 
+#include "io_trace.h"
 #include <QObject>
 
 class ElementGraphics;
 class QUndoCommand;
 class MouseAction;
 class QucsDoc;
+class QAction;
 class QMenu; // here?!
 
 
-// must be QObject so it can receive/filter events
+// must be QObject so it can receive/filter events (needed??!)
 class MouseActions : public QObject {
 	Q_OBJECT
 public:
@@ -46,6 +48,10 @@ public:
   // menu appearing by right mouse button click on component
   QMenu *ComponentMenu;
 
+public:
+	void slotToggle(QAction* sender);
+	void slotTrigger(QAction* sender);
+
 private:
   // former Schematic::select*
   // but that does not work, because ElementMouseAction lives here.
@@ -56,15 +62,17 @@ public:
   void updateViewport(); // why?
 
 public: // TODO. move into mouse actions
-  //  void rightPressMenu(QMouseEvent*);
+	//  void rightPressMenu(QMouseEvent*);
 
-  bool eventFilter(QObject *obj, QEvent *event);
-  virtual bool handle(QEvent*);
-  virtual void setControls(QucsDoc* ctx) = 0;
+	bool eventFilter(QObject *obj, QEvent *event);
+	virtual bool handle(QEvent*);
+	//virtual void setParent(QWidget* ctx) = 0;
+	virtual void setControls(QucsDoc* ctx) = 0;
 
-  void executeCommand(QUndoCommand* c);
-  MouseAction* activeAction(){ return _maCurrent; }
-  void setActive(MouseAction* a);
+	void executeCommand(QUndoCommand* c);
+	MouseAction* activeAction(){ untested(); return _maCurrent; }
+	MouseAction const* currentMode() const{ untested(); return _maCurrent; }
+	void setCurrentMode(MouseAction* a);
 
 public:
   void undo();
@@ -72,18 +80,15 @@ public:
 
 public:
 	QucsDoc* doc();
-	QucsDoc const* doc() const{return _doc;}
-
-protected: // toolbar?
-	MouseAction* _maCurrent{nullptr};
+	QucsDoc const* doc() const;
+	void possiblyToggleAction(MouseAction* a, QObject* sender);
 
 private:
+	MouseAction* _maCurrent{nullptr};
 	// QUndoStack* _undoStack; // Doc
   bool _drawn;  // indicates whether the scheme element was drawn last time
   bool isMoveEqual;
 
-protected:
-  QucsDoc* _doc;
 }; // MouseActions
 
 #endif

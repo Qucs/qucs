@@ -1,6 +1,7 @@
 TARGET = legacy
 
 SUBDIRS = \
+	action \
 	components \
 	paintings \
 	qucsator

@@ -73,9 +73,22 @@ public:
 /*--------------------------------------------------------------------------*/
 class MouseActionPaste : public MouseAction{
 public:
-	explicit MouseActionPaste(MouseActions& ctx, Element const* proto=nullptr)
-		: MouseAction(ctx), _gfx(nullptr), _proto(proto)
+	explicit MouseActionPaste(Element const* proto=nullptr)
+		: MouseAction(), _gfx(nullptr), _proto(proto)
   	{}
+
+private:
+	Action* clone() const{
+		return new MouseActionPaste(); // this?
+	}
+	QAction* createAction(QObject* parent) const override{ untested();
+		incomplete();
+//		auto x = new ActionEditPaste(parent);
+//		connect(x, &QAction::toggled, this, &MouseAction::slotToggle);
+//		return x;
+		return nullptr;
+	}
+
 private:
 	cmd* activate(QObject* sender) override;
 	cmd* deactivate() override;

@@ -1,6 +1,5 @@
 
-ACTION_CPP = \
+xACTION_CPP = \
 	move.cpp \
 	paste.cpp \
-	wire.cpp \
-	zoom.cpp
+	wire.cpp
