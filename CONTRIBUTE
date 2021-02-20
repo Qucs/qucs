@@ -2,11 +2,20 @@ Qucs 0.1.* is welcoming contributions.
 
 Currently, the code is in flux in many places while modularising, and porting
 to Qt5. This makes it more difficult to contribute, and contributions should
-focus on fixing bugs and porting the features present in 0.0.20 (cf. ROADMAP).
+focus on fixing bugs, porting the features present in 0.0.20 and new features
+(cf. ROADMAP).
 
-Code contributions that are clearly separate from the existing code base will
-be accepted given that they look useful. See examples/plugins/README for
-instructions.
+Code contributions that are separate from the existing code base will be
+accepted given that they look useful. See README files and code examples in
+
+- examples/plugins
+- plugins/*
+- legacy/*
+- [..]
+
+for further details and instructions. For complicated additions, please contact
+the developer(s). Do not submit patches with random changes and patch bombs
+against /src.
 
 Your contribution will be distributed under the GNU General Public License v3
 or any later version. Please make sure that your code is suitable for this

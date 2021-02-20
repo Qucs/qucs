@@ -1,0 +1,11 @@
+== Qucs GUI Objects
+
+- Editors
+   - Text
+   - Schematic
+- Dialogs
+   - Symbol properties
+   - Document settings
+   - etc..
+
+This is the starting point for adding a symbol or layout editor.
