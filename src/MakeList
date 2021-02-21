@@ -23,7 +23,6 @@ CPP_SRC = \
 	element_graphics.cpp \
 	findbr.cc \
 	geometry.cpp \
-	ghostwire.cpp \
 	graph.cpp \
 	imagewriter.cpp \
 	io.cpp \
@@ -115,7 +114,6 @@ HDR1 = \
 	net.h \
 	netlist.h \
 	nodemap.h \
-	spicedialog.h \
 	spicefile.h \
 	printerwriter.h \
 	projectView.h \

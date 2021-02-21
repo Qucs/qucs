@@ -41,8 +41,6 @@ else
 BAT_EXT =
 endif
 
-bin_SCRIPTS = qucsdigi${BAT_EXT} qucsveri${BAT_EXT} qucsdigilib${BAT_EXT}
-
 UICFILES = ui_searchdialog.h
 BUILT_SOURCES = $(UICFILES)
 

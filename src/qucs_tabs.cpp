@@ -108,6 +108,7 @@ QucsDoc* QucsTabWidget::createEmptySchematic(const QString &name)
   return d;
 }
 /*--------------------------------------------------------------------------*/
+// duplicate in qucs_actions QucsApp::?!
 QucsDoc* QucsTabWidget::createEmptyTextDoc(const QString &name)
 {itested();
   // create a text document

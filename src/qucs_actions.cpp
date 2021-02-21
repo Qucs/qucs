@@ -280,58 +280,73 @@ extern QString lastDirOpenSave; // to remember last directory and file
 /// - slotShowLastNetlist()
 /// - edit properties of components (such as spice, verilog)
 ///
+//
+//BUG. same in qucs_tabs
 void QucsApp::editFile(const QString& File)
 {
-  incomplete();
+	incomplete();
+	if ((QucsSettings.Editor == "qucs") || QucsSettings.Editor == "") {
+		// The Editor is 'qucs' or empty, open a net document tab
+		if (File.isEmpty()) {
+			std::string name = "untitled";
+//			TextDoc *d = new TextDoc(this, "", DocumentTab);
+
+			Widget* o = widget_dispatcher.clone("TextDoc");
+			//  e->setParam("name", name.toStdString());
+			assert(o);
+			QucsDoc* d = dynamic_cast<QucsDoc*>(o);
+			assert(d);
+			QWidget* w = dynamic_cast<QWidget*>(o);
+			assert(w);
+			d->setParent(this);
+			trace1("setname??", name);
+			d->setName(QString_(name)); // it's actually the (full?) filename? BUG: name vs label
+
+			int i = DocumentTab->addTab(w, QPixmap(":/bitmaps/empty.xpm"), QObject::tr("untitled"));
+			DocumentTab->setCurrentIndex(i);
+		} else {
+			slotHideEdit(); // disable text edit of component property
+			statusBar()->showMessage(tr("Opening file..."));
+			QFileInfo finfo(File);
+
+			if(!finfo.exists()){
+				statusBar()->showMessage(tr("Opening aborted, file not found."), 2000);
+			}else{
+				gotoPage(File);
+				lastDirOpenSave = File;   // remember last directory and file
+				statusBar()->showMessage(tr("Ready."));
+			}
+		}
+	} else {
+	}
 #if 0
-    if ((QucsSettings.Editor.toLower() == "qucs") | QucsSettings.Editor.isEmpty()) {
-        // The Editor is 'qucs' or empty, open a net document tab
-        if (File.isEmpty()) {
-            TextDoc *d = new TextDoc(this, "", DocumentTab);
-            int i = DocumentTab->addTab(d, QPixmap(":/bitmaps/empty.xpm"), QObject::tr("untitled"));
-            DocumentTab->setCurrentIndex(i);
-        } else {
-            slotHideEdit(); // disable text edit of component property
+	{
+		// use an external editor
+		QString prog;
+		QStringList args;
 
-            statusBar()->showMessage(tr("Opening file..."));
+		QString editorPath = QucsSettings.Editor;
+		QFileInfo editor(editorPath);
+		prog = QDir::toNativeSeparators(editor.canonicalFilePath());
 
-            QFileInfo finfo(File);
+		if (!File.isEmpty()) {
+			args << File;
+		}
 
-            if(!finfo.exists())
-                statusBar()->showMessage(tr("Opening aborted, file not found."), 2000);
-            else {
-                gotoPage(File);
-                lastDirOpenSave = File;   // remember last directory and file
-                statusBar()->showMessage(tr("Ready."));
-            }
-        }
-    } else {
-      // use an external editor
-      QString prog;
-      QStringList args;
+		QProcess *externalEditor = new QProcess();
+		qDebug() << "taskElement: " << editorPath << args.join(" ");
+		externalEditor->start(prog, args);
 
-      QString editorPath = QucsSettings.Editor;
-      QFileInfo editor(editorPath);
-      prog = QDir::toNativeSeparators(editor.canonicalFilePath());
+		if( !externalEditor->waitForStarted(1000) ) {
+			QMessageBox::critical(this, tr("Error"), tr("Cannot start text editor: \n\n%1").arg(editorPath));
+			delete externalEditor;
+			return;
+		}
+		qDebug() << externalEditor->readAllStandardError();
 
-      if (!File.isEmpty()) {
-          args << File;
-      }
-
-      QProcess *externalEditor = new QProcess();
-      qDebug() << "taskElement: " << editorPath << args.join(" ");
-      externalEditor->start(prog, args);
-
-      if( !externalEditor->waitForStarted(1000) ) {
-        QMessageBox::critical(this, tr("Error"), tr("Cannot start text editor: \n\n%1").arg(editorPath));
-        delete externalEditor;
-        return;
-      }
-      qDebug() << externalEditor->readAllStandardError();
-
-      // to kill it before qucs ends
-      connect(this, SIGNAL(signalKillEmAll()), externalEditor, SLOT(kill()));
-    }
+		// to kill it before qucs ends
+		connect(this, SIGNAL(signalKillEmAll()), externalEditor, SLOT(kill()));
+	}
 #endif
 }
 
@@ -969,5 +984,3 @@ void QucsApp::slotHelpAbout()
   // AboutDialog *ad = new AboutDialog(this);
   // ad->exec();
 }
-
-// vim:ts=8:sw=2:noet
