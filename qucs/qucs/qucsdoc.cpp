@@ -47,6 +47,7 @@ QucsDoc::QucsDoc(QucsApp *App_, const QString& Name_)
   }
   SimOpenDpl = true;
   SimRunScript = false;
+  SimInhibitWindow = false;
 
   DocChanged = false;
   showBias = -1;  // don't show DC bias (currently for "Schematic" only)

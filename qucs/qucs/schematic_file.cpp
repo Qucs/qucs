@@ -375,6 +375,7 @@ int Schematic::saveDocument()
   stream << "  <OpenDisplay=" << SimOpenDpl << ">\n";
   stream << "  <Script=" << Script << ">\n";
   stream << "  <RunScript=" << SimRunScript << ">\n";
+  stream << "  <SimInhibitWindow=" << SimInhibitWindow << ">\n";
   stream << "  <showFrame=" << showFrame << ">\n";
 
   QString t;
@@ -586,6 +587,9 @@ bool Schematic::loadProperties(QTextStream *stream)
     else if(cstr == "RunScript")
 		if(nstr.toInt(&ok) == 0) SimRunScript = false;
 		else SimRunScript = true;
+    else if (cstr == "SimInhibitWindow")
+    if(nstr.toInt(&ok) == 0) SimInhibitWindow = false;
+    else SimInhibitWindow = true;
     else if(cstr == "showFrame")
 		showFrame = nstr.at(0).toLatin1() - '0';
     else if(cstr == "FrameText0") misc::convert2Unicode(Frame_Text0 = nstr);
