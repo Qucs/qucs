@@ -29,12 +29,22 @@ private: // MouseActions
 	// void handle(QEvent*) override;
 	void setControls(QucsDoc* ctx);
 	// void setParent(QWidget* ctx);
+	void executeCommand(QUndoCommand* c) override;
+	void stash_toolbar(QAction* p);
 
 protected: // Doc stuff
 //	QucsDoc* doc();
 	SchematicScene const* scene()const;
 	void updateViewport();
 	QPoint snapToGrid(QPointF const&p) const;
+	QUndoStack* undoStack(){ return _undoStack; }
+
+private:
+	void redo() override;
+	void undo() override;
+
+private:
+	QUndoStack* _undoStack{nullptr};
 
 public: // actions... private?
 	     // not yet. still toggled from outside
@@ -62,6 +72,8 @@ public: // actions... private?
 //	QAction* _actionMY{nullptr};
 //	QAction* _actionInsertGround{nullptr};
 //	QAction* _actionInsertPort{nullptr};
+private:
+	QToolBar* _toolbar{nullptr};
 };
 /*--------------------------------------------------------------------------*/
 /*--------------------------------------------------------------------------*/

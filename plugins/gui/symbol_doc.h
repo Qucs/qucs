@@ -133,7 +133,7 @@ public:
   int     save();
   int     saveSymbolCpp (void);
   int     saveSymbolJSON (void);
-  void    becomeCurrent(bool);
+  void    becomeCurrent() override;
 
   bool scrollUp(int);
   bool scrollDown(int);

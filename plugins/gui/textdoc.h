@@ -64,7 +64,8 @@ public:
   int   save ();
   float zoomBy (float);
   void  showNoZoom ();
-  void  becomeCurrent (bool);
+  void becomeCurrent();
+  void cleanup(){ incomplete(); }
   bool  loadSimulationTime (QString&);
   void  commentSelected ();
   void  insertSkeleton ();
@@ -368,13 +369,8 @@ void SchematicDoc::hideEvent(QHideEvent*e)
 	QGraphicsView::hideEvent(e);
 }
 #endif
-/*!
- * \brief TextDoc::becomeCurrent sets text document as current
- *
- * \detail Make sure the menu options are adjusted.
- * why is this not some event handler? (showEvent?)
- */
-void TextDoc::becomeCurrent (bool)
+// set as current
+void TextDoc::becomeCurrent ()
 {
 	incomplete();
 #if 0

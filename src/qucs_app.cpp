@@ -10,8 +10,8 @@ void QucsApp::clearWorkToolbar()
 }
 
 // obsolete.
-void QucsApp::addWorkToolbarAction(QAction* a)
-{ untested();
-	assert(_docToolBar);
-	_docToolBar->addAction(a);
-}
+// void QucsApp::addWorkToolbarAction(QAction* a)
+// { untested();
+// 	assert(_docToolBar);
+// 	_docToolBar->addAction(a);
+// }

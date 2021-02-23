@@ -18,11 +18,11 @@
 #include "misc.h"
 #include "qucs_app.h"
 #include "schematic_dialog.h"
-// #include "schematic_doc.h"
 #include "swap.h"
 #include "qucs_globals.h"
 #include "wiredialog.h"
 #include "widget.h"
+#include "qt_compat.h"
 
 #include <QLabel>
 #include <QLineEdit>

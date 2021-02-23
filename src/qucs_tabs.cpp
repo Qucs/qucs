@@ -1,7 +1,20 @@
+/***************************************************************************
+    copyright            : (C) 2020, 2021 Felix Salfelder
+ ***************************************************************************/
+
+/***************************************************************************
+ *                                                                         *
+ *   This program is free software; you can redistribute it and/or modify  *
+ *   it under the terms of the GNU General Public License as published by  *
+ *   the Free Software Foundation; either version 3 of the License, or     *
+ *   (at your option) any later version.                                   *
+ *                                                                         *
+ ***************************************************************************/
 #include "qucs_tabs.h"
 #include "qucsdoc.h"
 #include "qucs_app.h" // gaah
 #include "io_trace.h"
+#include "qt_compat.h"
 #include "qucs_globals.h"
 
 #include <QTabBar>
@@ -10,6 +23,33 @@
 #include <QClipboard>
 #include <QDesktopServices>
 /*--------------------------------------------------------------------------*/
+/*--------------------------------------------------------------------------*/
+void QucsTabWidget::setCurrentIndex(int i)
+{
+	// BUG: currentIndex is wrong (why??). use _current instead.
+	trace4("QucsTabWidget::setCurrentIndex", currentIndex(), i, _current, current());
+	QTabWidget::setCurrentIndex(i);
+
+	if(_current){
+		_current->cleanup();
+		_current = nullptr;
+	}else{
+	}
+	
+	if(_current != current()){
+		_current = current();
+
+		if(_current){
+			_current->becomeCurrent();
+		}else{
+		}
+	}else{
+		// why?
+		incomplete();
+		unreachable(); // BUG
+	}
+
+}
 /*--------------------------------------------------------------------------*/
 void QucsTabWidget::slotDCbias()
 { untested();
@@ -129,7 +169,7 @@ QucsDoc* QucsTabWidget::createEmptyTextDoc(const QString &name)
   setCurrentIndex(i);
   return d;
 }
-
+/*--------------------------------------------------------------------------*/
 void QucsTabWidget::setSaveIcon(bool state, int index)
 { untested();
   // set document tab icon to "smallsave.xpm" or "empty.xpm"
@@ -139,43 +179,43 @@ void QucsTabWidget::setSaveIcon(bool state, int index)
   }
   setTabIcon(index, QPixmap(icon));
 }
-
+/*--------------------------------------------------------------------------*/
 void QucsTabWidget::slotCxMenuClose()
 { untested();
   // close tab where the context menu was opened
   App->slotFileClose(contextTabIndex);
 }
-
+/*--------------------------------------------------------------------------*/
 void QucsTabWidget::slotCxMenuCloseOthers()
 { untested();
   // close all tabs, except the one where the context menu was opened
   App->closeAllFiles(contextTabIndex);
 }
-
+/*--------------------------------------------------------------------------*/
 void QucsTabWidget::slotCxMenuCloseLeft()
 { untested();
   // close all tabs to the left of the current one
   App->closeAllLeft(contextTabIndex);
 }
-
+/*--------------------------------------------------------------------------*/
 void QucsTabWidget::slotCxMenuCloseRight()
 { untested();
   // close all tabs to the right of the current one
   App->closeAllRight(contextTabIndex);
 }
-
+/*--------------------------------------------------------------------------*/
 void QucsTabWidget::slotCxMenuCloseAll()
 { untested();
   App->slotFileCloseAll();
 }
-
+/*--------------------------------------------------------------------------*/
 void QucsTabWidget::slotCxMenuCopyPath()
 { untested();
   // copy the document full path to the clipboard
   QClipboard *cb = QApplication::clipboard();
   cb->setText(docName());
 }
-
+/*--------------------------------------------------------------------------*/
 void QucsTabWidget::slotCxMenuOpenFolder()
 { untested();
   QFileInfo Info(docName());

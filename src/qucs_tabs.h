@@ -1,3 +1,15 @@
+/***************************************************************************
+    copyright            : (C) 2020, 2021 Felix Salfelder
+ ***************************************************************************/
+
+/***************************************************************************
+ *                                                                         *
+ *   This program is free software; you can redistribute it and/or modify  *
+ *   it under the terms of the GNU General Public License as published by  *
+ *   the Free Software Foundation; either version 3 of the License, or     *
+ *   (at your option) any later version.                                   *
+ *                                                                         *
+ ***************************************************************************/
 
 #ifndef QUCS_TABS_H
 #define QUCS_TABS_H
@@ -19,6 +31,8 @@ public: // BUG, obsolete.
 
   QucsDoc* current();
 
+  void setCurrentIndex(int i);
+
 public slots:
   void showContextMenu(const QPoint& point);
 private slots:
@@ -39,6 +53,7 @@ private: // BUG
 private:
   int contextTabIndex; // what?
   QucsApp *App; // BUG
+  QucsDoc* _current{nullptr};
 };
 
 #endif

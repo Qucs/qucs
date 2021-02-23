@@ -495,19 +495,6 @@ void QucsApp::initActions()
 	tr("Calculate DC bias\n\nCalculate DC bias and show it"));
   connect(dcbias, &QAction::triggered, DocumentTab, &QucsTabWidget::slotDCbias);
 
-  showMsg = new QAction(tr("Show Last Messages"), this);
-  showMsg->setShortcut(Qt::Key_F5);
-  showMsg->setStatusTip(tr("Show last simulation messages"));
-  showMsg->setWhatsThis(
-        tr("Show Last Messages\n\nShow the messages of the last simulation"));
-  connect(showMsg, SIGNAL(triggered()), SLOT(slotShowLastMsg()));
-
-  showNet = new QAction(tr("Show Last Netlist"), this);
-  showNet->setShortcut(Qt::Key_F6);
-  showNet->setStatusTip(tr("Show last simulation netlist"));
-  showNet->setWhatsThis(
-	tr("Show Last Netlist\n\nShows the netlist of the last simulation"));
-  connect(showNet, &QAction::toggled, this, &QucsApp::slotShowLastNetlist);
 
   viewToolBar = new QAction(tr("Tool&bar"), this);
   viewToolBar->setCheckable(true);

@@ -39,6 +39,31 @@
 // inherit from DocAction??
 /*--------------------------------------------------------------------------*/
 /*--------------------------------------------------------------------------*/
+#if 0 // TODO
+void QucsApp::slotSelectMarker()
+{
+  QucsDoc *qd = DocumentTab->current();
+  assert(qd);
+
+  incomplete();
+//  qd->actionSelectMarker();
+}
+  showNet = new QAction(tr("Show Last Netlist"), this);
+  showNet->setShortcut(Qt::Key_F6);
+  showNet->setStatusTip(tr("Show last simulation netlist"));
+  showNet->setWhatsThis(
+	tr("Show Last Netlist\n\nShows the netlist of the last simulation"));
+  connect(showNet, &QAction::toggled, this, &QucsApp::slotShowLastNetlist);
+
+  showMsg = new QAction(tr("Show Last Messages"), this);
+  showMsg->setShortcut(Qt::Key_F5);
+  showMsg->setStatusTip(tr("Show last simulation messages"));
+  showMsg->setWhatsThis(
+        tr("Show Last Messages\n\nShow the messages of the last simulation"));
+  connect(showMsg, SIGNAL(triggered()), SLOT(slotShowLastMsg()));
+
+#endif
+/*--------------------------------------------------------------------------*/
 class ActionInsEqn : public QAction{
 public:
 	explicit ActionInsEqn(QObject* parent) : QAction(parent) { untested();
@@ -697,13 +722,25 @@ static void setParent_(Object* o, QObject* par)
 	oo->setParent(par);
 }
 /*--------------------------------------------------------------------------*/
+void SchematicActions::stash_toolbar(QAction* p)
+{
+	trace1("stash_toolbar", p);
+	assert(_toolbar);
+	_toolbar->addAction(p);
+}
+/*--------------------------------------------------------------------------*/
 SchematicActions::SchematicActions(QucsDoc* ctx)
   : MouseActions(ctx)
 {itested();
 	assert(ctx);
 	assert(doc());
+	auto p = dynamic_cast<QWidget*>(ctx);
+	assert(p);
 
-	untested();
+	_undoStack = new QUndoStack(this);
+	_toolbar = new QToolBar(p); // p?
+//	assert(!_toolbar->parent());
+
 	maDelete = new MouseActionDelete(this);
 	setParent_(maDelete, this);
 	untested();
@@ -714,6 +751,7 @@ SchematicActions::SchematicActions(QucsDoc* ctx)
 	setParent_(cc, this);
 	maSelect = dynamic_cast<MouseAction*>(cc);
 	assert(maSelect);
+//	setCurrentMode(maSelect); does not work.
 
 	cc = action_dispatcher.clone("AddWire");
 	setParent_(cc, this);
@@ -761,7 +799,58 @@ SchematicActions::SchematicActions(QucsDoc* ctx)
 	maEditPaste = new MouseActionPaste();
 	setParent_(maEditPaste, this);
 
+//	_toolbar = 
+	assert(_toolbar);
+
+	auto sel = maSelect->createAction(p);
+	sel->toggle(); // seems to work, but does not appear "activated" (?)
+
+	stash_toolbar(maSelect->createAction(p));
+	stash_toolbar(maWire->createAction(p));
+	stash_toolbar(maInsertPort->createAction(p));
+	stash_toolbar(maRotate->createAction(p));
+	stash_toolbar(maMirrorYaxis->createAction(p));
+	stash_toolbar(maMirrorXaxis->createAction(p));
+	stash_toolbar(maInsertPort->createAction(p));
+	stash_toolbar(maInsertGround->createAction(p));
+	stash_toolbar(maInsertEqn->createAction(p));
+
+	ctx->addToolBar(_toolbar);
+
+//	setCurrentMode(maSelect); does not work.
 } // SchematicActions::SchematicActions
+/*--------------------------------------------------------------------------*/
+void SchematicActions::redo()
+{
+	incomplete();
+}
+/*--------------------------------------------------------------------------*/
+void SchematicActions::undo()
+{
+	incomplete();
+}
+/*--------------------------------------------------------------------------*/
+void SchematicActions::executeCommand(QUndoCommand* c)
+{
+	assert(c);
+	assert(doc());
+	QUndoStack* u = undoStack();
+
+	if(u){itested();
+		u->push(c); // also calls redo
+
+		// train wreck. must be part of push. fix later.
+		if(doc()->_app){ untested();
+			assert(doc()->_app->undo);
+			doc()->_app->undo->setEnabled(true); // base class??
+		}else{ untested();
+			incomplete();
+		}
+	}else{ untested();
+		// forget about it.
+		delete c;
+	}
+}
 /*--------------------------------------------------------------------------*/
 void SchematicActions::setControls(QucsDoc* ctx)
 {
@@ -772,41 +861,6 @@ void SchematicActions::setControls(QucsDoc* ctx)
 	//}
 	auto p = dynamic_cast<QWidget*>(ctx); // prech?
 	assert(p);
-
- 	assert(maSelect);
- 	assert(maWire);
- 	assert(maMirrorXaxis);
- 	assert(maMirrorYaxis);
- 	assert(maRotate);
- 	assert(maInsertGround);
- 	assert(maInsertPort);
- 	assert(maInsertEqn);
-
-	auto b = ctx->newToolBar();
-	QAction* A;
-
-	A = maSelect->createAction(p);
-	b->addAction(A);
-	A = maWire->createAction(p);
-	b->addAction(A);
-	A = maInsertPort->createAction(p);
-	b->addAction(A);
-	A = maRotate->createAction(p);
-	b->addAction(A);
-	A = maMirrorYaxis->createAction(p);
-	b->addAction(A);
-	A = maMirrorXaxis->createAction(p);
-	b->addAction(A);
-	A = maInsertPort->createAction(p);
-	b->addAction(A);
-	A = maInsertGround->createAction(p);
-	b->addAction(A);
-	A = maInsertEqn->createAction(p);
-	b->addAction(A);
-
-
-
-	// TODO: menu...
 }
 /*--------------------------------------------------------------------------*/
 SchematicActions::~SchematicActions()

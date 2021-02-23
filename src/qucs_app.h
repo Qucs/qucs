@@ -1,9 +1,6 @@
 /***************************************************************************
-                                   qucs.h
-                                  --------
-    begin                : Thu Aug 28 2003
     copyright            : (C) 2003 by Michael Margraf
-    email                : michael.margraf@alumni.tu-berlin.de
+                               2021 Felix Salfelder
  ***************************************************************************/
 
 /***************************************************************************
@@ -15,8 +12,8 @@
  *                                                                         *
  ***************************************************************************/
 
-#ifndef QUCS_H
-#define QUCS_H
+#ifndef QUCS_APP_H
+#define QUCS_APP_H
 
 #include <QMainWindow>
 #include <QString>
@@ -69,7 +66,7 @@ class SimProcess; // really?
 class Simulator;
 
 
-/* pi */
+// what??
 static const double pi = 3.141592653589793238462643383279502884197169399375105820974944;
 
 #include "settings.h"
@@ -82,7 +79,7 @@ extern QStringList qucsPathList;
 extern VersionTriplet QucsVersion;
 // extern QucsApp *QucsMain;  // the Qucs application itself
 
-// TODO move these inside the QucsApp class?
+// TODO move these into the QucsApp class?
 bool loadSettings();
 bool saveApplSettings();
 
@@ -275,7 +272,7 @@ private:
   void initStatusBar();  // setup the statusbar
 
 public:
-  void addWorkToolbarAction(QAction* a);
+//  void addWorkToolbarAction(QAction* a);
   void clearWorkToolbar();
 
 public:
@@ -339,7 +336,7 @@ public: // Toolbar?
   QAction *magPlus, *editPaste,
           *editActivate, *wire, *editDelete,
           *helpOnline, *callEditor, *callFilter, *callLine, *callActiveFilter,
-          *showMsg, *showNet, *alignTop, *alignBottom, *alignLeft, *alignRight;
+          *alignTop, *alignBottom, *alignLeft, *alignRight;
   QAction *callLib, *callMatch, // TODO: call tool.
 			 *changeProps,
           *addToProj, *editFind, *insEntity, *selectMarker, *callPowerComb,
@@ -357,34 +354,19 @@ public slots: // obsolete slots
   void slotEditCopy();        // put the marked object into the clipboard
   void slotEditPaste();   // paste the clipboard into the document
   void slotEditDelete();  // delete the selected items
-//  void slotInsertEquation();
-//  void slotInsertGround();
-//  void slotInsertPort();
-//  void slotInsertEntity();
-//  void slotSetWire();
   void slotEscape();
 //  void slotSelect();
 //  void slotEditActivate();
-//  void slotInsertLabel();
-//  void slotSetMarker();
-//  void slotOnGrid();      // set selected elements on grid
 //  void slotMoveText();    // move property text of components
   void slotZoomIn();
   void slotEditUndo();    // makes the last operation undone
   void slotEditRedo();    // makes the last undo undone
   void slotEditFind();    // searches for a piece of text
-//  void slotAlignTop();    // align selected elements with respect to top
-//  void slotAlignBottom(); // align selected elements with respect to bottom
-//  void slotAlignLeft();   // align selected elements with respect to left
-//  void slotAlignRight();  // align selected elements with respect to right
-//  void slotDistribHoriz();// distribute horizontally selected elements
-//  void slotDistribVert(); // distribute vertically selected elements
-//  void slotCenterHorizontal();
-//  void slotCenterVertical();
 //  void slotSelectAll();
-  void slotSelectMarker();
-  void slotShowLastMsg();
-  void slotShowLastNetlist();
+//  void slotSelectMarker();
+//  void slotShowLastMsg();
+//  void slotShowLastNetlist();
+
   void slotCallEditor();
   void slotCallFilter();
   void slotCallActiveFilter();
@@ -395,6 +377,7 @@ public slots: // obsolete slots
   void slotCallRes();
   void slotHelpOnline();
   void slotCallPowerComb();
+
   void slotChangeProps();
   void slotAddToProject();
   void slotApplyCompText();
@@ -431,4 +414,4 @@ private:
 }; // qucsApp
 
 
-#endif /* QUCS_H */
+#endif // guard

@@ -68,15 +68,16 @@ public: // TODO. move into mouse actions
 	virtual bool handle(QEvent*);
 	//virtual void setParent(QWidget* ctx) = 0;
 	virtual void setControls(QucsDoc* ctx) = 0;
+	virtual void executeCommand(QUndoCommand* c);
 
-	void executeCommand(QUndoCommand* c);
+public: // modes
 	MouseAction* activeAction(){ untested(); return _maCurrent; }
 	MouseAction const* currentMode() const{ untested(); return _maCurrent; }
 	void setCurrentMode(MouseAction* a);
 
 public:
-  void undo();
-  void redo();
+  virtual void undo() = 0;
+  virtual void redo() = 0;
 
 public:
 	QucsDoc* doc();
@@ -85,10 +86,8 @@ public:
 
 private:
 	MouseAction* _maCurrent{nullptr};
-	// QUndoStack* _undoStack; // Doc
-  bool _drawn;  // indicates whether the scheme element was drawn last time
-  bool isMoveEqual;
-
+	bool _drawn;  // indicates whether the scheme element was drawn last time
+	bool isMoveEqual;
 }; // MouseActions
 
 #endif

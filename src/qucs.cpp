@@ -194,9 +194,11 @@ void QucsApp::initView()
   assert(DocumentTab);
   setCentralWidget(DocumentTab);
 
-  //  does not exist.
-//  connect(DocumentTab, &QucsTabWidget::currentChanged,
-//      this, &QucsApp::slotChangeView);
+  //  here?! move to QucsTabWidget::QucsTabWidget?
+//  disconnect(DocumentTab, &QucsTabWidget::currentChanged, nullptr, nullptr);
+//  disconnect(DocumentTab, &QucsTabWidget::tabBarClicked, nullptr, nullptr);
+  connect(DocumentTab, &QucsTabWidget::currentChanged,
+      DocumentTab, &QucsTabWidget::setCurrentIndex);
 
   // Give every tab a close button, and connect the button's signal to
   // slotFileClose
@@ -1337,7 +1339,6 @@ bool QucsApp::gotoPage(const QString& Name)
 
   if(d) { untested();
     // open page found
-    // d->becomeCurrent(); called from showEvent.
     DocumentTab->setCurrentIndex(i);  // make new document the current
     return true;
   }else{itested();

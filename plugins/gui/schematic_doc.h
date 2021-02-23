@@ -117,8 +117,8 @@ public:
 
 private: // QucsDoc.
 	void new_root();
-	QAction* createUndoAction() override;
-	QAction* createRedoAction() override;
+//	QAction* createUndoAction() override;
+//	QAction* createRedoAction() override;
 
 private: //temporary/obsolete
 #if 0
@@ -151,9 +151,12 @@ public:
 	int     save();
 	//int     saveSymbolCpp (void);
 	//int     saveSymbolJSON (void);
-	void    becomeCurrent();
-	void showEvent(QShowEvent*) override;
-	void hideEvent(QHideEvent*) override;
+	void becomeCurrent();
+	void cleanup();
+
+	// remove.
+//	void showEvent(QShowEvent*) override;
+//	void hideEvent(QHideEvent*) override;
 	
 	bool scrollUp(int);
 	bool scrollDown(int);
@@ -488,9 +491,9 @@ private:
 	}
 //  MouseAction* mouseAction(); QucsDoc
 
-  void setDrawn(bool b=true){mouseActions()->setDrawn(b);}
-  QUndoStack* undoStack() override{ return _undoStack; }
+	void setDrawn(bool b=true){mouseActions()->setDrawn(b);}
 
+	// ??
 	SubcktBase* root() override {return _root;}
 
 public:
@@ -513,7 +516,6 @@ private:
 	SchematicModel* _model;
 	SubcktBase* _main;
 	CmdEltList _commands;
-	QUndoStack* _undoStack;
 	std::map<std::string, SimProcess*> _simProcess; // QucsDoc?
 	
 	// Shortcuts for scolling schematic / TextEdit
@@ -639,8 +641,7 @@ SchematicDoc::SchematicDoc()
      QucsDoc(),
      _root(nullptr),
      _model(nullptr),
-     _main(nullptr),
-     _undoStack(nullptr)
+     _main(nullptr)
 { untested();
 }
 /*--------------------------------------------------------------------------*/
@@ -689,6 +690,7 @@ void SchematicDoc::expand()
   connect(_cursorDown, SIGNAL(activated()), SLOT(slotCursorDown()));
 }
 /*--------------------------------------------------------------------------*/
+#if 0 // these won't work
 QAction* SchematicDoc::createUndoAction()
 {
 	if(_undoStack){
@@ -706,6 +708,7 @@ QAction* SchematicDoc::createRedoAction()
 		return nullptr; 
 	}
 }
+#endif
 /*--------------------------------------------------------------------------*/
 void SchematicDoc::setParent(QWidget* owner)
 {itested();
@@ -714,8 +717,6 @@ void SchematicDoc::setParent(QWidget* owner)
 	QGraphicsView::setParent(owner);
 
 	expand();
-
-  _undoStack = new QUndoStack();
 
 //  what is the viewport, and where is it initialised?
   assert(viewport());
@@ -797,26 +798,25 @@ void SchematicDoc::setParent(QWidget* owner)
 SchematicDoc::~SchematicDoc()
 {itested();
 	delete _root;
-	delete _undoStack;
 //	delete _mouseActions;
 //	delete Scene; ???
 }
 /*--------------------------------------------------------------------------*/
-void SchematicDoc::showEvent(QShowEvent*e)
-{untested();
-	{ // merge?
-	becomeCurrent();
-	QucsDoc::showEvent(e);
-	}
-
-	QGraphicsView::showEvent(e);
-}
+//void SchematicDoc::showEvent(QShowEvent*e)
+//{untested();
+//	{ // merge?
+//	becomeCurrent();
+//	QucsDoc::showEvent(e);
+//	}
+//
+//	QGraphicsView::showEvent(e);
+//}
 /*--------------------------------------------------------------------------*/
-void SchematicDoc::hideEvent(QHideEvent*e)
-{untested();
-	QucsDoc::hideEvent(e);
-	QGraphicsView::hideEvent(e);
-}
+//void SchematicDoc::hideEvent(QHideEvent*e)
+//{untested();
+//	QucsDoc::hideEvent(e);
+//	QGraphicsView::hideEvent(e);
+//}
 #if 0 // not yet
 }
   incomplete();
@@ -2395,6 +2395,7 @@ void SchematicDoc::actionApplyCompText()
 // }
 
 // ---------------------------------------------------
+// why/what?
 bool SchematicDoc::createSubcircuitSymbol()
 { untested();
   incomplete();
@@ -2451,11 +2452,17 @@ bool SchematicDoc::createSubcircuitSymbol()
 #endif
   return true;
 }
-// ---------------------------------------------------
-// // expose tab?
-// same as showEvent?
+/*--------------------------------------------------------------------------*/
+// needed?
+void SchematicDoc::cleanup()
+{ untested();
+	QucsDoc::cleanup();
+}
+/*--------------------------------------------------------------------------*/
+// needed?
 void SchematicDoc::becomeCurrent()
 {itested();
+	QucsDoc::becomeCurrent();
   emit signalCursorPosChanged(0, 0);
 
   // update appropriate menu entry

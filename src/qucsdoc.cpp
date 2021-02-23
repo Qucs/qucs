@@ -1,6 +1,6 @@
 /***************************************************************************
     copyright            : (C) 2003, 2004 by Michael Margraf
-                               2019 Felix Salfelder / QUCS team
+                               2019, 2021 Felix Salfelder
  ***************************************************************************/
 
 /***************************************************************************
@@ -25,7 +25,7 @@
 #include "simulator.h"
 #include "sckt_base.h"
 #include "qt_compat.h"
-
+/* -------------------------------------------------------------------------------- */
 /* -------------------------------------------------------------------------------- */
 void QucsDoc::setDocFile(std::string const& filename)
 { untested();
@@ -54,8 +54,6 @@ void QucsDoc::setDocFile(std::string const& filename)
 }
 /* -------------------------------------------------------------------------------- */
 QucsDoc::QucsDoc() : Widget() // (QucsApp* App_, const QString& Name_, QWidget* o)
-//   : _app(App_),
-//	  _owner(o)
 { untested();
   GridOn = true;
   _name = "unnamed"; // name? filename?
@@ -69,14 +67,9 @@ QucsDoc::QucsDoc() : Widget() // (QucsApp* App_, const QString& Name_, QWidget* 
   showBias = -1;  // don't show DC bias (currently for "Schematic" only)
   // Scale = 1.0;
 }
-
+/* -------------------------------------------------------------------------------- */
 QucsDoc::~QucsDoc()
 { untested();
-}
-
-void QucsDoc::slotToolBar(QAction* a)
-{
-	incomplete();
 }
 /* -------------------------------------------------------------------------------- */
 #if 1
@@ -114,13 +107,13 @@ void QucsDoc::redo()
 	}
 }
 #endif
-
+/* -------------------------------------------------------------------------------- */
 QString QucsDoc::fileSuffix (const QString& Name)
 { untested();
   QFileInfo Info (Name);
   return Info.suffix();
 }
-
+/* -------------------------------------------------------------------------------- */
 QString QucsDoc::fileSuffix (void)
 { untested();
   return fileSuffix (_name);
@@ -182,15 +175,7 @@ QucsApp* QucsDoc::app()
 	unreachable();
 	return nullptr;
 }
-
-// QWidget* QucsDoc::workToolbar()
-// { untested();
-// 	if(app()){ untested();
-// 		return app()->workToolbar();
-// 	}else{ untested();
-// 		return nullptr;
-// 	}
-// }
+/* -------------------------------------------------------------------------------- */
 void QucsDoc::printCursorPosition(int x, int y)
 {
 	if(app()){ untested();
@@ -200,65 +185,45 @@ void QucsDoc::printCursorPosition(int x, int y)
 	}
 }
 /* -------------------------------------------------------------------------------- */
-void QucsDoc::showEvent(QShowEvent* ev)
+void QucsDoc::cleanup()
 {
+	if(!app()){
+		unreachable();
+	}else if(_toolbar){ untested();
+		// assert(_toolbar->parent()==app()); // what??
+		// app()->removeToolBar(_toolbar);
+		_toolbar->setVisible(false);
+//		assert(_toolbar->parent()==nullptr);
+	}else{
+	}
+}
+/* -------------------------------------------------------------------------------- */
+void QucsDoc::becomeCurrent()
+{
+	QWidget* p = dynamic_cast<QWidget*>(this);
+	assert(p);
+
+	trace1("QucsDoc::becomeCurrent", _toolbar);
 	if(_eventHandler){
 		_eventHandler->setControls(this);
 	}else{
+	}
+
+	if(!app()){
+		incomplete();
+		assert(false);
+	}else if(_toolbar){ untested();
+		app()->addToolBar(_toolbar); // BUG: add upfront.
+		assert(_toolbar->parent()==app());
+
+		_toolbar->setVisible(true);
+	}else{ untested();
 	}
 
 	// not here.
 	if(app()){
 		// _undo_redo_bar = newToolBar();
 	}else{
-	}
-}
-/* -------------------------------------------------------------------------------- */
-// this is wrong. need some unbecomeCurrent hook...
-void QucsDoc::hideEvent(QHideEvent* ev)
-{ untested();
-	if(app()){ untested();
-		// necessary?
-		// when hiding a qucsdoc, shouldn't all children become invisible?
-		// (does not seem to work)
-		app()->clearWorkToolbar();
-	}else{ untested();
-	}
-
-	if(auto w=dynamic_cast<QWidget*>(this)){ untested();
-//		for(auto i : children()){
-//			trace0("hide");
-//			i->hide();
-//		}
-	}else{
-	}
-}
-
-// void QucsDoc::addToolBar(QToolBar* a)
-// {
-// }
-
-void QucsDoc::addToolBarAction(QAction* a)
-{ untested();
-	incomplete();
-	return;
-	assert(a);
-	if(auto w=dynamic_cast<QWidget*>(this)){ untested();
-		// assert(a->parent()==w);
-		// no. move dto schematicAction
-	}else{ untested();
-	}
-
-	if(app()){ untested();
-		// TODO: add toolbar in one piece.
-		app()->addWorkToolbarAction(a);
-	}else{ untested();
-	}
-
-	if(auto w=dynamic_cast<QWidget*>(this)){ untested();
-		// should not have messed with it.
-		// assert(a->parent()==w);
-	}else{ untested();
 	}
 }
 /* -------------------------------------------------------------------------------- */
@@ -293,14 +258,11 @@ void QucsDoc::executeCommand(QUndoCommand* c)
 	}
 }
 /* -------------------------------------------------------------------------------- */
-QToolBar* QucsDoc::newToolBar()
+void QucsDoc::addToolBar(QToolBar* t)
 { untested();
-	auto p = dynamic_cast<QWidget*>(this);
-	assert(p);
-	auto t = new QToolBar(p);
-	assert(app());
-	app()->addToolBar(t);
-	return t;
+	assert(!_toolbar);
+	// assert(!t->parent());
+	_toolbar = t;
 }
 /* -------------------------------------------------------------------------------- */
 CommonData* QucsDoc::qucsData(std::string const& /*key*/)

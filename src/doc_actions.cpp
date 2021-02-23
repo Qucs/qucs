@@ -1751,24 +1751,6 @@ bool MouseActions::handle(QEvent*e)
 
 void MouseActions::executeCommand(QUndoCommand* c)
 { untested();
-	assert(c);
-	assert(doc());
-	QUndoStack* u = doc()->undoStack();
-
-	if(u){itested();
-		u->push(c); // also calls redo
-
-		// train wreck. must be part of push. fix later.
-		if(doc()->_app){ untested();
-			assert(doc()->_app->undo);
-			doc()->_app->undo->setEnabled(true);
-		}else{ untested();
-			incomplete();
-		}
-	}else{ untested();
-		// forget about it.
-		delete c;
-	}
 }
 /* -------------------------------------------------------------------------------- */
 void MouseAction::setCursor(QCursor const& c)

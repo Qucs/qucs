@@ -257,16 +257,6 @@ void QucsApp::slotEditRedo()
 }
 // --------------------------------------------------------------
 // ---------------------------------------------------------------------
-// Is called when the "select markers" action is triggered.
-// schematic only
-void QucsApp::slotSelectMarker()
-{
-  QucsDoc *qd = DocumentTab->current();
-  assert(qd);
-
-  incomplete();
-//  qd->actionSelectMarker();
-}
 
 extern QString lastDirOpenSave; // to remember last directory and file
 // ------------------------------------------------------------------------
@@ -351,28 +341,25 @@ void QucsApp::editFile(const QString& File)
 }
 
 // ------------------------------------------------------------------------
-// Is called to show the output messages of the last simulation.
+#if 0 // BUG. works with qucsator only.
 void QucsApp::slotShowLastMsg()
 {
   editFile(QString_(QucsSettings.homeDir()) + QDir::separator() + "log.txt");
 }
-
-// ------------------------------------------------------------------------
-// Is called to show the netlist of the last simulation.
 void QucsApp::slotShowLastNetlist()
 {
   editFile(QDir_(QucsSettings.homeDir()).filePath("netlist.txt"));
 }
-
+#endif
 // ------------------------------------------------------------------------
 // Is called to start the text editor.
 void QucsApp::slotCallEditor()
 {
+	// command?
   editFile(QString(""));
 }
 
 // ------------------------------------------------------------------------
-// Is called to start the filter synthesis program.
 void QucsApp::slotCallFilter()
 {
   launchTool("qucsfilter", "filter synthesis");
@@ -383,22 +370,16 @@ void QucsApp::slotCallActiveFilter()
   launchTool("qucsactivefilter", "active filter synthesis");
 }
 
-// ------------------------------------------------------------------------
-// Is called to start the transmission line calculation program.
 void QucsApp::slotCallLine()
 {
   launchTool("qucstrans", "line calculation");
 }
 
-// ------------------------------------------------------------------------
-// Is called to start the component library program.
 void QucsApp::slotCallLibrary()
 {
   launchTool("qucslib", "library");
 }
 
-// --------------------------------------------------------------
-// Is called to show a dialog for creating matching circuits.
 void QucsApp::slotCallMatch()
 {
   incomplete();
@@ -407,22 +388,16 @@ void QucsApp::slotCallMatch()
 //  d->exec();
 }
 
-// ------------------------------------------------------------------------
-// Is called to start the attenuator calculation program.
 void QucsApp::slotCallAtt()
 {
   launchTool("qucsattenuator", "attenuator calculation");
 }
 
-// ------------------------------------------------------------------------
-// Is called to start the resistor color code calculation program.
 void QucsApp::slotCallRes()
 {
   launchTool("qucsrescodes", "resistor color code calculation");
 }
 
-//-------------------------------------------------------------------
-// It starts the power combining synthesis tool
 void QucsApp::slotCallPowerComb()
 {
   launchTool("qucspowercombining", "Power combiner synthesis");
@@ -478,23 +453,16 @@ void QucsApp::launchTool(const QString& prog, const QString& progDesc, const QSt
   connect(this, SIGNAL(signalKillEmAll()), tool, SLOT(kill()));
 }
 
-/**
- * @brief QucsApp::slotHelpOnline
- * Open default browser poining at the Qucs-Help website.
- */
 void QucsApp::slotHelpOnline()
 {
   QString link = "http://qucs-help.readthedocs.io/";
   QDesktopServices::openUrl(QUrl(link));
 }
 
-// --------------------------------------------------------------
 void QucsApp::showHTML(const QString& Page)
 {
   launchTool("qucshelp", "help", Page);
 }
-
-
 
 // ---------------------------------------------------------------------
 // Is called when the find action is triggered.
