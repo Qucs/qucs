@@ -24,9 +24,11 @@ include ../../autotools/common.mk
 
 inst_LTLIBRARIES = vadim.la
 
-vadim_la_LDFLAGS = -shared -module -avoid-version
+vadim_la_LDFLAGS = -no-undefined -shared -module -avoid-version
 vadim_la_SOURCES = \
 	DIODE_SPICE.cpp
+
+vadim_la_LIBADD = $(X11_LIBS) $(QT_LIBS)
 
 vadim_la_CXXFLAGS = ${AM_CXXFLAGS} -fPIC
 
