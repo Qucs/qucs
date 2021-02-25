@@ -462,7 +462,7 @@ void createListComponentEntry(){
     Comps = Category::getModules(category);
 
     // \fixme, crash with diagrams, skip
-    if(category == "diagrams") break;
+    if(category == "diagrams" || category == "paintings") continue;
 
     char * File;
     QString Name;
@@ -474,6 +474,9 @@ void createListComponentEntry(){
 
 		// FIXME: cleanup
 		QTextStream s;
+      if (c->getSchematic()==nullptr){
+        continue;
+      }
 		c->getSchematic()->saveComponent(s, c);
       QString qucsEntry = *(s.string());
       fprintf(stdout, "%s; qucs    ; %s\n", c->obsolete_model_hack().toAscii().data(), qucsEntry.toAscii().data());
@@ -504,6 +507,8 @@ void createListComponentEntry(){
 // ##########                  Program Start                      ##########
 // ##########                                                     ##########
 // #########################################################################
+QString convertPath(char *sbf);
+
 int main(int argc, char *argv[])
 {
   qInstallMsgHandler(qucsMessageOutput);
@@ -684,88 +689,165 @@ int main(int argc, char *argv[])
   int dpi = 96;
   QString color = "RGB";
   QString orientation = "portrait";
+  QString     argvProjectPath;
+  QStringList argvFileList;
+  QStringList hasErrors;
 
   // simple command line parser
   for (int i = 1; i < argc; ++i) {
-    if (!strcmp(argv[i], "-h") || !strcmp(argv[i], "--help")) {
-      fprintf(stdout,
-  "Usage: %s [-hv] \n"
-  "       qucs -n -i FILENAME -o FILENAME\n"
-  "       qucs -p -i FILENAME -o FILENAME.[pdf|png|svg|eps] \n\n"
-  "  -h, --help     display this help and exit\n"
-  "  -v, --version  display version information and exit\n"
-  "  -n, --netlist  convert Qucs schematic into netlist\n"
-  "  -p, --print    print Qucs schematic to file (eps needs inkscape)\n"
-  "  -q, --quit     exit\n"
-  "    --page [A4|A3|B4|B5]         set print page size (default A4)\n"
-  "    --dpi NUMBER                 set dpi value (default 96)\n"
-  "    --color [RGB|RGB]            set color mode (default RGB)\n"
-  "    --orin [portraid|landscape]  set orientation (default portraid)\n"
-  "  -i FILENAME    use file as input schematic\n"
-  "  -o FILENAME    use file as output netlist\n"
-  "  -icons         create component icons under ./bitmaps_generated\n"
-  "  -doc           dump data for documentation:\n"
-  "                 * file with of categories: categories.txt\n"
-  "                 * one directory per category (e.g. ./lumped components/)\n"
-  "                   - CSV file with component data ([comp#]_data.csv)\n"
-  "                   - CSV file with component properties. ([comp#]_props.csv)\n"
-  "  -list-entries  list component entry formats for schematic and netlist\n"
-  , argv[0]);
-      return 0;
-    }else if (!strcmp(argv[i], "-v") || !strcmp(argv[i], "--version")) {
+    if (argv[i][0]=='-')
+    {
+      if (!strcmp(argv[i], "-h") || !strcmp(argv[i], "--help")) {
+        fprintf(stdout,
+        "Usage: %s [-h|--help] [-v|--version] \n"
+        "       qucs -n -i FILENAME -o FILENAME\n"
+        "       qucs -p -i FILENAME -o FILENAME.[pdf|png|svg|eps] \n"
+        "       qucs [ projectPath] [ filePath1 [ filePath2 ... ] ] ]\n\n"
+        "  -h, --help     display this help and exit\n"
+        "  -v, --version  display version information and exit\n"
+        "  -n, --netlist  convert Qucs schematic into netlist\n"
+        "  -p, --print    print Qucs schematic to file (eps needs inkscape)\n"
+        "    --page [A4|A3|B4|B5]         set print page size (default A4)\n"
+        "    --dpi NUMBER                 set dpi value (default 96)\n"
+        "    --color [RGB|RGB]            set color mode (default RGB)\n"
+        "    --orin [portrait|landscape]  set orientation (default portrait)\n"
+        "  -i FILENAME    use file as input schematic\n"
+        "  -o FILENAME    use file as output netlist\n"
+        "  -icons         create component icons under ./bitmaps_generated\n"
+        "  -doc           dump data for documentation:\n"
+        "                 * file with of categories: categories.txt\n"
+        "                 * one directory per category (e.g. ./lumped components/)\n"
+        "                   - CSV file with component data ([comp#]_data.csv)\n"
+        "                   - CSV file with component properties. ([comp#]_props.csv)\n"
+        "  -a plugin      load (attach) plugin -- under construction"
+        //FIXME "  -list-entries  list component entry formats for schematic and netlist\n"
+        "  -q, --quit     exit\n"
+        "\n"
+        " Examples:\n"
+        "  qucs -n -i schematic.sch -o netlist.net\n"
+        "  qucs -p -i schematic.sch -o output.png --page A4 --dpi 120 --orin landscape\n"
+        "  qucs -icons\n"
+        "  qucs -doc\n"
+        //FIXME "  qucs -list-entries\n"
+        "  qucs ../qucs-test/testsuite/AC_bandpass_prj/  bandpass.sch  opa227.sch\n"
+        "  qucs ~/proj/qucs-test/testsuite/DC_AC_gain_prj  \"*.sch\"\n"
+        , argv[0]);
+        return 0;
+      }else if (!strcmp(argv[i], "-v") || !strcmp(argv[i], "--version")) {
 #ifdef GIT
       fprintf(stdout, "Qucs " PACKAGE_VERSION " (" GIT ")" "\n");
 #else
       fprintf(stdout, "Qucs " PACKAGE_VERSION "\n");
 #endif
-      return 0;
+        return 0;
+      }
+      else if (!strcmp(argv[i], "-n") || !strcmp(argv[i], "--netlist")) {
+        netlist_flag = true;
+      }
+      else if (!strcmp(argv[i], "-p") || !strcmp(argv[i], "--print")) {
+        print_flag = true;
+      }
+      else if (!strcmp(argv[i], "--page")) {
+        page = argv[++i];
+      }
+      else if (!strcmp(argv[i], "--dpi")) {
+        dpi = QString(argv[++i]).toInt();
+      }
+      else if (!strcmp(argv[i], "--color")) {
+        color = argv[++i];
+      }
+      else if (!strcmp(argv[i], "--orin")) {
+        orientation = argv[++i];
+        // for comatibility with existing scripts
+        if (orientation=="portraid"){
+          orientation=="portrait";
+        }
+      }
+      else if (!strcmp(argv[i], "-a")) {
+        attach(argv[++i]);
+      }
+      else if (!strcmp(argv[i], "-q") || !strcmp(argv[i], "--quit")) {
+        exit(0);
+      }
+      else if (!strcmp(argv[i], "-i")) {
+        inputfile = argv[++i];
+      }
+      else if (!strcmp(argv[i], "-o")) {
+        outputfile = argv[++i];
+      }
+      else if(!strcmp(argv[i], "-icons")) {
+        createIcons();
+        return 0;
+      }
+      else if(!strcmp(argv[i], "-doc")) {
+        createDocData();
+        return 0;
+      }
+      else if(!strcmp(argv[i], "-list-entries")) {
+        createListComponentEntry();
+        return 0;
+      }
+      else {
+        fprintf(stderr, "Error: Unknown option: %s\n", argv[i]);
+        return -1;
+        }
     }
-    else if (!strcmp(argv[i], "-n") || !strcmp(argv[i], "--netlist")) {
-      netlist_flag = true;
+    else
+    {
+      //
+      QFileInfo filePath(convertPath(argv[i]));
+      if(filePath.isDir())
+      {
+        if (argvProjectPath!=nullptr){
+           hasErrors.append("Err: multiple path definitions");
+        }
+        argvProjectPath = filePath.canonicalFilePath()+"/"; // i.e . -> /home/usr/qucs/test01_prj
+      }
+      else
+      if(filePath.isFile())
+      {
+        argvFileList.append(filePath.filePath());
+      }
+      else
+      {
+        //is not dir nor file (isSymLink?)
+        bool exist = false;
+        //doesn't exist alone, try in project path
+        if (!argvProjectPath.isNull())
+        {
+          if (!filePath.isAbsolute()){
+            QFileInfo fullpath(argvProjectPath + filePath.filePath());
+            if (fullpath.isFile())
+            {
+              argvFileList.append(fullpath.absoluteFilePath());
+              exist = true;
+            }else{
+              //try wildcard *.sch
+              QDir prjPathDir(argvProjectPath);
+              QStringList wildCard;
+              wildCard.append(argv[i]);
+              QFileInfoList fList = prjPathDir.entryInfoList(wildCard, QDir::Files);
+              foreach(QFileInfo fi, fList){
+                argvFileList.append(fi.absoluteFilePath());
+              }
+              exist = fList.size()>0;
+            }
+          }
+        }
+        if (!exist)
+        {
+          hasErrors.append("Error: File doesn't exist: "+QString(argv[i]));
+        }
+      }
     }
-    else if (!strcmp(argv[i], "-p") || !strcmp(argv[i], "--print")) {
-      print_flag = true;
+  } // for argv
+
+  if (hasErrors.size()>0)
+  {
+    foreach(QString el, hasErrors) {
+      fprintf(stderr, "-----------> %s\n", el.toAscii().data());
     }
-    else if (!strcmp(argv[i], "--page")) {
-      page = argv[++i];
-    }
-    else if (!strcmp(argv[i], "--dpi")) {
-      dpi = QString(argv[++i]).toInt();
-    }
-    else if (!strcmp(argv[i], "--color")) {
-      color = argv[++i];
-    }
-    else if (!strcmp(argv[i], "--orin")) {
-      orientation = argv[++i];
-    }
-    else if (!strcmp(argv[i], "-a")) {
-      attach(argv[++i]);
-    }
-    else if(!strcmp(argv[i], "-q") || !strcmp(argv[i], "--quit")) {
-	exit(0);
-    }
-    else if (!strcmp(argv[i], "-i")) {
-      inputfile = argv[++i];
-    }
-    else if (!strcmp(argv[i], "-o")) {
-      outputfile = argv[++i];
-    }
-    else if(!strcmp(argv[i], "-icons")) {
-      createIcons();
-      return 0;
-    }
-    else if(!strcmp(argv[i], "-doc")) {
-      createDocData();
-      return 0;
-    }
-    else if(!strcmp(argv[i], "-list-entries")) {
-      createListComponentEntry();
-      return 0;
-    }
-    else {
-      fprintf(stderr, "Error: Unknown option: %s\n", argv[i]);
-      return -1;
-    }
+    return -1;
   }
 
   // check operation and its required arguments
@@ -791,10 +873,29 @@ int main(int argc, char *argv[])
   }
 
   QucsMain = new QucsApp();
-  
+  QucsMain->initProjectSchematics(argvProjectPath, argvFileList);
   QucsMain->show();
   int result = a.exec();
   //saveApplSettings(QucsMain);
   return result;
+}
+/*
+ * translate:
+ *    \a\b\c  -> /a/b/c
+ *    \a\b\c\ -> /a/b/c/
+ */
+QString convertPath(char *sbf){
+  //From Qt 4.6 QDir documentation,
+  // Qt uses "/" as a universal directory separator in the same
+  // way that "/" is used as a path separator in URLs.
+  // If you always use "/" as a directory separator, Qt will
+  // translate your paths to conform to the underlying operating system.
+  int l = strlen(sbf);
+  char tbf[l+1];
+  for(int i=0; i<l+1; ++i){ // including terminating 0
+    tbf[i] = (sbf[i]=='\\')? '/' : sbf[i];
+  }
+  QString ret(tbf);
+  return ret;
 }
 // vim:ts=8:sw=2:noet
