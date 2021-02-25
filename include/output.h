@@ -149,10 +149,6 @@ public:
 	SimOutputData() : CommonData() {}
 	virtual ~SimOutputData(){}
 
-public: // obsolete interface. don't use.
-  virtual DataX const* axis(uint ) const { return nullptr; } // if (i<axis_count) return CPointsX.at(i); return NULL;
-//	  double *cPointsY() const { return CPointsY; }
-
 public:
 	virtual bool isEmpty() {return true;}
 	virtual size_t size() const{incomplete(); return 0;}

@@ -137,12 +137,12 @@ private:
 	CommonData const* dep(index_t) const override;
 
 public: // obsolete interface. don't use.
-	DataX const* axis(uint i) const override {
+	DataX const* axis(uint i) const { untested();
 		trace2("datax axis", i, axis_count);
-		if (i<numAxes()){
+		if (i<numAxes()){ untested();
 			assert(i < CPointsX.size()); // ??
 		  	return CPointsX[i];
-		}else{
+		}else{ untested();
 			return NULL;
 		}
 	}
