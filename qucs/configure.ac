@@ -233,6 +233,11 @@ fi # if pkg-config exists
         fi
       fi
 
+      dnl Windows GUI programs should not have console window visible
+      if test x$WIN32 = xyes; then
+        LDFLAGS="$LDFLAGS -mwindows"
+      fi
+
       if test "$enable_qucs_gui_debug" = yes; then
         CFLAGS="$CFLAGS -W -Wall -Wmissing-prototypes"
         CXXFLAGS="$CXXFLAGS -W -Wall"
@@ -377,11 +382,11 @@ AS_IF([test $QT_MAJOR_VERSION -ge 5],
     dnl Check for Qt in:
     dnl  * Digia default path: /Library/Frameworks
     dnl  * User provided path: QTDIR
-    dnl  * Homebrew defaul:    /usr/local/lib or ${prefix}/Library/Frameworks
-    dnl  * MacpPorts default   /opt/local/lib or ${prefix}/Library/Frameworks
+    dnl  * Homebrew default:   /usr/local/lib or ${prefix}/Library/Frameworks
+    dnl  * MacPorts default:   /opt/local/lib or ${prefix}/Library/Frameworks
     with_qt=no
     AC_MSG_CHECKING([for Qt OS X framework])
-    paths="$QTDIR/lib ${prefix}/Library/Frameworks /Library/Frameworks /opt/local/lib /usr/local/lib"
+    paths="$QTDIR/lib $QTDIR/Library/Frameworks ${prefix}/Library/Frameworks /Library/Frameworks /opt/local/lib /usr/local/lib"
     for path in $paths; do
       if test -f "$path/QtGui.framework/Headers/QApplication"; then
         with_qt=yes

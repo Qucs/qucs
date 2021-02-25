@@ -1,7 +1,7 @@
 /*
  * aboutdialog.cpp - customary about dialog showing various info
  *
- * Copyright (C) 2015-2016, Qucs team (see AUTHORS file)
+ * Copyright (C) 2015-2020, Qucs team (see AUTHORS file)
  *
  * This file is part of Qucs
  *
@@ -135,7 +135,7 @@ AboutDialog::AboutDialog(QWidget *parent)
   lbl = new QLabel(versionText);
   lbl->setAlignment(Qt::AlignHCenter);
   vl->addWidget(lbl);
-  vl->addWidget(new QLabel(tr("Copyright (C)")+" 2011-2016 Qucs Team\n"+
+  vl->addWidget(new QLabel(tr("Copyright (C)")+" 2011-2020 Qucs Team\n"+
 			   tr("Copyright (C)")+" 2003-2009 Michael Margraf"));
 
   lbl = new QLabel("\nThis is free software; see the source for copying conditions."

@@ -1,3 +1,6 @@
 [submodule "qucs-test"]
 	path = qucs-test
 	url = https://github.com/Qucs/qucs-test.git
+[submodule "qucsator"]
+	path = qucsator
+	url = https://github.com/Qucs/qucsator

@@ -76,10 +76,12 @@ build_script:
   - bash -lc "exec 0</dev/null && cd $APPVEYOR_BUILD_FOLDER/qucs && make -j2 install"
   - bash -lc "exec 0</dev/null && cd /c/qucs-win$MBITS/bin && ./qucs -v"
 
-  ## Build Qucs-core and install
-  - bash -lc "exec 0</dev/null && cd $APPVEYOR_BUILD_FOLDER/qucs-core && ./bootstrap"
-  - bash -lc "exec 0</dev/null && cd $APPVEYOR_BUILD_FOLDER/qucs-core && ./configure --prefix=/c/qucs-win$MBITS --with-mkadms=/c/qucs-win$MBITS/bin/admsXml --disable-dependency-tracking"
-  - bash -lc "exec 0</dev/null && cd $APPVEYOR_BUILD_FOLDER/qucs-core && make -j2 install"
+  ## Build Qucsator and install
+  - git submodule init qucsator
+  - git submodule update qucsator
+  - bash -lc "exec 0</dev/null && cd $APPVEYOR_BUILD_FOLDER/qucsator && ./bootstrap"
+  - bash -lc "exec 0</dev/null && cd $APPVEYOR_BUILD_FOLDER/qucsator && ./configure --prefix=/c/qucs-win$MBITS --with-mkadms=/c/qucs-win$MBITS/bin/admsXml --disable-dependency-tracking"
+  - bash -lc "exec 0</dev/null && cd $APPVEYOR_BUILD_FOLDER/qucsator && make -j2 install"
   - bash -lc "exec 0</dev/null && cd /c/qucs-win$MBITS/bin && ./qucsator -v"
 
   ## Check

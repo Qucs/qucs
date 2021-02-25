@@ -46,7 +46,7 @@ PYTHON=python
 AC_SUBST([PYTHON])
 
 AC_CONFIG_SUBDIRS([qucs
-                   qucs-core])
+                   qucsator])
 
 AS_IF([test -d "$srcdir/qucs-doc"],
 	AC_CONFIG_SUBDIRS([qucs-doc])

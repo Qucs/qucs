@@ -56,8 +56,8 @@ All versions of the code may be accessed by cloning one of the Git repositories 
     git clone git://github.com/Qucs/qucs.git
     git clone git://git.code.sf.net/p/qucs/git
 
-For test and development qucs-test is provided as a Git submodule.
-To download the submodule either:
+Both, qucsator (simulator) and qucs-test (test suite) are provided as Git
+submodules. To retrieve the submodules you may
 
    * clone submodules recursively:
      * `git clone --recursive [repository]`
@@ -77,63 +77,57 @@ Compilation and installation depends on the operation system. See below for an e
 
 Some general contribution guidelines can be found on our Wiki <https://github.com/Qucs/qucs/wiki/Contribution>.
 
-## Compile instructions Linux (Debian/Ubuntu)
+## More compile instructions on GNU/Linux
 
-For the GUI tools and simulation engine the following dependencies are needed:
+(This section may be outdated. Find up to date documentation in */README.md)
 
-    sudo apt-get install build-essential
-    sudo apt-get install libqt4-dev libqt4-qt3support
-    sudo apt-get install automake libtool libtool-bin gperf flex bison
+For the GUI tools and simulation engine the following packages are required
+when building from git (package names on non-Debian may vary).
 
-The ADMS package is necessary. Please [download](https://sourceforge.net/projects/mot-adms/files/adms-source/) the latest tarball and follow the [install](https://github.com/Qucs/ADMS#users-install-from-tarball) instructions. Having `admsXml` on the path should be sufficient.
+	 adms automake build-essential libqt4-dev libqt4-qt3support libtool libtool-bin
+    gperf flex bison pkg-config
 
-To build the manuals and user documentation further dependencies are needed. Please check the `qucs-doc/README` file.
-See below the `--disable-doc` to skip building the documentation from source.
-To build the documentation from source the following dependencies are needed:
+To build the manuals and user documentation further dependencies are needed.
+Please check the `qucs-doc/README` file.  See below the `--disable-doc` to skip
+building the documentation from source.  To build the documentation from source
+the following packages are needed (package names on non-Debian may vary).
 
-    sudo apt-get install doxygen
-    sudo apt-get install octave octave-epstk
-    sudo apt-get install latex2html
-    sudo apt-get install texlive texlive-font-utils texlive-math-extra
-    sudo apt-get install texlive-publishers texlive-science
-    sudo apt-get install transfig gnuplot graphviz
-    sudo apt-get install ps2eps pgf python-tk
+	 doxygen latex2html octave octave-epstk ps2eps pgf python-tk
+    texlive-publishers texlive-science texlive texlive-font-utils
+    texlive-math-extra transfig gnuplot graphviz
 
-Bootstrap and build everything (after cloning):
+Bootstrap, build, install everything (after cloning):
 
-    cd qucs
-    ./bootstrap
-    ./configure
-    make
-    sudo make install
+    $ cd qucs
+    $ ./bootstrap
+    $ ./configure
+    $ make
+    $ sudo make install # optional
 
 Compile Qucs GUI tools only:
 
-    cd qucs
-    [./bootstrap] #if not executed in the top level
-    ./configure
-    make
-    sudo make install
+    $ cd qucs
+    $ [./bootstrap] #if not executed in the top level
+    $ ./configure
+    $ make
 
 Compile qucs-core tools only:
 
-    cd qucs-core
-    [./bootstrap] #if not executed in the top level
-    ./configure
-    make
-    sudo make install
+    $ cd qucs-core
+    $ [./bootstrap] #if not executed in the top level
+    $ ./configure
+    $ make
 
 Compile qucs-doc documentation only:
 
-    cd qucs-doc
-    [./bootstrap] #if not executed in the top level
-    ./configure
-    make
-    sudo make install
+    $ cd qucs-doc
+    $ [./bootstrap] #if not executed in the top level
+    $ ./configure
+    $ make
 
-Testing can be executed at the top level with:
+Tests may be executed at the top level with:
 
-    make check
+    $ make check
 
 Note:
 
@@ -144,9 +138,11 @@ Note:
    To use a different `admsXml` pass the option `--with-admsxml=[path/to/]anotherAdmsXml`
    to `./configure`.
 
- * The LaTex documentation compilation in qucs-doc can be skipped passing `--disable-doc` to the top level `configure` script.
+ * The LaTex documentation compilation in qucs-doc can be skipped passing
+   `--disable-doc` to the top level `configure` script.
 
- * Consider the output of `./configure --help` for more and definitive build options.
+ * Consider INSTALL and the output of `./configure --help` for more and
+   definitive build options.
 
 
 ## Binary Installation
