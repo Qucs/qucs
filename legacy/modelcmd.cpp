@@ -42,10 +42,10 @@ class Model : public Command{
 	  trace1("hack", M);
 	  Symbol* textdef = symbol_dispatcher.clone("qucsatorScktHack");
 	  assert(textdef);
-	  textdef->setParameter("qucsatorsckthack", M);
+	  textdef->set_param_by_name("qucsatorsckthack", M);
 	  textdef->setLabel(":qucsatorsckthack:");
 	  assert(s);
-	  s->pushBack(textdef);
+	  s->push_back(textdef);
 #endif
   }
 }d0;

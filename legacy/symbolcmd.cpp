@@ -111,7 +111,7 @@ private: // Symbol
 //
 //		return *_ports[i];
 //	}
-	std::string const portName(index_t i) const override{ untested();
+	std::string const portName(index_t i) const override{
 		trace1("symbol portName", i);
 		return port_value(i);
 	}
@@ -181,7 +181,7 @@ class SymbolCommand : public Command{
 		  }
 	  }
 
-	  s->pushBack(sym);
+	  s->push_back(sym);
   }
 }d0;
 Dispatcher<Command>::INSTALL p0(&commandDispatcher, "Symbol", &d0);

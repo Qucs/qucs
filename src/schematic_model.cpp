@@ -118,6 +118,12 @@ void SchematicModel::push_back(Element* what)
 	_cl.push_back(what);
 }
 /*--------------------------------------------------------------------------*/
+SchematicModel& SchematicModel::erase(const_iterator what)
+{
+	_cl.erase(what);
+	return *this;
+}
+/*--------------------------------------------------------------------------*/
 // BUG: connect and push_back in one go. don't use.
 void SchematicModel::pushBack(Element* what)
 {

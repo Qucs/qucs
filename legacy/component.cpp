@@ -564,7 +564,7 @@ void Component::setParameter(unsigned pos, std::string const& v)
 }
 
 // -------------------------------------------------------
-void Component::setParameter(std::string const& name, std::string const& v)
+void Component::set_param_by_name(std::string const& name, std::string const& v)
 {
   if(name=="$angle"){
     int r = atoi(v.c_str());
@@ -595,8 +595,26 @@ void Component::setParameter(std::string const& name, std::string const& v)
     auto c = center();
     c.second = y;
     Element::setPosition(c);
-  }else{ untested();
-    Symbol::setParameter(name, v);
+  }else if(name=="$tx"){
+    tx = atoi(v.c_str());
+  }else if(name=="$ty"){
+    ty = atoi(v.c_str());
+  }else{
+
+    bool got_it = false;
+    for(Property *pp = Props.first(); pp != 0; pp = Props.next()){
+      if(pp->Name == QString_(name)) {
+	pp->Value = QString_(v);
+	got_it = true;
+	break;
+      }else{
+      }
+    }
+	
+    if(got_it){
+    }else{
+      Symbol::set_param_by_name(name, v);
+    }
   }
 }
 

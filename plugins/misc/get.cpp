@@ -29,15 +29,24 @@ void Get::do_it(istream_t& cmd, SchematicModel* sckt)
 	cmd >> "get";
 	cmd >> fn;
 
-	trace1("get", fn);
-	istream_t stream (istream_t::_WHOLE_FILE, fn);
 
+	std::string suffix;
+	auto pos = fn.find_last_of(".");
+	if(pos == std::string::npos){
+		suffix = ".sch"; // wild guess
+	}else{
+		suffix = fn.substr(pos);
+	}
+
+	trace2("get", fn, suffix);
+
+	istream_t stream (istream_t::_WHOLE_FILE, fn);
 	stream.read_line();
 
 // TODO: any language.
 // magic = stream.fullstring ...
 
-	auto L = languageDispatcher["leg_sch"];
+	auto L = languageDispatcher[suffix];
 	assert(L);
 
 	while(!stream.atEnd()){

@@ -35,6 +35,14 @@ private:
 	std::string _what;
 };
 
+struct ExceptionNoMatch :public Exception{
+  std::string _key;
+  ExceptionNoMatch(const std::string& key)
+    :Exception("no match: " + key),
+     _key(key) {
+  }
+};
+
 class ExceptionCantFind : public Exception{
 public:
 	explicit ExceptionCantFind(std::string w="?") : Exception("can't find:" + w) {}

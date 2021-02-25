@@ -24,13 +24,13 @@ public:
 	explicit DatFiles() : Data(){itested();
 		setLabel("datfile");
 	}
-	DatFiles(DatFiles const&d) : Data(d){ untested(); }
+	DatFiles(DatFiles const&d) : Data(d){ }
 
 private:
-	DatFiles* clone() const override { untested(); return new DatFiles(*this); }
+	DatFiles* clone() const override { return new DatFiles(*this); }
 
-	void set_param_by_name(std::string const& n, std::string const& v) override{ untested();
-		if(n=="$schematic_filename"){ untested();
+	void set_param_by_name(std::string const& n, std::string const& v) override{
+		if(n=="$schematic_filename"){
 			_file_name = v;
 		}else{ untested();
 			incomplete();

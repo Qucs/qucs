@@ -62,7 +62,7 @@ private: // Symbol
 	unsigned numPorts() const override{ return 0; }
 	Port& port(unsigned){ unreachable(); return *new Port();}
 	pos_t portPosition(unsigned) const override { unreachable(); return pos_t(0,0); }
-	void setParameter(std::string const& n, std::string const& v) override;
+	void set_param_by_name(std::string const& n, std::string const& v) override;
 	rect_t bounding_rect() const override;
 	void expand() override;
 
@@ -98,10 +98,10 @@ void WireUC::pushWire(pos_t p0, pos_t delta)
 	Symbol* w = prechecked_cast<Symbol*>(wc);
 	assert(w);
 
-	w->setParameter("$xposition", std::to_string(x));
-	w->setParameter("$yposition", std::to_string(y));
-	w->setParameter("deltax", std::to_string(mx));
-	w->setParameter("deltay", std::to_string(my));
+	w->set_param_by_name("$xposition", std::to_string(x));
+	w->set_param_by_name("$yposition", std::to_string(y));
+	w->set_param_by_name("deltax", std::to_string(mx));
+	w->set_param_by_name("deltay", std::to_string(my));
 
 	trace2("expand", _p0, _p1);
 	subckt()->push_back(w);
@@ -166,7 +166,7 @@ rect_t WireUC::bounding_rect() const
   return r;
 }
 /*--------------------------------------------------------------------------*/
-void WireUC::setParameter(std::string const& n, std::string const& v)
+void WireUC::set_param_by_name(std::string const& n, std::string const& v)
 {itested();
 	trace2("gwsp", n, v);
 	if(n=="x0"){itested();
@@ -187,7 +187,7 @@ void WireUC::setParameter(std::string const& n, std::string const& v)
 			break;
 		}
 	}else{ untested();
-		Symbol::setParameter(n, v);
+		Symbol::set_param_by_name(n, v);
 	}
 }
 /*--------------------------------------------------------------------------*/
@@ -283,7 +283,7 @@ private:
 		assert(e);
 		_mode = 1 - _mode;
 		auto s = std::to_string(_mode);
-		e->setParameter("mode", s);
+		e->set_param_by_name("mode", s);
 		w->update();
 	}
 	void new_gfx();
@@ -412,8 +412,8 @@ QUndoCommand* MouseActionWire::move(QEvent* e)
 		Element* ee = element(cur);
 		auto elt = prechecked_cast<Symbol*>(ee);
 
-		elt->setParameter("x1", std::to_string(fX));
-		elt->setParameter("y1", std::to_string(fY));
+		elt->set_param_by_name("x1", std::to_string(fX));
+		elt->set_param_by_name("y1", std::to_string(fY));
 		cur->prepareGeometryChange();
 
 		e->accept();
@@ -442,10 +442,10 @@ QUndoCommand* MouseActionWire::press1(QGraphicsSceneMouseEvent* ev)
 	Element* ee = element(cur);
 	auto e = prechecked_cast<Symbol*>(ee);
 
-	e->setParameter("x0", std::to_string(fX));
-	e->setParameter("y0", std::to_string(fY));
-	e->setParameter("x1", std::to_string(fX));
-	e->setParameter("y1", std::to_string(fY));
+	e->set_param_by_name("x0", std::to_string(fX));
+	e->set_param_by_name("y0", std::to_string(fY));
+	e->set_param_by_name("x1", std::to_string(fX));
+	e->set_param_by_name("y1", std::to_string(fY));
 
 	cur->prepareGeometryChange();
 
@@ -527,10 +527,10 @@ QUndoCommand* MouseActionWire::press2(QGraphicsSceneMouseEvent* ev)
 		Element* ee = element(cur);
 		auto e = prechecked_cast<Symbol*>(ee);
 
-		e->setParameter("x0", std::to_string(fX));
-		e->setParameter("y0", std::to_string(fY));
-		e->setParameter("x1", std::to_string(fX));
-		e->setParameter("y1", std::to_string(fY));
+		e->set_param_by_name("x0", std::to_string(fX));
+		e->set_param_by_name("y0", std::to_string(fY));
+		e->set_param_by_name("x1", std::to_string(fX));
+		e->set_param_by_name("y1", std::to_string(fY));
 
 		cur->prepareGeometryChange();
 		sceneAddItem(cur); // show, does not attach.

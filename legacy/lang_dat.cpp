@@ -24,7 +24,7 @@ namespace {
 class DatLang : public DocumentLanguage {
 private: // NetLang
   // inline void printItem(Element const* c, stream_t& s) const;
-  std::string findType(istream_t&) const override {incomplete(); return "incomplete";}
+  std::string find_type_in_string(istream_t&) const override {incomplete(); return "incomplete";}
   Element* parseItem(istream_t&, Element*) const {incomplete(); return nullptr; }
 
 private: // Language

@@ -61,7 +61,7 @@ private:
 	}
 
 public:
-	Element* clone() const override{ untested();
+	Element* clone() const override{
 		trace0("Paramset::clone");
 		return new Paramset(*this);
 	}
@@ -85,9 +85,9 @@ public:
 	}
 
 public:
-	pos_t portPosition(index_t i) const override{ untested();
+	pos_t portPosition(index_t i) const override{
 		trace2("Paramset::portPosition", i, common());
-		if(auto s=dynamic_cast<Symbol const*>(_painting)){ untested();
+		if(auto s=dynamic_cast<Symbol const*>(_painting)){
 			assert(i < s->numPorts());
 			auto p = s->portPosition(i);
 			trace3("Paramset::portPosition", i, s->numPorts(), p);
@@ -116,34 +116,34 @@ private: // Symbol
 	bool portExists(index_t) const override;
 	std::string const portName(index_t) const override;
 
-	void setParameter(std::string const& name, std::string const& value);
+	void set_param_by_name(std::string const& name, std::string const& value) override;
 	void setParameter(index_t i, std::string const& value) override;
 	index_t paramCount() const override{
 	  return 3 + Symbol::paramCount();
 	}
 
 	std::string paramName(index_t i) const override;
-	std::string paramValue(index_t i) const override{ untested();
+	std::string paramValue(index_t i) const override{
 		switch (int(Paramset::paramCount()) - (1 + i)) {
-		case 0: untested();
+		case 0:
 			return _filename;
 //		case 1: untested();
 //			return "dunno";
-		case 1: untested();
+		case 1:
 			return std::to_string(_ty);
-		case 2: untested();
+		case 2:
 			return std::to_string(_tx);
 		default:
 			return Symbol::paramValue(i);
 		}
 	}
-	std::string paramValue(std::string const& name) const override{ untested();
+	std::string paramValue(std::string const& name) const override{
 		trace1("Paramset::paramValue", name);
-		if(name=="$tx"){ untested();
+		if(name=="$tx"){
 			return std::to_string(_tx);
-		}else if(name=="$ty"){ untested();
+		}else if(name=="$ty"){
 			return std::to_string(_ty);
-		}else{ untested();
+		}else{
 			incomplete();
 			return Symbol::paramValue(name);
 		}
@@ -177,7 +177,7 @@ class SubFactory : public Element, public SymbolFactory {
 public:
 	explicit SubFactory() : Element(), SymbolFactory() {}
 	SubFactory(SubFactory const& f) : Element(f), SymbolFactory(f)
-	{ untested();
+	{
 //		_proto = symbol_dispatcher.clone("paramset"); ?
 		_proto = new Paramset();
 		_proto->_factory = this;
@@ -190,9 +190,9 @@ public:
 
 private:
 	void set_param_by_name(std::string const& name, std::string const& v) override
-	{ untested();
+	{
 		trace2("SF::set_param", name, v);
-		if(name=="$SUB_PATH"){ untested();
+		if(name=="$SUB_PATH"){
 			_subPath = v;
 		}else{ untested();
 			throw qucs::ExceptionCantFind(name, label());
@@ -208,13 +208,13 @@ static Dispatcher<Element>::INSTALL p(&element_dispatcher, "LegacySub", &d0);
 static Module::INSTALL pp("stuff", &d0);
 /*--------------------------------------------------------------------------*/
 Element* SubFactory::clone_instance() const
-{ untested();
+{
 	assert(_proto);
 	auto new_instance = prechecked_cast<Paramset*>(_proto->clone());
 	assert(!new_instance->subckt());
 
 	if(this == &d0){ untested();
-	}else{ untested();
+	}else{
 		assert(new_instance->_factory == this);
 	}
 
@@ -232,7 +232,7 @@ Paramset::Paramset(CommonComponent* cc)
 /*--------------------------------------------------------------------------*/
 // use common params eventually.
 std::string Paramset::paramName(index_t i) const
-{ untested();
+{
 	switch (int(Paramset::paramCount()) - (1 + i)) {
 	case 0:
 		return "File";
@@ -252,7 +252,7 @@ Paramset::Paramset(Paramset const&x)
 	 _tx(x._tx),
 	 _ty(x._ty),
     _painting(x._painting)
-{ untested();
+{
 	setTypeName("Sub"); // dev_type_key
 	_ports.resize(x._ports.size());
 }
@@ -262,7 +262,7 @@ Paramset::Paramset(Paramset const&x)
 // }
 /*--------------------------------------------------------------------------*/
 void Paramset::refreshSymbol(std::string const& fn)
-{ untested();
+{
 	auto dotplace = fn.find_last_of(".");
 
 #ifndef NDEBUG
@@ -270,7 +270,7 @@ void Paramset::refreshSymbol(std::string const& fn)
 	if (dotplace == std::string::npos) { untested();
 		// throw?? or try and recover??
 		type_name = "Sub" + typesep + "invalid_filename";
-	}else{ untested();
+	}else{
 		type_name = "Sub" + typesep + fn.substr(0, dotplace);
 	}
 #endif
@@ -380,7 +380,7 @@ void Paramset::init(Symbol const* proto)
 // if its already there, use it.
 // TODO: factory needs a refresh hook.
 Symbol const* SubFactory::newSymbol(std::string const& fn) const
-{ untested();
+{
 	trace1("SubFactory::newSymbol", fn);
 //	QString FileName(Props.getFirst()->Value);
 	auto dotplace = fn.find_last_of(".");
@@ -390,24 +390,24 @@ Symbol const* SubFactory::newSymbol(std::string const& fn) const
 		incomplete();
 		// throw?? or try and recover??
 		type_name = "Sub" + typesep + "invalid_filename";
-	}else{ untested();
+	}else{
 		type_name = "Sub" + typesep + fn.substr(0, dotplace);
 	}
 
 	auto cached_ = _scope->find_(type_name);
 	Element* cached = nullptr;
-	if(cached_ != _scope->end()){ untested();
+	if(cached_ != _scope->end()){
 		// TODO: find_again.
 		cached = *cached_;
-	}else{ untested();
+	}else{
 	}
 
 	std::string file_found = findFile(fn, _subPath, R_OK);
 	trace4("SubFactory::newCommon", label(), fn, _subPath, file_found);
 
-	if(auto sym = dynamic_cast<Symbol const*>(cached)){ untested();
+	if(auto sym = dynamic_cast<Symbol const*>(cached)){
 		return sym; // ->common();
-	}else if(file_found != "" ){ untested();
+	}else if(file_found != "" ){
 		incomplete(); // rework with parser.
 		assert(owner());
 		auto os = prechecked_cast<Symbol const*>(owner());
@@ -475,7 +475,7 @@ static void parse_portcmd(istream_t& cs, SubcktBase* s)
 }
 /*--------------------------------------------------------------------------*/
 void SubFactory::build_sckt(istream_t& cs, SubcktBase* proto) const
-{ untested();
+{
 	trace1("SubFactory::build_sckt", cs.fullstring());
 	assert(owner());
 
@@ -549,7 +549,7 @@ void SubFactory::build_sckt(istream_t& cs, SubcktBase* proto) const
 }
 /*--------------------------------------------------------------------------*/
 bool Paramset::portExists(index_t i) const
-{ untested();
+{
 	return i<numPorts();
 	assert(scope());
 	trace1("Paramset::portExists", i);
@@ -566,26 +566,26 @@ std::string const Paramset::portName(index_t) const
 	return invalid_;
 }
 /*--------------------------------------------------------------------------*/
-void Paramset::setParameter(std::string const& name, std::string const& v)
-{ untested();
+void Paramset::set_param_by_name(std::string const& name, std::string const& v)
+{
 	trace2("Paramset::setParameter", name, v);
 	if(name=="$SUB_PATH"){ untested();
 		_subPath = v;
-	}else if(name=="$tx"){ untested();
+	}else if(name=="$tx"){
 		_tx = atoi(v.c_str());
-	}else if(name=="$ty"){ untested();
+	}else if(name=="$ty"){
 		_ty = atoi(v.c_str());
-	}else if(name=="File"){ untested();
+	}else if(name=="File"){
 		_filename = v;
 		trace1("Paramset::setParameter2", v);
 		refreshSymbol(v);
-	}else{ untested();
-		Symbol::setParameter(name, v);
+	}else{
+		Symbol::set_param_by_name(name, v);
 	}
 }
 /*--------------------------------------------------------------------------*/
 void Paramset::setParameter(index_t i, std::string const& v)
-{ untested();
+{
 	switch (int(Paramset::paramCount()) - (1 + i)) {
 	case 0:
 		_filename = v;

@@ -242,7 +242,7 @@ void WireDialog::slotApplyInput()
   if(CompNameEdit->text().toStdString() != Comp->label()) {
     trace2("Apply", Comp->label(), CompNameEdit->text());
 
-	 Comp->setParameter("netname", CompNameEdit->text().toStdString());
+	 Comp->set_param_by_name("netname", CompNameEdit->text().toStdString());
 	 _changed = true;
   }else{
   }

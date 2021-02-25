@@ -27,7 +27,7 @@ std::string SubcktBase::dev_type()const
 }
 /*--------------------------------------------------------------------------*/
 pos_t SubcktBase::portPosition(index_t i) const
-{ untested();
+{
 	std::string n = portName(i);
 	trace3("SubcktBase::portPosition", i, label(), n);
 	//SchematicModel const* s = subckt(); // scope?
@@ -51,10 +51,10 @@ pos_t SubcktBase::portPosition(index_t i) const
 }
 /*--------------------------------------------------------------------------*/
 Port& SubcktBase::port(index_t i)
-{ untested();
+{
 	assert(scope());
-	if(_ports.size() > i){ untested();
-	}else{ untested();
+	if(_ports.size() > i){
+	}else{
 		_ports.resize(i+1);
 	}
 

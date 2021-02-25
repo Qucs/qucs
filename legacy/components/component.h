@@ -130,7 +130,7 @@ protected:
 
 
 public: // BUG
-  void setParameter(std::string const& name, std::string const& value) override;
+  void set_param_by_name(std::string const& name, std::string const& value) override;
 
 public: // BUG
   void    print(ViewPainter*, float);

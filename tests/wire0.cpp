@@ -16,14 +16,14 @@ void union0()
 
 	auto wp = symbol_dispatcher["Wire"];
 	auto w0 = prechecked_cast<Symbol*>(wp->clone());
-	w0->setParameter(std::string("deltax"), "10");
+	w0->set_param_by_name(std::string("deltax"), "10");
 
 	assert( w0->portPosition(0) == pos_t(0,0));
 	assert( w0->portPosition(1) == pos_t(10,0));
 
 	auto w1 = prechecked_cast<Symbol*>(wp->clone());
-	w1->setParameter(std::string("$xposition"), "1");
-	w1->setParameter(std::string("deltax"), "1");
+	w1->set_param_by_name(std::string("$xposition"), "1");
+	w1->set_param_by_name(std::string("deltax"), "1");
 
 	assert( w1->portPosition(0) == pos_t(0,0));
 	assert( w1->portPosition(1) == pos_t(1,0));
@@ -55,10 +55,10 @@ void union1()
 
 	auto wp=symbol_dispatcher["Wire"];
 	auto w0 = prechecked_cast<Symbol*>(wp->clone());
-	w0->setParameter(std::string("deltax"), "10");
+	w0->set_param_by_name(std::string("deltax"), "10");
 
 	auto w1 = prechecked_cast<Symbol*>(wp->clone());
-	w1->setParameter(std::string("deltay"), "1");
+	w1->set_param_by_name(std::string("deltay"), "1");
 
 	connect_push(root, w0);
 	assert(M.nodeCount() == 2);
@@ -80,11 +80,11 @@ void union2()
 
 	auto wp=symbol_dispatcher["Wire"];
 	auto w0 = prechecked_cast<Symbol*>(wp->clone());
-	w0->setParameter(std::string("deltax"), "10");
+	w0->set_param_by_name(std::string("deltax"), "10");
 
 	auto w1 = prechecked_cast<Symbol*>(wp->clone());
-	w1->setParameter(std::string("$xposition"), "5");
-	w1->setParameter(std::string("deltax"), "10");
+	w1->set_param_by_name(std::string("$xposition"), "5");
+	w1->set_param_by_name(std::string("deltax"), "10");
 
 	connect_push(root, w0);
 	assert(M.nodeCount() == 2);
@@ -107,13 +107,13 @@ void union3()
 
 	auto wp=symbol_dispatcher["Wire"];
 	auto w0 = prechecked_cast<Symbol*>(wp->clone());
-	w0->setParameter(std::string("deltax"), "10");
+	w0->set_param_by_name(std::string("deltax"), "10");
 
 	auto w1 = prechecked_cast<Symbol*>(wp->clone());
-	w1->setParameter(std::string("deltax"), "-10");
+	w1->set_param_by_name(std::string("deltax"), "-10");
 
 	auto w2 = prechecked_cast<Symbol*>(wp->clone());
-	w2->setParameter(std::string("deltay"), "-10");
+	w2->set_param_by_name(std::string("deltay"), "-10");
 
 	connect_push(root, w0);
 	connect_push(root, w1);
@@ -134,14 +134,14 @@ void union4()
 
 	auto wp=symbol_dispatcher["Wire"];
 	auto w0 = prechecked_cast<Symbol*>(wp->clone());
-	w0->setParameter(std::string("deltax"), "10");
-	w0->setParameter(std::string("$xposition"), "-5");
+	w0->set_param_by_name(std::string("deltax"), "10");
+	w0->set_param_by_name(std::string("$xposition"), "-5");
 
 	assert( w0->nodePosition(0) == pos_t(-5,0));
 	assert( w0->nodePosition(1) == pos_t(5,0));
 
 	auto w2 = prechecked_cast<Symbol*>(wp->clone());
-	w2->setParameter(std::string("deltay"), "-10");
+	w2->set_param_by_name(std::string("deltay"), "-10");
 
 	trace1("dbg", w2->portPosition(1));
 	assert( w2->nodePosition(1) == pos_t(0,-10));
@@ -166,8 +166,8 @@ void union5()
 
 	auto wp=symbol_dispatcher["Wire"];
 	auto w0 = prechecked_cast<Symbol*>(wp->clone());
-	w0->setParameter(std::string("deltax"), "10");
-	w0->setParameter(std::string("$xposition"), "-5");
+	w0->set_param_by_name(std::string("deltax"), "10");
+	w0->set_param_by_name(std::string("$xposition"), "-5");
 
 	wp = symbol_dispatcher["GND"];
 	assert(wp);
@@ -202,13 +202,13 @@ void union6()
 
 	auto wp=symbol_dispatcher["Wire"];
 	auto w0 = prechecked_cast<Symbol*>(wp->clone());
-	w0->setParameter(std::string("deltax"), "10");
+	w0->set_param_by_name(std::string("deltax"), "10");
 
 	auto w1 = prechecked_cast<Symbol*>(wp->clone());
-	w1->setParameter(std::string("deltay"), "10");
+	w1->set_param_by_name(std::string("deltay"), "10");
 
 	auto w2 = prechecked_cast<Symbol*>(wp->clone());
-	w2->setParameter(std::string("deltay"), "-10");
+	w2->set_param_by_name(std::string("deltay"), "-10");
 
 	connect_push(root, w0);
 	connect_push(root, w1);

@@ -1,0 +1,26 @@
+# Qucs
+## declarations 1
+### item Sub:opa227
+# sckt Sub:opa227
+
+.Def:opa227 P1 P2 P3
+# Missing ID & params Sub:opa227
+# 36
+VCVS:SRC2 _net6 P3 gnd gnd G="1" T="0"
+R:R1 _net10 _net6 R="1 kOhm" Temp="26.85" Tc1="0.0" Tc2="0.0" Tnom="26.85"
+C:C1 gnd _net6 C="1.98944 mF" V=""
+VCVS:SRC1 P1 _net10 gnd P2 G="1e8" T="0"
+.Def:End
+## declarations end
+
+C:C1 _net4 _net5 C="0.1 uF" V=""
+R:R2 _net6 _net7 R="10 kOhm" Temp="26.85" Tc1="0.0" Tc2="0.0" Tnom="26.85"
+R:R5 _net8 _net9 R="10 kOhm" Temp="26.85" Tc1="0.0" Tc2="0.0" Tnom="26.85"
+Sub:OPA227_1 _net10 _net11 _net12 Type="opa227"
+Sub:OPA227_2 _net13 _net14 _net15 Type="opa227"
+Vac:V1 _net17 _net18 U="1 V" f="1 kHz" Phase="0" Theta="0"
+R:R1 _net19 _net20 R="10 kOhm" Temp="26.85" Tc1="0.0" Tc2="0.0" Tnom="26.85"
+R:R4 _net21 _net22 R="10 kOhm" Temp="26.85" Tc1="0.0" Tc2="0.0" Tnom="26.85"
+C:C2 gnd _net23 C="0.1 uF" V=""
+R:R3 _net24 gnd R="1591 Ohm" Temp="26.85" Tc1="0.0" Tc2="0.0" Tnom="26.85"
+R:R6 _net25 _net26 R="1.59 Ohm" Temp="26.85" Tc1="0.0" Tc2="0.0" Tnom="26.85"

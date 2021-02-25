@@ -89,7 +89,7 @@ void LIB::load_single(std::string what, SchematicModel* scope)
 
 		istream_t stream(istream_t::_STRING, c.modelString.toStdString());
 		stream.read_line();
-		std::string type = L_->findType(stream); // BUG?
+		std::string type = L_->find_type_in_string(stream); // BUG?
 
 		if(type=="Lib"){
 			// possibly a subcircuit. parse and stash
@@ -121,7 +121,7 @@ void LIB::load_single(std::string what, SchematicModel* scope)
 		}else if(type=="Sub"){
 			// TODO: new__instance does this.
 			Symbol* sym = symbol_dispatcher.clone("LegacyParamset");
-			sym->setParameter("modelstring", c.modelString.toStdString());
+			sym->set_param_by_name("modelstring", c.modelString.toStdString());
 			std::string t = "P:" + parsedlib.name.toStdString() + ":" + c.name.toStdString();
 			sym->setLabel(t);
 
@@ -183,98 +183,6 @@ void LIB::do_it(istream_t& cs, SchematicModel* scope)
 			// TODO: load_single
 			libPath = LibFiles[i].first;
 			load_single(libPath.toStdString(), scope);
-#if 0
-			libPath.chop(4); // remove extension
-			parsedlib.components.clear();
-			int result = parseComponentLibrary(libPath, parsedlib);
-
-			trace3("got lib", parsedlib.name, libPath, parsedlib.components.size());
-			switch (result) {
-			case QUCS_COMP_LIB_IO_ERROR:
-				{ untested();
-					QString filename = getLibAbsPath(LibFiles[i].first);
-					message(QucsMsgWarning, "Cannot open \"%1\"." + filename.toStdString());
-					return;
-				}
-			case QUCS_COMP_LIB_CORRUPT: untested();
-												 message(QucsMsgWarning, "Library is corrupt.");
-												 return;
-			default:
-												 break;
-			}
-
-			// ComponentLibraryItem are not Elements, but just a concoction of QStrings.
-			// turn it into Element... (do it here, for now, but that's silly).
-			for(ComponentLibraryItem c : parsedlib){
-				trace2("libcomp", parsedlib.name, c.name); // ->label());
-				if(c.symbol==""){
-					getSection("Symbol", c.definition, c.symbol); // GAAH
-				}else{ untested();
-				}
-
-				if(c.symbol==""){
-					c.definition += "\n<Symbol>" + parsedlib.defaultSymbol + "\n</Symbol>\n";
-					trace1("attached symbol to defn", c.definition);
-				}else{
-				}
-
-				auto D = languageDispatcher["legacy_lib"];
-				auto L_ = dynamic_cast<SchematicLanguage const*>(D);
-				auto C = commandDispatcher["leg_sch"];
-				auto L = dynamic_cast<DocumentFormat const*>(C);
-				assert(L);
-
-				istream_t stream(istream_t::_STRING, c.modelString.toStdString());
-				stream.read_line();
-				std::string type = L_->findType(stream); // BUG?
-
-				if(type=="Lib"){
-					// possibly a subcircuit. parse and stash
-					//
-					// // stuff should already be parsed in, but isn't
-					// BUG: parse c.definition. but not here.
-					istream_t stream(istream_t::_STRING, c.definition.toStdString());
-					Symbol* sym = symbol_dispatcher.clone("LegacyLibProto");
-					auto ssym = prechecked_cast<SubcktBase*>(sym);
-					std::string t = "Lib:" + parsedlib.name.toStdString() + ":" + c.name.toStdString();
-
-					sym->setLabel(c.name.toStdString());
-
-					assert(ssym);
-					try{
-						// trace1("parse", c.definition);
-						L->load(stream, ssym);
-
-						trace1("Lib stashing", t);
-						stash(new Dispatcher<Symbol>::INSTALL(&symbol_dispatcher, t, ssym));
-						new Module::INSTALL(parsedlib.name.toStdString(), ssym);
-					}catch(qucs::Exception const&){ untested();
-						trace0("not stashing");
-						delete ssym;
-					}
-
-					// trace3("Lib", c.modelString, type, c.definition);
-					// d'uh
-				}else{
-					// TODO: new__instance does this.
-					Symbol* sym = symbol_dispatcher.clone("LegacyParamset");
-					sym->setParameter("modelstring", c.modelString.toStdString());
-					std::string t = "P:" + parsedlib.name.toStdString() + ":" + c.name.toStdString();
-					sym->setLabel(t);
-
-					if(symbol_dispatcher[type]){
-						sym->setTypeName(type);
-						L->load(stream, sym);
-						new Module::INSTALL(parsedlib.name.toStdString(), sym);
-					}else{
-						trace1("paramset skip", type);
-						// unreachable(); eventually
-						// possibly not ported yet.
-					}
-				}
-				// todo: memory leak.
-			}
-#endif
 
 #if 0
 			lineLibInfo = libInfoStruct{libPath};

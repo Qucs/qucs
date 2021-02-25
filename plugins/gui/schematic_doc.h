@@ -83,7 +83,6 @@ struct SubFile {
   QStringList PortTypes; // data types of in/out signals
 };
 typedef QMap<QString, SubFile> SubMap;
-
 /* -------------------------------------------------------------------------------- */
 /* -------------------------------------------------------------------------------- */
 class SchematicDoc : public QGraphicsView /* bug?! */, public QucsDoc {
@@ -917,7 +916,7 @@ bool SchematicDoc::load()
 	  assert(_model);
   }
 #endif
-  _root->setParameter("$filename", docName().toStdString());
+  _root->set_param_by_name("$filename", docName().toStdString());
 
   if(!loadDocument()){ untested();
     return false;

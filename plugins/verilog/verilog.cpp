@@ -11,6 +11,8 @@
  *                                                                         *
  ***************************************************************************/
 
+// verilog languages with bits from lang_verilog.cc
+
 #include "node.h"
 #include "qucs_globals.h"
 #include "docfmt.h"
@@ -35,23 +37,32 @@ class ComponentList;
 namespace {
 /* -------------------------------------------------------------------------------- */
 static std::string netLabel(Node const* nn)
-{
-	if(!nn){
+{ untested();
+	if(!nn){ untested();
 		return "(null)";
-	}else{
+	}else{ untested();
 	}
 	Net const* n = nn->net();
 	if(!n){ untested();
 		unreachable();
 		return "(null)";
-	}else if(n->hasLabel()){
+	}else if(n->hasLabel()){ untested();
 		return n->label();
-	}else{
+	}else{ untested();
 		return "_net" + std::to_string(n->pos());
 	}
 }
 /* -------------------------------------------------------------------------------- */
 class Verilog : public DocumentLanguage {
+protected: // in
+   DEV_DOT* parseCommand(istream_t&, DEV_DOT*) const override;
+
+public:
+	SubcktBase* parse_module(istream_t& cmd, SubcktBase* x) const;
+	SubcktBase* parse_model(istream_t&, SubcktBase*) const override;
+	Symbol* parseSymbol(istream_t& cs, Symbol* sym) const;
+
+private:
 	void printElement(Element const*, ostream_t&) const override;
 	void printSymbol(Symbol const*, ostream_t&) const override;
 	void printSubckt(SubcktBase const*, ostream_t&) const override;
@@ -64,19 +75,244 @@ private: // local
 	void print_ports_short(ostream_t& o, const Symbol* x) const;
 
 private: //DocumentLanguage
-	std::string findType(istream_t&) const override {incomplete(); return "incomplete";}
-	Element* parseItem(istream_t&, Element*) const override {incomplete(); return nullptr;}
-} V;
-static Dispatcher<DocumentLanguage>::INSTALL p0(&languageDispatcher, "verilog|verilog_nl", &V);
-/*--------------------------------------------------------------------------*/
+	std::string find_type_in_string(istream_t&) const override;
+	Element* parseItem(istream_t&, Element*) const override;
+}lang_verilog;
+static Dispatcher<DocumentLanguage>::INSTALL p0(&languageDispatcher,
+                                                "verilog|verilog_nl", &lang_verilog);
+/* -------------------------------------------------------------------------------- */
 class VS : public Verilog {
+public:
+	explicit VS() : Verilog(){
+		setLabel("verilog_schematic");
+	}
+
+private:
+//	std::string find_type_in_string(istream_t&) const override;
+//	Element* parseItem(istream_t&, Element*) const override;
+//	SubcktBase* parse_model(istream_t&, SubcktBase*) const override;
+//	Symbol* parseSymbol(istream_t& cs, Symbol* sym) const;
+
+private:
 	void printSymbol(Symbol const*, ostream_t&) const override;
 	void printSubckt(SubcktBase const* x, ostream_t& o) const override;
-private:
+
 	void print_ports_short(ostream_t& o, const Symbol* x) const;
 	void print_args(ostream_t&, Symbol const* sym) const;
 } V_;
-static Dispatcher<DocumentLanguage>::INSTALL p1(&languageDispatcher, "verilog_schematic", &V_);
+static Dispatcher<DocumentLanguage>::INSTALL p1(&languageDispatcher, "verilog_schematic|.vs", &V_);
+/*--------------------------------------------------------------------------*/
+DEV_DOT* Verilog::parseCommand(istream_t& cmd, DEV_DOT* x) const
+{
+	assert(x);
+	x->set(cmd.fullstring());
+	SchematicModel* scope = x->scope();
+
+	if(scope){
+	}else if(!x->owner()){ untested();
+	}else if(auto s=dynamic_cast<SubcktBase*>(x->owner())){
+		scope = s->subckt();
+	}else{
+		incomplete();
+		// : &SchematicModel::card_list;
+	}
+
+	cmd.reset();
+	Command::cmdproc(cmd, scope);
+	delete x;
+	return NULL;
+}
+/*--------------------------------------------------------------------------*/
+std::string Verilog::find_type_in_string(istream_t& cmd) const
+{
+	size_t here = cmd.cursor();
+	std::string type;
+	if ((cmd >> "//")) {
+		assert(here == 0);
+		type = "dev_comment";
+	}else{
+		cmd >> type;
+	}
+	cmd.reset(here);
+	trace1("verilog ftis", type);
+	return type;
+}
+/*--------------------------------------------------------------------------*/
+static void parse_type(istream_t& cmd, Element* x)
+{
+  assert(x);
+  std::string new_type;
+  cmd >> new_type;
+  // x->set_dev_type(new_type); TODO
+}
+/*--------------------------------------------------------------------------*/
+static void parse_args_instance(istream_t& cmd, Element* x)
+{
+	assert(x);
+
+	if (cmd >> "#(") {
+		if (cmd.match1('.')) {
+			// by name
+			while (cmd >> '.') {
+				size_t here = cmd.cursor();
+				std::string name  = cmd.ctos("(", "", "");
+				std::string value = cmd.ctos(",)", "(", ")");
+				cmd >> ',';
+				try{
+					trace2("pai", name, value);
+					x->set_param_by_name(name, value);
+				}catch (qucs::ExceptionNoMatch&) {untested();
+					cmd.warn(bDANGER, here, x->label() + ": bad parameter " + name + " ignored");
+				}
+			}
+		}else{
+			// by order
+			int index = 1;
+			while (cmd.is_alnum() || cmd.match1("+-.")) { untested();
+				size_t here = cmd.cursor();
+				try{ untested();
+					std::string value = cmd.ctos(",)", "", "");
+					trace2("pai", index, value);
+					x->set_param_by_index(x->param_count() - index++, value); // , 0/*offset*/);
+				}catch (qucs::Exception_Too_Many& e) {untested();
+					cmd.warn(bDANGER, here, e.message());
+				}
+			}
+		}
+		cmd >> ')';
+	}else{ untested();
+		// no args
+	}
+}
+/*--------------------------------------------------------------------------*/
+static void parse_label(istream_t& cmd, Element* x)
+{
+	trace1("parse_label", cmd.fullstring());
+	assert(x);
+	std::string my_name;
+	if (cmd >> my_name) {
+		x->setLabel(my_name);
+	}else{ untested();
+		//x->setLabel(x->id_letter() + std::string("_unnamed")); //BUG// not unique
+		x->setLabel(std::string("_unnamed")); //BUG// not unique
+		cmd.warn(bDANGER, "label required");
+	}
+}
+/*--------------------------------------------------------------------------*/
+static void parse_ports(istream_t& cmd, Symbol* x, bool all_new)
+{
+	assert(x);
+	trace4("parse_ports", cmd.fullstring(), x->label(), x->scope(), x->owner());
+
+	if (cmd >> '(') {
+		if (cmd.is_alnum()) {
+			// by order
+			int index = 0;
+			while (cmd.is_alnum()) {
+				size_t here = cmd.cursor();
+				try{
+					std::string value;
+					cmd >> value;
+					x->set_port_by_index(index, value);
+					if (all_new) { untested();
+						//    if (x->node_is_grounded(index)) { untested();
+						//      cmd.warn(bDANGER, here, "node 0 not allowed here");
+						//    }else
+						if (x->subckt() && x->subckt()->nodes()->size() != index+1) { untested();
+							cmd.warn(bDANGER, here, "duplicate port name, skipping");
+						}else{ untested();
+							++index;
+						}
+					}else{
+						++index;
+					}
+				}catch (qucs::Exception_Too_Many& e) { untested();
+					cmd.warn(bDANGER, here, e.message());
+				}
+			}
+//			if (index < x->min_nodes()) { untested();
+//				cmd.warn(bDANGER, "need " + to_string(x->min_nodes()-index) +" more nodes, grounding");
+//				for (int iii = index;  iii < x->min_nodes();  ++iii) { untested();
+//					x->set_port_to_ground(iii);
+//				}
+//			}else{ untested();
+//			}
+		}else{
+			// by name
+			while (cmd >> '.') { untested();
+				size_t here = cmd.cursor();
+				try{ untested();
+					std::string name, value;
+					cmd >> name >> '(' >> value >> ')' >> ',';
+					x->set_port_by_name(name, value);
+				}catch (qucs::ExceptionNoMatch const&) {untested();
+					cmd.warn(bDANGER, here, "mismatch, ignored");
+				}
+			}
+//			for (int iii = 0;  iii < x->min_nodes();  ++iii) { untested();
+//				if (!(x->node_is_connected(iii))) {untested();
+//					cmd.warn(bDANGER, x->port_name(iii) + ": port unconnected, grounding");
+//					x->set_port_to_ground(iii);
+//				}else{ untested();
+//				}
+//			}
+		}
+		cmd >> ')';
+	}else{ untested();
+		cmd.warn(bDANGER, "'(' required (parse ports) (grounding)");
+		incomplete();
+//		for (int iii = 0;  iii < x->min_nodes();  ++iii) { untested();
+//			if (!(x->node_is_connected(iii))) { untested();
+//				cmd.warn(bDANGER, x->port_name(iii) + ": port unconnected, grounding");
+//				x->set_port_to_ground(iii);
+//			}else{ untested();
+//				unreachable();
+//			}
+//		}
+	}
+}
+/*--------------------------------------------------------------------------*/
+/*--------------------------------------------------------------------------*/
+Symbol* Verilog::parseSymbol(istream_t& cmd, Symbol* x) const
+{
+	trace1("VS::parseSymbol", cmd.fullstring());
+	// parse_instance...
+	try{
+		assert(x);
+		cmd.reset();
+		parse_type(cmd, x);
+		parse_args_instance(cmd, x);
+		parse_label(cmd, x);
+		parse_ports(cmd, x, false/*allow dups*/);
+		cmd >> ';';
+		cmd.check(bWARNING, "what's this?");
+		return x;
+	}catch (qucs::Exception& e) {
+		trace1("parseSymbol", e.message());
+		incomplete();
+		cmd.warn(bDANGER, e.message());
+		return nullptr;
+	}
+}
+/*--------------------------------------------------------------------------*/
+SubcktBase* Verilog::parse_model(istream_t&, SubcktBase*) const
+{ untested();
+	incomplete();
+	return nullptr;
+}
+/*--------------------------------------------------------------------------*/
+Element* Verilog::parseItem(istream_t& cmd, Element* e) const
+{
+	assert(e);
+	if(auto s=dynamic_cast<Symbol*>(e)){
+		return parseSymbol(cmd, s);
+	}else if(auto s=dynamic_cast<DEV_DOT*>(e)){
+		return parseCommand(cmd, s);
+	}else{ untested();
+		incomplete();
+		return nullptr;
+	}
+}
 /*--------------------------------------------------------------------------*/
 void VS::print_args(ostream_t& s, Symbol const* sym) const
 {
@@ -153,7 +389,7 @@ void Verilog::print_ports_short(ostream_t& o, const Symbol* x) const
 
 	 if(1){
 		 o << sep << n->netName(p); // BUG. use owner.
-	 }else{
+	 }else{ untested();
 		 o << sep << p;
 	 }
     sep = ", ";
@@ -172,13 +408,6 @@ void Verilog::print_ports_short(ostream_t& o, const Symbol* x) const
 void Verilog::printSubckt(SubcktBase const* x, ostream_t& o) const
 {
 	SchematicModel const* scope = nullptr;
-
-#if 0 // no. too late.
-	if(x->label()[0] == ':'){ untested();
-		o << "// skip sckt " << x->label() << "\n";
-	}else
-#endif
-	Element const* e = x;
 
 	scope = x->scope();
 
@@ -245,7 +474,7 @@ void Verilog::printSymbol(Symbol const* sym, ostream_t& s) const
 	{
 		auto label = sym->label();
 		auto type = sym->typeName();
-		if(sym->common()){ untested();
+		if(sym->common()){
 			type = sym->common()->modelname(); // "netlist mode"
 		}else{
 		}
@@ -312,7 +541,7 @@ void VS::printSubckt(SubcktBase const* x, ostream_t& o) const
 
 	auto it = scope->find_("main");
 	if(it == scope->end()){
-	}else if(dynamic_cast<SubcktBase const*>(*it)){
+	}else if(dynamic_cast<SubcktBase const*>(*it)){ untested();
 		o << "// just main scope\n";
 		scope = (*it)->scope();
 		// good idea?
@@ -407,7 +636,7 @@ void VerilogSchematicFormat::do_it(istream_t& cs, SchematicModel* scope)
 	ostream_t stream(&NetlistFile);
 
 	auto it = scope->find_("main");
-	if(it == scope->end()){
+	if(it == scope->end()){ untested();
 	}else if(auto main = dynamic_cast<SubcktBase*>(*it)){
 		// scope = xx->scope();
 		V_.printItem(stream, main);
@@ -415,74 +644,83 @@ void VerilogSchematicFormat::do_it(istream_t& cs, SchematicModel* scope)
 	}
 
 #if 0
-	for(auto pc : *o){
+	for(auto pc : *o){ untested();
 		if(dynamic_cast<TaskElement const*>(pc)){ untested();
 			unreachable();
 			// BUG. a TaskElement is not a Component
 			continue;
-		}else if(pc->label()[0] == ':'){
+		}else if(pc->label()[0] == ':'){ untested();
 			stream << "// skip sckt " << pc->label() << "\n";
-		}else if(auto s=dynamic_cast<Symbol const*>(pc)){
+		}else if(auto s=dynamic_cast<Symbol const*>(pc)){ untested();
 			V_.printItem(stream, s);
 		}
 	}
 #endif
 }
 /* -------------------------------------------------------------------------------- */
-// similar to Verilog::printSymbol, but with the actual node names and
-// coordinates.
-#if 0// // obsolete?
-void VerilogSchematicFormat::printSymbol(Symbol const* sym, ostream_t& s) const
-{ untested();
-#if 0
-	Component const* c=dynamic_cast<Component const*>(sym);
-	if(!c){ untested();
-		incomplete();
-		unreachable();
-		return;
-	}else if(c->isOpen()) { untested();
-		// parameter?
-		incomplete();
-		// }else if(c->isShort()){ untested();
-		//   // parameter?
-		//   incomplete();
-	}else
-#endif
-	
-	{ untested();
-		// wrong. somehow flatten composite types.
-		// Lib:Z-Diodes:1N4732A
-		// (use common->modelname or such things?)
-		std::string type = sym->typeName();
-      std::replace( type.begin(), type.end(), ':', '$');
-		std::string label = sym->label();
+/* "module" <name> "(" <ports> ")" ";"
+ *    <declarations>
+ *    <netlist>
+ * "endmodule"
+ */
+//BUG// strictly one device per line
 
-		s << type << " ";
+SubcktBase* Verilog::parse_module(istream_t& cmd, SubcktBase* x) const
+{
+	assert(x);
 
-		if(label == "*"){ untested();
-			// bug/feature/wtf?
-			label="anonymous_gnd_hack_" + std::to_string(gndhackn++);
-		}else{ untested();
+	// header
+	cmd.reset();
+	(cmd >> "module |macromodule ");
+	parse_label(cmd, x);
+	parse_ports(cmd, x, true/*all new*/);
+	cmd >> ';';
+
+	// body
+	for (;;) {
+		cmd.get_line("verilog-module>");
+
+		if (cmd >> "endmodule ") {
+			break;
+		}else{
+			trace1("new_instance", cmd.fullstring());
+			new__instance(cmd, x, x->scope());
 		}
-
-		print_args(sym, s);
-		s << label << "(";
-
-		QString comma = "";
-		for(unsigned i=0; i<sym->numPorts(); ++i){ untested();
-			trace3("...", sym->label(), i, sym->numPorts());
-			auto p = sym->nodePosition(i);
-			auto x = p.first;
-			auto y = p.second;
-			s << comma << "net_" << x << "_" << y;
-			comma = ", ";
-		}
-
-		s << ");\n";
 	}
+	return x;
 }
-#endif
-/* -------------------------------------------------------------------------------- */
+/*--------------------------------------------------------------------------*/
+class CMD_MODULE : public Command {
+	void do_it(istream_t& cmd, SchematicModel* Scope) override
+	{
+		// auto new_module = dynamic_cast<SubcktBase*>(device_dispatcher.clone("subckt"));
+		auto new_module = dynamic_cast<SubcktBase*>(symbol_dispatcher.clone("subckt_proto"));
+		assert(new_module);
+		assert(!new_module->owner());
+
+		{ // a hack...
+			cmd.reset();
+			(cmd >> "module |macromodule ");
+			parse_label(cmd, new_module);
+
+			trace2("new_module", new_module->label(), new_module);
+			auto f = Scope->find_(new_module->label());
+			if(f == Scope->end()){
+			}else{
+				new_module->set_owner((*f)->owner());
+				Scope->erase(f);
+			}
+		}
+
+		assert(new_module->scope());
+		assert(new_module->scope()->is_empty());
+		assert(!new_module->is_device());
+		lang_verilog.parse_module(cmd, new_module);
+		Scope->push_back(new_module);
+	}
+} p2;
+Dispatcher<Command>::INSTALL d2(&commandDispatcher, "module|macromodule", &p2);
+/*--------------------------------------------------------------------------*/
 } // namespace
 /* -------------------------------------------------------------------------------- */
 /* -------------------------------------------------------------------------------- */

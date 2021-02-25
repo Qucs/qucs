@@ -238,15 +238,15 @@ private: // Symbol
 		}
 	}
 	// Lib::
-	pos_t portPosition(unsigned i) const override{
+	pos_t portPosition(index_t i) const override{
 		assert(_parent);
 		return _parent->portPosition(i);
 	}
-	Port& port(unsigned i) override{itested();
+	Port& port(index_t i) override{itested();
 		assert(i < _ports.size());
 		return _ports[i];
 	}
-	void setParameter(std::string const& n, std::string const& v) override{
+	void set_param_by_name(std::string const& n, std::string const& v) override{
 		bool redo = false;
 		if(n == "Lib"){ itested();
 			_section.Value = QString::fromStdString(v);
@@ -254,12 +254,12 @@ private: // Symbol
 		}else if(n=="Component"){ itested();
 			_component.Value = QString::fromStdString(v);
 			redo = true;
-		}else if(n=="$tx"){ untested();
+		}else if(n=="$tx"){
 			incomplete();
-		}else if(n=="$ty"){ untested();
+		}else if(n=="$ty"){
 			incomplete();
 		}else{itested();
-			Symbol::setParameter(n, v);
+			Symbol::set_param_by_name(n, v);
 		}
 
 		/// not here. move to some elaborate/expand hook.
@@ -271,8 +271,8 @@ private: // Symbol
 		}else{ untested();
 		}
 	}
-	unsigned paramCount() const{ return Symbol::paramCount() + 4 + _params.size(); }
-	void setParameter(unsigned n, std::string const& v) override{
+	index_t paramCount() const{ return Symbol::paramCount() + 4 + _params.size(); }
+	void setParameter(index_t n, std::string const& v) override{
 		assert(n<Lib::paramCount());
 		bool redo = false;
 		int m = int(n) - int(Symbol::paramCount());

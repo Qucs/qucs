@@ -62,11 +62,11 @@ private: // Symbol
 	pos_t portPosition(unsigned) const {unreachable(); return pos_t(0,0);}
 	unsigned numPorts() const  override{ return 0;}
 	Port& port(unsigned) override{unreachable(); return *new Port();}
-	void setParameter(std::string const& name, std::string const& value){
+	void set_param_by_name(std::string const& name, std::string const& value) override{
 		if(name == "qucsatorsckthack"){
 			_text = value;
 		}else{ untested();
-			Symbol::setParameter(name, value);
+			Symbol::set_param_by_name(name, value);
 		}
 	}
 	std::string paramValue(std::string const& name) const override{
@@ -136,7 +136,7 @@ static std::string mangleType(std::string& t)
 class QucsatorLang : public NetLang {
 private: // NetLang
   // inline void printItem(Element const* c, stream_t& s) const;
-  std::string findType(istream_t&) const override {incomplete(); return "incomplete";}
+  std::string find_type_in_string(istream_t&) const override {incomplete(); return "incomplete";}
 
 private: // local
 	Element* parseItem(istream_t& s, Element* x) const override;
@@ -163,7 +163,7 @@ static void printSymbol_(Symbol const* c, ostream_t& s)
 
 	{
 		std::string type = c->typeName();
-		if(c->common()){ untested();
+		if(c->common()){
 			type = c->common()->modelname(); // "netlist mode"
 		}else{ untested();
 		}
@@ -190,7 +190,7 @@ static void printSymbol_(Symbol const* c, ostream_t& s)
 				incomplete();
 			}else if(name == "Component") {
 				// hack
-			}else if(name == "File") { untested();
+			}else if(name == "File") {
 				// hack
 			}else if(name == "Lib") {
 				// hack

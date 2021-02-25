@@ -41,11 +41,6 @@
 #include "schematic_lang.h"
 #include "sckt_base.h"
 // -------------------------------------------------------------
-
-// -------------------------------------------------------------
-#if 0// moved
-bool SchematicDoc::loadProperties(QTextStream *stream)
-#endif
 // // TODO: move to frame::setParameters
 #if 0
 {
@@ -59,34 +54,6 @@ bool SchematicDoc::loadProperties(QTextStream *stream)
 #endif
 
 // -------------------------------------------------------------
-
-// ***************************************************************
-// *****                                                     *****
-// *****             Functions to create netlist             *****
-// *****                                                     *****
-// ***************************************************************
-// Collects the signal names for digital simulations.
-#if 0
-void SchematicModel::collectDigitalSignals(void)
-{
-  incomplete();
-// Node *pn=nullptr;
-//
-//  for(pn = nodes().first(); pn != 0; pn = nodes().next()) {
-//    DigMap::Iterator it = Signals.find(pn->name());
-//    if(it == Signals.end()) { // avoid redeclaration of signal
-//      Signals.insert(pn->name(), DigSignal(pn->name(), pn->DType));
-//    } else if (!pn->DType.isEmpty()) {
-//      it.value().Type = pn->DType;
-//    }
-//  }
-}
-#endif
-
-//#include <iostream>
-
-
-// ---------------------------------------------------
 // // what is this?
 #if 0
 bool SchematicModel::createLibNetlist(ostream_t& stream,
@@ -132,9 +99,5 @@ bool SchematicModel::createLibNetlist(ostream_t& stream,
 } // createLibNetlist
 #endif
 
-//#define VHDL_SIGNAL_TYPE "bit"
-//#define VHDL_LIBRARIES   ""
-static const std::string VHDL_SIGNAL_TYPE("std_logic");
-static const std::string VHDL_LIBRARIES("\nlibrary ieee;\nuse ieee.std_logic_1164.all;\n");
 
 // vim:ts=8:sw=2:noet

@@ -1,0 +1,11 @@
+# Qucs
+## declarations 0
+## declarations end
+
+C:C1 gnd _net1 C="39.01pF" V=""
+L:L1 _net2 _net3 L="280.9nH" I=""
+C:C2 gnd _net5 C="39.01pF" V=""
+Vac:V1 _net7 _net8 U="1 V" f="1 GHz" Phase="0" Theta="0"
+Vac:V2 _net9 _net10 U="0 V" f="1 GHz" Phase="0" Theta="0"
+R:R2 _net12 _net13 R="Z0" Temp="26.85" Tc1="0.0" Tc2="0.0" Tnom="26.85"
+R:R1 _net14 _net15 R="Z0" Temp="26.85" Tc1="0.0" Tc2="0.0" Tnom="26.85"

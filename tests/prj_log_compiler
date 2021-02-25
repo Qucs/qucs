@@ -17,13 +17,14 @@ mkdir ${out}
 
 status=PASS
 
-for i in $( cd ${srcdir}; ls $base/*.sch ) ; do
+# TODO: cleanup. explicit any to any
+for i in $( cd ${srcdir}; ls $base/*.{sch,vs} ) ; do
 	schname=$(basename $i)
 	eval echo more $base $schname ${REDIR}
 
 	# dump qucsator netlist
 	rm -f "${out}/${base}_${schname}.net"
-	cmd="$QUCS -n -i ${srcdir}/$i -o ${out}/${base}_${schname}.net"
+	cmd="$QUCS -a $VERILOG_PLUGIN -n -i ${srcdir}/$i -o ${out}/${base}_${schname}.net"
 	eval echo "$cmd" ${REDIR}
 	eval "$cmd" ${REDIR}
 
@@ -40,8 +41,8 @@ for i in $( cd ${srcdir}; ls $base/*.sch ) ; do
 	sed -i '1 s/Qucs.*/Qucs/' ${out}/${base}_${schname}.v
 	
 	# dump legacy schematic
-	rm -f "${out}/${base}_${schname}.dup"
-	cmd="$QUCS -l leg_sch -n -i ${srcdir}/$i -o ${out}/${base}_${schname}.dup"
+	rm -f "${out}/${base}_${schname}.sch"
+	cmd="$QUCS -a $VERILOG_PLUGIN -l leg_sch -n -i ${srcdir}/$i -o ${out}/${base}_${schname}.sch"
 	eval echo "$cmd" ${REDIR}
 	eval "$cmd" ${REDIR}
 
@@ -53,7 +54,7 @@ for i in $( cd ${srcdir}; ls $base/*.sch ) ; do
 
 	# =================================
 
-	files="${base}_${schname}.net ${base}_${schname}.dup ${base}_${schname}.vs ${base}_${schname}.v"
+	files="${base}_${schname}.net ${base}_${schname}.sch ${base}_${schname}.vs ${base}_${schname}.v"
 
 	for F in $files; do
 		cmd="$DIFF ${out}/${F} ${ref}/${F}"

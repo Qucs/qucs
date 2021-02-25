@@ -23,7 +23,7 @@ void error(int, const char* fmt, ...)
 /*--------------------------------------------------------------------------*/
 void error(int i, const std::string& message)
 {
-	std::cerr << "error" << i << " " << message;
+	std::cerr << "error " << i << " " << message;
 }
 /*--------------------------------------------------------------------------*/
 namespace qucs{

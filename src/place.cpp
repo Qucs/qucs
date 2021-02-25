@@ -30,6 +30,14 @@ Dispatcher<Command>::INSTALL p(&symbol_dispatcher, "place", &d0);
 /*--------------------------------------------------------------------------*/
 } // namespace
 /*--------------------------------------------------------------------------*/
+void Place::set_param_by_name(std::string const& name, std::string const& value)
+{
+	return Symbol::set_param_by_name(name, value);
+//	if(name == $xposition){
+//	}else if(name == $xposition){
+//	}
+}
+/*--------------------------------------------------------------------------*/
 void Place::paint(ViewPainter* p) const
 {
 	trace3("placepaint", label(), position(), node_degree());

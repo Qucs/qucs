@@ -457,9 +457,9 @@ void ElementGraphics::transform(qucsSymbolTransform a, std::pair<int, int> pivot
 		auto vflip = -2 * int(new_mr.mirror()) + 1;
 		trace2("transform", vflip, new_mr.degrees_int());
 
-		s->setParameter(std::string("$hflip"), std::string("1"));
-		s->setParameter(std::string("$vflip"), std::to_string(vflip));
-		s->setParameter(std::string("$angle"), std::to_string(new_mr.degrees_int()));
+		s->set_param_by_name(std::string("$hflip"), std::string("1"));
+		s->set_param_by_name(std::string("$vflip"), std::to_string(vflip));
+		s->set_param_by_name(std::string("$angle"), std::to_string(new_mr.degrees_int()));
 
 		auto p = pos();
 		int x = getX(p.toPoint());

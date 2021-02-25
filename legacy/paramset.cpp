@@ -60,9 +60,9 @@ private: // Symbol
 	pos_t portPosition(unsigned) const override{
 		incomplete(); return pos_t(0,0);
 	}
-	void setParameter(std::string const& n, std::string const& v) override{
+	void set_param_by_name(std::string const& n, std::string const& v) override{
 		if(_proto){
-			_proto->setParameter(n, v);
+			_proto->set_param_by_name(n, v);
 		}else{
 			unreachable();
 		}

@@ -118,18 +118,14 @@ void doNetlist(QString schematic_fn, std::string netlist, Command* fmt)
 
 	Symbol* root = symbol_dispatcher.clone("schematic_root");
 	assert(root);
-	root->setParameter("$filename", sfn); // BUG: PATH.
+	root->set_param_by_name("$filename", sfn); // BUG: PATH.
 	root->setLabel(sfn);
 	auto o = dynamic_cast<SubcktBase*>(root);
 	assert(o);
 	assert(o->scope());
 
 	std::string cs = "get " + sfn;
-#if 1
 	command(cs, o);
-#else
-	CMD::command(cs, o->scope());
-#endif
 
 	istream_t cs2(istream_t::_STRING, netlist);
 	assert(fmt);

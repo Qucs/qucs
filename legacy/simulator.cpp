@@ -388,6 +388,7 @@ void LegacyNetlister::createNetlist(ostream_t& stream,
 	// BUG: deduplicate. "print_module_body" or so.
 	QString Time;
 	assert(scope);
+	trace1("qucsator netlist main", scope);
 	for(auto it_ : *scope){
 	//	stream << "...\n";
 		auto pc = dynamic_cast<Symbol const*>(it_);
@@ -533,7 +534,7 @@ void LegacyNetlister::throughAllComps(ostream_t&, SchematicModel const* scope_,
 			// only one proto per key
 			assert(!d || d == proto);
 		  	d = proto;
-		}else if(sym && sym->subckt()){ untested();
+		}else if(sym && sym->subckt()){
 			// really??
 			std::string key = sym->dev_type();
 			trace3("need declaration?", sym->label(), key, sym);
@@ -554,7 +555,7 @@ void LegacyNetlister::throughAllComps(ostream_t&, SchematicModel const* scope_,
 		}else{
 			// no.
 			// find_type(pc->typeName()); // but where?
-			trace1("not sure", pc->typeName());
+			trace2("not sure", pc->typeName(), pc->label());
 //			_declarations.insert(pc->typeName());
 			// Symbol const* p = pc->proto(&sckt); // just expand?
 		}

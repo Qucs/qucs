@@ -42,7 +42,7 @@ public:
 			sub->setLabel("Sub");
 			sub->set_dev_type("Sub"); // why?
 			_sub = sub;
-		}else{ untested();
+		}else{
 			_sub->setLabel("Sub"); // why?
 		}
 
@@ -76,8 +76,8 @@ private: // Symbol
 		  throw qucs::ExceptionCantFind(n, label());
 	  }
   }
-  void setParameter(std::string const& n, std::string const& v){
-    if(n == "$filename") { untested();
+  void set_param_by_name(std::string const& n, std::string const& v) override{
+    if(n == "$filename") {
 		 _full_path = v;
 		 auto pos = v.find_last_of("/");
 		 if(pos==std::string::npos){
@@ -91,7 +91,7 @@ private: // Symbol
 		 }
       _dat->set_param_by_name("$schematic_filename", v);
     }else{ untested();
-      SubcktBase::setParameter(n, v);
+      SubcktBase::set_param_by_name(n, v);
     }
   }
 

@@ -474,6 +474,7 @@ void QucsApp::initActions()
 //  tr("Power combining synthesis\n\nStarts power combining synthesis tool"));
 //  connect(callPowerComb, SIGNAL(triggered()), SLOT(slotCallPowerComb()));
 
+  // CHECK: needed in textdoc?
   simulate = new QAction(QIcon((":/bitmaps/gear.png")), tr("Simulate"), this);
   simulate->setShortcut(Qt::Key_F2);
   simulate->setStatusTip(tr("Simulates the current document"));

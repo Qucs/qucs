@@ -35,7 +35,7 @@ private:
 		return prefix + std::to_string(_numports);
 	}
 public:
-	Element* clone() const override{ untested();
+	Element* clone() const override{
 		return new DefaultSymbol(*this);
 	}
 
@@ -72,7 +72,7 @@ private:
 // or maybe the idealbalun2 schematic is broken?
 static int HS = 30;
 void DefaultSymbol::init()
-{ untested();
+{
 	int No = _numports;
 	// sort of default symbol if there is no symbol section?
 	int h = HS*((No-1)/2) + 15;
@@ -83,7 +83,7 @@ void DefaultSymbol::init()
 	Texts.append(new Text(-10, -6,"sub"));
 
 	int i=0, y = 15-h;
-	while(i<No) { untested();
+	while(i<No) {
 		i++;
 		Lines.append(new Line(-30,  y,-15,  y,QPen(Qt::darkBlue,2)));
 		Ports.append(new ComponentPort(-30,  y));

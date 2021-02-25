@@ -131,7 +131,7 @@ istream_t& istream_t::skipbl()
 }
 /*--------------------------------------------------------------------------*/
 istream_t& istream_t::skip1b(char t)
-{ untested();
+{
   skipbl();
   skip1(t);
   skipbl();
@@ -209,9 +209,9 @@ std::string istream_t::ctos(const std::string& term,
 				if (--quotes <= 0) {
 					end_string = cursor() - 1;
 					break;
-				}else{ untested();
+				}else{
 				}
-			}else if (skip1(the_begin_quote)) { untested();
+			}else if (skip1(the_begin_quote)) {
 				++quotes;
 				skip();
 			}else if (skip1('\\')) { untested();

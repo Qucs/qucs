@@ -31,7 +31,7 @@ private:
 
 	void paint(ViewPainter*) const override;
 	std::string paramValue(std::string const& n) const override;
-	void setParameter(std::string const& n, std::string const& v) override;
+	void set_param_by_name(std::string const& n, std::string const& v) override;
 	virtual unsigned numPorts() const {return 1;}
 	rect_t bounding_rect() const override;
 	Port& port(unsigned i);
@@ -48,12 +48,12 @@ std::string NodeLabel::paramValue(std::string const& n) const
 	return Symbol::paramValue(n);
 }
 /*--------------------------------------------------------------------------*/
-void NodeLabel::setParameter(std::string const& n, std::string const& v)
+void NodeLabel::set_param_by_name(std::string const& n, std::string const& v)
 {
 	if(n == "netname"){
 		incomplete();
 	}else{
-		Symbol::setParameter(n, v);
+		Symbol::set_param_by_name(n, v);
 	}
 }
 /*--------------------------------------------------------------------------*/

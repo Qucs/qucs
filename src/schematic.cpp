@@ -1333,40 +1333,6 @@ Component* SchematicDoc::find_component(QString const&)
 }
 #endif
 
-// ---------------------------------------------------
-
-#if 0
-// pre qt5 kludge
-void SchematicDoc::pushBack(Element* what)
-{ untested();
-  qDebug() << "SchematicDoc::pushBack" << what;
-#ifndef USE_SCROLLVIEW
-  incomplete();
-  assert(_model);
-  _model->pushBack(what);
-#else
-  if(auto c=command(what)){ untested();
-    incomplete();
-    simpleInserttaskElement(c);
-  }else if(auto c=component(what)){ untested();
-    qDebug() << "sic" << c->label();
-    simpleInsertComponent(c);
-  }else if(auto d=diagram(what)){ untested();
-    diagrams().append(d);
-  }else if(auto w=wire(what)){ untested();
-    qDebug() << "got wire";
-    simpleInsertWire(w);
-  }else if(auto s=dynamic_cast<SchematicSymbol*>(what)){ untested();
-    unreachable();
-   //  delete _symbol;
-    // _symbol = s;
-  }else{ untested();
-    incomplete();
-  }
-#endif
-}
-#endif
-
 // ----------------------------------------------------------------
 #if 0
 QString SchematicDoc::getParameter(std::string const& x) const

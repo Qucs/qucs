@@ -158,15 +158,6 @@ QucsApp::QucsApp()
 #endif
 }
 
-// why "AtStartup?!"
-void QucsApp::openFileAtStartup(QString const& arg)
-{
-      QFileInfo Info(arg);
-      QucsSettings.QucsWorkDir = Info.absoluteDir().absolutePath().toStdString(); // ?
-      QString p = QString_(QucsSettings.QucsWorkDir) + QDir::separator() + Info.fileName();
-      gotoPage(p);
-}
-
 QucsApp::~QucsApp()
 { untested();
   Module::unregisterModules ();
@@ -197,8 +188,7 @@ void QucsApp::initView()
   //  here?! move to QucsTabWidget::QucsTabWidget?
 //  disconnect(DocumentTab, &QucsTabWidget::currentChanged, nullptr, nullptr);
 //  disconnect(DocumentTab, &QucsTabWidget::tabBarClicked, nullptr, nullptr);
-  connect(DocumentTab, &QucsTabWidget::currentChanged,
-      DocumentTab, &QucsTabWidget::setCurrentIndex);
+//
 
   // Give every tab a close button, and connect the button's signal to
   // slotFileClose
@@ -1327,49 +1317,6 @@ void QucsApp::slotTextNew()
 }
 
 // --------------------------------------------------------------
-// Changes to the document "Name". If already open then it goes to it
-// directly, otherwise it loads it.
-bool QucsApp::gotoPage(const QString& Name)
-{itested();
-    // is Name the filename?!
-  int No = DocumentTab->currentIndex();
-
-  int i = 0;
-  QucsDoc * d = findDoc (Name, &i);  // search, if page is already loaded
-
-  if(d) { untested();
-    // open page found
-    DocumentTab->setCurrentIndex(i);  // make new document the current
-    return true;
-  }else{itested();
-  }
-
-  QFileInfo Info(Name);
-  if(Info.suffix() == "sch" || Info.suffix() == "dpl" ||
-     Info.suffix() == "sym") {itested();
-    d = DocumentTab->createEmptySchematic(Name);
-  } else {itested();
-    d = DocumentTab->createEmptyTextDoc(Name);
-  }
-
-     // load document if possible
-  if(!d->load()) {itested();
-    delete d;
-    DocumentTab->setCurrentIndex(No);
-    // view->drawn = false;
-    return false;
-  }else{itested();
-    slotChangeView(DocumentTab->current());
-
-    // if only an untitled document was open -> close it
-    if(getDoc(0)->docName().isEmpty())
-      if(!getDoc(0)->DocChanged)
-        delete DocumentTab->widget(0);
-
-    //view->drawn = false;
-    return true;
-  }
-}
 
 QString lastDirOpenSave; // to remember last directory and file
 

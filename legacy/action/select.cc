@@ -146,7 +146,7 @@ public:
 	explicit MouseActionSelect() {}
 #else
 	explicit MouseActionSelect(MouseActions* ctx=nullptr)
-		: MouseAction() { untested();
+		: MouseAction() {
 //			assert(scene());
 		}
 #endif

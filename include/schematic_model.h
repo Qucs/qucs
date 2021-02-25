@@ -53,32 +53,6 @@ class ElementGraphics; // BUG
 class ostream_t;
 /*--------------------------------------------------------------------------*/
 class NodeMap;
-#if 0
-// TODO: refactor here
-class ElementList : public std::list<Element*> {
-public:
-	typedef std::list<Element*> container;
-	typedef std::list<Element*>::const_iterator const_iterator;
-private:
-	ElementList(ElementList const&) = delete;
-public:
-	explicit ElementList() {}
-	~ElementList() {
-		while(!empty()){
-			delete(front());
-			pop_front();
-		}
-	}
-
-public:
-	void pushBack(Element*s) {push_back(s);}
-	void append(Element*s) {push_back(s);}
-	bool isEmpty() const { return empty(); }
-public:
-	const_iterator begin() const{return container::begin();}
-	const_iterator end() const{return container::end();}
-};
-#endif
 /*--------------------------------------------------------------------------*/
 // TODO: rename to ObjectList
 class SchematicModel{
@@ -123,7 +97,11 @@ public: // stuff saved from Schematic
 private:
 	void detachFromNode(Element* what, Node* from);
 	void removeRef(Element* s) { erase(std::find(begin(), end(), s)); }
-	void erase(const_iterator what){_cl.erase(what);}
+
+public:
+	SchematicModel& erase(const_iterator what);
+	//SchematicModel& erase(Element* c);
+	//SchematicModel& erase_all();
 
 public:
 	void collectDigitalSignals(void);
@@ -154,6 +132,7 @@ public: // container
 	}
 	void pushBack(Element* what);
 	void erase(Element* what);
+	bool is_empty() const { return !_cl.size(); }
 	size_t size() const{ return _cl.size(); }
 
 public: // compat? test? debug?

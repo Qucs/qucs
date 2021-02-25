@@ -107,6 +107,7 @@ namespace{
 class LegacySchematicLanguage : public SchematicLanguage {
 public:
 	LegacySchematicLanguage(bool mod=false) : SchematicLanguage(), _lib_mod(mod){
+		setLabel("legacy_schematic");
 	}
 private: // stuff from component.cc
 	void loadProperties(QTextStream& stream, SchematicSymbol& m) const;
@@ -115,7 +116,7 @@ private: // stuff from component.cc
 
 private: // overrides
 	void parse_top_item(istream_t& stream, SchematicModel* sckt) const override;
-	std::string findType(istream_t&) const override;
+	std::string find_type_in_string(istream_t&) const override;
 	Element* parseItem(istream_t&, Element*) const override;
    DEV_DOT* parseCommand(istream_t&, DEV_DOT*) const override;
 
@@ -137,7 +138,7 @@ private:
 	bool _lib_mod; // HACK HACK
 }d0;
 static Dispatcher<DocumentLanguage>::INSTALL
-    p0(&languageDispatcher, "leg_sch", &d0);
+    p0(&languageDispatcher, "leg_sch|.sch", &d0);
 /*--------------------------------------------------------------------------*/
 struct set_default{
 	set_default(){
@@ -177,7 +178,7 @@ static bool obsolete_wireload(Symbol* w, const QString& sc)
 		return false; // BUG: throw
 	}else{
 	}
-	sym->setParameter("$xposition", std::to_string(x1));
+	sym->set_param_by_name("$xposition", std::to_string(x1));
 
 	n  = s.section(' ',1,1);    // y1
 	int y1 = n.toInt(&ok);
@@ -185,7 +186,7 @@ static bool obsolete_wireload(Symbol* w, const QString& sc)
 		return false; // BUG: throw
 	}else{
 	}
-	sym->setParameter("$yposition", std::to_string(y1));
+	sym->set_param_by_name("$yposition", std::to_string(y1));
 
 	n  = s.section(' ',2,2);    // x2
 	int x2 = n.toInt(&ok);
@@ -199,7 +200,7 @@ static bool obsolete_wireload(Symbol* w, const QString& sc)
 	}else{ itested();
 		// but not really necessary
 	}
-	sym->setParameter("deltax", std::to_string(x2 - x1));
+	sym->set_param_by_name("deltax", std::to_string(x2 - x1));
 
 	n  = s.section(' ',3,3);    // y2
 	int y2 = n.toInt(&ok);
@@ -213,7 +214,7 @@ static bool obsolete_wireload(Symbol* w, const QString& sc)
 	}else{ untested();
 		// nothing wrong with that, really?
 	}
-	sym->setParameter("deltay", std::to_string(y2 - y1));
+	sym->set_param_by_name("deltay", std::to_string(y2 - y1));
 
 	assert(sym->nodePosition(0) == pos_t(x1, y1));
 	trace2("debug obsolete load", sym->nodePosition(1), pos_t(x2, y2));
@@ -238,10 +239,10 @@ static bool obsolete_wireload(Symbol* w, const QString& sc)
 		// node position from it.
 		auto nn = s.section('"',3,3);
 		trace7("hack push", s, sth, delta, nx, ny, nn, n);
-		sym->setParameter("netname", n.toStdString()); // what is this?
-		sym->setParameter("delta", delta.toStdString()); // what is this?
-		sym->setParameter("nx", nx.toStdString()); // not the node position, maybe the label position?
-		sym->setParameter("ny", ny.toStdString()); // not the node position, maybe the label position?
+		sym->set_param_by_name("netname", n.toStdString()); // what is this?
+		sym->set_param_by_name("delta", delta.toStdString()); // what is this?
+		sym->set_param_by_name("nx", nx.toStdString()); // not the node position, maybe the label position?
+		sym->set_param_by_name("ny", ny.toStdString()); // not the node position, maybe the label position?
 		sym->expand(); //always?
 	}else{
 	}
@@ -299,7 +300,7 @@ Diagram* LegacySchematicLanguage::parseDiagram(Diagram* d, istream_t& stream)con
 		}
 
 		auto& cs = stream;
-		while(true){ untested();
+		while(true){
 			cs.read_line();
 			trace2("diag cmd" , cs.fullstring(), type);
 			if(cs.umatch(std::string("</")+type+">")){
@@ -329,7 +330,7 @@ void LegacySchematicLanguage::printDiagram(Diagram const* x, ostream_t& cs) cons
 {
 	cs << "  " << x->save(); // BUG
 	Element const* e = x;
-	for(auto ii : *e->scope()){ untested();
+	for(auto ii : *e->scope()){
 		printItem(cs, ii);
 	}
 	cs << "  </" << x->label() << ">\n";
@@ -379,7 +380,7 @@ void LegacySchematicLanguage::printTaskElement(TaskElement const* c, ostream_t& 
 		s << c->label();
 	}
 	s << " ";
-	if (auto lc=dynamic_cast<LegacyTaskElement const*>(c)){ untested();
+	if (auto lc=dynamic_cast<LegacyTaskElement const*>(c)){
 		printLegacyTaskElement(lc, s);
 	}else{
 		incomplete();
@@ -775,8 +776,8 @@ Symbol* LegacySchematicLanguage::parseSymbol(istream_t& cs, Symbol* sym) const
 		qDebug() << "cx" << cx;
 		if(!ok){ untested();
 			throw qucs::Exception("xposition parse");
-		}else{ untested();
-			sym->setParameter("$xposition", std::to_string(cx));
+		}else{
+			sym->set_param_by_name("$xposition", std::to_string(cx));
 			//	sym->setParameter(3, std::to_string(cx));
 		}
 
@@ -785,7 +786,7 @@ Symbol* LegacySchematicLanguage::parseSymbol(istream_t& cs, Symbol* sym) const
 		if(!ok){ untested();
 			throw qucs::Exception("yposition parse");
 		}else{
-			sym->setParameter("$yposition", std::to_string(cy));
+			sym->set_param_by_name("$yposition", std::to_string(cy));
 			//	sym->setParameter(4, std::to_string(cy));
 		}
 
@@ -794,7 +795,7 @@ Symbol* LegacySchematicLanguage::parseSymbol(istream_t& cs, Symbol* sym) const
 		if(!ok){ untested();
 			throw qucs::Exception("tx parse");
 		}else{
-			sym->setParameter("$tx", std::to_string(tmp));
+			sym->set_param_by_name("$tx", std::to_string(tmp));
 		}
 
 		n  = s.section(' ',6,6);    // ty
@@ -802,7 +803,7 @@ Symbol* LegacySchematicLanguage::parseSymbol(istream_t& cs, Symbol* sym) const
 		if(!ok){ untested();
 			throw qucs::Exception("ty parse");
 		}else{
-			sym->setParameter("$ty", std::to_string(tmp));
+			sym->set_param_by_name("$ty", std::to_string(tmp));
 		}
 
 		{
@@ -813,7 +814,7 @@ Symbol* LegacySchematicLanguage::parseSymbol(istream_t& cs, Symbol* sym) const
 			}else{
 				int vflip = 1-2*nn;
 				assert(vflip==1 || vflip==-1);
-				sym->setParameter("$vflip", std::to_string(vflip));
+				sym->set_param_by_name("$vflip", std::to_string(vflip));
 			}
 
 			n  = s.section(' ',8,8);    // rotated
@@ -824,7 +825,7 @@ Symbol* LegacySchematicLanguage::parseSymbol(istream_t& cs, Symbol* sym) const
 			}
 
 			tmp *= 90;
-			sym->setParameter("$angle", std::to_string(tmp));
+			sym->set_param_by_name("$angle", std::to_string(tmp));
 			assert(sym->paramValue("$angle") == std::to_string(tmp));
 		}
 
@@ -914,13 +915,13 @@ static Component* parseComponentObsoleteCallback(const QString& _s, Component* c
 	n  = s.section(' ',3,3);    // cx
 	int cx=n.toInt(&ok);
 	qDebug() << "cx" << cx;
-	sym->setParameter("$xposition", std::to_string(cx));
+	sym->set_param_by_name("$xposition", std::to_string(cx));
 //	sym->setParameter(3, std::to_string(cx));
 	if(!ok) return NULL;
 
 	n  = s.section(' ',4,4);    // cy
 	int cy=n.toInt(&ok);
-	sym->setParameter("$yposition", std::to_string(cy));
+	sym->set_param_by_name("$yposition", std::to_string(cy));
 //	sym->setParameter(4, std::to_string(cy));
 	if(!ok) return NULL;
 
@@ -954,7 +955,7 @@ static Component* parseComponentObsoleteCallback(const QString& _s, Component* c
 		}
 
 		tmp *= 90;
-		sym->setParameter("$angle", std::to_string(tmp));
+		sym->set_param_by_name("$angle", std::to_string(tmp));
 		if(sym->paramValue("$angle") == std::to_string(tmp)){
 		}else{
 			unreachable();
@@ -1183,7 +1184,7 @@ DEV_DOT* LegacySchematicLanguage::parseCommand(istream_t& c, DEV_DOT* x) const
 	c.skipbl();
 	c.skip1('<');
 
-	if (!commandDispatcher[s]) { untested();
+	if (!commandDispatcher[s]) {
 		trace3("command miss", s, Line, c.cursor());
 		//    cmd.skip();
 		//    ++here;
@@ -1199,7 +1200,7 @@ DEV_DOT* LegacySchematicLanguage::parseCommand(istream_t& c, DEV_DOT* x) const
 	return nullptr;
 }
 /*--------------------------------------------------------------------------*/
-std::string LegacySchematicLanguage::findType(istream_t& c) const
+std::string LegacySchematicLanguage::find_type_in_string(istream_t& c) const
 {
 	std::string l = c.fullString();
 	auto Line = QString::fromStdString(l);
@@ -1468,7 +1469,7 @@ class PaintingCommand : public Command{
 		  }
 	  }
 
-	  s->pushBack(sym);
+	  s->push_back(sym);
 
 	  trace1("find DOT", sym->label());
 	  for(auto i : *sym->subckt()){
@@ -1579,6 +1580,23 @@ class WireCommand : public Command{
 Dispatcher<Command>::INSTALL pw0(&commandDispatcher, "Wires", &dw0);
 Dispatcher<Command>::INSTALL pw1(&commandDispatcher, "Wires>", &dw0); // BUG
 Dispatcher<Command>::INSTALL pw2(&commandDispatcher, "<Wires>", &dw0); // ...
+/*--------------------------------------------------------------------------*/
+class DescriptionCommand : public Command{
+	void do_it(istream_t& cs, SchematicModel* s) override{
+		auto fullstring = cs.fullString();
+
+		while(cs.more()){ untested();
+			cs.read_line();
+			if(cs.umatch("</Description>")){ untested();
+				break;
+			}else{ untested();
+			}
+		}
+	}
+}d5;
+Dispatcher<Command>::INSTALL pd0(&commandDispatcher, "Description>", &d5); // BUG
+Dispatcher<Command>::INSTALL pd1(&commandDispatcher, "<Description>", &d5); // ...
+/*--------------------------------------------------------------------------*/
 } // namespace
 /*--------------------------------------------------------------------------*/
 /*--------------------------------------------------------------------------*/

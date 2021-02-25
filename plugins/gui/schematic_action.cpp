@@ -33,11 +33,6 @@
 #include "schematic_edit.h"
 #include "widget.h"
 /*--------------------------------------------------------------------------*/
-// TODO: why are actions implemented twice?
-// one button and one event handler. and random glue all over the place
-/*--------------------------------------------------------------------------*/
-// inherit from DocAction??
-/*--------------------------------------------------------------------------*/
 /*--------------------------------------------------------------------------*/
 #if 0 // TODO
 void QucsApp::slotSelectMarker()
@@ -62,6 +57,19 @@ void QucsApp::slotSelectMarker()
         tr("Show Last Messages\n\nShow the messages of the last simulation"));
   connect(showMsg, SIGNAL(triggered()), SLOT(slotShowLastMsg()));
 
+#endif
+/*--------------------------------------------------------------------------*/
+#if 0 // not yet.
+class ActionSimulate : public QAction{
+public:
+	explicit ActionSimulate(QObject* parent) : QAction(parent) { untested();
+		setIcon(QIcon(":/bitmaps/gear.png"));
+		setText(tr("Simulate"));
+		setShortcut(Qt::Key_F2);
+		setStatusTip(tr("Simulates the current document"));
+		setWhatsThis(tr("Simulate\n\nSimulates the current document"));
+	}
+};
 #endif
 /*--------------------------------------------------------------------------*/
 class ActionInsEqn : public QAction{
@@ -319,9 +327,9 @@ void transformElement(Element* e, qucsSymbolTransform a, pos_t pivot)
 
 		vflip = -2 * int(new_mr.mirror()) + 1;
 
-		s->setParameter(std::string("$hflip"), std::string("1"));
-		s->setParameter(std::string("$vflip"), std::to_string(vflip));
-		s->setParameter(std::string("$angle"), std::to_string(new_mr.degrees_int()));
+		s->set_param_by_name(std::string("$hflip"), std::string("1"));
+		s->set_param_by_name(std::string("$vflip"), std::to_string(vflip));
+		s->set_param_by_name(std::string("$angle"), std::to_string(new_mr.degrees_int()));
 
 		trace3("posttransform", hflip, vflip, new_mr.degrees_int());
 
@@ -799,7 +807,6 @@ SchematicActions::SchematicActions(QucsDoc* ctx)
 	maEditPaste = new MouseActionPaste();
 	setParent_(maEditPaste, this);
 
-//	_toolbar = 
 	assert(_toolbar);
 
 	auto sel = maSelect->createAction(p);

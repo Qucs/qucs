@@ -24,29 +24,30 @@
 #include <QDesktopServices>
 /*--------------------------------------------------------------------------*/
 /*--------------------------------------------------------------------------*/
-void QucsTabWidget::setCurrentIndex(int i)
+void QucsTabWidget::setCurrentIndex_(int i)
 {
 	// BUG: currentIndex is wrong (why??). use _current instead.
 	trace4("QucsTabWidget::setCurrentIndex", currentIndex(), i, _current, current());
 	QTabWidget::setCurrentIndex(i);
 
 	if(_current){
+		// BUG: current may have gone and this crashes.
 		_current->cleanup();
 		_current = nullptr;
 	}else{
 	}
 	
-	if(_current != current()){
+	if(_current == current()){
+		// why?
+		incomplete();
+		unreachable(); // BUG
+	}else{
 		_current = current();
 
 		if(_current){
 			_current->becomeCurrent();
 		}else{
 		}
-	}else{
-		// why?
-		incomplete();
-		unreachable(); // BUG
 	}
 
 }
@@ -61,9 +62,12 @@ void QucsTabWidget::slotDCbias()
 /*--------------------------------------------------------------------------*/
 QucsTabWidget::QucsTabWidget(QucsApp *parent) : QTabWidget(parent)
 {itested();
-  App = parent;
-  setContextMenuPolicy(Qt::CustomContextMenu);
-  connect(this, SIGNAL(customContextMenuRequested(const QPoint&)), this, SLOT(showContextMenu(const QPoint&)));
+	App = parent;
+	setContextMenuPolicy(Qt::CustomContextMenu);
+	connect(this, &QucsTabWidget::customContextMenuRequested,
+	        this, &QucsTabWidget::showContextMenu);
+	connect(this, &QucsTabWidget::currentChanged,
+	        this, &QucsTabWidget::setCurrentIndex_);
 }
 /*--------------------------------------------------------------------------*/
 void QucsTabWidget::showContextMenu(const QPoint& point)
@@ -122,7 +126,7 @@ QucsDoc* QucsTabWidget::current()
 {
 	QWidget* w = currentWidget();
 	auto d = dynamic_cast<QucsDoc*>(w);
-	assert(d);
+	assert(d || !w);
 	return d;
 }
 /*--------------------------------------------------------------------------*/

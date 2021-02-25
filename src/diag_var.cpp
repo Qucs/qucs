@@ -181,7 +181,7 @@ void DiagramVariable::set_param_by_index(index_t i, std::string const& value)
 }
 /*--------------------------------------------------------------------------*/
 std::string DiagramVariable::param_value(index_t i) const
-{ untested();
+{
 	switch(i){
 	case 0:
 		return _color;

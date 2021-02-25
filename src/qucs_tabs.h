@@ -31,9 +31,9 @@ public: // BUG, obsolete.
 
   QucsDoc* current();
 
-  void setCurrentIndex(int i);
 
 public slots:
+  void setCurrentIndex_(int i);
   void showContextMenu(const QPoint& point);
 private slots:
   void slotCxMenuClose();

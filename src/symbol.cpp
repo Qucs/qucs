@@ -178,7 +178,7 @@ Port const& Symbol::port(unsigned i) const
 }
 /*--------------------------------------------------------------------------*/
 std::string Symbol::paramValue(std::string const& n) const
-{ untested();
+{
 	if(n=="$xposition"){
 		return std::to_string(cx());
 	}else if(n=="$yposition"){
@@ -306,7 +306,7 @@ void Symbol::setParameter(unsigned n, std::string const& v)
 	}
 }
 /*--------------------------------------------------------------------------*/
-void Symbol::setParameter(std::string const& name, std::string const& v)
+void Symbol::set_param_by_name(std::string const& name, std::string const& v)
 {
 	if(name == "$xposition"){
 		setPosition(pos_t(atoi(v.c_str()), cy()));

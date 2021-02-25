@@ -120,7 +120,7 @@ private: // internal
 		assert(cs);
 		return cs->subckt();
 	}
-	SchematicModel const* subckt() const{
+	SchematicModel const* subckt() const{ untested();
 		auto s=const_cast<SubcktProto*>(this);
 		return s->scope();
 	}

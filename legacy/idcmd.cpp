@@ -63,7 +63,7 @@ class IdCommand : public Command{
 			dot->set("parameter " + name + " " + def); //TODO: desc & type.
 
 			trace2("push DOT", name, def);
-			scope->pushBack(dot);
+			scope->push_back(dot);
 
 			i += 2;
 		}
@@ -73,7 +73,7 @@ class IdCommand : public Command{
 		trace3("ID push", label, cx, cy);
 		ps->setPosition(pos_t(cx,cy));
 		ps->setLabel(label);
-		scope->pushBack(ps);
+		scope->push_back(ps);
 	}
 }d0;
 Dispatcher<Command>::INSTALL p0(&commandDispatcher, ".ID", &d0);

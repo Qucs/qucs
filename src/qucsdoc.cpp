@@ -83,6 +83,7 @@ void QucsDoc::undo()
 {
 	incomplete();
 }
+/* -------------------------------------------------------------------------------- */
 #else
 // really?!
 // no. some qucsdocs come without undo stack. so undo/redo must be custom.
@@ -118,18 +119,18 @@ QString QucsDoc::fileSuffix (void)
 { untested();
   return fileSuffix (_name);
 }
-
+/* -------------------------------------------------------------------------------- */
 QString QucsDoc::fileBase (const QString& Name)
 { untested();
   QFileInfo Info (Name);
   return Info.completeBaseName();
 }
-
+/* -------------------------------------------------------------------------------- */
 QString QucsDoc::fileBase (void)
 { untested();
   return fileBase (_name);
 }
-
+/* -------------------------------------------------------------------------------- */
 #if 0
 // cleanup debris
 QAction* QucsDoc::selectAction()
@@ -161,7 +162,7 @@ MouseActions* QucsDoc::mouseActions()
 	return nullptr;
 }
 #endif
-
+/* -------------------------------------------------------------------------------- */
 QucsApp* QucsDoc::app()
 { untested();
 	QObject* w = dynamic_cast<QWidget*>(this);

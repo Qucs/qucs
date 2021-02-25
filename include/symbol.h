@@ -135,7 +135,7 @@ public: // Parameters
 	virtual unsigned paramCount()const;
 	virtual bool paramIsPrintable()const;
 
-	virtual void setParameter(std::string const& name, std::string const&);
+	virtual void set_param_by_name(std::string const& name, std::string const& value);
 	virtual void setParameter(unsigned i, std::string const&);
 
 	virtual std::string paramValue(std::string const&s) const;

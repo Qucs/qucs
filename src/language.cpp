@@ -34,6 +34,25 @@ Element* DocumentLanguage::parseItem(istream_t& s, Element* c) const
 	  incomplete();
 	  return nullptr;
   }
+#if 0
+  assert(c);
+  if (c->is_device()){
+    assert(dynamic_cast<COMPONENT*>(c));
+    return parse_instance(cmd, prechecked_cast<COMPONENT*>(c));
+  }else if (BASE_SUBCKT* s = dynamic_cast<BASE_SUBCKT*>(c)) {
+    return parse_module(cmd, s);
+  }else if (MODEL_CARD* m = dynamic_cast<MODEL_CARD*>(c)) {untested();
+    return parse_paramset(cmd, m);
+  }else if (DEV_COMMENT* com = dynamic_cast<DEV_COMMENT*>(c)) {
+    return parse_comment(cmd, com);
+  }else if (DEV_DOT* d = dynamic_cast<DEV_DOT*>(c)) {
+    return parse_command(cmd, d);
+  }else{untested();
+    incomplete();
+    unreachable();
+    return NULL;
+  }
+#endif
 }
 /*--------------------------------------------------------------------------*/
 void DocumentLanguage::printItem(ostream_t& s, Element const* c) const
@@ -72,7 +91,7 @@ void DocumentLanguage::new__instance(istream_t& cmd, Element* owner,
 	if (cmd.is_end()) { untested();
 		return;
 	}else{
-		std::string type = findType(cmd);
+		std::string type = find_type_in_string(cmd);
 		trace3("new__instance", type, cmd.fullString(), Scope);
 		if (const Element* proto = find_proto(type, owner)) {
 			if (auto p = dynamic_cast<DEV_DOT const*>(proto)){
@@ -92,7 +111,7 @@ void DocumentLanguage::new__instance(istream_t& cmd, Element* owner,
 				new_instance->set_owner(owner); // owner is null, usually.
 				parseItem(cmd, new_instance);
 			}else if (Element* new_instance = proto->clone_instance()) {
-				trace0("new__instance no dot .. ");
+				trace2("new__instance no dot .. ", cmd.fullString(), owner);
 				new_instance->set_owner(owner); // owner is null, usually.
 				Element* o = parseItem(cmd, new_instance);
 
