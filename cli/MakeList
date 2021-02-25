@@ -1,6 +1,8 @@
 
 CPP_SRC = main.cpp
 
+DEFS += -DSIGSETJMP_IS_BROKEN
+
 TGT_PROGRAM = qucscli
 
 EXTRA_DIST = \
