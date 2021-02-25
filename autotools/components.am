@@ -28,7 +28,7 @@ include ../../autotools/common.mk
 
 inst_LTLIBRARIES = components.la
 
-components_la_LDFLAGS = -shared -module -avoid-version
+components_la_LDFLAGS = -no-undefined -shared -module -avoid-version
 
 components_la_SOURCES = $(DEFAULT_COMPONENTS)
 components_la_LIBADD = $(QT_LIBS)
