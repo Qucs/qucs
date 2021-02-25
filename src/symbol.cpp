@@ -308,9 +308,9 @@ void Symbol::setParameter(unsigned n, std::string const& v)
 /*--------------------------------------------------------------------------*/
 void Symbol::set_param_by_name(std::string const& name, std::string const& v)
 {
-	if(name == "$xposition"){
+	if(name == "$xposition"){ untested();
 		setPosition(pos_t(atoi(v.c_str()), cy()));
-	}else if(name == "$yposition"){
+	}else if(name == "$yposition"){ untested();
 		setPosition(pos_t(cx(), atoi(v.c_str())));
 	}else if(name == "$angle"){
 		trace1("angle", v);

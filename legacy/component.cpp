@@ -543,7 +543,7 @@ void Component::rotate()
 }
 // -------------------------------------------------------
 
-void Component::setParameter(unsigned pos, std::string const& v)
+void Component::setParameter(index_t pos, std::string const& v)
 {
   int p = int(pos) - int(Symbol::paramCount()) - num_component_params ;
 

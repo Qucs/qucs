@@ -17,6 +17,7 @@
 #include "io_trace.h"
 
 #include "simulator.h"
+#include "platform.h"
 #include "sckt_base.h"
 #include "net.h"
 #include "docfmt.h" // <<
@@ -262,9 +263,9 @@ void Qucsator::do_it(istream_t& cs, SchematicModel const* scope)
 		DataSet = QDir::toNativeSeparators(Info.path()) +
 			QDir::separator() + doc()->DataSet;
 	} else{
-		// TODO: TMPFILENAME
-		char* t = strdup("/tmp/qucsator_XXXXXX.dat");
-		int h = mkstemps(t, 4);
+		char* t = strdup(TMPFILENAME);
+//		int h = mkstemps(t, 4); // not portable -> so what
+		int h = mkstemp(t);
 		close(h);
 		DataSet = QString(t);
 		free(t);

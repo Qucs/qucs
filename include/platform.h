@@ -30,10 +30,23 @@
 #include "config.h"
 #endif
 /*--------------------------------------------------------------------------*/
+#ifndef TMPFILENAME
+#define TMPFILENAME     "/tmp/qucs_XXXXXX"
+#endif
+/*--------------------------------------------------------------------------*/
+#if defined(__WIN32__)
+#define	ENDDIR		"/\\"
+#define PATHSEP		';'
+#define SHELL		OS::getenv("COMSPEC")
+#else
+#define	ENDDIR		"/"
+#define PATHSEP		':'
+#define SHELL		OS::getenv("SHELL")
+#endif
 /*--------------------------------------------------------------------------*/
 /* machine and compiler patches */
 #if defined(__MINGW32__) // perhaps also if _WIN32?
-  // #define SIGSETJMP_IS_BROKEN not yet required.
+  #define SIGSETJMP_IS_BROKEN
   #define MS_DLL
 #endif
 /*--------------------------------------------------------------------------*/
@@ -49,7 +62,6 @@
 
 /*--------------------------------------------------------------------------*/
 /* portability hacks, the serious stuff */
-#define PATHSEP		':'
 
 #ifdef __MINGW32__
 #define executableSuffix ".exe"
