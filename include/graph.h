@@ -14,15 +14,13 @@
 #ifndef GRAPH_H
 #define GRAPH_H
 
-
-// #include "marker.h"
 #include "element.h"
 
+#include <assert.h>
 #include <cmath>
 #include <QColor>
 #include <QDateTime>
-
-#include <assert.h>
+#include <vector>
 
 typedef enum{
   GRAPHSTYLE_INVALID = -1,
