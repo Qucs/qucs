@@ -218,13 +218,16 @@ void QucsDoc::becomeCurrent()
 		assert(_toolbar->parent()==app());
 
 		_toolbar->setVisible(true);
+
 	}else{ untested();
 	}
 
 	// not here.
-	if(app()){
+	if(!app()){
 		// _undo_redo_bar = newToolBar();
-	}else{
+	}else if(_eventHandler){
+	  QObject::connect(app()->undo, SIGNAL(triggered()), _eventHandler, SLOT(slotUndo()));
+	  QObject::connect(app()->redo, SIGNAL(triggered()), _eventHandler, SLOT(slotRedo()));
 	}
 }
 /* -------------------------------------------------------------------------------- */

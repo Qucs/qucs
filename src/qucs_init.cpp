@@ -270,13 +270,11 @@ void QucsApp::initActions()
   undo->setShortcut(Qt::CTRL+Qt::Key_Z);
   undo->setStatusTip(tr("Undo the last command"));
   undo->setWhatsThis(tr("Undo\n\nMake the last action undone"));
-  connect(undo, SIGNAL(triggered()), SLOT(slotEditUndo()));
 
   redo = new QAction(QIcon((":/bitmaps/redo.png")), tr("&Redo"), this);
   redo->setShortcut(Qt::CTRL+Qt::Key_Y);
   redo->setStatusTip(tr("Redo the last command"));
   redo->setWhatsThis(tr("Redo\n\nRepeat the last action once more"));
-  connect(redo, SIGNAL(triggered()), SLOT(slotEditRedo()));
 
   projNew = new QAction(tr("&New Project..."), this);
   projNew->setShortcut(Qt::CTRL+Qt::SHIFT+Qt::Key_N);
@@ -591,8 +589,8 @@ void QucsApp::initMenuBar()
 
   // forward to QAction instances. effectively simulate button presses.
   editMenu = new QMenu(tr("&Edit"));  // menuBar entry editMenu
-//  editMenu->addAction(undo);
-//  editMenu->addAction(redo);
+  editMenu->addAction(undo);
+  editMenu->addAction(redo);
 //  editMenu->addSeparator();
 //  editMenu->addAction(editCut);
 //  editMenu->addAction(editCopy);

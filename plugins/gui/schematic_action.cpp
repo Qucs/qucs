@@ -827,17 +827,23 @@ SchematicActions::SchematicActions(QucsDoc* ctx)
 //	setCurrentMode(maSelect); does not work.
 } // SchematicActions::SchematicActions
 /*--------------------------------------------------------------------------*/
-void SchematicActions::redo()
+void SchematicActions::slotRedo()
 {
-	incomplete();
+	QUndoStack* u = undoStack();
+	assert(u);
+
+	u->redo();
 }
 /*--------------------------------------------------------------------------*/
-void SchematicActions::undo()
+void SchematicActions::slotUndo()
 {
-	incomplete();
+	QUndoStack* u = undoStack();
+	assert(u);
+
+	u->undo();
 }
 /*--------------------------------------------------------------------------*/
-void SchematicActions::executeCommand(QUndoCommand* c)
+void SchematicActions::executeCommand(QUndoCommand /*??*/ * c)
 {
 	assert(c);
 	assert(doc());

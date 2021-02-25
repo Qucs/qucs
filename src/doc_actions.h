@@ -75,9 +75,9 @@ public: // modes
 	MouseAction const* currentMode() const{ untested(); return _maCurrent; }
 	void setCurrentMode(MouseAction* a);
 
-public:
-  virtual void undo() = 0;
-  virtual void redo() = 0;
+public slots:
+  virtual void slotUndo() = 0;
+  virtual void slotRedo() = 0;
 
 public:
 	QucsDoc* doc();

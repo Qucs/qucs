@@ -40,8 +40,8 @@ protected: // Doc stuff
 	QUndoStack* undoStack(){ return _undoStack; }
 
 private:
-	void redo() override;
-	void undo() override;
+	void slotRedo() override;
+	void slotUndo() override;
 
 private:
 	QUndoStack* _undoStack{nullptr};
