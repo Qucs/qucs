@@ -22,8 +22,6 @@
 # Boston, MA 02110-1301, USA.  
 #
 
-qucs_appledir = $(bindir)/qucs.app/Contents/MacOS/
-
 include ../autotools/common.mk
 
 all-local: qucs
@@ -36,19 +34,15 @@ qucs_real_CPPFLAGS = ${AM_CPPFLAGS} $(QT_CFLAGS) \
 		-DQUCS_PLUGPATH=\"${pkglibdir}\" \
 		-DQUCS_PREFIX=\"${prefix}\"
 
-if COND_WIN32
-qucs_real_LDADD = \
-	../src/libqucs.la
-else
-qucs_real_LDADD = \
-	../src/libqucs.la \
-	$(X11_LIBS) $(QT_LIBS)
-endif
+qucs_real_LDADD = ../src/libqucs.la
 
-if COND_MACOSX
-qucs_apple_PROGRAMS = qucs.real
-else
-endif
+# TODO
+qucs_real_LDADD += $(X11_LIBS) $(QT_LIBS)
+
+# needed later on?
+# if COND_WIN32
+# else
+# endif
 
 # bin_PROGRAMS = ${TGT_PROGRAM}.real does not work
 bin_PROGRAMS = qucs.real
