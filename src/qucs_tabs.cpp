@@ -31,9 +31,9 @@ void QucsTabWidget::setCurrentIndex_(int i)
 	QTabWidget::setCurrentIndex(i);
 
 	if(_current){
-		// BUG: current may have gone and this crashes.
-		_current->cleanup();
-		_current = nullptr;
+//		// BUG: current may have gone and this crashes.
+//		_current->cleanup();
+//		_current = nullptr;
 	}else{
 	}
 	

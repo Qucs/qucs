@@ -114,6 +114,15 @@ public:
 	float textCorr(){return 1;}
 	bool sizeOfFrame(int&, int&);
 
+	// BUG: wrong place.
+	void setVisible(bool x) override { itested();
+		if(!x){ itested();
+			cleanup();
+		}else{ itested();
+		}
+		QWidget::setVisible(x);
+	}
+
 private: // QucsDoc.
 	void new_root();
 //	QAction* createUndoAction() override;
