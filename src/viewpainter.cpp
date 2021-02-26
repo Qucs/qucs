@@ -1,16 +1,13 @@
 /***************************************************************************
-                        viewpainter.cpp  -  description
-                             -------------------
-    begin                : Tue Oct 05 2004
     copyright            : (C) 2004 by Michael Margraf
-    email                : michael.margraf@alumni.tu-berlin.de
+                               2020, 2021 Felix Salfelder
  ***************************************************************************/
 
 /***************************************************************************
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU General Public License as published by  *
- *   the Free Software Foundation; either version 2 of the License, or     *
+ *   the Free Software Foundation; either version 3 of the License, or     *
  *   (at your option) any later version.                                   *
  *                                                                         *
  ***************************************************************************/
@@ -25,53 +22,6 @@
 #include <QDebug>
 #include <QPolygon>
 #include <QPainterPath>
-
-#ifdef USE_SCROLLVIEW
-obsolete
-
-ViewPainter::ViewPainter(QPainter *p)
-{
-  Painter = p;
-  DX = DY = Scale = 0.0;
-  FontScale = PrintScale = 1.0;
-}
-
-ViewPainter::~ViewPainter()
-{
-}
-
-// -------------------------------------------------------------
-void ViewPainter::init(QPainter *p, float Scale_, int DX_, int DY_, 
-		       int dx_, int dy_, 
-		       float FontScale_, float PrintScale_)
-{
-  Painter = p;
-  Scale = Scale_;
-  FontScale = FontScale_;
-  PrintScale = PrintScale_;
-  DX = float(DX_) * Scale - float(dx_);
-  DY = float(DY_) * Scale - float(dy_);
-
-  QFont f = p->font();
-  if(FontScale == 0.0)
-    FontScale = Scale;
-#ifdef __MINGW32__
-  FontScale = Scale;
-#endif
-  f.setPointSizeF( FontScale * float(f.pointSize()) );
-  p->setFont(f);
-  LineSpacing = p->fontMetrics().lineSpacing();
-  p-> setMatrixEnabled(false);   // we use our own coordinate transformation
-
-  QPainter::RenderHints hints = 0;
-  // Ask to antialias drawings if requested
-  if (QucsSettings.GraphAntiAliasing) hints |= QPainter::Antialiasing;
-  // Ask to antialias text if requested
-  if (QucsSettings.TextAntiAliasing) hints |= QPainter::TextAntialiasing;
-  p->setRenderHints(hints);
-}
-
-#endif
 
 // -------------------------------------------------------------
 void ViewPainter::map(int x1, int y1, int& x, int& y)
@@ -94,33 +44,6 @@ void ViewPainter::drawRect(rect_t const& r)
   Painter->drawRect(q);
 }
 
-#ifdef USE_SCROLLVIEW
-obsolete
-// -------------------------------------------------------------
-void ViewPainter::drawPoint(int x1i, int y1i)
-{
-  float x1, y1;
-  x1 = float(x1i)*Scale + DX;
-  y1 = float(y1i)*Scale + DY;
-
-  Painter->drawPoint(QPointF(x1, y1));
-}
-
-// -------------------------------------------------------------
-void ViewPainter::drawLine(int x1i, int y1i, int x2i, int y2i)
-{
-  float x1, y1, x2, y2;
-  x1 = float(x1i)*Scale + DX;
-  y1 = float(y1i)*Scale + DY;
-  x2 = float(x2i)*Scale + DX;
-  y2 = float(y2i)*Scale + DY;
-
-  Painter->drawLine(QLineF(x1, y1, x2, y2));
-}
-
-#else
-
-// check: could as well derive from QPainter?
 ViewPainter::ViewPainter(QPainter* p)
   : Painter(p),
   Scale(1.f),
@@ -130,8 +53,6 @@ ViewPainter::ViewPainter(QPainter* p)
   LineSpacing(p->fontMetrics().lineSpacing())
 {
 }
-
-#endif
 
 // -------------------------------------------------------------
 // FIXME. graph.cpp (or so)

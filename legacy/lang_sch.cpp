@@ -540,12 +540,33 @@ void LegacySchematicLanguage::printSymbol(Symbol const* sym, ostream_t& s) const
 		s << " "+QString::number(c->cx())+" "+QString::number(c->cy());
 		s << " "+QString::number(c->tx)+" "+QString::number(c->ty);
 		s << " ";
-		if(c->mirroredX){
-			s << "1";
+		if(!sym->legacyTransformHack()){
+			int angle = atoi(sym->paramValue("$angle").c_str());
+			int hflip = atoi(sym->paramValue("$hflip").c_str());
+			int vflip = atoi(sym->paramValue("$vflip").c_str());
+			assert(hflip);
+			assert(vflip);
+			if(hflip==1){
+				s << (1-vflip) / 2;
+				s << " " << (angle/90) % 4;
+			}else if(vflip==1){ untested();
+				assert(hflip==-1);
+				s << "1";
+				s << " TODO" << ((180-angle)/90) % 4;
+			}else{ untested();
+				assert(hflip==-1);
+				assert(vflip==-1);
+				s << "0";
+				s << " TODO" << ((180+angle)/90) % 4;
+			}
 		}else{
-			s << "0";
+			if(c->mirroredX){
+				s << "1";
+			}else{
+				s << "0";
+			}
+			s << " " << QString::number(c->rotated());
 		}
-		s << " " << QString::number(c->rotated());
 		for(Property *p1 = cc->Props.first(); p1 != 0; p1 = cc->Props.next()) {
 			if(p1->Description.isEmpty()){
 				s << " \""+p1->Name+"="+p1->Value+"\"";   // e.g. for equations

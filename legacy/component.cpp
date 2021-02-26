@@ -335,7 +335,6 @@ void Component::paint(ViewPainter *p) const
     // normal components go here
     assert(!Model.size() || Model.at(0) != '.');
 
-    // paint all lines
     foreach(Line *p1, Lines) {itested();
       p->setPen(p1->style);
       p->drawLine(cx+p1->x1, cy+p1->y1, cx+p1->x2, cy+p1->y2);
@@ -365,9 +364,9 @@ void Component::paint(ViewPainter *p) const
     newFont.setWeight(QFont::Light);
 
     // keep track of painter state
+#if 0
     p->save();
 
-#if 0
     auto wm = p->worldMatrix();
     // write all text
     foreach(Text *pt, Texts) {itested();
@@ -390,17 +389,17 @@ void Component::paint(ViewPainter *p) const
     }
     p->setWorldMatrix(wm);
     p->setWorldMatrixEnabled(false);
+    p->restore();
 #endif
 
     // restore painter state
-    p->restore();
   }
 
   // restore old font
   p->setFont(f);
 
   p->setPen(QPen(Qt::black,1));
-  p->map(cx+tx, cy+ty, x, y);
+//   p->map(cx+tx, cy+ty, x, y);
 ///  if(showName) {itested();
 ///    p->drawText(x, y, 0, 0, Qt::TextDontClip, Name);
 ///    y += p->LineSpacing;
@@ -566,20 +565,20 @@ void Component::setParameter(index_t pos, std::string const& v)
 // -------------------------------------------------------
 void Component::set_param_by_name(std::string const& name, std::string const& v)
 {
-  if(name=="$angle"){
+  if(name=="$angle" && legacyTransformHack()){
     int r = atoi(v.c_str());
     trace3("Component::setParameter", name, v, label());
     assert(!(r % 90)); // for now.
     r /= 90;
     r %= 4;
     set_rotated(r);
-  }else if(name=="$vflip"){
+  }else if(name=="$vflip" && legacyTransformHack()){
     int r = atoi(v.c_str());
     assert(r==1 || r==-1);
     r -= 1;
     r /= -2;
     set_mirror_yaxis(r);
-  }else if(name=="$hflip"){itested();
+  }else if(name=="$hflip" && legacyTransformHack()){
     int r = atoi(v.c_str());
     assert(r==1 || r==-1);
     r -= 1;
@@ -642,7 +641,7 @@ static int paramDisplay(P const& p, int offset)
 // -------------------------------------------------------
 std::string Component::paramValue(std::string const& name) const
 {
-  if(name=="$angle"){
+  if(name=="$angle" && legacyTransformHack()){
     trace1("Component::paramValue", _rotated);
     return std::to_string(_rotated*90);
   }else if(name=="$tx"){
@@ -653,13 +652,14 @@ std::string Component::paramValue(std::string const& name) const
     return std::to_string(center().first);
   }else if(name=="$yposition"){
     return std::to_string(center().second);
-  }else if(name=="$vflip"){
+  }else if(name=="$vflip" && legacyTransformHack()){
     // 0 |-> 1
     // 1 |-> -1
     int m = 1 - mirroredX * 2;
     return std::to_string(m);
-  }else if(name=="$hflip"){
-    return "1";
+  }else if(name=="$hflip" && legacyTransformHack()){
+    int m = 1 - mirroredY * 2;
+    return std::to_string(m);
   }else if(name=="$param_display"){
     return std::to_string(paramDisplay(Props, 2 + Symbol::paramCount()));
   }else if(name=="$mfactor"){
@@ -672,40 +672,59 @@ std::string Component::paramValue(std::string const& name) const
 // -------------------------------------------------------
 void Component::set_rotated(unsigned r)
 {
-  assert(r<4);
-  while(r != unsigned(_rotated)){
-    rotate();
+  if(!legacyTransformHack()){
+    _rotated = 4;
+    return;
+  }else{
+    assert(r<4);
+    while(r != unsigned(_rotated)){
+      rotate();
 
-    // keep track of what's done
-    ++_rotated;
-    _rotated %= 4;
+      // keep track of what's done
+      ++_rotated;
+      _rotated %= 4;
+    }
+    trace3("Component::set_rotated", label(), r, _rotated);
   }
-  trace3("Component::set_rotated", label(), r, _rotated);
 }
 
 // -------------------------------------------------------
 void Component::set_mirror_yaxis(unsigned x)
 {
-  auto rot_bak = rotated();
-  if(x != mirroredX){
-    mirrorX(); // sic.
+  if(!legacyTransformHack()){
+    mirroredX = x;
+    assert(false);
+    // _vflip = 1 - mirroredX * 2;
+    return;
   }else{
-    assert(x==0);
-  }
+    auto rot_bak = rotated();
+    if(x != mirroredX){
+      mirrorX(); // sic.
+    }else{
+      assert(x==0);
+    }
 
-  set_rotated(rot_bak);
+    set_rotated(rot_bak);
+  }
 }
 // -------------------------------------------------------
 void Component::set_mirror_xaxis(unsigned x)
 {
-  auto rot_bak = rotated();
-  if(x != mirroredX){
-    mirrorY(); // six.
+  if(!legacyTransformHack()){
+    mirroredY = x;
+    assert(false);
+    // _hflip = 1 - mirroredY * 2;
+    return;
   }else{
-    assert(x==0);
-  }
+    auto rot_bak = rotated();
+    if(x != mirroredX){
+      mirrorY(); // sic.
+    }else{
+      assert(x==0);
+    }
 
-  set_rotated(rot_bak);
+    set_rotated(rot_bak);
+  }
 }
 // -------------------------------------------------------
 // Mirrors the component about the x-axis.
@@ -1545,6 +1564,11 @@ Widget* Component::schematicWidget(QucsDoc* Doc) const
 //  return new ComponentDialog(Doc); //does not work yet.
 }
 /*--------------------------------------------------------------------------*/
+bool Component::legacyTransformHack() const
+{
+  return true; // messes up paintings and zoom
+  return false; // changes (fixes?) schematic dump.
+}
 /*--------------------------------------------------------------------------*/
 /*--------------------------------------------------------------------------*/
 /*--------------------------------------------------------------------------*/

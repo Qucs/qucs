@@ -138,7 +138,7 @@ public: // just forward
 		Painter->setWorldMatrixEnabled(b);
 	}
 	void setWorldMatrix(QTransform const& m){
-		 Painter->setWorldTransform(m);
+		Painter->setWorldTransform(m);
 	}
 	template<class T>
 	void rotate(T t){

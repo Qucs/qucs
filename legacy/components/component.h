@@ -77,12 +77,10 @@ public: //??!
   QString get_Verilog_Code(int);
 
 private: // Element override
-  void    paint(ViewPainter*) const;
+  void paint(ViewPainter*) const override;
   Widget* schematicWidget(QucsDoc*) const override;
   rect_t bounding_rect() const override;
-  bool legacyTransformHack() const override{
-	  return true;
-  }
+  bool legacyTransformHack() const override;
 
 private: // Symbol interface.
   virtual void recreate() {}; // obsolete?
@@ -164,6 +162,7 @@ public: // BUG
 
   // to hold track of the component appearance for saving and copying
   bool mirroredX;   // is it mirrored about X axis or not
+  bool mirroredY{false};   // is it mirrored about X axis or not
   int  _rotated;     // rotation angle divided by 90 degrees
 
   virtual QString getSubcircuitFile() const { return ""; }

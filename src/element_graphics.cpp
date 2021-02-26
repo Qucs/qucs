@@ -286,6 +286,7 @@ void ElementGraphics::paint(QPainter *p, const QStyleOptionGraphicsItem *o,
 {itested();
 	assert(p);
 	ViewPainter v(p); // TODO
+	assert(v.Scale==1);
 
 	if(auto pp=dynamic_cast<Painting const*>(_e)){
 		pp->paint(&v);
@@ -297,7 +298,7 @@ void ElementGraphics::paint(QPainter *p, const QStyleOptionGraphicsItem *o,
 			p->setPen(QPen(Qt::darkGray,3));
 			p->drawRoundedRect(br, 3, 3);
 		}else{itested();
-#ifdef DO_TRACE_
+#ifdef DO_TRACE
 			p->setPen(QPen(Qt::green,3));
 			p->drawRoundedRect(br, 3, 3);
 			p->drawEllipse(-3, -3, 6, 6);
@@ -495,7 +496,9 @@ SchematicScene* ElementGraphics::scene() const
 QRectF ElementGraphics::boundingRect() const
 {itested();
 	if(auto pp=dynamic_cast<Painting const*>(_e)){
-		return QRectF_(pp->bounding_rect().toRectF());
+		auto rr = pp->bounding_rect().toRectF();
+		trace2("br", rr, _e->label());
+		return rr;
 	}else{ untested();
 		return QRectF();
 	}

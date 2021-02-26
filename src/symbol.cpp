@@ -223,6 +223,10 @@ void Symbol::paint(ViewPainter* p) const
 			p->setPen(QPen(Qt::black,2));
 			p->drawEllipse(x-1, y-1, 2, 2);
 		}else{itested();
+#ifdef DO_TRACE
+			p->setPen(QPen(Qt::blue,3));
+			p->drawEllipse(x-1, y-1, 3, 3);
+#endif
 		}
 	}
 }
