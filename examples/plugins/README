@@ -14,7 +14,7 @@ Try
 $ qucs -a ./hello_world |& grep hello
 hello world
 
-$ qucs -a ./red_wires -i ../schematics/bandpass.sch
+$ qucs -a ./red_wire -i ../schematics/bandpass.sch
 
 == Your own plugin
 

@@ -1,5 +1,6 @@
 
 HDR = \
+	action.h \
 	ap.h \
 	c_comand.h \
 	command.h \

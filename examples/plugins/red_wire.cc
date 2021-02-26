@@ -36,6 +36,10 @@ namespace{
 class Wires : public SubcktBase{
 private:
 	Port& port(unsigned){ throw "unreachable";}
+
+private: // painting
+	rect_t bounding_rect() const{unreachable(); return rect_t(0, 0, 0, 0);}
+	void paint(ViewPainter*) const{unreachable();}
 };
 /*--------------------------------------------------------------------------*/
 class Wire : public Symbol, public Conductor {
@@ -53,7 +57,7 @@ private: // Element
 	Wire* clone() const override{
 		return new Wire(*this);
 	}
-	QDialog* schematicWidget(QucsDoc*) const override;
+	Widget* schematicWidget(QucsDoc*) const override;
 	void paint(ViewPainter*) const override;
 	rect_t bounding_rect() const override;
 
@@ -68,7 +72,7 @@ private:
 	bool isInterior(pos_t const&) const;
 
 private: // Symbol
-	void setParameter(std::string const& name, std::string const& value) override;
+	void set_param_by_name(std::string const& name, std::string const& value) override;
 	std::string paramValue(std::string const& name) const override;
 	bool showLabel() const override{ return false; }
 	void expand() override;
@@ -354,11 +358,10 @@ Symbol* Wire::newUnion(Symbol const* s) const
 	return nullptr;
 }
 /*--------------------------------------------------------------------------*/
-QDialog* Wire::schematicWidget(QucsDoc* Doc) const
+Widget* Wire::schematicWidget(QucsDoc* Doc) const
 { untested();
-	trace0("Component::editElement");
 	incomplete();
-//	return new WireDialog(Doc); // memory leak?
+//	this is just a demo wire without widget.
 	return nullptr;
 }
 /*--------------------------------------------------------------------------*/
@@ -421,20 +424,20 @@ std::string Wire::paramValue(std::string const& n) const
 	}
 }
 // ----------------------------------------------------------------
-void Wire::setParameter(std::string const& n, std::string const& v)
+void Wire::set_param_by_name(std::string const& n, std::string const& v)
 {
 	if(n=="nx"){
 		nx = v;
 	}else if(n=="ny"){
 		ny = v;
 	}else if(n=="$vflip"){ untested();
-		Symbol::setParameter(n, v);
+		Symbol::set_param_by_name(n, v);
 		_scale = abs(_scale) * atoi(v.c_str());
 	}else if(n=="$angle"){ untested();
-		Symbol::setParameter(n, v);
+		Symbol::set_param_by_name(n, v);
 		trace4("new angle", angle(), cx(), cy(), _scale);
 	}else if(n=="$hflip"){ untested();
-		Symbol::setParameter(n, v);
+		Symbol::set_param_by_name(n, v);
 		int tmp = atoi(v.c_str());
 		assert(tmp==1);
 	}else if(n=="delta"){
@@ -461,7 +464,7 @@ void Wire::setParameter(std::string const& n, std::string const& v)
 		_has_netname = (v != "");
 		_netname = v;
 	}else{
-		Symbol::setParameter(n, v);
+		Symbol::set_param_by_name(n, v);
 	}
 }
 // ----------------------------------------------------------------
