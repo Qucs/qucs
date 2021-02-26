@@ -1,0 +1,6 @@
+octave scripts
+
+Mainly reading qucsator datasets and some plotting routines.
+
+It does not use qucs really, but there is a widget in Qucs that presents an
+octave command line interpreter.

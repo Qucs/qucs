@@ -4,7 +4,6 @@
 SUBDIRS = \
 	. \
 	bitmaps \
-	octave \
 	tests
 
 CPP_SRC = \
@@ -91,7 +90,6 @@ DIALG_MOCHEADERS = \
 	labeldialog.h \
 	librarydialog.h \
 	loaddialog.h \
-	matchdialog.h \
 	newprojdialog.h \
 	packagedialog.h \
 	qucssettingsdialog.h \
@@ -151,7 +149,6 @@ DIALOG_SRC = \
 	labeldialog.cpp \
 	librarydialog.cpp \
 	loaddialog.cpp \
-	matchdialog.cpp \
 	newprojdialog.cpp \
 	packagedialog.cpp \
 	qucssettingsdialog.cpp \

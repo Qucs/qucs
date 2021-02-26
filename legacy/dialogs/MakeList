@@ -1,5 +1,12 @@
 
-	spicedialog.cpp \
-	digisettingsdialog.cpp \
-	digisettingsdialog.h \
-	vasettingsdialog.h
+TARGET = dialogs
+
+QT_PLUGIN_SRC = \
+	digisettingsdialog.cc \
+	vasettingsdialog.cc \
+	matchdialog.cc
+
+DOES_NOT_COMPILE_YET = \
+	spicedialog.cc
+
+EXTRA_DIST = ${QT_PLUGIN_SRC:%.cc=%.h}

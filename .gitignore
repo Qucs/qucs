@@ -26,6 +26,7 @@ INSTALL
 depcomp
 aclocal.m4
 install-sh
+ltmain.sh
 compile
 config.guess
 config.h
@@ -40,6 +41,7 @@ Makefile
 Makefile.in
 missing
 qucs/qucs.real
+autom4te.cache
 
 # generated man pages
 *.1

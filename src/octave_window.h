@@ -3,6 +3,9 @@
     email                : michael.margraf@alumni.tu-berlin.de
  ***************************************************************************/
 
+/// NO LICENSE GIVEN ///
+// can we assume GPLv2+?
+
 #ifndef OCTAVE_WINDOW_H
 #define OCTAVE_WINDOW_H
 

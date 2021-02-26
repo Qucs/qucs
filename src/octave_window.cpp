@@ -2,9 +2,13 @@
     copyright            : (C) 2010 by Michael Margraf
     email                : michael.margraf@alumni.tu-berlin.de
  ***************************************************************************/
+
+/// NO LICENSE GIVEN ///
+// can we assume GPLv2+?
 #include "octave_window.h"
 #include "qucs_app.h"
 #include "misc.h"
+#include "platform.h"
 
 #include <QSize>
 #include <QColor>
@@ -95,11 +99,7 @@ bool OctaveWindow::startOctave()
   connect(&octProcess, SIGNAL(readyReadStandardError()), SLOT(slotDisplayErr()));
   connect(&octProcess, SIGNAL(readyReadStandardOutput()), SLOT(slotDisplayMsg()));
   connect(&octProcess, SIGNAL(finished(int)), SLOT(slotOctaveEnded(int)));
-#ifdef __MINGW32__
-  QString sep(";"); // path separator
-#else
-  QString sep(":");
-#endif
+  QString sep(PATHSEP);
 
   // append process PATH, othewise Octave does not find gnuplot
   QProcessEnvironment env = QProcessEnvironment::systemEnvironment();

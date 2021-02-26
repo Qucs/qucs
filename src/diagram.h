@@ -12,11 +12,10 @@
  *                                                                         *
  ***************************************************************************/
 
-#ifndef DIAGRAM_H
-#define DIAGRAM_H
+#ifndef QUCS_DIAGRAM_H
+#define QUCS_DIAGRAM_H
 
-//#include "graph.h"
-#include "../legacy/marker.h"
+#include "../legacy/marker.h" // BUG
 #include "element.h"
 #include "viewpainter.h"
 #include "exception.h"

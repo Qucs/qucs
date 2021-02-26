@@ -55,7 +55,7 @@
 #include "qucssettingsdialog.h"
 #include "searchdialog.h"
 #include "labeldialog.h"
-#include "matchdialog.h"
+//#include "matchdialog.h"
 #include "simmessage.h"
 #include "exportdialog.h"
 #include "octave_window.h"

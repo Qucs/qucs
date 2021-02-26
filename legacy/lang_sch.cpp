@@ -1227,144 +1227,28 @@ std::string LegacySchematicLanguage::find_type_in_string(istream_t& c) const
 		trace1("findType diagramvariable", c.fullString());
 		return "diagramvariable";
 	}else{
-		trace3("findType", c.fullString(), typestring, type.at(0));
 	}
 
 	// untangle non-commands.
 	if(typestring == ".AC"){
-		return "AC";
+		typestring = "AC";
 	}else if(typestring == ".TR"){
-		return "TR";
+		typestring = "TR";
 	}else if(typestring == ".DC"){
-		return "DC";
+		typestring = "DC";
 	}else if(typestring == ".SP"){
-		return "SP";
+		typestring = "SP";
 	}else if(typestring == ".SW"){
-		return "SW";
+		typestring = "SW";
 	}else if(typestring == "Diagrams>"){
-		return "<Diagrams>";
+		typestring = "<Diagrams>";
 	}else{
-		return typestring;
 	}
+
+	trace1("legsch::findType", typestring);
+	return typestring;
 
 }
-/*--------------------------------------------------------------------------*/
-// findProto??
-#if 0
-Element* LegacySchematicLanguage::getComponentFromName(QString& Line) const
-{ untested();
-	qDebug() << "component?" << Line;
-	Element *e = nullptr;
-
-	Line = Line.trimmed();
-	if(Line.at(0) != '<') { untested();
-		throw "notyet_exception"
-			"Format Error:\nWrong line start!";
-	}else{ untested();
-	}
-
-	QString type = Line.section (' ',0,0); // component type
-	type.remove (0,1);    // remove leading "<"
-	std::string typestring = type.toStdString();
-
-///	// TODO: get rid of the exceptional cases.
-	if (type == "Eqn"){ untested();
-		incomplete();
-		// c = new Equation ();
-	}else if (type == "SPICE"){ untested();
-		incomplete();
-		// c = new SpiceFile();
-	}else if (type.left (6) == "SPfile" && type != "SPfile"){ untested();
-		incomplete();
-		// backward compatible
-		//c = new SParamFile ();
-		//c->Props.getLast()->Value = type.mid (6);
-	}
-
-	// BUG: findProto
-	Element const* s = symbol_dispatcher[typestring];
-	if(!s){ untested();
-		s = element_dispatcher[typestring];
-	}else{ untested();
-	}
-
-	trace2("get", typestring, s);
-
-	if(Component const* sc=dynamic_cast<Component const*>(s)){ untested();
-		// legacy component
-		Element* k = sc->clone(); // memory leak?
-		e = prechecked_cast<Element*>(k);
-
-		// set_type?
-	}else if(TaskElement const* sc=dynamic_cast<TaskElement const*>(s)){ untested();
-		trace1("TaskElement", Line);
-		Element* k = sc->clone(); // memory leak?
-		e = prechecked_cast<Element*>(k);
-	}else if(typestring.size() == 0){ untested();
-		incomplete();
-	}else if(typestring.c_str()[0] == '.'){ untested();
-		std::string type = typestring.substr(1); // drop dot.
-		e = element_dispatcher.clone(type);
-		if(auto ce = dynamic_cast<TaskElement*>(e)){ untested();
-			// should use setType lower down. drop name.
-			ce->setTypeName(QString::fromStdString(type));
-		}else{ untested();
-			untested();
-		}
-	}else if(s){ untested();
-		e = s->clone_instance();
-	}else{ untested();
-	}
-
-	if(e) { untested();
-		trace1("e bug", Line);
-		incomplete();
-		loadElement_(Line, e);
-		// setType()
-	}else{ untested();
-		qDebug() << "error with" << type;
-		message(QucsMsgWarning,
-			"Format Error:\nUnknown component!\n"
-			"%1\n\n"
-			"Do you want to load schematic anyway?\n"
-			"Unknown components will be replaced \n"
-			"by dummy subcircuit placeholders.");
-
-		incomplete();
-		// c = new Subcircuit();
-		// // Hack: insert dummy File property before the first property
-		// int pos1 = Line.indexOf('"');
-		// QString filestr = QString("\"%1.sch\" 1 ").arg(cstr);
-		// Line.insert(pos1,filestr);
-	}
-
-
-#if 1 // legacy cruft?
-	// BUG: don't use schematic.
-	if(LegacyTaskElement* cmd=command(e)){ untested();
-		p->loadtaskElement(Line, cmd);
-	}else if(TaskElement* cmd=command(e)){ untested();
-		incomplete();
-	}else if(Component* c=component(e)){ untested();
-		if(!p->parseComponentObsoleteCallback(Line, c)) { untested();
-			QMessageBox::critical(0, QObject::tr("Error"),
-					QObject::tr("Format Error:\nWrong 'component' line format!"));
-			delete e;
-			return 0;
-		}else{ untested();
-		}
-		cstr = c->name();   // is perhaps changed in "recreate" (e.g. subcircuit)
-		int x = c->tx, y = c->ty;
-		c->setSchematic (p);
-		c->recreate(0);
-		c->obsolete_name_override_hack(cstr);
-		c->tx = x;  c->ty = y;
-	}
-#endif
-
-	return e;
-}
-#endif
 /*--------------------------------------------------------------------------*/
 // was Schematic::loadProperties
 #if 0
@@ -1583,15 +1467,20 @@ Dispatcher<Command>::INSTALL pw2(&commandDispatcher, "<Wires>", &dw0); // ...
 /*--------------------------------------------------------------------------*/
 class DescriptionCommand : public Command{
 	void do_it(istream_t& cs, SchematicModel* s) override{
-		auto fullstring = cs.fullString();
+		auto description = cs.fullString();
 
-		while(cs.more()){ untested();
+		while(true) {
+			// this may throw. And it should, if Description is not closed
 			cs.read_line();
-			if(cs.umatch("</Description>")){ untested();
+
+			description += cs.fullString(); // newline?
+			if(cs.umatch("</Description>")) {
 				break;
-			}else{ untested();
+			}else{
 			}
 		}
+		
+		trace1("Description", description);
 	}
 }d5;
 Dispatcher<Command>::INSTALL pd0(&commandDispatcher, "Description>", &d5); // BUG

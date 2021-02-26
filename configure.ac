@@ -831,7 +831,8 @@ AC_CONFIG_FILES([
     contrib/hidpi/Makefile:autotools/hidpi.in
     include/Makefile:autotools/include.in
     legacy/Makefile:autotools/legacy.in
-    legacy/components/Makefile
+    legacy/components/Makefile:autotools/components.in
+    legacy/dialogs/Makefile:autotools/dialogs.in
     legacy/action/Makefile:autotools/action.in
     legacy/qucsator/Makefile:autotools/qucsator.in
     legacy/paintings/Makefile:autotools/paintings.in
@@ -864,7 +865,6 @@ AC_CONFIG_FILES([
     src/Makefile:autotools/src.in
     src/action/Makefile
     src/bitmaps/Makefile
-    src/octave/Makefile
     src/tests/Makefile
     tests/Makefile
     translations/Makefile
