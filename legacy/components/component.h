@@ -124,6 +124,7 @@ protected: // Symbol
 
 protected:
   void setParameter(unsigned i, std::string const&) override;
+	static const int num_symbol_params;
 	static const int num_component_params;
 
 

@@ -31,8 +31,8 @@
     <Pac P1 1 -20 190 18 -26 0 1 "1" 1 "100 Ohm" 1 "0 dBm" 0 "1 GHz" 0 "26.85" 0>
     <GND * 5 -20 240 0 0 0 0>
     <GND * 5 870 190 0 0 0 0>
-    <Sub Balun1 1 160 150 -10 34 0 0 "IdealBalun.sch" 0>
-    <Sub Balun2 1 820 150 -40 34 1 2 "IdealBalun.sch" 0>
+    <Sub Balun1 1 160 150 -10 0 0 0 "IdealBalun.sch" 0>
+    <Sub Balun2 1 820 150 -40 0 1 2 "IdealBalun.sch" 0>
     <GND * 5 80 210 0 0 0 0>
     <Vdc V1 1 80 160 18 -26 0 1 "1V" 1>
     <VProbe Pr1 1 920 130 28 -31 0 0>

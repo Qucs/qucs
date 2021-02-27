@@ -131,6 +131,8 @@ private:
   Component* _comp; // should be a copy?
 };
 
+// yikes. and yikes.
+const int Component::num_symbol_params = 4;
 const int Component::num_component_params = 2; // tx and ty.
 
 Component::Component(Component const& p)
@@ -138,8 +140,6 @@ Component::Component(Component const& p)
     mirroredX(p.mirroredX),
     _rotated(p._rotated),
     isActive(p.isActive),
-    //cx(p.cx),
-    //cy(p.cy),
     tx(p.tx),
     ty(p.ty),
     x1(p.x1),
@@ -549,7 +549,7 @@ void Component::setParameter(index_t pos, std::string const& v)
   trace2("Component::setParameter", pos, v);
   if(pos==Symbol::paramCount()){
     // tx
-  }else if(pos==Symbol::paramCount()+1){
+  }else if(pos < Symbol::paramCount()+num_component_params){
     // ty
   }else if(pos<Symbol::paramCount()){ untested();
     Symbol::setParameter(pos, v);
@@ -1522,7 +1522,7 @@ unsigned Component::paramCount() const
   return Props.count() + Symbol::paramCount() + num_component_params;
 }
 /*--------------------------------------------------------------------------*/
-std::string Component::paramValue(unsigned i) const
+std::string Component::paramValue(index_t i) const
 {
   unsigned s = Symbol::paramCount();
   if(i<Symbol::paramCount()){
@@ -1532,7 +1532,7 @@ std::string Component::paramValue(unsigned i) const
   }else if(i==s+1){
     return std::to_string(tx);
   }else{
-    assert(i>=s+num_component_params);
+    assert(i>=s + num_component_params);
     i -= (s + num_component_params);
 
     assert( Props.at(i));
@@ -1540,7 +1540,7 @@ std::string Component::paramValue(unsigned i) const
   }
 }
 /*--------------------------------------------------------------------------*/
-std::string Component::paramName(unsigned i) const
+std::string Component::paramName(index_t i) const
 {
   unsigned s = Symbol::paramCount();
   if(i<Symbol::paramCount()){

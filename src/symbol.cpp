@@ -268,6 +268,7 @@ bool Symbol::paramIsPrintable() const
 /*--------------------------------------------------------------------------*/
 unsigned Symbol::paramCount() const
 {
+	return 4; // TODO:  angle mfactor ...?
 	return 2; // TODO:  vflip hflip angle mfactor ...?
 	return 6;
 }
@@ -279,6 +280,10 @@ std::string Symbol::paramValue(unsigned i) const
 		return std::to_string(cx());
 	case 1:
 		return std::to_string(cy());
+	case 2:
+		return std::to_string(_vflip);
+	case 3:
+		return std::to_string(_hflip);
 	default:
 		throw qucs::ExceptionCantFind(label(), std::to_string(i), "param values");
 	}
@@ -292,17 +297,25 @@ std::string Symbol::paramName(unsigned i) const
 		return "$xposition";
 	case 1:
 		return "$yposition";
+	case 2:
+		return "$vflip";
+	case 3:
+		return "$hflip";
 	default:
 		throw qucs::ExceptionCantFind(label(), std::to_string(i), "param names");
 	}
 }
 /*--------------------------------------------------------------------------*/
-void Symbol::setParameter(unsigned n, std::string const& v)
+void Symbol::setParameter(index_t n, std::string const& v)
 {
 	if(n==0){ // xpos
 		setPosition(pos_t(atoi(v.c_str()), cy()));
 	}else if(n==1){ // ypos
 		setPosition(pos_t(cx(), atoi(v.c_str())));
+	}else if(n==2){ // vflip
+		_vflip = atoi(v.c_str()); // TODO: parameters.
+	}else if(n==3){ // hflip
+		_hflip = atoi(v.c_str()); // TODO: parameters.
 	}else if(n<Symbol::paramCount()){
 		unreachable();
 	}else{

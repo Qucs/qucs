@@ -1,17 +1,8 @@
 # Qucs
 ## declarations 1
-### item Lib:Ideal:Notch2
-# sckt Notch2
-.Def:Ideal_Notch2 _net0 _net3 fc="1E3" Q="1"
-VCVS:SRC1 _net0 _net1 gnd gnd G="1" T="0"
-VCVS:SRC2 _net2 _net3 gnd gnd G="1" T="0"
-R:R1 _net1 _net2 R="R" Temp="26.85" Tc1="0.0" Tc2="0.0" Tnom="26.85"
-L:L1 gnd _net4 L="L" I=""
-Eqn:Eqn1 wc="2*pi*fc" C="1E-6" L="1/(wc*wc*C)" R="1/Q*sqrt(L/C)" Export="yes"
-C:C1 _net4 _net2 C="C" V="0"
-.Def:End
+# unresolved symbol (empty)
 ## declarations end
 
 Vdc:V1 _net4 gnd U="1 V"
 R:R1 _net0 gnd R="50 Ohm" Temp="26.85" Tc1="0.0" Tc2="0.0" Tnom="26.85"
-Sub:IB1 fc="1E3" Q="1" Type="Ideal_Notch2"
+(empty):IB1

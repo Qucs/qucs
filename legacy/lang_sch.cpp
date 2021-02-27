@@ -465,7 +465,7 @@ static void printArgs(Symbol const* sym, ostream_t& s)
 	}
 
 	int show = atoi(sym->paramValue("$param_display").c_str());
-	for(unsigned i=0; i<sym->paramCount(); ++i){
+	for(index_t i=0; i<sym->paramCount(); ++i){
 		trace3("display", i, show, sym->paramName(i));
 		// if(sym->paramIsPrintabl(i))
 		std::string n = sym->paramName(i);
@@ -546,9 +546,14 @@ void LegacySchematicLanguage::printSymbol(Symbol const* sym, ostream_t& s) const
 			int vflip = atoi(sym->paramValue("$vflip").c_str());
 			assert(hflip);
 			assert(vflip);
-			if(hflip==1){
-				s << (1-vflip) / 2;
-				s << " " << (angle/90) % 4;
+			if(hflip==1){ untested();
+				int a = (angle/90) % 4;
+				if(a==3){
+					s << "0 1";
+				}else{
+					s << (1-vflip) / 2;
+					s << " " << (angle/90) % 4;
+				}
 			}else if(vflip==1){ untested();
 				assert(hflip==-1);
 				s << "1";
@@ -559,10 +564,10 @@ void LegacySchematicLanguage::printSymbol(Symbol const* sym, ostream_t& s) const
 				s << "0";
 				s << " TODO" << ((180+angle)/90) % 4;
 			}
-		}else{
-			if(c->mirroredX){
+		}else{ untested();
+			if(c->mirroredX){ untested();
 				s << "1";
-			}else{
+			}else{ untested();
 				s << "0";
 			}
 			s << " " << QString::number(c->rotated());
@@ -835,6 +840,7 @@ Symbol* LegacySchematicLanguage::parseSymbol(istream_t& cs, Symbol* sym) const
 			}else{
 				int vflip = 1-2*nn;
 				assert(vflip==1 || vflip==-1);
+				trace2("spbn $vflip", vflip, sym->label());
 				sym->set_param_by_name("$vflip", std::to_string(vflip));
 			}
 
@@ -959,8 +965,18 @@ static Component* parseComponentObsoleteCallback(const QString& _s, Component* c
 
 	{
 		n  = s.section(' ',7,7);    // mirror y axis
-		if(n.toInt(&ok) == 1){
-			c->mirrorX();
+		int nn = n.toInt(&ok);
+		if(!ok){
+			incomplete();
+			// throw?
+		}else if(!sym->legacyTransformHack()){
+			int vflip = 1-2*nn;
+			assert(vflip==1 || vflip==-1);
+			trace2("spbn $vflip", vflip, sym->label());
+			sym->set_param_by_name("$vflip", std::to_string(vflip));
+		}else if(nn == 1){
+			c->mirrorX(); // yikes.
+		}else{
 		}
 		if(!ok) return NULL;
 
@@ -1019,7 +1035,7 @@ static Component* parseComponentObsoleteCallback(const QString& _s, Component* c
 
 	// set parameters.
 	Property *p1;
-	unsigned position=4;
+	unsigned position = 6; // what?
 	for(p1 = c->Props.first(); p1 != 0; p1 = c->Props.next()) {
 		z++;
 		n = s.section('"',z,z);    // property value. gaah parse over and over again?
