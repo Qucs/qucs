@@ -6,7 +6,7 @@ R #(.$xposition(360), .$yposition(160), .$vflip(1), .$hflip(1), .$tx(-26), .$ty(
 C #(.$xposition(440), .$yposition(190), .$vflip(1), .$hflip(1), .$tx(17), .$ty(17), .C(1.98944 mF), .V(), .Symbol(neutral)) C1(net_440_220, net_440_160);
 VCVS #(.$xposition(260), .$yposition(190), .$vflip(1), .$hflip(1), .$tx(-26), .$ty(-26), .G(1e8), .T(0)) SRC1(net_230_160, net_290_160, net_290_220, net_230_220);
 Port #(.$xposition(160), .$yposition(160), .$vflip(1), .$hflip(1), .$tx(-23), .$ty(-23), .Num(1), .Type(analog)) P1(P1, net_160_160);
-Port #(.$xposition(610), .$yposition(160), .$vflip(1), .$hflip(1), .$tx(4), .$ty(4), .Num(3), .Type(analog)) P3(P3, net_610_160);
+Port #(.$xposition(610), .$yposition(160), .$vflip(-1), .$hflip(1), .$tx(4), .$ty(4), .Num(3), .Type(analog)) P3(P3, net_610_160);
 Port #(.$xposition(160), .$yposition(220), .$vflip(1), .$hflip(1), .$tx(-23), .$ty(-23), .Num(2), .Type(analog)) P2(P2, net_160_220);
 GND #(.$xposition(600), .$yposition(220), .$vflip(1), .$hflip(1), .$tx(0), .$ty(0)) anonymous_gnd_hack_1(net_600_220);
 wire #(.$xposition(390), .$yposition(160), .$vflip(1), .$hflip(1)) noname(net_390_160, net_440_160);

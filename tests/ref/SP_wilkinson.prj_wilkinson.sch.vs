@@ -1,6 +1,6 @@
 // VS::printSubckt main
 module main();
-Pac #(.$xposition(60), .$yposition(110), .$vflip(1), .$hflip(1), .$tx(-74), .$ty(-74), .Num(1), .Z(50 Ohm), .P(0 dBm), .f(1 GHz), .Temp(26.85)) P1(net_60_80, net_60_140);
+Pac #(.$xposition(60), .$yposition(110), .$vflip(-1), .$hflip(1), .$tx(-74), .$ty(-74), .Num(1), .Z(50 Ohm), .P(0 dBm), .f(1 GHz), .Temp(26.85)) P1(net_60_80, net_60_140);
 GND #(.$xposition(60), .$yposition(140), .$vflip(1), .$hflip(1), .$tx(0), .$ty(0)) anonymous_gnd_hack_0(net_60_140);
 TLIN #(.$xposition(130), .$yposition(80), .$vflip(1), .$hflip(1), .$tx(-26), .$ty(-26), .Z(50 Ohm), .L(100 mm), .Alpha(0 dB), .Temp(26.85)) Line1(net_100_80, net_160_80);
 TLIN #(.$xposition(230), .$yposition(40), .$vflip(1), .$hflip(1), .$tx(-26), .$ty(-26), .Z(70.7 Ohm), .L(75 mm), .Alpha(0 dB), .Temp(26.85)) Line2(net_200_40, net_260_40);

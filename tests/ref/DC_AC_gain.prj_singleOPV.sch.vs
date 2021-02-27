@@ -7,7 +7,7 @@ Port #(.$xposition(50), .$yposition(400), .$vflip(1), .$hflip(1), .$tx(-23), .$t
 Port #(.$xposition(540), .$yposition(230), .$vflip(1), .$hflip(1), .$tx(4), .$ty(4), .Num(5), .Type()) P6(P6, net_540_230);
 Port #(.$xposition(50), .$yposition(230), .$vflip(1), .$hflip(1), .$tx(-23), .$ty(-23), .Num(1), .Type()) P1(P1, net_50_230);
 Port #(.$xposition(50), .$yposition(170), .$vflip(1), .$hflip(1), .$tx(-23), .$ty(-23), .Num(2), .Type()) P2(P2, net_50_170);
-Idc #(.$xposition(90), .$yposition(270), .$vflip(1), .$hflip(1), .$tx(18), .$ty(18), .I(5 uA)) I1(net_90_300, net_90_240);
+Idc #(.$xposition(90), .$yposition(270), .$vflip(-1), .$hflip(1), .$tx(18), .$ty(18), .I(5 uA)) I1(net_90_300, net_90_240);
 wire #(.$xposition(200), .$yposition(100), .$vflip(1), .$hflip(1)) noname(net_200_100, net_210_100);
 wire #(.$xposition(170), .$yposition(130), .$vflip(1), .$hflip(1)) noname(net_170_130, net_170_140);
 wire #(.$xposition(310), .$yposition(130), .$vflip(1), .$hflip(1)) noname(net_310_130, net_310_160);

@@ -1,9 +1,9 @@
 // VS::printSubckt main
 module main();
-Pac #(.$xposition(80), .$yposition(90), .$vflip(1), .$hflip(1), .$tx(-74), .$ty(-74), .Num(1), .Z(50 Ohm), .P(0 dBm), .f(1 GHz), .Temp(26.85)) P1(net_80_60, net_80_120);
+Pac #(.$xposition(80), .$yposition(90), .$vflip(-1), .$hflip(1), .$tx(-74), .$ty(-74), .Num(1), .Z(50 Ohm), .P(0 dBm), .f(1 GHz), .Temp(26.85)) P1(net_80_60, net_80_120);
 Pac #(.$xposition(300), .$yposition(90), .$vflip(1), .$hflip(1), .$tx(18), .$ty(18), .Num(2), .Z(50 Ohm), .P(0 dBm), .f(1 GHz), .Temp(26.85)) P2(net_300_60, net_300_120);
 Pac #(.$xposition(260), .$yposition(180), .$vflip(1), .$hflip(1), .$tx(18), .$ty(18), .Num(3), .Z(50 Ohm), .P(0 dBm), .f(1 GHz), .Temp(26.85)) P3(net_260_150, net_260_210);
-Pac #(.$xposition(120), .$yposition(160), .$vflip(1), .$hflip(1), .$tx(-74), .$ty(-74), .Num(4), .Z(50 Ohm), .P(0 dBm), .f(1 GHz), .Temp(26.85)) P4(net_120_130, net_120_190);
+Pac #(.$xposition(120), .$yposition(160), .$vflip(-1), .$hflip(1), .$tx(-74), .$ty(-74), .Num(4), .Z(50 Ohm), .P(0 dBm), .f(1 GHz), .Temp(26.85)) P4(net_120_130, net_120_190);
 GND #(.$xposition(80), .$yposition(120), .$vflip(1), .$hflip(1), .$tx(0), .$ty(0)) anonymous_gnd_hack_0(net_80_120);
 GND #(.$xposition(120), .$yposition(190), .$vflip(1), .$hflip(1), .$tx(0), .$ty(0)) anonymous_gnd_hack_1(net_120_190);
 GND #(.$xposition(300), .$yposition(120), .$vflip(1), .$hflip(1), .$tx(0), .$ty(0)) anonymous_gnd_hack_2(net_300_120);

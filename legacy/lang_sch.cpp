@@ -546,14 +546,15 @@ void LegacySchematicLanguage::printSymbol(Symbol const* sym, ostream_t& s) const
 			int vflip = atoi(sym->paramValue("$vflip").c_str());
 			assert(hflip);
 			assert(vflip);
-			if(hflip==1){ untested();
-				int a = (angle/90) % 4;
-				if(a==3){
-					s << "0 1";
-				}else{
-					s << (1-vflip) / 2;
-					s << " " << (angle/90) % 4;
-				}
+			int a = (angle/90) % 4;
+			
+			// only vflip in legacy format. convert.
+			// (this is implemented somewhere else already...)
+			if(hflip==-1 and vflip==-1 and a==3){ untested();
+				s << "0 1";
+			}else if(hflip==1){ untested();
+				s << (1-vflip) / 2;
+				s << " " << (angle/90) % 4;
 			}else if(vflip==1){ untested();
 				assert(hflip==-1);
 				s << "1";

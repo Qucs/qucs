@@ -11,7 +11,7 @@ C #(.$xposition(500), .$yposition(170), .$vflip(1), .$hflip(1), .$tx(17), .$ty(1
 OpAmp #(.$xposition(210), .$yposition(260), .$vflip(1), .$hflip(1), .$tx(-26), .$ty(-26), .G(1e6), .Umax(15 V)) OP1(net_180_280, net_180_240, net_250_260);
 OpAmp #(.$xposition(380), .$yposition(280), .$vflip(1), .$hflip(1), .$tx(-26), .$ty(-26), .G(1e6), .Umax(15 V)) OP2(net_350_300, net_350_260, net_420_280);
 Eqn #(.$xposition(340), .$yposition(40), .$vflip(1), .$hflip(1), .$tx(-23), .$ty(-23), .Gain(dB(Out.v/In.v)), .Export(yes)) Eqn1();
-R #(.$xposition(130), .$yposition(340), .$vflip(1), .$hflip(1), .$tx(-50), .$ty(-50), .R(10k), .Temp(26.85), .Tc1(0.0), .Tc2(0.0), .Tnom(26.85), .Symbol(european)) R1(net_130_370, net_130_310);
+R #(.$xposition(130), .$yposition(340), .$vflip(-1), .$hflip(1), .$tx(-50), .$ty(-50), .R(10k), .Temp(26.85), .Tc1(0.0), .Tc2(0.0), .Tnom(26.85), .Symbol(european)) R1(net_130_370, net_130_310);
 GND #(.$xposition(40), .$yposition(250), .$vflip(1), .$hflip(1), .$tx(0), .$ty(0)) anonymous_gnd_hack_1(net_40_250);
 Vac #(.$xposition(40), .$yposition(220), .$vflip(1), .$hflip(1), .$tx(18), .$ty(18), .U(1uV), .f(1 GHz), .Phase(0), .Theta(0)) V1(net_40_190, net_40_250);
 //AC1

@@ -8,9 +8,9 @@ Eqn #(.$xposition(450), .$yposition(320), .$vflip(1), .$hflip(1), .$tx(-28), .$t
 Eqn #(.$xposition(450), .$yposition(440), .$vflip(1), .$hflip(1), .$tx(-31), .$ty(-31), .Ql(200), .Qc(5000), .f0(14e6), .Export(yes)) Eqn1();
 //AC1
 GND #(.$xposition(100), .$yposition(220), .$vflip(1), .$hflip(1), .$tx(0), .$ty(0)) anonymous_gnd_hack_2(net_100_220);
-Pac #(.$xposition(100), .$yposition(150), .$vflip(1), .$hflip(1), .$tx(-122), .$ty(-122), .Num(1), .Z(50 Ohm), .P(0 dBm), .f(1 GHz), .Temp(-273.15)) P2(net_100_120, net_100_180);
+Pac #(.$xposition(100), .$yposition(150), .$vflip(-1), .$hflip(1), .$tx(-122), .$ty(-122), .Num(1), .Z(50 Ohm), .P(0 dBm), .f(1 GHz), .Temp(-273.15)) P2(net_100_120, net_100_180);
 GND #(.$xposition(630), .$yposition(290), .$vflip(1), .$hflip(1), .$tx(0), .$ty(0)) anonymous_gnd_hack_3(net_630_290);
-Vdc #(.$xposition(630), .$yposition(250), .$vflip(1), .$hflip(1), .$tx(-75), .$ty(-75), .U(1.1 V)) V1(net_630_220, net_630_280);
+Vdc #(.$xposition(630), .$yposition(250), .$vflip(-1), .$hflip(1), .$tx(-75), .$ty(-75), .U(1.1 V)) V1(net_630_220, net_630_280);
 wire #(.$xposition(630), .$yposition(90), .$vflip(1), .$hflip(1)) noname(net_630_90, net_630_140);
 wire #(.$xposition(590), .$yposition(140), .$vflip(1), .$hflip(1)) noname(net_590_140, net_630_140);
 wire #(.$xposition(590), .$yposition(200), .$vflip(1), .$hflip(1)) noname(net_590_200, net_630_200);

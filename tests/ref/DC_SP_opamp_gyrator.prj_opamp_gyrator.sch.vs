@@ -5,8 +5,8 @@ C #(.$xposition(210), .$yposition(150), .$vflip(1), .$hflip(1), .$tx(-26), .$ty(
 Pac #(.$xposition(70), .$yposition(160), .$vflip(1), .$hflip(1), .$tx(18), .$ty(18), .Num(1), .Z(50 Ohm), .P(0 dBm), .f(1 GHz), .Temp(26.85)) P1(net_70_130, net_70_190);
 GND #(.$xposition(70), .$yposition(190), .$vflip(1), .$hflip(1), .$tx(0), .$ty(0)) anonymous_gnd_hack_1(net_70_190);
 OpAmp #(.$xposition(290), .$yposition(130), .$vflip(1), .$hflip(1), .$tx(-26), .$ty(-26), .G(1e6), .Umax(15 V)) OP1(net_260_150, net_260_110, net_330_130);
-R #(.$xposition(210), .$yposition(110), .$vflip(1), .$hflip(1), .$tx(-26), .$ty(-26), .R(10 Ohm), .Temp(26.85), .Tc1(0.0), .Tc2(0.0), .Tnom(26.85), .Symbol(european)) R1(net_180_110, net_240_110);
-R #(.$xposition(260), .$yposition(250), .$vflip(1), .$hflip(1), .$tx(-57), .$ty(-57), .R(500k), .Temp(26.85), .Tc1(0.0), .Tc2(0.0), .Tnom(26.85), .Symbol(european)) R2(net_260_280, net_260_220);
+R #(.$xposition(210), .$yposition(110), .$vflip(-1), .$hflip(1), .$tx(-26), .$ty(-26), .R(10 Ohm), .Temp(26.85), .Tc1(0.0), .Tc2(0.0), .Tnom(26.85), .Symbol(european)) R1(net_180_110, net_240_110);
+R #(.$xposition(260), .$yposition(250), .$vflip(-1), .$hflip(1), .$tx(-57), .$ty(-57), .R(500k), .Temp(26.85), .Tc1(0.0), .Tc2(0.0), .Tnom(26.85), .Symbol(european)) R2(net_260_280, net_260_220);
 GND #(.$xposition(530), .$yposition(160), .$vflip(1), .$hflip(1), .$tx(0), .$ty(0)) anonymous_gnd_hack_2(net_530_160);
 GND #(.$xposition(420), .$yposition(160), .$vflip(1), .$hflip(1), .$tx(0), .$ty(0)) anonymous_gnd_hack_3(net_420_160);
 Pac #(.$xposition(420), .$yposition(130), .$vflip(1), .$hflip(1), .$tx(18), .$ty(18), .Num(2), .Z(50 Ohm), .P(0 dBm), .f(1 GHz), .Temp(26.85)) P2(net_420_100, net_420_160);

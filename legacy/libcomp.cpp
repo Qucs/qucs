@@ -304,7 +304,7 @@ private: // Symbol
 			break;
 		}
 
-		if(_section.Value == ""){ untested();
+		if(_section.Value == ""){
 		}else if(_component.Value == ""){
 		}else if(redo){
 			// BUG: not here.

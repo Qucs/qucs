@@ -15,7 +15,7 @@ L #(.$xposition(350), .$yposition(110), .$vflip(1), .$hflip(1), .$tx(10), .$ty(1
 Vac #(.$xposition(20), .$yposition(270), .$vflip(1), .$hflip(1), .$tx(18), .$ty(18), .U(1 uV), .f(1 GHz), .Phase(0), .Theta(0)) V2(net_20_240, net_20_300);
 C #(.$xposition(280), .$yposition(300), .$vflip(1), .$hflip(1), .$tx(17), .$ty(17), .C(100n), .V(), .Symbol(neutral)) C2(net_280_330, net_280_270);
 GND #(.$xposition(420), .$yposition(230), .$vflip(1), .$hflip(1), .$tx(0), .$ty(0)) anonymous_gnd_hack_4(net_420_230);
-Vdc #(.$xposition(420), .$yposition(200), .$vflip(1), .$hflip(1), .$tx(-60), .$ty(-60), .U(12 V)) V1(net_420_170, net_420_230);
+Vdc #(.$xposition(420), .$yposition(200), .$vflip(-1), .$hflip(1), .$tx(-60), .$ty(-60), .U(12 V)) V1(net_420_170, net_420_230);
 //AC1
 Eqn #(.$xposition(500), .$yposition(200), .$vflip(1), .$hflip(1), .$tx(-23), .$ty(-23), .Gain(dB(Output.v/Input.v)), .Export(yes)) Eqn1();
 wire #(.$xposition(120), .$yposition(180), .$vflip(1), .$hflip(1)) noname(net_120_180, net_120_200);

@@ -664,7 +664,7 @@ std::string Component::paramValue(std::string const& name) const
     return std::to_string(paramDisplay(Props, 2 + Symbol::paramCount()));
   }else if(name=="$mfactor"){
     return isActive?"1":"0";
-  }else{ untested();
+  }else{
     return Symbol::paramValue(name);
   }
 }
@@ -1566,8 +1566,8 @@ Widget* Component::schematicWidget(QucsDoc* Doc) const
 /*--------------------------------------------------------------------------*/
 bool Component::legacyTransformHack() const
 {
-  return true; // messes up paintings and zoom
   return false; // changes (fixes?) schematic dump.
+  return true; // messes up paintings and zoom
 }
 /*--------------------------------------------------------------------------*/
 /*--------------------------------------------------------------------------*/

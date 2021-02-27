@@ -16,7 +16,7 @@ Eqn #(.$xposition(460), .$yposition(380), .$vflip(1), .$hflip(1), .$tx(-25), .$t
 R #(.$xposition(340), .$yposition(70), .$vflip(1), .$hflip(1), .$tx(-26), .$ty(-26), .R(10 kOhm), .Temp(26.85), .Tc1(0.0), .Tc2(0.0), .Tnom(26.85), .Symbol(european)) R1(net_310_70, net_370_70);
 R #(.$xposition(620), .$yposition(70), .$vflip(1), .$hflip(1), .$tx(-26), .$ty(-26), .R(10 kOhm), .Temp(26.85), .Tc1(0.0), .Tc2(0.0), .Tnom(26.85), .Symbol(european)) R4(net_590_70, net_650_70);
 C #(.$xposition(570), .$yposition(280), .$vflip(1), .$hflip(1), .$tx(17), .$ty(17), .C(0.1 uF), .V(), .Symbol(neutral)) C2(net_570_310, net_570_250);
-R #(.$xposition(280), .$yposition(280), .$vflip(1), .$hflip(1), .$tx(15), .$ty(15), .R(1591 Ohm), .Temp(26.85), .Tc1(0.0), .Tc2(0.0), .Tnom(26.85), .Symbol(european)) R3(net_280_250, net_280_310);
+R #(.$xposition(280), .$yposition(280), .$vflip(-1), .$hflip(1), .$tx(15), .$ty(15), .R(1591 Ohm), .Temp(26.85), .Tc1(0.0), .Tc2(0.0), .Tnom(26.85), .Symbol(european)) R3(net_280_250, net_280_310);
 R #(.$xposition(520), .$yposition(210), .$vflip(1), .$hflip(1), .$tx(-26), .$ty(-26), .R(1.59 Ohm), .Temp(26.85), .Tc1(0.0), .Tc2(0.0), .Tnom(26.85), .Symbol(european)) R6(net_490_210, net_550_210);
 wire #(.$xposition(240), .$yposition(150), .$vflip(1), .$hflip(1)) noname(net_240_150, net_280_150);
 wire #(.$xposition(240), .$yposition(210), .$vflip(1), .$hflip(1)) noname(net_240_210, net_280_210);
