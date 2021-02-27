@@ -790,6 +790,11 @@ void SchematicDoc::setParent(QWidget* owner)
         _app, SLOT(slotUpdateUndo(bool)));
     connect(this, SIGNAL(signalRedoState(bool)),
         _app, SLOT(slotUpdateRedo(bool)));
+
+	 // something like this?
+	 // connect(_undoStack, &QUndoStack::canRedoChanged, _app, [=](bool canRedo){App->setRedoEnabled(canRedo);});
+	 // connect(_undoStack, &QUndoStack::canUndoChanged, _app, [=](bool canUndo){App->setUndoEnabled(canUndo);});
+
   // really?
     emit signalUndoState(true);
     emit signalRedoState(false);
