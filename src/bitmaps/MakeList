@@ -172,3 +172,9 @@ ICONS = \
 	big.qucs.xpm \
 	tiny.button.qucs.xpm \
 	tiny.qucs.xpm
+    
+EXTRA_DIST = $(XPMS) $(PNGS) $(ICONS)
+
+# installation of pictures
+picdatadir = ${prefix}/share/qucs/bitmaps
+picdata_DATA = $(EXTRA_DIST)

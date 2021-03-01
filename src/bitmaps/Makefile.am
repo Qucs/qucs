@@ -1,5 +1,3 @@
-EXTRA_DIST = $(PNG) $(XPM)
-
 PNG = \
 	ac_current.png \
 	ac.png \
@@ -247,3 +245,15 @@ XPM = \
 	smallsave.xpm \
 	tiny.button.qucs.xpm \
 	tiny.qucs.xpm
+
+ICON = \
+	big.button.qucs.xpm \
+	big.qucs.xpm \
+	tiny.button.qucs.xpm \
+	tiny.qucs.xpm
+
+EXTRA_DIST = $(XPM) $(PNG) $(ICON)
+
+# installation of pictures
+picdatadir = ${prefix}/share/qucs/bitmaps
+picdata_DATA = $(EXTRA_DIST)
