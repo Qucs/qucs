@@ -33,13 +33,12 @@
 
 #include "diagram.h"
 #include "schematic_model.h"
-#include "diagramdialog.h"
 #include "qucs_app.h"
 #include "mnemo.h"
-// #include "schematic_doc.h"
 #include "platform.h"
 #include "qio.h"
 #include "misc.h"
+#include "qt_compat.h"
 
 #include <QTextStream>
 #include <QMessageBox>
@@ -53,6 +52,8 @@
 #include "some_font_stuff.h"
 #include "../legacy/obsolete_paintings.h" // BUG
 #include "graph.h"
+
+namespace qucs {
 
 Diagram::Diagram(Diagram const& p)
   : Element(p),
@@ -120,8 +121,7 @@ Diagram::Diagram(int cx, int cy)
 //  Type = isDiagram;
   GridPen = QPen(Qt::lightGray,0);
 
-  setLabel("diag");
-
+  set_label("diag");
 }
 
 Diagram::~Diagram()
@@ -272,7 +272,7 @@ void Diagram::paintDiagram(ViewPainter *p)
 void Diagram::new_subckt()
 {
 	assert(!_subckt);
-	_subckt = new SchematicModel();
+	_subckt = new ElementList();
 }
 
 void Diagram::paintMarkers(ViewPainter *, bool paintAll)
@@ -1577,6 +1577,7 @@ bool Diagram::load(const QString& Line, istream_t& stream)
     if(s == ("</"+Name+">")){
       return true;  // found end tag ?
     }else if(s.section(' ', 0,0) == "<Mkr") { untested();
+		 incomplete(); // load like variables??
 
       // .......................................................
       // load markers of the diagram
@@ -1586,11 +1587,11 @@ bool Diagram::load(const QString& Line, istream_t& stream)
       // }else{ untested();
       // }
       // assert(pg->parentDiagram() == this);
-      Marker *pm = new Marker(nullptr);
-      if(!pm->load(s)) { untested();
-	delete pm;
-	return false;
-      }
+/// 		 Marker *pm = new Marker(nullptr);
+/// 		 if(!pm->load(s)) { untested();
+/// 			 delete pm;
+/// 			 return false;
+/// 		 }
 //      pg->Markers.append(pm);
       continue;
     }
@@ -2295,7 +2296,7 @@ void Diagram::prepare()
 	}
 }
 
-Widget* Diagram::schematicWidget(QucsDoc* Doc) const
+Widget* Diagram::schematicWidget(Doc* Doc) const
 { untested();
   trace0("Component::editElement");
   incomplete();
@@ -2377,3 +2378,5 @@ void SchematicDoc::actionExportGraphAsCsv()
   File.close();
 }
 #endif
+
+} // qucs

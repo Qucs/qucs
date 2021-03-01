@@ -14,7 +14,19 @@
 #include "qucs_app.h"
 #include "property.h"
 #include "../legacy/obsolete_paintings.h"
+#include "task_element.h"
 
+namespace {
+
+using namespace qucs;
+
+class Digi_Sim : public TaskElement {
+public:
+  Digi_Sim();
+ ~Digi_Sim();
+  Element* clone() const {return new Digi_Sim(*this);}
+  static Element* info(QString&, char* &, bool getNewOne=false);
+};
 
 Digi_Sim::Digi_Sim()
 {
@@ -66,4 +78,6 @@ Element* Digi_Sim::info(QString& Name, char* &BitmapFile, bool getNewOne)
 
   if(getNewOne)  return new Digi_Sim();
   return 0;
+}
+
 }

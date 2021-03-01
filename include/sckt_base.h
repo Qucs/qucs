@@ -16,8 +16,10 @@
 #include "symbol.h"
 #include <vector>
 /*--------------------------------------------------------------------------*/
-// TODO: a symbol is a painting. does it make sense?
-class SubcktBase : public Symbol {
+namespace qucs {
+/*--------------------------------------------------------------------------*/
+// BUG a symbol is a painting. does it make sense?
+class SubcktBase : public Symbol /*COMPONENT*/ {
 public:
 	explicit SubcktBase() {} // HACK
 	~SubcktBase(){
@@ -35,10 +37,10 @@ public:
 	virtual unsigned numPorts() const { return net_nodes(); }
 
 public: // Element
-	SchematicModel const* scope() const {
+	ElementList const* scope() const {
 		return Element::scope();
 	}
-	SchematicModel* scope() {
+	ElementList* scope() {
 		return Element::scope();
 	}
 
@@ -50,8 +52,8 @@ public:
 
 public:
 	virtual bool makes_own_scope()const  {return false;}
-	SchematicModel const* subckt() const{ return _subckt; }
-	SchematicModel* subckt(){ return _subckt; }
+	ElementList const* subckt() const{ return _subckt; }
+	ElementList* subckt(){ return _subckt; }
 	void new_subckt();
 	index_t net_nodes() const{return _ports.size();}
 
@@ -60,6 +62,10 @@ private:
 };
 /*--------------------------------------------------------------------------*/
 std::string net_name(SubcktBase const* s, std::string const& n);
+/*--------------------------------------------------------------------------*/
+} // qucs
+/*--------------------------------------------------------------------------*/
+using qucs::SubcktBase; // transition.
 /*--------------------------------------------------------------------------*/
 /*--------------------------------------------------------------------------*/
 #endif

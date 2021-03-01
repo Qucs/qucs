@@ -9,12 +9,12 @@
 #include "object.h"
 #include "language.h"
 
-class SchematicModel;
+namespace qucs {
 
-// obsolete? DocumentLanguage::parseItem
-class SchematicLanguage : public DocumentLanguage{
+// obsolete? Language::parseItem
+class SchematicLanguage : public Language{
 protected:
-	SchematicLanguage() : DocumentLanguage() {}
+	SchematicLanguage() : Language() {}
 public:
 	virtual ~SchematicLanguage() {}
 };
@@ -31,6 +31,5 @@ void schematicParse(istream_t& s, SchematicSymbol& c, SchematicLanguage const* L
 	}
 }
 #endif
-
-
+}
 #endif

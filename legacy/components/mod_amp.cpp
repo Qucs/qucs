@@ -12,7 +12,7 @@
 
 mod_amp::mod_amp()
 {
-  setLabel("Modular Operational Amplifier verilog device");
+  set_label("Modular Operational Amplifier verilog device");
 
   Props.append (new Property ("GBP", "1e6", false,
     QObject::tr ("Gain bandwidth product (Hz)")));

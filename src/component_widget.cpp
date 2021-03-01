@@ -23,6 +23,9 @@
 #include "schematic_model.h"
 #include "painting.h"
 
+using qucs::ViewPainter;
+using qucs::Element;
+
 // ElementWidget??
 void ComponentWidget::startDrag(Qt::DropActions)
 { untested();
@@ -60,16 +63,16 @@ void ComponentWidget::startDrag(Qt::DropActions)
   }
 }
 
-ComponentListWidgetItem::ComponentListWidgetItem(Element const* e)
+ComponentListWidgetItem::ComponentListWidgetItem(qucs::Element const* e)
 	: _e(e)
 { untested();
 	assert(e);
 	QString File = e->iconBasename();
-	QString Name = QString::fromStdString(e->label());
-	Painting const* p = dynamic_cast<Painting const*>(e);
+	QString Name = QString::fromStdString(e->short_label());
+	qucs::Painting const* p = dynamic_cast<qucs::Painting const*>(e);
 	if(p){
 	}else{
-		trace1("not a painting?", e->label());
+		trace1("not a painting?", e->short_label());
 		return;
 
 	}

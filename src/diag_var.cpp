@@ -19,6 +19,14 @@
 /*--------------------------------------------------------------------------*/
 namespace{
 /*--------------------------------------------------------------------------*/
+using qucs::Data;
+using qucs::CommonData;
+using qucs::ViewPainter;
+using qucs::ElementList;
+using qucs::SubcktBase;
+using qucs::SimOutputDir;
+using qucs::data_dispatcher;
+/*--------------------------------------------------------------------------*/
 class DiagramVariable : public Data {
 public:
 	DiagramVariable() : Data() {}
@@ -72,7 +80,7 @@ private:
 			}
 		}
 	}
-	CommonData const* find_in_scope(SchematicModel const* scope, std::string const& what)
+	CommonData const* find_in_scope(ElementList const* scope, std::string const& what)
 	{
 		trace0("var sckt");
 		assert(scope);
@@ -117,7 +125,7 @@ private:
 #endif
 			return nullptr;
 		}else if(auto d = dynamic_cast<SimOutputDir const*>(where)){itested();
-			trace1("found dir", d->label());
+			trace1("found dir", d->short_label());
 			CommonData const* f=nullptr;
 			for(auto x : *d){itested();
 				f = find_it(x, what);
@@ -135,7 +143,7 @@ private:
 			}else{ untested();
 				return nullptr;
 			}
-		}else if(where->label() != what){itested();
+		}else if(where->short_label() != what){itested();
 			return nullptr;
 		}else if(auto x=dynamic_cast<CommonData const*>(where)){itested();
 			return x;
@@ -152,7 +160,7 @@ private:
 	std::string _style;
 	std::string _xaxisno;
 }v0;
-Dispatcher<Data>::INSTALL p0(&dataDispatcher, "diagramvariable", &v0);
+Dispatcher<Data>::INSTALL p0(&data_dispatcher, "diagramvariable", &v0);
 /*--------------------------------------------------------------------------*/
 void DiagramVariable::set_param_by_index(index_t i, std::string const& value)
 {itested();

@@ -28,7 +28,7 @@
 namespace{
 
 class g: public Command{
-	void do_it(istream_t& cs, SchematicModel*) override{
+	void do_it(istream_t& cs, ElementList*) override{
 
 		cs >> "startgui";
 		std::string filename;
@@ -65,8 +65,8 @@ class g: public Command{
 			a.installTranslator( &tor );
 		}
 
-		Module::registerModules (); // BUG
-		auto QucsMain = new QucsApp();
+		qucs::Module::registerModules (); // BUG
+		auto QucsMain = new qucs::App();
 
 		QucsMain->show();
 		auto fn = QString_(filename);
@@ -77,5 +77,5 @@ class g: public Command{
 		//saveApplSettings(QucsMain);
 	}
 }p;
-DISPATCHER<CMD>::INSTALL d0(&commandDispatcher, "startgui", &p);
+DISPATCHER<CMD>::INSTALL d0(&command_dispatcher, "startgui", &p);
 }// namespace

@@ -30,6 +30,7 @@ class QPainter;
 class Wire;
 class Node;
 
+namespace qucs {
 
 // seems to be a ConductorLabel? or just a Symbol?!
 class WireLabel : public Element {
@@ -74,5 +75,7 @@ private:
   bool isHighlighted;
 
 };
+
+} // qucs
 
 #endif

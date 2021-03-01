@@ -27,6 +27,7 @@
 /*--------------------------------------------------------------------------*/
 class SchematicScene;
 /*--------------------------------------------------------------------------*/
+namespace qucs {
 /*--------------------------------------------------------------------------*/
 // A graphics element on the screen.
 // sort of proxy for Element
@@ -55,7 +56,7 @@ public:
 	SchematicScene* scene() const; // really?
 
 private:
-	SchematicModel* model();
+	qucs::ElementList* model();
 
 public: // QGraphicsItem
 	void update();
@@ -114,9 +115,11 @@ private:
 Element* element(ElementGraphics*);
 Element const* element(ElementGraphics const*);
 /*--------------------------------------------------------------------------*/
+} // qucs
 /*--------------------------------------------------------------------------*/
 #include <QEvent> // TODO: check if ItemEvent is needed at all, if so,
 // move to a different place
+namespace qucs {
 /*--------------------------------------------------------------------------*/
 class ItemEvent: public QEvent{
 public:
@@ -128,5 +131,6 @@ private:
 	ElementGraphics& _item;
 };
 /*--------------------------------------------------------------------------*/
+} // qucs
 /*--------------------------------------------------------------------------*/
 #endif

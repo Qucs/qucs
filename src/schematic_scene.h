@@ -33,15 +33,22 @@
 #include "qt_compat.h"
 #include "viewpainter.h"
 
-class Element;
-class ElementGraphics;
-class Node;
-class Place;
-class QucsDoc;
-class SchematicModel;
-class Symbol;
 
-// TODO: merge schematic mouse actions into this.
+namespace qucs{
+	class Element;
+	class ElementGraphics;
+	class Node;
+	class Place;
+	class Doc;
+	class ElementList;
+	class Symbol;
+}
+
+using qucs::Symbol;
+using qucs::ElementGraphics;
+
+// TODO: move to gui?
+
 class SchematicScene : public QGraphicsScene
 {
 Q_OBJECT
@@ -59,8 +66,8 @@ public:
   }
 #endif
 
-  void attachToModel(Element*);
-  Element* detachFromModel(Element*);
+  void attachToModel(qucs::Element*);
+  qucs::Element* detachFromModel(qucs::Element*);
   void connectPorts(Symbol* c);
 
 public: //places
@@ -71,11 +78,11 @@ public: //places
 
 private:
 public: // hack?
-  SchematicModel* scope();
+  qucs::ElementList* scope();
 
 public:
-  QGraphicsItem& addElement(Element* x);
-  SchematicModel const* scope() const{
+  QGraphicsItem& addElement(qucs::Element* x);
+  qucs::ElementList const* scope() const{
 	  return const_cast<SchematicScene*>(this)->scope();
   }
 
@@ -91,7 +98,7 @@ public:
 //  Node const* nodeAt(pos_t) const;
   bool isConductor(pos_t) const;
 
-  void possiblyRename(Element* e) const;
+  void possiblyRename(qucs::Element* e) const;
 
 public: // wrap items
   QList<ElementGraphics*> selectedItems() const;
@@ -109,8 +116,8 @@ private:
   void selectAll(bool v=true);
 
 protected:
-	QucsDoc* doc();
-	QucsDoc const* doc() const;
+	qucs::Doc* doc();
+	qucs::Doc const* doc() const;
 
 private:
   bool event(QEvent* e) override;
@@ -120,9 +127,4 @@ protected:
   void drawBackground(QPainter *painter, const QRectF& rect);
 };
 
-// #include "qt_compat.h"
-// #include "element.h" // TODO: move implementation to .cpp
-//                      // also: this relates to scene, but is this the right place?
-// 							// (having other problems, still)
-// 
 #endif /* SCHEMATICSCENE_H_ */

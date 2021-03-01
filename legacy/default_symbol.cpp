@@ -114,7 +114,7 @@ public:
 		for(unsigned i=1; i<10; i++){
 			auto s = d0.clone();
 			s->set_param_by_name("$numports", std::to_string(i));
-			s->setLabel(prefix + std::to_string(i));
+			s->set_label(prefix + std::to_string(i));
 			trace1("default symbol",  s->label());
 			auto d = new disp_t(&symbol_dispatcher, s->label(), s);
 			_sstash.push_back(s);

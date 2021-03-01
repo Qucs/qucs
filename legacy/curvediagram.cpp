@@ -31,11 +31,39 @@
 
 #include <QMessageBox>
 
-#include "curvediagram.h"
 #include "qucs_app.h"
 #include "misc.h"
 #include "some_font_stuff.h"
 #include "obsolete_paintings.h"
+#include "diagram.h"
+
+namespace{
+
+using namespace qucs;
+
+class CurveDiagram : public Diagram  {
+public: 
+  CurveDiagram(int _cx=0, int _cy=0);
+ ~CurveDiagram();
+
+  Element* clone() const{ return new CurveDiagram(); }
+
+  static Element* info(QString&, char* &, bool getNewOne=false);
+  int  calcDiagram();
+  void calcLimits();
+  void calcCoordinate(const double*, const double*, const double*, float*, float*, Axis const*) const;
+  void finishMarkerCoordinates(float&, float&) const;
+  bool insideDiagram(float, float) const;
+
+public: // legacy cruft.
+  QList<Graph *>  Graphs;
+  QList<Arc *>    Arcs;
+  QList<Line *>   Lines;
+  QList<Text *>   Texts;
+
+protected:
+  void clip(Graph::iterator&) const;
+};
 
 CurveDiagram::CurveDiagram(int _cx, int _cy) : Diagram(_cx, _cy)
 {
@@ -256,4 +284,6 @@ Element* CurveDiagram::info(QString& Name, char* &BitmapFile, bool getNewOne)
 
   if(getNewOne)  return new CurveDiagram();
   return 0;
+}
+
 }

@@ -18,7 +18,7 @@
 #include "qucsdoc.h"
 #include <QWidget>
 
-SyntaxHighlighter::SyntaxHighlighter(QucsDoc *textEdit)
+SyntaxHighlighter::SyntaxHighlighter(qucs::Doc *textEdit)
     : QSyntaxHighlighter(dynamic_cast<QWidget*>(textEdit)) // yikes.
 {
 #if 0

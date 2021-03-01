@@ -14,6 +14,8 @@
 #include "netlist.h"
 #include "net.h"
 
+namespace qucs {
+
 Net* NetList::newNet()
 {
 	unsigned idx;
@@ -28,7 +30,7 @@ Net* NetList::newNet()
 		assert(_l[idx]->size() == size_t(-1));
 		_l[idx]->inc_nodes();
 		assert(_l[idx]->pos() == idx);
-		_l[idx]->setLabel("");
+		_l[idx]->set_label("");
 	}
 
 	assert(_l[idx]->size() == 0);
@@ -52,3 +54,5 @@ void NetList::delNet(Net* n)
 	assert(n==_l[idx]);
 	_g.push(idx);
 }
+
+} // qucs

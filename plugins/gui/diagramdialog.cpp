@@ -121,7 +121,7 @@ public:
 	}
 
 public:
-	void setScope(SchematicModel const* s){ _scope = s; }
+	void setScope(ElementList const* s){ _scope = s; }
 
 	void refresh(){ untested();
 		for(Element const* elt : *_scope){ untested();
@@ -172,7 +172,7 @@ private:
 	}
 
 public:
-	SchematicModel const* _scope{nullptr};
+	ElementList const* _scope{nullptr};
 };
 
 // BUG: disentangle different diagram types

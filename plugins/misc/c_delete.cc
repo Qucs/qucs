@@ -27,7 +27,7 @@
 #define INTERFACE
 #include "qucs_globals.h"
 #include "qio.h"
-#define CARD_LIST SchematicModel
+#define CARD_LIST ElementList
 #define CS istream_t
 
 #include "qucs_globals.h"
@@ -127,7 +127,7 @@ private:
     }
   }
 } p1;
-DISPATCHER<CMD>::INSTALL d1(&commandDispatcher, "delete|rm", &p1);
+DISPATCHER<CMD>::INSTALL d1(&command_dispatcher, "delete|rm", &p1);
 /*--------------------------------------------------------------------------*/
 }
 /*--------------------------------------------------------------------------*/

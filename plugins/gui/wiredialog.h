@@ -32,12 +32,11 @@
 #include <QPluginLoader>
 /*--------------------------------------------------------------------------*/
 namespace {
-// Q_NAMESPACE // not needed?
+using namespace qucs;
 /*--------------------------------------------------------------------------*/
 class WireDialog : public QDialog, public SchematicDialog {
     Q_OBJECT
-//    Q_PLUGIN_METADATA(IID "...." FILE "somestuff.json")
-    Q_INTERFACES(SchematicDialog)
+    // Q_INTERFACES(SchematicDialog)
 public:
   explicit WireDialog();
   WireDialog(WireDialog const&);

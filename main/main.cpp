@@ -51,13 +51,12 @@
 
 static const std::string default_simulator="qucsator"; // FIXME: get from rc? maybe from environment?
 
-
 #define CMD Command
 
 void setSimulator(char const* name)
 { untested();
-  auto const* d = dataDispatcher[name];
-  if(auto s=dynamic_cast<Simulator const*>(d)){ untested();
+  auto const* d = data_dispatcher[name];
+  if(auto s=dynamic_cast<qucs::Simulator const*>(d)){ untested();
     QucsSettings.setSimulator(s);
   }else{ untested();
     // message(5, "cannot find simulator " + std::string(name));
@@ -119,7 +118,7 @@ void doNetlist(QString schematic_fn, std::string netlist, Command* fmt)
 	Symbol* root = symbol_dispatcher.clone("schematic_root");
 	assert(root);
 	root->set_param_by_name("$filename", sfn); // BUG: PATH.
-	root->setLabel(sfn);
+	root->set_label(sfn);
 	auto o = dynamic_cast<SubcktBase*>(root);
 	assert(o);
 	assert(o->scope());
@@ -412,7 +411,7 @@ int main(int argc, char *argv[])
     }
   }
 
-  Command const* cmd = commandDispatcher[netlang_name];
+  Command const* cmd = command_dispatcher[netlang_name];
   if(!cmd){
     message(5, "no language " + netlang_name);
     exit(1);
@@ -422,7 +421,7 @@ int main(int argc, char *argv[])
 
   if(fmt){
     // just use it.
-  }else if(dataDispatcher[netlang_name]){ untested();
+  }else if(data_dispatcher[netlang_name]){ untested();
     incomplete();
     // ask a simulator.
 //    fmt = sd->netLang();
@@ -448,7 +447,7 @@ int main(int argc, char *argv[])
       fprintf(stderr, "Error: Expected output file.\n");
       result = -1;
     }else if (dump_flag) {
-      auto cmd = commandDispatcher[netlang_name];
+      auto cmd = command_dispatcher[netlang_name];
       auto fmt = prechecked_cast<DocumentFormat*>(cmd);
       if(!fmt){ untested();
 	qDebug() << "no lang" << QString::fromStdString(netlang_name);

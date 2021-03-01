@@ -40,15 +40,6 @@
 # define USE_SCROLLVIEW
 #endif
 
-// this is also in schematic.h. that's a moc issue.
-#ifdef USE_SCROLLVIEW
-# define SchematicBase Q3ScrollView
-#else
-# define SchematicBase QGraphicsView
-class ElementGraphics;
-#endif
-
-
 // strictly, this should also work with qt4.
 
 // partly implement Q3Ptrlist, see Qt3 documentation.

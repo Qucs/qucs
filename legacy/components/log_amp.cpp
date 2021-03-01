@@ -12,7 +12,7 @@
 
 log_amp::log_amp()
 {
-  setLabel("Logarithmic Amplifier verilog device");
+  set_label("Logarithmic Amplifier verilog device");
 
   Props.append (new Property ("Kv", "1.0", false,
     QObject::tr ("scale factor")));

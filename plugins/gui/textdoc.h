@@ -48,7 +48,9 @@ namespace {
 #define DEV_MASK_TYP 0xFF00
 #define DEV_DEF      0x0200 // default value
 
-class TextDoc : public QPlainTextEdit, public QucsDoc {
+using namespace qucs;
+
+class TextDoc : public QPlainTextEdit, public Doc {
 	Q_OBJECT
 public:
 	TextDoc();
@@ -56,7 +58,7 @@ public:
 	void setParent(QWidget* w) override;
 	void  setName (const QString&) override;
 	Widget* clone() const override{ untested();
-		QucsDoc* wd = new TextDoc();
+		Doc* wd = new TextDoc();
 		return wd;
 	}
 
@@ -121,7 +123,7 @@ private: // actions. here?
   void actionEditPaste(QAction*) override;
   void actionZoomIn(QAction*) override;
 
-private: // QucsDoc
+private: // Doc
   void slotEditActivate(QAction*) override;
   void slotEditDelete(QAction*) override;
   void slotEditUndo(QAction*) override{
@@ -165,7 +167,7 @@ inline void TextDoc::actionInsertEntity(QAction*)
 
 TextDoc::TextDoc()
    : QPlainTextEdit(),
-     QucsDoc()
+     Doc()
 {
 }
 

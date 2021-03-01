@@ -33,7 +33,7 @@ static Module::INSTALL pp("lumped", &d0);
 
 TLine::TLine() : Component()
 {
-  setLabel("ideal transmission line");
+  set_label("ideal transmission line");
   setTypeName("TLIN");
 
   Lines.append(new Line(-30,  0, 30,  0,QPen(Qt::darkBlue,2)));

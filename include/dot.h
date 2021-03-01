@@ -27,6 +27,8 @@
 #include "element.h"
 #define DEV_DOT Dot
 /*--------------------------------------------------------------------------*/
+namespace qucs {
+/*--------------------------------------------------------------------------*/
 class DEV_DOT : public Element {
 private:
   std::string	_s;
@@ -40,19 +42,19 @@ private: // override virtual
   std::string	dev_type()const		{untested();return "dotcard";}
 public: // override
   DEV_DOT* clone()const override {return new DEV_DOT(*this);}
-  SchematicModel* scope() override;
+  ElementList* scope() override;
 public:
   void set(Command const* c) {_c = c;}
   void set(const std::string& S) {_s = S;}
-  void set_scope(SchematicModel* s){_scope = s;} // yikes.
+  void set_scope(ElementList* s){_scope = s;} // yikes.
   const std::string& s()const {return _s;}
   Command const* c() const {return _c;}
 private:
-  SchematicModel* _scope;
+  ElementList* _scope;
   Command const* _c{nullptr};
 };
 /*--------------------------------------------------------------------------*/
-inline SchematicModel* DEV_DOT::scope()
+inline ElementList* DEV_DOT::scope()
 {
   if(_scope){
     return _scope;
@@ -61,6 +63,9 @@ inline SchematicModel* DEV_DOT::scope()
   }
 }
 /*--------------------------------------------------------------------------*/
+} // qucs
+/*--------------------------------------------------------------------------*/
+using qucs::Dot; // transition
 /*--------------------------------------------------------------------------*/
 #endif
 // vim:ts=8:sw=2:noet:

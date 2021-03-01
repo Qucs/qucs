@@ -26,14 +26,17 @@
 #include <QString>
 
 class QWidget;
-class QucsDoc;
+
+namespace qucs{
+class Doc;
+}
 
 class ImageWriter
 {
 public:
   ImageWriter (QString lastfile);
   virtual ~ImageWriter ();
-  int print(QucsDoc const*);
+  int print(qucs::Doc const*);
   void noGuiPrint(QWidget*, QString printFile, QString color);
 
   QString getLastSavedFile();

@@ -30,6 +30,8 @@
 
 namespace{
 
+using namespace qucs;
+
 class LIB : public Command{
 public:
 	LIB(){
@@ -44,9 +46,9 @@ public:
 #endif
 	}
 private:
-	void do_it(istream_t&, SchematicModel* scope) override;
-	void load_single(std::string what, SchematicModel* scope);
-	void stash(std::string const& t, Symbol* ssym, SchematicModel* scope) {
+	void do_it(istream_t&, ElementList* scope) override;
+	void load_single(std::string what, ElementList* scope);
+	void stash(std::string const& t, Symbol* ssym, ElementList* scope) {
 		auto i = new Dispatcher<Symbol>::INSTALL(&symbol_dispatcher, t, ssym);
 		_stash.push_back(i);
 	}
@@ -54,9 +56,9 @@ private:
 	std::vector<Dispatcher<Symbol>::INSTALL*> _stash;
 	std::vector<Module::INSTALL*> _mod;
 }l;
-Dispatcher<Command>::INSTALL p(&commandDispatcher, "loadlegacylib", &l);
+Dispatcher<Command>::INSTALL p(&command_dispatcher, "loadlegacylib", &l);
 
-void LIB::load_single(std::string what, SchematicModel* scope)
+void LIB::load_single(std::string what, ElementList* scope)
 {
 	QString libPath = QString_(what);
 	libPath.chop(4); // remove extension
@@ -81,9 +83,9 @@ void LIB::load_single(std::string what, SchematicModel* scope)
 		}else{
 		}
 
-		auto D = languageDispatcher["legacy_lib"];
+		auto D = language_dispatcher["legacy_lib"];
 		auto L_ = dynamic_cast<SchematicLanguage const*>(D);
-		auto C = commandDispatcher["leg_sch"];
+		auto C = command_dispatcher["leg_sch"];
 		auto L = dynamic_cast<DocumentFormat const*>(C);
 		assert(L);
 
@@ -101,7 +103,7 @@ void LIB::load_single(std::string what, SchematicModel* scope)
 			auto ssym = prechecked_cast<SubcktBase*>(sym);
 			std::string t = "Lib:" + parsedlib.name.toStdString() + ":" + c.name.toStdString();
 
-			sym->setLabel(c.name.toStdString());
+			sym->set_label(c.name.toStdString());
 
 			assert(ssym);
 			try{
@@ -123,7 +125,7 @@ void LIB::load_single(std::string what, SchematicModel* scope)
 			Symbol* sym = symbol_dispatcher.clone("LegacyParamset");
 			sym->set_param_by_name("modelstring", c.modelString.toStdString());
 			std::string t = "P:" + parsedlib.name.toStdString() + ":" + c.name.toStdString();
-			sym->setLabel(t);
+			sym->set_label(t);
 
 			if(symbol_dispatcher[type]){
 				sym->setTypeName(type);
@@ -141,7 +143,7 @@ void LIB::load_single(std::string what, SchematicModel* scope)
 }
 
 
-void LIB::do_it(istream_t& cs, SchematicModel* scope)
+void LIB::do_it(istream_t& cs, ElementList* scope)
 {
 	cs >> "loadlegacylib";
 	std::string what;

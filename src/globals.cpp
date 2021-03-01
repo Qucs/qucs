@@ -4,13 +4,17 @@
  ***************************************************************************/
 #include "qucs_globals.h"
 
+namespace qucs{
+
 Dispatcher<Diagram> diagram_dispatcher;
-Dispatcher<Command> commandDispatcher;
+Dispatcher<Command> command_dispatcher;
 Dispatcher<Symbol> symbol_dispatcher;
-Dispatcher<Data> dataDispatcher;
-Dispatcher<DocumentLanguage> languageDispatcher;
+Dispatcher<Data> data_dispatcher;
+Dispatcher<Language> language_dispatcher;
 Dispatcher<Element> element_dispatcher;
 Dispatcher<Widget> widget_dispatcher;
 
 // use command_dispatcher?
 Dispatcher<Action> action_dispatcher;
+
+}

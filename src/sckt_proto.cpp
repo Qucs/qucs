@@ -19,15 +19,17 @@
 #include "qucs_globals.h"
 #include <memory>
 #include "common_sckt.h"
-
-typedef unsigned index_t;
 /*--------------------------------------------------------------------------*/
+/*--------------------------------------------------------------------------*/
+namespace qucs {
+/*--------------------------------------------------------------------------*/
+	class Node;
 /*--------------------------------------------------------------------------*/
 CommonSubckt comms(CC_STATIC_);
 /*--------------------------------------------------------------------------*/
 std::string CommonSubckt::port_value(unsigned i) const
 {
-	trace2("port_value", label(), i);
+	trace2("port_value", short_label(), i);
 	Port const& p = port(i);
 	return p.nodeLabel();
 }
@@ -37,7 +39,7 @@ pos_t CommonSubckt::portPosition(index_t i) const
 	// TODO: find a port connected to the node at position i..
 	//  (maybe use precalc?)
 	std::string n = port_value(i);
-	SchematicModel const* s = subckt();
+	ElementList const* s = subckt();
 
 	if(n==""){
 		incomplete();
@@ -69,7 +71,15 @@ pos_t CommonSubckt::portPosition(index_t i) const
 	return pos_t(0, 0);
 }
 /*--------------------------------------------------------------------------*/
+} // qucs
+/*--------------------------------------------------------------------------*/
 namespace {
+/*--------------------------------------------------------------------------*/
+using qucs::Port;
+using qucs::Node;
+using qucs::ViewPainter;
+using qucs::CommonSubckt;
+using qucs::CommonComponent;
 /*--------------------------------------------------------------------------*/
 class SubcktProto : public SubcktBase {
 private:
@@ -82,16 +92,16 @@ public:
 
 	virtual void build() { incomplete(); } // needed??
 	bool makes_own_scope()const override { return true;}
-	SchematicModel* scope() override;
+	ElementList* scope() override;
 
 public: // repeat (why?!)
-	SchematicModel const* scope() const {
+	ElementList const* scope() const {
 		auto m = const_cast<SubcktProto*>(this);
 		return m->scope();
 	}
 private:
 	Port& port(index_t) override;
-//	SchematicModel const* scope() const override { return &sm; }
+//	ElementList const* scope() const override { return &sm; }
 //
 private: // bug, feature? is this a Symbol??
 	rect_t bounding_rect() const{ return rect_t();};
@@ -113,14 +123,14 @@ private: // Symbol
 	bool is_device() const override{return false;}
 
 private: // internal
-	SchematicModel* subckt() { untested();
+	ElementList* subckt() { untested();
 		CommonComponent* cc = mutable_common();
 		assert(cc);
 		auto cs = prechecked_cast<CommonSubckt*>(cc);
 		assert(cs);
 		return cs->subckt();
 	}
-	SchematicModel const* subckt() const{ untested();
+	ElementList const* subckt() const{ untested();
 		auto s=const_cast<SubcktProto*>(this);
 		return s->scope();
 	}
@@ -135,7 +145,7 @@ public:
 
 private:
 //	Element const* _instance; // why?
-	//SchematicModel sm;
+	//ElementList sm;
 }d0;
 static Dispatcher<Symbol>::INSTALL p(&symbol_dispatcher, "subckt_proto", &d0);
 /*--------------------------------------------------------------------------*/
@@ -177,7 +187,7 @@ pos_t SubcktProto::portPosition(index_t i) const
 {
 #if 1
 	std::string n = portName(i);
-	SchematicModel const* s = scope();
+	ElementList const* s = scope();
 
 	if(s){
 //		return subckt()->portValue(i)->position();
@@ -226,7 +236,7 @@ SubcktProto::SubcktProto(Element const*)
 //	assert(dynamic_cast<Symbol const*>(sym->owner())); ///!!!
 }
 /*--------------------------------------------------------------------------*/
-SchematicModel* SubcktProto::scope()
+ElementList* SubcktProto::scope()
 {
 	CommonComponent* cc = mutable_common();
 	assert(cc);

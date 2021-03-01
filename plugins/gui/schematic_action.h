@@ -17,23 +17,22 @@
 #include "doc_actions.h"
 #include "schematic_edit.h"
 /*--------------------------------------------------------------------------*/
-class QucsDoc;
-/*--------------------------------------------------------------------------*/
+using namespace qucs;
 // merge into scene altogether?
 class SchematicActions : public MouseActions{
 public:
-	explicit SchematicActions(QucsDoc*);
+	explicit SchematicActions(qucs::Doc*);
 	~SchematicActions();
 
 private: // MouseActions
 	// void handle(QEvent*) override;
-	void setControls(QucsDoc* ctx);
+	void setControls(qucs::Doc* ctx);
 	// void setParent(QWidget* ctx);
 	void executeCommand(QUndoCommand* c) override;
 	void stash_toolbar(QAction* p);
 
 protected: // Doc stuff
-//	QucsDoc* doc();
+//	qucs::Doc* doc();
 	SchematicScene const* scene()const;
 	void updateViewport();
 	QPoint snapToGrid(QPointF const&p) const;

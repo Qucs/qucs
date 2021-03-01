@@ -28,7 +28,7 @@
 /*--------------------------------------------------------------------------*/
 #define CS istream_t
 #define CMD Command
-#define CARD_LIST SchematicModel
+#define CARD_LIST ElementList
 /*--------------------------------------------------------------------------*/
 namespace {
 /*--------------------------------------------------------------------------*/
@@ -61,7 +61,7 @@ public:
     }
   }
 } p0;
-DISPATCHER<CMD>::INSTALL d0(&commandDispatcher, "end", &p0);
+DISPATCHER<CMD>::INSTALL d0(&command_dispatcher, "end", &p0);
 #endif
 /*--------------------------------------------------------------------------*/
 #if 0 // missing IO
@@ -78,7 +78,7 @@ public:
     }
   }
 } p1;
-DISPATCHER<CMD>::INSTALL d1(&commandDispatcher, "pause", &p1);
+DISPATCHER<CMD>::INSTALL d1(&command_dispatcher, "pause", &p1);
 #endif
 /*--------------------------------------------------------------------------*/
   // tmp hack
@@ -99,7 +99,7 @@ public:
     }
   }
 } p2;
-DISPATCHER<CMD>::INSTALL d2(&commandDispatcher, "quit|exit", &p2);
+DISPATCHER<CMD>::INSTALL d2(&command_dispatcher, "quit|exit", &p2);
 /*--------------------------------------------------------------------------*/
 #if 0 // later
 class CMD_TEMP : public CMD {
@@ -115,7 +115,7 @@ public:
     }
   }
 } p3;
-DISPATCHER<CMD>::INSTALL d3(&commandDispatcher, "temperature|temp", &p3);
+DISPATCHER<CMD>::INSTALL d3(&command_dispatcher, "temperature|temp", &p3);
 #endif
 /*--------------------------------------------------------------------------*/
 #if 0 // later
@@ -129,7 +129,7 @@ public:
     }
   }
 } p4;
-DISPATCHER<CMD>::INSTALL d4(&commandDispatcher, "title", &p4);
+DISPATCHER<CMD>::INSTALL d4(&command_dispatcher, "title", &p4);
 #endif
 /*--------------------------------------------------------------------------*/
 }

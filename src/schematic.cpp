@@ -402,7 +402,7 @@ float SchematicDoc::textCorr()
 // ---------------------------------------------------
 // use boundingRect instead
 #if 0
-void SchematicModel::sizeOfAll(int& xmin, int& ymin, int& xmax, int& ymax, float) const
+void ElementList::sizeOfAll(int& xmin, int& ymin, int& xmax, int& ymax, float) const
 {itested();
   xmin=INT_MAX;
   ymin=INT_MAX;
@@ -1003,7 +1003,7 @@ bool SchematicDoc::elementsOnGrid()
 #if 0
 void SchematicDoc::switchPaintMode()
 { untested();
-  // BUG. this messes with SchematicModel functions
+  // BUG. this messes with ElementList functions
   // setSymbolMode(!isSymbolMode());
 
   TODO("Fix contentsY");
@@ -1350,7 +1350,7 @@ QString SchematicDoc::getParameter(std::string const& x) const
 // ----------------------------------------------------------------
 
 #if 0
-void SchematicModel::removeNode(Node const* x)
+void ElementList::removeNode(Node const* x)
 { untested();
 #ifndef USE_SCROLLVIEW
   incomplete();

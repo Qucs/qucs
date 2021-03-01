@@ -18,6 +18,7 @@ CPP_SRC = \
 	diag_var.cpp \
 	dispatcher.cc \
 	doc_actions.cpp \
+	e_base.cc \
 	element.cpp \
 	element_graphics.cpp \
 	findbr.cc \
@@ -30,7 +31,6 @@ CPP_SRC = \
 	language.cpp \
 	l_wmatch.cc \
 	marker.cpp \
-	messagedock.cpp \
 	misc.cpp \
 	mnemo.cpp \
 	module.cpp \
@@ -69,13 +69,11 @@ CPP_SRC = \
 	task_element.cpp \
 	u_parameter.cc \
 	viewpainter.cpp \
-	wire.cpp \
-	wirelabel.cpp
+	wire.cpp
 
 QMOCHEADERS = \
 	component_widget.h \
 	doc_actions.h \
-	messagedock.h \
 	mouseaction.h \
 	octave_window.h \
 	projectView.h \
@@ -87,7 +85,6 @@ DIALG_MOCHEADERS = \
 	aboutdialog.h \
 	exportdialog.h \
 	importdialog.h \
-	labeldialog.h \
 	librarydialog.h \
 	loaddialog.h \
 	newprojdialog.h \
@@ -98,7 +95,6 @@ DIALG_MOCHEADERS = \
 	simmessage.h
 
 HDR1 = \
-	diagramdialog.h \
 	actions.h \
 	docfmt.h \
 	dynamic_cc.h \
@@ -122,8 +118,7 @@ HDR1 = \
 	schematic_lang.h \
 	schematic_edit.h \
 	swap.h \
-	some_font_stuff.h \
-	wirelabel.h
+	some_font_stuff.h
 
 # must be installed. but later
 HDR2 = \
@@ -137,16 +132,13 @@ HDR2 = \
 	printerwriter.h \
 	projectView.h \
 	schematic_lang.h \
-	syntax.h \
-	wirelabel.h \
-	wirelabel.h
+	syntax.h
 
 # plugins? lets see
 DIALOG_SRC = \
 	aboutdialog.cpp \
 	exportdialog.cpp \
 	importdialog.cpp \
-	labeldialog.cpp \
 	librarydialog.cpp \
 	loaddialog.cpp \
 	newprojdialog.cpp \
@@ -155,12 +147,6 @@ DIALOG_SRC = \
 	savedialog.cpp \
 	searchdialog.cpp \
 	simmessage.cpp
-
-# dialogs related to components
-# sort out later.
-NOTYET_DIALOG_SRC2 = \
-	diagramdialog.cpp
-
 
 UI_FILES = searchdialog.ui
 

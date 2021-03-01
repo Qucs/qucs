@@ -1,7 +1,7 @@
 
 stuff found that related to "digital simulation"
 
-void SchematicModel::collectDigitalSignals(void)
+void ElementList::collectDigitalSignals(void)
 {
   incomplete();
 // Node *pn=nullptr;

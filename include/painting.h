@@ -11,10 +11,12 @@
  *                                                                         *
  ***************************************************************************/
 
-#ifndef PAINTING_H
-#define PAINTING_H
+#ifndef QUCS_PAINTING_H
+#define QUCS_PAINTING_H
 
 #include "geometry.h"
+
+namespace qucs{
 
 class ViewPainter;
 
@@ -23,5 +25,7 @@ public:
 	virtual rect_t bounding_rect() const = 0;
 	virtual void paint(ViewPainter*) const = 0;
 };
+
+}
 
 #endif

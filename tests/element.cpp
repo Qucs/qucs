@@ -15,6 +15,8 @@
 
 #include "element.h"
 
+using namespace qucs;
+
 struct install_element_stub{
 	install_element_stub(Element* e) : _e(e){}
 	Element* _e;

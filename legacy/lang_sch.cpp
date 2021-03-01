@@ -107,7 +107,7 @@ namespace{
 class LegacySchematicLanguage : public SchematicLanguage {
 public:
 	LegacySchematicLanguage(bool mod=false) : SchematicLanguage(), _lib_mod(mod){
-		setLabel("legacy_schematic");
+		set_label("legacy_schematic");
 	}
 private: // stuff from component.cc
 	void loadProperties(QTextStream& stream, SchematicSymbol& m) const;
@@ -115,7 +115,7 @@ private: // stuff from component.cc
 //	Element* getComponentFromName(QString& Line) const;
 
 private: // overrides
-	void parse_top_item(istream_t& stream, SchematicModel* sckt) const override;
+	void parse_top_item(istream_t& stream, ElementList* sckt) const override;
 	std::string find_type_in_string(istream_t&) const override;
 	Element* parseItem(istream_t&, Element*) const override;
    DEV_DOT* parseCommand(istream_t&, DEV_DOT*) const override;
@@ -137,8 +137,8 @@ private:
    void printDiagram(Diagram const*, ostream_t&) const override;
 	bool _lib_mod; // HACK HACK
 }d0;
-static Dispatcher<DocumentLanguage>::INSTALL
-    p0(&languageDispatcher, "leg_sch|.sch", &d0);
+static Dispatcher<Language>::INSTALL
+    p0(&language_dispatcher, "leg_sch|.sch", &d0);
 /*--------------------------------------------------------------------------*/
 struct set_default{
 	set_default(){
@@ -148,8 +148,8 @@ struct set_default{
 /*--------------------------------------------------------------------------*/
 	 // obsolete??
 LegacySchematicLanguage d1(true);
-static Dispatcher<DocumentLanguage>::INSTALL
-    p1(&languageDispatcher, "legacy_lib", &d1);
+static Dispatcher<Language>::INSTALL
+    p1(&language_dispatcher, "legacy_lib", &d1);
 /*--------------------------------------------------------------------------*/
 /*--------------------------------------------------------------------------*/
 static Component* parseComponentObsoleteCallback(const QString& _s, Component* c);
@@ -233,7 +233,7 @@ static bool obsolete_wireload(Symbol* w, const QString& sc)
 		auto delta = s.section(' ',7,7);
 		auto sth = s.section('"',3,3);
 
-		// nl->setLabel(n, s.section('"',3,3), delta, nx, ny);  // Wire Label
+		// nl->set_label(n, s.section('"',3,3), delta, nx, ny);  // Wire Label
 
 		// not sure what the parameters mean, need to compute label position and
 		// node position from it.
@@ -250,7 +250,7 @@ static bool obsolete_wireload(Symbol* w, const QString& sc)
 	return true;
 }
 /*--------------------------------------------------------------------------*/
-void LegacySchematicLanguage::parse_top_item(istream_t& cmd, SchematicModel* sckt) const
+void LegacySchematicLanguage::parse_top_item(istream_t& cmd, ElementList* sckt) const
 {
 	QString Line;
 	assert(sckt);
@@ -283,7 +283,7 @@ Diagram* LegacySchematicLanguage::parseDiagram(Diagram* d, istream_t& stream)con
 		if(diagram_dispatcher[what.c_str()+1]){
 			trace1("diagram parse", type);
 			assert(d); // BUG
-			d->setLabel(type); // yuck there is no label. put the type in
+			d->set_label(type); // yuck there is no label. put the type in
 		}else{ untested();
 			trace1("diagram doesntexist", type);
 			incomplete();
@@ -306,7 +306,7 @@ Diagram* LegacySchematicLanguage::parseDiagram(Diagram* d, istream_t& stream)con
 			if(cs.umatch(std::string("</")+type+">")){
 				break;
 			}else{
-				trace2("Rect parse", label(), cs.fullstring());
+				trace2("Rect parse", short_label(), cs.fullstring());
 				cs.skipbl();
 				new__instance(cs, d, d->scope());
 			}
@@ -611,7 +611,7 @@ static TaskElement* loadLegacyTaskElement(const QString& _s, LegacyTaskElement* 
 		QString label=s.section(' ',1,1);
 		trace1("TASK NAME", label);
 ///		c->setName(label);//???
-		c->setLabel(label.toStdString());
+		c->set_label(label.toStdString());
 
 		QString n;
 		n  = s.section(' ',2,2);      // isActive
@@ -714,7 +714,7 @@ Place const* place_at(pos_t p, Symbol* m)
 		assert(s);
 		s->setPosition(p);
 		s->setTypeName("place");
-		s->setLabel(ps);
+		s->set_label(ps);
 		s->set_owner(m->owner());
 		s->set_port_by_index(0, ps);
 		scope->push_back(s);
@@ -740,7 +740,7 @@ Element* LegacySchematicLanguage::parseElement(istream_t& cmd, Element* x) const
 	std::string s;
 	cmd >> s;
 
-	x->setLabel(s);
+	x->set_label(s);
 
 	for(index_t i=0; i<x->param_count(); ++i){
 		s = cmd.ctos(">", "=", ">");
@@ -787,7 +787,7 @@ Symbol* LegacySchematicLanguage::parseSymbol(istream_t& cs, Symbol* sym) const
 	}else{
 
 		QString label=s.section(' ',1,1);
-		sym->setLabel(label.toStdString());
+		sym->set_label(label.toStdString());
 
 		QString n;
 		n  = s.section(' ',2,2);      // flags
@@ -875,7 +875,7 @@ Symbol* LegacySchematicLanguage::parseSymbol(istream_t& cs, Symbol* sym) const
 				sym->setParameter(position + offset, n.toStdString());
 			}catch(qucs::ExceptionCantFind const*){ untested();
 				incomplete(); // CS has error messages...
-				message(QucsMsgFatal, "cannot parse Symbol param " +
+				cs.warn(MsgFatal, "cannot parse Symbol param " +
 						std::to_string(position + offset) + " in " + sym->label());
 				throw; // BUG
 			}
@@ -922,7 +922,7 @@ static Component* parseComponentObsoleteCallback(const QString& _s, Component* c
 	QString label=s.section(' ',1,1);
 	c->obsolete_name_override_hack(label); //??
 	trace1("loadComp", label);
-	c->setLabel(label.toStdString());
+	c->set_label(label.toStdString());
 
 	QString n;
 	n  = s.section(' ',2,2);      // flags
@@ -1183,7 +1183,7 @@ Element* LegacySchematicLanguage::parseItem(istream_t& c, Element* e) const
 		// Data here?
 		return parseElement(c, s);
 	}else{ untested();
-		return DocumentLanguage::parseItem(c, e);
+		return Language::parseItem(c, e);
 	}
 
 
@@ -1222,7 +1222,7 @@ DEV_DOT* LegacySchematicLanguage::parseCommand(istream_t& c, DEV_DOT* x) const
 	c.skipbl();
 	c.skip1('<');
 
-	if (!commandDispatcher[s]) {
+	if (!command_dispatcher[s]) {
 		trace3("command miss", s, Line, c.cursor());
 		//    cmd.skip();
 		//    ++here;
@@ -1367,7 +1367,7 @@ void LegacySchematicLanguage::loadProperties(QTextStream& s_in,
 #endif
 /*--------------------------------------------------------------------------*/
 class PaintingCommand : public Command{
-	void do_it(istream_t& cs, SchematicModel* s) override{
+	void do_it(istream_t& cs, ElementList* s) override{
 	  auto fullstring = cs.fullString();
 	  trace1("Section", fullstring);
 
@@ -1375,10 +1375,10 @@ class PaintingCommand : public Command{
 	  auto* sym = dynamic_cast<SubcktBase*>(sc);
 	  assert(sym);
 	  sym->new_subckt();
-	  sym->setLabel(":Paintings:");
+	  sym->set_label(":Paintings:");
 	  assert(s);
 
-	  auto lang = languageDispatcher["legacy_lib"];
+	  auto lang = language_dispatcher["legacy_lib"];
 	  assert(lang);
 
 	  while(true){
@@ -1403,12 +1403,12 @@ class PaintingCommand : public Command{
 	  }
   }
 }d3;
-Dispatcher<Command>::INSTALL _p0(&commandDispatcher, "Paintings", &d3);
-Dispatcher<Command>::INSTALL _p1(&commandDispatcher, "Paintings>", &d3); // BUG
-Dispatcher<Command>::INSTALL _p2(&commandDispatcher, "<Paintings>", &d3); // ...
+Dispatcher<Command>::INSTALL _p0(&command_dispatcher, "Paintings", &d3);
+Dispatcher<Command>::INSTALL _p1(&command_dispatcher, "Paintings>", &d3); // BUG
+Dispatcher<Command>::INSTALL _p2(&command_dispatcher, "<Paintings>", &d3); // ...
 /*--------------------------------------------------------------------------*/
 class DiagramCommand : public Command{
-	void do_it(istream_t& cs, SchematicModel* s) override{
+	void do_it(istream_t& cs, ElementList* s) override{
 		auto fullstring = cs.fullString();
 		trace1("Section", fullstring);
 
@@ -1421,13 +1421,13 @@ class DiagramCommand : public Command{
 			Symbol* sc = symbol_dispatcher.clone("subckt_proto");
 			sym = dynamic_cast<SubcktBase*>(sc);
 			assert(sym);
-			sym->setLabel("main");
+			sym->set_label("main");
 			//sym->set_owner(..);
 			s->pushBack(sym);
 			assert(s);
 		}
 
-		auto lang = languageDispatcher["legacy_lib"];
+		auto lang = language_dispatcher["legacy_lib"];
 		assert(lang);
 
 		Element* e = sym;
@@ -1447,10 +1447,10 @@ class DiagramCommand : public Command{
 		trace1("Diag parse", e->scope()->size());
 	}
 }d4;
-Dispatcher<Command>::INSTALL p5_(&commandDispatcher, "<Diagrams>", &d4); // ...
+Dispatcher<Command>::INSTALL p5_(&command_dispatcher, "<Diagrams>", &d4); // ...
 /*--------------------------------------------------------------------------*/
 class WireCommand : public Command{
-	void do_it(istream_t& cs, SchematicModel* s) override{
+	void do_it(istream_t& cs, ElementList* s) override{
 		auto fullstring = cs.fullString();
 		trace1("WireCommand", fullstring);
 
@@ -1467,13 +1467,13 @@ class WireCommand : public Command{
 
 			sym = dynamic_cast<SubcktBase*>(sc);
 			assert(sym);
-			sym->setLabel("main");
+			sym->set_label("main");
 			//sym->set_owner(..);
 			s->pushBack(sym);
 			assert(s);
 		}
 
-		auto lang = languageDispatcher["legacy_lib"];
+		auto lang = language_dispatcher["legacy_lib"];
 		assert(lang);
 
 		Element* e = sym;
@@ -1499,12 +1499,12 @@ class WireCommand : public Command{
 		}
 	}
 }dw0;
-Dispatcher<Command>::INSTALL pw0(&commandDispatcher, "Wires", &dw0);
-Dispatcher<Command>::INSTALL pw1(&commandDispatcher, "Wires>", &dw0); // BUG
-Dispatcher<Command>::INSTALL pw2(&commandDispatcher, "<Wires>", &dw0); // ...
+Dispatcher<Command>::INSTALL pw0(&command_dispatcher, "Wires", &dw0);
+Dispatcher<Command>::INSTALL pw1(&command_dispatcher, "Wires>", &dw0); // BUG
+Dispatcher<Command>::INSTALL pw2(&command_dispatcher, "<Wires>", &dw0); // ...
 /*--------------------------------------------------------------------------*/
 class DescriptionCommand : public Command{
-	void do_it(istream_t& cs, SchematicModel* s) override{
+	void do_it(istream_t& cs, ElementList* s) override{
 		auto description = cs.fullString();
 
 		while(true) {
@@ -1521,8 +1521,8 @@ class DescriptionCommand : public Command{
 		trace1("Description", description);
 	}
 }d5;
-Dispatcher<Command>::INSTALL pd0(&commandDispatcher, "Description>", &d5); // BUG
-Dispatcher<Command>::INSTALL pd1(&commandDispatcher, "<Description>", &d5); // ...
+Dispatcher<Command>::INSTALL pd0(&command_dispatcher, "Description>", &d5); // BUG
+Dispatcher<Command>::INSTALL pd1(&command_dispatcher, "<Description>", &d5); // ...
 /*--------------------------------------------------------------------------*/
 } // namespace
 /*--------------------------------------------------------------------------*/

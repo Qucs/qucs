@@ -15,7 +15,7 @@
 #ifndef QUCS_DIAGRAM_H
 #define QUCS_DIAGRAM_H
 
-#include "../legacy/marker.h" // BUG
+// #include "../legacy/marker.h" // BUG
 #include "element.h"
 #include "viewpainter.h"
 #include "exception.h"
@@ -48,7 +48,10 @@ class Text;
 class QMouseEvent;
 class istream_t;
 class FontMetrics;
-class Graph;
+
+namespace qucs{
+	class Graph;
+}
 
 struct Axis {
   double  min, max; // least and greatest values of all graph data
@@ -65,7 +68,9 @@ struct Axis {
 
 // yikes.
 #include "graph.h"
-typedef Graph::iterator GraphIterator;
+
+namespace qucs {
+typedef qucs::Graph::iterator GraphIterator;
 
 class Diagram : public Element {
 protected:
@@ -95,7 +100,7 @@ private:
 //   virtual void paint(ViewPainter*) const override; // not necessarily
 //  pos_t center() const override;
 //  void    getCenter(int&, int&); //override; //remove this.
-  Widget* schematicWidget(QucsDoc* Doc) const override;
+  Widget* schematicWidget(Doc* Doc) const override;
   virtual QRectF boundingRect() const; // { unreachable(); return QRectF(); }
 
 protected:
@@ -119,14 +124,14 @@ public: // Parameters
 	virtual void set_param_by_name(std::string const&, std::string const&){unreachable();}
 	virtual void set_param_by_index(index_t, std::string const&);
 	virtual std::string param_value(index_t i) const{ untested();
-		throw qucs::ExceptionCantFind( label(), std::to_string(i), "params");
+		throw qucs::ExceptionCantFind( short_label(), std::to_string(i), "params");
 	}
 	virtual std::string param_name(index_t n) const{ untested();
-		throw qucs::ExceptionCantFind( label(), std::to_string(n), "params");
+		throw qucs::ExceptionCantFind( short_label(), std::to_string(n), "params");
 	}
 
 public:
-	SchematicModel* scope(){ return _subckt; }
+	ElementList* scope(){ return _subckt; }
 
 public: // ??!
   virtual void paintDiagram(ViewPainter* p);
@@ -208,7 +213,9 @@ private:
 protected:
   QString Name; // the label, but sometimes the type. yikes.
 private:
-  SchematicModel* _subckt{nullptr};
+  ElementList* _subckt{nullptr};
 }; // Diagram
+
+} // qucs
 
 #endif

@@ -29,12 +29,27 @@
 
 unsigned gndhackn=0;
 
-class PaintingList;
 class DiagramList;
 class WireList;
 class ComponentList;
 
+namespace qucs{
+	class Conductor;
+	class Painting;
+	class Diagram;
+	class TaskElement;
+}
+
 namespace {
+/* -------------------------------------------------------------------------------- */
+using qucs::Conductor;
+using qucs::Net;
+using qucs::Node;
+using qucs::Element;
+using qucs::Language;
+using qucs::Painting;
+using qucs::TaskElement;
+using qucs::Diagram;
 /* -------------------------------------------------------------------------------- */
 static std::string netLabel(Node const* nn)
 { untested();
@@ -47,13 +62,13 @@ static std::string netLabel(Node const* nn)
 		unreachable();
 		return "(null)";
 	}else if(n->hasLabel()){ untested();
-		return n->label();
+		return n->short_label();
 	}else{ untested();
 		return "_net" + std::to_string(n->pos());
 	}
 }
 /* -------------------------------------------------------------------------------- */
-class Verilog : public DocumentLanguage {
+class Verilog : public Language {
 protected: // in
    DEV_DOT* parseCommand(istream_t&, DEV_DOT*) const override;
 
@@ -78,13 +93,13 @@ private: //DocumentLanguage
 	std::string find_type_in_string(istream_t&) const override;
 	Element* parseItem(istream_t&, Element*) const override;
 }lang_verilog;
-static Dispatcher<DocumentLanguage>::INSTALL p0(&languageDispatcher,
+static Dispatcher<Language>::INSTALL p0(&language_dispatcher,
                                                 "verilog|verilog_nl", &lang_verilog);
 /* -------------------------------------------------------------------------------- */
 class VS : public Verilog {
 public:
 	explicit VS() : Verilog(){
-		setLabel("verilog_schematic");
+		set_label("verilog_schematic");
 	}
 
 private:
@@ -100,13 +115,13 @@ private:
 	void print_ports_short(ostream_t& o, const Symbol* x) const;
 	void print_args(ostream_t&, Symbol const* sym) const;
 } V_;
-static Dispatcher<DocumentLanguage>::INSTALL p1(&languageDispatcher, "verilog_schematic|.vs", &V_);
+static Dispatcher<Language>::INSTALL p1(&language_dispatcher, "verilog_schematic|.vs", &V_);
 /*--------------------------------------------------------------------------*/
 DEV_DOT* Verilog::parseCommand(istream_t& cmd, DEV_DOT* x) const
 {
 	assert(x);
 	x->set(cmd.fullstring());
-	SchematicModel* scope = x->scope();
+	ElementList* scope = x->scope();
 
 	if(scope){
 	}else if(!x->owner()){ untested();
@@ -114,7 +129,7 @@ DEV_DOT* Verilog::parseCommand(istream_t& cmd, DEV_DOT* x) const
 		scope = s->subckt();
 	}else{
 		incomplete();
-		// : &SchematicModel::card_list;
+		// : &ElementList::card_list;
 	}
 
 	cmd.reset();
@@ -191,10 +206,10 @@ static void parse_label(istream_t& cmd, Element* x)
 	assert(x);
 	std::string my_name;
 	if (cmd >> my_name) {
-		x->setLabel(my_name);
+		x->set_label(my_name);
 	}else{ untested();
-		//x->setLabel(x->id_letter() + std::string("_unnamed")); //BUG// not unique
-		x->setLabel(std::string("_unnamed")); //BUG// not unique
+		//x->set_label(x->id_letter() + std::string("_unnamed")); //BUG// not unique
+		x->set_label(std::string("_unnamed")); //BUG// not unique
 		cmd.warn(bDANGER, "label required");
 	}
 }
@@ -407,7 +422,7 @@ void Verilog::print_ports_short(ostream_t& o, const Symbol* x) const
 
 void Verilog::printSubckt(SubcktBase const* x, ostream_t& o) const
 {
-	SchematicModel const* scope = nullptr;
+	ElementList const* scope = nullptr;
 
 	scope = x->scope();
 
@@ -527,7 +542,7 @@ void VS::printSymbol(Symbol const* sym, ostream_t& s) const
 /*--------------------------------------------------------------------------*/
 void VS::printSubckt(SubcktBase const* x, ostream_t& o) const
 {
-	SchematicModel const* scope = nullptr;
+	ElementList const* scope = nullptr;
 	o << "// VS::printSubckt " << x->label() << "\n";
 	Element const* e = x;
 
@@ -571,7 +586,7 @@ void VS::printSubckt(SubcktBase const* x, ostream_t& o) const
 			}
 		}
 
-//		if(auto m=dynamic_cast<SchematicModel const*>(x)){ untested();
+//		if(auto m=dynamic_cast<ElementList const*>(x)){ untested();
 		for(auto ci : places){
 				printItem(o, ci);
 		}
@@ -588,7 +603,7 @@ class VerilogSchematicFormat : public DocumentFormat{
   void load(istream_t& stream, Object*) const;
 
 private: //command
-  void do_it(istream_t&, SchematicModel*) override;
+  void do_it(istream_t&, ElementList*) override;
 
 private: // legacy cruft
   bool isSymbolMode() const{ return false; }
@@ -614,7 +629,7 @@ private: // legacy cruft
 private: // hacks.
   void printSymbol(Symbol const*, ostream_t&) const;
 }VS;
-static Dispatcher<Command>::INSTALL pp(&commandDispatcher, "v_sch", &VS);
+static Dispatcher<Command>::INSTALL pp(&command_dispatcher, "v_sch", &VS);
 /* -------------------------------------------------------------------------------- */
 /* -------------------------------------------------------------------------------- */
 void VerilogSchematicFormat::load(istream_t&, Object*) const
@@ -622,14 +637,14 @@ void VerilogSchematicFormat::load(istream_t&, Object*) const
   incomplete();
 }
 /* -------------------------------------------------------------------------------- */
-void VerilogSchematicFormat::do_it(istream_t& cs, SchematicModel* scope)
+void VerilogSchematicFormat::do_it(istream_t& cs, ElementList* scope)
 {
 	std::string fn;
 	cs >> fn;
 
 	QFile NetlistFile(QString::fromStdString(fn));
 	if(!NetlistFile.open(QIODevice::WriteOnly | QFile::Truncate)) { untested();
-		message(QucsMsgFatal, "Cannot open "+fn+" for writing\n");
+		cs.warn(qucs::MsgFatal, "Cannot open "+fn+" for writing\n");
 		return; // throw?
 	}else{
 	}
@@ -691,7 +706,7 @@ SubcktBase* Verilog::parse_module(istream_t& cmd, SubcktBase* x) const
 }
 /*--------------------------------------------------------------------------*/
 class CMD_MODULE : public Command {
-	void do_it(istream_t& cmd, SchematicModel* Scope) override
+	void do_it(istream_t& cmd, ElementList* Scope) override
 	{
 		// auto new_module = dynamic_cast<SubcktBase*>(device_dispatcher.clone("subckt"));
 		auto new_module = dynamic_cast<SubcktBase*>(symbol_dispatcher.clone("subckt_proto"));
@@ -719,7 +734,7 @@ class CMD_MODULE : public Command {
 		Scope->push_back(new_module);
 	}
 } p2;
-Dispatcher<Command>::INSTALL d2(&commandDispatcher, "module|macromodule", &p2);
+Dispatcher<Command>::INSTALL d2(&command_dispatcher, "module|macromodule", &p2);
 /*--------------------------------------------------------------------------*/
 } // namespace
 /* -------------------------------------------------------------------------------- */

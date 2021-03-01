@@ -28,6 +28,12 @@
 /*--------------------------------------------------------------------------*/
 namespace {
 /*--------------------------------------------------------------------------*/
+using qucs::Action;
+using qucs::Element;
+using qucs::MouseAction;
+using qucs::MouseActions;
+using qucs::Widget;
+/*--------------------------------------------------------------------------*/
 class ActionZoomIn : public QAction{
 public:
 	explicit ActionZoomIn(QObject* parent) : QAction(parent) { untested();

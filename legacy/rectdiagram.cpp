@@ -37,7 +37,9 @@
 
 namespace {
 
-class RectDiagram : public Diagram  {
+using namespace qucs;
+
+class RectDiagram : public Diagram {
   RectDiagram(RectDiagram const& c) : Diagram(c) {}
 public:
   explicit RectDiagram();

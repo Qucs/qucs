@@ -36,7 +36,7 @@ WireLabel::WireLabel(const QString& _Name, int, int,
   x1 = _x1;
   y1 = _y1;
   setName(_Name); //?!
-  setLabel(_Name.toStdString());
+  set_label(_Name.toStdString());
   initValue = "";
 
   // Type = _Type;
@@ -46,28 +46,6 @@ WireLabel::WireLabel(const QString& _Name, int, int,
 WireLabel::~WireLabel()
 {
 }
-
-// ----------------------------------------------------------------
-#if 0 // obsolete
-void WireLabel::paintScheme(QPainter *p) const
-{
-  p->drawRect(x1, y1, x2, y2);
-
-  // which corner of rectangle should be connected to line ?
-  if(cx() < x1+(x2>>1)) {
-    if(cy() < y1+(y2>>1))
-      p->drawLine(cx(), cy, x1, y1);
-    else
-      p->drawLine(cx(), cy, x1, y1+y2);
-  }
-  else {
-    if(cy() < y1+(y2>>1))
-      p->drawLine(cx(), cy, x1+x2, y1);
-    else
-      p->drawLine(cx(), cy, x1+x2, y1+y2);
-  }
-}
-#endif
 
 // ----------------------------------------------------------------
 void WireLabel::setCenter(int, int, bool)
@@ -195,7 +173,7 @@ void WireLabel::paint(ViewPainter *p) const
 void WireLabel::setName(const QString& Name_)
 {
   //setTypeName("wirelabel"); //  = Name_; //?!
-  setLabel(Name_.toStdString());
+  set_label(Name_.toStdString());
   
   // get size of text using the screen-compatible metric
 //  FontMetrics metrics;

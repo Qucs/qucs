@@ -1,6 +1,5 @@
 /***************************************************************************
-    copyright            : (C) 2003 by Michael Margraf
-                               2020, 2021 Felix Salfelder
+    copyright            : (C) 2020, 2021 Felix Salfelder
  ***************************************************************************/
 
 /***************************************************************************
@@ -20,10 +19,14 @@
 class QAction;
 class QObject;
 
-class Action : public Object{
+namespace qucs {
+
+class Action : public Object /* Command? */ {
 public:
 	virtual Action* clone() const = 0;
 	virtual QAction* createAction(QObject*) const = 0;
 };
+
+}
 
 #endif

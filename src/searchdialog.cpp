@@ -42,7 +42,7 @@ SearchDialog::~SearchDialog()
 }
 
 // ---------------------------------------------------------------------
-void SearchDialog::initSearch(QucsDoc *_doc, const QString &text, bool replace)
+void SearchDialog::initSearch(qucs::Doc *_doc, const QString &text, bool replace)
 {
   doc = dynamic_cast<QWidget*>(_doc);
 

@@ -19,10 +19,14 @@
 #include "qt_compat.h"
 #include "qucs_globals.h"
 /* -------------------------------------------------------------------------------- */
+namespace {
+/* -------------------------------------------------------------------------------- */
+using namespace qucs;
+/* -------------------------------------------------------------------------------- */
 class DatFiles : public Data{
 public:
 	explicit DatFiles() : Data(){itested();
-		setLabel("datfile");
+		set_label("datfile");
 	}
 	DatFiles(DatFiles const&d) : Data(d){ }
 
@@ -47,33 +51,33 @@ private: // Data
 private:
 	std::string _file_name;
 }f1;
-static Dispatcher<Data>::INSTALL d1(&dataDispatcher, "datfiles", &f1);
-/* -------------------------------------------------------------------------------- */
+static Dispatcher<Data>::INSTALL d1(&data_dispatcher, "datfiles", &f1);
 /* -------------------------------------------------------------------------------- */
 class DatListing : public SimOutputDir{
 public:
 	explicit DatListing(std::string const& dir, QStringList const& Elements){
-		auto lang = languageDispatcher["qucsator"];
+		auto lang = language_dispatcher["qucsator"];
 		assert(lang);
 
 		for(auto DataSet : Elements){
-			auto dat = dataDispatcher.clone("datfile"); // really? table?
+			auto dat = data_dispatcher.clone("datfile"); // really? table?
 			assert(dat);
 			std::string fn = dir + "/" + DataSet.toStdString();
 			trace1("datlisting prepare", fn);
 			dat->set_param_by_name("filename", fn); // really?
 			auto l = DataSet.size();
-			dat->setLabel(DataSet.toStdString().substr(0, l-4));
-			assert(dat->label()!="");
+			dat->set_label(DataSet.toStdString().substr(0, l-4));
+			assert(dat->short_label()!="");
 
 			try{
 				istream_t cs(istream_t::_WHOLE_FILE, fn);
 				lang->parseItem(cs, dat);
-				assert(dat->label()!="");
-				assert(dat->common()->label()!="");
+				assert(dat->short_label()!="");
+				assert(dat->common()->short_label()!="");
 				push_back(dat->common());
 			}catch(qucs::Exception_File_Open const&){
-				message(QucsMsgWarning, "cannot load " + fn);
+				// move to prepare(Element*)
+				// parent->message(MsgWarning, "cannot load " + fn);
 			}
 			delete dat;
 		}
@@ -88,8 +92,12 @@ void DatFiles::refresh() const
 	QStringList Elements = ProjDir.entryList(QStringList("*.dat"), QDir::Files, QDir::Name);
 
 	DatListing* L = new DatListing(ProjDir.absolutePath().toStdString(), Elements);
-	L->setLabel("datfiles");
+	L->set_label("datfiles");
 	attach(L);
 }
 /* -------------------------------------------------------------------------------- */
 /* -------------------------------------------------------------------------------- */
+/* -------------------------------------------------------------------------------- */
+/* -------------------------------------------------------------------------------- */
+/* -------------------------------------------------------------------------------- */
+} // namespace

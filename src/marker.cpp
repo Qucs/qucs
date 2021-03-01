@@ -47,6 +47,8 @@ static double default_Z0=50;
  * marker position is the sampling point closest to the click.
  */
 
+namespace qucs {
+
 Marker::Marker(Graph *pg_, int branchNo, int cx_, int cy_) :
   Element(),
   pGraph(pg_),
@@ -778,3 +780,5 @@ void Marker::findaxismk()
 
 }
 */
+
+} // qucs

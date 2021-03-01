@@ -36,24 +36,22 @@ extern tQucsSettings QucsSettings;  // bug, settings.h
 /* -------------------------------------------------------------------------------- */
 namespace {
 /* -------------------------------------------------------------------------------- */
-// -------------------------------------------------------------------
-// PLAN/TODO: merge into (legacy) qucsator driver below
-//    meant to produce a netlist including the qucsator commands and process
-// (this is reminiscent of a "command", but qucs does not have commands)
-// NB: now it has commands. could fix this now.
+using namespace qucs;
+/* -------------------------------------------------------------------------------- */
+//	LegacyNetlister + qucsatorLanguage = qucsator netlister
 class LegacyNetlister : public DocumentFormat{
 	LegacyNetlister(LegacyNetlister const&) = delete;
 public:
 	explicit LegacyNetlister() : _qucslang(nullptr) {}
 private: // Command
-	void do_it(istream_t&, SchematicModel*) override;
+	void do_it(istream_t&, ElementList*) override;
 
 private: // legacy implementation
-  void createNetlist(ostream_t& stream, SchematicModel const*,
+  void createNetlist(ostream_t& stream, ElementList const*,
 		std::vector<Element const*>& tasks) const;
-  void prepareSave(ostream_t& stream, SchematicModel const* m,
+  void prepareSave(ostream_t& stream, ElementList const* m,
 		std::map<std::string, Element const*>& declarations) const;
-  void throughAllComps(ostream_t& d, SchematicModel const* m,
+  void throughAllComps(ostream_t& d, ElementList const* m,
 		std::map<std::string, Element const*>& declarations) const;
   void clear() const;
   void printDeclarations(ostream_t& d,
@@ -62,9 +60,9 @@ private: // overrides
   void load(istream_t&, Object*) const override;
 private:
 //  mutable SubMap FileList; // BUG (maybe not)
-  mutable DocumentLanguage* _qucslang;
+  mutable Language* _qucslang;
 }LNL;
-static Dispatcher<Command>::INSTALL p1(&commandDispatcher, "qucsator|legacy_nl", &LNL);
+static Dispatcher<Command>::INSTALL p1(&command_dispatcher, "qucsator|legacy_nl", &LNL);
 /* -------------------------------------------------------------------------------- */
 // "simulator" backend emulating legacy behaviour
 // TODO: forward to other simulator following legacy heuristic.
@@ -79,7 +77,7 @@ private: // Simulator
 	DocumentFormat const* netLister() const override {return &LNL;}
 
 	void run(istream_t&, SimCtrl*) override{ incomplete(); }
-	void do_it(istream_t&, SchematicModel const*) override{ incomplete(); }
+	void do_it(istream_t&, ElementList const*) override{ incomplete(); }
 	void init() override{incomplete();}
 	std::string errorString() const override{ incomplete(); return "incomplete";}
 	void kill() override{ incomplete(); }
@@ -89,7 +87,7 @@ private: // implementation
 	Simulator const* chooseBackend();
 	Simulator* _wrapped_simulator;
 }QS;
-static Dispatcher<Data>::INSTALL p(&dataDispatcher, "legacy|legacy_sim", &QS);
+static Dispatcher<Data>::INSTALL p(&data_dispatcher, "legacy|legacy_sim", &QS);
 /* -------------------------------------------------------------------------------- */
 struct default_sim{
 	default_sim(){
@@ -100,7 +98,7 @@ struct default_sim{
 /* -------------------------------------------------------------------------------- */
 NetLang const* LegacySimulator::netLang() const
 { untested();
-	DocumentLanguage const* d = languageDispatcher["qucsator"];
+	Language const* d = language_dispatcher["qucsator"];
 	assert(d);
 	auto n = prechecked_cast<NetLang const*>(d);
 	assert(n);
@@ -114,7 +112,7 @@ NetLang const* LegacySimulator::netLang() const
 Simulator const* LegacySimulator::chooseBackend()
 { untested();
 	incomplete(); // only run qucstor for now
-	auto dd = dataDispatcher["qucsator"];
+	auto dd = data_dispatcher["qucsator"];
 	return dynamic_cast<Simulator const*>(dd);
 #if 0
       if(SimOpt = findOptimization(d)) { untested();
@@ -154,12 +152,12 @@ void LegacyNetlister::clear() const
 /* -------------------------------------------------------------------------------- */
 void LegacyNetlister::load(istream_t&, Object*) const
 { untested();
-   _qucslang = languageDispatcher["qucsator"];
+   _qucslang = language_dispatcher["qucsator"];
 	assert(_qucslang);
 	incomplete();
 }
 /* -------------------------------------------------------------------------------- */
-void LegacyNetlister::do_it(istream_t& cs, SchematicModel* m)
+void LegacyNetlister::do_it(istream_t& cs, ElementList* m)
 {
 	std::map<std::string, Element const*> declarations;
 	std::vector<Element const*> tasks;
@@ -182,7 +180,7 @@ void LegacyNetlister::do_it(istream_t& cs, SchematicModel* m)
 	}
 	ostream_t Stream(&NetlistFile);
 
-   _qucslang = languageDispatcher["qucsator"];
+   _qucslang = language_dispatcher["qucsator"];
 	clear();
 
 	int SimPorts = 10;//??
@@ -241,7 +239,7 @@ void LegacyNetlister::do_it(istream_t& cs, SchematicModel* m)
 void LegacyNetlister::printDeclarations(ostream_t& stream,
 		std::map<std::string, Element const*>& declarations) const
 {
-   _qucslang = languageDispatcher["qucsator"];
+   _qucslang = language_dispatcher["qucsator"];
 	assert(_qucslang);
 
 	stream << "## declarations "<< declarations.size() << "\n";
@@ -261,7 +259,7 @@ void LegacyNetlister::printDeclarations(ostream_t& stream,
 
 // was Schematic::prepareNetlist
 // visit lot of components, strange callbacks...
-void LegacyNetlister::prepareSave(ostream_t& stream, SchematicModel const* m,
+void LegacyNetlister::prepareSave(ostream_t& stream, ElementList const* m,
 		std::map<std::string, Element const*>& declarations) const
 {
 	incomplete();
@@ -360,7 +358,7 @@ void LegacyNetlister::prepareSave(ostream_t& stream, SchematicModel const* m,
 
 // former Schematic::createNetlist
 void LegacyNetlister::createNetlist(ostream_t& stream,
-		SchematicModel const* scope_,
+		ElementList const* scope_,
 		std::vector<Element const*>& tasks) const
 {
 	assert(scope_);
@@ -457,13 +455,13 @@ void LegacyNetlister::createNetlist(ostream_t& stream,
 // could eject "include" statements instead, but need to convert sub schematics
 // to target language somewhere else.
 
-void LegacyNetlister::throughAllComps(ostream_t&, SchematicModel const* scope_,
+void LegacyNetlister::throughAllComps(ostream_t&, ElementList const* scope_,
 		std::map<std::string, Element const*>& declarations) const
 { incomplete();
 	QString s;
 	bool isAnalog = true;
 
-	SchematicModel const* sckt = scope_;
+	ElementList const* sckt = scope_;
 
 	auto f = scope_->find_("main");
 	if(f!=scope_->end()){

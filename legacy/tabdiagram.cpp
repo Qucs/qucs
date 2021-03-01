@@ -26,6 +26,8 @@
 #include "obsolete_paintings.h"
 
 namespace{
+using namespace qucs;
+
 class TabDiagram : public Diagram  {
 private:
 	TabDiagram(TabDiagram const& d) : Diagram(d) {}

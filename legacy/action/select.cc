@@ -25,6 +25,13 @@
 
 namespace{
 /*--------------------------------------------------------------------------*/
+using qucs::Element;
+using qucs::SchematicEdit;
+using qucs::SchematicDialog;
+using qucs::Action;
+using qucs::MouseAction;
+using qucs::MouseActions;
+/*--------------------------------------------------------------------------*/
 static Symbol* symbol(Element* e)
 {
 	return dynamic_cast<Symbol*>(e);
@@ -188,7 +195,7 @@ QUndoCommand* MouseActionSelect::dblclk(QEvent* evt)
 	Element* elt = nullptr;
 	ElementGraphics* gfx = nullptr;
 	//
-	if(auto i = dynamic_cast<ItemEvent*>(evt)){ untested();
+	if(auto i = dynamic_cast<qucs::ItemEvent*>(evt)){ untested();
 		// QList<ElementGraphics*> l;
 		gfx = &i->item();
 		elt = element(gfx);

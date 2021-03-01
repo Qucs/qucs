@@ -44,7 +44,7 @@ static Module::INSTALL pp("vadim", &D);
 DIODE_SPICE::DIODE_SPICE()
 {
 	setTypeName("DIODE_SPICE");
-	setLabel("SPICE D:\nMultiple line ngspice or Xyce D model specifications allowed using \"+\" continuation lines.\nLeave continuation lines blank when NOT in use.");
+	set_label("SPICE D:\nMultiple line ngspice or Xyce D model specifications allowed using \"+\" continuation lines.\nLeave continuation lines blank when NOT in use.");
 
 
 	Lines.append(new Line(-30,  0, -20,  0,QPen(Qt::darkBlue,3)));

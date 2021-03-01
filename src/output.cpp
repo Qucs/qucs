@@ -14,6 +14,8 @@
 
 #include "output.h"
 /* -------------------------------------------------------------------------------- */
+namespace qucs {
+/* -------------------------------------------------------------------------------- */
 SimOutputDir::~SimOutputDir()
 {
 	for(auto i : _d){
@@ -30,9 +32,11 @@ SimOutputDir::SimOutputDir(const SimOutputDir& s) : _d(s._d)
 void SimOutputDir::push_back(CommonData const* d)
 {
 	assert(d);
-	assert(d->label()!="");
+	assert(d->short_label()!="");
 
-	CommonData::attach(d, &_d[d->label()]);
+	CommonData::attach(d, &_d[d->short_label()]);
 }
+/* -------------------------------------------------------------------------------- */
+} // qucs
 /* -------------------------------------------------------------------------------- */
 /* -------------------------------------------------------------------------------- */

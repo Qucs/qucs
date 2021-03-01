@@ -41,17 +41,22 @@
 #include "io_trace.h"
 #include "port.h"
 #include "geometry.h"
-// #include "qt_compat.h"
 
-class Node;
-class QucsDoc;
+class QWidget;
 class QPainter;
-class WireLabel;
-class SchematicModel;
-class Symbol;
-class Widget;
 
-typedef unsigned index_t;
+class Label;
+class WireLabel;
+
+namespace qucs {
+
+class NetLang;
+class Symbol;
+class Doc;
+class Node;
+class Diagram;
+class Painting;
+class Widget;
 
 // valid values for Element.Type
 // The 4 least significant bits of each value are reserved for special
@@ -69,40 +74,8 @@ typedef unsigned index_t;
 #define isMarker           0x0080
 //#define isWire             0x0100
 
-#if 0
-#define isPainting         0x2000
-#define isPaintingResize   0x2001
-
-#define isLabel            0x4000
-#define isMovingLabel      0x4001
-#define isHMovingLabel     0x4002
-#define isVMovingLabel     0x4004
-
-#define isDiagram          0x8000
-#define isDiagramResize    0x8001
-#define isDiagramHScroll   0x8002
-#define isDiagramVScroll   0x8003
-#endif
-
-
-
-class NetLang;
 class ViewPainter;
-
-//static QString incomplete_description="incomplete_description";
-// will be gone soon.
-// class Component;
-class Label;
-class WireLabel;
-class Diagram;
-class Painting;
-class Graph;
-class Marker;
-class Node;
-class ViewPainter;
-class QWidget;
-/*--------------------------------------------------------------------------*/
-class SchematicModel;
+class ElementList;
 /*--------------------------------------------------------------------------*/
 // Element: has a position.
 // TODO: base on sth like card with params but no position.
@@ -133,10 +106,10 @@ public: // make old variables accessible
 	}
 
 public: // UI stuff.
-#if 0 // TODO (QucsDoc is not a QWidget yet);
+#if 0 // TODO (Doc is not a QWidget yet);
 	virtual QWidget* widget(QObject* parent) { return nullptr; }
 #else
-	virtual Widget* schematicWidget(QucsDoc*) const { return nullptr; }
+	virtual Widget* schematicWidget(Doc*) const { return nullptr; }
 	virtual QWidget* newWidget() {return nullptr;}
 #endif
 
@@ -188,9 +161,9 @@ public:
 	}
 
 	// create a declaration, e.g. subcircuit definition or include directive
-	virtual Symbol const* proto(SchematicModel const*) const{return nullptr;}
-	SchematicModel const* scope() const;
-	virtual SchematicModel* scope();
+	virtual Symbol const* proto(ElementList const*) const{return nullptr;}
+	ElementList const* scope() const;
+	virtual ElementList* scope();
 
 public: // friend ElementGraphics?
 	//  void attachToModel();
@@ -206,6 +179,12 @@ public:
 	const Element* find_in_parent_scope(const std::string& name)const;
 	const Element* find_in_my_scope(const std::string& name)const;
 
+public:
+	void message(MsgType, const char*) const;
+	virtual void message(MsgType, std::string const&) const;
+
+	std::string const& label() const{return short_label();}
+
 private:
 	pos_t _position; // BUG: store in symbol?
 
@@ -217,11 +196,13 @@ private:
 	std::string _type;
 }; // Element
 /*--------------------------------------------------------------------------*/
-inline SchematicModel const* Element::scope() const
+inline ElementList const* Element::scope() const
 {
 	auto e=const_cast<Element*>(this);
 	return e->scope();
 }
+/*--------------------------------------------------------------------------*/
+} // qucs
 /*--------------------------------------------------------------------------*/
 /*--------------------------------------------------------------------------*/
 #endif

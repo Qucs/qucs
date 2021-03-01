@@ -67,6 +67,12 @@ inline std::ostream& operator<<(std::ostream&o, std::pair<int, int> const& p)
   return o << "(" << p.first << ", " << p.second << ")";
 }
 
+// inline ostream_t& operator<<(ostream_t& o, std::string const& s)
+// {
+// 	incomplete();
+// 	return o;
+// }
+
 // it does not work with Qt. switch implementation first.
 // namespace IO{
 //   extern ostream_t mstdout;

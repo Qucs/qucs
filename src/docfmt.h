@@ -24,10 +24,10 @@ public:
 
 #include <QTextStream>
 // here?
-inline QTextStream& operator<< (QTextStream& o, std::string const& s)
-{
-	return o << QString::fromStdString(s);
-}
+// inline QTextStream& operator<< (QTextStream& o, std::string const& s)
+// {
+// 	return o << QString::fromStdString(s);
+// }
 
 
 #endif

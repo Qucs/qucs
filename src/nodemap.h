@@ -10,15 +10,17 @@
 
 template<class G>
 struct graph_traits{};
-
-class Node;
-class NodeMap;
-class NetList;
 // describe the conductor graph.
 // Conductors are the vertices.
 // a connected component in this graph is a Net
 template<class M>
 class ConnectedComponents;
+
+namespace qucs {
+
+class Node;
+class NodeMap;
+class NetList;
 
 class NodeMap {
 public:
@@ -29,13 +31,13 @@ private:
 	public:
 		using is_transparent = void;
 		bool operator()(Node const* n1, Node const* n2) const{
-			return c(n1->label(), n2->label());
+			return c(n1->short_label(), n2->short_label());
 		}
 		bool operator()(Node const* n1, key_type const& n2) const{
-			return c(n1->label(), n2);
+			return c(n1->short_label(), n2);
 		}
 		bool operator()(key_type const& n1, Node const* n2) const{
-			return c(n1, n2->label());
+			return c(n1, n2->short_label());
 		}
 	private:
 		std::less<std::string> c;
@@ -117,5 +119,6 @@ private:
 	ConnectedComponents<NodeMap>* _cc;
 };
 
-
+} // qucs
+using qucs::NodeMap; // transition
 #endif

@@ -16,21 +16,21 @@
 
 #include <QTabWidget>
 
-class QucsApp;
-class QucsDoc;
+namespace qucs {
+class App;
+class Doc;
 
-class QucsTabWidget : public QTabWidget
+class DocTabWidget : public QTabWidget
 {
   Q_OBJECT
 public:
-  QucsTabWidget(QucsApp *parent = 0);
+  DocTabWidget(App *parent = 0);
   void setSaveIcon(bool state=true, int index=-1);
 public: // BUG, obsolete.
-  QucsDoc *createEmptySchematic(const QString &name);
-  QucsDoc *createEmptyTextDoc(const QString &name);
+  Doc *createEmptySchematic(const QString &name);
+  Doc *createEmptyTextDoc(const QString &name);
 
-  QucsDoc* current();
-
+  Doc* current();
 
 public slots:
   void setCurrentIndex_(int i);
@@ -52,8 +52,10 @@ private: // BUG
 
 private:
   int contextTabIndex; // what?
-  QucsApp *App; // BUG
-  QucsDoc* _current{nullptr};
+  App *_app; // BUG
+  Doc* _current{nullptr};
 };
+
+} // qucs
 
 #endif

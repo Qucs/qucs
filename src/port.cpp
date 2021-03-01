@@ -31,7 +31,7 @@ const std::string nullabel="(null)";
 std::string const& Port::nodeLabel() const
 {
 	if(_node){
-		return _node->label();
+		return _node->short_label();
 	}else{
 		// unreachable(); useful for debugging
 		return nullabel;
@@ -65,7 +65,7 @@ void Port::new_node(const std::string& node_name, Element const* d)
 {
   assert(d);
 
-  SchematicModel const* scope = d->scope();
+  ElementList const* scope = d->scope();
   if(scope){
 	  NodeMap* Map = scope->nodes();
 	  assert(Map);

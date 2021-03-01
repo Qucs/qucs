@@ -19,10 +19,14 @@
 #include "widget.h"
 #include "platform.h"
 
-class QucsDoc;
+/*--------------------------------------------------------------------------*/
+using qucs::Widget;
 class QUndoCommand;
+/*--------------------------------------------------------------------------*/
+namespace qucs{
+/*--------------------------------------------------------------------------*/
 class ElementGraphics;
-class SchematicDoc;
+class Doc;
 /*--------------------------------------------------------------------------*/
 class SchematicDialog : public Widget{
 protected:
@@ -42,10 +46,13 @@ protected slots: // needed?
 	virtual bool eventFilter(QObject * /*obj*/, QEvent * /*event*/){return false;}
 
 protected:
-	QucsDoc* doc();
+	Doc* doc();
 	void execute(QUndoCommand* c);
 };
 /*--------------------------------------------------------------------------*/
-Q_DECLARE_INTERFACE(SchematicDialog, "qucs.SchematicDialog")
+// Q_DECLARE_INTERFACE(SchematicDialog, "qucs.SchematicDialog") // needed?
+/*--------------------------------------------------------------------------*/
+} // qucs
+/*--------------------------------------------------------------------------*/
 /*--------------------------------------------------------------------------*/
 #endif

@@ -23,6 +23,7 @@
 #include <QPolygon>
 #include <QPainterPath>
 
+namespace qucs {
 // -------------------------------------------------------------
 void ViewPainter::map(int x1, int y1, int& x, int& y)
 {
@@ -476,5 +477,7 @@ int  ViewPainter::drawTextMapped(const QString&, int, int, int *Height){
   return 0;
 }
 #endif
+
+}
 
 // vim:ts=8:sw=2:noet

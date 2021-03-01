@@ -29,9 +29,10 @@
 
 namespace{
 
-SchematicModel empty;
+using namespace qucs;
+ElementList empty;
 
-// TODO: use "get" command.
+// TODO: use "get" command. (is this still in use?)
 class LegacySchematicFormat : public DocumentFormat{
 public:
 	explicit LegacySchematicFormat()
@@ -39,7 +40,7 @@ public:
 
 private: //Command
 	void load(istream_t& stream, Object*) const override;
-	void do_it(istream_t&, SchematicModel*) override;
+	void do_it(istream_t&, ElementList*) override;
 private: // legacy cruft
 	bool isSymbolMode() const{ return false; }
 	ElementList const& symbolPaints(SchematicSymbol const& m) const{
@@ -47,7 +48,7 @@ private: // legacy cruft
 		//assert( m.symbolPaintings());
 		//return *m.symbolPaintings();
 	}
-	SchematicModel const& section(SchematicModel const* m, std::string name) const{
+	ElementList const& section(ElementList const* m, std::string name) const{
 		assert(m);
 		auto p = m->find_(name);
 		if(p==m->end()){
@@ -69,14 +70,14 @@ private: // legacy cruft
 //		return m.components();
 	}
 }d0;
-static Dispatcher<Command>::INSTALL p0(&commandDispatcher, "leg_sch", &d0);
+static Dispatcher<Command>::INSTALL p0(&command_dispatcher, "leg_sch", &d0);
 
 void LegacySchematicFormat::load(istream_t& s, Object* c) const
 {
 // TODO: move stuff here that does not belong to leg_sch.
-	auto l=languageDispatcher["leg_sch"];
+	auto l = language_dispatcher["leg_sch"];
 	assert(l);
-	auto L=dynamic_cast<SchematicLanguage const*>(l);
+	auto L = dynamic_cast<SchematicLanguage const*>(l);
 	assert(L);
 
 	auto cc=dynamic_cast<SubcktBase*>(c);
@@ -178,7 +179,7 @@ static void printProperties(SchematicSymbol const& m, ostream_t& stream)
 }
 #endif
 
-void LegacySchematicFormat::do_it(istream_t& cs, SchematicModel* m)
+void LegacySchematicFormat::do_it(istream_t& cs, ElementList* m)
 {
 	cs >> "save";
 	std::map<std::string, Element const*> declarations;
@@ -198,8 +199,8 @@ void LegacySchematicFormat::do_it(istream_t& cs, SchematicModel* m)
 	std::vector<Element const*> paintings;
 	std::vector<Element const*> diagrams;
 
-	auto D = languageDispatcher["leg_sch"];
-	auto L = dynamic_cast<DocumentLanguage const*>(D);
+	auto D = language_dispatcher["leg_sch"];
+	auto L = dynamic_cast<Language const*>(D);
 	assert(L);
 
 	stream << "<Qucs Schematic 0.0.20>\n";

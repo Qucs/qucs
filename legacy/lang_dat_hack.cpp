@@ -244,7 +244,9 @@ SimOutputDat::SimOutputDat(istream_t& cs)
 			const_iterator ff = find(nn);
 			const_iterator ee = end();
 			if(ff == ee){ untested();
-				message(QucsMsgWarning, "bogus deps in " + i.first + ": " + nn);
+				incomplete(); // message handler in Object?
+				              // is shared data an object? rearrange
+				// message(MsgWarning, "bogus deps in " + i.first + ": " + nn);
 			}else{
 				vv->_deps.push_back(nullptr);
 				attach(*ff, &vv->_deps.back());
@@ -269,7 +271,7 @@ SimOutputData const* SimOutputDatVar::refresh(QByteArray FileContent)
 	QString Variable;
 //	QFileInfo Info(QString::fromStdString(_fileName));
 
-	setLabel(_var.toStdString()); // BUG
+	set_label(_var.toStdString()); // BUG
 
 	int pos = g->_var.indexOf(':');
 	trace3("datvar", _fileName, _var, pos);
@@ -656,7 +658,7 @@ int SimOutputDatVar::loadIndepVarData(std::string const& Variable,
 class DatFile : public Data{
 public:
 	explicit DatFile() : Data(){itested();
-		setLabel("datfile");
+		set_label("datfile");
 	}
 	DatFile(DatFile const&d) : Data(d){ }
 
@@ -683,7 +685,7 @@ private: // implementation
 private:
 	std::string _fileName;
 }f1;
-static Dispatcher<Data>::INSTALL d1(&dataDispatcher, "datfile", &f1);
+static Dispatcher<Data>::INSTALL d1(&data_dispatcher, "datfile", &f1);
 /* -------------------------------------------------------------------------------- */
 /* -------------------------------------------------------------------------------- */
 } // namespace

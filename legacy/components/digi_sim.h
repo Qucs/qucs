@@ -18,15 +18,5 @@
 #ifndef DIGI_SIM_H
 #define DIGI_SIM_H
 
-#include "task_element.h"
-
-
-class Digi_Sim : public TaskElement {
-public:
-  Digi_Sim();
- ~Digi_Sim();
-  Element* clone() const {return new Digi_Sim(*this);}
-  static Element* info(QString&, char* &, bool getNewOne=false);
-};
 
 #endif

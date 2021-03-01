@@ -34,7 +34,7 @@ static Module::INSTALL pp("RF", &d0);
 
 MScorner::MScorner()
 {
-  setLabel("microstrip corner");
+  set_label("microstrip corner");
   setTypeName("MCORN");
 
   Lines.append(new Line(-30,  0,-18,  0,QPen(Qt::darkBlue,2)));

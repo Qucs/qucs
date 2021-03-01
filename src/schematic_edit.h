@@ -19,6 +19,8 @@
 #include "place.h"
 #include <set>
 
+namespace qucs {
+
 // edit a schematic add/delete/alter
 class SchematicEdit : public QUndoCommand {
 public:
@@ -102,6 +104,8 @@ private:
 	SchematicScene* _scn;
 	std::set<ElementGraphics*> _check_places;
 };
+/*--------------------------------------------------------------------------*/
+} // qucs
 /*--------------------------------------------------------------------------*/
 /*--------------------------------------------------------------------------*/
 #endif

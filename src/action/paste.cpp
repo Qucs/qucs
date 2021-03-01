@@ -57,7 +57,7 @@ public:
 					while(z && std::isdigit(label[z])){
 						--z;
 					}
-					element(c)->setLabel(label.substr(0, z+1));
+					element(c)->set_label(label.substr(0, z+1));
 				}
 
 				qInsert(c);
@@ -111,7 +111,7 @@ class pastebuffer : public SubcktBase{
 public:
 	explicit pastebuffer(){ untested();
 		new_subckt();
-		auto const* lang = languageDispatcher[cnp_lang];
+		auto const* lang = language_dispatcher[cnp_lang];
 		assert(lang);
 
 		QClipboard *cb = QApplication::clipboard();

@@ -32,6 +32,13 @@ extern QCursor& crosshair();
 /*--------------------------------------------------------------------------*/
 namespace{
 /*--------------------------------------------------------------------------*/
+using qucs::Action;
+using qucs::Element;
+using qucs::MouseAction;
+using qucs::MouseActions;
+using qucs::SchematicEdit;
+using qucs::Widget;
+/*--------------------------------------------------------------------------*/
 // BUG/FEATURE. Wires can't go around the corner
 // wire under construction does. convert to pair of Wires eventually
 class WireUC : public Symbol /*subckt*/ {
@@ -147,7 +154,7 @@ void WireUC::expand()
 	}else{ untested();
 	}
 
-	SchematicModel const* sc = subckt();
+	ElementList const* sc = subckt();
 	if(sc->size()){ itested();
 	}else{ itested();
 		// possible when double clicking on empty wire
@@ -488,7 +495,7 @@ QUndoCommand* MouseActionWire::finish()
 		auto s = prechecked_cast<Symbol*>(element(i));
 		assert(s);
 		s->expand();
-		SchematicModel const* cs = s->subckt();
+		ElementList const* cs = s->subckt();
 		assert(cs);
 		trace1("prepare NewWire", cs->size());
 		for(Element const* j : *cs){itested();

@@ -24,6 +24,8 @@
 #include <QStringLiteral> //bug
 #include <QMimeData> //bug
 
+namespace qucs {
+
 QUndoCommand* MouseAction::handle(QEvent* e)
 {itested();
 
@@ -103,7 +105,7 @@ QUndoCommand* MouseAction::handle(QEvent* e)
   }
 }
 // SchematicMouseAction::doc?
-QucsDoc const* MouseAction::doc() const
+Doc const* MouseAction::doc() const
 {itested();
   auto cc = const_cast<MouseAction*>(this);
   return cc->doc();
@@ -145,9 +147,9 @@ QGraphicsView* MouseAction::view()
   }
 }
 
-QucsDoc* MouseAction::doc()
+Doc* MouseAction::doc()
 {itested();
-  QucsDoc* c = ctx()->doc();
+  Doc* c = ctx()->doc();
   return c;
 #if 0
   auto cc = dynamic_cast<SchematicDoc*>(c);
@@ -241,4 +243,7 @@ MouseActions* MouseAction::ctx() const
 	assert(p);
 	return p;
 }
+/*--------------------------------------------------------------------------*/
+} // qucs
+/*--------------------------------------------------------------------------*/
 /*--------------------------------------------------------------------------*/

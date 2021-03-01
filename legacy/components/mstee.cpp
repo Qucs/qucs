@@ -35,7 +35,7 @@ static Module::INSTALL pp("RF", &d0);
 
 MStee::MStee() : MultiViewComponent()
 {
-  setLabel("microstrip tee");
+  set_label("microstrip tee");
   setTypeName("MTEE");
 
   x1 = -30; y1 = -11;

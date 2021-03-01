@@ -20,9 +20,18 @@
 #include "../legacy/obsolete_paintings.h"
 #include "property.h"
 
+namespace qucs{
+	class ViewPainter;
+	class Module;
+}
+using qucs::Widget;
+using qucs::ViewPainter;
+using qucs::Module;
+using qucs::Element;
+using qucs::NetLang; // what?
+
 class SchematicModel;
 class SchematicDoc;
-class ViewPainter;
 class QString;
 class QPen;
 class ComponentDialog;
@@ -78,7 +87,7 @@ public: //??!
 
 private: // Element override
   void paint(ViewPainter*) const override;
-  Widget* schematicWidget(QucsDoc*) const override;
+  Widget* schematicWidget(qucs::Doc*) const override;
   rect_t bounding_rect() const override;
   bool legacyTransformHack() const override;
 
@@ -209,7 +218,7 @@ public:
   }
   void setName(QString x){
 	  incomplete();
-	  setLabel(x.toStdString());
+	  set_label(x.toStdString());
 	  Name = x;
   }
   void obsolete_name_override_hack(QString x){

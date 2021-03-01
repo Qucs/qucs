@@ -22,7 +22,8 @@
 
 class QString;
 class QPen;
-class Schematic; // obsolete.
+
+using namespace qucs;
 
 class LegacyPainting : public Element, public Painting {
 public:

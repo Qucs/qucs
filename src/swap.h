@@ -14,7 +14,8 @@
 #include <QUndoCommand>
 #include "element_graphics.h"
 
-// BUG: SchematicEdit.
+namespace qucs {
+// BUG? SchematicEdit
 class SwapSymbolCommand : public QUndoCommand {
   SwapSymbolCommand() = delete;
   SwapSymbolCommand(SwapSymbolCommand const&) = delete;
@@ -51,3 +52,5 @@ private:
   ElementGraphics* _gfx;
   Element* _elt;
 };
+
+} // qucs

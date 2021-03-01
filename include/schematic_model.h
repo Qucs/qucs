@@ -13,19 +13,7 @@
 #ifndef QUCS_SCHEMATIC_MODEL_H
 #define QUCS_SCHEMATIC_MODEL_H
 
-#ifndef UNTANGLE_QT // later.
-//# include <QGraphicsScene>
-//# include <QFileInfo> // BUG
-#endif
-
 #include "object.h"
-//#include "node.h"
-// #include "qio.h"
-//#include "schematic_scene.h"
-//#include "qucsdoc.h"
-//#include "nodemap.h"
-//#include "netlist.h"
-//#include "protomap.h"
 #include "tasks.h"
 #include "element.h"
 #include "symbol.h"
@@ -33,64 +21,58 @@
 #include <map>
 #include <algorithm>
 /*--------------------------------------------------------------------------*/
-class Node;
-class NetList; // BUG
-class QPlainTextEdit; //??!
-class QGraphicsScene; // bug?
 class QFileInfo; // BUG
 class QPrinter; // BUG?
-class TaskElement;
-class ParamList;
-class NetLang;
 /*--------------------------------------------------------------------------*/
-class WireList;
+class ostream_t;
+class ParamList;
+/*--------------------------------------------------------------------------*/
+/*--------------------------------------------------------------------------*/
+namespace qucs {
+/*--------------------------------------------------------------------------*/
+class Node;
+class NetList;
 class NodeMap;
-class CmdEltList;
-class ElementList;
+class TaskElement;
 class Diagram;
 class Painting;
-class ElementGraphics; // BUG
-class ostream_t;
 /*--------------------------------------------------------------------------*/
-class NodeMap;
-/*--------------------------------------------------------------------------*/
-// TODO: rename to ObjectList
-class SchematicModel{
+class ElementList{
 public: // stub
-	typedef std::list<Element*> ElementList;
-	typedef ElementList::iterator iterator;
-	typedef ElementList::const_iterator const_iterator;
-  class fat_iterator {
-  private:
-    SchematicModel* _list;
-    iterator   _iter;
-  private:
-    explicit	  fat_iterator()	{unreachable();}
-  public:
-		  fat_iterator(const fat_iterator& p)
-					: _list(p._list), _iter(p._iter) {}
-    explicit	  fat_iterator(SchematicModel* l, iterator i)
-					: _list(l), _iter(i) {}
-    fat_iterator& operator=(const fat_iterator& p)
-					{_list = p._list, _iter = p._iter; return *this;}
-    bool	  is_end()const		{return _iter == _list->end();}
-    Element*	  operator*()		{return (is_end()) ? NULL : *_iter;}
-    fat_iterator& operator++()		{assert(!is_end()); ++_iter; return *this;}
-    fat_iterator  operator++(int)
-				{assert(!is_end()); fat_iterator t(*this); ++_iter; return t;}
-    bool	  operator==(const fat_iterator& x)const
-				{unreachable(); assert(_list==x._list); return (_iter==x._iter);}
-    bool	  operator!=(const fat_iterator& x)const
-					{assert(_list==x._list); return (_iter!=x._iter);}
-    iterator	  iter()const		{return _iter;}
-    fat_iterator  end()const		{return fat_iterator(_list, _list->end());}
-    void	  insert(Element* c)	{_list->insert(iter(),c);}
-  };
+	typedef std::list<Element*> container_type;
+	typedef container_type::iterator iterator;
+	typedef container_type::const_iterator const_iterator;
+	class fat_iterator {
+	private:
+		ElementList* _list;
+		iterator   _iter;
+	private:
+		explicit	  fat_iterator()	{unreachable();}
+	public:
+		fat_iterator(const fat_iterator& p)
+			: _list(p._list), _iter(p._iter) {}
+		explicit	  fat_iterator(ElementList* l, iterator i)
+			: _list(l), _iter(i) {}
+		fat_iterator& operator=(const fat_iterator& p)
+		{_list = p._list, _iter = p._iter; return *this;}
+		bool	  is_end()const		{return _iter == _list->end();}
+		Element*	  operator*()		{return (is_end()) ? NULL : *_iter;}
+		fat_iterator& operator++()		{assert(!is_end()); ++_iter; return *this;}
+		fat_iterator  operator++(int)
+		{assert(!is_end()); fat_iterator t(*this); ++_iter; return t;}
+		bool	  operator==(const fat_iterator& x)const
+		{unreachable(); assert(_list==x._list); return (_iter==x._iter);}
+		bool	  operator!=(const fat_iterator& x)const
+		{assert(_list==x._list); return (_iter!=x._iter);}
+		iterator	  iter()const		{return _iter;}
+		fat_iterator  end()const		{return fat_iterator(_list, _list->end());}
+		void	  insert(Element* c)	{_list->insert(iter(),c);}
+	};
 private:
-	SchematicModel(SchematicModel const&) = delete;
+	ElementList(ElementList const&) = delete;
 public:
-	explicit SchematicModel();
-	~SchematicModel();
+	explicit ElementList();
+	~ElementList();
 public: // stuff saved from Schematic
 	void sizeOfAll(int&, int&, int&, int&, float) const;
 
@@ -99,9 +81,9 @@ private:
 	void removeRef(Element* s) { erase(std::find(begin(), end(), s)); }
 
 public:
-	SchematicModel& erase(const_iterator what);
-	//SchematicModel& erase(Element* c);
-	//SchematicModel& erase_all();
+	ElementList& erase(const_iterator what);
+	//ElementList& erase(Element* c);
+	//ElementList& erase_all();
 
 public:
 	void collectDigitalSignals(void);
@@ -127,7 +109,7 @@ public:
 public: // container
 	void clear();
 	void push_back(Element* what);
-	SchematicModel& insert(SchematicModel::iterator i, Element* c) { untested();
+	ElementList& insert(ElementList::iterator i, Element* c) { untested();
 		_cl.insert(i, c);  return *this;
 	}
 	void pushBack(Element* what);
@@ -152,7 +134,7 @@ public:
 //					{return find_again(short_name, begin());}
 //	iterator find_again(const std::string& short_name, iterator);
   // return a const_iterator
-	SchematicModel const* parent() const;
+	ElementList const* parent() const;
 	const_iterator begin()const {return _cl.begin();}
 	const_iterator end()const {return _cl.end();}
 	iterator begin() {return _cl.begin();}
@@ -162,7 +144,7 @@ public:
 					{return find_again(short_name, begin());}
 
 private:
-	ElementList _cl;
+	container_type _cl;
 	NetList* Nets;
 	NodeMap* _nm;
 //	QFileInfo FileInfo;
@@ -173,19 +155,24 @@ public: // HACK
 	ParamList const* params() const;
 
 private:
-	const SchematicModel* _parent;
+	const ElementList* _parent;
 	std::multimap<std::string, Element*> _map;
 	mutable ParamList* _params;
-}; // SchematicModel
+}; // ElementList
 /*--------------------------------------------------------------------------*/
-SchematicModel::fat_iterator findbranch(istream_t&, SchematicModel::fat_iterator);
+} // qucs
 /*--------------------------------------------------------------------------*/
-inline SchematicModel::fat_iterator findbranch(istream_t& cmd, SchematicModel* cl)
+qucs::ElementList::fat_iterator findbranch(istream_t&, qucs::ElementList::fat_iterator);
+/*--------------------------------------------------------------------------*/
+namespace qucs {
+/*--------------------------------------------------------------------------*/
+inline ElementList::fat_iterator findbranch(istream_t& cmd, ElementList* cl)
 {
   assert(cl);
-  return findbranch(cmd, SchematicModel::fat_iterator(cl, cl->begin()));
+  return findbranch(cmd, ElementList::fat_iterator(cl, cl->begin()));
 }
 /*--------------------------------------------------------------------------*/
-size_t numWires(SchematicModel const& m);
+size_t numWires(ElementList const& m);
 /*--------------------------------------------------------------------------*/
+} // namespace
 #endif

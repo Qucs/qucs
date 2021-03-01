@@ -26,6 +26,13 @@
 /*--------------------------------------------------------------------------*/
 namespace{
 /*--------------------------------------------------------------------------*/
+using qucs::Element;
+using qucs::Diagram;
+using qucs::Painting;
+using qucs::ViewPainter;
+using qucs::Graph;
+using qucs::Module;
+/*--------------------------------------------------------------------------*/
 class DiagramWidget : public QPlainTextEdit{
 public:
 	DiagramWidget(Diagram* d)

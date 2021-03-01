@@ -13,6 +13,8 @@
 #include "schematic_dialog.h"
 #include "qucsdoc.h"
 /*--------------------------------------------------------------------------*/
+namespace qucs {
+/*--------------------------------------------------------------------------*/
 SchematicDialog::SchematicDialog()
     : Widget()
 {
@@ -29,13 +31,15 @@ void SchematicDialog::execute(QUndoCommand* c)
 	doc()->executeCommand(c);
 }
 /*--------------------------------------------------------------------------*/
-QucsDoc* SchematicDialog::doc()
+Doc* SchematicDialog::doc()
 { untested();
 	auto t = dynamic_cast<QWidget*>(this); // prech?
 	assert(t);
-	auto p = dynamic_cast<QucsDoc*>(t->parentWidget()); // prech?
+	auto p = dynamic_cast<Doc*>(t->parentWidget()); // prech?
 	assert(p);
 	return p;
 }
+/*--------------------------------------------------------------------------*/
+} // qucs
 /*--------------------------------------------------------------------------*/
 /*--------------------------------------------------------------------------*/

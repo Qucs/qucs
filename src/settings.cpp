@@ -5,7 +5,7 @@
 #include "platform.h"
 
 extern QStringList qucsPathList; // BUG
-DocumentLanguage* tQucsSettings::language;
+qucs::Language* tQucsSettings::language;
 
 // Loads the settings file and stores the settings.
 // BUG: move to QucsSettings::QucsSettings
@@ -120,12 +120,12 @@ bool loadSettings()
     return true;
 }
 /*--------------------------------------------------------------------------*/
-Simulator const* tQucsSettings::simulator() const
+qucs::Simulator const* tQucsSettings::simulator() const
 {
 	return _simulator;
 }
 /*--------------------------------------------------------------------------*/
-void tQucsSettings::setSimulator(Simulator const* s)
+void tQucsSettings::setSimulator(qucs::Simulator const* s)
 {
 	_simulator = s;
 }

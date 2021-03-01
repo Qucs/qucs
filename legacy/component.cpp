@@ -39,8 +39,6 @@
 #include <QDialog>
 #include <assert.h>
 
-class Schematic;
-
 class QValidator;
 class QIntValidator;
 class QRegExpValidator;
@@ -54,10 +52,11 @@ class QComboBox;
 class QPushButton;
 class QVBoxLayout;
 
+using namespace qucs;
 
 class ComponentDialog : public SchematicDialog {
 public:
-  ComponentDialog(QucsDoc*);
+  ComponentDialog(qucs::Doc*);
   ~ComponentDialog();
 
   void attach(ElementGraphics* c) override;
@@ -200,7 +199,7 @@ Component::Component() : Symbol(),  _rotated(0)
 
   Model=""; //remove later.
 
-  setLabel(typeName());
+  set_label(typeName());
 }
 
 Element* Component::clone() const
@@ -1557,11 +1556,11 @@ std::string Component::paramName(index_t i) const
 }
 /*--------------------------------------------------------------------------*/
 // BUG BUG BUG decouple.
-Widget* Component::schematicWidget(QucsDoc* Doc) const
+Widget* Component::schematicWidget(qucs::Doc* d) const
 { untested();
   trace0("Component::editElement");
-  return Symbol::schematicWidget(Doc); // for now
-//  return new ComponentDialog(Doc); //does not work yet.
+  return Symbol::schematicWidget(d); // for now
+//  return new ComponentDialog(d); //does not work yet.
 }
 /*--------------------------------------------------------------------------*/
 bool Component::legacyTransformHack() const

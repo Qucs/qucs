@@ -34,7 +34,7 @@ Module::INSTALL pp("sources", &d0);
 
 iProbe::iProbe() : Component()
 {
-  setLabel("current probe");
+  set_label("current probe");
   setTypeName("IProbe");
 
   Lines.append(new Line(-30,  0,-20,  0,QPen(Qt::darkBlue,2)));

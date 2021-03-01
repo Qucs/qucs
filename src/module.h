@@ -23,14 +23,8 @@
 #include "io_trace.h"
 #include <assert.h>
 
+namespace qucs {
 class Element;
-
-// function typedefs for circuits and analyses
-//typedef Element * (* pInfoFunc) (QString&, char * &, bool);
-#if 0 // pointless
-typedef Element * (* pInfoVAFunc) (QString&, QString&, bool, QString);
-//typedef Component * (* pCreatorFunc) ();
-#endif
 
 void guiRegisterElement (std::string const& category, Element const*);
 
@@ -39,7 +33,6 @@ void guiRegisterElement (std::string const& category, Element const*);
 class Module {
 public:
 	Module (Element const* e) : _e(e) { }
-
 	~Module ();
 
 public: // BUG: this is not part of Module
@@ -120,5 +113,7 @@ private: // internal
 	QString Name;
 	QList<Module *> Content;
 };
+
+}
 
 #endif /* __MODULE_H__ */

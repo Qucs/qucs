@@ -34,7 +34,7 @@ static Module::INSTALL pp("RF", &d0);
 
 MSlange::MSlange()
 {
-  setLabel("microstrip lange coupler");
+  set_label("microstrip lange coupler");
   setTypeName("MLANGE");
 
   Lines.append(new Line(-30,-30,-30, 10,QPen(Qt::darkBlue,2)));

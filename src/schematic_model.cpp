@@ -11,7 +11,6 @@
  *                                                                         *
  ***************************************************************************/
 
-//#include "schematic_doc.h"
 #include "schematic_lang.h"
 #include "qucs_globals.h"
 #include "nodemap.h"
@@ -24,9 +23,9 @@
 #include "diagram.h" // BUG?
 #include "task_element.h" // BUG?
 /*--------------------------------------------------------------------------*/
+namespace qucs {
 /*--------------------------------------------------------------------------*/
-// getting here in CLI mode
-SchematicModel::SchematicModel()
+ElementList::ElementList()
   : Nets(nullptr),
     _nm(nullptr),
     _parent(nullptr),
@@ -36,7 +35,7 @@ SchematicModel::SchematicModel()
 	_nm = new NodeMap(*Nets);
 }
 /*--------------------------------------------------------------------------*/
-SchematicModel::~SchematicModel()
+ElementList::~ElementList()
 {
 	for(auto i : *this){
 	  	if(auto c=dynamic_cast<Symbol*>(i)){
@@ -50,7 +49,7 @@ SchematicModel::~SchematicModel()
 	}
 }
 /*--------------------------------------------------------------------------*/
-void SchematicModel::clear()
+void ElementList::clear()
 {
 	for(auto& pc : _cl){
 		if(auto s=prechecked_cast<Symbol*>(pc)){
@@ -70,14 +69,14 @@ void SchematicModel::clear()
 // called from schematic::erase only
 // // possibly not needed. all actions must be undoable anyway
 // -> use detach, store reference in UndoAction.
-void SchematicModel::erase(Element* what)
+void ElementList::erase(Element* what)
 {
 	Element* e = detach(what);
 	delete(e);
 }
 /*--------------------------------------------------------------------------*/
 // supposedly equivalent to clone and erase.
-Element* SchematicModel::detach(Element* what)
+Element* ElementList::detach(Element* what)
 {
 	assert(what);
 	assert(what->owner());
@@ -111,26 +110,26 @@ Element* SchematicModel::detach(Element* what)
 }
 /*--------------------------------------------------------------------------*/
 // stash object and keep track of label.
-void SchematicModel::push_back(Element* what)
+void ElementList::push_back(Element* what)
 {
 	_map.insert(std::make_pair(what->label(), what));
-	trace2("SchematicModel::push_back", what->label(), this);
+	trace2("ElementList::push_back", what->label(), this);
 	_cl.push_back(what);
 }
 /*--------------------------------------------------------------------------*/
-SchematicModel& SchematicModel::erase(const_iterator what)
+ElementList& ElementList::erase(const_iterator what)
 {
 	_cl.erase(what);
 	return *this;
 }
 /*--------------------------------------------------------------------------*/
 // BUG: connect and push_back in one go. don't use.
-void SchematicModel::pushBack(Element* what)
+void ElementList::pushBack(Element* what)
 {
 	incomplete();
 	push_back(what);
 
-	trace2("SchematicModel::push_back", what->label(), this);
+	trace2("ElementList::push_back", what->label(), this);
 	if(dynamic_cast<TaskElement*>(what)){ untested();
 	}else if(auto c=dynamic_cast<Symbol*>(what)){
 		if(c->is_device()){
@@ -146,27 +145,27 @@ void SchematicModel::pushBack(Element* what)
 	}
 }
 /*--------------------------------------------------------------------------*/
-// QFileInfo const& SchematicModel::getFileInfo ()const
+// QFileInfo const& ElementList::getFileInfo ()const
 // {
 // 	return FileInfo;
 // }
 /*--------------------------------------------------------------------------*/
-NodeMap* SchematicModel::nodes() const
+NodeMap* ElementList::nodes() const
 {
 	return _nm;
 }
 /*--------------------------------------------------------------------------*/
-//PaintingList const& SchematicModel::symbolPaints() const
+//PaintingList const& ElementList::symbolPaints() const
 //{ untested();
 //	return SymbolPaints;
 //}
 
-//PaintingList& SchematicModel::paintings()
+//PaintingList& ElementList::paintings()
 //{
 //	return Paintings;
 //}
 //
-//PaintingList& SchematicModel::symbolPaintings()
+//PaintingList& ElementList::symbolPaintings()
 //{ untested();
 //	assert(_symbol);
 //	// temporary. move stuff here....
@@ -174,22 +173,22 @@ NodeMap* SchematicModel::nodes() const
 //}
 //
 // same, but const.
-//ElementList const& SchematicModel::components() const
+//ElementList const& ElementList::components() const
 //{
 //	return _cl;
 //}
 
-// NodeMap const& SchematicModel::nodes() const
+// NodeMap const& ElementList::nodes() const
 // {
 // 	return Nodes;
 // }
 
-// PaintingList const& SchematicModel::paintings() const
+// PaintingList const& ElementList::paintings() const
 // {
 // 	return Paintings;
 // }
 
-//PaintingList const& SchematicModel::symbolPaints() const
+//PaintingList const& ElementList::symbolPaints() const
 //{ untested();
 //	return SymbolPaintings;
 //}
@@ -205,7 +204,7 @@ static void createNodeSet(QStringList& Collect, int& countInit,
 }
 #endif
 /*--------------------------------------------------------------------------*/
-void SchematicModel::disconnect(Symbol* c)
+void ElementList::disconnect(Symbol* c)
 {
 	trace1("disconnect", c->label());
 	incomplete();
@@ -243,7 +242,7 @@ static Place const* place_at(pos_t p, Symbol* m)
 		assert(s);
 		s->setPosition(p);
 		s->setTypeName("place");
-		s->setLabel(ps);
+		s->set_label(ps);
 		s->set_owner(m->owner());
 		s->set_port_by_index(0, ps);
 		scope->push_back(s);
@@ -256,7 +255,7 @@ static Place const* place_at(pos_t p, Symbol* m)
 
 }
 #if 1 // obsolete. free?
-void SchematicModel::connect(Symbol* sym)
+void ElementList::connect(Symbol* sym)
 {
 
 #if 0
@@ -280,22 +279,22 @@ void SchematicModel::connect(Symbol* sym)
 #endif
 /*--------------------------------------------------------------------------*/
 // BUG?
-//unsigned SchematicModel::numPorts() const
+//unsigned ElementList::numPorts() const
 //{
 //	assert(this);
-//	trace1("SchematicModel::numPorts", this);
+//	trace1("ElementList::numPorts", this);
 //	// incomplete
 //	return _ports.size();
 //}
 /*--------------------------------------------------------------------------*/
-//void SchematicModel::setPort(unsigned i, Node* n)
+//void ElementList::setPort(unsigned i, Node* n)
 //{
 //	trace2("setPort", i, _ports.size());
 //	_ports.resize(std::max(_ports.size(), size_t(i)+1));
 //	_ports[i] = n;
 //}
 ///*--------------------------------------------------------------------------*/
-//Node const* SchematicModel::portValue(unsigned i) const
+//Node const* ElementList::portValue(unsigned i) const
 //{
 //	assert(i<numPorts());
 //	if(_ports[i]){
@@ -305,7 +304,7 @@ void SchematicModel::connect(Symbol* sym)
 //	}
 //}
 /*--------------------------------------------------------------------------*/
-void SchematicModel::prepare()
+void ElementList::prepare()
 {
 	for(auto pc : _cl){
 		assert(pc);
@@ -314,7 +313,7 @@ void SchematicModel::prepare()
 	}
 }
 /*--------------------------------------------------------------------------*/
-void SchematicModel::set_owner(Element* o)
+void ElementList::set_owner(Element* o)
 {
 	for(auto pc : _cl){
 		assert(pc);
@@ -325,7 +324,7 @@ void SchematicModel::set_owner(Element* o)
 	}
 }
 /*--------------------------------------------------------------------------*/
-SchematicModel const* SchematicModel::parent() const
+ElementList const* ElementList::parent() const
 {
 	return nullptr;
 }
@@ -333,14 +332,14 @@ SchematicModel const* SchematicModel::parent() const
 bool operator==(Object const*p, std::string const&s)
 {
 	if(p){
-		return p->label() == s;
+		return p->short_label() == s;
 	}else{
 		return false;
 	}
 }
 /*--------------------------------------------------------------------------*/
-SchematicModel::const_iterator SchematicModel::find_again(const std::string& short_name,
-						SchematicModel::const_iterator /*Begin*/)const
+ElementList::const_iterator ElementList::find_again(const std::string& short_name,
+						ElementList::const_iterator /*Begin*/)const
 {
 	// incomplete, does not find again.
 	trace1("find_again", short_name);
@@ -350,7 +349,7 @@ SchematicModel::const_iterator SchematicModel::find_again(const std::string& sho
 }
 /*--------------------------------------------------------------------------*/
 // HACK
-unsigned SchematicModel::nextIdx(std::string const& s) const
+unsigned ElementList::nextIdx(std::string const& s) const
 {
 	unsigned r=0;
 	if(s==""){
@@ -380,7 +379,7 @@ unsigned SchematicModel::nextIdx(std::string const& s) const
 	return r+1;
 }
 /*--------------------------------------------------------------------------*/
-PARAM_LIST* SchematicModel::params()
+PARAM_LIST* ElementList::params()
 {
   if (!_params) {
     assert(!_parent);
@@ -390,7 +389,7 @@ PARAM_LIST* SchematicModel::params()
   return _params;
 }
 /*--------------------------------------------------------------------------*/
-PARAM_LIST const* SchematicModel::params() const
+PARAM_LIST const* ElementList::params() const
 {
   if (!_params) {
     assert(!_parent);
@@ -401,7 +400,7 @@ PARAM_LIST const* SchematicModel::params() const
 }
 /*--------------------------------------------------------------------------*/
 // debug (any other use?!)
-size_t numWires(SchematicModel const& m)
+size_t numWires(ElementList const& m)
 {
 	size_t r = 0;
 	for(auto i : m){
@@ -413,16 +412,18 @@ size_t numWires(SchematicModel const& m)
 	return r;
 }
 /*--------------------------------------------------------------------------*/
-size_t SchematicModel::numNets() const
+size_t ElementList::numNets() const
 {
 	assert(Nets);
 	return Nets->size();
 }
 /*--------------------------------------------------------------------------*/
-size_t SchematicModel::numNodes() const
+size_t ElementList::numNodes() const
 {
 	assert(nodes());
 	return nodes()->size();
 }
+/*--------------------------------------------------------------------------*/
+} // qucs
 /*--------------------------------------------------------------------------*/
 /*--------------------------------------------------------------------------*/

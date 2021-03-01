@@ -151,7 +151,7 @@ private: // local
   void printPainting(Painting const*, ostream_t&) const override {incomplete();}
   void printDiagram(Diagram const*, ostream_t&) const override {incomplete();}
 }qucslang;
-static Dispatcher<DocumentFormat>::INSTALL p(&languageDispatcher, "qucsator", &qucslang);
+static Dispatcher<DocumentFormat>::INSTALL p(&language_dispatcher, "qucsator", &qucslang);
 /* -------------------------------------------------------------------------------- */
 /* -------------------------------------------------------------------------------- */
 // non-callback print.
@@ -268,8 +268,8 @@ Data* QucsatorLang::parseData(istream_t& cs, Data* x) const
 	}
 #endif
 	CommonData* cd = new SimOutputDat(cs);
-	trace1("datparse", label());
-	cd->setLabel(x->label()); // hmm
+	trace1("datparse", short_label());
+	cd->set_label(x->label()); // hmm
 	x->attach(cd);
 	return x;
 }
@@ -311,7 +311,7 @@ void QucsatorLang::printSubckt(SubcktBase const* p, ostream_t& s) const
 #endif
 //	assert(!p->is_device());
 	Symbol const* sym = p;
-	SchematicModel const* sckt;
+	ElementList const* sckt;
 
 	sckt = e->scope();
 	assert(sckt);

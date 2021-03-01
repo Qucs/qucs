@@ -30,15 +30,15 @@ class QVBoxLayout;
 class QPushButton;
 class QProgressBar;
 class QFile;
-class Component;
+
+namespace qucs {
 
 // #define SPEEDUP_PROGRESSBAR
-
 
 class SimMessage : public QDialog, private SimCtrl {
 Q_OBJECT
 public:
-  SimMessage(Simulator* sim, QucsDoc const* doc);
+  SimMessage(Simulator* sim, Doc const* doc);
  ~SimMessage();
 
   void startProcess(istream_t&);
@@ -78,13 +78,12 @@ private:
   void FinishSimulation();
 //  void nextSPICE();
   void startSimulator(std::string const& which);
-//  Component * findOptimization(SchematicDoc *);
   QPlainTextEdit *ProgText, *ErrText;
   bool           wasLF;   // linefeed for "ProgText"
   bool           simKilled; // true if simulation was aborted by the user
 
 public:
-	void do_it(istream_t, QucsDoc&);
+	void do_it(istream_t, Doc&);
 	void setMode(std::string const&);
 	int status()const{
 		assert(_sim);
@@ -113,16 +112,15 @@ public:
 
 	QPushButton    *Display, *Abort;
 	QProgressBar   *SimProgress;
-
-  QVBoxLayout  *all;
-protected:
-  QString Program;
+	QVBoxLayout  *all;
 
 private:
   Simulator* _simulator;
-  QucsDoc const* _doc;
+  Doc const* _doc;
   Simulator::state_t oldState;
   // std::string _what;
 }; // SimMessage
+
+} // qucs
 
 #endif

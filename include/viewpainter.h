@@ -15,7 +15,7 @@
 #ifndef QUCS_VIEWPAINTER_H
 #define QUCS_VIEWPAINTER_H
 
-#include <QPainter> // ugly, still better than direct include..
+#include <QPainter> // BUG
 #include "io_trace.h"
 #include "geometry.h"
 
@@ -24,13 +24,10 @@ class QColor;
 
 #define TO_INT(f)   (f > 0.0 ? int(f + 0.5) : int(f - 0.5))
 
-/* This class is neccessary because scaled fonts looks very ungly.
-   Avoiding this is unfortunately not easy.
-   This class scales the font point size instead of the font glyphes.
-   But this has the disadvantage, that the text size does not increase
-   equally with the rest of the drawing. We therefore must compute
-   some thing anew each time the paint function is called. The class
-   "ViewPainter" supports this. */
+// This class wraps QPainter
+//
+
+namespace qucs {
 
 class ViewPainter{
 	ViewPainter(const ViewPainter&);
@@ -175,5 +172,9 @@ public: // BUG, is accessed directly.
 	float DY;
 	int LineSpacing;
 };
+
+}
+
+using qucs::ViewPainter; // transition
 
 #endif

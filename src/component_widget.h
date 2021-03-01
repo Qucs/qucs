@@ -21,6 +21,10 @@
 #include <QListWidget>
 #include <QStringLiteral>
 
+namespace qucs {
+class Element;
+}
+
 class ComponentWidget : public QListWidget{
 	Q_OBJECT
 public:
@@ -31,23 +35,22 @@ public:
 	void startDrag(Qt::DropActions /*supportedActions*/);
 };
 
-class Element;
 class ComponentListWidgetItem : public QListWidgetItem, public QObject{
 public:
 	explicit ComponentListWidgetItem() : QListWidgetItem(), QObject(), _e(nullptr) {};
-	ComponentListWidgetItem(Element const* e);
+	ComponentListWidgetItem(qucs::Element const* e);
 	ComponentListWidgetItem(ComponentListWidgetItem const&) = delete;
 
 public:
-	Element* cloneElement() const;
-	Element const* proto() const;
+	qucs::Element* cloneElement() const;
+	qucs::Element const* proto() const;
 
 public:
 	QDataStream & dump(QDataStream &x) const;
 	QDataStream & load(QDataStream &x);
 
 private:
-	Element const* _e;
+	qucs::Element const* _e;
 };
 
 inline QDataStream &operator<<(QDataStream &x, const ComponentListWidgetItem &y)

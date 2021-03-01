@@ -30,6 +30,8 @@ copyright            : 2016, 2020 Felix Salfelder
 
 namespace{
 
+using qucs::ElementList;
+
 class plugins : public Command{
 public:
 	explicit plugins() : Command(){
@@ -70,12 +72,12 @@ public:
   }
 
 private:
-  void do_it(istream_t&, SchematicModel*) override;
+  void do_it(istream_t&, ElementList*) override;
 private:
   mutable std::map<std::string, void*> attach_list;
 } my_plugins;
-Dispatcher<Command>::INSTALL p0(&commandDispatcher, "load|attach", &my_plugins);
-Dispatcher<Command>::INSTALL p1(&commandDispatcher, "detach_all", &my_plugins);
+Dispatcher<Command>::INSTALL p0(&command_dispatcher, "load|attach", &my_plugins);
+Dispatcher<Command>::INSTALL p1(&command_dispatcher, "detach_all", &my_plugins);
 
 static std::string plugpath()
 {
@@ -88,7 +90,7 @@ static std::string plugpath()
   }
 }
 
-void plugins::do_it(istream_t& cs, SchematicModel*)
+void plugins::do_it(istream_t& cs, ElementList*)
 {
 	cs.reset();
 	if(cs.umatch("detach_all")){

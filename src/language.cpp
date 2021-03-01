@@ -26,7 +26,9 @@
 
 #define DEV_DOT Dot
 /*--------------------------------------------------------------------------*/
-Element* DocumentLanguage::parseItem(istream_t& s, Element* c) const
+namespace qucs {
+/*--------------------------------------------------------------------------*/
+Element* Language::parseItem(istream_t& s, Element* c) const
 { untested();
   if (DEV_DOT* d = dynamic_cast<DEV_DOT*>(c)) { untested();
     return parseCommand(s, d);
@@ -55,7 +57,7 @@ Element* DocumentLanguage::parseItem(istream_t& s, Element* c) const
 #endif
 }
 /*--------------------------------------------------------------------------*/
-void DocumentLanguage::printItem(ostream_t& s, Element const* c) const
+void Language::printItem(ostream_t& s, Element const* c) const
 {
 	if(!c){ untested();
 		s << "unreachable, no item\n";
@@ -84,8 +86,8 @@ void DocumentLanguage::printItem(ostream_t& s, Element const* c) const
 }
 /*--------------------------------------------------------------------------*/
 // borrowed from u_lang.h
-void DocumentLanguage::new__instance(istream_t& cmd, Element* owner,
-		SchematicModel* Scope) const
+void Language::new__instance(istream_t& cmd, Element* owner,
+		ElementList* Scope) const
 {
 	assert(Scope);
 	if (cmd.is_end()) { untested();
@@ -128,7 +130,7 @@ void DocumentLanguage::new__instance(istream_t& cmd, Element* owner,
 	}
 }
 /*--------------------------------------------------------------------------*/
-Element const* DocumentLanguage::find_proto(const std::string& Name, const Element* Scope) const
+Element const* Language::find_proto(const std::string& Name, const Element* Scope) const
 {
 	trace1("find_proto", Name);
 	Element const* p=nullptr;
@@ -153,7 +155,7 @@ Element const* DocumentLanguage::find_proto(const std::string& Name, const Eleme
 #endif
   if (p) {
     return p;
-  }else if (auto cmd = commandDispatcher[Name]) {
+  }else if (auto cmd = command_dispatcher[Name]) {
     auto d = new DEV_DOT;	//BUG// memory leak
 	 trace1("DOT", Name);
 	 d->set(cmd); // really?
@@ -167,7 +169,7 @@ Element const* DocumentLanguage::find_proto(const std::string& Name, const Eleme
 //    return p;
   }else if ((p = diagram_dispatcher[Name])) {
     return p;
-  }else if ((p = dataDispatcher[Name])) {
+  }else if ((p = data_dispatcher[Name])) {
     return p;
   }else{
 	  trace1("try more", Name);
@@ -194,7 +196,7 @@ Element const* DocumentLanguage::find_proto(const std::string& Name, const Eleme
     else{ /* no shortcut available */
       s = Name;
     }
-    if ((commandDispatcher[s])) { untested();
+    if ((command_dispatcher[s])) { untested();
       return new DEV_DOT; //BUG// we will look it up twice, //BUG// memory leak
 		 // d->set(cmd);?
     }else{ untested();
@@ -204,5 +206,7 @@ Element const* DocumentLanguage::find_proto(const std::string& Name, const Eleme
   }
       return NULL;
 }
+/*--------------------------------------------------------------------------*/
+} // qucs
 /*--------------------------------------------------------------------------*/
 /*--------------------------------------------------------------------------*/

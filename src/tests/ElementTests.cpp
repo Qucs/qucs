@@ -26,6 +26,9 @@
 #include <QDebug>
 
 #include "ElementTests.h"
+
+using namespace qucs;
+
 class testElement : public Element{
 public:
 	testElement() : Element() {

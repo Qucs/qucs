@@ -14,7 +14,7 @@ int main()
 	Symbol* root = symbol_dispatcher.clone("subckt_proto");
 	assert(root);
 	assert(root->scope());
-	SchematicModel& M = *root->scope();
+	ElementList& M = *root->scope();
 
 	Symbol* w0;
 	Symbol* w1;

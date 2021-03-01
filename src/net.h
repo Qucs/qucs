@@ -14,6 +14,8 @@
 #include "object.h"
 #include <assert.h>
 
+namespace qucs {
+
 class Net : public Object{
 public:
 private:
@@ -25,7 +27,7 @@ private:
 	Net( const Net& ) = delete;
 
 public:
-	bool hasLabel() const{ return label() != ""; }
+	bool hasLabel() const{ return short_label() != ""; }
 	size_t size() const{return _size;}
 
 	void setPos(unsigned u){_pos=u;}
@@ -38,3 +40,5 @@ private:
 	size_t _size; // number of Conductors
 	unsigned _pos; // position
 };
+
+} // qucs

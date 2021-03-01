@@ -20,6 +20,8 @@
 #include "element.h"
 #include "exception.h"
 /* -------------------------------------------------------------------------------- */
+namespace qucs {
+/* -------------------------------------------------------------------------------- */
 // rename to SharedData?
 class CommonData : public Object{
 private:
@@ -75,7 +77,7 @@ public:
 	~Data();
 	CommonData const* common()const{ return _common; }
 	virtual void set_param_by_name(std::string const& name, std::string const&){
-		throw qucs::ExceptionCantFind(name, label());
+		throw qucs::ExceptionCantFind(name, short_label());
 	}
 	void attach(CommonData const* d) {
 		CommonData::attach(d, &_common);
@@ -100,6 +102,10 @@ inline bool CommonData::operator==(const CommonData&)const
 	incomplete();
 	return false;
 }
+/* -------------------------------------------------------------------------------- */
+} // qucs
+/* -------------------------------------------------------------------------------- */
+using qucs::Data; // transition
 /* -------------------------------------------------------------------------------- */
 /* -------------------------------------------------------------------------------- */
 #endif

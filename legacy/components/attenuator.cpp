@@ -20,7 +20,7 @@
 
 Attenuator::Attenuator()
 {
-  setLabel("attenuator");
+  set_label("attenuator");
 
   Lines.append(new Line( -4, -6, -4,  6,QPen(Qt::darkBlue,2)));
   Lines.append(new Line( -4, -6,  4, -6,QPen(Qt::darkBlue,2)));

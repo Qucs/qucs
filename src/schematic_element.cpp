@@ -1617,7 +1617,7 @@ void SchematicDoc::insertRawComponent(Component *c, bool noOptimize)
 // apparently label are owned by nodes,
 // FIXME: store labels properly, and get rid of this mess.
 #if 0 // does not work like this.
-void SchematicModel::recreateSymbol(Symbol *Comp)
+void ElementList::recreateSymbol(Symbol *Comp)
 {
     incomplete();
     WireLabel **plMem=0, **pl;

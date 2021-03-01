@@ -19,6 +19,7 @@
 #include <set>
 /*--------------------------------------------------------------------------*/
 /*--------------------------------------------------------------------------*/
+namespace qucs {
 /*--------------------------------------------------------------------------*/
 struct{
 	bool operator ()(ElementGraphics* a, ElementGraphics* b) const{
@@ -133,7 +134,7 @@ public:
 	}
 
 private:
-	SchematicModel* _scope;
+	ElementList* _scope;
 	SchematicScene* _scene;
 	std::set<ElementGraphics*> _new_plg; // new places.
 	std::set<ElementGraphics*> _old_plg; // places that were already there
@@ -173,7 +174,7 @@ void SchematicEdit::do_it_first()
 	std::vector<ElementGraphics*> done_del;
 
 	// footprint. keep track of places and nodes
-//	SchematicModel* m = scene()->scope();
+//	ElementList* m = scene()->scope();
 	Footprint f(scene());
 
 	trace1("============ edit delete...", _del.size());
@@ -475,4 +476,7 @@ void SchematicEdit::redo()
 		do_it();
 	}
 }
+/*--------------------------------------------------------------------------*/
+} // qucs
+/*--------------------------------------------------------------------------*/
 /*--------------------------------------------------------------------------*/

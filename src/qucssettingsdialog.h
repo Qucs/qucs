@@ -40,7 +40,7 @@ class QucsSettingsDialog : public QDialog
 {
     Q_OBJECT
 public:
-    QucsSettingsDialog(QucsApp *parent=0);
+    QucsSettingsDialog(qucs::App *parent=0);
     ~QucsSettingsDialog();
 
 private slots:
@@ -75,7 +75,7 @@ private slots:
     void slotPathSelectionChanged();
 
 public:
-    QucsApp *App;
+	 qucs::App *App;
 
     QFont Font;
     QCheckBox *checkWiring, *checkLoadFromFutureVersions,

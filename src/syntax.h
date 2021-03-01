@@ -16,7 +16,7 @@
 #define QUCS_SYNTAX_H
 
 #include <QSyntaxHighlighter>
-#include "qucsdoc.h"
+#include "qucsdoc.h" // to textdoc??
 
 enum language_type {
   LANG_NONE = 0,
@@ -33,7 +33,7 @@ enum textstate_type {
 
 class SyntaxHighlighter : public QSyntaxHighlighter {
 public:
- SyntaxHighlighter(QucsDoc*);
+ SyntaxHighlighter(qucs::Doc*);
  virtual ~SyntaxHighlighter();
 
  void setLanguage(int);
@@ -41,7 +41,7 @@ public:
 
 private:
   int language;
-  QucsDoc *Doc;
+  qucs::Doc *Doc;
 
   struct HighlightingRule
      {

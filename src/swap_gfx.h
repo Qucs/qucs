@@ -15,6 +15,8 @@
 #include "element_graphics.h"
 #include "schematic_scene.h"
 
+namespace qucs {
+
 class SwapElementGfx : public SchematicEdit {
 public:
   ~SwapElementGfx(){
@@ -30,3 +32,5 @@ public:
     setText("Swap Element " + QString_(element(g)->label()));
   }
 };
+
+}

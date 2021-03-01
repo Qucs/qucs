@@ -21,7 +21,7 @@ namespace{
 /*--------------------------------------------------------------------------*/
 // ignore "<Spice>" section. (use <Model> instead.)
 class Model : public Command{
-	void do_it(istream_t& cs, SchematicModel*) override {
+	void do_it(istream_t& cs, ElementList*) override {
 	  auto fullstring = cs.fullString();
 	  trace1("Model", fullstring);
 
@@ -45,14 +45,14 @@ class Model : public Command{
 	  Symbol* textdef = symbol_dispatcher.clone("spiceVerbatimHack");
 	  assert(textdef);
 	  textdef->setParameter("spiceVerbatimHack", M);
-	  textdef->setLabel(":spiceVerbatimHack:");
+	  textdef->set_label(":spiceVerbatimHack:");
 	  assert(s);
 	  s->pushBack(textdef);
 #endif
   }
 }d0;
-Dispatcher<Command>::INSTALL p0(&commandDispatcher, "Spice", &d0);
-Dispatcher<Command>::INSTALL p1(&commandDispatcher, "Spice>", &d0); // BUG
-Dispatcher<Command>::INSTALL p2(&commandDispatcher, "<Spice>", &d0); // ...
+Dispatcher<Command>::INSTALL p0(&command_dispatcher, "Spice", &d0);
+Dispatcher<Command>::INSTALL p1(&command_dispatcher, "Spice>", &d0); // BUG
+Dispatcher<Command>::INSTALL p2(&command_dispatcher, "<Spice>", &d0); // ...
 /*--------------------------------------------------------------------------*/
 } // namespace

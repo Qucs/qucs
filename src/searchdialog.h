@@ -17,7 +17,9 @@
 
 #include <QDialog>
 
-class QucsDoc;
+namespace qucs {
+class Doc;
+}
 
 namespace Ui {
   class SearchDialog;
@@ -31,7 +33,7 @@ public:
   SearchDialog(QWidget *);
  ~SearchDialog();
 
-  void initSearch(QucsDoc *doc, const QString &text, bool replace=false);
+  void initSearch(qucs::Doc *doc, const QString &text, bool replace=false);
 
 signals:
   void search(const QString &str, bool CaseSensitive, bool wordOnly, bool backward);

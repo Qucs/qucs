@@ -32,7 +32,7 @@
 //#include "e_cardlist.h"
 /*--------------------------------------------------------------------------*/
 // QUCS hacks
-#define CARD_LIST SchematicModel
+#define CARD_LIST qucs::ElementList
 #define OMSTREAM ostream_t
 #include <limits>
 #include <string>

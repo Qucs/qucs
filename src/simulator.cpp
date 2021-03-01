@@ -17,6 +17,8 @@
 #include "qucsdoc.h"
 #include "exception.h"
 /* -------------------------------------------------------------------------------- */
+namespace qucs {
+/* -------------------------------------------------------------------------------- */
 Simulator::~Simulator()
 {
 }
@@ -51,12 +53,12 @@ void Simulator::detachCtrl(SimCtrl const* ctrl)
   }
 }
 /* -------------------------------------------------------------------------------- */
-void Simulator::message(QucsMsgType lvl, std::string const& msg)
+void Simulator::message(MsgType lvl, std::string const& msg)
 {itested();
 	if(_ctrl){itested();
 		_ctrl->message(lvl, msg);
 	}else{ untested();
-		Object::message(lvl, msg.c_str());
+		Element::message(lvl, msg.c_str());
 	}
 }
 /* -------------------------------------------------------------------------------- */
@@ -68,5 +70,7 @@ void Simulator::notifyState(Simulator::state_t st)
 	}else{ untested();
 	}
 }
+/* -------------------------------------------------------------------------------- */
+} // qucs
 /* -------------------------------------------------------------------------------- */
 /* -------------------------------------------------------------------------------- */

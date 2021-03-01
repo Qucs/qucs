@@ -18,25 +18,28 @@
 #include <QFile>
 
 namespace {
+
+using namespace qucs;
+
 class createListComponentEntry : public Command {
 public:
-	void do_it(istream_t&, SchematicModel*) override;
+	void do_it(istream_t&, ElementList*) override;
 }c;
-Dispatcher<Command>::INSTALL p(&commandDispatcher, "listcompentry", &c);
+Dispatcher<Command>::INSTALL p(&command_dispatcher, "listcompentry", &c);
 
 
-void createListComponentEntry::do_it(istream_t&, SchematicModel*)
+void createListComponentEntry::do_it(istream_t&, ElementList*)
 {
   QStringList cats = Category::getCategories ();
   QFile data("/dev/stdout");
   data.open (QFile::WriteOnly | QFile::Truncate);
   ostream_t s(&data);
 
-  auto lang = languageDispatcher["leg_sch"];
+  auto lang = language_dispatcher["leg_sch"];
   assert(lang);
-  auto qucsatorlang = languageDispatcher["qucsator"];
+  auto qucsatorlang = language_dispatcher["qucsator"];
   assert(qucsatorlang);
-  auto verilog = languageDispatcher["verilog"];
+  auto verilog = language_dispatcher["verilog"];
 
   foreach(QString category, cats) {
 
@@ -59,9 +62,9 @@ void createListComponentEntry::do_it(istream_t&, SchematicModel*)
       s << "=====" << e->label() << "=========\n";
 
       if(auto c = dynamic_cast<Symbol*>(ce)){
-	ce->setLabel("my_" + c->typeName());
+	ce->set_label("my_" + c->typeName());
       }else if(auto c = dynamic_cast<TaskElement*>(ce)){
-	ce->setLabel("my_" + c->typeName());
+	ce->set_label("my_" + c->typeName());
       }else{
 	// not sure.
       }

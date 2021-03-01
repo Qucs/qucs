@@ -22,27 +22,30 @@
 #define DEV_DOT Dot
 // include u_lang.h // TODO
 //class Command;
-class DEV_DOT;
-class Element;
 class istream_t;
-class Painting;
-class SchematicModel;
-class SubcktBase;
-class Symbol;
-class Diagram;
-class TaskElement;
 class ostream_t;
 
 /* -------------------------------------------------------------------------------- */
+namespace qucs {
+/* -------------------------------------------------------------------------------- */
+class DEV_DOT;
+class Diagram;
+class Element;
+class ElementList;
+class Painting;
+class SubcktBase;
+class Symbol;
+class TaskElement;
+/* -------------------------------------------------------------------------------- */
 // baseclass for schematic and net languages.
 // use u_lang.h instead?
-class DocumentLanguage : public Object{
+class Language : public Object{
 protected:
-        DocumentLanguage() : Object(){}
+        Language() : Object(){}
 public:
-	virtual ~DocumentLanguage() {}
+	virtual ~Language() {}
 
-	virtual void	parse_top_item(istream_t&, SchematicModel*) const {incomplete();}
+	virtual void	parse_top_item(istream_t&, ElementList*) const {incomplete();}
 	virtual Element* parseItem(istream_t&, Element*) const;
 	virtual SubcktBase* parse_model(istream_t&, SubcktBase*) const {incomplete(); assert(false); return nullptr;} // == 0
 	virtual DEV_DOT* parseCommand(istream_t&, DEV_DOT*) const{
@@ -50,7 +53,7 @@ public:
 	}
   virtual std::string find_type_in_string(istream_t&) const = 0;
   void new__instance(istream_t& cmd, Element* owner,
-                     SchematicModel* Scope) const;
+                     ElementList* Scope) const;
   const Element* find_proto(const std::string&, const Element*) const;
 
 public:
@@ -66,10 +69,12 @@ private: //called by printItem
 };
 /* -------------------------------------------------------------------------------- */
 // group netlist languages. needed? obsolete?
-class NetLang : public DocumentLanguage {
+class NetLang : public Language {
 public:
   virtual ~NetLang(){}
 };
+/* -------------------------------------------------------------------------------- */
+} // qucs
 /* -------------------------------------------------------------------------------- */
 /* -------------------------------------------------------------------------------- */
 #endif

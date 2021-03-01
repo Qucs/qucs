@@ -32,25 +32,27 @@
 class QAction;
 class QPainter;
 class QPrinter;
-class QucsApp;
 class QUndoCommand;
 class QUndoStack;
 
+namespace qucs {
+
+class App;
 class CommonData;
 class Element;
+class ElementList;
 class MouseAction;
 class MouseActions;
-class SchematicModel;
 class Simulator;
 class SubcktBase;
 
-class QucsDoc : public Widget {
+class Doc : public Widget {
 protected:
-	QucsDoc(const QucsDoc&);
-	explicit QucsDoc(); // QucsApp*, const QString&, QWidget* owner);
+	Doc(const Doc&);
+	explicit Doc(); // QucsApp*, const QString&, QWidget* owner);
 public:
-//  explicit QucsDoc(QucsApp*, const QString&, QWidget* owner);
-	virtual ~QucsDoc();
+//  explicit Doc(QucsApp*, const QString&, QWidget* owner);
+	virtual ~Doc();
 	virtual void setParent(QWidget*) = 0;
 
 public:
@@ -67,7 +69,7 @@ public:
 	virtual bool handleMouseActions(QEvent*) {return false;}
 	virtual void addElement(Element*);
 
-	virtual /*bug*/ SchematicModel* model();
+	virtual /*bug*/ qucs::ElementList* model();
 	void printCursorPosition(int x, int y);
 
 public: // what?
@@ -77,7 +79,7 @@ public: // what?
 	QString fileBase (void);
 
 private:
-  QucsApp* app();
+	App* app();
 
 protected:
 	void setEventHandler(MouseActions* a) { _eventHandler = a; }
@@ -109,7 +111,7 @@ public:
   QString SimTime;     // used for VHDL simulation, but stored in datadisplay
   QDateTime lastSaved;
 
-  QucsApp* _app{nullptr}; /// yikes.
+  App* _app{nullptr}; /// yikes.
   bool DocChanged;
   bool SimOpenDpl;   // open data display after simulation ?
   bool SimRunScript; // run script after simulation ?
@@ -200,16 +202,18 @@ public:
 
 public:
 	SubcktBase const* root() const;
-	SchematicModel const* scope() const;
+	qucs::ElementList const* scope() const;
 
 public: // really??
 	virtual SubcktBase* root() {return nullptr;}
-	SchematicModel* scope();
+	qucs::ElementList* scope();
 
 private:
 	QWidget* _owner;
 	MouseActions* _eventHandler{nullptr};
 	QToolBar* _toolbar{nullptr};
-}; // QucsDoc
+}; // Doc
+
+}
 
 #endif

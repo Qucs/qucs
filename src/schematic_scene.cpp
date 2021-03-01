@@ -25,13 +25,16 @@
 #include <QGraphicsProxyWidget>
 /*--------------------------------------------------------------------------*/
 /*--------------------------------------------------------------------------*/
+using qucs::Element;
+using qucs::Conductor;
+/*--------------------------------------------------------------------------*/
 QPoint SchematicScene::gridSize() const
 {
 	assert(doc());
 	return doc()->gridSize();
 }
 /*--------------------------------------------------------------------------*/
-QGraphicsItem& SchematicScene::addElement(Element* x)
+QGraphicsItem& SchematicScene::addElement(qucs::Element* x)
 {
 	auto i = new ElementGraphics(x);
 	addItem(i);
@@ -43,48 +46,6 @@ QGraphicsItem& SchematicScene::addElement(Element* x)
 /*--------------------------------------------------------------------------*/
 /*--------------------------------------------------------------------------*/
 /*--------------------------------------------------------------------------*/
-/* remove. later. */
-// scene()->selectedItems gives QGraphicsItems
-Element* element(ElementGraphics* g)
-{
-//	auto e=dynamic_cast<ElementGraphics*>(g);
-	if(!g) return nullptr;
-	return g->operator->();
-}
-#if 0
-Component* component(QGraphicsItem* g)
-{
-	incomplete();
-	auto e=dynamic_cast<ElementGraphics*>(g);
-	if(!e) return nullptr;
-	return component(e->operator->());
-}
-WireLabel* wireLabel(QGraphicsItem* g)
-{
-	auto e=dynamic_cast<ElementGraphics*>(g);
-	if(!e) return nullptr;
-	return wireLabel(e->operator->());
-}
-Diagram* diagram(QGraphicsItem* g)
-{
-	auto e=dynamic_cast<ElementGraphics*>(g);
-	if(!e) return nullptr;
-	return dynamic_cast<Diagram*>(e->operator->());
-}
-Painting* painting(QGraphicsItem* g)
-{
-	auto e=dynamic_cast<ElementGraphics*>(g);
-	if(!e) return nullptr;
-	return painting(e->operator->());
-}
-Marker* marker(QGraphicsItem* g)
-{
-	auto e=dynamic_cast<ElementGraphics*>(g);
-	if(!e) return nullptr;
-	return marker(e->operator->());
-}
-#endif
-/*--------------------------------------------------------------------------*/
 /*--------------------------------------------------------------------------*/
 /*--------------------------------------------------------------------------*/
 SchematicScene::SchematicScene(QObject *parent)
@@ -92,16 +53,16 @@ SchematicScene::SchematicScene(QObject *parent)
 {
 }
 /*--------------------------------------------------------------------------*/
-QucsDoc* SchematicScene::doc()
+qucs::Doc* SchematicScene::doc()
 {
 	assert(parent());
-	return dynamic_cast<QucsDoc*>(parent());
+	return dynamic_cast<qucs::Doc*>(parent());
 }
 /*--------------------------------------------------------------------------*/
-QucsDoc const* SchematicScene::doc() const
+qucs::Doc const* SchematicScene::doc() const
 {
 	assert(parent());
-	return dynamic_cast<QucsDoc const*>(parent());
+	return dynamic_cast<qucs::Doc const*>(parent());
 }
 /*--------------------------------------------------------------------------*/
 SchematicScene::~SchematicScene()
@@ -160,7 +121,7 @@ void SchematicScene::drawBackground(QPainter *painter, const QRectF &r)
 // 	_e->paintScheme(p);
 // }
 
-// scene::display(SchematicModel&)?
+// scene::display(ElementList&)?
 // 'l' is a bit of a hack. let's see
 #if 0
 void SchematicScene::removeItem(Element const* xx)
@@ -476,7 +437,7 @@ QList<ElementGraphics*> SchematicScene::items(
 }
 /*--------------------------------------------------------------------------*/
 // remove?
-SchematicModel* SchematicScene::scope()
+ElementList* SchematicScene::scope()
 {
 	assert(doc());
 	return doc()->model(); // yikes.
@@ -538,7 +499,7 @@ ElementGraphics* SchematicScene::new_place(pos_t const& p)
 //			scope()->push_back(cl);
 			assert(cl->owner());
 			cl->setPosition(p);
-			cl->setLabel(place_name);
+			cl->set_label(place_name);
 			cl->set_port_by_index(0, place_name);
 //
 //			QGraphicsItem* i = new ElementGraphics(cl);
@@ -610,7 +571,7 @@ void SchematicScene::possiblyRename(Element* e) const
 	}else if(std::isdigit(label[z-1])){
 	}else{
 		unsigned i = scope()->nextIdx(label);
-		e->setLabel(label + std::to_string(i));
+		e->set_label(label + std::to_string(i));
 		// gfx->update();
 	}
 }

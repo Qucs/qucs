@@ -26,21 +26,12 @@
 #include "actions.h" // BUG
 #include "platform.h"
 
-/**
- * @file qucs.h
- * @brief definition of the main Qucs application class and other helper classes
- */
+// main Qucs application class and other helper classes
 
-class QucsDoc;
-class SimMessage; // BUG
-class MouseActions;
 class SearchDialog;
 class OctaveWindow;
-class MessageDock;
 class ProjectView;
-class QucsTabWidget;
 class VersionTriplet;
-class QucsApp;
 
 class QLabel;
 class QAction;
@@ -63,7 +54,6 @@ class QModelIndex;
 class QPushButton;
 
 class SimProcess; // really?
-class Simulator;
 
 
 // what??
@@ -71,17 +61,21 @@ static const double pi = 3.14159265358979323846264338327950288419716939937510582
 
 #include "settings.h"
 
+namespace qucs {
+	class MouseActions;
+	class Simulator;
+	bool saveApplSettings();
+}
+
 
 // extern because nearly everywhere used
 extern tQucsSettings QucsSettings;  // extern because nearly everywhere used
 extern QString lastDir;    // to remember last directory for several dialogs
 extern QStringList qucsPathList;
 extern VersionTriplet QucsVersion;
-// extern QucsApp *QucsMain;  // the Qucs application itself
 
 // TODO move these into the QucsApp class?
 bool loadSettings();
-bool saveApplSettings();
 
 class QucsFileSystemModel : public QFileSystemModel {
   Q_OBJECT
@@ -99,21 +93,26 @@ protected:
   bool lessThan(const QModelIndex &left, const QModelIndex &right) const;
 };
 
-class QucsApp : public QMainWindow {
-  Q_OBJECT
+namespace qucs {
+class Doc;
+class DocTabWidget;
+class MessageDock;
+
+class App : public QMainWindow {
+	Q_OBJECT
 public:
-  QucsApp();
- ~QucsApp();
+	App();
+	~App();
   bool closeTabsRange(int startTab, int stopTab, int exceptTab = -1);
   bool closeAllFiles(int exceptTab = -1);
   bool closeAllLeft(int);
   bool closeAllRight(int);
   void openFileAtStartup(QString const&); // ??
   bool gotoPage(const QString&);   // to load a document
-  QucsDoc *getDoc(int No=-1);
-  QucsDoc* findDoc (QString, int * Pos = 0);
+  Doc *getDoc(int No=-1);
+  Doc* findDoc (QString, int * Pos = 0);
   QString fileType (const QString&);
-  static bool isTextDocument(QucsDoc const*);
+  static bool isTextDocument(Doc const*);
 
   QString ProjName;   // name of the project, that is open
   QHash<QString,QString> schNameHash; // QHash for the schematic files lookup
@@ -189,14 +188,14 @@ private slots:
   void slotButtonProjNew();
   void slotButtonProjOpen();
   void slotButtonProjDel();
-  void slotChangeView(QucsDoc*);
+  void slotChangeView(Doc*);
   void slotSimulate();
   void slotChangePage(QString&, QString&);
   void slotHideEdit();
   void slotFileChanged(bool);
 
 public slots: // why? not here.
-  void slotAfterSimulation(Simulator const*);
+  void slotAfterSimulation(qucs::Simulator const*);
 
 signals:
   void signalKillEmAll();
@@ -220,11 +219,10 @@ private:
   void initCursorMenu();
 
   void printCurrentDocument(bool);
-  bool saveFile(QucsDoc *Doc=0);
   bool saveAs();
   void openProject(const QString &);
   bool deleteProject(const QString &);
-  void updatePortNumber(QucsDoc*, int);
+  void updatePortNumber(Doc*, int);
   void fillComboBox(bool);
   void switchSchematicDoc(bool);
   void switchEditMode(bool);
@@ -235,6 +233,9 @@ private:
   void updateRecentFilesList(QString s);
   void successExportMessages(bool ok);
   void fillLibrariesTreeView (void);
+
+public:
+  bool saveFile(Doc *Doc=0); // const?
 
 public:
 
@@ -277,7 +278,7 @@ public:
 
 public:
 //  MouseActions *view;
-  QucsTabWidget *DocumentTab;
+  DocTabWidget *DocumentTab;
   QListWidget *CompComps;
   QTreeWidget *libTreeWidget;
 
@@ -411,7 +412,9 @@ private:
   void launchTool(const QString&, const QString&, const QString& = ""); // tool, description and args
   friend class SaveDialog;
   QString lastExportFilename;
-}; // qucsApp
+}; // App
+
+} // qucs
 
 
 #endif // guard

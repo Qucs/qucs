@@ -34,9 +34,9 @@
 #include "platform.h"
 #include "command.h"
 #include "schematic_model.h"
-#define CKT_BASE Object
-#define CARD_LIST SchematicModel
+#define CARD_LIST ElementList
 #define CS istream_t
+using qucs::ElementList;
 //#include "e_card.h"
 /*--------------------------------------------------------------------------*/
 class CS;

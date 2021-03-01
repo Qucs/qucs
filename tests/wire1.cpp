@@ -16,7 +16,7 @@ void union0()
 	Symbol* root = symbol_dispatcher.clone("subckt_proto");
 	assert(root);
 	assert(root->scope());
-	SchematicModel& M = *root->scope();
+	ElementList& M = *root->scope();
 
 	auto wp=symbol_dispatcher["Wire"];
 	auto w0 = prechecked_cast<Symbol*>(wp->clone());
@@ -44,7 +44,7 @@ void union0()
 
 	assert(nu);
 	assert(nu->subckt());
-	SchematicModel const* s = nu->subckt();
+	ElementList const* s = nu->subckt();
 	assert(s);
 	trace1("gnd", numWires(*s));
 	assert(numWires(*s)==2);
@@ -81,7 +81,7 @@ void union1()
 	Symbol* root = symbol_dispatcher.clone("subckt_proto");
 	assert(root);
 	assert(root->scope());
-	SchematicModel& M = *root->scope();
+	ElementList& M = *root->scope();
 
 	auto wp = symbol_dispatcher["Wire"];
 	auto w0 = prechecked_cast<Symbol*>(wp->clone());
@@ -117,7 +117,7 @@ void union2()
 	Symbol* root = symbol_dispatcher.clone("subckt_proto");
 	assert(root);
 	assert(root->scope());
-	SchematicModel& M = *root->scope();
+	ElementList& M = *root->scope();
 
 	auto wp=symbol_dispatcher["Wire"];
 

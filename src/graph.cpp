@@ -20,6 +20,8 @@
 #include <QPainter>
 #include <QDebug>
 
+namespace qucs {
+
 class Diagram;
 
 Graph::Graph(Diagram const* d, const QString& _Line) :
@@ -459,6 +461,8 @@ double Graph::ScrPt::getDep() const
 {
   assert(ScrX>=0);
   return dep;
+}
+
 }
 
 // vim:ts=8:sw=2:et

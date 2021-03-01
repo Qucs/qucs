@@ -14,13 +14,14 @@
 
 #include "element.h"
 #include "schematic_model.h"
-//#include "schematic_doc.h"
+
+namespace qucs {
 
 Element::Element() : _position(0, 0), _owner(nullptr)
 {
   // Type = isDummyElement; // BUG
   x1 = y1 = 0; // x2 = y2 = 0; // really?
-//  setLabel(name());
+//  set_label(name());
 }
 
 Element::Element(Element const& e)
@@ -30,7 +31,7 @@ Element::Element(Element const& e)
    _owner(nullptr) // sic.
 	//Name(e.Name) // yikes.
 {
-  setLabel(e.label());
+  set_label(e.label());
 
   // BUG
   // Selected = false;
@@ -46,45 +47,14 @@ void Element::getCenter(int&x, int&y) const
 	x = _position.first;
 	y = _position.second;
 }
-
-#if 0 // fixed?
-// pure? maybe not. there could be non-paintable elements...
-void Element::paint(ViewPainter* p) const
-{
-#ifndef NDEBUG
-	p->setPen(QPen(Qt::yellow,1));
-	p->drawRoundedRect(bounding_rect().toRectF());
-#endif
-}
-
-// does not work for nodes and diagrams
-rect_t Element::bounding_rect() const
-{
-	trace1("bogus BR call", label());
-	unreachable(); // but from diagrams or so
-	// QRectF b(cx+x1, cy+y1, x2-x1, y2-y1);
-//	QRectF b(x1, y1, x2-x1, y2-y1);
-//	return b;
-//
-	return rect_t(0,0,0,0);
-}
-
-void Element::attachToModel()
-{itested();
-	assert(false); // obsolete, hopefully
-	trace1("attachToModel", label());
-	assert(scope());
-	scope()->push_back(this);
-}
-#endif
-
+/*--------------------------------------------------------------------------*/
 void Element::detachFromModel()
 {
 	assert(scope());
 	scope()->detach(this);
 }
 /*--------------------------------------------------------------------------*/
-SchematicModel* Element::scope()
+ElementList* Element::scope()
 {
 	if(auto o=dynamic_cast<Symbol*>(owner())){
 		if(o->subckt()){
@@ -164,8 +134,10 @@ const Element* Element::find_in_parent_scope(const std::string& name)const
 
 }
 /*--------------------------------------------------------------------------*/
+} // qucs
 /*--------------------------------------------------------------------------*/
 
+#if 0
 // legacy stuff. pretend that Element points to an Element
 //#include "components/component.h"
 #include "diagram.h"
@@ -190,3 +162,5 @@ Node* node(Element* e){ return dynamic_cast<Node*>(e); }
 WireLabel const* wireLabel(Element const* e){ return dynamic_cast<WireLabel const*>(e); }
 Diagram const* diagram(Element const* e){ return dynamic_cast<Diagram const*>(e); }
 Painting const* painting(Element const* e){ return dynamic_cast<Painting const*>(e); }
+
+#endif

@@ -21,7 +21,6 @@
 #include "widget.h"
 
 #include "viewpainter.h"
-#include "wirelabel.h"
 #include "platform.h"
 #include "symbol.h"
 #include "sckt_base.h"
@@ -30,6 +29,10 @@ class QPainter;
 class QString;
 /*--------------------------------------------------------------------------*/
 namespace{
+/*--------------------------------------------------------------------------*/
+using qucs::Conductor;
+using qucs::Widget;
+using qucs::Doc;
 /*--------------------------------------------------------------------------*/
 class Wires : public SubcktBase{
 private:
@@ -55,7 +58,7 @@ private: // Element
 	Wire* clone() const override{
 		return new Wire(*this);
 	}
-	Widget* schematicWidget(QucsDoc*) const override;
+	Widget* schematicWidget(Doc*) const override;
 	void paint(ViewPainter*) const override;
 	rect_t bounding_rect() const override;
 
@@ -132,7 +135,7 @@ Wire::Wire() : Symbol(),
 	// Symbol::setPosition(pos_t(0, 0)); // redundant?
 
 	setTypeName("wire");
-	setLabel("noname"); // BUG
+	set_label("noname"); // BUG
 }
 /*--------------------------------------------------------------------------*/
 Wire::Wire(Wire const& w)
@@ -142,7 +145,7 @@ Wire::Wire(Wire const& w)
     _scale(w._scale),
     _has_netname(w._has_netname)
 {
-	setLabel(w.label());
+	set_label(w.label());
 }
 /*--------------------------------------------------------------------------*/
 Wire::Wire(pos_t const& p0, pos_t const& p1)
@@ -155,7 +158,7 @@ Wire::Wire(pos_t const& p0, pos_t const& p1)
 	Symbol::setPosition(p0);
 
 	pos_t pp1((p1 - p0).first, (p1 - p0).second);
-	setLabel("noname");
+	set_label("noname");
 	findScaleAndAngle(pp1);
 
 	// assert(_scale>0); // for now?
@@ -191,7 +194,7 @@ void Wire::findScaleAndAngle(pos_t p1)
 #if 0
 	auto n0 = nodePosition(0);
 	auto n1 = nodePosition(1);
-	setLabel("wire_" + std::to_string(n0.first) +
+	set_label("wire_" + std::to_string(n0.first) +
 			":"+ std::to_string(n0.second) +
 			"_"+ std::to_string(n1.first) +
 			":"+ std::to_string(n1.second));
@@ -222,7 +225,7 @@ Symbol* Wire::intersectPorts(Symbol const* s) const
 		Symbol *sckt = symbol_dispatcher.clone("subckt_proto");
 		assert(sckt);
 		sckt->new_subckt();
-		SchematicModel* m = sckt->subckt();
+		ElementList* m = sckt->subckt();
 
 		// TODO: ordering bug probably here as well.
 		m->push_back(s->clone());
@@ -315,7 +318,7 @@ Symbol* Wire::newTee(Wire const* o) const
 	if(s){
 		trace1("building tee", split);
 		s->new_subckt();
-		SchematicModel* m = s->subckt();
+		ElementList* m = s->subckt();
 		assert(m);
 
 		// BUG BUG BUG. this depends on the order.
@@ -357,7 +360,7 @@ Symbol* Wire::newUnion(Symbol const* s) const
 }
 /*--------------------------------------------------------------------------*/
 // NOT HERE ? //
-Widget* Wire::schematicWidget(QucsDoc* Doc) const
+Widget* Wire::schematicWidget(Doc* Doc) const
 { untested();
 	trace0("Wire::schematicWidget");
 
@@ -407,7 +410,7 @@ void Wire::setName(const QString&, const QString&, int, int, int)
     Label->initValue = Value_;
   }else{ untested();
     Label->setName(Name_); // ?!
-    Label->setLabel(Name_);
+    Label->set_label(Name_);
   }
 }
 #endif
@@ -485,7 +488,7 @@ void Wire::expand()
   if (_netname != ""){
     new_subckt();
     Symbol* n = symbol_dispatcher.clone("NodeLabel");
-    n->setLabel(_netname);
+    n->set_label(_netname);
     // n->setParameters("$xposition");
     // n->setParameters("$yposition");
     // n->setParameters("dx", 5);
@@ -552,7 +555,7 @@ void Wire::connectNode(index_t i)
 		}else if(n->netLabel() == n2->netLabel()){
 			// nothing to do
 		}else{
-			message(QucsMsgWarning, ("possible label conflict. not sure what to do in "
+			message(qucs::MsgWarning, ("possible label conflict. not sure what to do in "
 					+ n->netLabel() + " vs " + n2->netLabel()).c_str());
 		}
 		trace2("wire addededge", n->netLabel(), n2->netLabel());

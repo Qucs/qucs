@@ -56,7 +56,7 @@
 // -------------------------------------------------------------
 // // what is this?
 #if 0
-bool SchematicModel::createLibNetlist(ostream_t& stream,
+bool ElementList::createLibNetlist(ostream_t& stream,
      QPlainTextEdit*, int, NetLang const&)
 { untested();
   incomplete(); // wrong place.

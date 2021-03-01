@@ -22,8 +22,6 @@
 #include "viewpainter.h"
 
 class QPainter;
-class Diagram;
-class Graph;
 
 typedef enum{
 	nM_Rect = 0,
@@ -32,6 +30,10 @@ typedef enum{
 } numMode_t;
 
 struct Axis;
+
+namespace qucs {
+class Diagram;
+class Graph;
 
 class Marker : public Element {
 public:
@@ -114,5 +116,7 @@ public: // shouldn't be there, cross-manipulated by MarkerDialog
 
   unsigned optText;  // selected optional parameters
 };
+
+} // qucs
 
 #endif

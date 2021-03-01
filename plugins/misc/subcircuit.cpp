@@ -16,6 +16,7 @@
 
 #include "common_sckt.h"
 #include "docfmt.h"
+#include "symbol.h"
 #include "dot.h"
 #include "factory.h"
 #include "language.h"
@@ -26,11 +27,22 @@
 #include "qucs_globals.h"
 #include "sckt_base.h"
 
+/*--------------------------------------------------------------------------*/
+namespace qucs {
+	class ViewPainter;
+}
+/*--------------------------------------------------------------------------*/
 namespace {
-
+/*--------------------------------------------------------------------------*/
 const std::string typesep(":");
 const std::string defsym(":SYMBOL_"); // use a parameter?
-
+/*--------------------------------------------------------------------------*/
+using qucs::CommonComponent;
+using qucs::CommonSubckt;
+using qucs::Element;
+using qucs::Language;
+using qucs::Module;
+using qucs::ViewPainter;
 /*--------------------------------------------------------------------------*/
 // possibly not needed.
 class CommonSub : public CommonComponent{
@@ -99,7 +111,7 @@ public:
 		if(cs){ untested();
 			return cs->portPosition(i);
 		}else{
-			message(QucsMsgWarning, "bogus port\n");
+			message(qucs::MsgWarning, "bogus port\n");
 		}
 		auto cc = dynamic_cast<CommonSubckt const*>(common());
 		trace3("portPosition", i, common(), cc);
@@ -422,7 +434,7 @@ Symbol const* SubFactory::newSymbol(std::string const& fn) const
 		build_sckt(pstream, s);
 
 		s->set_dev_type(type_name);
-		s->setLabel(type_name);
+		s->set_label(type_name);
 
 		assert(_scope);
 
@@ -479,8 +491,8 @@ void SubFactory::build_sckt(istream_t& cs, SubcktBase* proto) const
 	trace1("SubFactory::build_sckt", cs.fullstring());
 	assert(owner());
 
-	auto LL = languageDispatcher["leg_sch"]; // use command instead?
-	auto L = dynamic_cast<DocumentLanguage const*>(LL);
+	auto LL = language_dispatcher["leg_sch"]; // use command instead?
+	auto L = dynamic_cast<Language const*>(LL);
 	assert(L);
 	cs.read_line();
 	while(!cs.is_end()){itested();

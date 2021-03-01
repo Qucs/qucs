@@ -35,7 +35,7 @@
 // Qucs wrappings
 #define CS istream_t
 #define CMD Command
-#define CARD_LIST SchematicModel
+#define CARD_LIST qucs::ElementList
 #define error ::message
 //#define fullstring fullString
 // TODO: connect with qucs error facilities.
@@ -103,7 +103,7 @@ void CMD::cmdproc(CS& cmd, CARD_LIST* scope)
   if (s == "xxxxcomment") { untested();
     // nothing
   }else if (s != "") {itested();
-    CMD* c = commandDispatcher[s];
+    CMD* c = command_dispatcher[s];
     if (c) {itested();
       // assert(scope);
       c->do_it(cmd, scope);
@@ -142,7 +142,7 @@ void CMD::command(const std::string& cs, CARD_LIST* scope)
   cmd >> s;
   trace1("CMD::command", s);
 
-  CMD* c = commandDispatcher[s];
+  CMD* c = command_dispatcher[s];
   if (c) {itested();
     c->do_it(cmd, scope);
   }else{ untested();

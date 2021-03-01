@@ -19,6 +19,11 @@
 /*--------------------------------------------------------------------------*/
 namespace{
 /*--------------------------------------------------------------------------*/
+using qucs::ViewPainter;
+using qucs::SubcktBase;
+using qucs::Node;
+using qucs::Widget;
+/*--------------------------------------------------------------------------*/
 class sda : public SubcktBase  {
 public:
   explicit sda() : SubcktBase () {
@@ -28,7 +33,7 @@ public:
 
     auto a = symbol_dispatcher.clone("subckt_proto");
     assert(a);
-    a->setLabel("main");
+    a->set_label("main");
     a->set_owner(this);
     subckt()->push_back(a);
 
@@ -39,11 +44,11 @@ public:
 			Symbol* sub = symbol_dispatcher.clone("LegacySub");
 
 			assert(sub);
-			sub->setLabel("Sub");
+			sub->set_label("Sub");
 			sub->set_dev_type("Sub"); // why?
 			_sub = sub;
 		}else{
-			_sub->setLabel("Sub"); // why?
+			_sub->set_label("Sub"); // why?
 		}
 
 		assert(a);
@@ -59,9 +64,9 @@ public:
 #if 1
 		// dat file access...
 		// TODO: default according to properties in .sch file?
-		_dat = dataDispatcher.clone("datfiles");
+		_dat = data_dispatcher.clone("datfiles");
 		assert(a);
-		_dat->setLabel("datfiles");
+		_dat->set_label("datfiles");
 		subckt()->push_back(_dat);
 #endif
   }
@@ -100,7 +105,7 @@ private: // BUG? a SubcktBase is a Painting...
   virtual void paint(ViewPainter*) const override{ unreachable(); }
 
 private: // SchematicSymbol
-  SchematicModel* scope(){
+  ElementList* scope(){
     return subckt();
   }
   // bug, forward to schematic object (it doesn't exist yet).
@@ -152,7 +157,7 @@ private:
   Node const* portValue(unsigned)const {unreachable(); return nullptr;}
   void setPort(unsigned, Node*){incomplete();}
 
-  Widget* schematicWidget(QucsDoc* Doc) const { untested();
+  Widget* schematicWidget(qucs::Doc* d) const { untested();
 	  trace0("root::schematicWidget");
 
 	  Widget const* w = widget_dispatcher["SchematicDoc"];

@@ -27,7 +27,6 @@ include ../../autotools/common.mk
 
 inst_LTLIBRARIES = paintings.la
 
-MOCHEADERS = arrowdialog.h graphictextdialog.h filldialog.h id_dialog.h
 MOCFILES = $(MOCHEADERS:.h=.moc.cpp)
 
 paintings_la_CXXFLAGS = ${AM_CXXFLAGS} -fPIC

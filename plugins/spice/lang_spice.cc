@@ -24,6 +24,7 @@
 #include "qucs_globals.h"
 #include "qio.h"
 namespace{
+using namespace qucs;
 class LangSpice : public NetLang {
 private: // NetLang
   // inline void printItem(Element const* c, stream_t& s) const;
@@ -37,11 +38,11 @@ private: // local
   void printPainting(Painting const*, ostream_t&) const override { untested(); }
   void printDiagram(Diagram const*, ostream_t&) const override { untested();}
 }d0;
-static Dispatcher<DocumentLanguage>::INSTALL p(&languageDispatcher, "spice", &d0);
+static Dispatcher<Language>::INSTALL p(&language_dispatcher, "spice", &d0);
 /*--------------------------------------------------------------------------*/
 void LangSpice::printSymbol(Symbol const* s, ostream_t& o) const
 {
-	o << s->label() << " ... stub\n";
+	o << s->short_label() << " ... stub\n";
 }
 /*--------------------------------------------------------------------------*/
 } // namespace

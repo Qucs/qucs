@@ -31,9 +31,20 @@
 #include <QGraphicsScene>
 #include <QGraphicsProxyWidget>
 #include <QWidget>
+#include <QApplication> // BUG
 
 //#include "../legacy/obsolete_paintings.h"
 /*--------------------------------------------------------------------------*/
+namespace qucs {
+/*--------------------------------------------------------------------------*/
+/* remove. later. */
+// scene()->selectedItems gives QGraphicsItems
+Element* element(ElementGraphics* g)
+{
+//	auto e=dynamic_cast<ElementGraphics*>(g);
+	if(!g) return nullptr;
+	return g->operator->();
+}
 /*--------------------------------------------------------------------------*/
 ElementGraphics::ElementGraphics() : QGraphicsItem()
 { untested();
@@ -69,7 +80,7 @@ ElementGraphics::~ElementGraphics()
 {itested();
 	if(isVisible()){itested();
 		// assert(_e->owner()); ??
-		// element is owned by SchematicModel.
+		// element is owned by ElementList.
 	}else{itested();
 		// assert(!_e->owner()); ??
 		// check: is this correct?
@@ -345,7 +356,7 @@ ElementGraphics* ElementGraphics::newPort(pos_t where) const
 		if(!ng){ untested();
 		}else if(u->subckt()){ untested();
 			// multiple Symbols?
-			SchematicModel const* sc=u->subckt();
+			ElementList const* sc=u->subckt();
 			for(auto c : sc->wires() /*BUG*/ ){ untested();
 				auto cg = new ElementGraphics(c->clone());
 				assert(_e->owner());
@@ -749,7 +760,6 @@ ItemEvent::ItemEvent(QEvent const& a, ElementGraphics& b)
 {itested();
 }
 /*--------------------------------------------------------------------------*/
-#include <QApplication> // BUG
 QVariant ElementGraphics::itemChange(GraphicsItemChange c, const QVariant &v)
 {
     if (!scene()){itested();
@@ -768,5 +778,7 @@ QVariant ElementGraphics::itemChange(GraphicsItemChange c, const QVariant &v)
 	 }
 	 return QGraphicsItem::itemChange(c, v);
 }
+/*--------------------------------------------------------------------------*/
+} // qucs
 /*--------------------------------------------------------------------------*/
 /*--------------------------------------------------------------------------*/

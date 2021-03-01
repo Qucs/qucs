@@ -37,8 +37,6 @@
 #include <QDialog> // BUG
 #include <QRegExp> // BUG
 
-#include "id_dialog.h" //for now.
-
 namespace{
 
 struct SubParameter {
@@ -91,7 +89,7 @@ ID_Text::ID_Text(int cx_, int cy_) : LegacyPainting(cx_, cy_)
 
   Prefix = ""; // what?!
 
-  setLabel("?????");
+  set_label("?????");
 }
 
 ID_Text::~ID_Text()
@@ -262,14 +260,15 @@ void ID_Text::mirrorY()
 // If there were changes, it returns 'true'.
 bool ID_Text::Dialog()
 {
-  ID_Dialog *d = new ID_Dialog(this);
-  if(d->exec() == QDialog::Rejected) {
-    delete d;
-    return false;
-  }
+	incomplete();
+	return false;
 
-  delete d;
-  return true;
+//  ID_Dialog *d = new ID_Dialog(this);
+//  if(d->exec() == QDialog::Rejected) {
+//    delete d;
+//    return false;
+//  }
+//
+//  delete d;
+//  return true;
 }
-
-#include "id_dialog.cpp" //for now.

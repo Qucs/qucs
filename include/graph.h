@@ -22,6 +22,12 @@
 #include <QDateTime>
 #include <vector>
 
+struct Axis; // BUG
+
+namespace qucs {
+
+  class Marker; // BUG
+
 typedef enum{
   GRAPHSTYLE_INVALID = -1,
   GRAPHSTYLE_SOLID = 0,
@@ -69,7 +75,6 @@ private:
 };
 #endif
 
-struct Axis;
 
 /*!
  * prepare data for plotting purposes in Diagram.
@@ -179,7 +184,9 @@ private:
   std::vector<ScrPt> ScrPoints; // data in screen coordinates
   Diagram const* diagram;
 };
-
+/*--------------------------------------------------------------------------*/
+} // qucs
+/*--------------------------------------------------------------------------*/
+/*--------------------------------------------------------------------------*/
 #endif
-
 // vim:ts=8:sw=2:noet

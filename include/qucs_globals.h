@@ -18,22 +18,37 @@
 #include "platform.h"
 #include "action.h"
 
+class Command;
+
+namespace qucs {
+
 class TaskElement;
 class Diagram;
-class DocumentLanguage;
+class Language;
 class Data;
 class Symbol;
-class Command;
 class Widget;
 class Action;
 
 extern INTERFACE Dispatcher<Element> element_dispatcher;
-extern INTERFACE Dispatcher<Command> commandDispatcher;
+extern INTERFACE Dispatcher<Command> command_dispatcher;
 extern INTERFACE Dispatcher<Diagram> diagram_dispatcher;
-extern INTERFACE Dispatcher<DocumentLanguage> languageDispatcher;
-extern INTERFACE Dispatcher<Data> dataDispatcher;
+extern INTERFACE Dispatcher<Language> language_dispatcher;
+extern INTERFACE Dispatcher<Data> data_dispatcher;
 extern INTERFACE Dispatcher<Symbol> symbol_dispatcher;
 extern INTERFACE Dispatcher<Widget> widget_dispatcher;
 extern INTERFACE Dispatcher<Action> action_dispatcher;
+
+}
+
+/// for now.
+using qucs::element_dispatcher;
+using qucs::command_dispatcher;
+using qucs::diagram_dispatcher;
+using qucs::language_dispatcher;
+using qucs::data_dispatcher;
+using qucs::symbol_dispatcher;
+using qucs::widget_dispatcher;
+using qucs::action_dispatcher;
 
 #endif

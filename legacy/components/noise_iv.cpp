@@ -20,7 +20,7 @@
 
 Noise_iv::Noise_iv()
 {
-  setLabel("correlated current sources");
+  set_label("correlated current sources");
 
   // left noise source
   Arcs.append(new Arc(-42,-12, 24, 24,  0, 16*360,QPen(Qt::darkBlue,2)));

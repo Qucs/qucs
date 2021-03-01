@@ -37,7 +37,6 @@
 #include "qucs_app.h"
 #include "qucsdoc.h"
 #include "doc_actions.h"
-#include "messagedock.h"
 
 #include "module.h"
 #include "misc.h"
@@ -48,44 +47,27 @@
 #include "component_widget.h"
 #include "qucs_tabs.h"
 
-#if 0
-// BUG: not QucsApp
-void QucsApp::slotToggle(bool on)
-{
-  if(activeAction) {
-    activeAction->blockSignals(true); // do not call toggle slot
-    activeAction->setChecked(false);
-    activeAction->blockSignals(false);
-  }else{
-  }
-  if(!on) {
-    activeAction = nullptr;
-  }else if(auto s=dynamic_cast<QAction*>(sender())){
-    activeAction = s;
-  }else{
-    unreachable();
-  }
-}
-#endif
 // -----------------------------------------------------------------------
 //
 // /// workaround. deduplicate event forwarding.
 // this could be done using Qt. but not yet.
 // Toolbar::?
 #define ASSIGN_STUFF \
-  QucsDoc *qd = DocumentTab->current(); \
+  Doc *qd = DocumentTab->current(); \
   assert(qd); \
   auto s = prechecked_cast<QAction*>(sender()); \
   assert(s);
 
 #include <QListWidgetItem>
 
+namespace qucs {
+
 // Is called when the mouse is clicked within the Component QIconView.
-void QucsApp::slotSelectComponent(QListWidgetItem *item)
+void App::slotSelectComponent(QListWidgetItem *item)
 {
   slotHideEdit(); // disable text edit of component property
 
-  QucsDoc* qd = DocumentTab->current();
+  Doc* qd = DocumentTab->current();
   assert(qd);
 //  auto s = prechecked_cast<QAction*>(sender());
 //  assert(s);
@@ -177,10 +159,10 @@ void QucsApp::slotSelectComponent(QListWidgetItem *item)
 }
 
 // -----------------------------------------------------------------------
-// needed, because QucsDoc is not a QWidget.
+// needed, because Doc is not a QWidget.
 // perhaps attach an action handler and get rid of this.
 #if 0
-void QucsApp::slotToolBar()
+void App::slotToolBar()
 {
   ASSIGN_STUFF
   qd->slotToolBar(s);
@@ -189,7 +171,7 @@ void QucsApp::slotToolBar()
 // -----------------------------------------------------------------------
 // -----------------------------------------------------------------------
 // -----------------------------------------------------------------------
-//void QucsApp::slotEditMirrorY()
+//void App::slotEditMirrorY()
 //{ untested();
 //  ASSIGN_STUFF
 //  qd->actionEditMirrorY(s);
@@ -197,21 +179,21 @@ void QucsApp::slotToolBar()
 // -----------------------------------------------------------------------
 // TODO?   comment out the selected text on a text document
 // \todo update the status or tooltip message
-void QucsApp::slotZoomIn()
+void App::slotZoomIn()
 {
   ASSIGN_STUFF
   qd->actionZoomIn(s);
 }
 // -----------------------------------------------------------------------
 // BUG: why does the schematicDoc not catch key presses??
-void QucsApp::slotEscape()
+void App::slotEscape()
 {
   incomplete(); // context?!
   // select->setChecked(true);
   slotSearchClear();
 }
 // -----------------------------------------------------------------------
-void QucsApp::slotEditCut()
+void App::slotEditCut()
 {
   statusBar()->showMessage(tr("Cutting selection..."));
   slotHideEdit(); // disable text edit of component property
@@ -222,7 +204,7 @@ void QucsApp::slotEditCut()
   statusBar()->showMessage(tr("Ready."));
 }
 // --------------------------------------------------------------------
-void QucsApp::slotEditCopy()
+void App::slotEditCopy()
 {
   statusBar()->showMessage(tr("Copying selection to clipboard..."));
 
@@ -232,25 +214,25 @@ void QucsApp::slotEditCopy()
   statusBar()->showMessage(tr("Ready."));
 }
 // -----------------------------------------------------------------------
-void QucsApp::slotEditPaste()
+void App::slotEditPaste()
 {
   ASSIGN_STUFF
   qd->actionEditPaste(s);
 }
 // -----------------------------------------------------------------------
-void QucsApp::slotEditDelete()
+void App::slotEditDelete()
 {
   ASSIGN_STUFF
   qd->slotEditDelete(s);
 }
 // -----------------------------------------------------------------------
-void QucsApp::slotEditUndo()
+void App::slotEditUndo()
 {
   ASSIGN_STUFF
   qd->slotEditUndo(s);
 }
 // --------------------------------------------------------------
-void QucsApp::slotEditRedo()
+void App::slotEditRedo()
 {
   ASSIGN_STUFF
   qd->slotEditRedo(s);
@@ -261,7 +243,7 @@ void QucsApp::slotEditRedo()
 extern QString lastDirOpenSave; // to remember last directory and file
 // ------------------------------------------------------------------------
 ///
-/// \brief QucsApp::editFile
+/// \brief App::editFile
 /// \param File is the filename, or empty for a new file
 ///
 /// Called by :
@@ -272,7 +254,7 @@ extern QString lastDirOpenSave; // to remember last directory and file
 ///
 //
 //BUG. same in qucs_tabs
-void QucsApp::editFile(const QString& File)
+void App::editFile(const QString& File)
 {
 	incomplete();
 	if ((QucsSettings.Editor == "qucs") || QucsSettings.Editor == "") {
@@ -284,7 +266,7 @@ void QucsApp::editFile(const QString& File)
 			Widget* o = widget_dispatcher.clone("TextDoc");
 			//  e->setParam("name", name.toStdString());
 			assert(o);
-			QucsDoc* d = dynamic_cast<QucsDoc*>(o);
+			Doc* d = dynamic_cast<Doc*>(o);
 			assert(d);
 			QWidget* w = dynamic_cast<QWidget*>(o);
 			assert(w);
@@ -342,45 +324,45 @@ void QucsApp::editFile(const QString& File)
 
 // ------------------------------------------------------------------------
 #if 0 // BUG. works with qucsator only.
-void QucsApp::slotShowLastMsg()
+void App::slotShowLastMsg()
 {
   editFile(QString_(QucsSettings.homeDir()) + QDir::separator() + "log.txt");
 }
-void QucsApp::slotShowLastNetlist()
+void App::slotShowLastNetlist()
 {
   editFile(QDir_(QucsSettings.homeDir()).filePath("netlist.txt"));
 }
 #endif
 // ------------------------------------------------------------------------
 // Is called to start the text editor.
-void QucsApp::slotCallEditor()
+void App::slotCallEditor()
 {
 	// command?
   editFile(QString(""));
 }
 
 // ------------------------------------------------------------------------
-void QucsApp::slotCallFilter()
+void App::slotCallFilter()
 {
   launchTool("qucsfilter", "filter synthesis");
 }
 
-void QucsApp::slotCallActiveFilter()
+void App::slotCallActiveFilter()
 {
   launchTool("qucsactivefilter", "active filter synthesis");
 }
 
-void QucsApp::slotCallLine()
+void App::slotCallLine()
 {
   launchTool("qucstrans", "line calculation");
 }
 
-void QucsApp::slotCallLibrary()
+void App::slotCallLibrary()
 {
   launchTool("qucslib", "library");
 }
 
-void QucsApp::slotCallMatch()
+void App::slotCallMatch()
 {
   incomplete();
   // ask dispatcher
@@ -388,17 +370,17 @@ void QucsApp::slotCallMatch()
 //  d->exec();
 }
 
-void QucsApp::slotCallAtt()
+void App::slotCallAtt()
 {
   launchTool("qucsattenuator", "attenuator calculation");
 }
 
-void QucsApp::slotCallRes()
+void App::slotCallRes()
 {
   launchTool("qucsrescodes", "resistor color code calculation");
 }
 
-void QucsApp::slotCallPowerComb()
+void App::slotCallPowerComb()
 {
   launchTool("qucspowercombining", "Power combiner synthesis");
 }
@@ -411,7 +393,7 @@ void QucsApp::slotCallPowerComb()
  * \param progDesc  program description string (used for error messages)
  * \param args  arguments to pass to the executable
  */
-void QucsApp::launchTool(const QString& prog, const QString& progDesc, const QString& args) {
+void App::launchTool(const QString& prog, const QString& progDesc, const QString& args) {
   QProcess *tool = new QProcess();
 
 // platform.h? config.h??
@@ -453,20 +435,20 @@ void QucsApp::launchTool(const QString& prog, const QString& progDesc, const QSt
   connect(this, SIGNAL(signalKillEmAll()), tool, SLOT(kill()));
 }
 
-void QucsApp::slotHelpOnline()
+void App::slotHelpOnline()
 {
   QString link = "http://qucs-help.readthedocs.io/";
   QDesktopServices::openUrl(QUrl(link));
 }
 
-void QucsApp::showHTML(const QString& Page)
+void App::showHTML(const QString& Page)
 {
   launchTool("qucshelp", "help", Page);
 }
 
 // ---------------------------------------------------------------------
 // Is called when the find action is triggered.
-void QucsApp::slotEditFind()
+void App::slotEditFind()
 {
 #if 0
   SearchDia->initSearch(DocumentTab->current(),
@@ -478,14 +460,14 @@ void QucsApp::slotEditFind()
 }
 
 // --------------------------------------------------------------
-void QucsApp::slotChangeProps()
+void App::slotChangeProps()
 {
   ASSIGN_STUFF
   qd->actionChangeProps(s);
 }
 
 // --------------------------------------------------------------
-void QucsApp::slotAddToProject()
+void App::slotAddToProject()
 {
   slotHideEdit(); // disable text edit of component property
 
@@ -576,9 +558,9 @@ static Marker const* marker(Element const* e)
 
 // -----------------------------------------------------------
 // BUG/feature? why does the widget not receive key presses?!
-void QucsApp::slotCursor(arrow_dir_t dir)
+void App::slotCursor(arrow_dir_t dir)
 {
-  QucsDoc *qd = DocumentTab->current();
+  Doc *qd = DocumentTab->current();
   assert(qd);
 
   qd->actionCursor(dir);
@@ -588,9 +570,9 @@ void QucsApp::slotCursor(arrow_dir_t dir)
 // Is called if user clicked on component text of if return is
 // pressed in the component text QLineEdit.
 // In "view->MAx3" is the number of the current property.
-void QucsApp::slotApplyCompText()
+void App::slotApplyCompText()
 {
-  QucsDoc *qd = DocumentTab->current();
+  Doc *qd = DocumentTab->current();
   assert(qd);
 
   incomplete(); // edit text differently with graphics stuff
@@ -602,14 +584,14 @@ void QucsApp::slotApplyCompText()
 // -----------------------------------------------------------
 // Is called if the text of the property edit changed, to match
 // the width of the edit field.
-void QucsApp::slotResizePropEdit(const QString& t)
+void App::slotResizePropEdit(const QString& t)
 {
   editText->resize(editText->fontMetrics().horizontalAdvance(t)+4,
                    editText->fontMetrics().lineSpacing());
 }
 
 // -----------------------------------------------------------
-void QucsApp::slotCreateLib()
+void App::slotCreateLib()
 {
   slotHideEdit(); // disable text edit of component property
 
@@ -625,7 +607,7 @@ void QucsApp::slotCreateLib()
 }
 
 // -----------------------------------------------------------
-void QucsApp::slotImportData()
+void App::slotImportData()
 {
   slotHideEdit(); // disable text edit of component property
 
@@ -641,7 +623,7 @@ void QucsApp::slotImportData()
 }
 
 // -----------------------------------------------------------
-void QucsApp::slotExportSchematic()
+void App::slotExportSchematic()
 {
   //incomplete();
 
@@ -660,10 +642,10 @@ void QucsApp::slotExportSchematic()
 }
 // -----------------------------------------------------------
 // // BUG this is a diagram slot.
-void QucsApp::slotExportGraphAsCsv()
+void App::slotExportGraphAsCsv()
 {
   incomplete();
-  QucsDoc* qd = DocumentTab->current();
+  Doc* qd = DocumentTab->current();
   assert(qd);
 
   hideEdit();
@@ -672,7 +654,7 @@ void QucsApp::slotExportGraphAsCsv()
 
 
 // ----------------------------------------------------------
-void QucsApp::slotCreatePackage()
+void App::slotCreatePackage()
 {
   slotHideEdit(); // disable text edit of component property
 
@@ -682,7 +664,7 @@ void QucsApp::slotCreatePackage()
 }
 
 // ----------------------------------------------------------
-void QucsApp::slotExtractPackage()
+void App::slotExtractPackage()
 {
   slotHideEdit(); // disable text edit of component property
 
@@ -693,7 +675,7 @@ void QucsApp::slotExtractPackage()
   // readProjects();
 }
 
-void QucsApp::slotOpenRecent()
+void App::slotOpenRecent()
 {
   QAction *action = qobject_cast<QAction *>(sender());
   if (action) {
@@ -702,7 +684,7 @@ void QucsApp::slotOpenRecent()
   }
 }
 
-void QucsApp::slotUpdateRecentFiles()
+void App::slotUpdateRecentFiles()
 {
 incomplete();
 #if 0
@@ -725,7 +707,7 @@ incomplete();
 #endif
 }
 
-void QucsApp::slotClearRecentFiles()
+void App::slotClearRecentFiles()
 {
   QucsSettings.RecentDocs.clear();
   slotUpdateRecentFiles();
@@ -733,7 +715,7 @@ void QucsApp::slotClearRecentFiles()
 
 // launch the dialog to select dynamic modules
 // redo?
-void QucsApp::slotLoadModule()
+void App::slotLoadModule()
 {
 #if 0
     qDebug() << "slotLoadModule";
@@ -807,7 +789,7 @@ void QucsApp::slotLoadModule()
         // update the combobox, set new category in view
         // pick up new category 'verilog-a user components' from `Module::category`
         //set new category into view
-        QucsApp::fillComboBox(true);
+        App::fillComboBox(true);
         CompChoose->setCurrentIndex(CompChoose->count()-1);
         slotSetCompView(CompChoose->count()-1);
 
@@ -835,7 +817,7 @@ void QucsApp::slotLoadModule()
 
 // run admsXml, C++ compiler to build library
 // // BUG this is part of qucsator or qucsator driver
-void QucsApp::slotBuildModule()
+void App::slotBuildModule()
 {
 #if 0
     qDebug() << "slotBuildModule";
@@ -868,7 +850,7 @@ void QucsApp::slotBuildModule()
     QProcess *builder = new QProcess();
     builder->setProcessChannelMode(QProcess::MergedChannels);
     // get current va document
-    QucsDoc *Doc = getDoc();
+    Doc *Doc = getDoc();
     QString vaModule = Doc->fileBase(Doc->docName());
 
     QString admsXml = QucsSettings.AdmsXmlBinDir.canonicalPath();
@@ -945,10 +927,12 @@ void QucsApp::slotBuildModule()
 }
 
 // ----------------------------------------------------------
-void QucsApp::slotHelpAbout()
+void App::slotHelpAbout()
 {
 
   incomplete(); // ask dispatcher
   // AboutDialog *ad = new AboutDialog(this);
   // ad->exec();
 }
+
+} // qucs

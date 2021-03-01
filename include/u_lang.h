@@ -1,4 +1,4 @@
 
 #include "language.h"
-#define LANGUAGE DocumentLanguage
+#define LANGUAGE qucs::Language
 #define CKT_BASE Object

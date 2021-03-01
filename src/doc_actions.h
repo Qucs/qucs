@@ -12,7 +12,7 @@
  ***************************************************************************/
 
 // Deal with user interactions with a doc
-// inherit from this alongside a specialisation of QucsDoc
+// inherit from this alongside a specialisation of qucs::Doc
 
 #ifndef QUCS_DOC_ACTIONS
 #define QUCS_DOC_ACTIONS
@@ -20,13 +20,15 @@
 #include "io_trace.h"
 #include <QObject>
 
-class ElementGraphics;
 class QUndoCommand;
-class MouseAction;
-class QucsDoc;
 class QAction;
 class QMenu; // here?!
 
+namespace qucs {
+
+class ElementGraphics;
+class MouseAction;
+class Doc;
 
 // must be QObject so it can receive/filter events (needed??!)
 class MouseActions : public QObject {
@@ -34,7 +36,7 @@ class MouseActions : public QObject {
 public:
   typedef QList<ElementGraphics*> EGPList;
 public:
-  MouseActions(QucsDoc*);
+  MouseActions(Doc*);
   virtual ~MouseActions();
 
 //  void setPainter(SchematicDoc*);
@@ -67,7 +69,7 @@ public: // TODO. move into mouse actions
 	bool eventFilter(QObject *obj, QEvent *event);
 	virtual bool handle(QEvent*);
 	//virtual void setParent(QWidget* ctx) = 0;
-	virtual void setControls(QucsDoc* ctx) = 0;
+	virtual void setControls(Doc* ctx) = 0;
 	virtual void executeCommand(QUndoCommand* c);
 
 public: // modes
@@ -80,8 +82,8 @@ public slots:
   virtual void slotRedo() = 0;
 
 public:
-	QucsDoc* doc();
-	QucsDoc const* doc() const;
+	Doc* doc();
+	Doc const* doc() const;
 	void possiblyToggleAction(MouseAction* a, QObject* sender);
 
 private:
@@ -89,5 +91,7 @@ private:
 	bool _drawn;  // indicates whether the scheme element was drawn last time
 	bool isMoveEqual;
 }; // MouseActions
+
+}
 
 #endif

@@ -14,5 +14,7 @@ SRCS = \
 	portsymbol.cpp \
 	rectangle.cpp
 
-EXTRA_DIST = \
-	id_dialog.cpp
+# BUG
+MOCHEADERS = arrowdialog.h graphictextdialog.h filldialog.h
+
+EXTRA_DIST =

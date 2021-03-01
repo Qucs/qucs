@@ -32,7 +32,7 @@
  * dynamic loaded libraries.
  * \see QucsApp::slotBuildModule() for the make output assignment.
  */
-MessageDock::MessageDock(QucsApp *App_): QWidget()
+MessageDock::MessageDock(App *App_): QWidget()
 {
 
     builderTabs = new QTabWidget();

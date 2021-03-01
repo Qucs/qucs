@@ -36,7 +36,9 @@ class QString;
 /*--------------------------------------------------------------------------*/
 namespace{
 /*--------------------------------------------------------------------------*/
-class CommonLib : public CommonComponent{
+using namespace qucs;
+/*--------------------------------------------------------------------------*/
+class CommonLib : public CommonComponent {
 public:
 	explicit CommonLib(int i=0) : CommonComponent(i) {}
 private:
@@ -46,7 +48,7 @@ private:
 };
 CommonLib cl(CC_STATIC_);
 /*--------------------------------------------------------------------------*/
-SchematicModel empty;
+ElementList empty;
 // this is a prototype
 class LibComp : public SubcktBase {
 private:
@@ -70,7 +72,7 @@ public:
 
 private:
 	bool is_device() const override {return false;}
-	SchematicModel* scope() override {return subckt();}
+	ElementList* scope() override {return subckt();}
 	std::string paramValue(unsigned n) const override{ untested();
 		return SubcktBase::paramValue(n);
 	}
@@ -151,7 +153,7 @@ private:
 
 public: // HACK
 	// TODO: move to painting.
-	SchematicModel const* paintings() const{
+	ElementList const* paintings() const{
 		if(!_paint){
 			assert(subckt());
 			auto p_ = subckt()->find_(":SymbolSection:");
@@ -165,7 +167,7 @@ public: // HACK
 		}else{
 		}
 		if(!_paint){
-			message(QucsMsgCritical, "no paint");
+			message(MsgCritical, "no paint");
 			_paint = &empty;
 		}else{
 		}
@@ -183,7 +185,7 @@ private:
 	int _ty;
 	Property _section;
 	Property _component;
-	mutable SchematicModel const* _paint; // just caching
+	mutable ElementList const* _paint; // just caching
 }d0; // LibComp
 static Dispatcher<Symbol>::INSTALL p2(&symbol_dispatcher, "LegacyLibProto", &d0);
 /*--------------------------------------------------------------------------*/
@@ -379,7 +381,7 @@ private:
 //			attach_common(s->mutable_common());
 			_parent = s;
 			if(!_parent){
-				message(QucsMsgCritical, ("cannot find " + t).c_str());
+				message(MsgCritical, ("cannot find " + t).c_str());
 			}else{
 			}
 		}
@@ -421,7 +423,7 @@ private:
 	}
 
 private:
-	SchematicModel const* paintings() const{
+	ElementList const* paintings() const{
 		assert(_parent);
 		if(auto p = dynamic_cast<LibComp const*>(_parent)){
 			return p->paintings();

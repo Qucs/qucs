@@ -18,6 +18,9 @@
 #include "qucs_globals.h"
 
 namespace{
+
+using namespace qucs;
+
 class Ground : public Component  {
 private:
 	Ground(Ground const& g);
@@ -30,7 +33,7 @@ public:
 private:
   void init();
 
-	Widget* schematicWidget(QucsDoc* Doc) const override
+	Widget* schematicWidget(Doc* d) const override
 	{
 		// no edit dialog. tmp hack?
 		return nullptr;

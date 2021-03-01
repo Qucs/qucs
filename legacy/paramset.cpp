@@ -27,6 +27,8 @@
 
 namespace{
 
+using namespace qucs;
+
 //paramset hack; takes a copy of a Symbol...
 class LibParamset : public Symbol{
 public:
@@ -106,7 +108,7 @@ private: // Symbol
 //	ElementList const* symbolPaintings() const override{ untested();
 //		if(!_proto){untested();
 //		}else if(_proto){ untested();
-//		  	SchematicModel const* m = _proto->subckt();
+//		  	ElementList const* m = _proto->subckt();
 //		  	return &m->paintings();
 //		}else{ untested();
 //		}

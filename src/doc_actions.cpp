@@ -17,10 +17,8 @@
 #include "doc_actions.h"
 #include "mouseaction.h"
 #include "module.h"
-#include "labeldialog.h"
 #include "io_trace.h"
 #include "schematic_scene.h"
-#include "wirelabel.h"
 #include "qucsdoc.h"
 
 #include <QTextStream>
@@ -40,6 +38,7 @@
 #include <limits.h>
 #include <stdlib.h>
 
+namespace qucs {
 
 void MouseAction::sceneAddItem(ElementGraphics* x)
 { untested();
@@ -73,7 +72,7 @@ void MouseAction::sceneRemoveItem(ElementGraphics* x)
 QAction *formerAction;   // remember action before drag n'drop etc.
 
 // only mouse actions? how about undoable keyboard actions?
-MouseActions::MouseActions(QucsDoc* d)
+MouseActions::MouseActions(Doc* d)
   : QObject() // , _doc(d)
 {untested();
 	auto w = dynamic_cast<QWidget*>(d);
@@ -1606,18 +1605,18 @@ bool ElementMouseAction::isSelected() const
 #endif
 
 // why?
-QucsDoc* MouseActions::doc()
+Doc* MouseActions::doc()
 { untested();
 	auto w = dynamic_cast<QWidget*>(parent());
 	assert(w);
-	auto d = dynamic_cast<QucsDoc*>(w);
+	auto d = dynamic_cast<Doc*>(w);
 	assert(d);
 	return d;
 }
 
-QucsDoc const* MouseActions::doc() const
+Doc const* MouseActions::doc() const
 { untested();
-	auto d = dynamic_cast<QucsDoc const*>(parent());
+	auto d = dynamic_cast<Doc const*>(parent());
 	assert(d);
 	return d;
 }
@@ -1702,5 +1701,7 @@ void MouseActions::possiblyToggleAction(MouseAction* a, QObject* s)
 	}else{itested();
 	}
 }
+/* -------------------------------------------------------------------------------- */
+} // qucs
 /* -------------------------------------------------------------------------------- */
 /* -------------------------------------------------------------------------------- */

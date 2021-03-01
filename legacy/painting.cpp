@@ -16,7 +16,7 @@
 LegacyPainting::LegacyPainting() : Element(), Painting()
 {
   State = 0;
-  setLabel(Name.toStdString()); // legacy hack
+  set_label(Name.toStdString()); // legacy hack
 }
 
 void LegacyPainting::Bounding(int& _x1, int& _y1, int& _x2, int& _y2)

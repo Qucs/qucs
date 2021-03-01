@@ -1,22 +1,18 @@
 /***************************************************************************
-                             messagedock.h
-                             -------------
-    begin                : Tue Mar 11 2014
     copyright            : (C) 2014 by Guilherme Brondani Torri
-    email                : guitorri AT gmail DOT com
  ***************************************************************************/
 
 /***************************************************************************
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU General Public License as published by  *
- *   the Free Software Foundation; either version 2 of the License, or     *
+ *   the Free Software Foundation; either version 3 of the License, or     *
  *   (at your option) any later version.                                   *
  *                                                                         *
  ***************************************************************************/
 
-#ifndef MESSAGEDOCK_H
-#define MESSAGEDOCK_H
+#ifndef QUCS_MESSAGEDOCK_H
+#define QUCS_MESSAGEDOCK_H
 
 #include "qucs_app.h"
 
@@ -26,14 +22,14 @@ class QDockWidget;
 class QTabWidget;
 class QPlainTextEdit;
 
-/*!
- * \file messagedock.h
- * \brief The MessageDock class definiion
- */
+namespace qucs {
+	class App;
+}
+
 class MessageDock : public QWidget {
   Q_OBJECT
 public:
-  MessageDock(QucsApp*);
+  MessageDock(qucs::App*);
  ~MessageDock() {};
 
 public:

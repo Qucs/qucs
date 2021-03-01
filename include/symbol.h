@@ -22,14 +22,16 @@
 #include "painting.h"
 /*--------------------------------------------------------------------------*/
 class QPainter;
-class NodeMap;
-class PaintingList;
-class Net;
-class Symbol;
-class ElementList;
-class Widget;
 /*--------------------------------------------------------------------------*/
 enum {CC_STATIC_=27342};
+/*--------------------------------------------------------------------------*/
+namespace qucs{
+/*--------------------------------------------------------------------------*/
+class ElementList;
+class Net;
+class NodeMap;
+class Symbol;
+class Widget;
 /*--------------------------------------------------------------------------*/
 // borrowed (modified) from e_compon.h
 class CommonComponent : public Object {
@@ -94,7 +96,7 @@ public: // construct
 
 protected: // Element
 	void paint(ViewPainter*) const override;
-	Widget* schematicWidget(QucsDoc*) const override;
+	Widget* schematicWidget(Doc*) const override;
 
 public: // Element
 	pos_t center()const override;
@@ -103,7 +105,7 @@ public:
 	// what is this?
 	//  TODO: use prepare == precalc_first everywhere.
 	// some kind of "init"??!
-	virtual void recreate(); // SchematicModel const& ctx);
+	virtual void recreate(); // ElementList const& ctx);
 	virtual void build() {} // what does it do?
 
 public: // TODO. something like this.
@@ -122,11 +124,11 @@ public: // manage shared data across symbols
 	void	deflate_common();
 
 public:
-	SchematicModel const* scope() const;
+	ElementList const* scope() const;
 	virtual ElementList const* symbolPaintings() const;
 
 // protected: // needed in netlister. public use in parse...
-	virtual SchematicModel* scope();
+	virtual ElementList* scope();
 
 	void set_dev_type(const std::string& new_type);
 	virtual std::string dev_type()const{ return "(unreachable)";}
@@ -177,8 +179,8 @@ public: // Port stuff
 	virtual /*?*/ std::string const portName(unsigned) const{return "invalid"; }
 
 public: // hierarchy. move to SubcktBase
-	SchematicModel const* subckt() const{ return _subckt; }
-	SchematicModel* subckt(){ return _subckt; }
+	ElementList const* subckt() const{ return _subckt; }
+	ElementList* subckt(){ return _subckt; }
 	void new_subckt();
 
 private: // internal port access
@@ -192,7 +194,7 @@ public: // graphics
 	//  virtual void draw(QPainter&)const=0;
 	//...  more to come
 protected: // maybe not here. but need to rebase MultiViewComponent to ScktProto first.
-	SchematicModel* _subckt; // stuff contained in this symbol.
+	ElementList* _subckt; // stuff contained in this symbol.
 	// such as subckt components. meta data or symbol gfx
 	int vflip() const{return _vflip;}
 	int hflip() const{return _hflip;}
@@ -208,6 +210,10 @@ private:
 	CommonComponent* _common;
 	unsigned _net_nodes;
 }; // Symbol
+/*--------------------------------------------------------------------------*/
+} // qucs
+/*--------------------------------------------------------------------------*/
+using qucs::Symbol; // transition.
 /*--------------------------------------------------------------------------*/
 /*--------------------------------------------------------------------------*/
 #endif

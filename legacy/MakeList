@@ -32,7 +32,6 @@ LEGACY_SRC = \
 	idcmd.cpp \
 	painting.cpp \
 	propertiescmd.cpp \
-	rect3ddiagram.cpp \
 	rectdiagram.cpp \
 	root.cpp \
 	schematic_format.cpp \
@@ -50,6 +49,7 @@ NOTYET_SRC = \
 	timingdiagram.cpp \
 	truthdiagram.cpp \
 	phasordiagram.cpp \
+	rect3ddiagram.cpp \
 	waveac.cpp
 
 MAYBE_OBSOLETE = \

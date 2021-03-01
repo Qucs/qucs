@@ -29,6 +29,8 @@ class QPen;
 class QBrush;
 class Schematic; // obsolete.
 /* -------------------------------------------------------------------------------- */
+using namespace qucs;
+/* -------------------------------------------------------------------------------- */
 class LegacyTaskElement : public TaskElement {
 protected:
   LegacyTaskElement(const LegacyTaskElement&);
@@ -42,7 +44,7 @@ public:
 private:
 	void paint(ViewPainter*) const;
 	rect_t bounding_rect() const override;
-	Widget* schematicWidget(QucsDoc* Doc) const;
+	Widget* schematicWidget(qucs::Doc* d) const;
 
 	virtual index_t param_count() const;
 	virtual std::string param_name(index_t n) const;

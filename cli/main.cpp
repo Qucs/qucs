@@ -59,11 +59,11 @@
 /*--------------------------------------------------------------------------*/
 // qucs hacks and wraps
 #define CS istream_t
-#define CARD_LIST SchematicModel
+#define CARD_LIST ElementList
 #define OPT tQucsSettings
 #define CMD Command
 static std::string I_PROMPT = "qucs> ";
-SchematicModel static_model;
+ElementList static_model;
 /*--------------------------------------------------------------------------*/
 struct JMP_BUF{
   sigjmp_buf p;

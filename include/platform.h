@@ -21,6 +21,9 @@
 
 #include <string>
 #include <csignal>
+#include <cfloat>
+#include <cassert>
+#include <cstring>
 #include <csetjmp>
 #include <unistd.h>
 // #include <fcntl.h>	/* old style unix files (yikes?) */

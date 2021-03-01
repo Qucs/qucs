@@ -82,7 +82,7 @@ private: // Sckt
 //		return _numports; in e_comp
 //	}
 	bool makes_own_scope()const override { return true;}
-	SchematicModel* scope() override{
+	ElementList* scope() override{
 		return subckt();
 	}
 private: // Symbol
@@ -145,17 +145,17 @@ static void parse_dot(istream_t& cs, SubcktBase* s)
 }
 /*--------------------------------------------------------------------------*/
 class SymbolCommand : public Command{
-	void do_it(istream_t& cs, SchematicModel* s) override{
+	void do_it(istream_t& cs, ElementList* s) override{
 	  auto fullstring = cs.fullString();
 	  trace1("SymbolSection", fullstring);
 
 	  Symbol* sc = symbolSection.clone(); // symbol_dispatcher.clone("symbolSection");
 	  auto* sym = dynamic_cast<SubcktBase*>(sc);
 	  assert(sym);
-	  sym->setLabel(":SymbolSection:");
+	  sym->set_label(":SymbolSection:");
 	  assert(s);
 
-	  auto lang = languageDispatcher["legacy_lib"];
+	  auto lang = language_dispatcher["legacy_lib"];
 	  assert(lang);
 
 	  while(true){ itested();
@@ -184,8 +184,8 @@ class SymbolCommand : public Command{
 	  s->push_back(sym);
   }
 }d0;
-Dispatcher<Command>::INSTALL p0(&commandDispatcher, "Symbol", &d0);
-Dispatcher<Command>::INSTALL p1(&commandDispatcher, "Symbol>", &d0); // BUG
-Dispatcher<Command>::INSTALL p2(&commandDispatcher, "<Symbol>", &d0); // ...
+Dispatcher<Command>::INSTALL p0(&command_dispatcher, "Symbol", &d0);
+Dispatcher<Command>::INSTALL p1(&command_dispatcher, "Symbol>", &d0); // BUG
+Dispatcher<Command>::INSTALL p2(&command_dispatcher, "<Symbol>", &d0); // ...
 /*--------------------------------------------------------------------------*/
 } // namespace

@@ -12,7 +12,7 @@ void test1()
 	Symbol* root = symbol_dispatcher.clone("subckt_proto");
 	assert(root);
 	assert(root->scope());
-	SchematicModel& M = *root->scope();
+	ElementList& M = *root->scope();
 
 	auto wp=symbol_dispatcher["Wire"];
 //	 Wire(0,0,1,0);
@@ -117,7 +117,7 @@ void test1()
 
 	std::cout << "=== square test\n";
 	connect_push(root, w1);
-	SchematicModel const& cM = M;
+	ElementList const& cM = M;
 	for(auto i : cM){
 		Symbol* s = prechecked_cast<Symbol*>(i);
 		assert(s);
@@ -138,7 +138,7 @@ void test0()
 	Symbol* root = symbol_dispatcher.clone("subckt_proto");
 	assert(root);
 	assert(root->scope());
-	SchematicModel& M = *root->scope();
+	ElementList& M = *root->scope();
 
 	//auto w0 = new Wire(0,0,1,0);
 	auto wp=symbol_dispatcher["Wire"];

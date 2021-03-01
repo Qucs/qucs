@@ -20,7 +20,7 @@
 namespace{
 /*--------------------------------------------------------------------------*/
 class Properties : public Command{
-	void do_it(istream_t& cs, SchematicModel* s) override{
+	void do_it(istream_t& cs, ElementList* s) override{
 	  assert(s);
 	  while(true){
 		  cs.read_line();
@@ -77,8 +77,8 @@ class Properties : public Command{
 	  }
   }
 }d0;
-Dispatcher<Command>::INSTALL p0(&commandDispatcher, "Properties", &d0);
-Dispatcher<Command>::INSTALL p1(&commandDispatcher, "Properties>", &d0); // BUG
-Dispatcher<Command>::INSTALL p2(&commandDispatcher, "<Properties>", &d0); // ...
+Dispatcher<Command>::INSTALL p0(&command_dispatcher, "Properties", &d0);
+Dispatcher<Command>::INSTALL p1(&command_dispatcher, "Properties>", &d0); // BUG
+Dispatcher<Command>::INSTALL p2(&command_dispatcher, "<Properties>", &d0); // ...
 /*--------------------------------------------------------------------------*/
 } // namespace

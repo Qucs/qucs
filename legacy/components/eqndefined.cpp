@@ -23,7 +23,7 @@
 
 EqnDefined::EqnDefined()
 {
-  setLabel("equation defined device");
+  set_label("equation defined device");
 
   Model = "EDD";
   Name  = "D";

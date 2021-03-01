@@ -33,14 +33,13 @@
 #include <QPainter>
 #include <QDebug>
 
+namespace qucs {
+
 TaskElement::TaskElement(TaskElement const& p)
   : Element(p),
-    //cx(p.cx),
-    //cy(p.cy),
     tx(p.tx),
     ty(p.ty),
     showName(p.showName)
-	 // Name(p.Name)
 {
   qDebug() << "component copy";
 
@@ -66,7 +65,7 @@ TaskElement::TaskElement() : Element()
   // Props.setAutoDelete(true);
 }
 /*--------------------------------------------------------------------------*/
-SchematicModel* TaskElement::scope()
+ElementList* TaskElement::scope()
 {
 	if(auto o=dynamic_cast<Symbol*>(owner())){
 		return o->subckt();
@@ -372,9 +371,5 @@ void TaskElement::dialgButtStuff(ComponentDialog& /*d*/)const
   incomplete();
   // d.disableButtons();
 }
-//
-// BUG, tmp.
-//void SchematicModel::simpleInserttaskElement(TaskElement *)
-//{
-//  unreachable();
-//}
+
+} // qucs

@@ -224,7 +224,7 @@ Symbol* Wire::intersectPorts(Symbol const* s) const
 		Symbol *sckt = symbol_dispatcher.clone("subckt_proto");
 		assert(sckt);
 		sckt->new_subckt();
-		SchematicModel* m = sckt->subckt();
+		ElementList* m = sckt->subckt();
 
 		// TODO: ordering bug probably here as well.
 		m->push_back(s->clone());
@@ -317,7 +317,7 @@ Symbol* Wire::newTee(Wire const* o) const
 	if(s){
 		trace1("building tee", split);
 		s->new_subckt();
-		SchematicModel* m = s->subckt();
+		ElementList* m = s->subckt();
 		assert(m);
 
 		// BUG BUG BUG. this depends on the order.

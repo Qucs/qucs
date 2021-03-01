@@ -914,7 +914,7 @@ void ComponentDialog::slotApplyInput()
     if(pc){
       CompNameEdit->setText(QString::fromStdString(Comp->label()));
     } else if (Comp->label() != CompNameEdit->text().toStdString()) {
-      Comp->setLabel(CompNameEdit->text().toStdString());
+      Comp->set_label(CompNameEdit->text().toStdString());
       changed = true;
     }
   }

@@ -17,12 +17,14 @@
 #include <memory>
 #include <vector>
 
+namespace qucs {
+
 // TODO? use commonComponent instead and stick a symbol to it.
 class CommonSubckt : public CommonComponent{
 public:
 	explicit CommonSubckt(int x)
 		: CommonComponent(x){
-		_subckt = std::make_shared<SchematicModel>();
+		_subckt = std::make_shared<ElementList>();
 	}
 	explicit CommonSubckt(CommonSubckt const& c)
 		: CommonComponent(c), _subckt(c._subckt)
@@ -39,8 +41,8 @@ public:
 		}
 	}
 public:
-	SchematicModel* subckt(){ return _subckt.get(); }
-	SchematicModel const* subckt() const{ return _subckt.get(); }
+	ElementList* subckt(){ return _subckt.get(); }
+	ElementList const* subckt() const{ return _subckt.get(); }
 	CommonComponent* clone()const override{
 		incomplete();
 		return new CommonSubckt(*this);
@@ -75,8 +77,10 @@ public: // hmm
 		return s->port(i);
 	}
 private:
-	std::shared_ptr<SchematicModel> _subckt;
+	std::shared_ptr<ElementList> _subckt;
 	std::vector<Port*> _ports;
 };
+
+} // qucs
 
 #endif

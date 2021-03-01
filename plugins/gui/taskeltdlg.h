@@ -62,6 +62,12 @@ class QLabel;
 
 namespace {
 
+using qucs::SchematicDialog;
+using qucs::ElementGraphics;
+using qucs::Element;
+using qucs::TaskElement;
+using qucs::SwapSymbolCommand;
+
 class TaskElementDialog : public QDialog, public SchematicDialog {
     Q_OBJECT
 //    Q_INTERFACES(SchematicDialog) // no effect.
@@ -1025,7 +1031,7 @@ void TaskElementDialog::slotApplyInput()
     if(pc){
       CompNameEdit->setText(QString::fromStdString(Comp->label()));
     } else if (Comp->label() != CompNameEdit->text().toStdString()) {
-      Comp->setLabel(CompNameEdit->text().toStdString());
+      Comp->set_label(CompNameEdit->text().toStdString());
       changed = true;
     }
   }

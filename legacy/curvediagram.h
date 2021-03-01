@@ -18,31 +18,5 @@
 #ifndef CURVEDIAGRAM_H
 #define CURVEDIAGRAM_H
 
-#include "diagram.h"
-
-
-class CurveDiagram : public Diagram  {
-public: 
-  CurveDiagram(int _cx=0, int _cy=0);
- ~CurveDiagram();
-
-  Element* clone() const{ return new CurveDiagram(); }
-
-  static Element* info(QString&, char* &, bool getNewOne=false);
-  int  calcDiagram();
-  void calcLimits();
-  void calcCoordinate(const double*, const double*, const double*, float*, float*, Axis const*) const;
-  void finishMarkerCoordinates(float&, float&) const;
-  bool insideDiagram(float, float) const;
-
-public: // legacy cruft.
-  QList<Graph *>  Graphs;
-  QList<Arc *>    Arcs;
-  QList<Line *>   Lines;
-  QList<Text *>   Texts;
-
-protected:
-  void clip(Graph::iterator&) const;
-};
 
 #endif

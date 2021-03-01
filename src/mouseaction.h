@@ -21,8 +21,6 @@
 #include "schematic_scene.h"
 #include "element_graphics.h"
 
-class Label;
-class MouseActions;
 class QAction;
 class QEvent;
 class QMenu;
@@ -31,6 +29,9 @@ class QPainter;
 class QUndoCommand;
 class Schematic;
 
+namespace qucs {
+
+class MouseActions;
 
 // it is a mode. not an action...
 class MouseAction : public QObject, public Action {
@@ -75,7 +76,7 @@ protected:
 	SchematicScene* scene(); // passed to UndoCommands (check: why?)
 
 protected:
-	QucsDoc const* doc() const;
+	Doc const* doc() const;
 	SchematicScene const* scene() const;
 
 protected:
@@ -83,7 +84,7 @@ protected:
 	void sceneRemoveItem(ElementGraphics*);
 
 protected:
-	QucsDoc* doc(); // BUG _ctx.
+	Doc* doc(); // BUG _ctx.
 	QList<ElementGraphics*> selectedItems(); // BUG. copies.
 	QPointF mapToScene(QPoint const& p) const;
 	void updateViewport(); // why?
@@ -103,6 +104,6 @@ private:
 	QAction* _sender;
 }; // MouseAction
 
-class Label;
+} // qucs
 
 #endif

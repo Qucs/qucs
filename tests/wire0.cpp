@@ -12,7 +12,7 @@ void union0()
 	Symbol* root = symbol_dispatcher.clone("subckt_proto");
 	assert(root);
 	assert(root->scope());
-	SchematicModel& M = *root->scope();
+	ElementList& M = *root->scope();
 
 	auto wp = symbol_dispatcher["Wire"];
 	auto w0 = prechecked_cast<Symbol*>(wp->clone());
@@ -51,7 +51,7 @@ void union1()
 	Symbol* root = symbol_dispatcher.clone("subckt_proto");
 	assert(root);
 	assert(root->scope());
-	SchematicModel& M = *root->scope();
+	ElementList& M = *root->scope();
 
 	auto wp=symbol_dispatcher["Wire"];
 	auto w0 = prechecked_cast<Symbol*>(wp->clone());
@@ -76,7 +76,7 @@ void union2()
 	Symbol* root = symbol_dispatcher.clone("subckt_proto");
 	assert(root);
 	assert(root->scope());
-	SchematicModel& M = *root->scope();
+	ElementList& M = *root->scope();
 
 	auto wp=symbol_dispatcher["Wire"];
 	auto w0 = prechecked_cast<Symbol*>(wp->clone());
@@ -103,7 +103,7 @@ void union3()
 	Symbol* root = symbol_dispatcher.clone("subckt_proto");
 	assert(root);
 	assert(root->scope());
-	SchematicModel& M = *root->scope();
+	ElementList& M = *root->scope();
 
 	auto wp=symbol_dispatcher["Wire"];
 	auto w0 = prechecked_cast<Symbol*>(wp->clone());
@@ -130,7 +130,7 @@ void union4()
 	Symbol* root = symbol_dispatcher.clone("subckt_proto");
 	assert(root);
 	assert(root->scope());
-	SchematicModel& M = *root->scope();
+	ElementList& M = *root->scope();
 
 	auto wp=symbol_dispatcher["Wire"];
 	auto w0 = prechecked_cast<Symbol*>(wp->clone());
@@ -162,7 +162,7 @@ void union5()
 	Symbol* root = symbol_dispatcher.clone("subckt_proto");
 	assert(root);
 	assert(root->scope());
-	SchematicModel& M = *root->scope();
+	ElementList& M = *root->scope();
 
 	auto wp=symbol_dispatcher["Wire"];
 	auto w0 = prechecked_cast<Symbol*>(wp->clone());
@@ -198,7 +198,7 @@ void union6()
 	Symbol* root = symbol_dispatcher.clone("subckt_proto");
 	assert(root);
 	assert(root->scope());
-	SchematicModel& M = *root->scope();
+	ElementList& M = *root->scope();
 
 	auto wp=symbol_dispatcher["Wire"];
 	auto w0 = prechecked_cast<Symbol*>(wp->clone());

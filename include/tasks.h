@@ -17,8 +17,10 @@
 //
 #include <list>
 
+namespace qucs {
 class TaskElement; // Task??
 
 class CmdEltList /*HACK, for now */ : public std::list<TaskElement*> {
 };
+}
 #endif

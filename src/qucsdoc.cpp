@@ -13,21 +13,28 @@
  ***************************************************************************/
 
 #include <QFileInfo>
+#include <QFileDialog>
 #include <QAction>
-
-#include "action.h"
-#include "qucsdoc.h"
-#include "doc_actions.h"
-#include "simmessage.h"
-#include "qucs_app.h"
 #include <QUndoStack>
+#include <QMessageBox>
+
+#include "qucs_globals.h"
+#include "data.h"
+#include "action.h"
+#include "doc_actions.h"
 #include "qio.h" // tmp?
-#include "simulator.h"
-#include "sckt_base.h"
 #include "qt_compat.h"
+#include "qucs_app.h"
+#include "qucsdoc.h"
+#include "schematic_model.h"
+#include "sckt_base.h"
+#include "simmessage.h"
+#include "simulator.h"
 /* -------------------------------------------------------------------------------- */
 /* -------------------------------------------------------------------------------- */
-void QucsDoc::setDocFile(std::string const& filename)
+namespace qucs {
+/* -------------------------------------------------------------------------------- */
+void Doc::setDocFile(std::string const& filename)
 { untested();
 	_name = QString_(filename);
   QFileInfo Info(_name);
@@ -53,7 +60,7 @@ void QucsDoc::setDocFile(std::string const& filename)
   }
 }
 /* -------------------------------------------------------------------------------- */
-QucsDoc::QucsDoc() : Widget() // (QucsApp* App_, const QString& Name_, QWidget* o)
+Doc::Doc() : Widget() // (App* App_, const QString& Name_, QWidget* o)
 { untested();
   GridOn = true;
   _name = "unnamed"; // name? filename?
@@ -68,18 +75,18 @@ QucsDoc::QucsDoc() : Widget() // (QucsApp* App_, const QString& Name_, QWidget* 
   // Scale = 1.0;
 }
 /* -------------------------------------------------------------------------------- */
-QucsDoc::~QucsDoc()
+Doc::~Doc()
 { untested();
 }
 /* -------------------------------------------------------------------------------- */
 #if 1
 /* -------------------------------------------------------------------------------- */
-void QucsDoc::redo()
+void Doc::redo()
 {
 	incomplete();
 }
 /* -------------------------------------------------------------------------------- */
-void QucsDoc::undo()
+void Doc::undo()
 {
 	incomplete();
 }
@@ -87,7 +94,7 @@ void QucsDoc::undo()
 #else
 // really?!
 // no. some qucsdocs come without undo stack. so undo/redo must be custom.
-void QucsDoc::undo()
+void Doc::undo()
 { untested();
 	QUndoStack* u = undoStack();
 	if(u){itested();
@@ -99,7 +106,7 @@ void QucsDoc::undo()
 	}
 }
 
-void QucsDoc::redo()
+void Doc::redo()
 { untested();
 	QUndoStack* u = undoStack();
 	if(u){ untested();
@@ -109,31 +116,31 @@ void QucsDoc::redo()
 }
 #endif
 /* -------------------------------------------------------------------------------- */
-QString QucsDoc::fileSuffix (const QString& Name)
+QString Doc::fileSuffix (const QString& Name)
 { untested();
   QFileInfo Info (Name);
   return Info.suffix();
 }
 /* -------------------------------------------------------------------------------- */
-QString QucsDoc::fileSuffix (void)
+QString Doc::fileSuffix (void)
 { untested();
   return fileSuffix (_name);
 }
 /* -------------------------------------------------------------------------------- */
-QString QucsDoc::fileBase (const QString& Name)
+QString Doc::fileBase (const QString& Name)
 { untested();
   QFileInfo Info (Name);
   return Info.completeBaseName();
 }
 /* -------------------------------------------------------------------------------- */
-QString QucsDoc::fileBase (void)
+QString Doc::fileBase (void)
 { untested();
   return fileBase (_name);
 }
 /* -------------------------------------------------------------------------------- */
 #if 0
 // cleanup debris
-QAction* QucsDoc::selectAction()
+QAction* Doc::selectAction()
 { untested();
 	unreachable();
 	assert(_app);
@@ -142,7 +149,7 @@ QAction* QucsDoc::selectAction()
 #endif
 
 // set mode??
-// void QucsDoc::setActiveAction(MouseAction* a)
+// void Doc::setActiveAction(MouseAction* a)
 // { untested();
 // 	if(eventHandler()){ untested();
 // 		eventHandler()->setActive(a);
@@ -151,23 +158,23 @@ QAction* QucsDoc::selectAction()
 // }
 
 #if 0
-MouseActions const* QucsDoc::mouseActions() const
+MouseActions const* Doc::mouseActions() const
 { untested();
 	auto ma = const_cast<MouseActions*>(mouseActions());
 	return ma;
 }
 
-MouseActions* QucsDoc::mouseActions()
+MouseActions* Doc::mouseActions()
 { untested();
 	return nullptr;
 }
 #endif
 /* -------------------------------------------------------------------------------- */
-QucsApp* QucsDoc::app()
+App* Doc::app()
 { untested();
 	QObject* w = dynamic_cast<QWidget*>(this);
 	while(w){ untested();
-		if(auto a = dynamic_cast<QucsApp*>(w)){ untested();
+		if(auto a = dynamic_cast<App*>(w)){ untested();
 			return a;
 		}else{ untested();
 			w = w->parent();
@@ -177,7 +184,7 @@ QucsApp* QucsDoc::app()
 	return nullptr;
 }
 /* -------------------------------------------------------------------------------- */
-void QucsDoc::printCursorPosition(int x, int y)
+void Doc::printCursorPosition(int x, int y)
 {
 	if(app()){ untested();
 	// BUG. signal status bar?
@@ -186,7 +193,7 @@ void QucsDoc::printCursorPosition(int x, int y)
 	}
 }
 /* -------------------------------------------------------------------------------- */
-void QucsDoc::cleanup()
+void Doc::cleanup()
 {
 	if(!app()){
 		unreachable();
@@ -199,12 +206,12 @@ void QucsDoc::cleanup()
 	}
 }
 /* -------------------------------------------------------------------------------- */
-void QucsDoc::becomeCurrent()
+void Doc::becomeCurrent()
 {
 	QWidget* p = dynamic_cast<QWidget*>(this);
 	assert(p);
 
-	trace1("QucsDoc::becomeCurrent", _toolbar);
+	trace1("Doc::becomeCurrent", _toolbar);
 	if(_eventHandler){
 		_eventHandler->setControls(this);
 	}else{
@@ -231,18 +238,18 @@ void QucsDoc::becomeCurrent()
 	}
 }
 /* -------------------------------------------------------------------------------- */
-void QucsDoc::addElement(Element*)
+void Doc::addElement(Element*)
 { untested();
 	incomplete();
 }
 /* -------------------------------------------------------------------------------- */
-SchematicModel* QucsDoc::model()
+ElementList* Doc::model()
 { untested();
 	incomplete();
 	return nullptr;
 }
 /* -------------------------------------------------------------------------------- */
-void QucsDoc::executeCommand(QUndoCommand* c)
+void Doc::executeCommand(QUndoCommand* c)
 { untested();
 	// TODO: what if there are multiple views to a scene?
 	// is mouseActions == scene?
@@ -262,32 +269,32 @@ void QucsDoc::executeCommand(QUndoCommand* c)
 	}
 }
 /* -------------------------------------------------------------------------------- */
-void QucsDoc::addToolBar(QToolBar* t)
+void Doc::addToolBar(QToolBar* t)
 { untested();
 	assert(!_toolbar);
 	// assert(!t->parent());
 	_toolbar = t;
 }
 /* -------------------------------------------------------------------------------- */
-CommonData* QucsDoc::qucsData(std::string const& /*key*/)
+CommonData* Doc::qucsData(std::string const& /*key*/)
 { untested();
 	return nullptr; // _data[key];
 }
 /* -------------------------------------------------------------------------------- */
-void QucsDoc::slotDCbias()
+void Doc::slotDCbias()
 { untested();
 	incomplete();
 }
 /* -------------------------------------------------------------------------------- */
-void QucsDoc::slotSimulate()
+void Doc::slotSimulate()
 { untested();
   incomplete();
-} // QucsDoc::slotSimulate
+} // Doc::slotSimulate
 /* -------------------------------------------------------------------------------- */
 // move around more.
 #include <QFileDialog>
 #include <QMessageBox>
-bool QucsDoc::saveAs()
+bool Doc::saveAs()
 { untested();
 	int n = -1;
 	QString s;
@@ -350,7 +357,7 @@ bool QucsDoc::saveAs()
 
 #if 0 // incomplete
 		// search, if document is open
-		QucsDoc * d = findDoc (s);
+		Doc * d = findDoc (s);
 		if(d) { untested();
 			QMessageBox::information(this, QWidget::tr("Info"),
 					QWidget::tr("Cannot overwrite an open document"));
@@ -387,7 +394,7 @@ bool QucsDoc::saveAs()
 #include "qucs_globals.h"
 #include "simulator.h"
 /* -------------------------------------------------------------------------------- */
-void Simulator::attachDoc(QucsDoc /* const?? */ * d)
+void Simulator::attachDoc(Doc /* const?? */ * d)
 { untested();
 	incomplete();
 	_doc = d;
@@ -395,7 +402,7 @@ void Simulator::attachDoc(QucsDoc /* const?? */ * d)
 /* -------------------------------------------------------------------------------- */
 #if 1
 // FIXME.
-Simulator* QucsDoc::simulatorInstance(std::string const& which)
+Simulator* Doc::simulatorInstance(std::string const& which)
 { untested();
 	if (!scope()){ untested();
 		return nullptr;
@@ -408,7 +415,7 @@ Simulator* QucsDoc::simulatorInstance(std::string const& which)
 
 		Simulator const* proto = QucsSettings.simulator();
 		if(which!=""){ untested();
-			auto d = dataDispatcher[which];
+			Data* d = data_dispatcher[which];
 			proto = dynamic_cast<Simulator*>(d);
 		}else{ untested();
 		}
@@ -434,7 +441,7 @@ void setParameter(std::string const&, std::string const&)
 	incomplete();
 }
 /* -------------------------------------------------------------------------------- */
-SchematicModel* QucsDoc::scope()
+ElementList* Doc::scope()
 { untested();
 	if(root()){ untested();
 		return root()->scope();
@@ -443,16 +450,18 @@ SchematicModel* QucsDoc::scope()
 	}
 }
 /* -------------------------------------------------------------------------------- */
-SchematicModel const* QucsDoc::scope() const
+ElementList const* Doc::scope() const
 { untested();
-	auto d = const_cast<QucsDoc*>(this);
+	auto d = const_cast<Doc*>(this);
 	return d->scope();
 }
 /* -------------------------------------------------------------------------------- */
-SubcktBase const* QucsDoc::root() const
+SubcktBase const* Doc::root() const
 { untested();
-	auto d = const_cast<QucsDoc*>(this);
+	auto d = const_cast<Doc*>(this);
 	return d->root();
 }
+/* -------------------------------------------------------------------------------- */
+} // qucs
 /* -------------------------------------------------------------------------------- */
 /* -------------------------------------------------------------------------------- */

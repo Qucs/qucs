@@ -28,6 +28,8 @@
 #include <QPainter>
 #include <QPrintDialog>
 
+namespace qucs {
+
 PrinterWriter::PrinterWriter()
 {
   //default setting
@@ -48,7 +50,7 @@ PrinterWriter::~PrinterWriter()
 
 //allow user pass parameter and print document
 void PrinterWriter::noGuiPrint(
-		QucsDoc const* doc, QString printFile,
+		Doc const* doc, QString printFile,
 		QString page, int dpi, QString color,
 		QString orientation)
 {
@@ -88,7 +90,7 @@ void PrinterWriter::noGuiPrint(
     Printer->printRange() == QPrinter::AllPages, fitToPage);
 }
 
-void PrinterWriter::print(QucsDoc *doc)
+void PrinterWriter::print(Doc *doc)
 {
 	(void)doc;
   QPrintDialog *dialog = new QPrintDialog(Printer, 0);
@@ -129,3 +131,5 @@ void PrinterWriter::print(QucsDoc *doc)
 #endif
   delete dialog;
 }
+
+} // qucs

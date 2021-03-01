@@ -20,7 +20,7 @@
 
 Isolator::Isolator()
 {
-  setLabel("isolator");
+  set_label("isolator");
 
   Lines.append(new Line( -8,  0,  8,  0,QPen(Qt::darkBlue,3)));
   Lines.append(new Line(  8,  0,  0, -5,QPen(Qt::darkBlue,3)));

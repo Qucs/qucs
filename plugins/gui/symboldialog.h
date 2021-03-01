@@ -39,9 +39,13 @@
 /*--------------------------------------------------------------------------*/
 namespace {
 
+using qucs::SchematicDialog;
+using qucs::SwapElementGfx;
+using qucs::Element;
+
 class SymbolDialog : public QDialog, public SchematicDialog {
     Q_OBJECT
-    Q_INTERFACES(SchematicDialog)
+//    Q_INTERFACES(SchematicDialog)
 public:
 	explicit SymbolDialog();
 	~SymbolDialog();
@@ -631,7 +635,7 @@ void SymbolDialog::slotApplyInput()
 		CompNameEdit->setText(QString::fromStdString(_sym->label()));
 	}else if(CompNameEdit->text().toStdString() != _sym->label()) {
 		trace1("change_label", CompNameEdit->text().toStdString());
-		sym_clone->setLabel(CompNameEdit->text().toStdString());
+		sym_clone->set_label(CompNameEdit->text().toStdString());
 		changed = true;
 	}
 

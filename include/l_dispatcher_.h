@@ -31,7 +31,7 @@
 //testing=manual 2020.04.29
 #ifndef L_DISPATCHER__H
 #define L_DISPATCHER__H
-// #include "e_base.h"
+#include "e_base.h"
 // #include "u_opt.h"
 // #include "ap.h"
 #include "exception.h"

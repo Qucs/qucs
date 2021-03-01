@@ -29,6 +29,8 @@ class QString; // BUG
 class QPen; // BUG
 class QBrush; // BUG
 /* -------------------------------------------------------------------------------- */
+namespace qucs {
+/* -------------------------------------------------------------------------------- */
 class TaskElement : public Element, public Painting {
 protected:
   TaskElement(const TaskElement&);
@@ -86,7 +88,7 @@ public:
 	virtual std::string param_value_by_name(std::string const& key) const;
 
 private:
-  virtual SchematicModel* scope() override;
+  virtual ElementList* scope() override;
 
 protected:
   virtual QString netlist();
@@ -103,6 +105,8 @@ protected:
 private:
   std::string _caption;
 };
+/* -------------------------------------------------------------------------------- */
+} // qucs
 /* -------------------------------------------------------------------------------- */
 /* -------------------------------------------------------------------------------- */
 #endif

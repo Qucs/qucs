@@ -23,6 +23,10 @@
 /* -------------------------------------------------------------------------------- */
 namespace {
 /* -------------------------------------------------------------------------------- */
+using qucs::Element;
+using qucs::Language;
+using qucs::Conductor;
+/* -------------------------------------------------------------------------------- */
 class Netlister : public Command{
 public:
 	typedef std::map<std::string, Element const*> declmap;
@@ -30,18 +34,18 @@ public:
 public:
 	explicit Netlister() {}
 private: // Command
-	void do_it(istream_t&, SchematicModel*) override;
+	void do_it(istream_t&, ElementList*) override;
 
 private: // implementation
-	void resolve(ostream_t&, SchematicModel*, declmap&) const{incomplete();}
+	void resolve(ostream_t&, ElementList*, declmap&) const{incomplete();}
 	void printDeclarations(ostream_t& d,
 			declmap& declarations) const{incomplete();}
-	void printMain(ostream_t& stream, SchematicModel const*,
-			DocumentLanguage const*) const;
+	void printMain(ostream_t& stream, ElementList const*,
+			Language const*) const;
 }c0;
-static Dispatcher<Command>::INSTALL p1(&commandDispatcher, "netlist", &c0);
+static Dispatcher<Command>::INSTALL p1(&command_dispatcher, "netlist", &c0);
 /* -------------------------------------------------------------------------------- */
-void Netlister::do_it(istream_t& cs, SchematicModel* m)
+void Netlister::do_it(istream_t& cs, ElementList* m)
 {
 	declmap declarations;
 	std::string fn, language;
@@ -72,13 +76,13 @@ void Netlister::do_it(istream_t& cs, SchematicModel* m)
 	}
 	ostream_t Stream(&NetlistFile);
 
-	DocumentLanguage const* lang = nullptr;
+	Language const* lang = nullptr;
 	if(language==""){ untested();
 		lang = tQucsSettings::language;
 	}else{
-		lang = languageDispatcher[language];
+		lang = language_dispatcher[language];
 		trace2("netlist", lang, language);
-		assert(languageDispatcher[language]);
+		assert(language_dispatcher[language]);
 	}
 
 	if(lang){
@@ -99,7 +103,7 @@ void Netlister::do_it(istream_t& cs, SchematicModel* m)
 }
 /* -------------------------------------------------------------------------------- */
 void Netlister::printMain(ostream_t& stream,
-		SchematicModel const* scope_, DocumentLanguage const* lang) const
+		ElementList const* scope_, Language const* lang) const
 {
 	assert(scope_);
 	auto s = scope_->find_("main");

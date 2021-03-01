@@ -39,7 +39,9 @@
 #include "qucs_globals.h"
 #include "docfmt.h"
 /*--------------------------------------------------------------------------*/
-SimMessage::SimMessage(Simulator *sim, QucsDoc const* doc)
+namespace qucs {
+/*--------------------------------------------------------------------------*/
+SimMessage::SimMessage(Simulator *sim, Doc const* doc)
   : QDialog(), _simulator(sim), _doc(doc)
 {
   setAttribute(Qt::WA_DeleteOnClose); // here?
@@ -152,7 +154,7 @@ void SimMessage::startProcess(istream_t& cs)
 #if 0
   auto Doc = dynamic_cast<QucsDoc const*>(DocWidget);
 
-  if(QucsApp::isTextDocument(Doc)) { untested();
+  if(App::isTextDocument(Doc)) { untested();
     incomplete();
     // throw(Error(" Cannot simulate a text file");
     return;
@@ -191,7 +193,7 @@ void SimMessage::startProcess(istream_t& cs)
 //   _simulator->run(what, this);
 // }
 
-void SimMessage::do_it(istream_t cs, QucsDoc& d)
+void SimMessage::do_it(istream_t cs, qucs::Doc& d)
 { untested();
 //  _simMessage->start(); // really?
 
@@ -780,7 +782,7 @@ void SimMessage::stateChange()
   }
 }
 /*--------------------------------------------------------------------------*/
-static const int loglevel = Object::QucsMsgLog;
+static const int loglevel = qucs::MsgLog;
 void SimMessage::message(int level, std::string msg)
 {
   if(level==loglevel){
@@ -789,5 +791,7 @@ void SimMessage::message(int level, std::string msg)
     ErrText->appendPlainText(QString::fromStdString(msg));
   }
 }
+/*--------------------------------------------------------------------------*/
+} // qucs
 /*--------------------------------------------------------------------------*/
 // vim:ts=8:sw=2:et

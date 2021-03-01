@@ -21,7 +21,7 @@
 D_FlipFlop::D_FlipFlop()
 {
   Type = isDigitalComponent;
-  setLabel("D flip flop with asynchron reset");
+  set_label("D flip flop with asynchron reset");
 
   Props.append(new Property("t", "0", false, QObject::tr("delay time")));
 

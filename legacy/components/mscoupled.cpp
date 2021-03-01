@@ -34,7 +34,7 @@ static Module::INSTALL pp("RF", &d0);
 
 MScoupled::MScoupled() : Component()
 {
-  setLabel("coupled microstrip line");
+  set_label("coupled microstrip line");
   setTypeName("MCOUPLED");
 
   Lines.append(new Line(-30,-12,-16,-12,QPen(Qt::darkBlue,2)));

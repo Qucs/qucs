@@ -49,10 +49,7 @@
 #include <QDirIterator>
 #include <QDebug>
 
-using namespace std;
-
-
-QucsSettingsDialog::QucsSettingsDialog(QucsApp *parent)
+QucsSettingsDialog::QucsSettingsDialog(qucs::App *parent)
     : QDialog(parent)
 {
     App = parent;
@@ -516,10 +513,10 @@ void QucsSettingsDialog::slotApply()
         QWidget *w;
 
         while((w=App->DocumentTab->widget(No++)) != 0) {
-			  auto Doc = dynamic_cast<QucsDoc const*>(w);
+			  auto Doc = dynamic_cast<qucs::Doc const*>(w);
 			  assert(Doc);
           //QWidget *vp;
-          //if(QucsApp::isTextDocument(Doc)) {
+          //if(qucs::App::isTextDocument(Doc)) {
           //  vp = ((TextDoc*)w)->viewport();
           //} else {
           //  vp = ((SchematicDoc*)w)->viewport();
@@ -615,7 +612,7 @@ void QucsSettingsDialog::slotApply()
         changed = true;
     }
 
-    saveApplSettings();  // also sets the small and large font
+	 qucs::saveApplSettings();  // also sets the small and large font
 
     // if QucsHome is changed, refresh projects tree
     // do this after updating the other paths

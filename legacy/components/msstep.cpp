@@ -35,7 +35,7 @@ static Module::INSTALL pp("RF", &d0);
 
 MSstep::MSstep() : Component()
 {
-  setLabel("microstrip impedance step");
+  set_label("microstrip impedance step");
   setTypeName("MSTEP");
 
   Lines.append(new Line(-30,  0,-18,  0,QPen(Qt::darkBlue,2)));

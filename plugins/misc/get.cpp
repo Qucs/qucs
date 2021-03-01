@@ -19,11 +19,11 @@
 namespace{
 /*--------------------------------------------------------------------------*/
 class Get : public Command {
-	void do_it(istream_t&, SchematicModel*) override;
+	void do_it(istream_t&, ElementList*) override;
 }c;
-static Dispatcher<Command>::INSTALL p0(&commandDispatcher, "get", &c);
+static Dispatcher<Command>::INSTALL p0(&command_dispatcher, "get", &c);
 /*--------------------------------------------------------------------------*/
-void Get::do_it(istream_t& cmd, SchematicModel* sckt)
+void Get::do_it(istream_t& cmd, ElementList* sckt)
 {
 	std::string fn;
 	cmd >> "get";
@@ -46,7 +46,7 @@ void Get::do_it(istream_t& cmd, SchematicModel* sckt)
 // TODO: any language.
 // magic = stream.fullstring ...
 
-	auto L = languageDispatcher[suffix];
+	auto L = language_dispatcher[suffix];
 	assert(L);
 
 	while(!stream.atEnd()){

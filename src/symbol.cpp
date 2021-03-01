@@ -25,10 +25,16 @@
 #include <QComboBox>
 #include <QCheckBox>
 #include <QLabel>
+
+#include "misc.h"
+#include <cmath>
+#include "qucsdoc.h" //BUG?
+/*--------------------------------------------------------------------------*/
+namespace qucs {
 /*--------------------------------------------------------------------------*/
 // recreate schematic symbol. not sure why, maybe after parameter changes
 // (why not just call "Symbol::create??!")
-void Symbol::recreate(){ // }SchematicModel const&){ untested();
+void Symbol::recreate(){ // }ElementList const&){ untested();
 }
 /*--------------------------------------------------------------------------*/
 Symbol::Symbol()
@@ -58,14 +64,13 @@ Symbol::Symbol(Symbol const& s)
 }
 /*--------------------------------------------------------------------------*/
 // dup
-#include "qucsdoc.h" //BUG
-SchematicModel* Symbol::scope()
+ElementList* Symbol::scope()
 {
 	return Element::scope();
 
 	if(auto o=dynamic_cast<Symbol*>(owner())){ untested();
 		return o->subckt();
-	}else if(dynamic_cast<QucsDoc*>(owner())){ untested();
+	}else if(dynamic_cast<Doc*>(owner())){ untested();
 		assert(subckt());
 		return subckt(); // yikes
 	}else{untested();
@@ -76,7 +81,7 @@ SchematicModel* Symbol::scope()
 /*--------------------------------------------------------------------------*/
 // reuse overrides to give both const and non-const access.
 // (move to header)
-SchematicModel const* Symbol::scope() const
+ElementList const* Symbol::scope() const
 {
 	auto s=const_cast<Symbol*>(this);
 	return s->scope();
@@ -251,7 +256,7 @@ pos_t Symbol::nodePosition(unsigned i) const
 void Symbol::new_subckt()
 {
 	assert(!_subckt);
-	_subckt = new SchematicModel();
+	_subckt = new ElementList();
 }
 /*--------------------------------------------------------------------------*/
 Symbol::~Symbol()
@@ -458,11 +463,6 @@ bool CommonComponent::operator==(const CommonComponent& x)const
 /*--------------------------------------------------------------------------*/
 /*--------------------------------------------------------------------------*/
 /*--------------------------------------------------------------------------*/
-// symbolwidget.cpp?
-// #include "qucs_app.h"
-#include "misc.h"
-
-#include <cmath>
 /*--------------------------------------------------------------------------*/
 ElementList const* Symbol::symbolPaintings() const
 {
@@ -493,7 +493,7 @@ void Symbol::set_dev_type(const std::string& new_type)
 	}
 }
 /*--------------------------------------------------------------------------*/
-Widget* Symbol::schematicWidget(QucsDoc* Doc) const
+Widget* Symbol::schematicWidget(Doc* Doc) const
 { untested();
 	trace0("Symbol::schematicWidget");
 
@@ -505,5 +505,7 @@ Widget* Symbol::schematicWidget(QucsDoc* Doc) const
 	assert(clone);
 	return clone;
 }
+/*--------------------------------------------------------------------------*/
+} // qucs
 /*--------------------------------------------------------------------------*/
 /*--------------------------------------------------------------------------*/

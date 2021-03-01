@@ -36,8 +36,10 @@
 
 #include <assert.h>
 
+namespace qucs {
+
 // is this the toolbar?
-void QucsApp::initActions()
+void App::initActions()
 {
   activeAction = nullptr;   // no active action
 
@@ -230,7 +232,7 @@ void QucsApp::initActions()
   editPaste->setWhatsThis(
 	tr("Paste\n\nPastes the clipboard contents to the cursor position"));
   editPaste->setCheckable(true);
-  connect(editPaste, &QAction::toggled, this, &QucsApp::slotEditPaste);
+  connect(editPaste, &QAction::toggled, this, &App::slotEditPaste);
 
   // dup?
   editDelete = new QAction(QIcon((":/bitmaps/editdelete.png")), tr("&Delete"), this);
@@ -238,7 +240,7 @@ void QucsApp::initActions()
   editDelete->setStatusTip(tr("Delete the selected components"));
   editDelete->setWhatsThis(tr("Delete\n\nDeletes the selected components"));
   editDelete->setCheckable(true);
-  connect(editDelete, &QAction::toggled, this, &QucsApp::slotEditDelete);
+  connect(editDelete, &QAction::toggled, this, &App::slotEditDelete);
 
   editFind = new QAction(tr("Find..."), this);
   editFind->setShortcut(Qt::CTRL+Qt::Key_F);
@@ -492,7 +494,7 @@ void QucsApp::initActions()
   dcbias->setStatusTip(tr("Calculate DC bias and show it"));
   dcbias->setWhatsThis(
 	tr("Calculate DC bias\n\nCalculate DC bias and show it"));
-  connect(dcbias, &QAction::triggered, DocumentTab, &QucsTabWidget::slotDCbias);
+  connect(dcbias, &QAction::triggered, DocumentTab, &DocTabWidget::slotDCbias);
 
 
   viewToolBar = new QAction(tr("Tool&bar"), this);
@@ -540,7 +542,7 @@ void QucsApp::initActions()
 }
 
 // ----------------------------------------------------------
-void QucsApp::initMenuBar()
+void App::initMenuBar()
 {
   fileMenu = new QMenu(tr("&File"));  // menuBar entry fileMenu
 
@@ -761,7 +763,7 @@ incomplete();
 }
 
 // ----------------------------------------------------------
-void QucsApp::initToolBar()
+void App::initToolBar()
 {
   fileToolbar = new QToolBar(tr("File"), this);
   fileToolbar->addAction(fileNew);
@@ -811,7 +813,7 @@ void QucsApp::initToolBar()
 }
 
 // ----------------------------------------------------------
-void QucsApp::initStatusBar()
+void App::initStatusBar()
 {
   // To reserve enough space, insert the longest text and rewrite it afterwards.
   WarningLabel = new QLabel(tr("no warnings"), statusBar());
@@ -825,7 +827,7 @@ void QucsApp::initStatusBar()
 }
 
 // ----------------------------------------------------------
-void QucsApp::slotShowWarnings()
+void App::slotShowWarnings()
 {
   static int ResultState = 0;
 
@@ -849,7 +851,7 @@ void QucsApp::slotShowWarnings()
 }
 
 // ----------------------------------------------------------
-void QucsApp::slotResetWarnings()
+void App::slotResetWarnings()
 {
   QFont f = WarningLabel->font();   // reset warning label
   f.setWeight(QFont::Normal);
@@ -859,7 +861,7 @@ void QucsApp::slotResetWarnings()
 }
 
 // ----------------------------------------------------------
-void QucsApp::printCursorPosition(int x, int y)
+void App::printCursorPosition(int x, int y)
 {
   PositionLabel->setText(QString::number(x)+" : "+QString::number(y));
   PositionLabel->setMinimumWidth(PositionLabel->width());
@@ -867,7 +869,7 @@ void QucsApp::printCursorPosition(int x, int y)
 
 // --------------------------------------------------------------
 // called by document, update undo state
-void QucsApp::slotUpdateUndo(bool isEnabled)
+void App::slotUpdateUndo(bool isEnabled)
 {itested();
   assert(undo);
   undo->setEnabled(isEnabled);
@@ -875,7 +877,7 @@ void QucsApp::slotUpdateUndo(bool isEnabled)
 
 // --------------------------------------------------------------
 // called by document, update redo state
-void QucsApp::slotUpdateRedo(bool isEnabled)
+void App::slotUpdateRedo(bool isEnabled)
 {itested();
   assert(redo);
   redo->setEnabled(isEnabled);
@@ -883,7 +885,7 @@ void QucsApp::slotUpdateRedo(bool isEnabled)
 
 // ----------------------------------------------------------
 // turn Toolbar on or off
-void QucsApp::slotViewToolBar(bool toggle)
+void App::slotViewToolBar(bool toggle)
 {
   fileToolbar->setVisible(toggle);
   editToolbar->setVisible(toggle);
@@ -893,20 +895,20 @@ void QucsApp::slotViewToolBar(bool toggle)
 
 // ----------------------------------------------------------
 // turn Statusbar on or off
-void QucsApp::slotViewStatusBar(bool toggle)
+void App::slotViewStatusBar(bool toggle)
 {
   statusBar()->setVisible(toggle);
 }
 
 // ----------------------------------------------------------
 // turn Brwose Dock Window on or off
-void QucsApp::slotViewBrowseDock(bool toggle)
+void App::slotViewBrowseDock(bool toggle)
 {
   dock->setVisible(toggle);
 }
 
 // ----------------------------------------------------------
-void QucsApp::slotToggleDock(bool on)
+void App::slotToggleDock(bool on)
 {
   viewBrowseDock->blockSignals(true);
   viewBrowseDock->setChecked(on);
@@ -915,7 +917,7 @@ void QucsApp::slotToggleDock(bool on)
 
 // ----------------------------------------------------------
 // turn Octave Dock Window on or off
-void QucsApp::slotViewOctaveDock(bool toggle)
+void App::slotViewOctaveDock(bool toggle)
 {
   octDock->setVisible(toggle);
   if (toggle) {
@@ -924,11 +926,12 @@ void QucsApp::slotViewOctaveDock(bool toggle)
 }
 
 // ----------------------------------------------------------
-void QucsApp::slotToggleOctave(bool on)
+void App::slotToggleOctave(bool on)
 {
   viewOctaveDock->blockSignals(true);
   viewOctaveDock->setChecked(on);
   viewOctaveDock->blockSignals(false);
 }
 // ----------------------------------------------------------
+}
 // ----------------------------------------------------------

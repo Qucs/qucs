@@ -28,6 +28,10 @@
 
 namespace{
 
+//using qucs::DocumentFormat;
+using qucs::Language;
+using qucs::Conductor;
+
 // generate a simulateable netlist in verilog
 // contracts wires into nets, similar to qucsator
 // TODO: generic netlister
@@ -35,30 +39,30 @@ class VerilogNetlister : public DocumentFormat{
 public:
 	explicit VerilogNetlister();
 private: // legacy implementation
-  void createNetlist(ostream_t& stream, SchematicModel const* m) const;
+  void createNetlist(ostream_t& stream, ElementList const* m) const;
   void throughAllComps(ostream_t& d, SubcktBase const& m) const;
   void clear() const;
 private: // Command
-  void do_it(istream_t&, SchematicModel*) override;
+  void do_it(istream_t&, ElementList*) override;
 private: // DocumentFormat
   void load(istream_t&, Object*) const override{ incomplete(); }
 private:
   mutable std::vector<QString> netLabels;
-  DocumentLanguage const* lang;
-//  mutable SchematicModel const* modelhack;
+  Language const* lang;
+//  mutable ElementList const* modelhack;
 }VNL;
-static Dispatcher<Command>::INSTALL p1(&commandDispatcher, "verilog_nl", &VNL);
+static Dispatcher<Command>::INSTALL p1(&command_dispatcher, "verilog_nl", &VNL);
 /*--------------------------------------------------------------------------*/
 VerilogNetlister::VerilogNetlister() : DocumentFormat()
 {
-	lang = languageDispatcher["verilog"];
+	lang = language_dispatcher["verilog"];
 	// verilog = dynamic_cast<NetLang const*>(l);
 	assert(lang);
 }
 /*--------------------------------------------------------------------------*/
-void VerilogNetlister::do_it(istream_t& cs, SchematicModel* o)
+void VerilogNetlister::do_it(istream_t& cs, ElementList* o)
 {
-	lang = languageDispatcher["verilog"];
+	lang = language_dispatcher["verilog"];
 	assert(lang);
 
 	std::string fn;
@@ -76,7 +80,7 @@ void VerilogNetlister::do_it(istream_t& cs, SchematicModel* o)
 	assert(o);
 	auto& m = *o;
 
-	SchematicModel const* sch = &m;
+	ElementList const* sch = &m;
 	if (sch == NULL) {
 		throw "incomplete_exception";
 	}else{
@@ -86,7 +90,7 @@ void VerilogNetlister::do_it(istream_t& cs, SchematicModel* o)
 }
 /*--------------------------------------------------------------------------*/
 void VerilogNetlister::createNetlist(ostream_t& stream,
-		SchematicModel const* m) const
+		ElementList const* m) const
 {
 	assert(m);
 
@@ -126,11 +130,6 @@ void VerilogNetlister::throughAllComps(ostream_t& stream, SubcktBase const& m) c
 			continue;
 		}
 
-		if(it->paramValue("$mfactor") == "0") {
-			stream << "#ifdef QUCS_INACTIVE\n";
-		}else{
-		}
-
 		auto sym = it; // dynamic_cast<Symbol const*>(pc);
 		if(sym && sym->subckt()){
 			trace1("need expand?", sym->label());
@@ -141,10 +140,6 @@ void VerilogNetlister::throughAllComps(ostream_t& stream, SubcktBase const& m) c
 			// it->Ports.first()->Connection->setName("gnd");
 		}
 
-		if(it->paramValue("$mfactor") == "0") {
-			stream << "#endif // QUCS_INACTIVE\n";
-		}else{
-		}
 	}
 }
 

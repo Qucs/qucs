@@ -44,7 +44,7 @@ SaveDialog::~SaveDialog()
 {
 }
 
-void SaveDialog::setApp(QucsApp *a)
+void SaveDialog::setApp(qucs::App *a)
 {
    app = a;
 }
@@ -89,7 +89,7 @@ void SaveDialog::initDialog()
    connect(saveSelectedButton,SIGNAL(clicked()),this,SLOT(saveSelectedClicked()));
 }
 
-void SaveDialog::addUnsavedDoc(QucsDoc *doc)
+void SaveDialog::addUnsavedDoc(qucs::Doc *doc)
 {
    QString text = (doc->docName().isEmpty()) ? tr("Untitled") : doc->docName();
 
@@ -106,14 +106,14 @@ void SaveDialog::dontSaveClicked()
 }
 
 void SaveDialog::saveSelectedClicked()
-{   
-   QList<QucsDoc*> unsavable;
-   QMap<QucsDoc*,QListWidgetItem*>::iterator it(unsavedDocs.begin());
+{
+   QList<qucs::Doc*> unsavable;
+   QMap<qucs::Doc*,QListWidgetItem*>::iterator it(unsavedDocs.begin());
    for ( ; it != unsavedDocs.end(); ++it)
    {
       if ( it.value()->checkState() == Qt::Checked )
       {
-         QucsDoc *doc = static_cast<QucsDoc*>(it.key());
+			qucs::Doc *doc = static_cast<qucs::Doc*>(it.key());
          if(app->saveFile(doc) == false)
             unsavable.append(doc);
          else

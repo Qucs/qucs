@@ -19,22 +19,24 @@
 
 #include <QToolBar>
 
+namespace qucs {
+
 // obsolete.
-void QucsApp::clearWorkToolbar()
+void App::clearWorkToolbar()
 { untested();
 	assert(_docToolBar);
 	_docToolBar->clear();
 }
 
 // obsolete.
-// void QucsApp::addWorkToolbarAction(QAction* a)
+// void App::addWorkToolbarAction(QAction* a)
 // { untested();
 // 	assert(_docToolBar);
 // 	_docToolBar->addAction(a);
 // }
 
 // why "AtStartup?!"
-void QucsApp::openFileAtStartup(QString const& arg)
+void App::openFileAtStartup(QString const& arg)
 {
       QFileInfo Info(arg);
       QucsSettings.QucsWorkDir = Info.absoluteDir().absolutePath().toStdString(); // ?
@@ -45,13 +47,13 @@ void QucsApp::openFileAtStartup(QString const& arg)
 // Change to the document "Name". If already open then it goes to it
 // directly, otherwise it loads it.
 // this is used "atStartup"...
-bool QucsApp::gotoPage(const QString& Name)
+bool App::gotoPage(const QString& Name)
 {itested();
 	// is Name the filename?!
 	int No = DocumentTab->currentIndex();
 
 	int i = 0;
-	QucsDoc * d = findDoc (Name, &i);  // search, if page is already loaded
+	Doc* d = findDoc(Name, &i);  // search, if page is already loaded
 
 	if(d) { untested();
 		// open page found
@@ -68,8 +70,8 @@ bool QucsApp::gotoPage(const QString& Name)
 	bool is_schematic = false;
 
 	std::string suffix = "." + Info.suffix().toStdString();
-	for(auto i : languageDispatcher){
-		trace3("a schematic?", i.first, i.second->label(), suffix);
+	for(auto i : language_dispatcher){
+		trace3("a schematic?", i.first, i.second->short_label(), suffix);
 		if(i.first == suffix){
 			is_schematic = true;
 		}else{
@@ -105,3 +107,5 @@ bool QucsApp::gotoPage(const QString& Name)
 	}
 #endif
 }
+
+} // qucs

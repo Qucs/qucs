@@ -20,8 +20,12 @@
 #include "qio.h"
 /*--------------------------------------------------------------------------*/
 /*--------------------------------------------------------------------------*/
+using qucs::Conductor;
+using qucs::Net;
+using qucs::NodeMap;
+/*--------------------------------------------------------------------------*/
 template<>
-struct graph_traits<NodeMap>{
+struct graph_traits<qucs::NodeMap>{
 	typedef Conductor* vertex_descriptor;
 	typedef std::list<Conductor*>::iterator adjacency_iterator;
 	typedef Net* cc_descriptor;
@@ -59,6 +63,8 @@ struct graph_traits<NodeMap>{
 	}
 };
 /*--------------------------------------------------------------------------*/
+namespace qucs {
+/*--------------------------------------------------------------------------*/
 NodeMap::NodeMap(NetList& n)
   : _nets(n),
     _cc(new_ccs())
@@ -81,7 +87,7 @@ ConnectedComponents<NodeMap>* NodeMap::new_ccs()
 int NodeMap::erase(Node* tt)
 {
 	assert(tt);
-	trace2("NodeMap::erase", tt->degree(), tt->label());
+	trace2("NodeMap::erase", tt->degree(), tt->short_label());
 	assert(tt->hasNet());
 	Conductor* c = tt;
 	_cc->deregisterVertex(c);
@@ -182,6 +188,8 @@ void NodeMap::deregisterVertex(Conductor*c)
 {
   _cc->deregisterVertex(c);
 }
+/*--------------------------------------------------------------------------*/
+} // qucs
 /*--------------------------------------------------------------------------*/
 size_t graph_traits<NodeMap>::cc_size(Net* n, NodeMap const&)
 {

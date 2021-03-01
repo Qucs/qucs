@@ -58,6 +58,8 @@
 
 namespace{
 
+using namespace qucs;
+
 class SchematicDoc;
 
 // digital signal data
@@ -85,9 +87,9 @@ struct SubFile {
 typedef QMap<QString, SubFile> SubMap;
 /* -------------------------------------------------------------------------------- */
 /* -------------------------------------------------------------------------------- */
-class SchematicDoc : public QGraphicsView /* bug?! */, public QucsDoc {
+class SchematicDoc : public QGraphicsView /* bug?! */, public Doc {
 	Q_OBJECT
-	// Q_INTERFACES(QucsDoc) makes no difference.
+	// Q_INTERFACES(Doc) makes no difference.
 public:
 	typedef QList<ElementGraphics*> EGPList;
 
@@ -123,7 +125,7 @@ public:
 		QWidget::setVisible(x);
 	}
 
-private: // QucsDoc.
+private: // Doc.
 	void new_root();
 //	QAction* createUndoAction() override;
 //	QAction* createRedoAction() override;
@@ -428,7 +430,7 @@ public:
   bool isVerilog;
   bool creatingLib;
 
-private: // QucsDoc overrides, schematic_action.cpp
+private: // Doc overrides, schematic_action.cpp
   void reloadGraphs() override; // fix later
   void actionCopy(QAction*) override{ untested();
 	  copy();
@@ -477,7 +479,7 @@ public slots:
 	void slotInsertGround();
 	void slotInsertWire();
 
-private: // QucsDoc overrides.
+private: // Doc overrides.
 	      // actions that are not specific to SchematicDoc..
 			//
 			// move to mouseActions (DocActions?)
@@ -497,7 +499,7 @@ private:
 	  	assert(eventHandler());
 	  	return dynamic_cast<SchematicActions*>(eventHandler());
 	}
-//  MouseAction* mouseAction(); QucsDoc
+//  MouseAction* mouseAction(); Doc
 
 	void setDrawn(bool b=true){mouseActions()->setDrawn(b);}
 
@@ -506,25 +508,25 @@ private:
 
 public:
   SubcktBase const* root() const { return _root; }
-  SchematicModel const* model() const { return _model; }
+  ElementList const* model() const { return _model; }
 
   void addElement(Element*);
 
 protected:
   // HACK
-  SchematicModel* model() { return _model; }
+  ElementList* model() { return _model; }
 
-public: // need access to SchematicModel...
+public: // need access to ElementList...
   friend class MouseActions;
   friend class ImageWriter;
   friend class SchematicScene;
 
 private:
 	SubcktBase* _root;
-	SchematicModel* _model;
+	ElementList* _model;
 	SubcktBase* _main;
 	CmdEltList _commands;
-	std::map<std::string, SimProcess*> _simProcess; // QucsDoc?
+	std::map<std::string, SimProcess*> _simProcess; // Doc?
 	
 	// Shortcuts for scolling schematic / TextEdit
 	// This is rather cumbersome -> Make this with a QScrollView instead??
@@ -646,7 +648,7 @@ inline bool SchematicDoc::paste(ostream_t *stream, SOME_LIST *pe)
 /*--------------------------------------------------------------------------*/
 SchematicDoc::SchematicDoc()
    : QGraphicsView(),
-     QucsDoc(),
+     Doc(),
      _root(nullptr),
      _model(nullptr),
      _main(nullptr)
@@ -721,7 +723,7 @@ QAction* SchematicDoc::createRedoAction()
 void SchematicDoc::setParent(QWidget* owner)
 {itested();
 	assert(!parentWidget());
-	/// QucsDoc::setParent(owner); no. pure.
+	/// Doc::setParent(owner); no. pure.
 	QGraphicsView::setParent(owner);
 
 	expand();
@@ -804,7 +806,7 @@ void SchematicDoc::setParent(QWidget* owner)
 /*--------------------------------------------------------------------------*/
 // bool SchematicDoc::event(QEvent* e);
 // { untested();
-// 	QucsDoc::event(e);
+// 	Doc::event(e);
 // 	return QWidget::event(pEvent);
 // }
 /*--------------------------------------------------------------------------*/
@@ -819,7 +821,7 @@ SchematicDoc::~SchematicDoc()
 //{untested();
 //	{ // merge?
 //	becomeCurrent();
-//	QucsDoc::showEvent(e);
+//	Doc::showEvent(e);
 //	}
 //
 //	QGraphicsView::showEvent(e);
@@ -827,7 +829,7 @@ SchematicDoc::~SchematicDoc()
 /*--------------------------------------------------------------------------*/
 //void SchematicDoc::hideEvent(QHideEvent*e)
 //{untested();
-//	QucsDoc::hideEvent(e);
+//	Doc::hideEvent(e);
 //	QGraphicsView::hideEvent(e);
 //}
 #if 0 // not yet
@@ -892,7 +894,7 @@ void SchematicDoc::new_root()
   auto root = symbol_dispatcher.clone("schematic_root");
   _root = dynamic_cast<SubcktBase*>(root);
   assert(_root);
-  _root->setLabel("SchematicDoc");
+  _root->set_label("SchematicDoc");
 
   { // hack?
 	  _model = _root->subckt();
@@ -987,7 +989,7 @@ void SchematicDoc::parse(istream_t& s, SchematicLanguage const* L)
 
 	incomplete(); // but still used in qucs -i $file
 	if(!L){itested();
-		auto D = languageDispatcher["leg_sch"]; // use command instead.
+		auto D = language_dispatcher["leg_sch"]; // use command instead.
 		L = dynamic_cast<SchematicLanguage const*>(D);
 	}else{ untested();
 	}
@@ -1361,7 +1363,7 @@ void SchematicDoc::dropEvent(QDropEvent *Event)
     }
 
     // do not close untitled document to avoid segfault
-    QucsDoc *d = QucsMain->getDoc(0);
+    Doc *d = QucsMain->getDoc(0);
     bool changed = d->DocChanged;
     d->DocChanged = true;
 
@@ -1631,14 +1633,14 @@ void SchematicDoc::slotSimulate()
 /*--------------------------------------------------------------------------*/
 #if 0 //not sure
   if(isTextDocument (w)) { untested();
-    Doc = (QucsDoc*)((TextDoc*)w);
+    Doc = (Doc*)((TextDoc*)w);
     if(Doc->SimTime.isEmpty() && ((TextDoc*)Doc)->simulation) { untested();
       DigiSettingsDialog *d = new DigiSettingsDialog((TextDoc*)Doc);
       if(d->exec() == QDialog::Rejected)
 	return;
     }
   } else { untested();
-    Doc = (QucsDoc*)((SchematicDoc*)w);
+    Doc = (Doc*)((SchematicDoc*)w);
   }
 #endif
 
@@ -1791,9 +1793,9 @@ QString SchematicDoc::createClipboardFile() const
 		sym.subckt()->push_back(cl);
 	}
 
-	auto lang = languageDispatcher["leg_sch"];
+	auto lang = language_dispatcher["leg_sch"];
 	assert(lang);
-	auto fmt = prechecked_cast<DocumentLanguage const*>(lang);
+	auto fmt = prechecked_cast<Language const*>(lang);
 	assert(fmt);
 
 	QString buf;
@@ -1811,7 +1813,7 @@ int SchematicDoc::save()
 	int result = adjustPortNumbers();// same port number for schematic and symbol
 	{ // saveDocument();
 		// TODO: provide selection GUI
-		auto d = commandDispatcher["leg_sch"];
+		auto d = command_dispatcher["leg_sch"];
 		assert(d);
 		assert(_root);
 
@@ -1994,7 +1996,7 @@ void SchematicDoc::slotEditPaste()
 
 void QucsApp::slotAlignTop()
 {
-  QucsDoc *qd = DocumentTab->current();
+  Doc *qd = DocumentTab->current();
   assert(qd);
 
   qd->actionAlign(0); // BUG use enum
@@ -2002,7 +2004,7 @@ void QucsApp::slotAlignTop()
 // --------------------------------------------------------------
 void QucsApp::slotAlignBottom()
 {
-  QucsDoc *qd = DocumentTab->current();
+  Doc *qd = DocumentTab->current();
   assert(qd);
 
   qd->actionAlign(1); // BUG use enum
@@ -2012,7 +2014,7 @@ void QucsApp::slotAlignBottom()
 // Is called, when "Align left" action is triggered.
 void QucsApp::slotAlignLeft()
 {
-  QucsDoc *qd = DocumentTab->current();
+  Doc *qd = DocumentTab->current();
   assert(qd);
 
   qd->actionAlign(2);
@@ -2022,7 +2024,7 @@ void QucsApp::slotAlignLeft()
 // Is called, when "Align right" action is triggered.
 void QucsApp::slotAlignRight()
 {
-  QucsDoc *qd = DocumentTab->current();
+  Doc *qd = DocumentTab->current();
   assert(qd);
 
   qd->actionAlign(3);
@@ -2032,7 +2034,7 @@ void QucsApp::slotAlignRight()
 // Is called, when "Distribute horizontally" action is triggered.
 void QucsApp::slotDistribHoriz()
 {
-  QucsDoc *qd = DocumentTab->current();
+  Doc *qd = DocumentTab->current();
   assert(qd);
 
   qd->actionDistrib(0);
@@ -2042,7 +2044,7 @@ void QucsApp::slotDistribHoriz()
 // Is called, when "Distribute vertically" action is triggered.
 void QucsApp::slotDistribVert()
 {
-  QucsDoc *qd = DocumentTab->current();
+  Doc *qd = DocumentTab->current();
   assert(qd);
 
   qd->actionDistrib(1);
@@ -2052,7 +2054,7 @@ void QucsApp::slotDistribVert()
 // Is called, when "Center horizontally" action is triggered.
 void QucsApp::slotCenterHorizontal()
 {
-  QucsDoc *qd = DocumentTab->current();
+  Doc *qd = DocumentTab->current();
   assert(qd);
 
   qd->actionAlign(4);
@@ -2062,7 +2064,7 @@ void QucsApp::slotCenterHorizontal()
 // Is called, when "Center vertically" action is triggered.
 void QucsApp::slotCenterVertical()
 {
-  QucsDoc *qd = DocumentTab->current();
+  Doc *qd = DocumentTab->current();
   assert(qd);
 
   qd->actionAlign(5);
@@ -2404,7 +2406,7 @@ void SchematicDoc::actionApplyCompText()
 // {itested();
 // 	QPoint p(x,y);
 // 	QPointF mp = mapToScene(p);
-// 	QucsDoc::printCursorPosition(mp.x(),mp.y());
+// 	Doc::printCursorPosition(mp.x(),mp.y());
 // }
 
 // ---------------------------------------------------
@@ -2469,13 +2471,13 @@ bool SchematicDoc::createSubcircuitSymbol()
 // needed?
 void SchematicDoc::cleanup()
 { untested();
-	QucsDoc::cleanup();
+	Doc::cleanup();
 }
 /*--------------------------------------------------------------------------*/
 // needed?
 void SchematicDoc::becomeCurrent()
 {itested();
-	QucsDoc::becomeCurrent();
+	Doc::becomeCurrent();
   emit signalCursorPosChanged(0, 0);
 
   // update appropriate menu entry
@@ -2707,7 +2709,7 @@ void SchematicDoc::paintFrame(ViewPainter *p)
   p->drawText(x1_+d, y1_+(d>>1), 0, 0, Qt::TextDontClip, _frameText[0]);
 }
 /*--------------------------------------------------------------------------*/
-#if 0 // QucsDoc?
+#if 0 // Doc?
 void SchematicDoc::print(QPrinter*, QPainter *Painter, bool printAll, bool fitToPage)
 { untested();
 #ifndef USE_SCROLLVIEW
@@ -2861,7 +2863,7 @@ void SchematicDoc::setFrameText(int, QString)
 /*--------------------------------------------------------------------------*/
 class Factory : public Widget {
 	Widget* clone() const override{ untested();
-		QucsDoc* wd = new SchematicDoc();
+		Doc* wd = new SchematicDoc();
 		return wd;
 	}
 }F;

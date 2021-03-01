@@ -37,6 +37,8 @@
 
 namespace{
 
+using namespace qucs;
+
 class SmithDiagram : public Diagram  {
 public: 
   SmithDiagram(int _cx=0, int _cy=0, bool ImpMode=true);

@@ -24,10 +24,12 @@
 #include <QDesktopServices>
 /*--------------------------------------------------------------------------*/
 /*--------------------------------------------------------------------------*/
-void QucsTabWidget::setCurrentIndex_(int i)
+namespace qucs {
+/*--------------------------------------------------------------------------*/
+void DocTabWidget::setCurrentIndex_(int i)
 {
 	// BUG: currentIndex is wrong (why??). use _current instead.
-	trace4("QucsTabWidget::setCurrentIndex", currentIndex(), i, _current, current());
+	trace4("DocTabWidget::setCurrentIndex", currentIndex(), i, _current, current());
 	QTabWidget::setCurrentIndex(i);
 
 	if(_current){
@@ -52,7 +54,7 @@ void QucsTabWidget::setCurrentIndex_(int i)
 
 }
 /*--------------------------------------------------------------------------*/
-void QucsTabWidget::slotDCbias()
+void DocTabWidget::slotDCbias()
 { untested();
   current()->showBias = 0; //???
   incomplete();
@@ -60,17 +62,17 @@ void QucsTabWidget::slotDCbias()
   current()->slotDCbias();
 }
 /*--------------------------------------------------------------------------*/
-QucsTabWidget::QucsTabWidget(QucsApp *parent) : QTabWidget(parent)
+DocTabWidget::DocTabWidget(App *parent) : QTabWidget(parent)
 {itested();
-	App = parent;
+	_app = parent;
 	setContextMenuPolicy(Qt::CustomContextMenu);
-	connect(this, &QucsTabWidget::customContextMenuRequested,
-	        this, &QucsTabWidget::showContextMenu);
-	connect(this, &QucsTabWidget::currentChanged,
-	        this, &QucsTabWidget::setCurrentIndex_);
+	connect(this, &DocTabWidget::customContextMenuRequested,
+	        this, &DocTabWidget::showContextMenu);
+	connect(this, &DocTabWidget::currentChanged,
+	        this, &DocTabWidget::setCurrentIndex_);
 }
 /*--------------------------------------------------------------------------*/
-void QucsTabWidget::showContextMenu(const QPoint& point)
+void DocTabWidget::showContextMenu(const QPoint& point)
 { untested();
   if (point.isNull()) { untested();
 	  incomplete();
@@ -84,7 +86,7 @@ void QucsTabWidget::showContextMenu(const QPoint& point)
 
     // get the document where the context menu was opened
 	 // yikes. why involve App?!
-    QucsDoc *d = App->getDoc(contextTabIndex);
+    Doc *d = _app->getDoc(contextTabIndex);
     // save the document name (full path)
     // docName = d->docName();
 
@@ -112,7 +114,7 @@ void QucsTabWidget::showContextMenu(const QPoint& point)
   }
 }
 /*--------------------------------------------------------------------------*/
-QString QucsTabWidget::docName()
+QString DocTabWidget::docName()
 {
 	if(current()){
 		return current()->docName();
@@ -122,24 +124,24 @@ QString QucsTabWidget::docName()
 	}
 }
 /*--------------------------------------------------------------------------*/
-QucsDoc* QucsTabWidget::current()
+Doc* DocTabWidget::current()
 {
 	QWidget* w = currentWidget();
-	auto d = dynamic_cast<QucsDoc*>(w);
+	auto d = dynamic_cast<Doc*>(w);
 	assert(d || !w);
 	return d;
 }
 /*--------------------------------------------------------------------------*/
-QucsDoc* QucsTabWidget::createEmptySchematic(const QString &name)
+Doc* DocTabWidget::createEmptySchematic(const QString &name)
 {itested();
   // create a schematic
   QFileInfo Info(name);
-  assert(App);
+  assert(_app);
 
   Widget* o = widget_dispatcher.clone("SchematicDoc");
 //  e->setParam("name", name.toStdString());
   assert(o);
-  QucsDoc* d = dynamic_cast<QucsDoc*>(o);
+  Doc* d = dynamic_cast<Doc*>(o);
   assert(d);
   QWidget* w = dynamic_cast<QWidget*>(o);
   assert(w);
@@ -152,16 +154,16 @@ QucsDoc* QucsTabWidget::createEmptySchematic(const QString &name)
   return d;
 }
 /*--------------------------------------------------------------------------*/
-// duplicate in qucs_actions QucsApp::?!
-QucsDoc* QucsTabWidget::createEmptyTextDoc(const QString &name)
+// duplicate in qucs_actions App::?!
+Doc* DocTabWidget::createEmptyTextDoc(const QString &name)
 {itested();
   // create a text document
   QFileInfo Info(name);
-  // QucsDoc *d = newTextDoc(*App, name, this);
+  // Doc *d = newTextDoc(*App, name, this);
   Widget* o = widget_dispatcher.clone("TextDoc");
 //  e->setParam("name", name.toStdString());
   assert(o);
-  QucsDoc* d = dynamic_cast<QucsDoc*>(o);
+  Doc* d = dynamic_cast<Doc*>(o);
   assert(d);
   QWidget* w = dynamic_cast<QWidget*>(o);
   assert(w);
@@ -174,7 +176,7 @@ QucsDoc* QucsTabWidget::createEmptyTextDoc(const QString &name)
   return d;
 }
 /*--------------------------------------------------------------------------*/
-void QucsTabWidget::setSaveIcon(bool state, int index)
+void DocTabWidget::setSaveIcon(bool state, int index)
 { untested();
   // set document tab icon to "smallsave.xpm" or "empty.xpm"
   QString icon = (state)? ":/bitmaps/smallsave.xpm" : ":/bitmaps/empty.xpm";
@@ -184,46 +186,48 @@ void QucsTabWidget::setSaveIcon(bool state, int index)
   setTabIcon(index, QPixmap(icon));
 }
 /*--------------------------------------------------------------------------*/
-void QucsTabWidget::slotCxMenuClose()
+void DocTabWidget::slotCxMenuClose()
 { untested();
   // close tab where the context menu was opened
-  App->slotFileClose(contextTabIndex);
+  _app->slotFileClose(contextTabIndex);
 }
 /*--------------------------------------------------------------------------*/
-void QucsTabWidget::slotCxMenuCloseOthers()
+void DocTabWidget::slotCxMenuCloseOthers()
 { untested();
   // close all tabs, except the one where the context menu was opened
-  App->closeAllFiles(contextTabIndex);
+  _app->closeAllFiles(contextTabIndex);
 }
 /*--------------------------------------------------------------------------*/
-void QucsTabWidget::slotCxMenuCloseLeft()
+void DocTabWidget::slotCxMenuCloseLeft()
 { untested();
   // close all tabs to the left of the current one
-  App->closeAllLeft(contextTabIndex);
+  _app->closeAllLeft(contextTabIndex);
 }
 /*--------------------------------------------------------------------------*/
-void QucsTabWidget::slotCxMenuCloseRight()
+void DocTabWidget::slotCxMenuCloseRight()
 { untested();
   // close all tabs to the right of the current one
-  App->closeAllRight(contextTabIndex);
+  _app->closeAllRight(contextTabIndex);
 }
 /*--------------------------------------------------------------------------*/
-void QucsTabWidget::slotCxMenuCloseAll()
+void DocTabWidget::slotCxMenuCloseAll()
 { untested();
-  App->slotFileCloseAll();
+  _app->slotFileCloseAll();
 }
 /*--------------------------------------------------------------------------*/
-void QucsTabWidget::slotCxMenuCopyPath()
+void DocTabWidget::slotCxMenuCopyPath()
 { untested();
   // copy the document full path to the clipboard
   QClipboard *cb = QApplication::clipboard();
   cb->setText(docName());
 }
 /*--------------------------------------------------------------------------*/
-void QucsTabWidget::slotCxMenuOpenFolder()
+void DocTabWidget::slotCxMenuOpenFolder()
 { untested();
   QFileInfo Info(docName());
   QDesktopServices::openUrl(QUrl::fromLocalFile(Info.canonicalPath()));
 }
+/*--------------------------------------------------------------------------*/
+} // qucs
 /*--------------------------------------------------------------------------*/
 /*--------------------------------------------------------------------------*/

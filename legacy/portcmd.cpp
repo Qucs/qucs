@@ -23,7 +23,7 @@ namespace{
 static const std::string port = ".port_";
 /*--------------------------------------------------------------------------*/
 class PortSym : public Command{
-	void do_it(istream_t& cs, SchematicModel* s) override{
+	void do_it(istream_t& cs, ElementList* s) override{
 		assert(s);
 		auto fullstring = cs.fullString();
 		cs.reset();
@@ -62,7 +62,7 @@ class PortSym : public Command{
 		place->setPosition(pos_t(cx,cy));
 
 		if(1){
-			place->setLabel(portname);
+			place->set_label(portname);
 			s->push_back(place);
 		}
 //		Node* node = place->connectNode(0, s->nodes());
@@ -78,6 +78,6 @@ class PortSym : public Command{
 #endif
 	}
 }d0;
-Dispatcher<Command>::INSTALL p0(&commandDispatcher, ".PortSym", &d0);
+Dispatcher<Command>::INSTALL p0(&command_dispatcher, ".PortSym", &d0);
 /*--------------------------------------------------------------------------*/
 } // namespace

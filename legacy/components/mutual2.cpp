@@ -22,7 +22,7 @@
 
 Mutual2::Mutual2()
 {
-  setLabel("three mutual inductors");
+  set_label("three mutual inductors");
 
   int w;
   QString stmp;

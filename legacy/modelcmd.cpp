@@ -20,7 +20,7 @@
 namespace{
 /*--------------------------------------------------------------------------*/
 class Model : public Command{
-  virtual void do_it(istream_t& cs, SchematicModel* s) {
+  virtual void do_it(istream_t& cs, ElementList* s) {
 	  auto fullstring = cs.fullString();
 	  trace1("Model", fullstring);
 
@@ -43,14 +43,14 @@ class Model : public Command{
 	  Symbol* textdef = symbol_dispatcher.clone("qucsatorScktHack");
 	  assert(textdef);
 	  textdef->set_param_by_name("qucsatorsckthack", M);
-	  textdef->setLabel(":qucsatorsckthack:");
+	  textdef->set_label(":qucsatorsckthack:");
 	  assert(s);
 	  s->push_back(textdef);
 #endif
   }
 }d0;
-Dispatcher<Command>::INSTALL p0(&commandDispatcher, "Model", &d0);
-Dispatcher<Command>::INSTALL p1(&commandDispatcher, "Model>", &d0); // BUG
-Dispatcher<Command>::INSTALL p2(&commandDispatcher, "<Model>", &d0); // ...
+Dispatcher<Command>::INSTALL p0(&command_dispatcher, "Model", &d0);
+Dispatcher<Command>::INSTALL p1(&command_dispatcher, "Model>", &d0); // BUG
+Dispatcher<Command>::INSTALL p2(&command_dispatcher, "<Model>", &d0); // ...
 /*--------------------------------------------------------------------------*/
 } // namespace

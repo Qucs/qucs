@@ -22,6 +22,7 @@
 #include "io_trace.h"
 #include "qucs_globals.h"
 
+namespace qucs {
 // Global category and component lists.
 QHash<QString, Module *> Module::Modules;
 Categories Category::categories;
@@ -73,15 +74,10 @@ void Module::intoCategory(std::string const& cat, Module * m)
   }
 }
 
-// Helper macros for module registration.
-#define REGISTER_MOD_1(cat,val) \
-  guiRegisterElement (cat, new val())
-
 // waah. need one plugin per symbol list.
 void Module::registerModules (void) { untested();
   unreachable(); // obsolete.
 }
-
 
 // obsolete. hook into clear
 void Module::unregisterModules (void)
@@ -163,5 +159,7 @@ int Category::getModulesNr (QString category)
   return -1;
 }
 /*--------------------------------------------------------------------------*/
+/*--------------------------------------------------------------------------*/
+} // qucs
 /*--------------------------------------------------------------------------*/
 // vim:ts=8:sw=2:noet

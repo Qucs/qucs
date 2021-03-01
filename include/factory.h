@@ -16,10 +16,10 @@
 #ifndef QUCS_SYMBOL_FACTORY
 #define QUCS_SYMBOL_FACTORY
 
-class SchematicModel;
+class ElementList;
 
 struct SymbolFactory{
-	SchematicModel* _scope{nullptr};
+	ElementList* _scope{nullptr};
 };
 
 #endif

@@ -14,10 +14,12 @@
 #include "sckt_base.h"
 #include "schematic_model.h"
 /*--------------------------------------------------------------------------*/
+namespace qucs {
+/*--------------------------------------------------------------------------*/
 void SubcktBase::new_subckt()
 {
 	assert(!_subckt);
-	_subckt = new SchematicModel();
+	_subckt = new ElementList();
 }
 /*--------------------------------------------------------------------------*/
 std::string SubcktBase::dev_type()const
@@ -30,9 +32,9 @@ pos_t SubcktBase::portPosition(index_t i) const
 {
 	std::string n = portName(i);
 	trace3("SubcktBase::portPosition", i, label(), n);
-	//SchematicModel const* s = subckt(); // scope?
+	//ElementList const* s = subckt(); // scope?
 	assert(makes_own_scope());
-	SchematicModel const* s = scope(); // scope?
+	ElementList const* s = scope(); // scope?
 
 	if(s){
 //		return subckt()->portValue(i)->position();
@@ -65,6 +67,8 @@ Port& SubcktBase::port(index_t i)
 
 	return *_ports[i];
 }
+/*--------------------------------------------------------------------------*/
+} // qucs
 /*--------------------------------------------------------------------------*/
 // a bug. need to disentangle from nodemap.
 #include "nodemap.h"

@@ -20,7 +20,7 @@
 
 Circulator::Circulator()
 {
-  setLabel("circulator");
+  set_label("circulator");
 
   Arcs.append(new Arc(-14,-14, 28, 28,  0,16*360,QPen(Qt::darkBlue,2)));
   Lines.append(new Line(-30,  0,-14,  0,QPen(Qt::darkBlue,2)));

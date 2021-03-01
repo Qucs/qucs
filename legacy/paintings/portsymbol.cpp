@@ -21,6 +21,9 @@
 #include <QPainter>
 
 namespace{
+
+using namespace qucs;
+
 class PortSymbol : public LegacyPainting  {
 public:
   PortSymbol();
@@ -30,7 +33,6 @@ public:
   }
   void setSomeArgsHack(int cx_, int cy_, const QString& numberStr_,  const QString& nameStr_);
 
-  void paintScheme(Schematic*);
   void getCenter(int&, int&);
 //  void setCenter(int, int, bool relative=false);
 

@@ -26,6 +26,19 @@
 #include <qcustomplot.h>
 
 namespace {
+	using qucs::CommonData;
+	using qucs::Data;
+	using qucs::Diagram;
+	using qucs::Element;
+	using qucs::Painting;
+	using qucs::SimOutputData;
+	using qucs::ViewPainter;
+	using qucs::diagram_dispatcher;
+	using qucs::language_dispatcher;
+	using qucs::command_dispatcher;
+	using qucs::Module;
+//	using qucs::Command;
+	using qucs::ElementList;
 
 	// todo: share?
 // class DiagramWidget : public QWidget
@@ -147,7 +160,7 @@ private:
 
 	void add_data(Data const* d, int i){
 		if(d->common()){
-			trace1("var diagscope", d->label());
+			trace1("var diagscope", d->short_label());
 			CommonData const* p=nullptr;
 			CommonData::attach(d->common(), &p);
 			copy_graph_data(p, i);
@@ -162,7 +175,7 @@ private:
 				add_data(d, k);
 				++k;
 			}else{
-				trace1("diagscope", i->label());
+				trace1("diagscope", i->short_label());
 			}
 		}
 	}
@@ -176,10 +189,10 @@ private:
 #if 0
 	void  paintEvent(QPaintEvent *ev) override{
 		assert(_diag);
-		trace1("DiagramWidget::paint", _diag->label());
+		trace1("DiagramWidget::paint", _diag->short_label());
 		assert(_diag->scope());
 		for(auto i : *_diag->scope()){
-			trace1("diagscope", i->label());
+			trace1("diagscope", i->short_label());
 		}
 		QCustomPlot::paintEvent(ev);
 	}
@@ -230,7 +243,7 @@ private:
 //		Element::paint(p);
 	}
 	void prepare() override{
-		trace1("RectDiagram:prepare", label());
+		trace1("RectDiagram:prepare", short_label());
 		assert(scope());
 		Diagram::prepare();
 	}
@@ -238,7 +251,7 @@ private:
 private:
 	// does not work.
 	QWidget* newWidget(){ itested();
-		trace2("rect newWidget", label(), y2);
+		trace2("rect newWidget", short_label(), y2);
 		if(_widget){ untested();
 		}else{ untested();
 			_widget = new RectDiagramWidget(this);
@@ -259,7 +272,7 @@ RectDiagram::RectDiagram(RectDiagram const& c)
 	assert(scope());
 #if 0 // could use own datatype. let's see
 	Element* v = v0.clone();
-	v->setLabel("diagramvariable");
+	v->set_label("diagramvariable");
 	assert(scope());
 	scope()->push_back(v);
 #endif
@@ -355,7 +368,7 @@ bool RectDiagram::load(const QString& Line, istream_t& stream)
 		}
 	}
 
-	trace3("load diag", label(), Element::cx(), Element::cy());
+	trace3("load diag", short_label(), Element::cx(), Element::cy());
 
 
 	xAxis.Label = s.section('"',1,1);   // xLabel
@@ -372,8 +385,8 @@ bool RectDiagram::load(const QString& Line, istream_t& stream)
 		s = s.trimmed();
 		if(s.isEmpty()) continue;
 
-		//trace2("diagram::load", Name, label());
-		if(s == ("</"+QString_(label())+">")){
+		//trace2("diagram::load", Name, short_label());
+		if(s == ("</"+QString_(short_label())+">")){
 			return true;  // found end tag ?
 		}else if(s.section(' ', 0,0) == "<Mkr") { untested();
 
@@ -442,7 +455,7 @@ static Diagram* parseDiagram(RectDiagram* d, istream_t& cmd)
 }
 /*--------------------------------------------------------------------------*/
 class RectDiagramCmd : public Command  {
-	void do_it(istream_t& cs, SchematicModel* scope){
+	void do_it(istream_t& cs, ElementList* scope){
 		trace1("<Rect cmd" , cs.fullstring());
 		auto e = prechecked_cast<RectDiagram*>(D.clone());
 		assert(e);
@@ -451,7 +464,7 @@ class RectDiagramCmd : public Command  {
 		parseDiagram(e, cs);
 #endif
 #if 1
-		auto lang = languageDispatcher["leg_sch"];
+		auto lang = language_dispatcher["leg_sch"];
 		assert(lang);
 		while(true){
 			cs.read_line();
@@ -459,7 +472,7 @@ class RectDiagramCmd : public Command  {
 			if(cs.umatch("</Rect>")){
 				break;
 			}else{
-				trace2("Rect parse", label(), cs.fullstring());
+				trace2("Rect parse", short_label(), cs.fullstring());
 				cs.skipbl();
 				lang->new__instance(cs, e, e->scope());
 			}
@@ -468,8 +481,8 @@ class RectDiagramCmd : public Command  {
 		scope->push_back(e);
 	}
 }C;
-Dispatcher<Diagram>::INSTALL p1(&commandDispatcher, "Rect", &C);
-// Dispatcher<Diagram>::INSTALL p1(&commandDispatcher, "<Rect", &C); TODO: proritize < in legacy lang.
+Dispatcher<Diagram>::INSTALL p1(&command_dispatcher, "Rect", &C);
+// Dispatcher<Diagram>::INSTALL p1(&command_dispatcher, "<Rect", &C); TODO: proritize < in legacy lang.
 /*--------------------------------------------------------------------------*/
 }
 /*--------------------------------------------------------------------------*/

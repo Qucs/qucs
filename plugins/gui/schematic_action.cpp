@@ -37,7 +37,7 @@
 #if 0 // TODO
 void QucsApp::slotSelectMarker()
 {
-  QucsDoc *qd = DocumentTab->current();
+	qucs::Doc *qd = DocumentTab->current();
   assert(qd);
 
   incomplete();
@@ -611,7 +611,7 @@ QUndoCommand* MouseActionNewElement::enter(QEvent* ev)
 		assert(_proto);
 		elt = _proto->clone_instance();
 		if(auto sym=dynamic_cast<Symbol const*>(elt)){
-			elt->setLabel(sym->typeName());
+			elt->set_label(sym->typeName());
 		}else{
 		}
 		elt->setPosition(pos_t(sp.x(), sp.y()));
@@ -737,7 +737,7 @@ void SchematicActions::stash_toolbar(QAction* p)
 	_toolbar->addAction(p);
 }
 /*--------------------------------------------------------------------------*/
-SchematicActions::SchematicActions(QucsDoc* ctx)
+SchematicActions::SchematicActions(qucs::Doc* ctx)
   : MouseActions(ctx)
 {itested();
 	assert(ctx);
@@ -865,7 +865,7 @@ void SchematicActions::executeCommand(QUndoCommand /*??*/ * c)
 	}
 }
 /*--------------------------------------------------------------------------*/
-void SchematicActions::setControls(QucsDoc* ctx)
+void SchematicActions::setControls(qucs::Doc* ctx)
 {
 	// ?
 	//MouseActions::setControls(ctx);

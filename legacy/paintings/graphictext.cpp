@@ -42,7 +42,6 @@ public:
   GraphicText();
  ~GraphicText();
 
-  void paintScheme(Schematic*);
   void getCenter(int&, int&);
 //  void setCenter(int, int, bool relative=false);
 
@@ -55,9 +54,9 @@ public:
   QString saveCpp();
   QString saveJSON();
   void paint(ViewPainter*);
-  void MouseMoving(Schematic*, int, int, int, int, Schematic*, int, int, bool);
-  bool MousePressing();
-  bool getSelected(float, float, float);
+  //void MouseMoving(Schematic*, int, int, int, int, Schematic*, int, int, bool);
+  //bool MousePressing();
+  //bool getSelected(float, float, float);
   void Bounding(int&, int&, int&, int&);
 
   void rotate();
@@ -145,28 +144,13 @@ void GraphicText::paint(ViewPainter *p)
 }
 
 // -----------------------------------------------------------------------
-void GraphicText::paintScheme(Schematic *p)
-{
-	incomplete();
-  // FIXME #warning QMatrix wm = p->worldMatrix();
-  // FIXME #warning QMatrix Mat (wm.m11(), 0.0, 0.0, wm.m22(),
-// FIXME #warning 		wm.dx() + double(cx) * wm.m11(),
-// FIXME #warning 		wm.dy() + double(cy) * wm.m22());
-  // FIXME #warning p->setWorldMatrix(Mat);
-  // FIXME #warning p->rotate(-Angle);
-  //p->PostPaintEvent(_Rect, 0, 0, x2, y2);
-
-  // FIXME #warning p->setWorldMatrix(wm);
-}
-
-// ------------------------------------------------------------------------
 void GraphicText::getCenter(int& x, int &y)
 {
-	   auto cx=Element::cx();
-     auto cy=Element::cy();
+	auto cx=Element::cx();
+	auto cy=Element::cy();
 
-  x = cx+(x2>>1);
-  y = cy+(y2>>1);
+	x = cx+(x2>>1);
+	y = cy+(y2>>1);
 }
 
 // -----------------------------------------------------------------------
@@ -291,11 +275,11 @@ QString GraphicText::saveJSON()
 // -----------------------------------------------------------------------
 // fx/fy are the precise coordinates, gx/gy are the coordinates set on grid.
 // x/y are coordinates without scaling.
+#if 0
 void GraphicText::MouseMoving(
 	Schematic*, int, int, int , int,
 	Schematic*, int , int, bool)
 {
-#if 0
   // FIXME #warning p->setPen(Qt::SolidLine);
   if(drawn) {
     p->PostPaintEvent(_Line, x1+15, y1+15, x1+20, y1,0,0,true);  // erase old cursor symbol
@@ -310,7 +294,6 @@ void GraphicText::MouseMoving(
 
   cx = gx;
   cy = gy;
-#endif
 }
 
 // ------------------------------------------------------------------------
@@ -340,6 +323,7 @@ bool GraphicText::getSelected(float fX, float fY, float)
 
   return false;
 }
+#endif
 
 // ------------------------------------------------------------------------
 void GraphicText::Bounding(int& xmin, int& ymin, int& xmax, int& ymax)

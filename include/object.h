@@ -16,39 +16,26 @@
 #ifndef QUCS_OBJECT_H
 #define QUCS_OBJECT_H
 #include "io_trace.h"
+#include "e_base.h"
+#include <string>
 /*--------------------------------------------------------------------------*/
 typedef unsigned index_t;
 /*--------------------------------------------------------------------------*/
-class Object{
-public:
-	enum QucsMsgType{
-		QucsMsgTrace=0,
-		QucsMsgLog=1,
-		QucsMsgDebug=2,
-		QucsMsgWarning=3,
-		QucsMsgCritical=4,
-		QucsMsgFatal=5
-	};
-protected:
-	explicit Object(){}
-	explicit Object(Object const&){}
-
-public:
-	virtual ~Object(){}
-
-	std::string const& label() const{ return _label;}
-	std::string const& short_label()const {return _label;}
-//	void setLabel(QString const& l) {_label = l.toStdString();}
-	void setLabel(std::string const& l) {_label = l;}
-	void setLabel(char const* l) {_label = l;}
-
-protected: // error handling
-	void message(QucsMsgType, const char*) const;
-	virtual void message(QucsMsgType, std::string const&) const;
-
-private:
-	std::string _label;
+namespace qucs{
+enum MsgType{
+	MsgTrace=0,
+	MsgLog=1,
+	MsgDebug=2,
+	MsgWarning=3,
+	MsgCritical=4,
+	MsgFatal=5
 };
+/*--------------------------------------------------------------------------*/
+using Object = ::CKT_BASE;
+/*--------------------------------------------------------------------------*/
+} // qucs
+/*--------------------------------------------------------------------------*/
+using qucs::Object; // transition.
 /*--------------------------------------------------------------------------*/
 /*--------------------------------------------------------------------------*/
 #endif

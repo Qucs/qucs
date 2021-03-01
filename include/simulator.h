@@ -26,7 +26,10 @@
 #include "language.h"
 #include "output.h"
 /*--------------------------------------------------------------------------*/
-class DocumentFormat;
+class DocumentFormat; // BUG
+/*--------------------------------------------------------------------------*/
+namespace qucs {
+/*--------------------------------------------------------------------------*/
 class Component;
 class CommonData;
 /*--------------------------------------------------------------------------*/
@@ -54,22 +57,21 @@ public:
   virtual Simulator* clone() const = 0;
 
   virtual NetLang const* netLang() const{return nullptr;}
-  virtual DocumentFormat const* netLister() const{return nullptr;}
-//  virtual SimOutputData const* results(){}
+  virtual DocumentFormat const* netLister() const{return nullptr;} // really?
 
 public:
-  void attachDoc(QucsDoc*);
-  QucsDoc const* doc() const {return _doc;}
+  void attachDoc(Doc*);
+  Doc const* doc() const {return _doc;}
   virtual void run(istream_t& cs, SimCtrl* ctx) = 0; // really??
   virtual void join() = 0;
-  virtual void do_it(istream_t& cs, SchematicModel const* ctx) = 0;
+  virtual void do_it(istream_t& cs, ElementList const* ctx) = 0;
   virtual std::string errorString() const = 0;
   virtual void kill() = 0;
 
   int state() const{return _state;}
   void attachCtrl(SimCtrl*);
   void detachCtrl(SimCtrl const*);
-  void message(QucsMsgType, std::string const&);
+  void message(MsgType, std::string const&);
 
 protected:
   void setState(state_t s){_state = s;}
@@ -85,10 +87,12 @@ protected:
   bool has_ctrl() const{return _ctrl;}
 
 private:
-  QucsDoc* _doc; // const?
+  Doc* _doc; // const?
   int _state;
   SimCtrl* _ctrl;
 }; // Simulator
+/*--------------------------------------------------------------------------*/
+} // qucs
 /*--------------------------------------------------------------------------*/
 /*--------------------------------------------------------------------------*/
 #endif

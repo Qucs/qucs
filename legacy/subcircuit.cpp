@@ -56,7 +56,7 @@ public:
 
 private:
   Subcircuit(Subcircuit const&x);
-  Subcircuit(Subcircuit const&x, SchematicModel* hack);
+  Subcircuit(Subcircuit const&x, ElementList* hack);
 //  Component* newOne();
 
 // public: // obsolete.
@@ -78,11 +78,11 @@ private:
   }
 
 public:
-  QString getSubcircuitFile(SchematicModel const* scope) const;
+  QString getSubcircuitFile(ElementList const* scope) const;
 
 protected:
   QString vhdlCode(int);
-  void createSymbol(); // SchematicModel const& scope);
+  void createSymbol(); // ElementList const& scope);
   void defaultSymbol(int No);
   int loadSymbol(const QString&);
 
@@ -115,12 +115,12 @@ private: // Symbol
 private: // overrides
 	void build() override;
 
-	void proto(SchematicModel const* schem);
+	void proto(ElementList const* schem);
 	void build_sckt(SubcktBase* proto) const;
 
 private:
 	std::string _subPath;
-	SchematicModel* _protoscope; // stash prototypes here. (use Factory::_scope?)
+	ElementList* _protoscope; // stash prototypes here. (use Factory::_scope?)
 	std::string _filename; // "File" parameter.
 }; // Subcircuit
 Subcircuit d0(&cs);
@@ -174,7 +174,7 @@ Subcircuit::Subcircuit(Subcircuit const&x) : Component(x),
   new_subckt(); // triggers sckt expansion
 }
 /*--------------------------------------------------------------------------*/
-Subcircuit::Subcircuit(Subcircuit const&x, SchematicModel* hack) : Component(x),
+Subcircuit::Subcircuit(Subcircuit const&x, ElementList* hack) : Component(x),
 	_subPath(x._subPath), _protoscope(hack)
 {
   Props.append(new Property("File", "", false,
@@ -190,7 +190,7 @@ Component* Subcircuit::newOne()
 { untested();
 	unreachable();
 	Subcircuit *p = new Subcircuit();
-	p->setLabel("-newOne-"); // TODO
+	p->set_label("-newOne-"); // TODO
 	p->Props.getFirst()->Value = Props.getFirst()->Value;
 	trace1("Subcircuit::clone", Props.getFirst()->Value);
 
@@ -207,7 +207,7 @@ Element* Subcircuit::info(QString& Name, char* &BitmapFile, bool getNewOne)
   if(getNewOne) { untested();
 	  incomplete();
     Subcircuit *p = new Subcircuit();
-	 p->setLabel("-getnewOne-"); // TODO
+	 p->set_label("-getnewOne-"); // TODO
     p->recreate(0);   // createSymbol() is NOT called in constructor !!!
     return p;
   }
@@ -219,7 +219,7 @@ Element* Subcircuit::info(QString& Name, char* &BitmapFile, bool getNewOne)
 // Makes the schematic symbol subcircuit with the correct number
 // of ports.
 // TODO: is this used in case the file does not exist?
-void Subcircuit::createSymbol() // SchematicModel const& scope)
+void Subcircuit::createSymbol() // ElementList const& scope)
 {
 	trace1("legacy createSymbol", label());
   int No;
@@ -464,7 +464,7 @@ QString Subcircuit::verilogCode(int)
 #endif
 
 // -------------------------------------------------------
-QString Subcircuit::getSubcircuitFile(SchematicModel const* scp) const
+QString Subcircuit::getSubcircuitFile(ElementList const* scp) const
 {
 	trace4("getSubcircuitFile", this, scp, scope(), _subPath);
 
@@ -558,7 +558,7 @@ void Subcircuit::build()
 	proto(nullptr);
 }
 /*--------------------------------------------------------------------------*/
-void Subcircuit::proto(SchematicModel const* scope)
+void Subcircuit::proto(ElementList const* scope)
 {
    auto t = typeName();
 	trace1("Subcircuit::proto", typeName());
@@ -588,7 +588,7 @@ void Subcircuit::proto(SchematicModel const* scope)
 
 		QString t = Props.first()->Value;
 		
-		s->setLabel(typeName()); // so we can find it.
+		s->set_label(typeName()); // so we can find it.
 		s->set_dev_type(typeName());
 		trace3("sckt::proto install", label(), this, s->common());
 		trace3("sckt::proto install", typeName(), s->typeName(), s->common()->modelname());
@@ -625,7 +625,7 @@ void Subcircuit::build_sckt(SubcktBase* proto) const
 	// load subcircuit schematic
 	QString s = Props.first()->Value;
 	// QString s = paramValue("filename"); // or so.
-	//		SchematicModel const* dc=schematicModel();
+	//		ElementList const* dc=schematicModel();
 	// _subckt = d; // bug. new proto?
 
 	// todo: error handling.
@@ -637,7 +637,7 @@ void Subcircuit::build_sckt(SubcktBase* proto) const
 //	assert(file.isOpen());
 	istream_t pstream(istream_t::_WHOLE_FILE, scktfilename.toStdString());
 
-	auto cmd = commandDispatcher["leg_sch"];
+	auto cmd = command_dispatcher["leg_sch"];
 	auto D = prechecked_cast<DocumentFormat const*>(cmd);
 	assert(D);
 

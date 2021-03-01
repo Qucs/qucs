@@ -37,6 +37,8 @@ static const char _typesep = ':';
 /* -------------------------------------------------------------------------------- */
 namespace {
 /* -------------------------------------------------------------------------------- */
+using namespace qucs;
+/* -------------------------------------------------------------------------------- */
 class Qucsator;
 /* -------------------------------------------------------------------------------- */
 // TODO: merge QucsatorProcess into Qucsator
@@ -97,7 +99,7 @@ static std::string netLabel(Node const* nn)
 		unreachable();
 		return "(null)";
 	}else if(n->hasLabel()){ untested();
-		return n->label();
+		return n->short_label();
 	}else{ untested();
 		return "_net" + std::to_string(n->pos());
 	}
@@ -113,20 +115,20 @@ static void printDefHack(Symbol const* p, ostream_t& s)
 class Qucsator : public Simulator{
 public:
 	explicit Qucsator() : Simulator(), _process(this) {
-		setLabel("qucsator");
+		set_label("qucsator");
 	}
 	Qucsator(Qucsator const&) = delete;
 	~Qucsator(){}
 private: // Simulator
   Simulator* clone() const override {return new Qucsator();}
   NetLang const* netLang() const override {
-	  return dynamic_cast<NetLang const*>(languageDispatcher["qucsator"]);
+	  return dynamic_cast<NetLang const*>(language_dispatcher["qucsator"]);
   }
   DocumentFormat const* netLister() const override { untested();
-	  return dynamic_cast<DocumentFormat const*>(commandDispatcher["legacy_nl"]);
+	  return dynamic_cast<DocumentFormat const*>(command_dispatcher["legacy_nl"]);
   }
   void run(istream_t&, SimCtrl*) override; // really?
-  void do_it(istream_t&, SchematicModel const*) override;
+  void do_it(istream_t&, ElementList const*) override;
   void join() override;
   void kill() override{incomplete();}
   void init() override{incomplete();}
@@ -142,7 +144,7 @@ public: // QProcess callback.
 			trace2("slotStateChanged to not running", st, _process.error());
 			if(_oldState == QProcess::Starting){ untested();
 				// bug/feature: errorString is not useful.
-				message(QucsMsgFatal, "Failed to start: "
+				message(MsgFatal, "Failed to start: "
 						 + _process.errorString().toStdString());
 				notifyState(Simulator::sst_error);
 			}else{
@@ -176,7 +178,7 @@ private:
 	QProcess::ProcessState _oldState;
 	Data* _dat{nullptr};
 }QS;
-static Dispatcher<Data>::INSTALL qq(&dataDispatcher, "qucsator", &QS);
+static Dispatcher<Data>::INSTALL qq(&data_dispatcher, "qucsator", &QS);
 /* -------------------------------------------------------------------------------- */
 /* -------------------------------------------------------------------------------- */
 struct default_sim{
@@ -197,7 +199,7 @@ void Qucsator::run(istream_t& cs, SimCtrl* ctrl)
 	// Simulator::detachCtrl(ctrl)?
 }
 /* -------------------------------------------------------------------------------- */
-void Qucsator::do_it(istream_t& cs, SchematicModel const* scope)
+void Qucsator::do_it(istream_t& cs, ElementList const* scope)
 {itested();
 	assert(scope);
 	assert(has_ctrl());
@@ -215,16 +217,16 @@ void Qucsator::do_it(istream_t& cs, SchematicModel const* scope)
 	// possibly not a good idea.
 	QString f = QDir_(QucsSettings.QucsHomeDir).filePath("netlist.txt");
 
-	message(QucsMsgLog, "writing " + f.toStdString() + "...");
+	message(MsgLog, "writing " + f.toStdString() + "...");
 
 
-	auto dl = commandDispatcher["legacy_nl"];
+	auto dl = command_dispatcher["legacy_nl"];
 	std::string s = "netlist mode=" + what + " " + f.toStdString();
 	trace1("qucsator nl?", s);
 	istream_t nlcmd(istream_t::_STRING, s);
-	SchematicModel* hack = nullptr;
+	ElementList* hack = nullptr;
 	if(scope){itested();
-		hack = const_cast<SchematicModel*>(scope);
+		hack = const_cast<ElementList*>(scope);
 	}else{ untested();
 		assert(false);
 //	auto d = dynamic_cast<SchematicDoc const*>(doc()); // BUG.
@@ -232,7 +234,7 @@ void Qucsator::do_it(istream_t& cs, SchematicModel const* scope)
 //		// HACK
 //		assert(d);
 //		assert(d->root());
-//		hack = const_cast<SchematicModel*>(d->root()->subckt());
+//		hack = const_cast<ElementList*>(d->root()->subckt());
 	}
 	assert(hack);
 	trace1("qucsator", nlcmd.fullstring());
@@ -288,13 +290,13 @@ void Qucsator::do_it(istream_t& cs, SchematicModel const* scope)
 	_process.start(Program, Arguments);
 
 	QString cmd = Program +" "+ Arguments.join(" ");
-	message(QucsMsgLog, cmd.toStdString());
+	message(MsgLog, cmd.toStdString());
 }
 /* -------------------------------------------------------------------------------- */
 void Qucsator::collectData()
 {itested();
 	trace1("collectData", DataSet);
-	_dat = dataDispatcher.clone("datfile"); // really? table?
+	_dat = data_dispatcher.clone("datfile"); // really? table?
 	assert(_dat);
  	std::string fn = DataSet.toStdString();
 	istream_t cs(istream_t::_WHOLE_FILE, fn);
@@ -319,7 +321,7 @@ void QucsatorProcess::stderr_()
 { untested();
 	assert(_simulator);
 	std::string msg = readAllStandardError().toStdString();
-	_simulator->message(Object::QucsMsgWarning, msg);
+	_simulator->message(MsgWarning, msg);
 }
 /* -------------------------------------------------------------------------------- */
 void QucsatorProcess::stdout_()
@@ -327,7 +329,7 @@ void QucsatorProcess::stdout_()
 	assert(_simulator);
 	std::string msg = readAllStandardOutput().toStdString();
 	trace1("QucsatorProcess stdout", msg);
-	_simulator->message(Object::QucsMsgLog, msg);
+	_simulator->message(MsgLog, msg);
 }
 /* -------------------------------------------------------------------------------- */
 /* -------------------------------------------------------------------------------- */

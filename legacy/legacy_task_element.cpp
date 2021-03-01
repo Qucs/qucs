@@ -115,7 +115,7 @@ int LegacyTaskElement::textSize(int& _dx, int& _dy)
   return 0;
 }
 /*--------------------------------------------------------------------------*/
-Widget* LegacyTaskElement::schematicWidget(QucsDoc* Doc) const
+Widget* LegacyTaskElement::schematicWidget(qucs::Doc* d) const
 { untested();
   trace0("Component::editElement");
   incomplete();
@@ -384,7 +384,7 @@ Property * LegacyTaskElement::getProperty(const QString& name)
 // }
 //
 // BUG, tmp.
-//void SchematicModel::simpleInserttaskElement(LegacyTaskElement *)
+//void ElementList::simpleInserttaskElement(LegacyTaskElement *)
 //{
 //  unreachable();
 //}

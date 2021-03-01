@@ -29,13 +29,18 @@
 class QPrinter;
 class QWidget;
 
+namespace qucs{
+class Doc;
+
 class PrinterWriter
 {
 public:
   PrinterWriter ();
   virtual ~PrinterWriter ();
-  void print(QucsDoc *);
-  void noGuiPrint(QucsDoc const* doc, QString printFile,
+  void print(qucs::Doc *);
+
+  // what?
+  void noGuiPrint(Doc const* doc, QString printFile,
       QString page, int dpi, QString color, QString orientation);
 
   void setFitToPage(bool _fitToPage) { fitToPage = _fitToPage; };
@@ -43,5 +48,6 @@ private:
   bool fitToPage;
   QPrinter *Printer;
 };
+} // qucs
 
 #endif

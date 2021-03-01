@@ -24,7 +24,7 @@
 namespace{
 /*--------------------------------------------------------------------------*/
 class IdCommand : public Command{
-	void do_it(istream_t& cs, SchematicModel* scope) override{
+	void do_it(istream_t& cs, ElementList* scope) override{
 		auto fullstring = cs.fullString();
 
 		std::string type;
@@ -72,10 +72,10 @@ class IdCommand : public Command{
 		assert(ps);
 		trace3("ID push", label, cx, cy);
 		ps->setPosition(pos_t(cx,cy));
-		ps->setLabel(label);
+		ps->set_label(label);
 		scope->push_back(ps);
 	}
 }d0;
-Dispatcher<Command>::INSTALL p0(&commandDispatcher, ".ID", &d0);
+Dispatcher<Command>::INSTALL p0(&command_dispatcher, ".ID", &d0);
 /*--------------------------------------------------------------------------*/
 } // namespace

@@ -20,7 +20,7 @@
 
 Coupler::Coupler()
 {
-  setLabel("ideal coupler");
+  set_label("ideal coupler");
 
   Lines.append(new Line(-23,-24, 23,-24,QPen(Qt::darkGray,1)));
   Lines.append(new Line( 23,-24, 23, 24,QPen(Qt::darkGray,1)));

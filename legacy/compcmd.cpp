@@ -24,7 +24,7 @@
 namespace{
 /*--------------------------------------------------------------------------*/
 class CompCommand : public Command{
-	void do_it(istream_t& cs, SchematicModel* s) override{
+	void do_it(istream_t& cs, ElementList* s) override{
 		auto fullstring = cs.fullString();
 		trace1("CompCommand", fullstring);
 		assert(s);
@@ -38,12 +38,12 @@ class CompCommand : public Command{
 
 			sym = dynamic_cast<SubcktBase*>(sc);
 			assert(sym);
-			sym->setLabel("main");
+			sym->set_label("main");
 			s->pushBack(sym);
 			//sym->setOwner(..);
 		}
 
-		auto lang = languageDispatcher["legacy_lib"];
+		auto lang = language_dispatcher["legacy_lib"];
 		assert(lang);
 
 		while(true){
@@ -76,8 +76,8 @@ class CompCommand : public Command{
 		}
 	}
 }d0;
-Dispatcher<Command>::INSTALL p0(&commandDispatcher, "Components", &d0);
-Dispatcher<Command>::INSTALL p1(&commandDispatcher, "Components>", &d0); // BUG
-Dispatcher<Command>::INSTALL p2(&commandDispatcher, "<Components>", &d0); // ...
+Dispatcher<Command>::INSTALL p0(&command_dispatcher, "Components", &d0);
+Dispatcher<Command>::INSTALL p1(&command_dispatcher, "Components>", &d0); // BUG
+Dispatcher<Command>::INSTALL p2(&command_dispatcher, "<Components>", &d0); // ...
 /*--------------------------------------------------------------------------*/
 } // namespace
