@@ -1,0 +1,68 @@
+image: Visual Studio 2019
+environment:
+  matrix:
+    - MSYSTEM : MINGW64
+      MBITS: 64
+      MARCH: x86_64
+
+skip_commits:
+  files:
+    - .travis.yml
+    - '*.md'
+
+cache:
+  # cache pacman packages
+  # max cache size is 1 GB, which should be enough
+  # but in case we could cache only mingw-w64-*-qt4-*
+  - C:\msys64\var\cache\pacman\pkg\
+
+install:
+  #Setting path to find pacman
+  - set "PATH=C:\msys64\usr\bin;%PATH%"
+  # Take a look at the environment
+  - set
+  #correction to pgk-config path (needed for Qt5)
+  - set QT5_PATH=/mingw%MBITS%/lib/pkgconfig
+
+  - bash -lc ""
+  - bash -lc "pacman --version"
+  - bash -lc "pacman -Q"
+  # Switch from SF to msys2.org (default, much faster)
+  - bash -lc "pacman --noconfirm --needed --sync pacman-mirrors"
+  - bash -lc "pacman --noconfirm --needed -S autoconf automake bison flex"
+  - bash -lc "pacman --noconfirm --needed -S mingw-w64-$MARCH-qt5"
+  
+  #- bash -lc "cd /var/cache/pacman/pkg && wget -nc http://repo.msys2.org/mingw/$MARCH/mingw-w64-$MARCH-qt4-4.8.7-4-any.pkg.tar.xz && pacman --noconfirm --needed -U mingw-w64-$MARCH-qt4-4.8.7-4-any.pkg.tar.xz"
+
+  # Set compiler (64bit)
+  - set "CC=/c/msys64/usr/bin/gcc.exe"
+  - set "CXX=/c/msys64/usr/bin/g++.exe"
+  - set "CXXFLAGS=-std=gnu++14 -pipe -fno-check-new"
+
+  - bash -lc "awk --version | head -n1"
+
+build_script:
+  ## Notes
+  #  * The "exec 0</dev/null" opens a dummy file descriptor to fix error: ./configure: line 560: 0: Bad file descriptor
+
+  ## Build Qucs-GUI applications and install
+  - bash -lc "exec 0</dev/null && cd $APPVEYOR_BUILD_FOLDER && ./bootstrap"
+  - bash -lc "cd $APPVEYOR_BUILD_FOLDER && mkdir build"
+  - bash -lc "exec 0</dev/null && cd $APPVEYOR_BUILD_FOLDER/build && export PKG_CONFIG_PATH+=:$QT5_PATH && ../configure --prefix=/c/qucs-win$MBITS --disable-dependency-tracking"
+  - bash -lc "exec 0</dev/null && cd $APPVEYOR_BUILD_FOLDER/build && make -e"
+  - bash -lc "exec 0</dev/null && cd /c/qucs-win$MBITS/bin && ./qucs -v"
+
+  ## Check
+  - bash -lc "exec 0</dev/null && cd $APPVEYOR_BUILD_FOLDER/qucs && make check || :"
+
+after_build:
+   - 7z a %APPVEYOR_BUILD_FOLDER%\qucs-win%MBITS%.zip %QUCSDIR%
+
+artifacts:
+   # variables here must use the PowerShell syntax
+   - path: qucs-win$(MBITS).zip
+     name: qucs-win$(MBITS).zip
+
+on_failure:
+  - bash -lc "exec 0</dev/null && cat $APPVEYOR_BUILD_FOLDER/config.log"
+  - ps: Get-ChildItem .\*.log -Recurse | % { Push-AppveyorArtifact $_.FullName -FileName $_.Name }
