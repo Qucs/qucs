@@ -33,7 +33,7 @@
 #include "object.h"
 #include "platform.h"
 #include "command.h"
-#include "schematic_model.h"
+#include "element_list.h"
 #define CARD_LIST ElementList
 #define CS istream_t
 using qucs::ElementList;

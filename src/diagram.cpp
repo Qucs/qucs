@@ -32,7 +32,7 @@
 #include <locale.h>
 
 #include "diagram.h"
-#include "schematic_model.h"
+#include "element_list.h"
 #include "qucs_app.h"
 #include "mnemo.h"
 #include "platform.h"

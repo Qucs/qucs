@@ -30,7 +30,7 @@ private:
 
   static Element* info(QString&, char* &, bool getNewOne=false);
 }D;
-Dispatcher<Symbol>::INSTALL p(&symbol_dispatcher, "Iac", &D);
+Dispatcher<Symbol>::INSTALL p(&qucs::symbol_dispatcher, "Iac", &D);
 Module::INSTALL pp("sources", &D);
 
 Ampere_ac::Ampere_ac() : Component()

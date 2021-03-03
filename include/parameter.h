@@ -37,7 +37,7 @@
 #include <limits>
 #include <string>
 #include "ap.h"
-#include "schematic_model.h"
+#include "element_list.h"
 #include "message.h"
 #define INTERFACE
 #define PARA_BASE ParameterBase

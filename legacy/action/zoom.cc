@@ -72,7 +72,7 @@ private:
 	int _MAy1;
 	int _MAy2;
 }a;
-static Dispatcher<Widget>::INSTALL p1(&action_dispatcher, "ZoomIn", &a);
+static Dispatcher<Widget>::INSTALL p1(&qucs::action_dispatcher, "ZoomIn", &a);
 /*--------------------------------------------------------------------------*/
 QUndoCommand* MouseActionZoomIn::press(QEvent* e)
 { untested();

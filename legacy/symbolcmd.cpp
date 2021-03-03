@@ -13,7 +13,7 @@
 /*--------------------------------------------------------------------------*/
 #include "command.h"
 #include "qio.h"
-#include "schematic_model.h"
+#include "element_list.h"
 #include "qucs_globals.h"
 #include "painting.h"
 #include "language.h"
@@ -155,7 +155,7 @@ class SymbolCommand : public Command{
 	  sym->set_label(":SymbolSection:");
 	  assert(s);
 
-	  auto lang = language_dispatcher["legacy_lib"];
+	  auto lang = qucs::language_dispatcher["legacy_lib"];
 	  assert(lang);
 
 	  while(true){ itested();
@@ -184,8 +184,8 @@ class SymbolCommand : public Command{
 	  s->push_back(sym);
   }
 }d0;
-Dispatcher<Command>::INSTALL p0(&command_dispatcher, "Symbol", &d0);
-Dispatcher<Command>::INSTALL p1(&command_dispatcher, "Symbol>", &d0); // BUG
-Dispatcher<Command>::INSTALL p2(&command_dispatcher, "<Symbol>", &d0); // ...
+Dispatcher<Command>::INSTALL p0(&qucs::command_dispatcher, "Symbol", &d0);
+Dispatcher<Command>::INSTALL p1(&qucs::command_dispatcher, "Symbol>", &d0); // BUG
+Dispatcher<Command>::INSTALL p2(&qucs::command_dispatcher, "<Symbol>", &d0); // ...
 /*--------------------------------------------------------------------------*/
 } // namespace

@@ -13,7 +13,7 @@
 /*--------------------------------------------------------------------------*/
 #include "command.h"
 #include "qio.h"
-#include "schematic_model.h"
+#include "element_list.h"
 #include "qucs_globals.h"
 #include "painting.h"
 #include "dot.h"
@@ -51,12 +51,12 @@ class PortSym : public Command{
 		              + " label=" + portname);
 		s->push_back(dot);
 
-		auto ps = element_dispatcher.clone("PortSym");
+		auto ps = qucs::element_dispatcher.clone("PortSym");
 		assert(ps);
 		ps->setPosition(pos_t(cx,cy));
 		s->push_back(ps);
 
-		auto place = symbol_dispatcher.clone("place");
+		auto place = qucs::symbol_dispatcher.clone("place");
 		assert(place);
 		// not yet. place->set_port_by_index(0, "incomplete");
 		place->setPosition(pos_t(cx,cy));
@@ -78,6 +78,6 @@ class PortSym : public Command{
 #endif
 	}
 }d0;
-Dispatcher<Command>::INSTALL p0(&command_dispatcher, ".PortSym", &d0);
+Dispatcher<Command>::INSTALL p0(&qucs::command_dispatcher, ".PortSym", &d0);
 /*--------------------------------------------------------------------------*/
 } // namespace

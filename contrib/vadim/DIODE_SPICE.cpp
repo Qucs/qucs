@@ -36,7 +36,7 @@ protected:
 }D;
 
 // this is the schematic name...
-static Dispatcher<Symbol>::INSTALL p(&symbol_dispatcher, "DIODE_SPICE", &D);
+static Dispatcher<Symbol>::INSTALL p(&qucs::symbol_dispatcher, "DIODE_SPICE", &D);
 // the toolbox item
 static Module::INSTALL pp("vadim", &D);
 

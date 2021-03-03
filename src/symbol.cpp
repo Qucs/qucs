@@ -11,7 +11,7 @@
  *                                                                         *
  ***************************************************************************/
 #include "symbol.h"
-#include "schematic_model.h"
+#include "element_list.h"
 #include "schematic_dialog.h"
 #include <assert.h>
 #include "net.h"

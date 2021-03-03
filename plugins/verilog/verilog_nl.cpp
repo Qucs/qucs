@@ -17,7 +17,7 @@
 #include "conductor.h"
 //#include "components/component.h" // BUG
 #include "qucs_globals.h"
-#include "schematic_model.h"
+#include "element_list.h"
 #include "schematic_lang.h"
 #include "qio.h"
 #include "net.h"
@@ -51,18 +51,18 @@ private:
   Language const* lang;
 //  mutable ElementList const* modelhack;
 }VNL;
-static Dispatcher<Command>::INSTALL p1(&command_dispatcher, "verilog_nl", &VNL);
+static Dispatcher<Command>::INSTALL p1(&qucs::command_dispatcher, "verilog_nl", &VNL);
 /*--------------------------------------------------------------------------*/
 VerilogNetlister::VerilogNetlister() : DocumentFormat()
 {
-	lang = language_dispatcher["verilog"];
+	lang = qucs::language_dispatcher["verilog"];
 	// verilog = dynamic_cast<NetLang const*>(l);
 	assert(lang);
 }
 /*--------------------------------------------------------------------------*/
 void VerilogNetlister::do_it(istream_t& cs, ElementList* o)
 {
-	lang = language_dispatcher["verilog"];
+	lang = qucs::language_dispatcher["verilog"];
 	assert(lang);
 
 	std::string fn;

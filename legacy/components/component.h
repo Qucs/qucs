@@ -19,6 +19,7 @@
 #include "qt_compat.h"
 #include "../legacy/obsolete_paintings.h"
 #include "property.h"
+#include "qucs_globals.h"
 
 namespace qucs{
 	class ViewPainter;
@@ -28,14 +29,13 @@ using qucs::Widget;
 using qucs::ViewPainter;
 using qucs::Module;
 using qucs::Element;
+using qucs::ElementList;
+using qucs::symbol_dispatcher;
 using qucs::NetLang; // what?
 
-class SchematicModel;
-class SchematicDoc;
 class QString;
 class QPen;
-class ComponentDialog;
-
+class ComponentDialog; // BUG?
 class QTextStream; // BUG
 
 class Line;
@@ -103,7 +103,7 @@ protected: // wrap legacy. don't use in new code.
 public: // legacy stuff. don't use
   //private:
   virtual Component* newOne(){unreachable(); return nullptr;} // use clone instead.
-  virtual void tAC(QTextStream&, SchematicModel const*, QStringList&, int&, int, NetLang const&){
+  virtual void tAC(QTextStream&, ElementList const*, QStringList&, int&, int, NetLang const&){
 	  unreachable();
   }
 

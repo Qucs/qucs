@@ -43,7 +43,7 @@ private: // implementation
 	void printMain(ostream_t& stream, ElementList const*,
 			Language const*) const;
 }c0;
-static Dispatcher<Command>::INSTALL p1(&command_dispatcher, "netlist", &c0);
+static Dispatcher<Command>::INSTALL p1(&qucs::command_dispatcher, "netlist", &c0);
 /* -------------------------------------------------------------------------------- */
 void Netlister::do_it(istream_t& cs, ElementList* m)
 {
@@ -80,9 +80,9 @@ void Netlister::do_it(istream_t& cs, ElementList* m)
 	if(language==""){ untested();
 		lang = tQucsSettings::language;
 	}else{
-		lang = language_dispatcher[language];
+		lang = qucs::language_dispatcher[language];
 		trace2("netlist", lang, language);
-		assert(language_dispatcher[language]);
+		assert(lang);
 	}
 
 	if(lang){

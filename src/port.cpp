@@ -15,7 +15,7 @@
 #include "node.h"
 #include "nodemap.h"
 #include "element.h"
-#include "schematic_model.h"
+#include "element_list.h"
 /*--------------------------------------------------------------------------*/
 Port::~Port()
 {

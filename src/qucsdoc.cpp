@@ -26,7 +26,7 @@
 #include "qt_compat.h"
 #include "qucs_app.h"
 #include "qucsdoc.h"
-#include "schematic_model.h"
+#include "element_list.h"
 #include "sckt_base.h"
 #include "simmessage.h"
 #include "simulator.h"

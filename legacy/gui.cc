@@ -77,5 +77,5 @@ class g: public Command{
 		//saveApplSettings(QucsMain);
 	}
 }p;
-DISPATCHER<CMD>::INSTALL d0(&command_dispatcher, "startgui", &p);
+DISPATCHER<CMD>::INSTALL d0(&qucs::command_dispatcher, "startgui", &p);
 }// namespace

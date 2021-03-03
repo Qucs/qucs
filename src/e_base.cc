@@ -37,18 +37,18 @@ static char fix_case(char c)
 /*--------------------------------------------------------------------------*/
 #define MAXDBL (DBL_MAX)
 double const NOT_VALID = -(MAXDBL)*(.9647958);	/* unlikely number	  */
-double CKT_BASE::tr_probe_num(const std::string&)const {return NOT_VALID;}
+// double CKT_BASE::tr_probe_num(const std::string&)const {unreachable(); return NOT_VALID;}
 // XPROBE CKT_BASE::ac_probe_ext(const std::string&)const {return XPROBE(NOT_VALID, mtNONE);}
 /*--------------------------------------------------------------------------*/
-SIM_DATA* CKT_BASE::_sim = NULL; 
-PROBE_LISTS* CKT_BASE::_probe_lists = NULL;
+//SIM_DATA* CKT_BASE::_sim = NULL; 
+//PROBE_LISTS* CKT_BASE::_probe_lists = NULL;
 /*--------------------------------------------------------------------------*/
 CKT_BASE::~CKT_BASE()
 {
   trace1("~CKT_BASE", _probes);
   if (_probes == 0) {
-  }else if (!_probe_lists) {untested();
-  }else if (!_sim) {untested();
+//  }else if (!_probe_lists) {untested();
+//  }else if (!_sim) {untested();
   }else{
 //    _probe_lists->purge(this);
   }
@@ -94,10 +94,10 @@ bool CKT_BASE::help(CS& Cmd, OMSTREAM& Out)const
 #endif
 }
 /*--------------------------------------------------------------------------*/
+#if 0
 double CKT_BASE::probe_num(const std::string& what)const
 {
   incomplete();
-#if 0
   double x;
   if (_sim->analysis_is_ac()) {
     x = ac_probe_num(what);
@@ -105,14 +105,14 @@ double CKT_BASE::probe_num(const std::string& what)const
     x = tr_probe_num(what);
   }
   return (std::abs(x)>=1) ? x : floor(x/OPT::floor + .5) * OPT::floor;
-#endif
   return 0.;
 }
+#endif
 /*--------------------------------------------------------------------------*/
+#if 0
 double CKT_BASE::ac_probe_num(const std::string& what)const
 {
   incomplete();
-#if 0
   size_t length = what.length();
   mod_t modifier = mtNONE;
   bool want_db = false;
@@ -148,8 +148,6 @@ double CKT_BASE::ac_probe_num(const std::string& what)const
     }
   }
   return xp(modifier, want_db);
-#endif
-  return 0.;
 }
 /*--------------------------------------------------------------------------*/
 /*static*/ double CKT_BASE::probe(const CKT_BASE *This, const std::string& what)
@@ -160,6 +158,7 @@ double CKT_BASE::ac_probe_num(const std::string& what)const
     return 0.0;				/* happens when optimized models */
   }					/* don't have all parts */
 }
+#endif
 /*--------------------------------------------------------------------------*/
 /*static*/ WAVE* CKT_BASE::find_wave(const std::string& probe_name)
 {

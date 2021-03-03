@@ -13,7 +13,7 @@
  ***************************************************************************/
 
 #include "element.h"
-#include "schematic_model.h"
+#include "element_list.h"
 
 namespace qucs {
 

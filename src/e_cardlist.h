@@ -1,3 +1,3 @@
 
-#include "schematic_model.h"
+#include "element_list.h"
 typedef qucs::ElementList CARD_LIST;

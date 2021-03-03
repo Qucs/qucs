@@ -99,7 +99,7 @@ public:
     }
   }
 } p2;
-DISPATCHER<CMD>::INSTALL d2(&command_dispatcher, "quit|exit", &p2);
+DISPATCHER<CMD>::INSTALL d2(&qucs::command_dispatcher, "quit|exit", &p2);
 /*--------------------------------------------------------------------------*/
 #if 0 // later
 class CMD_TEMP : public CMD {

@@ -14,8 +14,8 @@
 // paramset style models from .lib files.
 
 #include "qucs_app.h"
-// #include "schematic_doc.h"
 #include "misc.h"
+#include "symbol.h"
 #include "qucs_globals.h"
 
 #include <limits.h>

@@ -31,7 +31,7 @@ protected:
   void createSymbol();
 }C;
 
-static Dispatcher<Symbol>::INSTALL p(&symbol_dispatcher, "C", &C);
+static Dispatcher<Symbol>::INSTALL p(&qucs::symbol_dispatcher, "C", &C);
 static Module::INSTALL pp("lumped", &C);
 
 Capacitor::Capacitor()

@@ -57,7 +57,6 @@ public:
 #define INTERFACE
 #include "ap.h"
 #undef CS
-#undef INTERFACE
 #define fullString fullstring
 
 

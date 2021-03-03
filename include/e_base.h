@@ -26,10 +26,10 @@
 #define E_BASE_H
 #include "platform.h"
 
-#define INTERFACE
 /*--------------------------------------------------------------------------*/
 // external
-class XPROBE;
+class XPROBE{
+};
 class WAVE;
 class OMSTREAM;
 struct SIM_DATA;
@@ -41,8 +41,8 @@ private:
   mutable int	_probes;		/* number of probes set */
   std::string	_label;
 public:
-  static SIM_DATA* _sim;
-  static PROBE_LISTS* _probe_lists;
+//  static SIM_DATA* _sim;
+//  static PROBE_LISTS* _probe_lists;
   //--------------------------------------------------------------------
 protected: // create and destroy
   explicit CKT_BASE()			  :_probes(0), _label() {}
@@ -56,10 +56,10 @@ public: // user stuff
   virtual std::string status()const {untested();return "";}
   //--------------------------------------------------------------------
 public: // probes
-	  double      probe_num(const std::string&)const;
-	  double      ac_probe_num(const std::string&)const;
-  virtual double      tr_probe_num(const std::string&)const;
-//  virtual XPROBE      ac_probe_ext(const std::string&)const;
+	  double      probe_num(const std::string&)const{unreachable(); return 0.;}
+	  double      ac_probe_num(const std::string&)const{unreachable(); return 0.;}
+  virtual double      tr_probe_num(const std::string&)const{unreachable(); return 0.;}
+  virtual XPROBE      ac_probe_ext(const std::string&)const{unreachable(); return XPROBE();}
 	  void	      inc_probes()const	{++_probes;}
 	  void	      dec_probes()const	{assert(_probes>0); --_probes;}
 	  bool	      has_probes()const	{return _probes > 0;}

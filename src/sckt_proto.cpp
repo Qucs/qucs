@@ -15,7 +15,7 @@
 // qucsator ".Def".
 /*--------------------------------------------------------------------------*/
 #include "sckt_base.h"
-#include "schematic_model.h"
+#include "element_list.h"
 #include "qucs_globals.h"
 #include <memory>
 #include "common_sckt.h"
@@ -75,11 +75,13 @@ pos_t CommonSubckt::portPosition(index_t i) const
 /*--------------------------------------------------------------------------*/
 namespace {
 /*--------------------------------------------------------------------------*/
-using qucs::Port;
-using qucs::Node;
-using qucs::ViewPainter;
-using qucs::CommonSubckt;
 using qucs::CommonComponent;
+using qucs::CommonSubckt;
+using qucs::Element;
+using qucs::ElementList;
+using qucs::Node;
+using qucs::Port;
+using qucs::ViewPainter;
 /*--------------------------------------------------------------------------*/
 class SubcktProto : public SubcktBase {
 private:
@@ -147,7 +149,7 @@ private:
 //	Element const* _instance; // why?
 	//ElementList sm;
 }d0;
-static Dispatcher<Symbol>::INSTALL p(&symbol_dispatcher, "subckt_proto", &d0);
+static Dispatcher<Symbol>::INSTALL p(&qucs::symbol_dispatcher, "subckt_proto", &d0);
 /*--------------------------------------------------------------------------*/
 /*--------------------------------------------------------------------------*/
 // bool SubcktProto::portExists(unsigned i) const

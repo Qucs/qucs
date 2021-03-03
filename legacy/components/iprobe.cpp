@@ -28,7 +28,7 @@ public:
 private:
   Element* clone() const override{ return new iProbe(*this);}
 }d0;
-Dispatcher<Symbol>::INSTALL p(&symbol_dispatcher, "IProbe", &d0);
+Dispatcher<Symbol>::INSTALL p(&qucs::symbol_dispatcher, "IProbe", &d0);
 Module::INSTALL pp("sources", &d0);
 
 

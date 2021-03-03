@@ -19,7 +19,6 @@
 
 ===== 0.1.* TODO =====
 
-- move interface to qucs namespace
 - run simulations in tests, add more simulators
 - resurrect diagrams as QWidgets
 - hide text during symbols drag
@@ -42,11 +41,12 @@ wishlist/optional
 - make code more (human) readable where possible
 - could add CMake at some point
 
-done?
+done or almost done
 - adjust selection bits after "wire optimisation" (almost)
 - fix parameters in "Lib" style components
 - untangle tAC and other callbacks
 - parameters in root circuit
+- move interface to qucs namespace
 
 ===== old stuff, mostly obsolete, implement plugins instead =====
 

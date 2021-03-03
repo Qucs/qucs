@@ -76,8 +76,8 @@ private:
 private:
   mutable std::map<std::string, void*> attach_list;
 } my_plugins;
-Dispatcher<Command>::INSTALL p0(&command_dispatcher, "load|attach", &my_plugins);
-Dispatcher<Command>::INSTALL p1(&command_dispatcher, "detach_all", &my_plugins);
+Dispatcher<Command>::INSTALL p0(&qucs::command_dispatcher, "load|attach", &my_plugins);
+Dispatcher<Command>::INSTALL p1(&qucs::command_dispatcher, "detach_all", &my_plugins);
 
 static std::string plugpath()
 {

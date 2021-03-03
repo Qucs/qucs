@@ -18,7 +18,7 @@
 #include "qucs_globals.h"
 #include "task_element.h"
 #include "docfmt.h"
-#include "schematic_model.h"
+#include "element_list.h"
 //#include "schematic_doc.h" // BUG
 #include "schematic_lang.h"
 #include "exception.h"

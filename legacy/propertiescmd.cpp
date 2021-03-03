@@ -13,7 +13,7 @@
 /*--------------------------------------------------------------------------*/
 #include "command.h"
 #include "qio.h"
-#include "schematic_model.h"
+#include "element_list.h"
 #include "qucs_globals.h"
 #include "parameter.h"
 /*--------------------------------------------------------------------------*/
@@ -77,8 +77,8 @@ class Properties : public Command{
 	  }
   }
 }d0;
-Dispatcher<Command>::INSTALL p0(&command_dispatcher, "Properties", &d0);
-Dispatcher<Command>::INSTALL p1(&command_dispatcher, "Properties>", &d0); // BUG
-Dispatcher<Command>::INSTALL p2(&command_dispatcher, "<Properties>", &d0); // ...
+Dispatcher<Command>::INSTALL p0(&qucs::command_dispatcher, "Properties", &d0);
+Dispatcher<Command>::INSTALL p1(&qucs::command_dispatcher, "Properties>", &d0); // BUG
+Dispatcher<Command>::INSTALL p2(&qucs::command_dispatcher, "<Properties>", &d0); // ...
 /*--------------------------------------------------------------------------*/
 } // namespace

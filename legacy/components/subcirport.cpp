@@ -13,7 +13,7 @@
  ***************************************************************************/
 #include "node.h"
 #include "nodemap.h"
-#include "schematic_model.h"
+#include "element_list.h"
 #include "component.h"
 #include "qucs_globals.h"
 #include "module.h"

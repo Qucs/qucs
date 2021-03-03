@@ -24,7 +24,7 @@
 #define PRINTERWRITER_H_ value
 
 #include <QString>
-#include "schematic_model.h"
+#include "element_list.h"
 
 class QPrinter;
 class QWidget;

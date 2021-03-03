@@ -32,7 +32,7 @@ protected:
   void createSymbol();
   QString netlist() const;
 }D;
-static Dispatcher<Symbol>::INSTALL p(&symbol_dispatcher, "_BJT", &D);
+static Dispatcher<Symbol>::INSTALL p(&qucs::symbol_dispatcher, "_BJT", &D);
 
 BJT::BJT() : Basic_BJT()
 {

@@ -19,7 +19,7 @@
 #include "element.h"
 #include "symbol.h"
 #include "schematic_scene.h"
-#include "schematic_model.h"
+#include "element_list.h"
 #include "element_graphics.h"
 #include "qio.h"
 #include "platform.h"

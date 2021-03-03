@@ -22,6 +22,7 @@
 #include "property.h"
 #include "qucs_app.h"
 #include "qucs_globals.h"
+#include "symbol.h"
 #include "viewpainter.h"
 #include "widget.h"
 #include "task_element.h"

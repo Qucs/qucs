@@ -13,7 +13,7 @@
 /*--------------------------------------------------------------------------*/
 #include "command.h"
 #include "qio.h"
-#include "schematic_model.h"
+#include "element_list.h"
 #include "qucs_globals.h"
 #include "painting.h"
 #include "language.h"
@@ -68,7 +68,7 @@ class IdCommand : public Command{
 			i += 2;
 		}
 
-		auto ps = element_dispatcher.clone(".ID");
+		auto ps = qucs::element_dispatcher.clone(".ID");
 		assert(ps);
 		trace3("ID push", label, cx, cy);
 		ps->setPosition(pos_t(cx,cy));
@@ -76,6 +76,6 @@ class IdCommand : public Command{
 		scope->push_back(ps);
 	}
 }d0;
-Dispatcher<Command>::INSTALL p0(&command_dispatcher, ".ID", &d0);
+Dispatcher<Command>::INSTALL p0(&qucs::command_dispatcher, ".ID", &d0);
 /*--------------------------------------------------------------------------*/
 } // namespace

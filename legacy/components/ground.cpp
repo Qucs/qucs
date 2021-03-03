@@ -14,6 +14,7 @@
 
 #include "ground.h"
 #include "node.h"
+#include "element_list.h"
 #include "module.h"
 #include "qucs_globals.h"
 

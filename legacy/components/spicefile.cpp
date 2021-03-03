@@ -33,7 +33,7 @@
 
 #include "spicefile.h"
 // #include "schematic.h"
-#include "schematic_model.h"
+#include "element_list.h"
 #include "qucs_app.h"
 #include "misc.h"
 #include "qio.h"

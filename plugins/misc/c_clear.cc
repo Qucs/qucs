@@ -19,7 +19,6 @@
  * delete and clear commands
  */
 
-#define INTERFACE
 #include "command.h"
 #include "qucs_globals.h"
 #define CARD_LIST ElementList
@@ -46,7 +45,7 @@ public:
   //  command("title '", Scope);
   }
 } p0;
-DISPATCHER<CMD>::INSTALL d0(&command_dispatcher, "clear", &p0);
+DISPATCHER<CMD>::INSTALL d0(&qucs::command_dispatcher, "clear", &p0);
 /*--------------------------------------------------------------------------*/
 }
 /*--------------------------------------------------------------------------*/

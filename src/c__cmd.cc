@@ -29,7 +29,7 @@
 #include "command.h"
 #include "message.h"
 #include "qucs_globals.h"
-#include "schematic_model.h"
+#include "element_list.h"
 // #include "qucs_globals.h"
 /*--------------------------------------------------------------------------*/
 // Qucs wrappings
@@ -103,7 +103,7 @@ void CMD::cmdproc(CS& cmd, CARD_LIST* scope)
   if (s == "xxxxcomment") { untested();
     // nothing
   }else if (s != "") {itested();
-    CMD* c = command_dispatcher[s];
+    CMD* c = qucs::command_dispatcher[s];
     if (c) {itested();
       // assert(scope);
       c->do_it(cmd, scope);
@@ -142,7 +142,7 @@ void CMD::command(const std::string& cs, CARD_LIST* scope)
   cmd >> s;
   trace1("CMD::command", s);
 
-  CMD* c = command_dispatcher[s];
+  CMD* c = qucs::command_dispatcher[s];
   if (c) {itested();
     c->do_it(cmd, scope);
   }else{ untested();

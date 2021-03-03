@@ -15,7 +15,7 @@
 #include "qucs_globals.h"
 #include "language.h"
 #include "schematic_lang.h"
-#include "schematic_model.h"
+#include "element_list.h"
 #include "misc.h" //?!!
 
 #include "conductor.h"

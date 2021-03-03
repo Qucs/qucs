@@ -11,9 +11,9 @@
  *                                                                         *
  ***************************************************************************/
 #include "qucsdoc.h"
-#include "schematic_model.h"
+#include "element_list.h"
 #include "schematic_lang.h"
-#include "schematic_model.h" /// hmm
+#include "element_list.h" /// hmm
 #include "qucs_globals.h"
 #include "task_element.h"
 #include "legacy_painting.h"

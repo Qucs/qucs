@@ -46,7 +46,7 @@ protected:
   QString ModuleName;
   QString ErrText;
 }d0;
-static Dispatcher<Symbol>::INSTALL p(&symbol_dispatcher, "VerilogFile", &d0);
+static Dispatcher<Symbol>::INSTALL p(&qucs::symbol_dispatcher, "VerilogFile", &d0);
 static Module::INSTALL pp("stuff", &d0);
 
 class Verilog_File_Info {

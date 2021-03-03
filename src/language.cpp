@@ -14,7 +14,7 @@
 #include "element.h"
 #include "qucs_globals.h"
 #include "task_element.h"
-#include "schematic_model.h"
+#include "element_list.h"
 #include "symbol.h"
 #include "painting.h"
 #include "language.h"

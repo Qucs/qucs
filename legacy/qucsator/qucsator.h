@@ -271,8 +271,6 @@ void Qucsator::do_it(istream_t& cs, ElementList const* scope)
 		close(h);
 		DataSet = QString(t);
 		free(t);
-
-//		DataSet = "/dev/stdout";
 	}
 
 	QString Program = QString_(QucsSettings.Qucsator);
@@ -306,9 +304,6 @@ void Qucsator::collectData()
 	delete _dat;
 }
 /* -------------------------------------------------------------------------------- */
-/* -------------------------------------------------------------------------------- */
-/* -------------------------------------------------------------------------------- */
-// BUG: must be anonymous
 /* -------------------------------------------------------------------------------- */
 void QucsatorProcess::slotStateChanged(QProcess::ProcessState newState)
 {itested();

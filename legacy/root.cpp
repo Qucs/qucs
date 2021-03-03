@@ -11,17 +11,20 @@
  *                                                                         *
  ***************************************************************************/
 
-#include "qucs_globals.h"
 #include "data.h"
-#include "sckt_base.h"
 #include "factory.h"
+#include "qucs_globals.h"
+#include "element_list.h"
+#include "sckt_base.h"
 #include "widget.h"
 /*--------------------------------------------------------------------------*/
 namespace{
 /*--------------------------------------------------------------------------*/
-using qucs::ViewPainter;
-using qucs::SubcktBase;
+using qucs::element_dispatcher;
+using qucs::ElementList;
 using qucs::Node;
+using qucs::SubcktBase;
+using qucs::ViewPainter;
 using qucs::Widget;
 /*--------------------------------------------------------------------------*/
 class sda : public SubcktBase  {
@@ -31,7 +34,7 @@ public:
   explicit sda(sda const&x) : SubcktBase (x) {
     new_subckt();
 
-    auto a = symbol_dispatcher.clone("subckt_proto");
+    auto a = qucs::symbol_dispatcher.clone("subckt_proto");
     assert(a);
     a->set_label("main");
     a->set_owner(this);
@@ -41,7 +44,7 @@ public:
 		// instance used when parsing a netlist.
 		_sub = element_dispatcher.clone("LegacySub");
 		if(!_sub){ // legacy
-			Symbol* sub = symbol_dispatcher.clone("LegacySub");
+			Symbol* sub = qucs::symbol_dispatcher.clone("LegacySub");
 
 			assert(sub);
 			sub->set_label("Sub");
@@ -64,7 +67,7 @@ public:
 #if 1
 		// dat file access...
 		// TODO: default according to properties in .sch file?
-		_dat = data_dispatcher.clone("datfiles");
+		_dat = qucs::data_dispatcher.clone("datfiles");
 		assert(a);
 		_dat->set_label("datfiles");
 		subckt()->push_back(_dat);
@@ -160,7 +163,7 @@ private:
   Widget* schematicWidget(qucs::Doc* d) const { untested();
 	  trace0("root::schematicWidget");
 
-	  Widget const* w = widget_dispatcher["SchematicDoc"];
+	  Widget const* w = qucs::widget_dispatcher["SchematicDoc"];
 	  auto ww = dynamic_cast<Widget const*>(w);
 
 	  assert(ww);
@@ -175,7 +178,7 @@ private:
 	Data* _dat;
 	std::string _full_path;
 }d0;
-static Dispatcher<Symbol>::INSTALL p(&symbol_dispatcher, "schematic_root", &d0);
+static Dispatcher<Symbol>::INSTALL p(&qucs::symbol_dispatcher, "schematic_root", &d0);
 /*--------------------------------------------------------------------------*/
 } // namespace
 /*--------------------------------------------------------------------------*/

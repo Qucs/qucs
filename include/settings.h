@@ -1,10 +1,6 @@
 #ifndef QUCS_SETTINGS_H
 #define QUCS_SETTINGS_H
 
-// #include <QFont>
-// #include <QColor>
-// #include <QDir>
-// #include "qt_compat.h"
 #include "io_trace.h"
 
 namespace qucs {

@@ -11,15 +11,18 @@
  *                                                                         *
  ***************************************************************************/
 
+#include "command.h"
+#include "data.h"
 #include "diagram.h"
+#include "element_list.h"
+#include "language.h"
 #include "misc.h"
-#include "qucs_globals.h"
 #include "module.h"
+#include "output.h"
+#include "painting.h"
 #include "qio.h"
 #include "qt_compat.h"
-#include "language.h"
-#include "data.h"
-#include "output.h"
+#include "qucs_globals.h"
 
 #include <QPlainTextEdit>
 #include <QLineEdit>

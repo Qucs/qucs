@@ -17,7 +17,7 @@
 #include "qucs_globals.h"
 #include "symbol.h"
 #include "viewpainter.h"
-#include "schematic_model.h"
+#include "element_list.h"
 #include "schematic_scene.h"
 #include "schematic_edit.h"
 #include "mouseaction.h"
@@ -34,6 +34,7 @@ namespace{
 /*--------------------------------------------------------------------------*/
 using qucs::Action;
 using qucs::Element;
+using qucs::ElementList;
 using qucs::MouseAction;
 using qucs::MouseActions;
 using qucs::SchematicEdit;
@@ -135,7 +136,7 @@ void WireUC::expand()
 	assert(subckt());
 
 	if(!_proto){ untested();
-		_proto	= symbol_dispatcher["Wire"];
+		_proto = qucs::symbol_dispatcher["Wire"];
 	}else{ untested();
 		unreachable();
 	}
@@ -198,7 +199,7 @@ void WireUC::set_param_by_name(std::string const& n, std::string const& v)
 	}
 }
 /*--------------------------------------------------------------------------*/
-Dispatcher<Symbol>::INSTALL p(&symbol_dispatcher, "__ma_ghostwire", &w);
+Dispatcher<Symbol>::INSTALL p(&qucs::symbol_dispatcher, "__ma_ghostwire", &w);
 /*--------------------------------------------------------------------------*/
 /*--------------------------------------------------------------------------*/
 class ActionInsertWire : public QAction{
@@ -261,7 +262,7 @@ class MouseActionWire : public MouseAction {
 public:
 	explicit MouseActionWire()
 		: MouseAction(), _mode(0), _phase(0) {itested();
-		_proto = symbol_dispatcher.clone("__ma_ghostwire"); // BUG. not in constructor.
+		_proto = qucs::symbol_dispatcher.clone("__ma_ghostwire"); // BUG. not in constructor.
 		assert(_proto);
 	}
 
@@ -312,7 +313,7 @@ private:
 	std::vector<ElementGraphics*> _gfx;
 	Element* _proto;
 }a0;
-static Dispatcher<Widget>::INSTALL p1(&action_dispatcher, "AddWire", &a0);
+static Dispatcher<Widget>::INSTALL p1(&qucs::action_dispatcher, "AddWire", &a0);
 /*--------------------------------------------------------------------------*/
 QUndoCommand* MouseActionWire::activate(QObject* sender)
 {itested();

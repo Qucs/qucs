@@ -184,7 +184,7 @@ private: // more decoupling
 	//ElementMouseAction focusElement;
 	bool isMoveEqual; //?
 }a0; // MouseActionSelect
-static Dispatcher<Widget>::INSTALL p1(&action_dispatcher, "ActionSelect", &a0);
+static Dispatcher<Widget>::INSTALL p1(&qucs::action_dispatcher, "ActionSelect", &a0);
 /*--------------------------------------------------------------------------*/
 QUndoCommand* MouseActionSelect::dblclk(QEvent* evt)
 { untested();

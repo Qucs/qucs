@@ -27,7 +27,7 @@ public:
   Component* newOne() {return new Volt_dc(*this);}
   static Element* info(QString&, char* &, bool getNewOne=false);
 }D;
-static Dispatcher<Symbol>::INSTALL p(&symbol_dispatcher, "Vdc", &D);
+static Dispatcher<Symbol>::INSTALL p(&qucs::symbol_dispatcher, "Vdc", &D);
 static Module::INSTALL pp("sources", &D);
 
 Volt_dc::Volt_dc()

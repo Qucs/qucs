@@ -751,7 +751,7 @@ class DialogFactory : public Widget /*?*/ {
 		return wd;
 	}
 }F;
-static Dispatcher<Widget>::INSTALL p1(&widget_dispatcher, "SymbolDialog", &F);
+static Dispatcher<Widget>::INSTALL p1(&qucs::widget_dispatcher, "SymbolDialog", &F);
 /*--------------------------------------------------------------------------*/
 /*--------------------------------------------------------------------------*/
 }

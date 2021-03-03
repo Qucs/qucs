@@ -21,7 +21,7 @@ namespace{
 class Get : public Command {
 	void do_it(istream_t&, ElementList*) override;
 }c;
-static Dispatcher<Command>::INSTALL p0(&command_dispatcher, "get", &c);
+static Dispatcher<Command>::INSTALL p0(&qucs::command_dispatcher, "get", &c);
 /*--------------------------------------------------------------------------*/
 void Get::do_it(istream_t& cmd, ElementList* sckt)
 {
@@ -46,7 +46,7 @@ void Get::do_it(istream_t& cmd, ElementList* sckt)
 // TODO: any language.
 // magic = stream.fullstring ...
 
-	auto L = language_dispatcher[suffix];
+	auto L = qucs::language_dispatcher[suffix];
 	assert(L);
 
 	while(!stream.atEnd()){

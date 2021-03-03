@@ -29,7 +29,7 @@ private:
   }
   // static Element* info(QString&, char* &, bool getNewOne=false);
 }d0;
-static Dispatcher<Symbol>::INSTALL p(&symbol_dispatcher, "MCOUPLED", &d0);
+static Dispatcher<Symbol>::INSTALL p(&qucs::symbol_dispatcher, "MCOUPLED", &d0);
 static Module::INSTALL pp("RF", &d0);
 
 MScoupled::MScoupled() : Component()

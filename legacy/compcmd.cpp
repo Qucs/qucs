@@ -13,7 +13,7 @@
 /*--------------------------------------------------------------------------*/
 #include "command.h"
 #include "qio.h"
-#include "schematic_model.h"
+#include "element_list.h"
 #include "qucs_globals.h"
 #include "painting.h"
 #include "language.h"
@@ -34,7 +34,7 @@ class CompCommand : public Command{
 		if(p_!=s->end()){
 			sym = dynamic_cast<SubcktBase*>(*p_);
 		}else{
-			Symbol* sc = symbol_dispatcher.clone("subckt_proto");
+			Symbol* sc = qucs::symbol_dispatcher.clone("subckt_proto");
 
 			sym = dynamic_cast<SubcktBase*>(sc);
 			assert(sym);
@@ -43,7 +43,7 @@ class CompCommand : public Command{
 			//sym->setOwner(..);
 		}
 
-		auto lang = language_dispatcher["legacy_lib"];
+		auto lang = qucs::language_dispatcher["legacy_lib"];
 		assert(lang);
 
 		while(true){
@@ -76,8 +76,8 @@ class CompCommand : public Command{
 		}
 	}
 }d0;
-Dispatcher<Command>::INSTALL p0(&command_dispatcher, "Components", &d0);
-Dispatcher<Command>::INSTALL p1(&command_dispatcher, "Components>", &d0); // BUG
-Dispatcher<Command>::INSTALL p2(&command_dispatcher, "<Components>", &d0); // ...
+Dispatcher<Command>::INSTALL p0(&qucs::command_dispatcher, "Components", &d0);
+Dispatcher<Command>::INSTALL p1(&qucs::command_dispatcher, "Components>", &d0); // BUG
+Dispatcher<Command>::INSTALL p2(&qucs::command_dispatcher, "<Components>", &d0); // ...
 /*--------------------------------------------------------------------------*/
 } // namespace

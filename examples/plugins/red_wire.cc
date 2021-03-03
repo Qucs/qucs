@@ -15,7 +15,7 @@
 //#include "wiredialog.h"
 #include "qucs_globals.h"
 #include "geometry.h"
-#include "schematic_model.h"
+#include "element_list.h"
 #include <QPainter>
 #include "qt_compat.h" // geometry?
 #include "l_compar.h"

@@ -2,7 +2,7 @@
 #define QUCS_COMMAND_H
 
 #include "object.h"
-#include "schematic_model.h"
+#include "element_list.h"
 
 #define INTERFACE
 #define CMD Command

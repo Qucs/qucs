@@ -18,7 +18,7 @@
 #include "docfmt.h"
 #include "task_element.h"
 #include "schematic_lang.h"
-#include "schematic_model.h"
+#include "element_list.h"
 #include "net.h"
 #include "nodemap.h" // BUG
 #include "sckt_base.h"
@@ -93,7 +93,7 @@ private: //DocumentLanguage
 	std::string find_type_in_string(istream_t&) const override;
 	Element* parseItem(istream_t&, Element*) const override;
 }lang_verilog;
-static Dispatcher<Language>::INSTALL p0(&language_dispatcher,
+static Dispatcher<Language>::INSTALL p0(&qucs::language_dispatcher,
                                                 "verilog|verilog_nl", &lang_verilog);
 /* -------------------------------------------------------------------------------- */
 class VS : public Verilog {
@@ -115,7 +115,7 @@ private:
 	void print_ports_short(ostream_t& o, const Symbol* x) const;
 	void print_args(ostream_t&, Symbol const* sym) const;
 } V_;
-static Dispatcher<Language>::INSTALL p1(&language_dispatcher, "verilog_schematic|.vs", &V_);
+static Dispatcher<Language>::INSTALL p1(&qucs::language_dispatcher, "verilog_schematic|.vs", &V_);
 /*--------------------------------------------------------------------------*/
 DEV_DOT* Verilog::parseCommand(istream_t& cmd, DEV_DOT* x) const
 {
@@ -629,7 +629,7 @@ private: // legacy cruft
 private: // hacks.
   void printSymbol(Symbol const*, ostream_t&) const;
 }VS;
-static Dispatcher<Command>::INSTALL pp(&command_dispatcher, "v_sch", &VS);
+static Dispatcher<Command>::INSTALL pp(&qucs::command_dispatcher, "v_sch", &VS);
 /* -------------------------------------------------------------------------------- */
 /* -------------------------------------------------------------------------------- */
 void VerilogSchematicFormat::load(istream_t&, Object*) const
@@ -709,7 +709,7 @@ class CMD_MODULE : public Command {
 	void do_it(istream_t& cmd, ElementList* Scope) override
 	{
 		// auto new_module = dynamic_cast<SubcktBase*>(device_dispatcher.clone("subckt"));
-		auto new_module = dynamic_cast<SubcktBase*>(symbol_dispatcher.clone("subckt_proto"));
+		auto new_module = dynamic_cast<SubcktBase*>(qucs::symbol_dispatcher.clone("subckt_proto"));
 		assert(new_module);
 		assert(!new_module->owner());
 
@@ -734,7 +734,7 @@ class CMD_MODULE : public Command {
 		Scope->push_back(new_module);
 	}
 } p2;
-Dispatcher<Command>::INSTALL d2(&command_dispatcher, "module|macromodule", &p2);
+Dispatcher<Command>::INSTALL d2(&qucs::command_dispatcher, "module|macromodule", &p2);
 /*--------------------------------------------------------------------------*/
 } // namespace
 /* -------------------------------------------------------------------------------- */

@@ -21,7 +21,7 @@
 #include "diagram.h"
 #include "paintings/painting.h"
 #include "schematic_scene.h"
-#include "schematic_model.h"
+#include "element_list.h"
 #include "schematic_lang.h"
 #include "schematic_action.h"
 #include "qt_compat.h"

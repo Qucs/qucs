@@ -30,7 +30,7 @@ public:
   }
   static Element* info(QString&, char* &, bool getNewOne=false);
 }D;
-static Dispatcher<Symbol>::INSTALL p(&symbol_dispatcher, "Idc", &D);
+static Dispatcher<Symbol>::INSTALL p(&qucs::symbol_dispatcher, "Idc", &D);
 static Module::INSTALL pp("sources", &D);
 
 

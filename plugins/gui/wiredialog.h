@@ -16,13 +16,14 @@
 #define WIREDIALOG_H
 
 #include "misc.h"
+#include "qt_compat.h"
 #include "qucs_app.h"
+#include "qucs_globals.h"
 #include "schematic_dialog.h"
 #include "swap.h"
-#include "qucs_globals.h"
-#include "wiredialog.h"
+#include "symbol.h"
 #include "widget.h"
-#include "qt_compat.h"
+#include "wiredialog.h"
 
 #include <QLabel>
 #include <QLineEdit>

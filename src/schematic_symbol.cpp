@@ -13,7 +13,7 @@
 
 #if 0
 #include "schematic_symbol.h"
-#include "schematic_model.h"
+#include "element_list.h"
 #include "schematic_doc.h"
 /*--------------------------------------------------------------------------*/
 ElementList empty;

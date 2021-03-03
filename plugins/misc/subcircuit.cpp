@@ -216,7 +216,7 @@ private:
 	Paramset* _proto{nullptr};
 	std::string _subPath;
 }d0;
-static Dispatcher<Element>::INSTALL p(&element_dispatcher, "LegacySub", &d0);
+static Dispatcher<Element>::INSTALL p(&qucs::element_dispatcher, "LegacySub", &d0);
 static Module::INSTALL pp("stuff", &d0);
 /*--------------------------------------------------------------------------*/
 Element* SubFactory::clone_instance() const
@@ -376,7 +376,7 @@ void Paramset::init(Symbol const* proto)
 		std::string defpaint = defsym + std::to_string(np);
 //		auto e = find_looking_out(defpaint);
 		trace2("default painting", np, defpaint);
-		auto e = symbol_dispatcher[defpaint];
+		auto e = qucs::symbol_dispatcher[defpaint];
 		assert(e);
 		if(auto p=dynamic_cast<Painting const*>(e)){
 			_painting = p;
@@ -426,7 +426,7 @@ Symbol const* SubFactory::newSymbol(std::string const& fn) const
 		assert(os);
 		assert(os->scope());
 
-		Symbol* ss = symbol_dispatcher.clone("subckt_proto"); // symbol_proto?
+		Symbol* ss = qucs::symbol_dispatcher.clone("subckt_proto"); // symbol_proto?
 		auto s = prechecked_cast<SubcktBase*>(ss);
 		assert(s);
 
@@ -491,7 +491,7 @@ void SubFactory::build_sckt(istream_t& cs, SubcktBase* proto) const
 	trace1("SubFactory::build_sckt", cs.fullstring());
 	assert(owner());
 
-	auto LL = language_dispatcher["leg_sch"]; // use command instead?
+	auto LL = qucs::language_dispatcher["leg_sch"]; // use command instead?
 	auto L = dynamic_cast<Language const*>(LL);
 	assert(L);
 	cs.read_line();

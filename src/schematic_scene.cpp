@@ -16,6 +16,7 @@
 #include "qucs_globals.h"
 #include "place.h"
 #include "qucsdoc.h"
+#include "element_list.h"
 #include "conductor.h"
 #include "element_graphics.h"
 
@@ -26,6 +27,7 @@
 /*--------------------------------------------------------------------------*/
 /*--------------------------------------------------------------------------*/
 using qucs::Element;
+using qucs::ElementList;
 using qucs::Conductor;
 /*--------------------------------------------------------------------------*/
 QPoint SchematicScene::gridSize() const
@@ -487,7 +489,7 @@ ElementGraphics* SchematicScene::new_place(pos_t const& p)
 	
 	if(ret){
 	}else{
-		auto cl = symbol_dispatcher.clone("place");
+		auto cl = qucs::symbol_dispatcher.clone("place");
 		assert(cl);
 		std::string place_name = "_net_" + std::to_string(getX(p))
 		                           + "_" + std::to_string(getY(p));

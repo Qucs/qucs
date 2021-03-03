@@ -13,7 +13,7 @@
 /*--------------------------------------------------------------------------*/
 #include "command.h"
 #include "qio.h"
-#include "schematic_model.h"
+#include "element_list.h"
 #include "qucs_globals.h"
 #include "painting.h"
 /*--------------------------------------------------------------------------*/
@@ -40,7 +40,7 @@ class Model : public Command{
 	  }
 #if 1
 	  trace1("hack", M);
-	  Symbol* textdef = symbol_dispatcher.clone("qucsatorScktHack");
+	  Symbol* textdef = qucs::symbol_dispatcher.clone("qucsatorScktHack");
 	  assert(textdef);
 	  textdef->set_param_by_name("qucsatorsckthack", M);
 	  textdef->set_label(":qucsatorsckthack:");
@@ -49,8 +49,8 @@ class Model : public Command{
 #endif
   }
 }d0;
-Dispatcher<Command>::INSTALL p0(&command_dispatcher, "Model", &d0);
-Dispatcher<Command>::INSTALL p1(&command_dispatcher, "Model>", &d0); // BUG
-Dispatcher<Command>::INSTALL p2(&command_dispatcher, "<Model>", &d0); // ...
+Dispatcher<Command>::INSTALL p0(&qucs::command_dispatcher, "Model", &d0);
+Dispatcher<Command>::INSTALL p1(&qucs::command_dispatcher, "Model>", &d0); // BUG
+Dispatcher<Command>::INSTALL p2(&qucs::command_dispatcher, "<Model>", &d0); // ...
 /*--------------------------------------------------------------------------*/
 } // namespace

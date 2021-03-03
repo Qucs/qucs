@@ -14,7 +14,7 @@
 #include "nodemap.h"
 #include "qucs_globals.h"
 #include "geometry.h"
-#include "schematic_model.h"
+#include "element_list.h"
 #include <QPainter>
 #include "qt_compat.h" // geometry?
 #include "l_compar.h"
@@ -31,8 +31,9 @@ class QString;
 namespace{
 /*--------------------------------------------------------------------------*/
 using qucs::Conductor;
-using qucs::Widget;
 using qucs::Doc;
+using qucs::ElementList;
+using qucs::Widget;
 /*--------------------------------------------------------------------------*/
 class Wires : public SubcktBase{
 private:
@@ -123,7 +124,7 @@ private:
 	int _scale;
 	bool _has_netname;
 }w;
-static Dispatcher<Symbol>::INSTALL p(&symbol_dispatcher, "Wire", &w);
+static Dispatcher<Symbol>::INSTALL p(&qucs::symbol_dispatcher, "Wire", &w);
 /*--------------------------------------------------------------------------*/
 /*--------------------------------------------------------------------------*/
 Wire::Wire() : Symbol(),
@@ -222,7 +223,7 @@ Symbol* Wire::intersectPorts(Symbol const* s) const
 		split.push_back(nodePosition(1));
 
 		std::sort(split.begin(), split.end());
-		Symbol *sckt = symbol_dispatcher.clone("subckt_proto");
+		Symbol *sckt = qucs::symbol_dispatcher.clone("subckt_proto");
 		assert(sckt);
 		sckt->new_subckt();
 		ElementList* m = sckt->subckt();
@@ -364,7 +365,7 @@ Widget* Wire::schematicWidget(Doc* Doc) const
 { untested();
 	trace0("Wire::schematicWidget");
 
-	Object const* w = widget_dispatcher["WireDialog"];
+	Object const* w = qucs::widget_dispatcher["WireDialog"];
 	auto ww = dynamic_cast<Widget const*>(w);
 
 	assert(ww);
@@ -487,7 +488,7 @@ void Wire::expand()
   // just not sure where exactly.
   if (_netname != ""){
     new_subckt();
-    Symbol* n = symbol_dispatcher.clone("NodeLabel");
+    Symbol* n = qucs::symbol_dispatcher.clone("NodeLabel");
     n->set_label(_netname);
     // n->setParameters("$xposition");
     // n->setParameters("$yposition");

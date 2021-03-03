@@ -2,10 +2,11 @@
 // (c) 2020 Felix Salfelder
 // GPLv3+
 
-#include "schematic_model.h"
+#include "element_list.h"
 #include "qucs_globals.h"
 #include "conductor.h"
 #include "wiretest.h"
+#include "command.h"
 
 void union0()
 {

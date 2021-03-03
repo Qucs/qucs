@@ -55,7 +55,7 @@ static const std::string default_simulator="qucsator"; // FIXME: get from rc? ma
 
 void setSimulator(char const* name)
 { untested();
-  auto const* d = data_dispatcher[name];
+  auto const* d = qucs::data_dispatcher[name];
   if(auto s=dynamic_cast<qucs::Simulator const*>(d)){ untested();
     QucsSettings.setSimulator(s);
   }else{ untested();
@@ -115,7 +115,7 @@ void doNetlist(QString schematic_fn, std::string netlist, Command* fmt)
 {
 	std::string sfn = schematic_fn.toStdString();
 
-	Symbol* root = symbol_dispatcher.clone("schematic_root");
+	Symbol* root = qucs::symbol_dispatcher.clone("schematic_root");
 	assert(root);
 	root->set_param_by_name("$filename", sfn); // BUG: PATH.
 	root->set_label(sfn);
@@ -411,7 +411,7 @@ int main(int argc, char *argv[])
     }
   }
 
-  Command const* cmd = command_dispatcher[netlang_name];
+  Command const* cmd = qucs::command_dispatcher[netlang_name];
   if(!cmd){
     message(5, "no language " + netlang_name);
     exit(1);
@@ -421,7 +421,7 @@ int main(int argc, char *argv[])
 
   if(fmt){
     // just use it.
-  }else if(data_dispatcher[netlang_name]){ untested();
+  }else if(qucs::data_dispatcher[netlang_name]){ untested();
     incomplete();
     // ask a simulator.
 //    fmt = sd->netLang();
@@ -447,7 +447,7 @@ int main(int argc, char *argv[])
       fprintf(stderr, "Error: Expected output file.\n");
       result = -1;
     }else if (dump_flag) {
-      auto cmd = command_dispatcher[netlang_name];
+      auto cmd = qucs::command_dispatcher[netlang_name];
       auto fmt = prechecked_cast<DocumentFormat*>(cmd);
       if(!fmt){ untested();
 	qDebug() << "no lang" << QString::fromStdString(netlang_name);

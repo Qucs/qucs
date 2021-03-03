@@ -81,11 +81,11 @@ void list_save(CS& cmd, ostream_t& out, CARD_LIST* scope)
 
   LANGUAGE* lang = OPT::language;
   if(lang_name!=""){
-    lang = language_dispatcher[lang_name];
+    lang = qucs::language_dispatcher[lang_name];
     assert(lang); // TODO
   }else if(!lang){
     incomplete();
-    lang = language_dispatcher["qucsator"];
+    lang = qucs::language_dispatcher["qucsator"];
   }else{ untested();
   }
 
@@ -161,7 +161,7 @@ public:
     out.flush();
   }
 } p1;
-DISPATCHER<CMD>::INSTALL d1(&command_dispatcher, "list", &p1);
+DISPATCHER<CMD>::INSTALL d1(&qucs::command_dispatcher, "list", &p1);
 /*--------------------------------------------------------------------------*/
 #if 0 // later
 class CMD_SAVE : public CMD {

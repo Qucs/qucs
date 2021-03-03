@@ -20,7 +20,7 @@
 #include <QDrag>
 #include <QPainter>
 #include "viewpainter.h"
-#include "schematic_model.h"
+#include "element_list.h"
 #include "painting.h"
 
 using qucs::ViewPainter;

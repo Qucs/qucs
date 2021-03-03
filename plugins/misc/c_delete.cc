@@ -18,13 +18,12 @@
  *------------------------------------------------------------------
  * delete and clear commands
  */
-//testing=script,complete 2006.07.16
 //BUG// If someone deletes an element inside an instance of a subckt
 // (like ".delete r1.x1", there is no error message, and the deleted
 // element will reappear next time an elaboration occurs, which is 
 // usually before anything else.
 //
-#define INTERFACE
+#include "platform.h"
 #include "qucs_globals.h"
 #include "qio.h"
 #define CARD_LIST ElementList
@@ -33,7 +32,9 @@
 #include "qucs_globals.h"
 #include "e_cardlist.h"
 #include "command.h"
+#define CARD_LIST ElementList
 #define CMD Command
+#define CS istream_t
 /*--------------------------------------------------------------------------*/
 namespace {
 /*--------------------------------------------------------------------------*/
@@ -127,7 +128,7 @@ private:
     }
   }
 } p1;
-DISPATCHER<CMD>::INSTALL d1(&command_dispatcher, "delete|rm", &p1);
+DISPATCHER<CMD>::INSTALL d1(&qucs::command_dispatcher, "delete|rm", &p1);
 /*--------------------------------------------------------------------------*/
 }
 /*--------------------------------------------------------------------------*/

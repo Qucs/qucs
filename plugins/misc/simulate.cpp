@@ -26,7 +26,7 @@ using qucs::SimCtrl;
 class Simulate : public Command{
 	void do_it(istream_t& cs, ElementList* s) override;
 }c;
-Dispatcher<Command>::INSTALL p0(&command_dispatcher, "simulate", &c);
+Dispatcher<Command>::INSTALL p0(&qucs::command_dispatcher, "simulate", &c);
 /*--------------------------------------------------------------------------*/
 struct mySimCtrl : SimCtrl{
 	mySimCtrl(Simulate* r) : _r(r){}
@@ -56,7 +56,7 @@ void Simulate::do_it(istream_t& cmd, ElementList* sckt)
    if(f == sckt->end()){itested();
       Simulator const* proto = QucsSettings.simulator();
       if(which!=""){itested();
-         auto p = data_dispatcher[which];
+         auto p = qucs::data_dispatcher[which];
 			proto = dynamic_cast<Simulator const*>(p);
       }else{ untested();
       }

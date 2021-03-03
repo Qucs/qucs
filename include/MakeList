@@ -9,6 +9,7 @@ HDR = \
 	dot.h \
 	dispatcher.h \
 	element.h \
+	element_list.h \
 	geometry.h \
 	graph.h \
 	exception.h \
@@ -28,7 +29,6 @@ HDR = \
 	qio.h \
 	qt_compat.h \
 	qucs_globals.h \
-	schematic_model.h \
 	sckt_base.h \
 	settings.h \
 	simulator.h \

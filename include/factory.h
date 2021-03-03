@@ -16,10 +16,12 @@
 #ifndef QUCS_SYMBOL_FACTORY
 #define QUCS_SYMBOL_FACTORY
 
-class ElementList;
+namespace qucs {
+	class ElementList;
+}
 
 struct SymbolFactory{
-	ElementList* _scope{nullptr};
+	qucs::ElementList* _scope{nullptr};
 };
 
 #endif

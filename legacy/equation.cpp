@@ -34,7 +34,7 @@ protected:
 
   void dialgButtStuff(ComponentDialog& d)const;
 }D;
-static Dispatcher<Symbol>::INSTALL p(&symbol_dispatcher, "Eqn", &D);
+static Dispatcher<Symbol>::INSTALL p(&qucs::symbol_dispatcher, "Eqn", &D);
 static Module::INSTALL pp("lumped", &D);
 
 Equation::Equation() : Component()

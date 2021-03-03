@@ -11,10 +11,11 @@
  *                                                                         *
  ***************************************************************************/
 
-#include "qucs_globals.h"
 #include "data.h"
-#include "output.h"
 #include "exception.h"
+#include "output.h"
+#include "qucs_globals.h"
+#include "element_list.h"
 #include "sckt_base.h"
 /*--------------------------------------------------------------------------*/
 namespace{

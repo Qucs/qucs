@@ -40,7 +40,7 @@ private:
 	Port _port;
 	bool _highlight;
 }d;
-static Dispatcher<Symbol>::INSTALL p(&symbol_dispatcher, "NodeLabel", &d);
+static Dispatcher<Symbol>::INSTALL p(&qucs::symbol_dispatcher, "NodeLabel", &d);
 /*--------------------------------------------------------------------------*/
 /*--------------------------------------------------------------------------*/
 std::string NodeLabel::paramValue(std::string const& n) const

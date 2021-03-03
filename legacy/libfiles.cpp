@@ -18,7 +18,7 @@
 #include "module.h"
 #include "schematic_lang.h"
 #include "symbol.h"
-#include "schematic_model.h" // tmp, debugging
+#include "element_list.h" // tmp, debugging
 #include "io_trace.h"
 #include "qt_compat.h"
 #include "docfmt.h"

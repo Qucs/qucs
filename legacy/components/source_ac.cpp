@@ -29,7 +29,7 @@ public:
   }
   static Element* info(QString&, char* &, bool getNewOne=false);
 }D;
-static Dispatcher<Symbol>::INSTALL p(&symbol_dispatcher, "Pac", &D);
+static Dispatcher<Symbol>::INSTALL p(&qucs::symbol_dispatcher, "Pac", &D);
 static Module::INSTALL pp("probes", &D);
 
 

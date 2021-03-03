@@ -1,5 +1,5 @@
 
-#include "schematic_model.h"
+#include "element_list.h"
 #include "place.h"
 
 using namespace qucs;

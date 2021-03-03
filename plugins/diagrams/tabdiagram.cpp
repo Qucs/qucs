@@ -21,6 +21,7 @@
 #include "misc.h"
 #include "qucs_globals.h"
 #include "module.h"
+#include "painting.h"
 
 #include "some_font_stuff.h"
 /*--------------------------------------------------------------------------*/
@@ -81,7 +82,7 @@ private:
 protected:
   void calcData(Graph*) {};  // no graph data
 }D;
-Dispatcher<Diagram>::INSTALL p(&diagram_dispatcher, "Tab", &D);
+Dispatcher<Diagram>::INSTALL p(&qucs::diagram_dispatcher, "Tab", &D);
 Module::INSTALL pp("diagrams", &D);
 /*--------------------------------------------------------------------------*/
 TabDiagram::TabDiagram(int _cx, int _cy) : Diagram(_cx, _cy)

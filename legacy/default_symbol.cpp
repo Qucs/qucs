@@ -116,7 +116,7 @@ public:
 			s->set_param_by_name("$numports", std::to_string(i));
 			s->set_label(prefix + std::to_string(i));
 			trace1("default symbol",  s->label());
-			auto d = new disp_t(&symbol_dispatcher, s->label(), s);
+			auto d = new disp_t(&qucs::symbol_dispatcher, s->label(), s);
 			_sstash.push_back(s);
 			_stash.push_back(d);
 		}
