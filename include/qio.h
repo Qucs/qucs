@@ -54,7 +54,6 @@ public:
 #define  mPOSITIVE qmPOSITIVE	/* store absolute value */
 #define  mOCTAL	 qmOCTAL	/* read the number in octal */
 #define  mHEX		 qmHEX		/* read the number in hex */
-#define INTERFACE
 #include "ap.h"
 #undef CS
 #define fullString fullstring

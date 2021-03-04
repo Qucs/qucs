@@ -26,8 +26,8 @@
 #define AP_H
 //#include "md.h"
 #include <string.h>
-#define INTERFACE
 //#include <QTextStream> // BUG
+#include "platform.h"
 #include "io_trace.h"
 #define CS istream_t
 #define AP_MOD AP_MOD_

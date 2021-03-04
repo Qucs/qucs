@@ -354,8 +354,7 @@ private:
 
 #if QT_VERSION >= 0x050000
 
-# define TRUE true
-# define FALSE false
+# include "platform.h"
 
 # define setResizeMode setSectionResizeMode
 # define setClickable setSectionsClickable
