@@ -1,0 +1,4 @@
+include MakeList
+
+bitmap_DATA = $(XPMS) $(PNGS)
+bitmapdir = ${pkgdatadir}/bitmaps

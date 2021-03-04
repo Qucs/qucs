@@ -864,7 +864,7 @@ AC_CONFIG_FILES([
     tools/powercombining/Makefile:autotools/powercombining.in
     src/Makefile:autotools/src.in
     src/action/Makefile
-    src/bitmaps/Makefile
+    src/bitmaps/Makefile:autotools/bitmaps.in
     src/tests/Makefile
     tests/Makefile
     translations/Makefile
