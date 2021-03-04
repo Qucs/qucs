@@ -52,7 +52,7 @@ void SaveDialog::setApp(qucs::App *a)
 
 void SaveDialog::initDialog()
 {
-   setSizeGripEnabled( FALSE );
+   setSizeGripEnabled(false);
    SaveDialogLayout = new QVBoxLayout(this);
 
    label = new QLabel( tr( "Select files to be saved" ) );

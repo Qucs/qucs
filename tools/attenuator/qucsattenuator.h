@@ -3,6 +3,8 @@
 **     Qucs Attenuator Synthesis
 **     qucsattenuator.h
 **
+**  BUG: is this distributable under GPLv3+?
+**
 **
 **
 **

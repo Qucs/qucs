@@ -39,12 +39,6 @@
 
 #if QT_VERSION >= 0x050000
 
-// (assuming this had to to with historic QT, but it wont matter)
-// warning on some systems, error without it on others. used in old code only.
-// replace everywhere, then drop these two.
-#define TRUE true
-#define FALSE false
-
 // TODO: replace all uses in non-legacy and get rid of this
 # define setResizeMode setSectionResizeMode
 # define setClickable setSectionsClickable

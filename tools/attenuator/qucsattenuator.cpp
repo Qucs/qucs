@@ -2,6 +2,8 @@
 **     Qucs Attenuator Synthesis
 **     qucsattenuator.cpp
 **
+**  BUG: is this distributable under GPLv3+?
+**
 **
 **
 **
@@ -247,18 +249,18 @@ void QucsAttenuator::slotQuit()
 void QucsAttenuator::slotSetText_Zin( const QString &text )
 {
   if(ComboTopology->currentIndex() == BRIDGE_TYPE) {
-    lineEdit_Zout->blockSignals( TRUE );
+    lineEdit_Zout->blockSignals(true);
     lineEdit_Zout->setText( text );
-    lineEdit_Zout->blockSignals( FALSE );
+    lineEdit_Zout->blockSignals(false);
   }
 }
 
 void QucsAttenuator::slotSetText_Zout( const QString &text )
 {
   if(ComboTopology->currentIndex() == BRIDGE_TYPE) {
-    lineEdit_Zin->blockSignals( TRUE );
+    lineEdit_Zin->blockSignals(true);
     lineEdit_Zin->setText( text );
-    lineEdit_Zin->blockSignals( FALSE );
+    lineEdit_Zin->blockSignals(false);
   }
 }
 
