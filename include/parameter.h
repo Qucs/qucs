@@ -39,7 +39,6 @@
 #include "ap.h"
 #include "element_list.h"
 #include "message.h"
-#define INTERFACE
 #define PARA_BASE ParameterBase
 #define PARAMETER Parameter
 #define PARAM_LIST ParamList

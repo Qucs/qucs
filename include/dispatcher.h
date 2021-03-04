@@ -9,7 +9,6 @@
 #include "object.h"
 /*--------------------------------------------------------------------------*/
 // TODO: connect with qucs error facilities.
-#define INTERFACE // ??
 // INTERFACE void error(int,const char*,...);
 // INTERFACE void error(int,const std::string&);
 /*--------------------------------------------------------------------------*/

@@ -4,7 +4,6 @@
 #include "object.h"
 #include "element_list.h"
 
-#define INTERFACE
 #define CMD Command
 // #define CARD_LIST qucs::ElementList // really?
 #define CS istream_t
