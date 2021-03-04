@@ -1,6 +1,4 @@
 /***************************************************************************
-                                 container.h
-                                -----------
     begin                : 2018
     copyright            : QUCS Developers
  ***************************************************************************/
@@ -9,16 +7,17 @@
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU General Public License as published by  *
- *   the Free Software Foundation; either version 2 of the License, or     *
+ *   the Free Software Foundation; either version 3 of the License, or     *
  *   (at your option) any later version.                                   *
  *                                                                         *
  ***************************************************************************/
-// provide a compatibility layer between different qt releases for qucs.
+// a compatibility layer between different qt releases,
+// collect all QT_VERSION dependent code here (TODO: remove QT<5).
 //
-// collect all QT_VERSION dependent code here.
+// some Qt accessibility functions.
 
-#ifndef QUCS_CONTAINER_H
-#define QUCS_CONTAINER_H
+#ifndef QUCS_QT_COMPAT_H
+#define QUCS_QT_COMPAT_H
 
 #include <list>
 #ifndef UNTANGLE_QT // later
@@ -31,19 +30,14 @@
 
 #include "geometry.h"
 #include "io_trace.h"
+#include "platform.h"
 
 #ifndef QT_MAJOR_VERSION
 #define QT_MAJOR_VERSION (QT_VERSION >> 16)
 #endif
 
-#if QT_MAJOR_VERSION < 5
-# define USE_SCROLLVIEW
-#endif
-
-// strictly, this should also work with qt4.
-
 // partly implement Q3Ptrlist, see Qt3 documentation.
-// just don't use it in new code, remove what is no longer used.
+// used in legacy code only (?). should be moved out.
 template <class T>
 class Q3PtrList {
 public:
@@ -354,8 +348,13 @@ private:
 
 #if QT_VERSION >= 0x050000
 
-# include "platform.h"
+// (assuming this had to to with historic QT, but it wont matter)
+// warning on some systems, error without it on others. used in old code only.
+// replace everywhere, then drop these two.
+#define TRUE true
+#define FALSE false
 
+// TODO: replace all uses in non-legacy and get rid of this
 # define setResizeMode setSectionResizeMode
 # define setClickable setSectionsClickable
 

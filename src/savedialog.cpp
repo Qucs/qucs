@@ -21,6 +21,7 @@
 #include "savedialog.h"
 #include "qucs_app.h"
 #include "qucsdoc.h"
+#include "platform.h"
 
 #include <QVariant>
 #include <QLabel>
