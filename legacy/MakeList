@@ -56,7 +56,7 @@ MAYBE_OBSOLETE = \
 	subcircuit.cpp
 
 HDR = \
-	obsolete_paintings.h \
+	obsolete_stuff.h \
 	curvediagram.h \
 	markerdialog.h \
 	marker.h \

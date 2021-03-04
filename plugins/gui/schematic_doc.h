@@ -337,6 +337,7 @@ public: // mostly not here
   Node* selectedNode(int, int);
   Marker* setMarker(int, int);
 
+#if 0
 private: // FIXME: remove
   void    markerLeftRight(bool, Q3PtrList<ElementGraphics>*);
   void    markerUpDown(bool, Q3PtrList<ElementGraphics>*);
@@ -353,6 +354,7 @@ public:
 				 break;
 	  }
   }
+#endif
 
   // now in mouseactions
   // Element* selectElement(QPoint const&, bool, int *index=0);

@@ -13,7 +13,7 @@
 #include "digi_sim.h"
 #include "qucs_app.h"
 #include "property.h"
-#include "../legacy/obsolete_paintings.h"
+#include "../legacy/obsolete_stuff.h" // BUG
 #include "task_element.h"
 
 namespace {

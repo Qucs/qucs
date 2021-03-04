@@ -34,7 +34,7 @@
 #include "qucs_app.h"
 #include "misc.h"
 #include "some_font_stuff.h"
-#include "obsolete_paintings.h"
+#include "obsolete_stuff.h"
 #include "diagram.h"
 
 namespace{

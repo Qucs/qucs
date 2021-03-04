@@ -23,7 +23,7 @@
 #include "module.h"
 
 #include "some_font_stuff.h"
-#include "obsolete_paintings.h"
+#include "obsolete_stuff.h"
 
 namespace{
 using namespace qucs;

@@ -36,7 +36,7 @@
 #include <QPainter>
 #include <QDebug>
 
-#include "../legacy/obsolete_paintings.h" // BUG
+#include "../legacy/obsolete_stuff.h" // BUG
 
 LegacyTaskElement::LegacyTaskElement(LegacyTaskElement const& p)
   : TaskElement(p)

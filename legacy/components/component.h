@@ -17,9 +17,10 @@
 
 #include "symbol.h"
 #include "qt_compat.h"
-#include "../legacy/obsolete_paintings.h"
+#include "../legacy/obsolete_stuff.h"
 #include "property.h"
 #include "qucs_globals.h"
+
 
 namespace qucs{
 	class ViewPainter;

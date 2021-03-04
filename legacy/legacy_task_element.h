@@ -16,6 +16,7 @@
 #include "platform.h"
 #include "task_element.h"
 #include "qt_compat.h"
+#include "obsolete_stuff.h"
 class ComponentDialog;//really??
 class Property;
 /* -------------------------------------------------------------------------------- */

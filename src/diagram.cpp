@@ -50,7 +50,7 @@
 #include <QMouseEvent>
 #include <QRectF>
 #include "some_font_stuff.h"
-#include "../legacy/obsolete_paintings.h" // BUG
+//#include "../legacy/obsolete_stuff.h" // BUG
 #include "graph.h"
 
 namespace qucs {

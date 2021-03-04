@@ -16,7 +16,6 @@
 #include "task_element.h"
 #include "module.h"
 #include "property.h"
-#include "../legacy/obsolete_paintings.h"
 #include "qt_compat.h"
 #include "../legacy_task_element.h"
 

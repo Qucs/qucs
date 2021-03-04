@@ -33,7 +33,7 @@
 #include "qucs_globals.h"
 #include "module.h"
 #include <QLineEdit>
-#include "obsolete_paintings.h"
+#include "obsolete_stuff.h"
 
 namespace {
 

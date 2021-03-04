@@ -31,7 +31,7 @@
 
 #include "misc.h"
 #include "diagram.h"
-#include "obsolete_paintings.h"
+#include "obsolete_stuff.h"
 #include "qucs_globals.h"
 #include "module.h"
 
