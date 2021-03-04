@@ -19,6 +19,7 @@
  ***************************************************************************/
 
 #include "savedialog.h"
+#include "platform.h"
 #include "qucs_app.h"
 #include "qucsdoc.h"
 
