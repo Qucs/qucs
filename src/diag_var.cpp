@@ -84,7 +84,6 @@ private:
 	CommonData const* find_in_scope(ElementList const* scope, std::string const& what)
 	{
 		trace0("var sckt");
-		assert(scope);
 		if(scope) {
 			CommonData const* f=nullptr;
 			for(auto x : *scope){itested();

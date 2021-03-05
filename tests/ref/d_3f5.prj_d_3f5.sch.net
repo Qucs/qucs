@@ -1,0 +1,9 @@
+# Qucs
+## declarations 2
+# unresolved symbol (empty)
+# unresolved symbol Lib:1:0
+## declarations end
+
+Sub:d_3f52 Type="1_0"
+(empty):ammeter1
+(empty):v_dc1

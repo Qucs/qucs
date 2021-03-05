@@ -275,10 +275,10 @@ private: // Symbol
 	}
 	index_t paramCount() const{ return Symbol::paramCount() + 4 + _params.size(); }
 	void setParameter(index_t n, std::string const& v) override{
-		assert(n<Lib::paramCount());
 		bool redo = false;
 		int m = int(n) - int(Symbol::paramCount());
-		trace3("Lib:SP", n, v, m);
+		trace4("Lib:SP", n, v, m, _params.size());
+//		assert(n<Lib::paramCount()); not necessarily.
 		switch(m){
 		case 0:
 			break;
@@ -297,7 +297,8 @@ private: // Symbol
 			if(m - 4 < 0){
 				Symbol::setParameter(n, v);
 			}else if(m - 4 >= int(_params.size())){ untested();
-				Symbol::setParameter(n, v);
+				incomplete();
+			// 	Symbol::setParameter(n, v);
 			}else if(auto p = dynamic_cast<PARAMETER<double>* >(_params[m-4])){ untested();
 				*p = v;
 			}else{
