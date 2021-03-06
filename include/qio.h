@@ -13,35 +13,48 @@
 #ifndef QUCS_IO_H
 #define QUCS_IO_H
 
-#include <QTextStream> // BUG
 #include "io_trace.h"
-
 std::string findFile(const std::string& filename, const std::string& path, int mode);
 
 class QFile;
+class QTextStream;
+class QString;
 
 // output stream
-class ostream_t : public QTextStream /*BUG*/ {
+class ostream_t {
 private:
 	ostream_t(ostream_t const&) = delete;
 public:
+	~ostream_t();
 //	explicit ostream_t(){ incomplete(); }
+	explicit ostream_t(std::string f);
 	explicit ostream_t(FILE* f);
 	explicit ostream_t(QFile* /* BUG const */ file);
-	explicit ostream_t(QString /* BUG const */ * filename) :
-		QTextStream(filename, QIODevice::WriteOnly){}
+	explicit ostream_t(QString /* BUG const */ * filename);
 
 public:
-	ostream_t& operator<<(std::string const& x){
-		QTextStream::operator<<(QString::fromStdString(x));
-		return *this;
+	ostream_t& operator<<(std::string const& x);
+	ostream_t& operator<<(double x){
+		return *this << std::to_string(x);
+	}
+	ostream_t& operator<<(long unsigned int x){
+		return *this << std::to_string(x);
+	}
+	ostream_t& operator<<(const char* x){
+		return *this << std::string(x);
 	}
 	template<class T>
 	ostream_t& operator<<(T x){
-		QTextStream::operator<<(x);
+		if(_s){
+			(*_s) << x;
+		}else{
+		}
 		return *this;
 	}
+	void flush();
 	//bool atEnd() const{return QTextStream::atEnd();}
+private:
+	QTextStream* _s{nullptr};
 };
 
 #define CS istream_t

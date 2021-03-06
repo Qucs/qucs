@@ -15,7 +15,6 @@
 #include "docfmt.h"
 #include "element.h"
 #include "conductor.h"
-//#include "components/component.h" // BUG
 #include "qucs_globals.h"
 #include "element_list.h"
 #include "schematic_lang.h"
@@ -23,8 +22,6 @@
 #include "net.h"
 #include "exception.h"
 #include "sckt_base.h"
-
-#include <QFile> // yikes.
 
 namespace{
 
@@ -40,7 +37,6 @@ public:
 	explicit VerilogNetlister();
 private: // legacy implementation
   void createNetlist(ostream_t& stream, ElementList const* m) const;
-  void throughAllComps(ostream_t& d, SubcktBase const& m) const;
   void clear() const;
 private: // Command
   void do_it(istream_t&, ElementList*) override;
@@ -61,21 +57,15 @@ VerilogNetlister::VerilogNetlister() : DocumentFormat()
 }
 /*--------------------------------------------------------------------------*/
 void VerilogNetlister::do_it(istream_t& cs, ElementList* o)
-{
+{ untested();
 	lang = qucs::language_dispatcher["verilog"];
 	assert(lang);
 
 	std::string fn;
 	cs >> fn;
 
-	QFile NetlistFile(QString::fromStdString(fn));
-	if(!NetlistFile.open(QIODevice::WriteOnly | QFile::Truncate)) { untested();
-		fprintf(stderr, "Error: Could write to %s\n", fn.c_str());
-		exit(1); // BUG
-	}else{
-	}
-
-	ostream_t Stream(&NetlistFile);
+	trace1("VerilogNetlister::do_it", fn);
+	ostream_t Stream(fn);
 
 	assert(o);
 	auto& m = *o;
@@ -117,30 +107,4 @@ void VerilogNetlister::createNetlist(ostream_t& stream,
 	}
 }
 /*--------------------------------------------------------------------------*/
-// obsolete.
-void VerilogNetlister::throughAllComps(ostream_t& stream, SubcktBase const& m) const
-{ incomplete();
-	auto const& sckt = *m.subckt();
-
-	for(auto it_ : sckt){
-		auto it = dynamic_cast<Symbol const*>(it_);
-		if(it){
-		}else{
-			incomplete();
-			continue;
-		}
-
-		auto sym = it; // dynamic_cast<Symbol const*>(pc);
-		if(sym && sym->subckt()){
-			trace1("need expand?", sym->label());
-			// if there is a sckt, make sure it is populated.
-			sym->proto(&sckt); // just expand?
-		}else if(it->typeName() == "GND") { // BUG, use a rail?
-
-			// it->Ports.first()->Connection->setName("gnd");
-		}
-
-	}
-}
-
 } // namespace

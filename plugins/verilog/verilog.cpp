@@ -641,14 +641,7 @@ void VerilogSchematicFormat::do_it(istream_t& cs, ElementList* scope)
 {
 	std::string fn;
 	cs >> fn;
-
-	QFile NetlistFile(QString::fromStdString(fn));
-	if(!NetlistFile.open(QIODevice::WriteOnly | QFile::Truncate)) { untested();
-		cs.warn(qucs::MsgFatal, "Cannot open "+fn+" for writing\n");
-		return; // throw?
-	}else{
-	}
-	ostream_t stream(&NetlistFile);
+	ostream_t stream(fn);
 
 	auto it = scope->find_("main");
 	if(it == scope->end()){ untested();

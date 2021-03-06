@@ -13,6 +13,7 @@
 #include "platform.h"
 #include "qio.h"
 #include "exception.h"
+#include "qt_compat.h"
 #include <QFile>
 
 /*--------------------------------------------------------------------------*/
@@ -30,18 +31,56 @@ static char* trim(char *string)
   return string;
 }
 /*--------------------------------------------------------------------------*/
-ostream_t::ostream_t(FILE* file)
-	: QTextStream(file, QIODevice::WriteOnly)
+ostream_t& ostream_t::operator<<(std::string const& x)
 {
+	if(_s){
+		(*_s) << QString_(x);
+	}else{
+	}
+	return *this;
+}
+/*--------------------------------------------------------------------------*/
+ostream_t::~ostream_t()
+{
+	delete _s;
+}
+/*--------------------------------------------------------------------------*/
+void ostream_t::flush()
+{
+	if(_s){
+		_s->flush();
+	}else{
+	}
+}
+/*--------------------------------------------------------------------------*/
+ostream_t::ostream_t(std::string f)
+{
+	auto q = new QFile(QString_(f)); // memory leak
+	if(!q->open(QIODevice::WriteOnly | QFile::Truncate)) { untested();
+		throw qucs::Exception("can't open " + f + " for writing");
+	}else{ untested();
+	}
+	_s = new QTextStream(q);
+}
+/*--------------------------------------------------------------------------*/
+ostream_t::ostream_t(QString /* BUG const */ * filename)
+{
+	_s = new QTextStream(filename, QIODevice::WriteOnly);
+}
+/*--------------------------------------------------------------------------*/
+ostream_t::ostream_t(FILE* file)
+{
+	incomplete(); // still used...?
+	_s = new QTextStream(file, QIODevice::WriteOnly);
 }
 /*--------------------------------------------------------------------------*/
 // BUG.
 ostream_t::ostream_t(QFile* /* BUG const */ file)
-	: QTextStream(file)
 {
 	incomplete(); // still used...?
+	_s = new QTextStream(file);
 }
-
+/*--------------------------------------------------------------------------*/
 std::string istream_t::read_line()
 {
 	get_line("incomplete");

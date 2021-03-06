@@ -47,7 +47,7 @@ static Dispatcher<Language>::INSTALL p(&language_dispatcher, "dat", &d0);
 /* -------------------------------------------------------------------------------- */
 void DatLang::printItem(ostream_t& s, Element const* c) const
 {
-	s << "... dat item\n";
+	s << std::string("... dat item\n");
 	if(auto d=dynamic_cast<Data const*>(c)){itested();
 		printData(d, s);
 	}else if(c){ untested();

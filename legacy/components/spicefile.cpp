@@ -299,6 +299,8 @@ bool SpiceFile::createSubNetlist(ostream_t &stream)
                           arg(FileName + ".lst");
       return false;
     }
+	 incomplete();
+#if 0
     outstream = &stream;
     filstream = new QTextStream(&ConvFile);
     QString SpiceName = SpiceFile.fileName();
@@ -306,6 +308,7 @@ bool SpiceFile::createSubNetlist(ostream_t &stream)
     ConvFile.close();
     delete filstream;
     return ret;
+#endif
   }
 
   // load old file and stuff into stream
