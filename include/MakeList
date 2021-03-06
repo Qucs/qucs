@@ -8,6 +8,7 @@ HDR = \
 	data.h \
 	dot.h \
 	dispatcher.h \
+	e_base.h \
 	element.h \
 	element_list.h \
 	geometry.h \
