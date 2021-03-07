@@ -253,7 +253,7 @@ std::string istream_t::ctos(const std::string& term,
 			}else if (skip1(the_begin_quote)) {
 				++quotes;
 				skip();
-			}else if (skip1('\\')) { untested();
+			}else if (skip1('\\')) {itested();
 				end_string = cursor() - 1;
 				s += _cmd.substr(begin_string, end_string-begin_string);
 				begin_string = cursor();

@@ -2497,10 +2497,10 @@ void SchematicDoc::becomeCurrent()
 //      _app->symEdit->setWhatsThis(tr("Edit Schematic\n\nEdits the schematic"));
 //    }
   }else{itested();
-    _app->symEdit->setText(tr("Edit Circuit Symbol"));
-    _app->symEdit->setStatusTip(tr("Edits the symbol for this schematic"));
-    _app->symEdit->setWhatsThis(
-	tr("Edit Circuit Symbol\n\nEdits the symbol for this schematic"));
+//    _app->symEdit->setText(tr("Edit Circuit Symbol"));
+//    _app->symEdit->setStatusTip(tr("Edits the symbol for this schematic"));
+//    _app->symEdit->setWhatsThis(
+//	tr("Edit Circuit Symbol\n\nEdits the symbol for this schematic"));
   }
 
   {itested();

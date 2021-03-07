@@ -224,7 +224,9 @@ private:
   bool deleteProject(const QString &);
   void updatePortNumber(Doc*, int);
   void fillComboBox(bool);
+public: // BUG
   void switchSchematicDoc(bool);
+private:
   void switchEditMode(bool);
 //  void changeSchematicSymbolMode(SchematicDoc*);
   bool recurRemove(const QString &);
@@ -266,11 +268,11 @@ private slots:
   void slotToggleDock(bool);
   void slotHelpAbout();     // shows an about dialog
 
-private:
-  void initActions();    // initializes all QActions of the application
-  void initMenuBar();    // creates the menu_bar and inserts the menuitems
-  void initToolBar();    // creates the toolbars
-  void initStatusBar();  // setup the statusbar
+public: // why?
+  void initMenuBar();
+  void initToolBar();
+  void initActions();
+  void initStatusBar();
 
 public:
 //  void addWorkToolbarAction(QAction* a);
@@ -291,9 +293,13 @@ public:
   QAction *fileNew, *fileNewNoDD, *textNew, *fileNewDpl, *fileOpen, *fileSave, *fileSaveAs,
           *fileSaveAll, *fileClose, *fileCloseOthers, *fileCloseAllLeft, *fileCloseAllRight,
           *fileCloseAll, *fileExamples, *fileSettings, *filePrint, *fileQuit,
-          *projNew, *projOpen, *projDel, *projClose, *applSettings, *refreshSchPath,
-          *editCut, *editCopy, *magAll, *magOne, *magMinus, *filePrintFit,
-          *symEdit, *intoH, *popH, *simulate, *dpl_sch, *undo, *redo, *dcbias;
+          *projNew, *projOpen, *projDel, *projClose, *applSettings, *refreshSchPath;
+//          *editCut, *editCopy, *magAll, *magOne, *magMinus, *filePrintFit,
+//          *symEdit, *intoH, *popH, *simulate, *dpl_sch,
+//
+	QAction *undo, *redo;
+	QAction *popH;
+	// , *dcbias;
 
   QAction *exportAsImage;
 
@@ -313,12 +319,17 @@ private:
   QLineEdit       *CompSearch;
   QPushButton     *CompSearchClear;
 
-  QAction *helpAboutApp, *helpAboutQt, *viewToolBar, *viewStatusBar,
-          *viewBrowseDock, *viewOctaveDock;
+  QAction *helpAboutApp, *helpAboutQt;
+
+  QAction* viewToolBar{nullptr};
+  QAction* viewStatusBar{nullptr};
+  QAction* viewBrowseDock{nullptr};
+  QAction* viewOctaveDock{nullptr};
 
   // menus contain the items of their menubar
   enum { MaxRecentFiles = 8 };
-  QMenu *fileMenu, *editMenu, *insMenu, *projMenu, *simMenu, *viewMenu,
+//  QMenu *fileMenu;
+  QMenu *editMenu, *insMenu, *projMenu, *simMenu, *viewMenu,
              *helpMenu, *alignMenu, *toolMenu, *recentFilesMenu;
   QAction *fileRecentAction[MaxRecentFiles];
   QAction *fileClearRecent;
@@ -326,8 +337,11 @@ private:
   // submenus for the PDF documents
   QMenu *helpTechnical, *helpReport, *helpTutorial;
 
-  QToolBar *fileToolbar, *editToolbar, *viewToolbar;
-  QToolBar *_docToolBar;
+  // which of those are needed?
+  QToolBar* fileToolbar{nullptr};
+  QToolBar* editToolbar{nullptr};
+  QToolBar* viewToolbar{nullptr};
+  QToolBar* _docToolBar{nullptr};
 
   QLabel *WarningLabel, *PositionLabel;  // labels in status bar
 
@@ -411,6 +425,7 @@ private:
   void showHTML(const QString&);
   void launchTool(const QString&, const QString&, const QString& = ""); // tool, description and args
   friend class SaveDialog;
+public: // BUG
   QString lastExportFilename;
 }; // App
 

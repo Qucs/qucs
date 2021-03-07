@@ -65,7 +65,7 @@ void ComponentWidget::startDrag(Qt::DropActions)
 
 ComponentListWidgetItem::ComponentListWidgetItem(qucs::Element const* e)
 	: _e(e)
-{ untested();
+{itested();
 	assert(e);
 	QString File = e->iconBasename();
 	QString Name = QString::fromStdString(e->short_label());

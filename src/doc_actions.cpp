@@ -74,7 +74,7 @@ QAction *formerAction;   // remember action before drag n'drop etc.
 // only mouse actions? how about undoable keyboard actions?
 MouseActions::MouseActions(Doc* d)
   : QObject() // , _doc(d)
-{untested();
+{itested();
 	auto w = dynamic_cast<QWidget*>(d);
 	assert(w);
 	QObject::setParent(w);
@@ -99,7 +99,7 @@ MouseActions::~MouseActions()
 //  delete focusMEvent;
 }
 void MouseActions::setCurrentMode(MouseAction* a)
-{ untested();
+{itested();
   if(_maCurrent){itested();
     _maCurrent->uncheck();
   }else{itested();
@@ -728,7 +728,7 @@ void MouseActions::MMoveRotate(SchematicDoc *, QMouseEvent *)
 
 // not sure why this is needed
 bool MouseActions::eventFilter(QObject *, QEvent *e)
-{ untested();
+{itested();
   if(e->isAccepted()){itested();
   }else{itested();
     // drop event?
@@ -1606,7 +1606,7 @@ bool ElementMouseAction::isSelected() const
 
 // why?
 Doc* MouseActions::doc()
-{ untested();
+{itested();
 	auto w = dynamic_cast<QWidget*>(parent());
 	assert(w);
 	auto d = dynamic_cast<Doc*>(w);
@@ -1639,7 +1639,7 @@ bool MouseActions::handle(QEvent*e)
     // emit signalUndoState(true);
     executeCommand(c);
     return true;
-  }else{ untested();
+  }else{itested();
     return false;
   }
 
@@ -1661,12 +1661,12 @@ void MouseAction::setCursor(QCursor const& c)
 // https://www.walletfox.com/course/qundocommandexample.php?
 // https://stackoverflow.com/questions/32973326/qgraphicsscene-how-to-map-item-movements-into-qundocommand
 void MouseActions::possiblyToggleAction(MouseAction* a, QObject* s)
-{ untested();
+{itested();
 	auto sender = dynamic_cast<QAction*>(s);
 	if(!sender){ // assert?
 		incomplete();
 		return;
-	}else{ untested();
+	}else{itested();
 	}
 
 	trace3("possiblyToggle", a, sender, sender->text());

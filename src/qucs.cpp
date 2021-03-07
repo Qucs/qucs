@@ -114,13 +114,7 @@ App::App()
   resize(QucsSettings.dx, QucsSettings.dy);
 
   initView();
-  initActions();
-  initMenuBar();
-  initToolBar();
-  initStatusBar();
-  viewToolBar->setChecked(true);
-  viewStatusBar->setChecked(true);
-  viewBrowseDock->setChecked(true);
+//  initStatusBar();
   slotViewOctaveDock(false);
   slotUpdateRecentFiles();
   initCursorMenu();
@@ -129,32 +123,6 @@ App::App()
   // instance of small text search dialog
   SearchDia = new SearchDialog(this);
 
-  // creates a document called "untitled"
-  DocumentTab->createEmptySchematic("");
-
-//  select->setChecked(true);  // switch on the 'select' action
-  switchSchematicDoc(true);  // "untitled" document is schematic
-
-  lastExportFilename = QDir::homePath() + QDir::separator() + "export.png";
-
-#if 0
-  // load documents given as command line arguments
-  // // ARGH. this is argv argc
-  // TODO: move to main.cc...
-  for(int z=1; z<qApp->arguments().size(); z++) {itested();
-    QString arg = qApp->arguments()[z];
-    QByteArray ba = arg.toLatin1();
-    const char *c_arg= ba.data();
-    if(*(c_arg) == '-') {itested();
-        // do not open files with '-'
-    }else{itested();
-      QFileInfo Info(arg);
-      QucsSettings.QucsWorkDir.setPath(Info.absoluteDir().absolutePath());
-      arg = QucsSettings.QucsWorkDir.filePath(Info.fileName());
-      gotoPage(arg);
-    }
-  }
-#endif
 }
 
 App::~App()
@@ -1838,7 +1806,7 @@ void App::slotFileQuit()
       tr("Yes"), tr("No"));
 
   if(exit == 0)
-    if(closeAllFiles()) { untested();
+    if(closeAllFiles()) {itested();
       emit signalKillEmAll();   // kill all subprocesses
       qApp->quit();
     }
@@ -2372,7 +2340,7 @@ void App::switchSchematicDoc (bool SchematicMode)
 
 // ---------------------------------------------------------
 void App::switchEditMode(bool SchematicMode)
-{ untested();
+{itested();
 # if 0 // use plugin.
   fillComboBox(SchematicMode);
   slotSetCompView(0);
@@ -2892,9 +2860,9 @@ QVariant QucsFileSystemModel::data( const QModelIndex& index, int role ) const
 
 // function below is adapted from https://stackoverflow.com/questions/10789284/qfilesystemmodel-sorting-dirsfirst
 bool QucsSortFilterProxyModel::lessThan(const QModelIndex &left, const QModelIndex &right) const
-{ untested();
+{itested();
   // if sorting by file names column
-  if (sortColumn() == 0) { untested();
+  if (sortColumn() == 0) {itested();
     QucsFileSystemModel *model = qobject_cast<QucsFileSystemModel*>(sourceModel());
     // get the current sort order (do we need this ?)
     bool asc = sortOrder() == Qt::AscendingOrder ? true : false;
@@ -2916,7 +2884,7 @@ bool QucsSortFilterProxyModel::lessThan(const QModelIndex &left, const QModelInd
       return !asc;
     }else if (leftFileInfo.isDir() && !rightFileInfo.isDir()) { untested();
       return asc;
-    } else if (!leftFileInfo.isDir() || rightFileInfo.isDir()) { untested();
+    } else if (!leftFileInfo.isDir() || rightFileInfo.isDir()) {itested();
        //?
     }else if (!leftFileName.endsWith("_prj") && rightFileName.endsWith("_prj")) { untested();
       return !asc;

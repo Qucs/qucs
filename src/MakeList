@@ -50,7 +50,6 @@ CPP_SRC = \
 	qucs_app.cpp \
 	qucs.cpp \
 	qucsdoc.cpp \
-	qucs_init.cpp \
 	qucs_tabs.cpp \
 	schematic.cpp \
 	schematic_dialog.cpp \

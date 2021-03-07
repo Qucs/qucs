@@ -48,7 +48,7 @@ void CommonData::attach(CommonData const* d, CommonData const** to)
 		trace1("++1", d->_attach_count);
 		*to = d;
 #if 1
-	}else if (*d != **to) { untested();
+	}else if (*d != **to) {itested();
 		incomplete();
 		// They are different, usually by edit.
 		detach(to);

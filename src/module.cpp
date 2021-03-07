@@ -75,7 +75,7 @@ void Module::intoCategory(std::string const& cat, Module * m)
 }
 
 // waah. need one plugin per symbol list.
-void Module::registerModules (void) { untested();
+void Module::registerModules (void) {itested();
   unreachable(); // obsolete.
 }
 
@@ -121,11 +121,11 @@ Category::~Category ()
 
 // Return the available category names in a list of strings.
 QStringList Category::getCategories (void)
-{ untested();
+{itested();
   QStringList res;
   QList<Category *>::const_iterator it;
   for (it = Category::categories.constBegin(); 
-       it != Category::categories.constEnd(); it++) { untested();
+       it != Category::categories.constEnd(); it++) {itested();
     res.append ((*it)->Name);
   }
   return res;
@@ -135,12 +135,12 @@ QStringList Category::getCategories (void)
 // as a pointer list. The pointer list is empty if there is no such
 // category available.
 QList<Module *> Category::getModules (QString category)
-{ untested();
+{itested();
   QList<Module *> res;
   QList<Category *>::const_iterator it;
   for (it = Category::categories.constBegin();
-       it != Category::categories.constEnd(); it++) { untested();
-    if (category == (*it)->Name) { untested();
+       it != Category::categories.constEnd(); it++) {itested();
+    if (category == (*it)->Name) {itested();
       res = (*it)->Content;
     }
   }
@@ -151,8 +151,8 @@ QList<Module *> Category::getModules (QString category)
 // category name.  The function returns minus 1 if there is no such
 // category.
 int Category::getModulesNr (QString category)
-{ untested();
-  for (int i = 0; i < Category::categories.size(); i++) { untested();
+{itested();
+  for (int i = 0; i < Category::categories.size(); i++) {itested();
     if (category == Category::categories.at(i)->Name)
       return i;
   }

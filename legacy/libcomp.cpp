@@ -105,7 +105,7 @@ private:
 //		return pos;
 //	}
 
-	rect_t bounding_rect() const override{ untested();
+	rect_t bounding_rect() const override{itested();
 		// BUG. cache.
 		rect_t br;
 		assert(paintings());
@@ -124,7 +124,7 @@ private:
 	}
 
 	// same in nonlegacy Sub...?
-	void paint(ViewPainter* v) const override{ untested();
+	void paint(ViewPainter* v) const override{itested();
 		assert(paintings());
 		for(auto e : *paintings()){ untested();
 			incomplete(); // BUG. honour p->legacyTransformhack
@@ -207,24 +207,24 @@ private: // Element
 	Symbol* clone()const override{
 		return new Lib(*this);
 	}
-	void paint(ViewPainter* v) const override{ untested();
+	void paint(ViewPainter* v) const override{itested();
 		// if(has_common()){untested();
 		//   common()->paint(p);
 		// }else
 		if(auto p = dynamic_cast<Painting const*>(_parent)){
 			// no-op? is the painting a sub-object?
 			p->paint(v);
-		}else{ untested();
+		}else{itested();
 		}
 		Symbol::paint(v);
 	}
-	rect_t bounding_rect() const override{ untested();
+	rect_t bounding_rect() const override{itested();
 		// if(has_common()){untested();
 		//   return common()->bounding_rect(p);
 		// }else
 		if(_parent){itested();
 			return _parent->bounding_rect();
-		}else{ untested();
+		}else{itested();
 			unreachable();
 			return rect_t();
 		}
@@ -292,11 +292,11 @@ private: // Symbol
 			_component.Value = QString::fromStdString(v);
 			redo = true;
 			break;
-		default: untested();
+		default:itested();
 			trace3("fwd", n, m, v);
 			if(m - 4 < 0){
 				Symbol::setParameter(n, v);
-			}else if(m - 4 >= int(_params.size())){ untested();
+			}else if(m - 4 >= int(_params.size())){itested();
 				incomplete();
 			// 	Symbol::setParameter(n, v);
 			}else if(auto p = dynamic_cast<PARAMETER<double>* >(_params[m-4])){ untested();
@@ -313,7 +313,7 @@ private: // Symbol
 			// BUG: not here.
 			attachProto();	
 			assert(_parent); // for now.
-		}else{ untested();
+		}else{itested();
 		}
 	}
 	std::string paramValue(std::string const& n) const override{

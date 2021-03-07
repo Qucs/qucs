@@ -214,7 +214,7 @@ void Symbol::paint(ViewPainter* p) const
 		int x = getX(pp);
 		int y = getY(pp);
 
-		if(!port(i).isConnected()){ untested();
+		if(!port(i).isConnected()){itested();
 			unreachable();
 			p->setPen(QPen(Qt::green,2));
 			p->drawEllipse(x-1, y-1, 2, 2);

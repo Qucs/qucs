@@ -16,8 +16,14 @@
 #include "qucs_app.h"
 #include "qucs_tabs.h"
 #include "qucsdoc.h"
+#include "octave_window.h"
+#include "misc.h"
 
+#include <QLabel>
 #include <QToolBar>
+#include <QStatusBar>
+#include <QDockWidget>
+#include <QTimer>
 
 namespace qucs {
 
@@ -79,7 +85,7 @@ bool App::gotoPage(const QString& Name)
 	}
 
 	// TODO. open schematic associated with document?
-	if(is_schematic) { untested();
+	if(is_schematic) {itested();
 		d = DocumentTab->createEmptySchematic(Name);
 	}else if(Info.suffix() == "sym") { untested();
 		incomplete();
@@ -97,7 +103,7 @@ bool App::gotoPage(const QString& Name)
 
 		// if only an untitled document was open -> close it
 		if(!getDoc(0)->docName().isEmpty()){ untested();
-		}else if(!getDoc(0)->DocChanged){ untested();
+		}else if(!getDoc(0)->DocChanged){itested();
 			delete DocumentTab->widget(0);
 		}else{ untested();
 		}
@@ -107,5 +113,126 @@ bool App::gotoPage(const QString& Name)
 	}
 #endif
 }
+
+// turn Toolbar on or off
+void App::slotViewToolBar(bool toggle)
+{
+	if(fileToolbar){ untested();
+	  fileToolbar->setVisible(toggle);
+	}else{itested();
+	}
+
+	if(editToolbar){ untested();
+	  editToolbar->setVisible(toggle);
+	}else{itested();
+	}
+
+	if(viewToolbar){ untested();
+	  viewToolbar->setVisible(toggle);
+	}else{itested();
+	}
+
+	if(_docToolBar){ untested();
+	  _docToolBar->setVisible(toggle);
+	}else{itested();
+	}
+}
+
+// ----------------------------------------------------------
+// turn Statusbar on or off
+void App::slotViewStatusBar(bool toggle)
+{
+  statusBar()->setVisible(toggle);
+}
+
+// ----------------------------------------------------------
+// turn Brwose Dock Window on or off
+void App::slotViewBrowseDock(bool toggle)
+{
+  dock->setVisible(toggle);
+}
+
+// ----------------------------------------------------------
+void App::slotToggleDock(bool on)
+{
+  viewBrowseDock->blockSignals(true);
+  viewBrowseDock->setChecked(on);
+  viewBrowseDock->blockSignals(false);
+}
+
+// ----------------------------------------------------------
+// turn Octave Dock Window on or off
+void App::slotViewOctaveDock(bool toggle)
+{
+  octDock->setVisible(toggle);
+  if (toggle) {
+    octave->startOctave();
+  }
+}
+
+// ----------------------------------------------------------
+void App::slotToggleOctave(bool on)
+{
+  viewOctaveDock->blockSignals(true);
+  viewOctaveDock->setChecked(on);
+  viewOctaveDock->blockSignals(false);
+}
+// ----------------------------------------------------------
+void App::printCursorPosition(int x, int y)
+{
+  PositionLabel->setText(QString::number(x)+" : "+QString::number(y));
+  PositionLabel->setMinimumWidth(PositionLabel->width());
+}
+
+// --------------------------------------------------------------
+// called by document, update undo state
+void App::slotUpdateUndo(bool isEnabled)
+{itested();
+  assert(undo);
+  undo->setEnabled(isEnabled);
+}
+
+// --------------------------------------------------------------
+// called by document, update redo state
+void App::slotUpdateRedo(bool isEnabled)
+{itested();
+  assert(redo);
+  redo->setEnabled(isEnabled);
+}
+// ----------------------------------------------------------
+// ----------------------------------------------------------
+void App::slotResetWarnings()
+{
+  QFont f = WarningLabel->font();   // reset warning label
+  f.setWeight(QFont::Normal);
+  WarningLabel->setFont(f);
+  misc::setWidgetForegroundColor(WarningLabel, Qt::black);
+  WarningLabel->setText(tr("no warnings"));
+}
+// ----------------------------------------------------------
+void App::slotShowWarnings()
+{
+  static int ResultState = 0;
+
+  if(ResultState == 0) {
+    QFont f = WarningLabel->font();
+    f.setWeight(QFont::DemiBold);
+    WarningLabel->setFont(f);
+    WarningLabel->setText(tr("Warnings in last simulation! Press F5"));
+  }
+
+  ResultState++;
+  if(ResultState & 1)
+    misc::setWidgetForegroundColor(WarningLabel, Qt::red);
+  else
+    misc::setWidgetForegroundColor(WarningLabel, Qt::black);
+
+  if(ResultState < 9)
+    QTimer::singleShot(500, this, SLOT(slotShowWarnings()));
+  else
+    ResultState = 0;
+}
+
+
 
 } // qucs

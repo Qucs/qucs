@@ -76,7 +76,7 @@ private:
 			if(d){itested();
 				trace1("var found it", label());
 				attach(d);
-			}else{ untested();
+			}else{itested();
 				trace1("var miss", label());
 			}
 		}
@@ -95,7 +95,7 @@ private:
 				}
 			}
 			return f;
-		}else{ untested();
+		}else{itested();
 			return nullptr;
 		}
 	}

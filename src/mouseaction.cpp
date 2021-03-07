@@ -112,7 +112,7 @@ Doc const* MouseAction::doc() const
 }
 
 void MouseAction::slotToggle() // QAction* sender)
-{ untested();
+{itested();
 	assert(ctx());
 	ctx()->possiblyToggleAction(this, sender());
 }
@@ -180,7 +180,7 @@ void MouseActions::updateViewport()
 {itested();
   auto s = dynamic_cast<QGraphicsView*>(doc());
   if(!s){ untested();
-  }else if(s->viewport()){ untested();
+  }else if(s->viewport()){itested();
     s->viewport()->update(); // use a signal?
   }else{ untested();
   }

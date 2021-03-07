@@ -61,7 +61,7 @@ void Doc::setDocFile(std::string const& filename)
 }
 /* -------------------------------------------------------------------------------- */
 Doc::Doc() : Widget() // (App* App_, const QString& Name_, QWidget* o)
-{ untested();
+{itested();
   GridOn = true;
   _name = "unnamed"; // name? filename?
 
@@ -76,7 +76,7 @@ Doc::Doc() : Widget() // (App* App_, const QString& Name_, QWidget* o)
 }
 /* -------------------------------------------------------------------------------- */
 Doc::~Doc()
-{ untested();
+{itested();
 }
 /* -------------------------------------------------------------------------------- */
 #if 1
@@ -171,12 +171,12 @@ MouseActions* Doc::mouseActions()
 #endif
 /* -------------------------------------------------------------------------------- */
 App* Doc::app()
-{ untested();
+{itested();
 	QObject* w = dynamic_cast<QWidget*>(this);
-	while(w){ untested();
-		if(auto a = dynamic_cast<App*>(w)){ untested();
+	while(w){itested();
+		if(auto a = dynamic_cast<App*>(w)){itested();
 			return a;
-		}else{ untested();
+		}else{itested();
 			w = w->parent();
 		}
 	}
@@ -197,7 +197,7 @@ void Doc::cleanup()
 {
 	if(!app()){
 		unreachable();
-	}else if(_toolbar){ untested();
+	}else if(_toolbar){itested();
 		// assert(_toolbar->parent()==app()); // what??
 		// app()->removeToolBar(_toolbar);
 		_toolbar->setVisible(false);
@@ -220,7 +220,7 @@ void Doc::becomeCurrent()
 	if(!app()){
 		incomplete();
 		assert(false);
-	}else if(_toolbar){ untested();
+	}else if(_toolbar){itested();
 		app()->addToolBar(_toolbar); // BUG: add upfront.
 		assert(_toolbar->parent()==app());
 
@@ -270,7 +270,7 @@ void Doc::executeCommand(QUndoCommand* c)
 }
 /* -------------------------------------------------------------------------------- */
 void Doc::addToolBar(QToolBar* t)
-{ untested();
+{itested();
 	assert(!_toolbar);
 	// assert(!t->parent());
 	_toolbar = t;

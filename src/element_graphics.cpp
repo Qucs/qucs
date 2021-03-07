@@ -189,7 +189,7 @@ static void redo_children(ElementGraphics* g)
 
 		new ElementText(g);
 
-		if(auto s = sym->subckt()){ untested();
+		if(auto s = sym->subckt()){itested();
 			for(auto o : *s){untested();
 				if(auto i=dynamic_cast<Element*>(o)){
 					QGraphicsItem* cg = new ElementGraphics(i->clone());
@@ -197,7 +197,7 @@ static void redo_children(ElementGraphics* g)
 				}else{
 				}
 			}
-		}else{ untested();
+		}else{itested();
 		}
 	}
 }
@@ -207,7 +207,7 @@ void ElementGraphics::attachElement(Element* e)
 	assert(e);
 	trace1("attach", e->label());
 	assert(!_e);
-	if(e->owner()){ untested();
+	if(e->owner()){itested();
 		// freshly parsed model
 		// when loading a schematic
 	}else{ untested();
@@ -228,7 +228,7 @@ void ElementGraphics::attachElement(Element* e)
 	}
 	if(_e->legacyTransformHack()){ untested();
 		flags |= ItemIgnoresTransformations;
-	}else{ untested();
+	}else{itested();
 	}
 	setFlags(flags);
 	// BUG: ask element?
@@ -265,7 +265,7 @@ void ElementGraphics::attachElement(Element* e)
 			// need to disentangle show/show_/hide/attach.
 		}
 		trace2("attached proxy", this, w);
-	}else if(sym){ untested();
+	}else if(sym){itested();
 		redo_children(this);
 	}else{
 	}
@@ -274,7 +274,7 @@ void ElementGraphics::attachElement(Element* e)
 	if(!_e){ untested();
 	}else if(_e->legacyTransformHack()){ untested();
 		// throw that in the bin some day..
-	}else if(auto s=dynamic_cast<Symbol const*>(_e)){ untested();
+	}else if(auto s=dynamic_cast<Symbol const*>(_e)){itested();
 		// could be made accessible through Symbol interface.
 		int hflip = atoi(s->paramValue("$hflip").c_str());
 		int vflip = atoi(s->paramValue("$vflip").c_str());
@@ -288,7 +288,7 @@ void ElementGraphics::attachElement(Element* e)
 		transform.rotate(-angle); // chirality...
 		transform.scale(hflip, vflip);
 		setTransform(transform);
-	}else{ untested();
+	}else{itested();
 	}
 }
 /*--------------------------------------------------------------------------*/
@@ -510,7 +510,7 @@ QRectF ElementGraphics::boundingRect() const
 		auto rr = pp->bounding_rect().toRectF();
 		trace2("br", rr, _e->label());
 		return rr;
-	}else{ untested();
+	}else{itested();
 		return QRectF();
 	}
 }
