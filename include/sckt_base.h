@@ -1,5 +1,5 @@
 /***************************************************************************
-    copyright            : (C) 2019, 2020 Felix Salfelder
+    copyright            : (C) 2019, 2020, 2021 Felix Salfelder
  ***************************************************************************/
 
 /***************************************************************************
@@ -13,13 +13,12 @@
 #ifndef SCKT_BASE_H
 #define SCKT_BASE_H
 /*--------------------------------------------------------------------------*/
-#include "symbol.h"
+#include "component.h"
 #include <vector>
 /*--------------------------------------------------------------------------*/
 namespace qucs {
 /*--------------------------------------------------------------------------*/
-// BUG a symbol is a painting. does it make sense?
-class SubcktBase : public Symbol /*COMPONENT*/ {
+class SubcktBase : public Component {
 public:
 	explicit SubcktBase() {} // HACK
 	~SubcktBase(){
@@ -28,7 +27,7 @@ public:
 		}
 	}
 protected:
-	SubcktBase(SubcktBase const& p) : Symbol(p) {}
+	SubcktBase(SubcktBase const& p) : Component(p) {}
 private:
 	virtual Element* clone()const {unreachable(); return nullptr;}
 //	Port& port(unsigned) override {unreachable(); return *new Port();}
@@ -64,8 +63,6 @@ private:
 std::string net_name(SubcktBase const* s, std::string const& n);
 /*--------------------------------------------------------------------------*/
 } // qucs
-/*--------------------------------------------------------------------------*/
-using qucs::SubcktBase; // transition.
 /*--------------------------------------------------------------------------*/
 /*--------------------------------------------------------------------------*/
 #endif

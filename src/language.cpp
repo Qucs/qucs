@@ -66,12 +66,12 @@ void Language::printItem(ostream_t& s, Element const* c) const
 		printElement(C, s);
 	}else if (auto C=dynamic_cast<const SubcktBase*>(c)) {
 		if(C->is_device()){
-			printSymbol(C, s);
+			print_instance(s, C);
 		}else{
 			printSubckt(C, s);
 		}
-	}else if (auto C=dynamic_cast<const Symbol*>(c)) {
-		printSymbol(C, s);
+	}else if (auto C=dynamic_cast<const Component*>(c)) {
+		print_instance(s, C);
 	}else if (auto C=dynamic_cast<const DEV_DOT*>(c)) {
 		print_command(s, C);
 	}else if (auto d=dynamic_cast<const Diagram*>(c)) {

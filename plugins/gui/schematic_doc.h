@@ -893,7 +893,7 @@ void SchematicDoc::new_root()
 { untested();
 	delete _root;
   // create empty schematic... (clear?)
-  auto root = symbol_dispatcher.clone("schematic_root");
+  auto root = device_dispatcher.clone("schematic_root");
   _root = dynamic_cast<SubcktBase*>(root);
   assert(_root);
   _root->set_label("SchematicDoc");
@@ -1776,10 +1776,6 @@ public:
 	explicit cnpsymbol() : SubcktBase(){ untested();
 		new_subckt();
 	}
-
-private: // BUG/feature. a SubcktBase is a Painting...
-	rect_t bounding_rect() const override{unreachable(); return rect_t();}
-	void paint(ViewPainter*) const override{unreachable();}
 
 private:
 	virtual Port& port(unsigned){ assert(false); return *new Port(); }

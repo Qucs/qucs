@@ -1,4 +1,3 @@
-//else?
 module Sub:opa227(_net2, _net1, _net0);
 module :SymbolSection:(_net2, _net1, _net0);
 painting incomplete

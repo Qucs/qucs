@@ -6,11 +6,9 @@ R #(.R(50 Ohm), .Temp(26.85), .Tc1(0.0), .Tc2(0.0), .Tnom(26.85), .Symbol(US)) R
 //DC1
 endmodule // main
 
-//else?
 module :SymbolSection:();
 endmodule // :SymbolSection:
 
-//else?
 module :Paintings:();
 endmodule // :Paintings:
 

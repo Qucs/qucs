@@ -28,9 +28,11 @@ class Data;
 class Symbol;
 class Widget;
 class Action;
+class Component;
 /*--------------------------------------------------------------------------*/
 extern INTERFACE Dispatcher<Element> element_dispatcher;
 extern INTERFACE Dispatcher<Command> command_dispatcher;
+extern INTERFACE Dispatcher<Component> device_dispatcher;
 extern INTERFACE Dispatcher<Diagram> diagram_dispatcher;
 extern INTERFACE Dispatcher<Language> language_dispatcher;
 extern INTERFACE Dispatcher<Data> data_dispatcher;

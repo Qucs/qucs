@@ -34,7 +34,7 @@ class Element;
 class ElementList;
 class Painting;
 class SubcktBase;
-class Symbol;
+class Component;
 class TaskElement;
 /* -------------------------------------------------------------------------------- */
 // baseclass for schematic and net languages.
@@ -61,7 +61,7 @@ public:
 private: //called by printItem
   virtual void printPainting(Painting const*, ostream_t&) const = 0;
   virtual void printDiagram(Diagram const*, ostream_t&) const = 0;
-  virtual void printSymbol(Symbol const*, ostream_t&) const = 0;
+  virtual void print_instance(ostream_t&, Component const*) const = 0;
   virtual void printSubckt(SubcktBase const*, ostream_t&) const = 0;
   virtual void printElement(Element const*, ostream_t&) const = 0;
 //  virtual void print_comment(ostream_t&, const DEV_COMMENT const*){incomplete();}

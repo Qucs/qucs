@@ -23,11 +23,9 @@ Eqn #(.dBS21(dB(S[2,1])), .dBS11(dB(S[1,1])), .Export(yes)) Eqn1();
 //DC1
 endmodule // main
 
-//else?
 module :SymbolSection:();
 endmodule // :SymbolSection:
 
-//else?
 module Sub:IdealBalun();
 module :SymbolSection:();
 endmodule // :SymbolSection:
@@ -46,7 +44,6 @@ endmodule // :Paintings:
 
 endmodule // Sub:IdealBalun
 
-//else?
 module :Paintings:();
 endmodule // :Paintings:
 

@@ -6,11 +6,9 @@ R #(.R(50 Ohm), .Temp(26.85), .Tc1(0.0), .Tc2(0.0), .Tnom(26.85), .Symbol(US)) R
 Sub$short_circuit #(.File(short_circuit.sch)) SC1(out, in);
 endmodule // main
 
-//else?
 module :SymbolSection:();
 endmodule // :SymbolSection:
 
-//else?
 module Sub:short_circuit(_net1, _net0);
 module :SymbolSection:(_net1, _net0);
 painting incomplete
@@ -40,7 +38,6 @@ endmodule // :Paintings:
 
 endmodule // Sub:short_circuit
 
-//else?
 module :Paintings:();
 endmodule // :Paintings:
 

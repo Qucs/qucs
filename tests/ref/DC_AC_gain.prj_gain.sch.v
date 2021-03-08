@@ -16,11 +16,9 @@ Sub$singleOPV #(.File(singleOPV.sch)) OPV1(_net12, Input, _net3, _net15, Output)
 R #(.R(1.7k), .Temp(26.85), .Tc1(0.0), .Tc2(0.0), .Tnom(26.85), .Symbol(european)) R3(_net12, gnd);
 endmodule // main
 
-//else?
 module :SymbolSection:();
 endmodule // :SymbolSection:
 
-//else?
 module Sub:singleOPV(_net0, _net1, _net4, _net3, _net2);
 module :SymbolSection:(_net0, _net1, _net4, _net3, _net2);
 painting incomplete
@@ -63,7 +61,6 @@ endmodule // :Paintings:
 
 endmodule // Sub:singleOPV
 
-//else?
 module :Paintings:();
 endmodule // :Paintings:
 

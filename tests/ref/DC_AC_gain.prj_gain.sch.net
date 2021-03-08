@@ -5,7 +5,6 @@
 # sckt Sub:singleOPV
 
 .Def:singleOPV P1 P2 P3 P4 P6
-# Missing ID & params Sub:singleOPV
 # 120
 R:R1 _net13 _net1 R="4k" Temp="26.85" Tc1="0.0" Tc2="0.0" Tnom="26.85"
 C:C1 _net1 P6 C="4p" V=""

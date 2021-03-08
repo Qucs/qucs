@@ -29,6 +29,7 @@ namespace qucs {
 class NetList;
 class Net;
 class Symbol;
+class SubcktBase;
 /*--------------------------------------------------------------------------*/
 class Conductor {
 public:
@@ -47,7 +48,7 @@ public: //pair?
 	  return _adj.end();
   }
   virtual bool isNet(pos_t const&) const{untested(); return false;} // obsolete??
-  virtual Symbol* newUnion(const Symbol*) const{ return nullptr; }
+  virtual SubcktBase* newUnion(const Symbol*) const{ return nullptr; }
 
 public:
   WireLabel *Label; // BUG

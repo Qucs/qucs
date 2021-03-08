@@ -82,6 +82,7 @@ using qucs::ElementList;
 using qucs::Node;
 using qucs::Port;
 using qucs::ViewPainter;
+using qucs::SubcktBase;
 /*--------------------------------------------------------------------------*/
 class SubcktProto : public SubcktBase {
 private:
@@ -149,7 +150,7 @@ private:
 //	Element const* _instance; // why?
 	//ElementList sm;
 }d0;
-static Dispatcher<qucs::Symbol>::INSTALL p(&qucs::symbol_dispatcher, "subckt_proto", &d0);
+static Dispatcher<qucs::Component>::INSTALL p(&qucs::device_dispatcher, "subckt_proto", &d0);
 /*--------------------------------------------------------------------------*/
 /*--------------------------------------------------------------------------*/
 // bool SubcktProto::portExists(unsigned i) const
@@ -239,7 +240,7 @@ SubcktProto::SubcktProto(Element const*)
 }
 /*--------------------------------------------------------------------------*/
 ElementList* SubcktProto::scope()
-{
+{ untested();
 	CommonComponent* cc = mutable_common();
 	assert(cc);
 	auto cs = prechecked_cast<CommonSubckt*>(cc);

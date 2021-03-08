@@ -34,14 +34,14 @@ private: // NetLang
 
 private: // local
   void printElement(Element const*, ostream_t&) const override { untested(); }
-  void printSymbol(Symbol const*, ostream_t&) const override;
+  void print_instance(ostream_t&, Component const*) const override;
   void printSubckt(SubcktBase const*, ostream_t&) const {untested(); }
   void printPainting(Painting const*, ostream_t&) const override { untested(); }
   void printDiagram(Diagram const*, ostream_t&) const override { untested();}
 }d0;
 static Dispatcher<Language>::INSTALL p(&language_dispatcher, "spice", &d0);
 /*--------------------------------------------------------------------------*/
-void LangSpice::printSymbol(Symbol const* s, ostream_t& o) const
+void LangSpice::print_instance(ostream_t& o, Component const* s) const
 {
 	o << s->short_label() << " ... stub\n";
 }

@@ -4,7 +4,6 @@
 # sckt Sub:IdealBalun
 
 .Def:IdealBalun P1 P2 P3 P4 P5
-# Missing ID & params Sub:IdealBalun
 # 31
 sTr:Tr1 P4 P1 P5 P3 P2 P2 T1="0.5" T2="0.5"
 .Def:End

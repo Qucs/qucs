@@ -41,8 +41,10 @@ const std::string defsym(":SYMBOL_"); // use a parameter?
 using qucs::CommonComponent;
 using qucs::CommonSubckt;
 using qucs::Element;
+using qucs::Component;
 using qucs::Language;
 using qucs::Module;
+using qucs::SubcktBase;
 using qucs::Symbol;
 using qucs::ViewPainter;
 /*--------------------------------------------------------------------------*/
@@ -101,7 +103,8 @@ public:
 public:
 	pos_t portPosition(index_t i) const override{
 		trace2("Paramset::portPosition", i, common());
-		if(auto s=dynamic_cast<Symbol const*>(_painting)){
+		if(auto s=dynamic_cast<Component const*>(_painting)){
+			// BUG. ask CommonSubckt?
 			assert(i < s->numPorts());
 			auto p = s->portPosition(i);
 			trace3("Paramset::portPosition", i, s->numPorts(), p);
@@ -162,7 +165,7 @@ private: // Symbol
 			return Symbol::paramValue(name);
 		}
 	}
-	void init(Symbol const* proto);
+	void init(Component const* proto);
 
 private: // overrides
 	index_t numPorts() const override{
@@ -200,8 +203,7 @@ public:
 	Element* clone_instance() const override;
 	Element* clone()const{return new SubFactory(*this);}
 
-	Symbol const* newSymbol(std::string const& fn) const;
-
+	Component const* newSymbol(std::string const& fn) const;
 private:
 	void set_param_by_name(std::string const& name, std::string const& v) override
 	{
@@ -291,7 +293,7 @@ void Paramset::refreshSymbol(std::string const& fn)
 
 	setTypeName("Sub"); // still // dev_type_key
 	assert(_factory);
-	Symbol const* new_parent = _factory->newSymbol(fn);
+	Component const* new_parent = _factory->newSymbol(fn);
 	assert(new_parent);
 //	auto cc = new_common->clone(); //really? set modelname in factory.
 	assert(new_parent->common());
@@ -304,7 +306,7 @@ void Paramset::refreshSymbol(std::string const& fn)
 	init(new_parent);
 }
 /*--------------------------------------------------------------------------*/
-void Paramset::init(Symbol const* proto)
+void Paramset::init(Component const* proto)
 {
 	auto ps = proto->scope();
 	assert(ps); // won't work for Components.
@@ -312,7 +314,7 @@ void Paramset::init(Symbol const* proto)
 	auto p_ = ps->find_("main");
 	if(p_==ps->end()){
 		_ports.resize(proto->numPorts());
-	}else if(auto mm=dynamic_cast<Symbol const*>(*p_)){
+	}else if(auto mm=dynamic_cast<Component const*>(*p_)){
 		_ports.resize(mm->numPorts());
 	}
 
@@ -365,10 +367,11 @@ void Paramset::init(Symbol const* proto)
 	}
 
 	// find painting...
-	if(!symsect){
-	}else if(symsect->scope()->size()){
+	if(!symsect){ untested();
+	}else if(!symsect->scope()->size()){ untested();
+	}else if(auto p=dynamic_cast<Painting const*>(symsect)){ untested();
 		trace2("got painting from symbol section", symsect->scope()->size(), symsect->numPorts());
-		_painting = symsect;
+		_painting = p;
 		// check nuber f ports??
 	}else{
 	}
@@ -393,7 +396,7 @@ void Paramset::init(Symbol const* proto)
 // create a subdevice from a file.
 // if its already there, use it.
 // TODO: factory needs a refresh hook.
-Symbol const* SubFactory::newSymbol(std::string const& fn) const
+Component const* SubFactory::newSymbol(std::string const& fn) const
 {
 	trace1("SubFactory::newSymbol", fn);
 //	QString FileName(Props.getFirst()->Value);
@@ -419,16 +422,16 @@ Symbol const* SubFactory::newSymbol(std::string const& fn) const
 	std::string file_found = findFile(fn, _subPath, R_OK);
 	trace4("SubFactory::newCommon", label(), fn, _subPath, file_found);
 
-	if(auto sym = dynamic_cast<Symbol const*>(cached)){
+	if(auto sym = dynamic_cast<Component const*>(cached)){
 		return sym; // ->common();
 	}else if(file_found != "" ){
 		incomplete(); // rework with parser.
 		assert(owner());
-		auto os = prechecked_cast<Symbol const*>(owner());
+		auto os = prechecked_cast<Element const*>(owner());
 		assert(os);
 		assert(os->scope());
 
-		Symbol* ss = qucs::symbol_dispatcher.clone("subckt_proto"); // symbol_proto?
+		Component* ss = qucs::device_dispatcher.clone("subckt_proto");
 		auto s = prechecked_cast<SubcktBase*>(ss);
 		assert(s);
 

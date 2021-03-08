@@ -6,11 +6,9 @@ R #(.R(50 Ohm), .Temp(26.85), .Tc1(0.0), .Tc2(0.0), .Tnom(26.85), .Symbol(US)) R
 Sub$nest1 #(.File(nest1.sch)) SC1(in, out);
 endmodule // main
 
-//else?
 module :SymbolSection:();
 endmodule // :SymbolSection:
 
-//else?
 module Sub:nest1(_net0, _net1);
 module :SymbolSection:(_net0, _net1);
 painting incomplete
@@ -33,7 +31,6 @@ endmodule // :Paintings:
 
 endmodule // Sub:nest1
 
-//else?
 module :Paintings:();
 endmodule // :Paintings:
 

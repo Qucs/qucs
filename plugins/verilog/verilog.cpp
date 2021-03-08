@@ -50,7 +50,9 @@ using qucs::Language;
 using qucs::Painting;
 using qucs::TaskElement;
 using qucs::Diagram;
+using qucs::SubcktBase;
 using qucs::Symbol;
+using qucs::Component;
 /* -------------------------------------------------------------------------------- */
 static std::string netLabel(Node const* nn)
 { untested();
@@ -80,7 +82,7 @@ public:
 
 private:
 	void printElement(Element const*, ostream_t&) const override;
-	void printSymbol(Symbol const*, ostream_t&) const override;
+	void print_instance(ostream_t&, Component const*) const override;
 	void printSubckt(SubcktBase const*, ostream_t&) const override;
 	void printPainting(Painting const*, ostream_t&) const override;
 	void print_command(ostream_t&, DEV_DOT const*) const override;
@@ -88,7 +90,7 @@ private:
 
 private: // local
 	void printTaskElement(TaskElement const*, ostream_t&) const;
-	void print_ports_short(ostream_t& o, const Symbol* x) const;
+	void print_ports_short(ostream_t& o, Component const* x) const;
 
 private: //DocumentLanguage
 	std::string find_type_in_string(istream_t&) const override;
@@ -110,11 +112,11 @@ private:
 //	Symbol* parseSymbol(istream_t& cs, Symbol* sym) const;
 
 private:
-	void printSymbol(Symbol const*, ostream_t&) const override;
+	void print_instance(ostream_t&, Component const*) const override;
 	void printSubckt(SubcktBase const* x, ostream_t& o) const override;
 
-	void print_ports_short(ostream_t& o, const Symbol* x) const;
-	void print_args(ostream_t&, Symbol const* sym) const;
+	void print_ports_short(ostream_t& o, const Component* x) const;
+	void print_args(ostream_t&, Component const* sym) const;
 } V_;
 static Dispatcher<Language>::INSTALL p1(&qucs::language_dispatcher, "verilog_schematic|.vs", &V_);
 /*--------------------------------------------------------------------------*/
@@ -215,7 +217,7 @@ static void parse_label(istream_t& cmd, Element* x)
 	}
 }
 /*--------------------------------------------------------------------------*/
-static void parse_ports(istream_t& cmd, Symbol* x, bool all_new)
+static void parse_ports(istream_t& cmd, Component* x, bool all_new)
 {
 	assert(x);
 	trace4("parse_ports", cmd.fullstring(), x->label(), x->scope(), x->owner());
@@ -234,7 +236,7 @@ static void parse_ports(istream_t& cmd, Symbol* x, bool all_new)
 						//    if (x->node_is_grounded(index)) { untested();
 						//      cmd.warn(bDANGER, here, "node 0 not allowed here");
 						//    }else
-						if (x->subckt() && x->subckt()->nodes()->size() != index+1) { untested();
+						if (x->subckt() && int(x->subckt()->nodes()->size()) != index+1) { untested();
 							cmd.warn(bDANGER, here, "duplicate port name, skipping");
 						}else{ untested();
 							++index;
@@ -330,7 +332,7 @@ Element* Verilog::parseItem(istream_t& cmd, Element* e) const
 	}
 }
 /*--------------------------------------------------------------------------*/
-void VS::print_args(ostream_t& s, Symbol const* sym) const
+void VS::print_args(ostream_t& s, Component const* sym) const
 {
 	std::string comma="";
 	s << "#(";
@@ -343,7 +345,7 @@ void VS::print_args(ostream_t& s, Symbol const* sym) const
 	s << ") ";
 }
 /*--------------------------------------------------------------------------*/
-static void print_args(Symbol const* sym, ostream_t& s)
+static void print_args(ostream_t& s, Component const* sym)
 {
 	std::string comma="";
 	s << "#(";
@@ -359,7 +361,7 @@ static void print_args(Symbol const* sym, ostream_t& s)
 	s << ") ";
 }
 /*--------------------------------------------------------------------------*/
-void VS::print_ports_short(ostream_t& o, const Symbol* x) const
+void VS::print_ports_short(ostream_t& o, Component const* x) const
 {
 	assert(x);
 
@@ -389,7 +391,7 @@ void Verilog::printPainting(Painting const*, ostream_t& o) const
 	o << "painting incomplete\n";
 }
 /*--------------------------------------------------------------------------*/
-void Verilog::print_ports_short(ostream_t& o, const Symbol* x) const
+void Verilog::print_ports_short(ostream_t& o, Component const* x) const
 {
   // print in short form ...   value only
 //  o<<"xxx" << x->label() << "xxx";
@@ -464,7 +466,7 @@ void Verilog::printTaskElement(TaskElement const* c, ostream_t& s) const
 	s << "//" << c->label() << "\n";
 }
 /*--------------------------------------------------------------------------*/
-void Verilog::printSymbol(Symbol const* sym, ostream_t& s) const
+void Verilog::print_instance(ostream_t& s, Component const* sym) const
 {
 #if 0
 	Component const* c=nullptr; // dynamic_cast<Component const*>(sym);
@@ -498,7 +500,7 @@ void Verilog::printSymbol(Symbol const* sym, ostream_t& s) const
       std::replace( type.begin(), type.end(), ':', '$');
 		s << QString::fromStdString(type) << " ";
 
-		print_args(sym, s);
+		print_args(s, sym);
 #if 0
 		QString comma="";
 		s << "#(";
@@ -520,7 +522,7 @@ void Verilog::printSymbol(Symbol const* sym, ostream_t& s) const
 	}
 }
 /*--------------------------------------------------------------------------*/
-void VS::printSymbol(Symbol const* sym, ostream_t& s) const
+void VS::print_instance(ostream_t& s, Component const* sym) const
 {
 	{
 		auto label = sym->label();
@@ -703,7 +705,8 @@ class CMD_MODULE : public Command {
 	void do_it(istream_t& cmd, ElementList* Scope) override
 	{
 		// auto new_module = dynamic_cast<SubcktBase*>(device_dispatcher.clone("subckt"));
-		auto new_module = dynamic_cast<SubcktBase*>(qucs::symbol_dispatcher.clone("subckt_proto"));
+		Component* dd = qucs::device_dispatcher.clone("subckt_proto");
+		auto new_module = dynamic_cast<SubcktBase*>(dd);
 		assert(new_module);
 		assert(!new_module->owner());
 

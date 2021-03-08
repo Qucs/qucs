@@ -9,7 +9,6 @@ legacy plugins: wip
 # sckt main
 
 
-# Missing ID & params main
 # 40
 R:R1 _net2 _net1 R="50 Ohm" Temp="26.85" Tc1="0.0" Tc2="0.0" Tnom="26.85"
 VProbe:Pr1 _net1 gnd

@@ -9,7 +9,6 @@ Port #(.Num(2), .Type()) P2(P2, P2);
 Idc #(.I(5 uA)) I1(_net17, P3);
 endmodule // main
 
-//else?
 module :SymbolSection:(_net0, _net1, _net4, _net3, _net2);
 painting incomplete
 painting incomplete
@@ -35,7 +34,6 @@ painting incomplete
 painting incomplete
 endmodule // :SymbolSection:
 
-//else?
 module :Paintings:();
 endmodule // :Paintings:
 

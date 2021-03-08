@@ -16,11 +16,9 @@ L #(.L(5 H), .I()) L1(gnd, _net15);
 //DC1
 endmodule // main
 
-//else?
 module :SymbolSection:();
 endmodule // :SymbolSection:
 
-//else?
 module :Paintings:();
 endmodule // :Paintings:
 

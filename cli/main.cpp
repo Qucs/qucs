@@ -29,18 +29,6 @@
 #include <ctype.h>
 #include <locale.h>
 
-#include <QApplication>
-#include <QString>
-#include <QStringList>
-#include <QTextCodec>
-#include <QTranslator>
-#include <QFile>
-#include <QMessageBox>
-#include <QRegExp>
-#include <QtSvg>
-#include <QDebug>
-
-//#include "qucs.h"
 #include "settings.h"
 #include "docfmt.h"
 #include "printerwriter.h"
@@ -96,7 +84,7 @@ static void prepare_env()
 }
 /*--------------------------------------------------------------------------*/
 static void read_startup_files(void)
-{
+{ untested();
 #if 1
   CMD::command(std::string("load plugins/misc"), &static_model);
 #else

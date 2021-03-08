@@ -8,11 +8,9 @@ L #(.L(13 nH), .I()) L1(Voltage, _net4);
 //AC1
 endmodule // main
 
-//else?
 module :SymbolSection:();
 endmodule // :SymbolSection:
 
-//else?
 module :Paintings:();
 endmodule // :Paintings:
 

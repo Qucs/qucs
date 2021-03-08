@@ -18,11 +18,9 @@ Vdc #(.U(1.1 V)) V1(_net17, gnd);
 GND #() *(gnd);
 endmodule // main
 
-//else?
 module :SymbolSection:();
 endmodule // :SymbolSection:
 
-//else?
 module :Paintings:();
 endmodule // :Paintings:
 

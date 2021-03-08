@@ -44,7 +44,9 @@ static Place const* place_at(pos_t p, Symbol* m)
 
 static void connect_push(Element* root, Symbol* sym)
 {
+//	assert(root->subckt());
 	sym->set_owner(root);
+	assert(sym->scope());
 // 	M.connect(sym);
 	for(unsigned i=0; i<sym->numPorts(); ++i){
 		pos_t p = sym->nodePosition(i);

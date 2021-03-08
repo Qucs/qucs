@@ -23,11 +23,9 @@ VProbe #() Pr1(_net29, gnd);
 GND #() *(gnd);
 endmodule // main
 
-//else?
 module :SymbolSection:();
 endmodule // :SymbolSection:
 
-//else?
 module :Paintings:();
 endmodule // :Paintings:
 

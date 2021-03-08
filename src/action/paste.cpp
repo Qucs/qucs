@@ -143,11 +143,11 @@ public:
 	}
 
 private:
-	void paint(ViewPainter* p) const{
+	void paint(ViewPainter* p) const{ untested();
 		auto r = bounding_rect();
 		p->drawRect(r);
 	}
-	rect_t bounding_rect() const override{ untested();
+	rect_t bounding_rect() const{ untested();
 		// BUG: this does not work.
 		// TODO: use Qt for drawing.
 		rect_t r;

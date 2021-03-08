@@ -145,7 +145,11 @@ TT* DISPATCHER<TT>::operator[](std::string s)
   }else{
   }
   TT* t=prechecked_cast<TT*>(rv);
-  assert(t || !rv);
+  if(t || !rv){
+  }else{
+    trace1("dispatcher type error", s);
+    assert(false);
+  }
   return(t);
 }
 /*--------------------------------------------------------------------------*/

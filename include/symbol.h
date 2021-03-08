@@ -78,11 +78,6 @@ public: // Port stuff
 	pos_t nodePosition(unsigned) const;
 	Node const* portNode(unsigned) const;
 
-public: // hierarchy. move to SubcktBase
-	ElementList const* subckt() const{ return _subckt; }
-	ElementList* subckt(){ return _subckt; }
-	void new_subckt();
-
 public: // graphics
 	// hmm, maybe just dispatch a gfx object.
 	// leave it like that, for now.
@@ -91,7 +86,6 @@ public: // graphics
 	//  virtual void draw(QPainter&)const=0;
 	//...  more to come
 protected: // maybe not here. but need to rebase MultiViewComponent to ScktProto first.
-	ElementList* _subckt; // stuff contained in this symbol.
 	// such as subckt components. meta data or symbol gfx
 	int vflip() const{return _vflip;}
 	int hflip() const{return _hflip;}

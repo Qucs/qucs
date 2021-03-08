@@ -86,7 +86,7 @@ private:
 }d0;
 static Dispatcher<Symbol>::INSTALL p0(&symbol_dispatcher, "qucsatorScktHack", &d0);
 /* -------------------------------------------------------------------------------- */
-static std::string netLabel(Symbol const* s, index_t k)
+static std::string netLabel(qucs::Component const* s, index_t k)
 {
 	auto m = s->scope();
 	assert(m);
@@ -145,7 +145,7 @@ private: // local
 
 private: // local
   void printElement(Element const*, ostream_t&) const override;
-  void printSymbol(Symbol const*, ostream_t&) const override;
+  void print_instance(ostream_t&, qucs::Component const*) const override;
   void printSubckt(SubcktBase const*, ostream_t&) const;
   void printComponent(::Component const*, ostream_t&) const;
   void printPainting(Painting const*, ostream_t&) const override {incomplete();}
@@ -207,7 +207,7 @@ static void printSymbol_(Symbol const* c, ostream_t& s)
 	}
 }
 /* -------------------------------------------------------------------------------- */
-void QucsatorLang::printSymbol(Symbol const* d, ostream_t& s) const
+void QucsatorLang::print_instance(ostream_t& s, qucs::Component const* d) const
 {
 	// is_device??
 	if(!d){ untested();
@@ -233,9 +233,9 @@ void QucsatorLang::printSymbol(Symbol const* d, ostream_t& s) const
 		// no geometry in netlist.
 	}else if(dynamic_cast<Conductor const*>(d)){
 		// possibly a wire.
-	}else if(d){
+	}else if(auto sym=dynamic_cast<Symbol const*>(d)){
 		// TODO. all symbols here.
-		printSymbol_(d, s);
+		printSymbol_(sym, s);
 	}else{ untested();
 		assert(false);
 		incomplete();
@@ -289,7 +289,7 @@ static void printDefHack(Symbol const* p, ostream_t& s)
 	s << hack;
 }
 /* -------------------------------------------------------------------------------- */
-static void print_ports(ostream_t& o, const Symbol* x)
+static void print_ports(ostream_t& o, const qucs::Component* x)
 {
 	for(unsigned i=0; x->portExists(i); ++i){
 		std::string N = netLabel(x, i);
@@ -310,7 +310,7 @@ void QucsatorLang::printSubckt(SubcktBase const* p, ostream_t& s) const
 	}
 #endif
 //	assert(!p->is_device());
-	Symbol const* sym = p;
+	qucs::Component const* sym = p;
 	ElementList const* sckt;
 
 	sckt = e->scope();
@@ -327,7 +327,7 @@ void QucsatorLang::printSubckt(SubcktBase const* p, ostream_t& s) const
 	if(h == sckt->end()){
 	}else{
 		sckt = (*h)->scope();
-		sym = prechecked_cast<Symbol const*>(*h);
+		sym = prechecked_cast<qucs::Component const*>(*h);
 		assert(sym);
 	}
 
@@ -340,12 +340,12 @@ void QucsatorLang::printSubckt(SubcktBase const* p, ostream_t& s) const
 
 	print_ports(s, sym);
 
+#if 0
 	// somehow parameters are stashed as paintings.
 	// let's see.
 	if(!p->symbolPaintings()){
 		s << "# Missing ID & params " << p->label() << "\n";
 	}else{ untested();
-#if 0
 		for(auto pi : *p->symbolPaintings()){ untested();
 			incomplete();
 			if(pi->name() == ".ID ") { untested();
@@ -361,8 +361,8 @@ void QucsatorLang::printSubckt(SubcktBase const* p, ostream_t& s) const
 			}
 		//		break;
 		}
-#endif
 	}
+#endif
 	//(*tstream) << '\n';
 	//
 	s << "# " << sckt->size() << "\n";
@@ -381,7 +381,7 @@ void QucsatorLang::printSubckt(SubcktBase const* p, ostream_t& s) const
 		}else if(i->typeName() == "GND"){
 		}else{
 			// s << "# ps" << i->typeName() << " " << i->label() << "\n";
-			printSymbol(i, s);
+			print_instance(s, i);
 		}
 	}
 

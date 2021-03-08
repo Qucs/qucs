@@ -5,7 +5,6 @@
 # sckt Sub:short_circuit
 
 .Def:short_circuit P1 P1
-# Missing ID & params Sub:short_circuit
 # 27
 .Def:End
 ## declarations end

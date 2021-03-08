@@ -48,7 +48,7 @@ public:
 private:
 	void do_it(istream_t&, ElementList* scope) override;
 	void load_single(std::string what, ElementList* scope);
-	void stash(std::string const& t, Symbol* ssym, ElementList* scope) {
+	void stash(std::string const& t, Component* ssym, ElementList* scope) {
 		auto i = new Dispatcher<Symbol>::INSTALL(&symbol_dispatcher, t, ssym);
 		_stash.push_back(i);
 	}
@@ -99,7 +99,7 @@ void LIB::load_single(std::string what, ElementList* scope)
 			// // stuff should already be parsed in, but isn't
 			// BUG: parse c.definition. but not here.
 			istream_t stream(istream_t::_STRING, c.definition.toStdString());
-			Symbol* sym = symbol_dispatcher.clone("LegacyLibProto");
+			Component* sym = device_dispatcher.clone("LegacyLibProto");
 			auto ssym = prechecked_cast<SubcktBase*>(sym);
 			std::string t = "Lib:" + parsedlib.name.toStdString() + ":" + c.name.toStdString();
 

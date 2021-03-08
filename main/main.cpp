@@ -51,7 +51,7 @@
 
 static const std::string default_simulator="qucsator"; // FIXME: get from rc? maybe from environment?
 
-#define CMD Command
+using qucs::SubcktBase;
 
 void setSimulator(char const* name)
 { untested();
@@ -115,7 +115,7 @@ void doNetlist(QString schematic_fn, std::string netlist, Command* fmt)
 {
 	std::string sfn = schematic_fn.toStdString();
 
-	qucs::Symbol* root = qucs::symbol_dispatcher.clone("schematic_root");
+	qucs::Component* root = qucs::device_dispatcher.clone("schematic_root");
 	assert(root);
 	root->set_param_by_name("$filename", sfn); // BUG: PATH.
 	root->set_label(sfn);
@@ -133,7 +133,7 @@ void doNetlist(QString schematic_fn, std::string netlist, Command* fmt)
 /*--------------------------------------------------------------------------*/
 void attach_single(std::string const& what)
 {
-  CMD::command(std::string("attach ") + what, nullptr);
+	Command::command(std::string("attach ") + what, nullptr);
 }
 /*--------------------------------------------------------------------------*/
 void attach_default_plugins()
@@ -144,7 +144,7 @@ void attach_default_plugins()
 
   attach_single("legacy/components");
   attach_single("legacy/paintings");
-  CMD::command("loadlegacylib", nullptr);
+  Command::command("loadlegacylib", nullptr);
   attach_single("plugins/misc");
   attach_single("plugins/gui");
 
@@ -393,17 +393,17 @@ int main(int argc, char *argv[])
     }else if (!strcmp(argv[i], "-s")) {
       setSimulator(argv[++i]);
     }else if(!strcmp(argv[i], "-icons")) { untested();
-      CMD::command(std::string("createicons "), nullptr);
+      Command::command(std::string("createicons "), nullptr);
       return 0;
     }else if(!strcmp(argv[i], "-doc")) { untested();
-      CMD::command(std::string("createdocdata "), nullptr);
+      Command::command(std::string("createdocdata "), nullptr);
       return 0;
     }else if(!strcmp(argv[i], "-list-entries")) {
       incomplete(); // don't use.
-      CMD::command(std::string("listcompentry "), nullptr);
+      Command::command(std::string("listcompentry "), nullptr);
       return 0;
     }else if(!strcmp(argv[i], "--list-entries")) {
-      CMD::command(std::string("listcompentry "), nullptr);
+      Command::command(std::string("listcompentry "), nullptr);
       return 0;
     }else{
       fprintf(stderr, "Error: Unknown option: %s\n", argv[i]);
@@ -459,13 +459,13 @@ int main(int argc, char *argv[])
       }
     } else if (print_flag) { untested();
       incomplete();
-      CMD::command(std::string("doprint "), nullptr);
+      Command::command(std::string("doprint "), nullptr);
 //      return doPrint(inputfile, outputfile,
 //          page, dpi, color, orientation);
     }else{
     }
   }else{
-    CMD::command(std::string("startgui " + inputfile.toStdString()), nullptr);
+    Command::command(std::string("startgui " + inputfile.toStdString()), nullptr);
   }
   return result;
 }

@@ -8,7 +8,7 @@
 
 void test0()
 {
-	Symbol* root = symbol_dispatcher.clone("subckt_proto");
+	Component* root = device_dispatcher.clone("subckt_proto");
 	assert(root);
 	assert(root->scope());
 	ElementList& M = *root->scope();

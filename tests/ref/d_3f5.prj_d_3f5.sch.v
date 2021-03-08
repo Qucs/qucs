@@ -6,11 +6,9 @@ GND #() *(gnd);
 (empty) #(.Lib(dcsweep), .Component()) v_dc1();
 endmodule // main
 
-//else?
 module :SymbolSection:();
 endmodule // :SymbolSection:
 
-//else?
 module :Paintings:();
 endmodule // :Paintings:
 

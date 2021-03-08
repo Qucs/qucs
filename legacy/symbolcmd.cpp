@@ -21,15 +21,17 @@
 #include "dot.h"
 #include "sckt_base.h"
 #include "viewpainter.h"
+#include "painting.h"
 /*--------------------------------------------------------------------------*/
 namespace{
 /*--------------------------------------------------------------------------*/
-// stuff paintings in here
-// rename and move to library when ready?
-// similar to sckt_proto. but not quite. revisit later.
-class SymbolSection : public SubcktBase{
+using qucs::Painting;
+using qucs::SubcktBase;
+using qucs::Component;
+/*--------------------------------------------------------------------------*/
+class SymbolSection : public SubcktBase, public Painting{
 public:
-	SymbolSection() : SubcktBase() {
+	SymbolSection() : SubcktBase(), Painting() {
 		new_subckt();
 	}
 	~SymbolSection(){
@@ -38,7 +40,7 @@ public:
 //		}
 	}
 private:
-	SymbolSection(SymbolSection const& p) : SubcktBase(p) {
+	SymbolSection(SymbolSection const& p) : SubcktBase(p), Painting(p) {
 //		incomplete(); so what.
 		new_subckt();
 	}
@@ -116,7 +118,7 @@ private: // Symbol
 		return port_value(i);
 	}
 public:
-	Symbol* clone() const override{
+	Component* clone() const override{
 		return new SymbolSection(*this);
 	}
 private: // use e_comp
@@ -149,7 +151,7 @@ class SymbolCommand : public Command{
 	  auto fullstring = cs.fullString();
 	  trace1("SymbolSection", fullstring);
 
-	  qucs::Symbol* sc = symbolSection.clone(); // symbol_dispatcher.clone("symbolSection");
+	  Component* sc = symbolSection.clone(); // symbol_dispatcher.clone("symbolSection");
 	  auto* sym = dynamic_cast<SubcktBase*>(sc);
 	  assert(sym);
 	  sym->set_label(":SymbolSection:");

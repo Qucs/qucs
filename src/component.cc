@@ -83,6 +83,12 @@ void Component::setParameter(index_t n, std::string const& v)
 	throw qucs::ExceptionCantFind(label(), std::to_string(n), "params");
 }
 /*--------------------------------------------------------------------------*/
+void Component::new_subckt()
+{
+	assert(!_subckt);
+	_subckt = new ElementList();
+}
+/*--------------------------------------------------------------------------*/
 void Component::set_param_by_name(std::string const& name, std::string const& v)
 {
 	throw qucs::ExceptionCantFind(label(), name, "params");

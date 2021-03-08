@@ -9,12 +9,12 @@
 
 void test1()
 {
-	Symbol* root = symbol_dispatcher.clone("subckt_proto");
+	Component* root = device_dispatcher.clone("subckt_proto");
 	assert(root);
 	assert(root->scope());
 	ElementList& M = *root->scope();
 
-	auto wp=symbol_dispatcher["Wire"];
+	auto wp = symbol_dispatcher["Wire"];
 //	 Wire(0,0,1,0);
 	auto w0 = prechecked_cast<Symbol*>(wp->clone());
 	w0->set_param_by_name("deltax", "1");
@@ -135,13 +135,13 @@ void test1()
 
 void test0()
 {
-	Symbol* root = symbol_dispatcher.clone("subckt_proto");
+	Component* root = device_dispatcher.clone("subckt_proto");
 	assert(root);
 	assert(root->scope());
 	ElementList& M = *root->scope();
 
 	//auto w0 = new Wire(0,0,1,0);
-	auto wp=symbol_dispatcher["Wire"];
+	auto wp = symbol_dispatcher["Wire"];
 	auto w0 = prechecked_cast<Symbol*>(wp->clone());
 	w0->set_param_by_name("deltax", "1");
 

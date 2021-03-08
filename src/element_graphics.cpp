@@ -16,8 +16,9 @@
  * along with Qucs.  If not, see <http://www.gnu.org/licenses/>.
  *
  */
-#include "element.h"
+#include "component.h"
 #include "symbol.h"
+#include "sckt_base.h"
 #include "schematic_scene.h"
 #include "element_list.h"
 #include "element_graphics.h"
@@ -398,7 +399,7 @@ ElementGraphics* ElementGraphics::newUnion(ElementGraphics const* s) const
 	}else if(auto c=dynamic_cast<Conductor const*>(_e)){itested();
 		assert(symbol(s));
 
-		if(Symbol* u = c->newUnion(symbol(s)) ){ untested();
+		if(Element* u = c->newUnion(symbol(s)) ){ untested();
 			trace3("new union", u, symbol(s)->typeName(), symbol(s)->label());
 			ng = new ElementGraphics(u);
 			assert(_e->owner());

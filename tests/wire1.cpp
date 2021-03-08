@@ -2,11 +2,12 @@
 // (c) 2020 Felix Salfelder
 // GPLv3+
 
+#include "command.h"
+#include "conductor.h"
 #include "element_list.h"
 #include "qucs_globals.h"
-#include "conductor.h"
+#include "sckt_base.h"
 #include "wiretest.h"
-#include "command.h"
 
 void union0()
 {
@@ -14,7 +15,7 @@ void union0()
 	//     __           __  |
 	//   -[__]-   ->  -[__]-o
 	//                      |
-	Symbol* root = symbol_dispatcher.clone("subckt_proto");
+	Component* root = device_dispatcher.clone("subckt_proto");
 	assert(root);
 	assert(root->scope());
 	ElementList& M = *root->scope();
@@ -26,6 +27,7 @@ void union0()
 	w0->set_param_by_name(std::string("$yposition"), "-50");
 
 	wp = symbol_dispatcher["R"];
+	assert(dynamic_cast<Symbol const*>(wp));
 	assert(wp);
 	auto g0 = prechecked_cast<Symbol*>(wp->clone());
 	trace1("DBG", g0->nodePosition(0));
@@ -40,7 +42,7 @@ void union0()
 
 	auto c = dynamic_cast<Conductor const*>(w0);
 	trace0("nu...");
-	Symbol* nu = c->newUnion(g0);
+	auto nu = c->newUnion(g0);
 	trace0("nu done");
 
 	assert(nu);
@@ -52,6 +54,8 @@ void union0()
 
 	auto ii = s->begin();
 	assert(ii != s->end());
+	trace1("found", (*ii)->short_label());
+	trace1("found", (*ii)->typeName());
 	auto a = prechecked_cast<Symbol const*>(*ii);
 	assert(a); // resistor.
 	++ii;
@@ -79,7 +83,7 @@ void union1()
 	// |         |
 	// |   =>    |
 	// |      ---o---
-	Symbol* root = symbol_dispatcher.clone("subckt_proto");
+	Component* root = device_dispatcher.clone("subckt_proto");
 	assert(root);
 	assert(root->scope());
 	ElementList& M = *root->scope();
@@ -98,7 +102,7 @@ void union1()
 
 	auto c = dynamic_cast<Conductor const*>(w0);
 	trace0("union...");
-	Symbol* w = c->newUnion(w1);
+	auto w = c->newUnion(w1);
 	trace0("union done");
 
 	assert(w);
@@ -115,7 +119,7 @@ void union2()
 	//                |
 	//          =>    |
 	// ------      ---o---
-	Symbol* root = symbol_dispatcher.clone("subckt_proto");
+	Component* root = device_dispatcher.clone("subckt_proto");
 	assert(root);
 	assert(root->scope());
 	ElementList& M = *root->scope();
@@ -138,7 +142,7 @@ void union2()
 #endif
 
 	auto c = dynamic_cast<Conductor const*>(w0);
-	Symbol* w = c->newUnion(w1);
+	auto w = c->newUnion(w1);
 
 	assert(w);
 	assert(w->subckt());

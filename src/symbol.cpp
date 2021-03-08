@@ -39,7 +39,6 @@ void Symbol::recreate(){ // }ElementList const&){ untested();
 /*--------------------------------------------------------------------------*/
 Symbol::Symbol()
     : Component(),
-		_subckt(nullptr),
 		_vflip(1),
 		_hflip(1),
 		_angle(0),
@@ -49,7 +48,6 @@ Symbol::Symbol()
 /*--------------------------------------------------------------------------*/
 Symbol::Symbol(Symbol const& s)
     : Component(s),
-		_subckt(nullptr),
 		_vflip(s._vflip),
 		_hflip(s._hflip),
 		_angle(s._angle),
@@ -146,13 +144,6 @@ pos_t Symbol::nodePosition(unsigned i) const
 		trace2("nodePosition post", pp, center());
 	}
 	return pp + center();
-}
-/*--------------------------------------------------------------------------*/
-// BUG: not here. legacy stuff...
-void Symbol::new_subckt()
-{
-	assert(!_subckt);
-	_subckt = new ElementList();
 }
 /*--------------------------------------------------------------------------*/
 Symbol::~Symbol()

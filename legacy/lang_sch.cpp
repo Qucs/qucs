@@ -130,7 +130,7 @@ private: // local/incomplete
 	void printData(Data const*, ostream_t&) const;
 
 private:
-	void printSymbol(Symbol const*, ostream_t&) const override;
+	void print_instance(ostream_t&, qucs::Component const*) const override;
 	void printElement(Element const*, ostream_t&) const override;
 	void printPainting(Painting const*, ostream_t&) const override;
 	void printSubckt(SubcktBase const*, ostream_t&) const override;
@@ -438,7 +438,7 @@ void LegacySchematicLanguage::printPainting(Painting const* p, ostream_t& s) con
 	}
 }
 /*--------------------------------------------------------------------------*/
-static void printArgs(Symbol const* sym, ostream_t& s)
+static void printArgs(qucs::Component const* sym, ostream_t& s)
 {
 	s << " " << sym->paramValue("$mfactor");
 	s << " " << sym->paramValue("$xposition");
@@ -476,7 +476,7 @@ static void printArgs(Symbol const* sym, ostream_t& s)
 		show /= 2;
 	}
 }
-static void printwirehack(Symbol const* w, ostream_t& d)
+static void printwirehack(qucs::Symbol const* w, ostream_t& d)
 {
 	assert(w);
 	// Symbol const* sym = w;
@@ -510,12 +510,13 @@ static void printwirehack(Symbol const* w, ostream_t& d)
   }
 }
 // was: void Schematic::saveComponent(QTextStream& s, Component const* c) const
-void LegacySchematicLanguage::printSymbol(Symbol const* sym, ostream_t& s) const
+void LegacySchematicLanguage::print_instance(ostream_t& s, qucs::Component const* sym) const
 {
 	trace1("printSymbol", sym->typeName());
-	if(sym->typeName()=="wire"){
+	if(sym->typeName()!="wire"){
+	}else if(auto ww=dynamic_cast<Symbol const*>(sym)){
 		// hack hack
-		return printwirehack(sym, s);
+		return printwirehack(ww, s);
 	}else{
 	}
 	s << "  <" << mangle(sym->typeName()) << " ";
@@ -1371,7 +1372,7 @@ class PaintingCommand : public Command{
 	  auto fullstring = cs.fullString();
 	  trace1("Section", fullstring);
 
-	  Symbol* sc = symbol_dispatcher.clone("subckt_proto");
+	  qucs::Component* sc = device_dispatcher.clone("subckt_proto");
 	  auto* sym = dynamic_cast<SubcktBase*>(sc);
 	  assert(sym);
 	  sym->new_subckt();

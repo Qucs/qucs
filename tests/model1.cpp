@@ -11,7 +11,7 @@ static const unsigned N=99;
 
 int main()
 {
-	Symbol* root = symbol_dispatcher.clone("subckt_proto");
+	Component* root = device_dispatcher.clone("subckt_proto");
 	assert(root);
 	assert(root->scope());
 	ElementList& M = *root->scope();

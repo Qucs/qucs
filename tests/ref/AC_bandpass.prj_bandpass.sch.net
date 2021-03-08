@@ -5,7 +5,6 @@
 # sckt Sub:opa227
 
 .Def:opa227 P1 P2 P3
-# Missing ID & params Sub:opa227
 # 36
 VCVS:SRC2 _net6 P3 gnd gnd G="1" T="0"
 R:R1 _net10 _net6 R="1 kOhm" Temp="26.85" Tc1="0.0" Tc2="0.0" Tnom="26.85"

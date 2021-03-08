@@ -10,7 +10,6 @@ Port #(.Num(2), .Type(analog)) P2(P2, P2);
 GND #() *(gnd);
 endmodule // main
 
-//else?
 module :SymbolSection:(_net2, _net1, _net0);
 painting incomplete
 painting incomplete
@@ -30,7 +29,6 @@ painting incomplete
 painting incomplete
 endmodule // :SymbolSection:
 
-//else?
 module :Paintings:();
 endmodule // :Paintings:
 

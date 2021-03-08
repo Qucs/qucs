@@ -50,7 +50,7 @@ CommonLib cl(CC_STATIC_);
 /*--------------------------------------------------------------------------*/
 ElementList empty;
 // this is a prototype
-class LibComp : public SubcktBase {
+class LibComp : public SubcktBase, public Painting {
 private:
 	LibComp(LibComp const&p)
 	  : SubcktBase(p),
@@ -67,7 +67,7 @@ public:
 		attach_common(&cl);
 	}
 	~LibComp() { incomplete(); };
-	Symbol* clone() const override{return new LibComp(*this);}
+	Component* clone() const override{return new LibComp(*this);}
 	Symbol* clone_instance() const override;
 
 private:
@@ -187,13 +187,13 @@ private:
 	Property _component;
 	mutable ElementList const* _paint; // just caching
 }d0; // LibComp
-static Dispatcher<Symbol>::INSTALL p2(&symbol_dispatcher, "LegacyLibProto", &d0);
+static Dispatcher<Component>::INSTALL p2(&device_dispatcher, "LegacyLibProto", &d0);
 /*--------------------------------------------------------------------------*/
 /*--------------------------------------------------------------------------*/
 // Lib instance. TODO: use paramset + common
 class Lib : public Symbol{
 public:
-	explicit Lib(Symbol const* p);
+	explicit Lib(Component const* p);
 	explicit Lib(CommonComponent* c=nullptr)
 		: Symbol(),
 		 _tx(0), _ty(0), _parent(nullptr) {
@@ -222,8 +222,8 @@ private: // Element
 		// if(has_common()){untested();
 		//   return common()->bounding_rect(p);
 		// }else
-		if(_parent){itested();
-			return _parent->bounding_rect();
+		if(auto p=dynamic_cast<Painting const*>(_parent)){itested();
+			return p->bounding_rect();
 		}else{itested();
 			unreachable();
 			return rect_t();
@@ -440,7 +440,7 @@ private:
 	int _ty;
 	Property _section;
 	Property _component;
-	Symbol const* _parent; // TODO. common.
+	Component const* _parent; // TODO. common.
 	std::vector<Port> _ports;
 	std::vector<std::string> _param_names; // could be common?
 	std::vector<PARA_BASE*> _params; // could be common
@@ -448,7 +448,7 @@ private:
 Lib D(&cl);
 static Dispatcher<Symbol>::INSTALL p(&symbol_dispatcher, "Lib", &D);
 /*--------------------------------------------------------------------------*/
-Lib::Lib(Symbol const* p)
+Lib::Lib(Component const* p)
 	  : Symbol(), _tx(0), _ty(0), _parent(p)
 {
 	setTypeName("Lib"); // really?

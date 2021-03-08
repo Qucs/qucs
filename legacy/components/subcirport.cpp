@@ -20,6 +20,7 @@
 #include "sckt_base.h"
 
 namespace{
+using qucs::SubcktBase;
 
 class SubCirPort : public Component /*Symbol*/  {
 private:

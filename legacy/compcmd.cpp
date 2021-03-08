@@ -24,6 +24,7 @@
 namespace{
 /*--------------------------------------------------------------------------*/
 using qucs::Symbol;
+using qucs::SubcktBase;
 /*--------------------------------------------------------------------------*/
 class CompCommand : public Command{
 	void do_it(istream_t& cs, ElementList* s) override{
@@ -36,8 +37,7 @@ class CompCommand : public Command{
 		if(p_!=s->end()){
 			sym = dynamic_cast<SubcktBase*>(*p_);
 		}else{
-			Symbol* sc = qucs::symbol_dispatcher.clone("subckt_proto");
-
+			qucs::Component* sc = qucs::device_dispatcher.clone("subckt_proto");
 			sym = dynamic_cast<SubcktBase*>(sc);
 			assert(sym);
 			sym->set_label("main");

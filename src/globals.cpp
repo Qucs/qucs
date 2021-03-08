@@ -8,6 +8,7 @@ namespace qucs{
 
 Dispatcher<Diagram> diagram_dispatcher;
 Dispatcher<Command> command_dispatcher;
+Dispatcher<Component> device_dispatcher;
 Dispatcher<Symbol> symbol_dispatcher;
 Dispatcher<Data> data_dispatcher;
 Dispatcher<Language> language_dispatcher;

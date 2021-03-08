@@ -7,7 +7,6 @@ Sub$nest2 #(.File(nest2.sch)) SC2(P2, _net9);
 R #(.R(0 Ohm), .Temp(26.85), .Tc1(0.0), .Tc2(0.0), .Tnom(26.85), .Symbol(US)) R1(P1, _net9);
 endmodule // main
 
-//else?
 module :SymbolSection:(_net0, _net1);
 painting incomplete
 // .port_ x=-30 y=0 n=0 label=:port1
@@ -16,7 +15,6 @@ painting incomplete
 painting incomplete
 endmodule // :SymbolSection:
 
-//else?
 module Sub:nest2(_net1, _net0);
 module :SymbolSection:(_net1, _net0);
 painting incomplete
@@ -46,7 +44,6 @@ endmodule // :Paintings:
 
 endmodule // Sub:nest2
 
-//else?
 module :Paintings:();
 endmodule // :Paintings:
 

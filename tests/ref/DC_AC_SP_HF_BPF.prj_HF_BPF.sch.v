@@ -12,11 +12,9 @@ GND #() *(gnd);
 Vdc #(.U(1.1 V)) V1(_net11, gnd);
 endmodule // main
 
-//else?
 module :SymbolSection:();
 endmodule // :SymbolSection:
 
-//else?
 module :Paintings:();
 endmodule // :Paintings:
 

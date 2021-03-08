@@ -84,7 +84,7 @@ CARD_LIST::fat_iterator findbranch(CS& cmd, CARD_LIST::fat_iterator here)
 	return here;
       }else{untested();
 	// there are dots, so look inside subckt
-	auto b = dynamic_cast<SubcktBase*>(*here);
+	auto b = dynamic_cast<qucs::SubcktBase*>(*here);
 	if(!b){ untested();
 	  ++here;
 	}else if (b->subckt()) {untested();

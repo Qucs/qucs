@@ -34,7 +34,7 @@ public:
   explicit sda(sda const&x) : SubcktBase (x) {
     new_subckt();
 
-    auto a = qucs::symbol_dispatcher.clone("subckt_proto");
+    auto a = qucs::device_dispatcher.clone("subckt_proto");
     assert(a);
     a->set_label("main");
     a->set_owner(this);
@@ -44,7 +44,7 @@ public:
 		// instance used when parsing a netlist.
 		_sub = element_dispatcher.clone("LegacySub");
 		if(!_sub){ // legacy
-			Symbol* sub = qucs::symbol_dispatcher.clone("LegacySub");
+			Component* sub = qucs::symbol_dispatcher.clone("LegacySub");
 
 			assert(sub);
 			sub->set_label("Sub");
@@ -75,8 +75,8 @@ public:
   }
   ~sda(){}
 
-private: // Symbol
-  Symbol* clone() const{return new sda(*this);}
+private: // Component
+  Component* clone() const{return new sda(*this);}
   std::string get_param_by_name(std::string const& n) const override{
 	  if(n == "$filename"){ untested();
 		  return _full_path;
@@ -91,7 +91,7 @@ private: // Symbol
 		 if(pos==std::string::npos){
 			 // something wrong.
 			 assert(false);
-		 }else if(dynamic_cast<Symbol const*>(_sub)){
+		 }else if(dynamic_cast<Component const*>(_sub)){
 			 // legacy hack
 			 _sub->set_param_by_name("$SUB_PATH", v);
 		 }else{
@@ -102,10 +102,6 @@ private: // Symbol
       SubcktBase::set_param_by_name(n, v);
     }
   }
-
-private: // BUG? a SubcktBase is a Painting...
-  virtual rect_t bounding_rect() const override{ unreachable(); }
-  virtual void paint(ViewPainter*) const override{ unreachable(); }
 
 private: // SchematicSymbol
   ElementList* scope(){
@@ -178,7 +174,7 @@ private:
 	Data* _dat;
 	std::string _full_path;
 }d0;
-static Dispatcher<qucs::Symbol>::INSTALL p(&qucs::symbol_dispatcher, "schematic_root", &d0);
+static Dispatcher<qucs::Component>::INSTALL p(&qucs::device_dispatcher, "schematic_root", &d0);
 /*--------------------------------------------------------------------------*/
 } // namespace
 /*--------------------------------------------------------------------------*/
