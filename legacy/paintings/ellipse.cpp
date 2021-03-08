@@ -57,7 +57,7 @@ public:
   QBrush Brush;    // filling style/color
   bool  filled;    // filled or not (for "getSelected" etc.)
 }D;
-Dispatcher<Painting>::INSTALL p(&element_dispatcher, "Ellipse", &D);
+Dispatcher<Painting>::INSTALL p(&qucs::element_dispatcher, "Ellipse", &D);
 Module::INSTALL pp("paintings", &D);
 
 Ellipse::Ellipse(bool _filled) : LegacyPainting()

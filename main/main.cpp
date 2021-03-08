@@ -115,7 +115,7 @@ void doNetlist(QString schematic_fn, std::string netlist, Command* fmt)
 {
 	std::string sfn = schematic_fn.toStdString();
 
-	Symbol* root = qucs::symbol_dispatcher.clone("schematic_root");
+	qucs::Symbol* root = qucs::symbol_dispatcher.clone("schematic_root");
 	assert(root);
 	root->set_param_by_name("$filename", sfn); // BUG: PATH.
 	root->set_label(sfn);

@@ -28,6 +28,7 @@ namespace{
 //using qucs::DocumentFormat;
 using qucs::Language;
 using qucs::Conductor;
+using qucs::Symbol;
 
 // generate a simulateable netlist in verilog
 // contracts wires into nets, similar to qucsator

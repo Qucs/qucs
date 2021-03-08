@@ -152,7 +152,7 @@ static Dispatcher<Language>::INSTALL
     p1(&language_dispatcher, "legacy_lib", &d1);
 /*--------------------------------------------------------------------------*/
 /*--------------------------------------------------------------------------*/
-static Component* parseComponentObsoleteCallback(const QString& _s, Component* c);
+static ::Component* parseComponentObsoleteCallback(const QString& _s, ::Component* c);
 //static TaskElement* loadtaskElement(const QString& _s, TaskElement* c);
 /*--------------------------------------------------------------------------*/
 static std::list<Element*> implicit_hack;
@@ -526,8 +526,8 @@ void LegacySchematicLanguage::printSymbol(Symbol const* sym, ostream_t& s) const
 		s << sym->label();
 	}
 
-	Component const* c=dynamic_cast<Component const*>(sym);
-	Component* cc=const_cast<Component*>(c); // BUGBUGBUGBUG
+	auto c = dynamic_cast<::Component const*>(sym);
+	auto cc = const_cast<::Component*>(c); // BUGBUGBUGBUG
 	if(c && c->useObsoleteProps()){
 		s << " ";
 		int i=0;
@@ -780,7 +780,7 @@ Symbol* LegacySchematicLanguage::parseSymbol(istream_t& cs, Symbol* sym) const
 	if(sym->typeName()=="wire"){
 		// yikes.
 		obsolete_wireload(sym, s);
-	}else if(auto cc=dynamic_cast<Component*>(sym)){
+	}else if(auto cc=dynamic_cast<::Component*>(sym)){
 		trace2("compon callback", s, cc->label());
 		// HACK
 		parseComponentObsoleteCallback(s, cc);
@@ -905,7 +905,7 @@ Symbol* LegacySchematicLanguage::parseSymbol(istream_t& cs, Symbol* sym) const
 } // parseSymbol
 
 // BUG raise exceptions if something goes wrong.
-static Component* parseComponentObsoleteCallback(const QString& _s, Component* c)
+static ::Component* parseComponentObsoleteCallback(const QString& _s, ::Component* c)
 {
 	Symbol* sym = c;
 	trace1("parseComponentObsoleteCallback", _s);

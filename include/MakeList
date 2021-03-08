@@ -3,6 +3,7 @@ HDR = \
 	action.h \
 	ap.h \
 	c_comand.h \
+	component.h \
 	command.h \
 	conductor.h \
 	data.h \

@@ -10,6 +10,7 @@ CPP_SRC = \
 	globals.cpp \
 	attach.cpp \
 	c__cmd.cc \
+	component.cc \
 	component_widget.cpp \
 	conductor.cpp \
 	cursors.cpp \

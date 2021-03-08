@@ -34,6 +34,7 @@ using qucs::Conductor;
 using qucs::Doc;
 using qucs::ElementList;
 using qucs::Widget;
+using qucs::Symbol;
 /*--------------------------------------------------------------------------*/
 class Wires : public SubcktBase{
 private:

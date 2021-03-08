@@ -26,6 +26,7 @@ namespace {
 using qucs::Element;
 using qucs::Language;
 using qucs::Conductor;
+using qucs::Symbol;
 /* -------------------------------------------------------------------------------- */
 class Netlister : public Command{
 public:

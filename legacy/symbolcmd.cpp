@@ -149,7 +149,7 @@ class SymbolCommand : public Command{
 	  auto fullstring = cs.fullString();
 	  trace1("SymbolSection", fullstring);
 
-	  Symbol* sc = symbolSection.clone(); // symbol_dispatcher.clone("symbolSection");
+	  qucs::Symbol* sc = symbolSection.clone(); // symbol_dispatcher.clone("symbolSection");
 	  auto* sym = dynamic_cast<SubcktBase*>(sc);
 	  assert(sym);
 	  sym->set_label(":SymbolSection:");

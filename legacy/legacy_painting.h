@@ -23,7 +23,12 @@
 class QString;
 class QPen;
 
-using namespace qucs;
+using qucs::Painting;
+using qucs::Element;
+using qucs::ViewPainter;
+namespace{
+	using namespace qucs;
+}
 
 class LegacyPainting : public Element, public Painting {
 public:

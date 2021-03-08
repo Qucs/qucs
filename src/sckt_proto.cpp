@@ -149,7 +149,7 @@ private:
 //	Element const* _instance; // why?
 	//ElementList sm;
 }d0;
-static Dispatcher<Symbol>::INSTALL p(&qucs::symbol_dispatcher, "subckt_proto", &d0);
+static Dispatcher<qucs::Symbol>::INSTALL p(&qucs::symbol_dispatcher, "subckt_proto", &d0);
 /*--------------------------------------------------------------------------*/
 /*--------------------------------------------------------------------------*/
 // bool SubcktProto::portExists(unsigned i) const

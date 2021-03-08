@@ -23,6 +23,8 @@
 /*--------------------------------------------------------------------------*/
 namespace{
 /*--------------------------------------------------------------------------*/
+using qucs::Symbol;
+/*--------------------------------------------------------------------------*/
 class CompCommand : public Command{
 	void do_it(istream_t& cs, ElementList* s) override{
 		auto fullstring = cs.fullString();

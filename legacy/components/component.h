@@ -12,8 +12,8 @@
  *                                                                         *
  ***************************************************************************/
 
-#ifndef QUCS_COMPONENT_H
-#define QUCS_COMPONENT_H
+#ifndef QUCS_LEGACY_COMPONENT_H
+#define QUCS_LEGACY_COMPONENT_H
 
 #include "symbol.h"
 #include "qt_compat.h"
@@ -33,6 +33,7 @@ using qucs::Element;
 using qucs::ElementList;
 using qucs::symbol_dispatcher;
 using qucs::NetLang; // what?
+using qucs::Symbol;
 
 class QString;
 class QPen;
@@ -74,7 +75,7 @@ public:
 
 };
 
-class Component : public Symbol {
+class Component : public qucs::Symbol {
 protected:
   Component(Component const&);
 
@@ -286,7 +287,7 @@ protected: // obsolete
 
 
 
-class MultiViewComponent : public Component {
+class MultiViewComponent : public ::Component {
 public:
   MultiViewComponent(MultiViewComponent const&c) : Component(c) {}
   MultiViewComponent() {};

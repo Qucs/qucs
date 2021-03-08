@@ -147,7 +147,7 @@ private: // local
   void printElement(Element const*, ostream_t&) const override;
   void printSymbol(Symbol const*, ostream_t&) const override;
   void printSubckt(SubcktBase const*, ostream_t&) const;
-  void printComponent(Component const*, ostream_t&) const;
+  void printComponent(::Component const*, ostream_t&) const;
   void printPainting(Painting const*, ostream_t&) const override {incomplete();}
   void printDiagram(Diagram const*, ostream_t&) const override {incomplete();}
 }qucslang;
@@ -226,7 +226,7 @@ void QucsatorLang::printSymbol(Symbol const* d, ostream_t& s) const
 	}else if(auto c=dynamic_cast<TaskElement const*>(d)){ untested();
 		// why is this a Symbol??
 		printTaskElement(c, s);
-	}else if(auto c=dynamic_cast<Component const*>(d)){
+	}else if(auto c=dynamic_cast<::Component const*>(d)){
 		// HACK
 		printComponent(c, s);
 	}else if(dynamic_cast<Place const*>(d)){
@@ -438,7 +438,7 @@ void QucsatorLang::printTaskElement(TaskElement const* c, ostream_t& s) const
 
 // print Component in qucsator language
 // BUG: callback: untangle isShort, isActive (mfactor?).
-void QucsatorLang::printComponent(Component const* c, ostream_t& s) const
+void QucsatorLang::printComponent(::Component const* c, ostream_t& s) const
 {
 	if(c->isActive != COMP_IS_ACTIVE){
 		// comment out?

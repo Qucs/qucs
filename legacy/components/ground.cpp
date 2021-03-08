@@ -22,7 +22,7 @@ namespace{
 
 using namespace qucs;
 
-class Ground : public Component  {
+class Ground : public ::Component  {
 private:
 	Ground(Ground const& g);
 public:

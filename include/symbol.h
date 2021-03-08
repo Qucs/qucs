@@ -10,20 +10,17 @@
  *   (at your option) any later version.                                   *
  *                                                                         *
  ***************************************************************************/
-// Base class for symbols, i.e. drawings with ports.
+// Base class for symbols, i.e. drawings that represent components
 
 #ifndef QUCS_SYMBOL_H
 #define QUCS_SYMBOL_H
 /*--------------------------------------------------------------------------*/
 #include "element.h"
+#include "component.h"
 #include "exception.h"
 #include "geometry.h"
 #include "exception.h"
 #include "painting.h"
-/*--------------------------------------------------------------------------*/
-class QPainter;
-/*--------------------------------------------------------------------------*/
-enum {CC_STATIC_=27342};
 /*--------------------------------------------------------------------------*/
 namespace qucs{
 /*--------------------------------------------------------------------------*/
@@ -33,61 +30,8 @@ class NodeMap;
 class Symbol;
 class Widget;
 /*--------------------------------------------------------------------------*/
-// borrowed (modified) from e_compon.h
-class CommonComponent : public Object {
-public:
-  static void attach_common(CommonComponent* c, CommonComponent** to);
-  static void detach_common(CommonComponent** from);
-private:
-  CommonComponent& operator=(const CommonComponent&)
-			      {unreachable(); return *this;}
-  explicit CommonComponent() : Object() {unreachable();incomplete();}
-protected:
-  explicit CommonComponent(const CommonComponent& p);
-  explicit CommonComponent(int c);
-public:
-  virtual ~CommonComponent();
-
-  void attach_model(const Symbol*)const;
-//  CommonComponent& attach(const MODEL_CARD* m) {_model = m; return *this;}
-  void set_modelname(const std::string& n) {_modelname = n;}
-
-  virtual CommonComponent* clone()const = 0;
-
-  // virtual bool is_trivial()const {return false;}
-
-public: // params, not yet.
-//   virtual bool param_is_printable(int)const;
-//   virtual std::string param_name(int)const;
-//   virtual std::string param_name(int,int)const;
-//   virtual std::string param_value(int)const;
-//   virtual void set_param_by_name(std::string, std::string);
-//   void Set_param_by_name(std::string, std::string); //BUG// see implementation
-//   virtual void set_param_by_index(int, std::string&, int);
-//   virtual int param_count()const {return 4;}
-public: // also, not yet
-//  virtual void precalc_first(const CARD_LIST*)	{}
-//  virtual void expand(const COMPONENT*)		{}
-//  virtual CommonComponent* deflate()		{return this;}
-//  virtual void precalc_last(const CARD_LIST*);
-
-  // virtual std::string name()const	= 0;
-  virtual bool  operator==(const CommonComponent&x)const;
-
-  bool operator!=(const CommonComponent& x)const {return !(*this == x);}
-  std::string	      modelname()const	{return _modelname;}
-//  const MODEL_CARD*   model()const	{assert(_model); return _model;}
-//  bool		      has_model()const	{return _model;}
-//   const PARAMETER<double>& mfactor()const {return _mfactor;}
-//   const PARAMETER<double>& value()const {return _value;}
-private:
-  std::string	_modelname;
-//  mutable const MODEL_CARD* _model;
-  int		_attach_count;
-};
 /*--------------------------------------------------------------------------*/
-/*--------------------------------------------------------------------------*/
-class Symbol : public Element, public Painting {
+class Symbol : public Component, public Painting {
 protected:
 	explicit Symbol(Symbol const&);
 public: // construct
@@ -115,23 +59,9 @@ public: // TODO. something like this.
 	// virtual void prepare();
 	// virtual void unPrepare();
 	//
-public: // manage shared data across symbols
-	CommonComponent* mutable_common()	  {return _common;}
-	const CommonComponent* common()const	  {return _common;}
-	bool	has_common()const		  {return _common;}
-	void	attach_common(CommonComponent*c) {CommonComponent::attach_common(c,&_common);}
-	void	detach_common()			  {CommonComponent::detach_common(&_common);}
-	void	deflate_common();
-
 public:
-	ElementList const* scope() const;
+//	ElementList const* scope() const;
 	virtual ElementList const* symbolPaintings() const;
-
-// protected: // needed in netlister. public use in parse...
-	virtual ElementList* scope();
-
-	void set_dev_type(const std::string& new_type);
-	virtual std::string dev_type()const{ return "(unreachable)";}
 
 public: // Parameters
 	virtual unsigned paramCount()const;
@@ -144,47 +74,14 @@ public: // Parameters
 	virtual std::string paramValue(unsigned i) const;
 	virtual std::string paramName(unsigned i) const;
 
-#if 0
-public: // qt?
-	void setParameter(QString const&, QString const&);
-	void setParameter(unsigned, QString const&);
-
-public: // non-virtual (on purpose)
-	QString const& netLabel(unsigned i) const;
-#endif
-
-public: // Node stuff
-	virtual bool is_device() const{return true;}
-	virtual Node* connectNode(unsigned idx, NodeMap&);
-	virtual Node* disconnectNode(unsigned idx, NodeMap&);
-
-private:
-	Port const& port(unsigned) const; // TODO. don't expose "Port"
-
 public: // Port stuff
-	virtual unsigned max_nodes() const{
-		return 100; // numPorts(); // for now.
-	}
-	virtual void set_port_by_index(index_t, std::string const&);
-	virtual void set_port_by_name(std::string const&, std::string const&);
-	virtual pos_t portPosition(unsigned) const = 0;
 	pos_t nodePosition(unsigned) const;
-
-	std::string port_value(unsigned) const;
-	virtual Node const* portValue(unsigned) const; // why virtual?
 	Node const* portNode(unsigned) const;
-	// TODO: rethink Port/Node semantics
-	virtual unsigned numPorts() const = 0; // net_nodes?
-	virtual bool portExists(unsigned i) const{ return i<numPorts(); }
-	virtual /*?*/ std::string const portName(unsigned) const{return "invalid"; }
 
 public: // hierarchy. move to SubcktBase
 	ElementList const* subckt() const{ return _subckt; }
 	ElementList* subckt(){ return _subckt; }
 	void new_subckt();
-
-private: // internal port access
-	virtual Port& port(unsigned i) = 0;
 
 public: // graphics
 	// hmm, maybe just dispatch a gfx object.
@@ -207,13 +104,9 @@ private:
 	int _angle;
 	unsigned _param_display;
 	bool _label_display;
-	CommonComponent* _common;
-	unsigned _net_nodes;
 }; // Symbol
 /*--------------------------------------------------------------------------*/
 } // qucs
-/*--------------------------------------------------------------------------*/
-using qucs::Symbol; // transition.
 /*--------------------------------------------------------------------------*/
 /*--------------------------------------------------------------------------*/
 #endif

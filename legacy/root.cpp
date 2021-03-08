@@ -178,7 +178,7 @@ private:
 	Data* _dat;
 	std::string _full_path;
 }d0;
-static Dispatcher<Symbol>::INSTALL p(&qucs::symbol_dispatcher, "schematic_root", &d0);
+static Dispatcher<qucs::Symbol>::INSTALL p(&qucs::symbol_dispatcher, "schematic_root", &d0);
 /*--------------------------------------------------------------------------*/
 } // namespace
 /*--------------------------------------------------------------------------*/

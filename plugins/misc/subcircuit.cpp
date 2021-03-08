@@ -30,6 +30,7 @@
 /*--------------------------------------------------------------------------*/
 namespace qucs {
 	class ViewPainter;
+	class Symbol;
 }
 /*--------------------------------------------------------------------------*/
 namespace {
@@ -42,6 +43,7 @@ using qucs::CommonSubckt;
 using qucs::Element;
 using qucs::Language;
 using qucs::Module;
+using qucs::Symbol;
 using qucs::ViewPainter;
 /*--------------------------------------------------------------------------*/
 // possibly not needed.

@@ -52,7 +52,15 @@ class QComboBox;
 class QPushButton;
 class QVBoxLayout;
 
-using namespace qucs;
+using qucs::SchematicDialog;
+using qucs::ElementGraphics;
+using qucs::CommonComponent;
+using qucs::Element;
+using qucs::ElementList;
+using qucs::Node;
+using qucs::Port;
+using qucs::ViewPainter;
+
 
 class ComponentDialog : public SchematicDialog {
 public:
@@ -203,7 +211,7 @@ Component::Component() : Symbol(),  _rotated(0)
 }
 
 Element* Component::clone() const
-{
+{ untested();
   Component const* e=this;
   Component* E=const_cast<Component*>(e);
   Component* ret = E->newOne();
@@ -445,7 +453,7 @@ void Component::print(ViewPainter *p, float FontScale)
 // -------------------------------------------------------
 // Rotates the component 90 counter-clockwise around its center
 void Component::rotate()
-{
+{ untested();
   // Port count only available after recreate, createSymbol
   if ((Model != "Sub") && (Model !="VHDL") && (Model != "Verilog")) // skip port count
     if(Ports.count() < 1) return;  // do not rotate components without ports

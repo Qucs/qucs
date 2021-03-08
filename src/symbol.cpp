@@ -38,53 +38,23 @@ void Symbol::recreate(){ // }ElementList const&){ untested();
 }
 /*--------------------------------------------------------------------------*/
 Symbol::Symbol()
-    : Element(),
+    : Component(),
 		_subckt(nullptr),
 		_vflip(1),
 		_hflip(1),
 		_angle(0),
-		_param_display(0),
-		_common(nullptr),
-		_net_nodes(0)
+		_param_display(0)
 {
 }
 /*--------------------------------------------------------------------------*/
 Symbol::Symbol(Symbol const& s)
-    : Element(s),
+    : Component(s),
 		_subckt(nullptr),
 		_vflip(s._vflip),
 		_hflip(s._hflip),
 		_angle(s._angle),
-		_param_display(s._param_display),
-		_common(nullptr),
-		_net_nodes(s._net_nodes)
+		_param_display(s._param_display)
 {
-  attach_common(s._common);
-  setTypeName(s.typeName());
-}
-/*--------------------------------------------------------------------------*/
-// dup
-ElementList* Symbol::scope()
-{
-	return Element::scope();
-
-	if(auto o=dynamic_cast<Symbol*>(owner())){ untested();
-		return o->subckt();
-	}else if(dynamic_cast<Doc*>(owner())){ untested();
-		assert(subckt());
-		return subckt(); // yikes
-	}else{untested();
-		trace1("owner not a symbol?", label());
-		return nullptr;
-	}
-}
-/*--------------------------------------------------------------------------*/
-// reuse overrides to give both const and non-const access.
-// (move to header)
-ElementList const* Symbol::scope() const
-{
-	auto s=const_cast<Symbol*>(this);
-	return s->scope();
 }
 /*--------------------------------------------------------------------------*/
 #if 0
@@ -96,90 +66,16 @@ QString const& Symbol::netLabel(unsigned i) const
 }
 #endif
 /*--------------------------------------------------------------------------*/
-void Symbol::set_port_by_name(std::string const&, std::string const&)
-{
-	incomplete();
-	assert(false);
-}
-/*--------------------------------------------------------------------------*/
-void Symbol::set_port_by_index(index_t num, std::string const& ext_name)
-{
-	trace5("spbi", num, max_nodes(), _net_nodes, ext_name, label());
-
-	if (num < max_nodes()) {
-		port(num).new_node(ext_name, this);
-		if (num+1 > _net_nodes) {
-			// make the list bigger
-			_net_nodes = num+1;
-		}else{
-			// it's already big enough, probably assigning out of order
-		}
-		assert(ext_name=="" || port(num)->hasNet());
-	}else{
-		throw qucs::Exception_Too_Many(num+1, max_nodes(), 0/*offset*/);
-	}
-}
-/*--------------------------------------------------------------------------*/
-// connect to a node. (connectPort?)
-Node* Symbol::connectNode(index_t i, NodeMap&nm)
-{
-	incomplete(); // obsolete;
-	return nullptr;
-}
-/*--------------------------------------------------------------------------*/
 void set_port_by_name(std::string const& name, std::string const& value)
 {
 	incomplete();
 	assert(false);
 }
 /*--------------------------------------------------------------------------*/
-Node* Symbol::disconnectNode(unsigned i, NodeMap&)
-{
-#if 1
-	//set_port_by_index(i, "");
-#else
-	trace2("disconnectNode", label(), i);
-	Port& mp = port(i);
-	Node* n = mp.value();
-	mp.disconnect(n /*, this*/);
-
-	return n;
-#endif
-	return nullptr;
-}
-/*--------------------------------------------------------------------------*/
-Node const* Symbol::portNode(unsigned i) const
-{ untested();
-  assert(i<unsigned(numPorts()));
-  if(port(i).isConnected()){ untested();
-	  assert( port(i).value() );
-	  return port(i).value();
-  }else{ untested();
-	  return nullptr;
-  }
-}
-/*--------------------------------------------------------------------------*/
-Node const* Symbol::portValue(unsigned i) const
-{
-  assert(i<unsigned(numPorts()));
-  if(port(i).isConnected()){
-	  assert( port(i).value() );
-	  return port(i).value();
-  }else{
-	  return nullptr;
-  }
-}
-/*--------------------------------------------------------------------------*/
 // same as Element::center?
 pos_t Symbol::center()const
 {
 	return Element::center(); // pos_t(_cx, _cy);
-}
-/*--------------------------------------------------------------------------*/
-Port const& Symbol::port(unsigned i) const
-{
-	Symbol* s=const_cast<Symbol*>(this);
-	return s->port(i);
 }
 /*--------------------------------------------------------------------------*/
 std::string Symbol::paramValue(std::string const& n) const
@@ -200,7 +96,7 @@ std::string Symbol::paramValue(std::string const& n) const
 	}else if(n=="$angle"){
 		return std::to_string(_angle);
 	}else{ untested();
-		throw qucs::ExceptionCantFind(label(), n, "params");
+		return Component::paramValue(n);
 	}
 }
 /*--------------------------------------------------------------------------*/
@@ -261,9 +157,6 @@ void Symbol::new_subckt()
 /*--------------------------------------------------------------------------*/
 Symbol::~Symbol()
 {
-	detach_common();
-	delete _subckt;
-	_subckt = nullptr;
 }
 /*--------------------------------------------------------------------------*/
 bool Symbol::paramIsPrintable() const
@@ -278,7 +171,7 @@ unsigned Symbol::paramCount() const
 	return 6;
 }
 /*--------------------------------------------------------------------------*/
-std::string Symbol::paramValue(unsigned i) const
+std::string Symbol::paramValue(index_t i) const
 {
 	switch(i){
 	case 0:
@@ -290,7 +183,7 @@ std::string Symbol::paramValue(unsigned i) const
 	case 3:
 		return std::to_string(_hflip);
 	default:
-		throw qucs::ExceptionCantFind(label(), std::to_string(i), "param values");
+		return Component::paramValue(i); // really??
 	}
 }
 /*--------------------------------------------------------------------------*/
@@ -324,7 +217,7 @@ void Symbol::setParameter(index_t n, std::string const& v)
 	}else if(n<Symbol::paramCount()){
 		unreachable();
 	}else{
-		throw qucs::ExceptionCantFind(label(), std::to_string(n), "params");
+		return Component::setParameter(n, v);
 	}
 }
 /*--------------------------------------------------------------------------*/
@@ -346,7 +239,7 @@ void Symbol::set_param_by_name(std::string const& name, std::string const& v)
 		_vflip = atoi(v.c_str());
 		assert(_hflip==1 || _hflip==-1);
 	}else{
-		throw qucs::ExceptionCantFind(label(), name, "params");
+		return Component::set_param_by_name(name, v);
 	}
 }
 /*--------------------------------------------------------------------------*/
@@ -468,29 +361,6 @@ ElementList const* Symbol::symbolPaintings() const
 {
 	unreachable(); // obsolete
 	return nullptr;
-}
-/*--------------------------------------------------------------------------*/
-std::string Symbol::port_value(unsigned i) const
-{
-	trace2("port_value", label(), i);
-	Port const& p = port(i);
-	return p.nodeLabel();
-}
-/*--------------------------------------------------------------------------*/
-void Symbol::set_dev_type(const std::string& new_type)
-{
-	if (common()) {
-		if (new_type != typeName()) {
-			CommonComponent* c = common()->clone();
-			assert(c);
-			c->set_modelname(new_type);
-			attach_common(c);
-		}else{
-		}
-	}else{
-		assert(false); // for now
-		// CARD::set_dev_type(new_type);
-	}
 }
 /*--------------------------------------------------------------------------*/
 Widget* Symbol::schematicWidget(Doc* Doc) const

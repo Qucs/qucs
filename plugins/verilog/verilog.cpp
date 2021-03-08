@@ -50,6 +50,7 @@ using qucs::Language;
 using qucs::Painting;
 using qucs::TaskElement;
 using qucs::Diagram;
+using qucs::Symbol;
 /* -------------------------------------------------------------------------------- */
 static std::string netLabel(Node const* nn)
 { untested();
