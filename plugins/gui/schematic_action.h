@@ -64,13 +64,7 @@ public: // actions... private?
 	MouseAction* maZoomIn;
 	// MouseAction* maZoomOut; // not a mouseaction
 	
-	// all in one go?? how?
-//	QAction* _actionSelect{nullptr};
-//	QAction* _actionRotate{nullptr};
-//	QAction* _actionMX{nullptr};
-//	QAction* _actionMY{nullptr};
-//	QAction* _actionInsertGround{nullptr};
-//	QAction* _actionInsertPort{nullptr};
+	void actionSelectElement(QObject*e);
 private:
 	QToolBar* _toolbar{nullptr};
 };

@@ -215,7 +215,6 @@ private:
   int ccCurIdx; // CompChooser current index (used during search)
 
 // ********** Methods ***************************************************
-  void initView();
   void initCursorMenu();
 
   void printCurrentDocument(bool);
@@ -269,6 +268,7 @@ private slots:
   void slotHelpAbout();     // shows an about dialog
 
 public: // why?
+  void initView();
   void initMenuBar();
   void initToolBar();
   void initActions();
@@ -307,19 +307,21 @@ public:
 
 private:
 // ********* Widgets on the main area **********************************
-  QDockWidget     *dock;
-  QTabWidget      *TabView;
-  QDockWidget     *octDock;
-  OctaveWindow    *octave;
-  MessageDock     *messageDock;
+// which ones have to be global?!
+  QDockWidget     *dock{nullptr};
+  QTabWidget      *TabView{nullptr};
+  QDockWidget     *octDock{nullptr};
+  OctaveWindow    *octave{nullptr};
+  MessageDock     *messageDock{nullptr};
 
-  QListView       *Projects;
-  ProjectView     *Content;
+  QListView       *Projects{nullptr};
+  ProjectView     *Content{nullptr};
 
-  QLineEdit       *CompSearch;
-  QPushButton     *CompSearchClear;
+  QLineEdit       *CompSearch{nullptr};
+  QPushButton     *CompSearchClear{nullptr};
 
-  QAction *helpAboutApp, *helpAboutQt;
+  QAction *helpAboutApp{nullptr};
+  QAction *helpAboutQt{nullptr};
 
   QAction* viewToolBar{nullptr};
   QAction* viewStatusBar{nullptr};

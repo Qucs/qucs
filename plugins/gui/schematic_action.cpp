@@ -497,9 +497,9 @@ public:
 #include <component_widget.h> // not here.
 QUndoCommand* MouseActionNewElement::activate(QObject* sender)
 {
-	if(auto s=dynamic_cast<ComponentListWidgetItem*>(sender)){
+	if(auto s=dynamic_cast<ComponentListWidgetItem*>(sender)){ untested();
 		_proto = s->proto(); // better clone?
-	}else{
+	}else{ untested();
 	}
 	return MouseAction::activate(sender);
 }
@@ -728,6 +728,12 @@ static void setParent_(Object* o, QObject* par)
 	auto oo = dynamic_cast<QObject*>(o); // prechecked?
 	assert(oo);
 	oo->setParent(par);
+}
+/*--------------------------------------------------------------------------*/
+void SchematicActions::actionSelectElement(QObject*e)
+{ untested();
+	maInsertElement->activate(e);
+	possiblyToggleAction(maInsertElement, nullptr);
 }
 /*--------------------------------------------------------------------------*/
 void SchematicActions::stash_toolbar(QAction* p)

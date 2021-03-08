@@ -20,16 +20,33 @@
 #include "qucs_tabs.h"
 #include "settings.h"
 #include "octave_window.h"
+#include "component_widget.h"
+#include "project_view.h"
 
 #include <QApplication>
+#include <QComboBox>
 #include <QDesktopWidget>
+#include <QDockWidget>
+#include <QLabel>
+#include <QLineEdit>
+#include <QListView>
 #include <QMenu>
 #include <QMenuBar>
-#include <QTextCodec>
-#include <QTranslator>
-#include <QToolBar>
-#include <QLabel>
+#include <QMessageBox>
+#include <QPushButton>
 #include <QStatusBar>
+#include <QTextCodec>
+#include <QToolBar>
+#include <QTranslator>
+#include <QVBoxLayout>
+#include <QTreeWidget>
+
+typedef enum {
+    Project = 0,
+    Content,
+    Components,
+    Libraries,
+} TabViewTabs;
 
 namespace qucs {
 /*--------------------------------------------------------------------------*/
@@ -37,6 +54,219 @@ QMenu* fileMenu;
 QAction *editCut, *editCopy, *magAll, *magOne, *magMinus, *filePrintFit;
 QAction *symEdit, *intoH, *simulate, *dpl_sch, *dcbias;
 /*--------------------------------------------------------------------------*/
+void App::initView()
+{itested();
+  // set application icon
+  // APPLE sets the QApplication icon with Info.plist
+#ifndef __APPLE__
+  // BUG: platform.h
+  setWindowIcon (QPixmap(":/bitmaps/big.qucs.xpm"));
+#endif
+
+  DocumentTab = new DocTabWidget(this);
+  assert(DocumentTab);
+  setCentralWidget(DocumentTab);
+
+  //  here?! move to DocTabWidget::DocTabWidget?
+//  disconnect(DocumentTab, &DocTabWidget::currentChanged, nullptr, nullptr);
+//  disconnect(DocumentTab, &DocTabWidget::tabBarClicked, nullptr, nullptr);
+//
+
+  // Give every tab a close button, and connect the button's signal to
+  // slotFileClose
+  DocumentTab->setTabsClosable(true);
+  connect(DocumentTab,
+          SIGNAL(tabCloseRequested(int)), SLOT(slotFileClose(int)));
+#ifdef HAVE_QTABWIDGET_SETMOVABLE
+  // make tabs draggable if supported
+  DocumentTab->setMovable (true);
+#endif
+
+  dock = new QDockWidget(tr("Main Dock"),this);
+  TabView = new QTabWidget(dock);
+  TabView->setTabPosition(QTabWidget::West);
+
+  connect(dock, SIGNAL(visibilityChanged(bool)), SLOT(slotToggleDock(bool)));
+
+#if 0
+  view = new MouseActions(*this);
+#endif
+
+
+  { // something about editText
+    editText = new QLineEdit(this);  // for editing component properties
+    editText->setFrame(false);
+    editText->setHidden(true);
+
+//    misc::setWidgetBackgroundColor(editText, QucsSettings.BGColor);
+
+    connect(editText, SIGNAL(returnPressed()), SLOT(slotApplyCompText()));
+    connect(editText, SIGNAL(textChanged(const QString&)),
+            SLOT(slotResizePropEdit(const QString&)));
+    connect(editText, SIGNAL(lostFocus()), SLOT(slotHideEdit()));
+  }
+
+  // ----------------------------------------------------------
+  // "Project Tab" of the left QTabWidget
+  QWidget *ProjGroup = new QWidget();
+  QVBoxLayout *ProjGroupLayout = new QVBoxLayout();
+  QWidget *ProjButts = new QWidget();
+  QPushButton *ProjNew = new QPushButton(tr("New"));
+  connect(ProjNew, SIGNAL(clicked()), SLOT(slotButtonProjNew()));
+  QPushButton *ProjOpen = new QPushButton(tr("Open"));
+  connect(ProjOpen, SIGNAL(clicked()), SLOT(slotButtonProjOpen()));
+  QPushButton *ProjDel = new QPushButton(tr("Delete"));
+  connect(ProjDel, SIGNAL(clicked()), SLOT(slotButtonProjDel()));
+
+  QHBoxLayout *ProjButtsLayout = new QHBoxLayout();
+  ProjButtsLayout->addWidget(ProjNew);
+  ProjButtsLayout->addWidget(ProjOpen);
+  ProjButtsLayout->addWidget(ProjDel);
+  ProjButts->setLayout(ProjButtsLayout);
+
+  ProjGroupLayout->addWidget(ProjButts);
+
+  Projects = new QListView();
+
+  ProjGroupLayout->addWidget(Projects);
+  ProjGroup->setLayout(ProjGroupLayout);
+
+  int tabviewIndex; // has to to with the left side tabs.
+  TabView->addTab(ProjGroup, tr("Projects"));
+  tabviewIndex = TabView->insertTab(TabViewTabs::Project, ProjGroup, tr("Projects"));
+  assert(tabviewIndex == TabViewTabs::Project);
+  TabView->setTabToolTip(TabViewTabs::Project, tr("content of project directory"));
+ connect(Projects, SIGNAL(doubleClicked(const QModelIndex &)),
+          this, SLOT(slotListProjOpen(const QModelIndex &)));
+
+  // ----------------------------------------------------------
+#if 1
+  {itested();
+    // "Content" Tab of the left QTabWidget
+    Content = new ProjectView(this);
+    Content->setContextMenuPolicy(Qt::CustomContextMenu);
+
+    tabviewIndex = TabView->insertTab(TabViewTabs::Content, Content, tr("Content"));
+    assert(tabviewIndex == TabViewTabs::Content);
+    TabView->setTabToolTip(TabViewTabs::Content, tr("content of current project"));
+
+    connect(Content, &ProjectView::clicked, this, &App::slotSelectSubcircuit);
+    connect(Content, &ProjectView::doubleClicked, this, &App::slotOpenContent);
+  }
+#endif
+
+  // ----------------------------------------------------------
+  // "Component" Tab of the left QTabWidget
+  QWidget *CompGroup  = new QWidget();
+  QVBoxLayout *CompGroupLayout = new QVBoxLayout();
+  QHBoxLayout *CompSearchLayout = new QHBoxLayout();
+
+  CompChoose = new QComboBox(this);
+  CompComps = new ComponentWidget(this);
+  CompComps->setViewMode(QListView::IconMode);
+  CompComps->setGridSize(QSize(110,90));
+  CompSearch = new QLineEdit(this);
+  CompSearch->setPlaceholderText(tr("Search Components"));
+  CompSearchClear = new QPushButton(tr("Clear"));
+
+  CompGroupLayout->setSpacing(5);
+  CompGroupLayout->addWidget(CompChoose);
+  CompGroupLayout->addWidget(CompComps);
+  CompGroupLayout->addLayout(CompSearchLayout);
+  CompSearchLayout->addWidget(CompSearch);
+  CompSearchLayout->addWidget(CompSearchClear);
+  CompGroup->setLayout(CompGroupLayout);
+
+  tabviewIndex = TabView->insertTab(TabViewTabs::Components, CompGroup,tr("Components"));
+  assert(tabviewIndex == TabViewTabs::Components);
+  TabView->setTabToolTip(TabViewTabs::Components, tr("components and diagrams"));
+  fillComboBox(true);
+
+  slotSetCompView(0);
+  connect(CompChoose, SIGNAL(activated(int)), SLOT(slotSetCompView(int)));
+  connect(CompComps, SIGNAL(itemActivated(QListWidgetItem*)), SLOT(slotSelectComponent(QListWidgetItem*)));
+  connect(CompComps, SIGNAL(itemPressed(QListWidgetItem*)), SLOT(slotSelectComponent(QListWidgetItem*)));
+  connect(CompSearch, SIGNAL(textEdited(const QString &)), SLOT(slotSearchComponent(const QString &)));
+  connect(CompSearchClear, SIGNAL(clicked()), SLOT(slotSearchClear()));
+
+  // ----------------------------------------------------------
+  // "Libraries" Tab of the left QTabWidget
+
+  QWidget *LibGroup = new QWidget ();
+  QVBoxLayout *LibGroupLayout = new QVBoxLayout ();
+  QWidget *LibButts = new QWidget ();
+  QPushButton *LibManage = new QPushButton (tr ("Manage Libraries"));
+  connect(LibManage, SIGNAL(clicked()), SLOT(slotCallLibrary()));
+
+  QHBoxLayout *LibButtsLayout = new QHBoxLayout();
+  LibButtsLayout->addWidget (LibManage);
+  LibButts->setLayout(LibButtsLayout);
+
+  LibGroupLayout->addWidget(LibButts);
+
+
+  libTreeWidget = new QTreeWidget (this);
+  libTreeWidget->setColumnCount (1);
+  QStringList headers;
+  headers.clear ();
+  headers << tr ("Libraries");
+  libTreeWidget->setHeaderLabels (headers);
+
+  LibGroupLayout->addWidget (libTreeWidget);
+  LibGroup->setLayout (LibGroupLayout);
+
+  fillLibrariesTreeView ();
+
+  tabviewIndex = TabView->insertTab(TabViewTabs::Libraries, LibGroup, tr("Libraries"));
+  assert(tabviewIndex == TabViewTabs::Libraries);
+  TabView->setTabToolTip (TabViewTabs::Libraries, tr ("system and user component libraries"));
+
+  connect(libTreeWidget, SIGNAL(itemPressed (QTreeWidgetItem*, int)),
+           SLOT(slotSelectLibComponent (QTreeWidgetItem*)));
+
+  // ----------------------------------------------------------
+  // put the tab widget in the dock
+  dock->setWidget(TabView);
+  dock->setAllowedAreas(Qt::LeftDockWidgetArea);
+  this->addDockWidget(Qt::LeftDockWidgetArea, dock);
+  TabView->setCurrentIndex(TabViewTabs::Project);
+
+  // ----------------------------------------------------------
+  // Octave docking window
+  octDock = new QDockWidget(tr("Octave Dock"));
+
+  connect(octDock, SIGNAL(visibilityChanged(bool)), SLOT(slotToggleOctave(bool)));
+  octave = new OctaveWindow(octDock);
+  this->addDockWidget(Qt::BottomDockWidgetArea, octDock);
+  this->setCorner(Qt::BottomLeftCorner  , Qt::LeftDockWidgetArea);
+
+  // ............................................
+
+//  messageDock = new MessageDock(this);
+
+  // initial projects directory model
+  m_homeDirModel = new QucsFileSystemModel(this);
+  m_proxyModel = new QucsSortFilterProxyModel();
+  //m_proxyModel->setDynamicSortFilter(true);
+  // show all directories (project and non-project)
+  m_homeDirModel->setFilter(QDir::NoDot | QDir::AllDirs);
+
+  // ............................................
+  QString path = QDir(QString::fromStdString(QucsSettings.homeDir())).absolutePath();
+  QDir ProjDir(path);
+  // initial projects directory is the Qucs home directory
+  QucsSettings.projsDir = path.toStdString();
+
+  // create home dir if not exist
+  if(!ProjDir.exists()) { untested();
+    if(!ProjDir.mkdir(path)) { untested();
+      QMessageBox::warning(this, tr("Warning"),
+          tr("Cannot create work directory !"));
+      return;
+    }
+  }
+  readProjects(); // reads all projects and inserts them into the ListBox
+}
 void App::initStatusBar()
 {
   // To reserve enough space, insert the longest text and rewrite it afterwards.
@@ -868,6 +1098,7 @@ class g: public Command{
 		qucs::Module::registerModules (); // BUG
 		auto QucsMain = new qucs::App();
 
+		QucsMain->initView();
 		QucsMain->initActions();
 		QucsMain->initMenuBar();
 		QucsMain->initToolBar();

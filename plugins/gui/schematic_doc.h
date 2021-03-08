@@ -308,6 +308,9 @@ public:
   QGraphicsItem& addToScene(Element*); // called from SM::pushBack.
 
 
+  // BUG; send to handler
+	void actionSelectElement(QObject*e);
+
 protected slots:
   // void slotScrollUp();
   // void slotScrollDown();
@@ -472,7 +475,6 @@ public slots:
 #if 0
   void actionMoveText(QAction*) override;
   void actionZoomIn(QAction*) override;
-  void actionSelectElement(QObject*) override;
   void actionInsertEquation(QAction*) override;
   void actionInsertPort(QAction*) override;
 #endif
@@ -2081,13 +2083,19 @@ void QucsApp::slotSelectAll()
 #endif
 }
 
-// ??
-#if 0
-void SchematicDoc::slotSelectElement(QObject*e)
+// void actionSelectElement(QObject*) override;
+void SchematicDoc::actionSelectElement(QObject*e)
 { untested();
-  schematicActions()->maInsertElement->activate(e);
-  possiblyToggleAction(schematicActions()->maInsertElement, nullptr);
+//  schematicActions()->maInsertElement->activate(e);
+  schematicActions()->actionSelectElement(e); // why not connect directly???
 }
+/*--------------------------------------------------------------------------*/
+//void SchematicDoc::slotSelectElement(QObject*e)
+//{ untested();
+//  schematicActions()->maInsertElement->activate(e);
+//  possiblyToggleAction(schematicActions()->maInsertElement, nullptr);
+//}
+#if 0
 
 // is this still in use?
 void SchematicDoc::actionEditUndo(QAction*)
@@ -2857,7 +2865,6 @@ void SchematicDoc::setFrameText(int, QString)
 { untested();
   incomplete();
 }
-/*--------------------------------------------------------------------------*/
 /*--------------------------------------------------------------------------*/
 class Factory : public Widget {
 	Widget* clone() const override{ untested();

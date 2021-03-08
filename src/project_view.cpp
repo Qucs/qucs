@@ -22,8 +22,7 @@
  */
 
 #include "qt_compat.h"
-#include "projectView.h"
-// #include "schematic_doc.h"
+#include "project_view.h"
 
 #include <QString>
 #include <QStringList>

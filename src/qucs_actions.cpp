@@ -33,7 +33,7 @@
 #include <QDesktopServices>
 #include <QUrl>
 
-#include "projectView.h"
+//#include "projectView.h"
 #include "qucs_app.h"
 #include "qucsdoc.h"
 #include "doc_actions.h"
@@ -72,8 +72,9 @@ void App::slotSelectComponent(QListWidgetItem *item)
 //  auto s = prechecked_cast<QAction*>(sender());
 //  assert(s);
 
-  if(auto ci=dynamic_cast<ComponentListWidgetItem*>(item)){
+  if(auto ci=dynamic_cast<ComponentListWidgetItem*>(item)){ untested();
     qd->actionSelectElement(ci);
+  }else{ untested();
   }
 
   // incomplete(); possibly

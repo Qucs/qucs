@@ -46,7 +46,7 @@ CPP_SRC = \
 	place.cpp \
 	port.cpp \
 	printerwriter.cpp \
-	projectView.cpp \
+	project_view.cpp \
 	qucs_actions.cpp \
 	qucs_app.cpp \
 	qucs.cpp \
@@ -76,7 +76,7 @@ QMOCHEADERS = \
 	doc_actions.h \
 	mouseaction.h \
 	octave_window.h \
-	projectView.h \
+	project_view.h \
 	qucs_app.h \
 	qucs_tabs.h \
 	schematic_scene.h
@@ -110,7 +110,7 @@ HDR1 = \
 	nodemap.h \
 	spicefile.h \
 	printerwriter.h \
-	projectView.h \
+	project_view.h \
 	property.h \
 	protomap.h \
 	qucsdoc.h \
@@ -130,7 +130,7 @@ HDR2 = \
 	module.h \
 	doc_actions.h \
 	printerwriter.h \
-	projectView.h \
+	project_view.h \
 	schematic_lang.h \
 	syntax.h
 

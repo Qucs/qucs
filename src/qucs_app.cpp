@@ -164,10 +164,13 @@ void App::slotToggleDock(bool on)
 // turn Octave Dock Window on or off
 void App::slotViewOctaveDock(bool toggle)
 {
-  octDock->setVisible(toggle);
-  if (toggle) {
-    octave->startOctave();
-  }
+	if(octDock){
+	  octDock->setVisible(toggle);
+	  if (toggle) {
+		 octave->startOctave();
+	  }
+	}else{
+	}
 }
 
 // ----------------------------------------------------------

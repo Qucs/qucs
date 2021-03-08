@@ -1626,9 +1626,11 @@ Doc const* MouseActions::doc() const
 bool MouseActions::handle(QEvent*e)
 {itested();
   QUndoCommand* c = nullptr;
-  if(_maCurrent){itested();
+  if(_maCurrent){untested();
+	  trace0("got handler");
     c = _maCurrent->handle(e);
   }else{ untested();
+	  trace0("no handler...");
 	  // assert(false); race?
   }
 
@@ -1663,14 +1665,12 @@ void MouseAction::setCursor(QCursor const& c)
 void MouseActions::possiblyToggleAction(MouseAction* a, QObject* s)
 {itested();
 	auto sender = dynamic_cast<QAction*>(s);
-	if(!sender){ // assert?
-		incomplete();
-		return;
-	}else{itested();
+	if(sender){
+		trace3("possiblyToggle", a, sender, sender->text());
+	}else{
 	}
-
-	trace3("possiblyToggle", a, sender, sender->text());
 	QUndoCommand* cmd = nullptr;
+
 	assert(a);
 	if(!sender){ untested();
 		setCurrentMode(nullptr);
