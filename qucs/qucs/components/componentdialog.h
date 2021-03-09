@@ -47,6 +47,7 @@ public:
 private slots:
   void slotButtOK();
   void slotButtCancel();
+  void slotButtHelp();
   void slotSelectProperty(QTableWidgetItem *item);
   void slotApplyInput();
   void slotApplyState(int State);
