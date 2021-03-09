@@ -207,7 +207,7 @@ private:
 private:
 	Diagram* _diag;
 };
-
+/*--------------------------------------------------------------------------*/
 class RectDiagramWidget : public DiagramWidget{
 public:
 	explicit RectDiagramWidget(Diagram* d) : DiagramWidget(d){
@@ -219,22 +219,20 @@ class RectDiagram : public Diagram, public Painting  {
 private:
 	RectDiagram(RectDiagram const& c);
 public:
-	explicit RectDiagram() : Diagram(), _widget(nullptr){}
+	explicit RectDiagram() : Diagram(), _widget(nullptr){
+		setTypeName("Rect");
+	}
 	~RectDiagram(){}
 
 public:
 	bool load(const QString& Line, istream_t& stream);
-	Element* clone() const override{
+	Element* clone() const override{ untested();
 		return new RectDiagram(*this);
 	}
 	index_t param_count() const{ return 4; }
 
 private:
-	rect_t bounding_rect() const override{
-//		Diagram const* cd = this;
-//		Diagram* d=const_cast<Diagram*>(cd);
-//		d->Bounding(x1_, y1_, x2_, y2_); // eek
-
+	rect_t bounding_rect() const override{ untested();
 		QPointF tl(0, -y2); // eek
 		QPointF br(x2, 0);
 		return rect_t(QRectF(tl, br));
@@ -271,7 +269,7 @@ Module::INSTALL pp("diagrams", &D);
 /*--------------------------------------------------------------------------*/
 RectDiagram::RectDiagram(RectDiagram const& c)
   : Diagram(c), _widget(c._widget)
-{
+{ untested();
 	assert(scope());
 #if 0 // could use own datatype. let's see
 	Element* v = v0.clone();
@@ -284,6 +282,7 @@ RectDiagram::RectDiagram(RectDiagram const& c)
 // obsolete.
 bool RectDiagram::load(const QString& Line, istream_t& stream)
 {
+	trace1("RD obsolet load", Line);
 	incomplete();
 	bool ok;
 	QString s = Line;
@@ -291,14 +290,11 @@ bool RectDiagram::load(const QString& Line, istream_t& stream)
 	if(s.at(0) != '<') return false;
 	if(s.at(s.length()-1) != '>'){ untested();
 		return false;
-	}else{
+	}else{ untested();
 	}
 	s = s.mid(1, s.length()-2);   // cut off start and end character
 
 	QString n;
-
-
-
 	n = s.section(' ',9,9);   // xAxis.autoScale
 	if(n.at(0) == '"') {
 		// seems to be a label.

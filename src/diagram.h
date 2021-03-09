@@ -104,10 +104,7 @@ private:
   virtual QRectF boundingRect() const; // { unreachable(); return QRectF(); }
 
 protected:
-  rect_t bounding_rect() const{
-	  auto br = boundingRect();
-	  return rect_t(br);
-  }
+  rect_t bounding_rect() const;
   void prepare() override;
 
 public:

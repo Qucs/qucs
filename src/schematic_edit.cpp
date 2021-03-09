@@ -204,7 +204,7 @@ void SchematicEdit::do_it_first()
 	trace1("============ edit insert...", _ins.size());
 	while(_ins.size()){
 		ElementGraphics* gfx = _ins.front();
-		trace2("try insert...", element(gfx)->label(), gfx->has_port_values());
+//		trace2("try insert...", element(gfx)->label(), gfx->has_port_values());
 		Element* e = element(gfx);
 		assert(!dynamic_cast<Place*>(e));
 
@@ -455,7 +455,7 @@ void SchematicEdit::qSwap(ElementGraphics* gfx, Element* e)
 
 	auto ng = new ElementGraphics(e);
 	ng->setSelected(gfx->isSelected());
-	assert(!ng->has_port_values());
+//	assert(!ng->has_port_values());
 	{// ?
 		// assert(!element(ng)->scope()); no. diagrams have sub-objects.
 		_scn->addItem(ng);

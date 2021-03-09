@@ -121,7 +121,7 @@ private: // overrides
    DEV_DOT* parseCommand(istream_t&, DEV_DOT*) const override;
 
 private: // local/incomplete
-	Diagram* parseDiagram(Diagram* d, istream_t& /*, DiagramList *List */) const;
+	Diagram* parseDiagram(Diagram* d, istream_t&) const;
 	Symbol* parseSymbol(istream_t&, Symbol*) const;
 //	Element* loadElement_(const QString& _s, Element* e) const;
 	void printLegacyTaskElement(LegacyTaskElement const*, ostream_t&) const;
@@ -136,13 +136,13 @@ private:
 	void printSubckt(SubcktBase const*, ostream_t&) const override;
    void printDiagram(Diagram const*, ostream_t&) const override;
 	bool _lib_mod; // HACK HACK
-}d0;
+}leg_sch;
 static Dispatcher<Language>::INSTALL
-    p0(&language_dispatcher, "leg_sch|.sch", &d0);
+    p0(&language_dispatcher, "leg_sch|.sch", &leg_sch);
 /*--------------------------------------------------------------------------*/
 struct set_default{
 	set_default(){
-		OPT::language = &d0;
+		OPT::language = &leg_sch;
 	}
 }sd;
 /*--------------------------------------------------------------------------*/
@@ -280,8 +280,8 @@ Diagram* LegacySchematicLanguage::parseDiagram(Diagram* d, istream_t& stream)con
 		std::string what=cstr.toStdString();
 
 		auto type = what.c_str()+1;
-		if(diagram_dispatcher[what.c_str()+1]){
-			trace1("diagram parse", type);
+		if(diagram_dispatcher[type]) {
+			trace2("diagram parse", type, stream.fullString());
 			assert(d); // BUG
 			d->set_label(type); // yuck there is no label. put the type in
 		}else{ untested();
@@ -291,6 +291,7 @@ Diagram* LegacySchematicLanguage::parseDiagram(Diagram* d, istream_t& stream)con
 			return nullptr;
 		}
 
+		trace1("load call", Line);
 		if(!d->load(Line, stream)) { untested();
 			trace1("loadfail", Line);
 			incomplete();
@@ -1428,7 +1429,7 @@ class DiagramCommand : public Command{
 			assert(s);
 		}
 
-		auto lang = language_dispatcher["legacy_lib"];
+		auto lang = &leg_sch; // language_dispatcher["legacy_lib"];
 		assert(lang);
 
 		Element* e = sym;

@@ -37,17 +37,19 @@ static Symbol* symbol(Element* e)
 	return dynamic_cast<Symbol*>(e);
 }
 /*--------------------------------------------------------------------------*/
-static Symbol* symbol(QGraphicsItem* g)
-{
-	auto e=dynamic_cast<ElementGraphics*>(g);
-	if(!e) return nullptr;
-	return symbol(e->operator->());
-}
-/*--------------------------------------------------------------------------*/
 static Symbol* symbol(ElementGraphics* e)
 {
-	if(!e) return nullptr;
-	return symbol(e->operator->());
+	if(!e){ untested();
+		return nullptr;
+	}else{ untested();
+		return symbol(&**e);
+	}
+}
+/*--------------------------------------------------------------------------*/
+static Symbol* symbol(QGraphicsItem* g)
+{ untested();
+	auto e = dynamic_cast<ElementGraphics*>(g);
+	return symbol(&**e);
 }
 /*--------------------------------------------------------------------------*/
 static bool isWire(Symbol const* e)
@@ -203,23 +205,37 @@ QUndoCommand* MouseActionSelect::dblclk(QEvent* evt)
 	}else{ untested();
 	}
 
-	// BUG: don't ask elt.
+	Widget* w = nullptr;
+
 	if(!elt){ untested();
 	}else if(auto ew = elt->schematicWidget(nullptr)){ untested();
+		// BUG? remove?
 		trace0("got editElement");
 		assert(gfx);
-		showSchematicWidget(ew, gfx);
-	}else{ untested();
-		trace0("no editElement");
-		incomplete(); // memory leak
+		w = ew;
+	}else if(auto wp = qucs::widget_dispatcher[elt->typeName() + "Dialog"]) { untested();
+		w = wp->clone();
+	}else{
+		trace1("no editElement", elt->typeName());
+	}
+
+	if(w){
+		showSchematicWidget(w, gfx);
+	}else{
 	}
 
 	return nullptr;
 }
 /*--------------------------------------------------------------------------*/
 // not sure I like this.
+// previously there was just one schematic widget allowed..
 void MouseActionSelect::showSchematicWidget(Widget* ew, ElementGraphics* gfx)
 {
+
+	if(auto eew=dynamic_cast<QDialog*>(ew)){ untested();
+		eew->setParent(view(), Qt::Dialog);
+	}else{
+	}
 	if(auto eew=dynamic_cast<SchematicDialog*>(ew)){ untested();
 		assert(gfx);
 		eew->attach(gfx);
@@ -227,7 +243,6 @@ void MouseActionSelect::showSchematicWidget(Widget* ew, ElementGraphics* gfx)
 	}
 
 	if(auto eew=dynamic_cast<QDialog*>(ew)){ untested();
-		eew->setParent(view(), Qt::Dialog);
 		if(eew->exec() != 1){ untested();
 			// done=true;   // dialog is WDestructiveClose
 		}else{ untested();

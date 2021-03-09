@@ -31,7 +31,7 @@ Element::Element(Element const& e)
    _owner(nullptr) // sic.
 	//Name(e.Name) // yikes.
 {
-  set_label(e.label());
+  setTypeName(e.typeName());
 
   // BUG
   // Selected = false;

@@ -49,6 +49,8 @@ public:
 	Element* detachElement();
 	Element* cloneElement() const;
 	ElementGraphics* newUnion(ElementGraphics const*) const;
+
+private:
 	bool has_port_values() const{ return _port_values.size(); }
 //	ElementGraphics* newPort(pos_t) const; obsolete?
 
@@ -83,14 +85,11 @@ public: // schematic_action.cpp
 	// void snap();
 
 public:
-	Element& operator*(){ itested();
+	Element const& operator*() const{ itested();
 		assert(_e); return *_e;
 	}
-	Element* operator->(){ itested();
-		assert(_e); return _e;
-	}
-	Element const* operator->() const{itested();
-		assert(_e); return _e;
+	Element& operator*(){ itested();
+		assert(_e); return *_e;
 	}
 	//  QPointF pos() const; // QGraphicsItem
 	void setPos(int i, int j, bool relative=false);

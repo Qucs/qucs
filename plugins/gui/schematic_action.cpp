@@ -706,21 +706,24 @@ static bool isWire(Symbol const* e)
 }
 /*--------------------------------------------------------------------------*/
 inline Symbol* symbol(Element* e)
-{
+{ untested();
 	return dynamic_cast<Symbol*>(e);
 }
+/*--------------------------------------------------------------------------*/
 inline Symbol* symbol(QGraphicsItem* g)
 {
 	auto e=dynamic_cast<ElementGraphics*>(g);
-	if(!e) return nullptr;
-	return symbol(e->operator->());
+	if(!e){ untested();
+		return nullptr;
+	}else{
+		return symbol(&**e);
+	}
 }
+/*--------------------------------------------------------------------------*/
 inline Symbol* symbol(ElementGraphics* e)
-{
-	if(!e) return nullptr;
-	return symbol(e->operator->());
+{ untested();
+	return symbol(&**e);
 }
-
 /*--------------------------------------------------------------------------*/
 /*--------------------------------------------------------------------------*/
 static void setParent_(Object* o, QObject* par)

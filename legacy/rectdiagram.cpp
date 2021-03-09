@@ -1,6 +1,6 @@
 /***************************************************************************
     copyright            : (C) 2003 by Michael Margraf
-    email                : michael.margraf@alumni.tu-berlin.de
+                               2020 Felix Salfelder
  ***************************************************************************/
 
 /***************************************************************************
@@ -12,10 +12,7 @@
  *                                                                         *
  ***************************************************************************/
 
-/*!
-  \class RectDiagram
-  \brief The RectDiagram class implements the Cartesian diagram
-*/
+// a Cartesian diagram
 
 #if HAVE_CONFIG_H
 # include <config.h>
@@ -27,6 +24,7 @@
 #endif
 
 #include "diagram.h"
+#include "painting.h"
 #include "qucs_app.h"
 #include "misc.h"
 #include "some_font_stuff.h"
@@ -39,16 +37,14 @@ namespace {
 
 using namespace qucs;
 
-class RectDiagram : public Diagram {
+class RectDiagram : public Diagram, public Painting{
   RectDiagram(RectDiagram const& c) : Diagram(c) {}
 public:
   explicit RectDiagram();
  ~RectDiagram();
 
-
 private:
-  Diagram* newOne() { unreachable(); return new RectDiagram(*this);}
-  Element* clone() const {return new RectDiagram(*this);}
+  Element* clone() const override {untested(); return new RectDiagram(*this);}
   static Element* info(QString&, char* &, bool getNewOne=false);
   int  calcDiagram();
   void calcLimits();
@@ -56,16 +52,24 @@ private:
   void finishMarkerCoordinates(float&, float&) const;
   bool insideDiagram(float, float) const;
 
-  pos_t center() const override{
+  pos_t center() const override{ untested();
     return Element::center();
   }
 
-//  in new style diagrams.
-//  QWidget* newWidget(){ untested();
-//    QWidget* w=new QLineEdit;
-//    w->move(_cx, _cy);
-//    return w;
-//  }
+private: // Painting
+  rect_t bounding_rect() const override { untested();
+    QPointF tl(0, -y2); // eek
+    QPointF br(x2, 0);
+    return rect_t(QRectF(tl, br));
+  }
+
+  void paint(ViewPainter* v) const override{
+    Diagram const* cd = this;
+    Diagram* d=const_cast<Diagram*>(cd);
+    d->paintDiagram(v);
+    //		Element::paint(p);
+  }
+
 public: // legacy cruft.
   QList<Graph *>  Graphs;
   QList<Arc *>    Arcs;
@@ -79,7 +83,7 @@ Dispatcher<Diagram>::INSTALL p(&diagram_dispatcher, "Rect", &D);
 Module::INSTALL pp("diagrams", &D);
 
 RectDiagram::RectDiagram() : Diagram(0, 0)
-{
+{ untested();
   x1 = 10;      // position of label text
   y1 = y3 = 33;
   x2 = 240;    // initial size of diagram
@@ -87,91 +91,111 @@ RectDiagram::RectDiagram() : Diagram(0, 0)
   x3 = 247;    // with some distance for right axes text
 
   Name = "Rect"; // BUG
+  setTypeName("Rect");
   calcDiagram();
 }
 
 RectDiagram::~RectDiagram()
-{
+{ untested();
 }
 
 // ------------------------------------------------------------
 void RectDiagram::calcCoordinate(const double* xD, const double* yD, const double*,
                                  float *px, float *py, Axis const *pa) const
-{
+{ untested();
   double x  = *xD;
   double yr = yD[0];
   double yi = yD[1];
-  if(xAxis.log) {
+  if(xAxis.log) { untested();
     x /= xAxis.low;
-    if(x <= 0.0)  *px = -1e5;   // "negative infinity"
-    else  *px = float(log10(x)/log10(xAxis.up / xAxis.low) * double(x2));
+    if(x <= 0.0) {
+      *px = -1e5;   // "negative infinity"
+    }else{
+      *px = float(log10(x)/log10(xAxis.up / xAxis.low) * double(x2));
+    }
+  }else{
+    *px = float((x-xAxis.low)/(xAxis.up-xAxis.low)*double(x2));
   }
-  else  *px = float((x-xAxis.low)/(xAxis.up-xAxis.low)*double(x2));
 
-  if(pa->log) {
+  if(pa->log) { untested();
     yr = sqrt(yr*yr + yi*yi);
     if(yr <= 0.0)  *py = -1e5;   // "negative infinity"
     else *py = float(log10(yr/fabs(pa->low)) /
                      log10(pa->up/pa->low) * double(y2));
-  }
-  else {
-    if(fabs(yi) > 1e-250)  // preserve negative values if not complex number
+  }else{ untested();
+    if(fabs(yi) > 1e-250) {
+      // preserve negative values if not complex number
       yr = sqrt(yr*yr + yi*yi);
+    }else{
+    }
     *py = float((yr-pa->low)/(pa->up-pa->low)*double(y2));
   }
 
-  if(!std::isfinite(*px))  *px = 0.0;
-  if(!std::isfinite(*py))  *py = 0.0;
+  if(!std::isfinite(*px)){
+    *px = 0.0;
+  }else{
+  }
+  if(!std::isfinite(*py)){
+    *py = 0.0;
+  }else{
+  }
 }
 
 // --------------------------------------------------------------
 void RectDiagram::finishMarkerCoordinates(float& fCX, float& fCY) const
-{
-  if(!insideDiagram(fCX, fCY)) {
+{ untested();
+  if(!insideDiagram(fCX, fCY)) { untested();
 	  fCX = fCY = 0.0;
   }
 }
 
 // --------------------------------------------------------------
 void RectDiagram::calcLimits()
-{
+{ untested();
   int i;
   double a, b, c;
 
   if(xAxis.autoScale) {// check before, to preserve limit exchange (max < min)
-    if(xAxis.log) {
+    if(xAxis.log) { untested();
       calcAxisLogScale(&xAxis, i, a, b, c, x2);
       xAxis.step = 1.0;
+    }else{
+      calcAxisScale(&xAxis, a, b, c, xAxis.step, double(x2));
     }
-    else  calcAxisScale(&xAxis, a, b, c, xAxis.step, double(x2));
     xAxis.limit_min = xAxis.low;
     xAxis.limit_max = xAxis.up;
+  }else{
   }
 
-  if(yAxis.autoScale) {// check before, to preserve limit exchange (max < min)
-    if(yAxis.log) {
+  if(yAxis.autoScale) {
+    // check before, to preserve limit exchange (max < min)
+    if(yAxis.log) { untested();
       calcAxisLogScale(&yAxis, i, a, b, c, y2);
       yAxis.step = 1.0;
     }
     else  calcAxisScale(&yAxis, a, b, c, yAxis.step, double(y2));
     yAxis.limit_min = yAxis.low;
     yAxis.limit_max = yAxis.up;
+  }else{
   }
 
-  if(zAxis.autoScale) {// check before, to preserve limit exchange (max < min)
-    if(zAxis.log) {
+  if(zAxis.autoScale) {
+    // check before, to preserve limit exchange (max < min)
+    if(zAxis.log) { untested();
       calcAxisLogScale(&zAxis, i, a, b, c, y2);
       zAxis.step = 1.0;
+    }else{
+      calcAxisScale(&zAxis, a, b, c, zAxis.step, double(y2));
     }
-    else  calcAxisScale(&zAxis, a, b, c, zAxis.step, double(y2));
     zAxis.limit_min = zAxis.low;
     zAxis.limit_max = zAxis.up;
+  }else{
   }
 }
 
 // --------------------------------------------------------------
 int RectDiagram::calcDiagram()
-{
+{ untested();
   Lines.clear();
   Texts.clear();
   Arcs.clear();
@@ -189,21 +213,27 @@ int RectDiagram::calcDiagram()
 
   // =====  give "step" the right sign (if user made it wrong)  ==============
   xAxis.step = fabs(xAxis.step);
-  if(xAxis.limit_min > xAxis.limit_max)
+  if(xAxis.limit_min > xAxis.limit_max){
     xAxis.step *= -1.0;
+  }else{
+  }
 
   yAxis.step = fabs(yAxis.step);
-  if(yAxis.limit_min > yAxis.limit_max)
+  if(yAxis.limit_min > yAxis.limit_max){
     yAxis.step *= -1.0;
+  }else{
+  }
 
   zAxis.step = fabs(zAxis.step);
-  if(zAxis.limit_min > zAxis.limit_max)
+  if(zAxis.limit_min > zAxis.limit_max){
     zAxis.step *= -1.0;
+  }else{
+  }
 
 
   // ====  x grid  =======================================================
-if(xAxis.log) {
-  if(xAxis.autoScale) {
+if(xAxis.log) { untested();
+  if(xAxis.autoScale) { untested();
     if(xAxis.max*xAxis.min < 1e-200)  goto Frame;  // invalid
   }
   else  if(xAxis.limit_min*xAxis.limit_max < 1e-200)  goto Frame;  // invalid
@@ -215,7 +245,7 @@ if(xAxis.log) {
     if(xAxis.GridOn)  if(z < x2)  if(z > 0)
       Lines.prepend(new Line(z, y2, z, 0, GridPen));  // x grid
 
-    if((zD < 1.5*zDstep) || (z == 0) || (z == x2)) {
+    if((zD < 1.5*zDstep) || (z == 0) || (z == x2)) { untested();
       tmp = misc::StringNiceNum(zD);
       if(xAxis.up < 0.0)  tmp = '-'+tmp;
       w = metrics.width(tmp);  // width of text
@@ -226,7 +256,7 @@ if(xAxis.log) {
 
     zD += zDstep;
     if(zD > 9.5*zDstep)  zDstep *= 10.0;
-    if(back) {
+    if(back) { untested();
       z = int(corr*log10(zD / fabs(xAxis.up)) + 0.5); // int() implies floor()
       z = x2 - z;
     }
@@ -276,20 +306,20 @@ Frame:
 
 // ------------------------------------------------------------
 bool RectDiagram::insideDiagram(float x, float y) const
-{
+{ untested();
   return (regionCode(x, y) == 0);
 }
 
 // ------------------------------------------------------------
 void RectDiagram::clip(Graph::iterator &p) const
-{
+{ untested();
   rectClip(p);
 }
 
 // ------------------------------------------------------------
 #if 0
 Element* RectDiagram::info(QString& Name, char* &BitmapFile, bool getNewOne)
-{
+{ untested();
   unreachable();
   Name = QObject::tr("Cartesian");
   BitmapFile = (char *) "rect";

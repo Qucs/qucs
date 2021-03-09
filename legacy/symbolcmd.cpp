@@ -67,7 +67,7 @@ private: // BUG? a SubcktBase is a Painting...
 	}
 	void paint(ViewPainter* v) const override{ untested();
 		assert(subckt());
-		for(auto e : *subckt()){ untested();
+		for(auto e : *subckt()){ itested();
 			incomplete(); // BUG. honour p->legacyTransformhack
 			if(auto p = dynamic_cast<Painting const*>(e)){
 				v->save();

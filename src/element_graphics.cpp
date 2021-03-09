@@ -42,9 +42,11 @@ namespace qucs {
 // scene()->selectedItems gives QGraphicsItems
 Element* element(ElementGraphics* g)
 {
-//	auto e=dynamic_cast<ElementGraphics*>(g);
-	if(!g) return nullptr;
-	return g->operator->();
+	if(!g){ untested();
+		return nullptr;
+	}else{ untested();
+		return &**g;
+	}
 }
 /*--------------------------------------------------------------------------*/
 ElementGraphics::ElementGraphics() : QGraphicsItem()
@@ -327,12 +329,20 @@ void ElementGraphics::paint(QPainter *p, const QStyleOptionGraphicsItem *o,
 /*--------------------------------------------------------------------------*/
 Symbol const* symbol(ElementGraphics const* e)
 {
-	return dynamic_cast<Symbol const*>(e->operator->());
+	if(!e){
+		return nullptr;
+	}else{
+		return dynamic_cast<Symbol const*>(&**e);
+	}
 }
 /*--------------------------------------------------------------------------*/
 Element const* element(ElementGraphics const* e)
 {
-	return e->operator->();
+	if(!e){
+		return nullptr;
+	}else{
+		return &**e;
+	}
 }
 /*--------------------------------------------------------------------------*/
 // add new port into ElementGraphics, build new

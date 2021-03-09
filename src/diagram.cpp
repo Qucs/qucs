@@ -202,7 +202,6 @@ void Diagram::set_param_by_index(index_t i, std::string const& v)
 	setPosition(pos_t(cx, cy)); // yikes. setPosition?
 }
 
-
 void Diagram::paintDiagram(ViewPainter *p)
 {itested();
 
@@ -218,7 +217,6 @@ void Diagram::paintDiagram(ViewPainter *p)
       p->setPen(pl->style);
       p->drawLine(pl->x1, pl->y1, pl->x2, pl->y2);
     }
-
   }
 
     // draw all graphs
@@ -1386,24 +1384,39 @@ QString Diagram::save() const
   s += c;
   s += " " + GridPen.color().name() + " " + QString::number(GridPen.style());
 
-  if(xAxis.log) s+= " 1";  else s += " 0";
+  if(xAxis.log){
+	  s+= " 1";
+  }else{
+	  s += " 0";
+  }
+
   c = '0';
   if(yAxis.log)  c |= 1;
   if(zAxis.log)  c |= 2;
   s += c;
 
-  if(xAxis.autoScale)  s+= " 1 ";
-  else  s+= " 0 ";
+  if(xAxis.autoScale){
+	  s += " 1 ";
+  }else{
+	  s += " 0 ";
+  }
+
   s += QString::number(xAxis.limit_min) + " ";
   s += QString::number(xAxis.step) + " ";
   s += QString::number(xAxis.limit_max);
-  if(yAxis.autoScale)  s+= " 1 ";
-  else  s+= " 0 ";
+  if(yAxis.autoScale){
+	  s+= " 1 ";
+  }else{
+	  s+= " 0 ";
+  }
   s += QString::number(yAxis.limit_min) + " ";
   s += QString::number(yAxis.step) + " ";
   s += QString::number(yAxis.limit_max);
-  if(zAxis.autoScale)  s+= " 1 ";
-  else  s+= " 0 ";
+  if(zAxis.autoScale){
+	  s+= " 1 ";
+  }else{
+	  s+= " 0 ";
+  }
   s += QString::number(zAxis.limit_min) + " ";
   s += QString::number(zAxis.step) + " ";
   s += QString::number(zAxis.limit_max) + " ";
@@ -1428,183 +1441,183 @@ QString Diagram::save() const
 }
 
 // ------------------------------------------------------------
-// BUG: MOVE to legacy
+// BUG: lang_sch. MOVE to legacy
 bool Diagram::load(const QString& Line, istream_t& stream)
 {
-  incomplete();
-  bool ok;
-  QString s = Line;
+	incomplete();
+	bool ok;
+	QString s = Line;
 
-  if(s.at(0) != '<') return false;
-  if(s.at(s.length()-1) != '>'){ untested();
-	  return false;
-  }else{
-  }
-  s = s.mid(1, s.length()-2);   // cut off start and end character
+	if(s.at(0) != '<') return false;
+	if(s.at(s.length()-1) != '>'){ untested();
+		return false;
+	}else{
+	}
+	s = s.mid(1, s.length()-2);   // cut off start and end character
 
-  QString n;
-  n  = s.section(' ',1,1);    // cx
-  int cx = n.toInt(&ok);
-  if(!ok) return false;
+	QString n;
+	n  = s.section(' ',1,1);    // cx
+	int cx = n.toInt(&ok);
+	if(!ok) return false;
 
-  n  = s.section(' ',2,2);    // cy
-  int cy = n.toInt(&ok);
-  if(!ok) return false;
+	n  = s.section(' ',2,2);    // cy
+	int cy = n.toInt(&ok);
+	if(!ok) return false;
 
-  setCenter(pos_t(cx, cy));
+	setCenter(pos_t(cx, cy));
 
-  n  = s.section(' ',3,3);    // x2
-  x2 = n.toInt(&ok);
-  if(!ok){ untested();
-	  return false;
-  }else{
-  }
+	n  = s.section(' ',3,3);    // x2
+	x2 = n.toInt(&ok);
+	if(!ok){ untested();
+		return false;
+	}else{
+	}
 
-  n  = s.section(' ',4,4);    // y2
-  y2 = n.toInt(&ok);
-  if(!ok) return false;
+	n  = s.section(' ',4,4);    // y2
+	y2 = n.toInt(&ok);
+	if(!ok) return false;
 
-  char c;
-  n = s.section(' ',5,5);    // GridOn
-  c = n.at(0).toLatin1() - '0';
-  xAxis.GridOn = yAxis.GridOn = (c & 1) != 0;
-  hideLines = (c & 2) != 0;
+	char c;
+	n = s.section(' ',5,5);    // GridOn
+	c = n.at(0).toLatin1() - '0';
+	xAxis.GridOn = yAxis.GridOn = (c & 1) != 0;
+	hideLines = (c & 2) != 0;
 
-  n = s.section(' ',6,6);    // color for GridPen
-  QColor co;
-  co.setNamedColor(n);
-  GridPen.setColor(co);
-  if(!GridPen.color().isValid()){ untested();
-	  return false;
-  }else{
-  }
+	n = s.section(' ',6,6);    // color for GridPen
+	QColor co;
+	co.setNamedColor(n);
+	GridPen.setColor(co);
+	if(!GridPen.color().isValid()){ untested();
+		return false;
+	}else{
+	}
 
-  n = s.section(' ',7,7);    // line style
-  GridPen.setStyle((Qt::PenStyle)n.toInt(&ok));
-  if(!ok) return false;
+	n = s.section(' ',7,7);    // line style
+	GridPen.setStyle((Qt::PenStyle)n.toInt(&ok));
+	if(!ok) return false;
 
-  n = s.section(' ',8,8);    // xlog, ylog
-  xAxis.log = n.at(0) != '0';
-  c = n.at(1).toLatin1();
-  yAxis.log = ((c - '0') & 1) == 1;
-  zAxis.log = ((c - '0') & 2) == 2;
+	n = s.section(' ',8,8);    // xlog, ylog
+	xAxis.log = n.at(0) != '0';
+	c = n.at(1).toLatin1();
+	yAxis.log = ((c - '0') & 1) == 1;
+	zAxis.log = ((c - '0') & 2) == 2;
 
-  n = s.section(' ',9,9);   // xAxis.autoScale
-  if(n.at(0) != '"') {
-	  // backward compatible
-    if(n == "1")  xAxis.autoScale = true;
-    else  xAxis.autoScale = false;
+	n = s.section(' ',9,9);   // xAxis.autoScale
+	if(n.at(0) != '"') {
+		// backward compatible
+		if(n == "1")  xAxis.autoScale = true;
+		else  xAxis.autoScale = false;
 
-    n = s.section(' ',10,10);    // xAxis.limit_min
-    xAxis.limit_min = n.toDouble(&ok);
-    if(!ok) return false;
+		n = s.section(' ',10,10);    // xAxis.limit_min
+		xAxis.limit_min = n.toDouble(&ok);
+		if(!ok) return false;
 
-    n = s.section(' ',11,11);  // xAxis.step
-    xAxis.step = n.toDouble(&ok);
-    if(!ok) return false;
+		n = s.section(' ',11,11);  // xAxis.step
+		xAxis.step = n.toDouble(&ok);
+		if(!ok) return false;
 
-    n = s.section(' ',12,12);  // xAxis.limit_max
-    xAxis.limit_max = n.toDouble(&ok);
-    if(!ok) return false;
+		n = s.section(' ',12,12);  // xAxis.limit_max
+		xAxis.limit_max = n.toDouble(&ok);
+		if(!ok) return false;
 
-    n = s.section(' ',13,13);    // yAxis.autoScale
-    if(n == "1")  yAxis.autoScale = true;
-    else  yAxis.autoScale = false;
+		n = s.section(' ',13,13);    // yAxis.autoScale
+		if(n == "1")  yAxis.autoScale = true;
+		else  yAxis.autoScale = false;
 
-    n = s.section(' ',14,14);    // yAxis.limit_min
-    yAxis.limit_min = n.toDouble(&ok);
-    if(!ok) return false;
+		n = s.section(' ',14,14);    // yAxis.limit_min
+		yAxis.limit_min = n.toDouble(&ok);
+		if(!ok) return false;
 
-    n = s.section(' ',15,15);    // yAxis.step
-    yAxis.step = n.toDouble(&ok);
-    if(!ok) return false;
+		n = s.section(' ',15,15);    // yAxis.step
+		yAxis.step = n.toDouble(&ok);
+		if(!ok) return false;
 
-    n = s.section(' ',16,16);    // yAxis.limit_max
-    yAxis.limit_max = n.toDouble(&ok);
-    if(!ok) return false;
+		n = s.section(' ',16,16);    // yAxis.limit_max
+		yAxis.limit_max = n.toDouble(&ok);
+		if(!ok) return false;
 
-    n = s.section(' ',17,17);    // zAxis.autoScale
-    if(n == "1")  zAxis.autoScale = true;
-    else  zAxis.autoScale = false;
+		n = s.section(' ',17,17);    // zAxis.autoScale
+		if(n == "1")  zAxis.autoScale = true;
+		else  zAxis.autoScale = false;
 
-    n = s.section(' ',18,18);    // zAxis.limit_min
-    zAxis.limit_min = n.toDouble(&ok);
-    if(!ok) return false;
+		n = s.section(' ',18,18);    // zAxis.limit_min
+		zAxis.limit_min = n.toDouble(&ok);
+		if(!ok) return false;
 
-    n = s.section(' ',19,19);    // zAxis.step
-    zAxis.step = n.toDouble(&ok);
-    if(!ok) return false;
+		n = s.section(' ',19,19);    // zAxis.step
+		zAxis.step = n.toDouble(&ok);
+		if(!ok) return false;
 
-    n = s.section(' ',20,20);    // zAxis.limit_max
-    zAxis.limit_max = n.toDouble(&ok);
-    if(!ok) return false;
+		n = s.section(' ',20,20);    // zAxis.limit_max
+		zAxis.limit_max = n.toDouble(&ok);
+		if(!ok) return false;
 
-    n = s.section(' ',21,21); // rotX
-    if(n.at(0) != '"') {
- 		 // backward compatible
-      rotX = n.toInt(&ok);
-      if(!ok) return false;
+		n = s.section(' ',21,21); // rotX
+		if(n.at(0) != '"') {
+			// backward compatible
+			rotX = n.toInt(&ok);
+			if(!ok) return false;
 
-      n = s.section(' ',22,22); // rotY
-      rotY = n.toInt(&ok);
-      if(!ok) return false;
+			n = s.section(' ',22,22); // rotY
+			rotY = n.toInt(&ok);
+			if(!ok) return false;
 
-      n = s.section(' ',23,23); // rotZ
-      rotZ = n.toInt(&ok);
-      if(!ok) return false;
-    }else{ untested();
-	 }
-  }
+			n = s.section(' ',23,23); // rotZ
+			rotZ = n.toInt(&ok);
+			if(!ok) return false;
+		}else{ untested();
+		}
+	}
 
-  trace3("load diag", label(), Element::cx(), Element::cy());
+	trace3("load diag", label(), Element::cx(), Element::cy());
 
 
-  xAxis.Label = s.section('"',1,1);   // xLabel
-  yAxis.Label = s.section('"',3,3);   // yLabel left
-  zAxis.Label = s.section('"',5,5);   // yLabel right
+	xAxis.Label = s.section('"',1,1);   // xLabel
+	yAxis.Label = s.section('"',3,3);   // yLabel left
+	zAxis.Label = s.section('"',5,5);   // yLabel right
 
-  Graph *pg;
-  return true;
-  // rest is done in lang_sch now.
-  // .......................................................
-  // load graphs of the diagram
-  while(!stream.atEnd()) {
-    s = QString::fromStdString(stream.read_line());
-    s = s.trimmed();
-    if(s.isEmpty()) continue;
+	Graph *pg;
+	return true;
+	// rest is done in lang_sch now.
+	// .......................................................
+	// load graphs of the diagram
+	while(!stream.atEnd()) {
+		s = QString::fromStdString(stream.read_line());
+		s = s.trimmed();
+		if(s.isEmpty()) continue;
 
-    trace2("diagram::load", Name, label());
-    if(s == ("</"+Name+">")){
-      return true;  // found end tag ?
-    }else if(s.section(' ', 0,0) == "<Mkr") { untested();
-		 incomplete(); // load like variables??
+		trace2("diagram::load", Name, label());
+		if(s == ("</"+Name+">")){
+			return true;  // found end tag ?
+		}else if(s.section(' ', 0,0) == "<Mkr") { untested();
+			incomplete(); // load like variables??
 
-      // .......................................................
-      // load markers of the diagram
-      // pg = Graphs.last();
-      // if(!pg){ untested();
-      // 	return false;
-      // }else{ untested();
-      // }
-      // assert(pg->parentDiagram() == this);
-/// 		 Marker *pm = new Marker(nullptr);
-/// 		 if(!pm->load(s)) { untested();
-/// 			 delete pm;
-/// 			 return false;
-/// 		 }
-//      pg->Markers.append(pm);
-      continue;
-    }
+			// .......................................................
+			// load markers of the diagram
+			// pg = Graphs.last();
+			// if(!pg){ untested();
+			// 	return false;
+			// }else{ untested();
+			// }
+			// assert(pg->parentDiagram() == this);
+			/// 		 Marker *pm = new Marker(nullptr);
+			/// 		 if(!pm->load(s)) { untested();
+			/// 			 delete pm;
+			/// 			 return false;
+			/// 		 }
+			//      pg->Markers.append(pm);
+			continue;
+		}
 
-    pg = new Graph(this);
-    trace2("graph load", s, Name);
-    if(!pg->load(s)) { untested();
-      delete pg;
-      return false;
-    }
-    // Graphs.append(pg);
-  }
-  return false;   // end tag missing
+		pg = new Graph(this);
+		trace2("graph load", s, Name);
+		if(!pg->load(s)) { untested();
+			delete pg;
+			return false;
+		}
+		// Graphs.append(pg);
+	}
+	return false;   // end tag missing
 }
 
 // --------------------------------------------------------------
@@ -2378,5 +2391,12 @@ void SchematicDoc::actionExportGraphAsCsv()
   File.close();
 }
 #endif
+
+rect_t Diagram::bounding_rect() const
+{ untested();
+	QPointF tl(0, -y2); // eek
+	QPointF br(x2, 0);
+	return rect_t(QRectF(tl, br));
+}
 
 } // qucs

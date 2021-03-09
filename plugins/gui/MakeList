@@ -5,6 +5,7 @@ TARGET = gui
 #      .h does not work in autotools
 # use .cc for now, but this is NOT the source.
 QT_PLUGIN_SRC = \
+	diagramdialog.cc \
 	textdoc.cc \
 	taskeltdlg.cc \
 	symboldialog.cc \
