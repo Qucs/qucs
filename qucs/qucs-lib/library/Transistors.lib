@@ -4020,18 +4020,19 @@ Added by Frans Schreuder <fransschreuder@users.sourceforge.net>
   </Model>
 </Component>
 
-<Component MMST4401>
-  <Description>
-    universal silicon NPN BJT
-    40V, 600mA, 200mW, 250MHz
-    Manufacturer: Diodes Inc.
-    PNP complement: MMST4403
-    added by Leandro D'Archivio <morti667@hotmail.com>
-  </Description>
-  <Model>
-    <_BJT T_MMST4401_ 1 0 0 8 -26 0 0 "npn" 0 "1.27p" 0 "410" 0 "1" 0 "60.7m" 0 "0.15" 0 "114" 0 "24" 0 "47.7p" 0 "2" 0 "0" 0 "2" 0 "410" 0 "4" 0 "0" 0 "0" 0 "0.104" 0 "0.261" 0 "1.04" 0 "27.7p" 0 "1.1" 0 "0.5" 0 "14.2p" 0 "0.3" 0 "0.3" 0 "1" 0 "0" 0 "0.75" 0 "0" 0 "0.5" 0 "533p" 0 "0" 0 "0" 0 "0" 0 "84.1n" 0 "26.85" 0 "0" 0 "1" 0 "1" 0 "0" 0 "1" 0 "1" 0 "0" 0>
-  </Model>
-</Component>
+# checker error, value of `Nf' (410) is out of range `[0.1,100]' in `BJT:T_MMST4401_'
+# <Component MMST4401>
+#   <Description>
+#     universal silicon NPN BJT
+#     40V, 600mA, 200mW, 250MHz
+#     Manufacturer: Diodes Inc.
+#     PNP complement: MMST4403
+#     added by Leandro D'Archivio <morti667@hotmail.com>
+#   </Description>
+#   <Model>
+#     <_BJT T_MMST4401_ 1 0 0 8 -26 0 0 "npn" 0 "1.27p" 0 "410" 0 "1" 0 "60.7m" 0 "0.15" 0 "114" 0 "24" 0 "47.7p" 0 "2" 0 "0" 0 "2" 0 "410" 0 "4" 0 "0" 0 "0" 0 "0.104" 0 "0.261" 0 "1.04" 0 "27.7p" 0 "1.1" 0 "0.5" 0 "14.2p" 0 "0.3" 0 "0.3" 0 "1" 0 "0" 0 "0.75" 0 "0" 0 "0.5" 0 "533p" 0 "0" 0 "0" 0 "0" 0 "84.1n" 0 "26.85" 0 "0" 0 "1" 0 "1" 0 "0" 0 "1" 0 "1" 0 "0" 0>
+#   </Model>
+# </Component>
 
 <Component MMST4403>
   <Description>
