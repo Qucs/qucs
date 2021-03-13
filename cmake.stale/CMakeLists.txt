@@ -78,6 +78,7 @@ add_subdirectory(${CMAKE_SOURCE_DIR}/main)
 # add_subdirectory(plugins)
  add_subdirectory(legacy)
  add_subdirectory(legacy/action)
+ add_subdirectory(legacy/qucsator)
 
  add_subdirectory(plugins/gui)
 
