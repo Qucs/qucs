@@ -33,3 +33,8 @@ target_include_directories(legacy PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/../../)
 target_link_libraries(legacy Qt5::Core)
 target_link_libraries(legacy Qt5::Gui)
 target_link_libraries(legacy Qt5::Widgets)
+
+# drop lib from liblegacy.so
+set_target_properties(legacy PROPERTIES PREFIX "")
+
+# TODO, somehow copy library into QUCS_PLUGPATH during build and relocate during install ?
