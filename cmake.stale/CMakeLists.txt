@@ -36,6 +36,10 @@ set(QT_DEBUG TRUE)
 
 add_definitions(${QT_DEFINITIONS} -DQT_DEPRECATED_WARNINGS)
 
+
+# TODO move all the Qt configuration to this top level configuration file
+
+
 # TODO: move to man
 #configure_file(${CMAKE_CURRENT_SOURCE_DIR}/man/qucs.1.cmake.in
 #               ${CMAKE_CURRENT_SOURCE_DIR}/man/qucs.1)
@@ -65,8 +69,9 @@ add_definitions(${QT_DEFINITIONS} -DQT_DEPRECATED_WARNINGS)
 #configure_file(${CMAKE_CURRENT_SOURCE_DIR}/qucs-transcalc/qucstrans.1.cmake.in
 #               ${CMAKE_CURRENT_SOURCE_DIR}/qucs-transcalc/qucstrans.1)
 
-add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/src)
-add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/main)
+# Process CMakeLists.txt relative to this source file
+add_subdirectory(${CMAKE_SOURCE_DIR}/src)
+add_subdirectory(${CMAKE_SOURCE_DIR}/main)
 
 # add_subdirectory(man)
 # add_subdirectory(plugins)

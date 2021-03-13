@@ -8,8 +8,6 @@
 project(qucs_lib CXX)
 
 # this is where the library source is.
-set(coreSchematicPath ../../src)
-
 set(coreSchematicPath ${CMAKE_CURRENT_SOURCE_DIR}/../../src)
 
 # use top VERSION file
@@ -53,23 +51,23 @@ set(CMAKE_AUTOMOC ON)
 set(CMAKE_AUTORCC ON)
 set(CMAKE_AUTOUIC ON)
 
-include(${PROJECT_SOURCE_DIR}/../../cmake/readMakeList.txt)
+include(${CMAKE_SOURCE_DIR}/readMakeList.txt)
 
-add_subdirectory(${coreSchematicPath}/bitmaps src/bitmaps) #-> added as resources
-add_subdirectory(${coreSchematicPath}/octave src/octave)
-add_subdirectory(${coreSchematicPath}/python src/python)
+#add_subdirectory(${coreSchematicPath}/bitmaps src/bitmaps) #-> added as resources
+#add_subdirectory(${coreSchematicPath}/octave src/octave)
+#add_subdirectory(${coreSchematicPath}/python src/python)
 #add_subdirectory(${coreSchematicPath}/tests src/tests)
 
 readVariable(${coreSchematicPath}/MakeList CPP_SRC QUCS_SRCS)
 #readVariable(${coreSchematicPath}/MakeList CPP_HEADERS QUCS_HDRS)
 readVariable(${coreSchematicPath}/MakeList UI_FILES QUCS_UI_FILES)
 readVariable(${coreSchematicPath}/MakeList DIALOG_SRC QUCS_DIALOG_SRC)
-readVariable(${coreSchematicPath}/MakeList DIALOG_SRC2 QUCS_DIALOG_SRC2)
+#readVariable(${coreSchematicPath}/MakeList DIALOG_SRC2 QUCS_DIALOG_SRC2)
 list(TRANSFORM QUCS_SRCS PREPEND ${coreSchematicPath}/)
 #list(TRANSFORM QUCS_HDRS PREPEND ${coreSchematicPath}/)
 list(TRANSFORM QUCS_UI_FILES PREPEND ${coreSchematicPath}/)
 list(TRANSFORM QUCS_DIALOG_SRC PREPEND ${coreSchematicPath}/)
-list(TRANSFORM QUCS_DIALOG_SRC2 PREPEND ${coreSchematicPath}/)
+#list(TRANSFORM QUCS_DIALOG_SRC2 PREPEND ${coreSchematicPath}/)
 
 #
 # Read variable to generate rules for building source files from bitmap resources
