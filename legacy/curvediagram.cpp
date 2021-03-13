@@ -61,6 +61,12 @@ public: // legacy cruft.
   QList<Line *>   Lines;
   QList<Text *>   Texts;
 
+private: // Diagram
+  virtual diag_coordinate_t calcCoordinate(double const&, double const&) const override{
+	  incomplete();
+	  return diag_coordinate_t();
+  }
+
 protected:
   void clip(Graph::iterator&) const;
 };
@@ -114,6 +120,7 @@ void CurveDiagram::finishMarkerCoordinates(float& fCX, float& fCY) const
 // ------------------------------------------------------------
 void CurveDiagram::calcLimits()
 {
+#if 0 // revisit after RectDiagram.
   int i;
   double a, b, c;
 
@@ -146,11 +153,13 @@ void CurveDiagram::calcLimits()
     zAxis.limit_min = zAxis.low;
     zAxis.limit_max = zAxis.up;
   }
+#endif
 }
 
 // --------------------------------------------------------------
 int CurveDiagram::calcDiagram()
 {
+#if 0 // do after RectDiagram
   Lines.clear();
   Texts.clear();
   Arcs.clear();
@@ -262,6 +271,8 @@ Frame:
   Lines.append(new Line(0,   0, x2,  0, QPen(Qt::black,0)));
   Lines.append(new Line(0,  y2,  0,  0, QPen(Qt::black,0)));
   return valid;
+#endif
+  return 1;
 }
 
 // ------------------------------------------------------------

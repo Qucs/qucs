@@ -11,6 +11,9 @@
  *                                                                         *
  ***************************************************************************/
 
+// plotting with QCustomPlot
+
+/*--------------------------------------------------------------------------*/
 #include "command.h"
 #include "data.h"
 #include "diagram.h"
@@ -23,12 +26,13 @@
 #include "qio.h"
 #include "qt_compat.h"
 #include "qucs_globals.h"
-
+/*--------------------------------------------------------------------------*/
 #include <QPlainTextEdit>
 #include <QLineEdit>
 #include <qcustomplot.h>
-
+/*--------------------------------------------------------------------------*/
 namespace {
+/*--------------------------------------------------------------------------*/
 	using qucs::CommonData;
 	using qucs::Data;
 	using qucs::Diagram;
@@ -40,11 +44,8 @@ namespace {
 	using qucs::language_dispatcher;
 	using qucs::command_dispatcher;
 	using qucs::Module;
-//	using qucs::Command;
 	using qucs::ElementList;
-
-	// todo: share?
-// class DiagramWidget : public QWidget
+/*--------------------------------------------------------------------------*/
 class DiagramWidget : public QCustomPlot {
 public:
 	DiagramWidget(Diagram* d)
@@ -85,7 +86,7 @@ private:
 			double maxx = -1e99;
 			for (auto xx : *dd){
 				x[ii] = xx.second.real();
-				trace1("var copy", x[ii]);
+//				trace1("var copy", x[ii]);
 				minx = std::min(x[ii], minx);
 				maxx = std::max(x[ii], maxx);
 				++ii;
@@ -96,7 +97,7 @@ private:
 			double maxy = -1e99;
 			for (auto yy : *pp){
 				y[ii] = yy.second.real();
-				trace1("var copy", y[ii]);
+//				trace1("var copy", y[ii]);
 				miny = std::min(y[ii], miny);
 				maxy = std::max(y[ii], maxy);
 				++ii;
@@ -116,7 +117,7 @@ private:
 
 	}
 	void copy_graph_data(CommonData const* p, int i){
-		auto pp=prechecked_cast<SimOutputData const*>(p);
+		auto pp = prechecked_cast<SimOutputData const*>(p);
 		assert(pp);
 		assert(i<=graphCount());
 		if(i==graphCount()){ untested();
@@ -126,31 +127,27 @@ private:
 		auto g = graph(graphCount()-1);
 		trace1("var copy", pp->numDeps());
 		if(pp->numDeps()==1){
-
+			auto dd = dynamic_cast<SimOutputData const*>(pp->dep(0));
+			assert(dd);
 			int num = pp->size();
 			QVector<double> x(num), y(num);
-			trace3("var copy", num, pp->min(), pp->max()); // does not work
+			trace3("var copy", num, pp->min(), pp->max());
+			trace3("var copy", num, dd->min(), dd->max());
 			int ii = 0;
-			double minx = 1e99;
-			double maxx = -1e99;
-			double miny = 1e99;
-			double maxy = -1e99;
+
+			double minx = dd->min();
+			double maxx = dd->max();
+			double miny = pp->min();
+			double maxy = pp->max();
 			for (auto xx : *pp){
 				x[ii] = xx.first;
 				y[ii] = xx.second.real();
-				trace1("var copy", x[ii]);
-				minx = std::min(x[ii], minx);
-				maxx = std::max(x[ii], maxx);
-				miny = std::min(y[ii], miny);
-				maxy = std::max(y[ii], maxy);
 				++ii;
 			}
 			assert(ii==num);
 
 			g->setData(x, y);
 
-			trace2("range", minx, maxx);
-			trace2("range", miny, maxy);
 			QCustomPlot::xAxis->setRange(minx, maxx);
 			QCustomPlot::yAxis->setRange(miny, maxy);
 
@@ -164,10 +161,11 @@ private:
 	void add_data(Data const* d, int i){
 		if(d->common()){
 			trace1("var diagscope", d->short_label());
-			CommonData const* p=nullptr;
+			CommonData const* p = nullptr;
 			CommonData::attach(d->common(), &p);
 			copy_graph_data(p, i);
 			CommonData::detach(&p);
+		}else{
 		}
 	}
 
@@ -232,7 +230,7 @@ public:
 	index_t param_count() const{ return 4; }
 
 private:
-	rect_t bounding_rect() const override{ untested();
+	rect_t bounding_rect() const override{ itested();
 		QPointF tl(0, -y2); // eek
 		QPointF br(x2, 0);
 		return rect_t(QRectF(tl, br));
@@ -259,6 +257,10 @@ private:
 			_widget->move(0, -y2); // gaah. the origin must be in the top left corner.
 		}
 		return _widget;
+	}
+	diag_coordinate_t calcCoordinate(double const& x, double const& y) const{
+		incomplete();
+		return diag_coordinate_t();
 	}
 
 private:

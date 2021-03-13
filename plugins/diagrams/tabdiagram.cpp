@@ -79,6 +79,12 @@ private:
 		return w;
 	}
 
+	// it's not a diagram. so what
+	diag_coordinate_t calcCoordinate(double const& x, double const& y) const{
+		unreachable();
+		return diag_coordinate_t();
+	}
+
 protected:
   void calcData(Graph*) {};  // no graph data
 }D;

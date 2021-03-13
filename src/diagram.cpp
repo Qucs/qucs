@@ -33,25 +33,24 @@
 
 #include "diagram.h"
 #include "element_list.h"
-#include "qucs_app.h"
+#include "graph.h"
+#include "misc.h"
 #include "mnemo.h"
 #include "platform.h"
 #include "qio.h"
-#include "misc.h"
 #include "qt_compat.h"
-
-#include <QTextStream>
-#include <QMessageBox>
-#include <QRegExp>
-#include <QDateTime>
-#include <QPainter>
-#include <QDebug>
-#include <QString>
-#include <QMouseEvent>
-#include <QRectF>
+#include "qucs_app.h"
 #include "some_font_stuff.h"
-//#include "../legacy/obsolete_stuff.h" // BUG
-#include "graph.h"
+
+#include <QDateTime>
+#include <QDebug>
+#include <QMessageBox>
+#include <QMouseEvent>
+#include <QPainter>
+#include <QRectF>
+#include <QRegExp>
+#include <QString>
+#include <QTextStream>
 
 namespace qucs {
 
@@ -132,17 +131,6 @@ Diagram::~Diagram()
   delete _subckt;
 }
 
-#if 0
-void Diagram::paint(ViewPainter *p) const
-{itested();
-
-  Diagram* d=const_cast<Diagram*>(this);
-  d->paintDiagram(p); // just use the old call for now.
-  // d->paintMarkers(p); // markers must/will become sub-objects.
-  Element::paint(p);
-}
-#endif
-
 index_t Diagram::param_count() const
 {
   return 8; // yikes. too many.
@@ -205,56 +193,12 @@ void Diagram::set_param_by_index(index_t i, std::string const& v)
 void Diagram::paintDiagram(ViewPainter *p)
 {itested();
 
-#if 0
-  { // does not paint anything?
-    // paint all arcs (1 pixel larger to compensate for strange circle method)
-    foreach(Arc *pa, Arcs) { untested();
-      p->setPen(pa->style);
-      p->drawArc(pa->x, pa->y, pa->w, pa->h, pa->angle, pa->arclen);
-    }
-    // paint all lines
-    foreach(Line *pl, Lines) {itested();
-      p->setPen(pl->style);
-      p->drawLine(pl->x1, pl->y1, pl->x2, pl->y2);
-    }
-  }
-
-    // draw all graphs
-  foreach(Graph *pg, Graphs) {itested();
-      pg->paint(p, cx(), cy());
-  }
-
-    // keep track of painter state
-    p->save();
-
-    // write whole text (axis label inclusively)
-    auto wm = p->worldMatrix();
-    foreach(Text *pt, Texts) {itested();
-//      p->setWorldMatrix(
-//          QMatrix(pt->mCos, -pt->mSin, pt->mSin, pt->mCos,
-//                   p->DX   + float(cx+pt->x) * p->Scale,
-//                   p->DY   + float(cy+pt->y) * p->Scale));
-//
-      // qDebug() << p->DX << p->DY << cy;
-      p->setPen(pt->Color);
-      p->drawText(QPoint(pt->x, -pt->y), pt->s);
-    }
-    p->setWorldMatrix(wm);
-    p->setWorldMatrixEnabled(false);
-
-    // restore painter state
-    p->restore();
-#endif
-
 #if 1
     // draws some box with corners to resize.
     // need a similar thing for scalable symbols.
     if(1) {itested();
       int x_, y_;
       float fx_, fy_;
-   //   p->map(cx(), cy()-y2, x_, y_);
-      fx_ = float(x2)*p->Scale + 10;
-      fy_ = float(y2)*p->Scale + 10;
 
       p->setPen(QPen(Qt::darkGray,3));
       p->drawRect(x_-5, y_-5, TO_INT(fx_), TO_INT(fy_));
@@ -453,14 +397,12 @@ bool Diagram::insideDiagram(float x, float y) const
   return ((x*x + y*y) <= R*R);
 }
 
-/*!
-   (try to) set a Marker to a diagram
-*/
+#if 0
+// (try to) set a Marker to a diagram
 Marker* Diagram::setMarker(int x, int y)
 { untested();
   if(getSelected(x, y)) { untested();
     // test all graphs of the diagram
-#if 0
     foreach(Graph *pg, Graphs) { untested();
       int n  = pg->getSelected(x-cx(), cy()-y); // sic!
       if(n >= 0) { untested();
@@ -470,10 +412,10 @@ Marker* Diagram::setMarker(int x, int y)
 	return pm;
       }
     }
-#endif
   }
   return NULL;
 }
+#endif
 
 // Cohen-Sutherland clipping algorithm
 // possibly better to leave this to Qt.
@@ -737,20 +679,8 @@ QRectF Diagram::boundingRect() const
   return QRectF(tl, br);
 }
 
-// -------------------------------------------------------
-bool Diagram::getSelected(int x_, int y_)
-{ untested();
-  assert(false);
-  if(x_ >= cx()-x1) if(x_ <= cx()+x3) if(y_ >= cy()-y2) if(y_ <= cy()+y1)
-    return true;
-
-  return false;
-}
-
-/*!
-   Checks if the resize area was clicked. If so return "true" and sets
-   x1/y1 and x2/y2 to the border coordinates to draw a rectangle.
-*/
+// Check if the resize area was clicked. If so return "true" and sets
+// x1/y1 and x2/y2 to the border coordinates to draw a rectangle.
 bool Diagram::resizeTouched(float fX, float fY, float len)
 { untested();
   float fCX = float(cx()), fCY = float(cy());
@@ -770,76 +700,9 @@ bool Diagram::resizeTouched(float fX, float fY, float len)
 }
 
 // --------------------------------------------------------------------------
-void Diagram::getAxisLimits(Graph *)
-{itested();
-#if 0
-  // FIXME: Graph should know the limits. but it doesn't yet.
-  //        we should only copy here. better: just wrap, dont use {x,y,z}Axis
-  int z=0;
-  double x, y, *p;
-  QString var, find;
-  DataX const *pD = pg->axis(0);
-  if(pD == 0) return;
-
-  if(Name[0] != 'C') {   // not for location curves
-    p = pD->Points;
-    for(z=pD->count; z>0; z--) { // check x coordinates (1. dimension)
-      x = *(p++);
-      if(std::isfinite(x)) {itested();
-	if(x > xAxis.max) xAxis.max = x;
-	if(x < xAxis.min) xAxis.min = x;
-      }
-    }
-  }
-
-#if 0 // BUG
-  if(Name == "Rect3D") { untested();
-    DataX const *pDy = pg->axis(1);
-    if(pDy) { untested();
-      p = pDy->Points;
-      for(z=pDy->count; z>0; z--) { // check y coordinates (2. dimension)
-	y = *(p++);
-    if(std::isfinite(y)) { untested();
-	  if(y > yAxis.max) yAxis.max = y;
-	  if(y < yAxis.min) yAxis.min = y;
-	}
-      }
-    }
-  }
-#endif
-
-  Axis *pa;
-  if(pg->yAxisNo == 0)  pa = &yAxis;
-  else  pa = &zAxis;
-  (pa->numGraphs)++;    // count graphs
-  p = pg->cPointsY;
-  if(p == 0) return;    // if no data => invalid
-  for(z=pg->countY*pD->count; z>0; z--) {  // check every y coordinate
-    x = *(p++);
-    y = *(p++);
-
-    if(Name[0] != 'C') {itested();
-      if(fabs(y) >= 1e-250) x = sqrt(x*x+y*y);
-      if(std::isfinite(x)) {itested();
-	if(x > pa->max) pa->max = x;
-	if(x < pa->min) pa->min = x;
-      }
-    }
-    else {   // location curve needs different treatment
-      if(std::isfinite(x)) { untested();
-	if(x > xAxis.max) xAxis.max = x;
-	if(x < xAxis.min) xAxis.min = x;
-      }
-      if(std::isfinite(y)) { untested();
-	if(y > pa->max) pa->max = y;
-	if(y < pa->min) pa->min = y;
-      }
-    }
-  }
-#endif
-}
 
 // --------------------------------------------------------------------------
+#if 0
 void Diagram::loadGraphData(const QString& defaultDataSet)
 {itested();
   int yNum = yAxis.numGraphs;
@@ -883,70 +746,10 @@ void Diagram::loadGraphData(const QString& defaultDataSet)
   }*/
   updateGraphData();
 }
-
-/*!
-   Calculate diagram again without reading dataset from file.
-*/
-void Diagram::recalcGraphData()
-{ untested();
-  yAxis.min = zAxis.min = xAxis.min =  DBL_MAX;
-  yAxis.max = zAxis.max = xAxis.max = -DBL_MAX;
-  yAxis.numGraphs = zAxis.numGraphs = 0;
-
-  // get maximum and minimum values
-#if 0
-  foreach(Graph *pg, Graphs){
-    getAxisLimits(pg);
-  }
 #endif
 
-  if(xAxis.min > xAxis.max) { untested();
-    xAxis.min = 0.0;
-    xAxis.max = 1.0;
-  }
-  if(yAxis.min > yAxis.max) { untested();
-    yAxis.min = 0.0;
-    yAxis.max = 1.0;
-  }
-  if(zAxis.min > zAxis.max) { untested();
-    zAxis.min = 0.0;
-    zAxis.max = 1.0;
-  }
-  if((Name == "Polar") || (Name == "Smith")) {  // one axis only
-    if(yAxis.min > zAxis.min)  yAxis.min = zAxis.min;
-    if(yAxis.max < zAxis.max)  yAxis.max = zAxis.max;
-  }
-
-  updateGraphData();
-}
 
 // ------------------------------------------------------------------------
-void Diagram::updateGraphData()
-{itested();
-  int valid = calcDiagram();   // do not calculate graph data if invalid
-
-#if 0
-  foreach(Graph *pg, Graphs) {itested();
-    pg->clear();
-    if((valid & (pg->yAxisNo+1)) != 0)
-      calcData(pg);   // calculate screen coordinates
-    else if(pg->cPointsY) { untested();
-      delete[] pg->cPointsY;
-      pg->cPointsY = 0;
-    }
-  }
-#endif
-
-  createAxisLabels();  // virtual function
-
-  // Setting markers must be done last, because in 3D diagram "Mem"
-  // is released in "createAxisLabels()".
-#if 0
-  foreach(Graph *pg, Graphs){itested();
-    pg->createMarkerText();
-  }
-#endif
-}
 
 // --------------------------------------------------------------------------
 /*!
@@ -1308,25 +1111,6 @@ bool Diagram::sameDependencies(Graph const*, Graph const*) const
 }
 
 // ------------------------------------------------------------
-#if 0 // tabdiagram?
-int Diagram::checkColumnWidth(const QString& Str,
-		const FontMetrics& metrics, int colWidth, int x, int y)
-{
-  //qDebug("%i", metrics.charWidth(Str,0));
-  int w = metrics.boundingRect(Str).width();  // width of text
-  if(w > colWidth) {
-    colWidth = w;
-    if((x+colWidth) >= x2) {    // enough space for text ?
-      // mark lack of space with a small arrow
-      Lines.append(new Line(x2-6, y-4, x2+7, y-4, QPen(Qt::red,2)));
-      Lines.append(new Line(x2,   y-7, x2+6, y-4, QPen(Qt::red,2)));
-      Lines.append(new Line(x2,   y-1, x2+6, y-4, QPen(Qt::red,2)));
-      return -1;
-    }
-  }
-  return colWidth;
-}
-#endif
 
 // ------------------------------------------------------------
 //void Diagram::setCenter(int x, int y, bool relative)
@@ -1379,20 +1163,31 @@ QString Diagram::save() const
   QString s = "<"+Name+" "+QString::number(cx())+" "+QString::number(cy())+" ";
   s += QString::number(x2)+" "+QString::number(y2)+" ";
   char c = '0';
-  if(xAxis.GridOn) c |= 1;
-  if(hideLines) c |= 2;
+  if(xAxis.GridOn){
+	  c |= 1;
+  }else{
+  }
+  if(hideLines) {
+	  c |= 2;
+  }else{
+  }
   s += c;
   s += " " + GridPen.color().name() + " " + QString::number(GridPen.style());
 
   if(xAxis.log){
-	  s+= " 1";
+	  s += " 1";
   }else{
 	  s += " 0";
   }
 
   c = '0';
-  if(yAxis.log)  c |= 1;
-  if(zAxis.log)  c |= 2;
+  if(yAxis.log){
+	  c |= 1;
+  }else{
+  }
+  if(zAxis.log) {
+	  c |= 2;
+  }
   s += c;
 
   if(xAxis.autoScale){
@@ -1629,123 +1424,6 @@ bool Diagram::load(const QString& Line, istream_t& stream)
 
 // ------------------------------------------------------------
 
-/*!
- Calculations for Cartesian diagrams (RectDiagram and Rect3DDiagram).
- \param   Axis - pointer to the axis to scale
- \param   Dist - length of axis in pixel on the screen
- \return value: "true" if axis runs from largest to smallest value
-
-  \param[out]             GridNum  - number where the first numbered grid is placed
-  \param[out]             GridStep - distance from one grid to the next
-  \param[out]             zD     - screen coordinate where the first grid is placed
-  \param[out]             zDstep - distance on screen from one grid to the next
-*/
-bool Diagram::calcAxisScale(Axis *Axis, double& GridNum, double& zD,
-				double& zDstep, double& GridStep, double Dist)
-{
-  bool back=false;
-  double numGrids, Base, Expo, corr;
-if(Axis->autoScale) {
-
-  if(fabs(Axis->max-Axis->min) < 1e-200) { untested();
-    if((Axis->max == 0.0) && (Axis->min == 0.0)) { untested();
-      Axis->up  =  1.0;
-      Axis->low = -1.0;
-    }
-    else {   // if max = min, double difference
-      Axis->up  = Axis->max + fabs(Axis->max);
-      Axis->low = Axis->min - fabs(Axis->min);
-    }
-  }
-  else if((Axis != &xAxis)) {itested();
-    // keep a small bounding between graph and  diagram limit
-    Axis->up  = Axis->max + 0.1*(Axis->max-Axis->min);
-    Axis->low = Axis->min - 0.1*(Axis->max-Axis->min);
-  }
-  else {
-    Axis->up  = Axis->max;   // normal case for x axis
-    Axis->low = Axis->min;
-  }
-
-
-  numGrids = floor(Dist/60.0);   // minimal grid is 60 pixel
-  if(numGrids < 1.0) Base = Axis->up-Axis->low;
-  else Base = (Axis->up-Axis->low)/numGrids;
-  Expo = floor(log10(Base));
-  Base = Base/pow(10.0,Expo);        // separate first significant digit
-  if(Base < 3.5) {     // use only 1, 2 and 5, which ever is best fitted
-    if(Base < 1.5) Base = 1.0;
-    else Base = 2.0;
-  }
-  else {itested();
-    if(Base < 7.5) Base = 5.0;
-    else { Base = 1.0; Expo++; }
-  }
-  GridStep = Base * pow(10.0,Expo);   // grid distance in real coordinates
-  corr = floor((Axis->up-Axis->low)/GridStep - numGrids);
-  if(corr < 0.0) corr++;
-  numGrids += corr;     // correct rounding faults
-
-
-  // upper y boundery ...........................
-  zD = fabs(fmod(Axis->up, GridStep));// expand grid to upper diagram edge ?
-  GridNum = zD/GridStep;
-  if((1.0-GridNum) < 1e-10) GridNum = 0.0;  // fix rounding errors
-  if(Axis->up <= 0.0) { untested();
-    if(GridNum < 0.3) { Axis->up += zD;  zD = 0.0; }
-  }
-  else  if(GridNum > 0.7)  Axis->up += GridStep-zD;
-        else if(GridNum < 0.1)
-	       if(GridNum*Dist >= 1.0)// more than 1 pixel above ?
-		 Axis->up += 0.3*GridStep;  // beauty correction
-
-
-  // lower y boundery ...........................
-  zD = fabs(fmod(Axis->low, GridStep));// expand grid to lower diagram edge ?
-  GridNum = zD/GridStep;
-  if((1.0-GridNum) < 1e-10) zD = GridNum = 0.0;  // fix rounding errors
-  if(Axis->low <= 0.0) {
-    if(GridNum > 0.7) { Axis->low -= GridStep-zD;  zD = 0.0; }
-    else if(GridNum < 0.1)
-	   if(GridNum*Dist >= 1.0) { // more than 1 pixel above ?
-	     Axis->low -= 0.3*GridStep;   // beauty correction
-	     zD += 0.3*GridStep;
-	   }
-  }
-  else { untested();
-    if(GridNum > 0.3) { untested();
-      zD = GridStep-zD;
-      if(GridNum > 0.9) { untested();
-	if((1.0-GridNum)*Dist >= 1.0) { // more than 1 pixel above ?
-	  Axis->low -= 0.3*GridStep;    // beauty correction
-	  zD += 0.3*GridStep;
-	}
-      }
-    }
-    else { Axis->low -= zD; zD = 0.0; }
-  }
-
-  GridNum = Axis->low + zD;
-  zD /= (Axis->up-Axis->low)/Dist;
-}
-else {   // user defined limits
-  zD = 0.0;
-  Axis->low = GridNum = Axis->limit_min;
-  Axis->up  = Axis->limit_max;
-  if(Axis->limit_max < Axis->limit_min)
-    back = true;
-  GridStep  = Axis->step;
-}
-
-  zDstep = GridStep/(Axis->up-Axis->low)*Dist; // grid in pixel
-
-  if(fabs(zDstep) < 2.0) {  // if grid too small, then no grid
-    zDstep = Dist;
-    GridStep = Axis->step = Axis->up-Axis->low;
-  }
-
-  return back;
-}
 
 /*!
   Calculations for logarithmical Cartesian diagrams
@@ -1853,92 +1531,6 @@ bool Diagram::calcAxisLogScale(Axis *Axis, int& z, double& zD,
 }
 
 // --------------------------------------------------------------
-bool Diagram::calcYAxis(Axis *Axis, int x0)
-{itested();
-  int z, w;
-  double GridStep, corr, zD, zDstep, GridNum;
-
-  QString tmp;
-  // get size of text using the screen-compatible metric
-  FontMetrics metrics;
-  int maxWidth = 0;
-
-  bool back = false;
-if(Axis->log) { untested();
-  if(Axis->autoScale) { untested();
-    if(Axis->max*Axis->min <= 0.0)  return false;  // invalid
-  }
-  else  if(Axis->limit_min*Axis->limit_max <= 0.0)  return false;  // invalid
-
-  back = calcAxisLogScale(Axis, z, zD, zDstep, corr, y2);
-
-  if(back) z = y2;
-  while((z <= y2) && (z >= 0)) {    // create all grid lines
-#if 0
-    if(Axis->GridOn)  if(z < y2)  if(z > 0)
-      Lines.prepend(new Line(0, z, x2, z, GridPen));  // y grid
-#endif
-
-    if((zD < 1.5*zDstep) || (z == 0)) { untested();
-      tmp = misc::StringNiceNum(zD);
-      if(Axis->up < 0.0)  tmp = '-'+tmp;
-
-      w = metrics.width(tmp);  // width of text
-      if(maxWidth < w) maxWidth = w;
-#if 0
-      if(x0 > 0)
-        Texts.append(new Text(x0+7, z-6, tmp)); // text aligned left
-      else
-        Texts.append(new Text(-w-7, z-6, tmp)); // text aligned right
-
-      // y marks
-      Lines.append(new Line(x0-5, z, x0+5, z, QPen(Qt::black,0)));
-#endif
-    }
-
-    zD += zDstep;
-    if(zD > 9.5*zDstep)  zDstep *= 10.0;
-    if(back) { untested();
-      z = int(corr*log10(zD / fabs(Axis->up)) + 0.5); // int() implies floor()
-      z = y2 - z;
-    }
-    else
-      z = int(corr*log10(zD / fabs(Axis->low)) + 0.5);// int() implies floor()
-  }
-}
-else {  // not logarithmical
-  back = calcAxisScale(Axis, GridNum, zD, zDstep, GridStep, double(y2));
-
-  double Expo;
-  if(Axis->up == 0.0)  Expo = log10(fabs(Axis->up-Axis->low));
-  else  Expo = log10(fabs(Axis->up));
-
-  zD += 0.5;     // perform rounding
-  z = int(zD);   //  "int(...)" implies "floor(...)"
-  while((z <= y2) && (z >= 0)) {  // create all grid lines
-    if(fabs(GridNum) < 0.01*pow(10.0, Expo)) GridNum = 0.0;// make 0 really 0
-    tmp = misc::StringNiceNum(GridNum);
-
-     w = metrics.width(tmp);  // width of text
-      if(maxWidth < w) maxWidth = w;
-///       if(x0 > 0)
-/// 	Texts.append(new Text(x0+8, z-6, tmp));  // text aligned left
-///       else
-/// 	Texts.append(new Text(-w-7, z-6, tmp));  // text aligned right
-      GridNum += GridStep;
-
-
-///     if(Axis->GridOn)  if(z < y2)  if(z > 0)
-///       Lines.prepend(new Line(0, z, x2, z, GridPen));  // y grid
-///    Lines.append(new Line(x0-5, z, x0+5, z, QPen(Qt::black,0))); // y marks
-    zD += zDstep;
-    z = int(zD);
-  }
-} // of "if(ylog) ... else ..."
-  if(x0 == 0)  x1 = maxWidth+14;
-  else  x3 = x2+maxWidth+14;
-  return true;
-}
 
 // convenience wrappers
 bool Diagram::insideDiagramP(Graph::iterator const& p) const
@@ -1947,12 +1539,12 @@ bool Diagram::insideDiagramP(Graph::iterator const& p) const
   float f2 = p->getScrY();
   return insideDiagram(f1,f2);
 }
-void Diagram::calcCoordinateP (const double*x, const double*y, const double*z, Graph::iterator& p, Axis const* A) const
-{itested();
-  float f1, f2;
-  calcCoordinate(x, y, z, &f1, &f2, A);
-  p->setScr(f1, f2);
-};
+// void Diagram::calcCoordinateP (const double*x, const double*y, const double*z, Graph::iterator& p, Axis const* A) const
+// {itested();
+//   float f1, f2;
+//   calcCoordinate(x, y, z, &f1, &f2, A);
+//   p->setScr(f1, f2);
+// };
 
 
 /* PHASOR AND WAVEAC RELATED CODE
@@ -2041,66 +1633,6 @@ bool Diagram::newcoordinate(Graph::iterator const& p,float* xn, float* yn) const
 	return false;
 	
   }  
-}
-//for phasor diagram while detect with type of graph it is (voltage, current....) and save in the auxiliary axis
-void Diagram::findaxisA(Graph *g) 
-{ untested();
-    QString var = g->Var;
-    
-    xAxisA = &xAxis;
-    yAxisA = &yAxis;
-    zAxisA = &zAxis;
-
-    if(var.indexOf(".v",0,Qt::CaseSensitive) != -1)
-    { untested();
-      xAxisA = &xAxisV;
-      yAxisA = &yAxisV;
-      zAxisA = &zAxisV;
-    }
-    else if(var.indexOf(".i",0,Qt::CaseSensitive) != -1)
-    { untested();
-      xAxisA = &xAxisI;
-      yAxisA = &yAxisI;
-      zAxisA = &zAxisI;
-    }
-    else if(var.indexOf(".S",0,Qt::CaseSensitive) != -1)
-    { untested();
-      xAxisA = &xAxisP;
-      yAxisA = &yAxisP;
-      zAxisA = &zAxisP;
-    }
-    else if(var.indexOf(".Ohm",0,Qt::CaseSensitive) != -1)
-    { untested();
-      xAxisA = &xAxisZ;
-      yAxisA = &yAxisZ;
-      zAxisA = &zAxisZ;
-    }
-}
-
-//will determine the value of the graph for one frequency
-bool Diagram::findmatch(Graph *g , int m)
-{ untested();
-  double *px;
-  double *pz = g->cPointsY + 2*m*g->axis(0)->count;
-  int z;
-  if(freq <= (double*) 0)
-  { untested();
-    freq=0;
-    sfreq = "0 Hz";
-    return false;
-  } 
-	px = g->axis(0)->Points;
-	for(z=g->axis(0)->count; z>0; z--) {  // every point
-	  if(*px == freq[nfreqa])
-	  { untested();
-	    g->gy = pz;//save value
-	    return true;
-	  }
-	  ++px;
-	  pz += 2;
-	}
-  return false;
-
 }
 
 //  will read the values receive and find if is one the values determined by AC and remove repeated number.
@@ -2301,14 +1833,14 @@ double Diagram::wavevalX(int i) const
     return i*xAxis.up/(sc*50); 
 }
 */
-
+/*--------------------------------------------------------------------------*/
 void Diagram::prepare()
 {
 	for(auto i : *scope()){
 		i->prepare();
 	}
 }
-
+/*--------------------------------------------------------------------------*/
 Widget* Diagram::schematicWidget(Doc* Doc) const
 { untested();
   trace0("Component::editElement");
@@ -2316,87 +1848,14 @@ Widget* Diagram::schematicWidget(Doc* Doc) const
   return nullptr;
 //  return new DiagramDialog(Doc); // memory leak?
 }
-
-// TODO this is a diagram function.
-#if 0
-void SchematicDoc::actionExportGraphAsCsv()
-{ untested();
-  // focusElement->exportGraphAsCsv? or so.
-  for(;;) { untested();
-    if(!mouseActions()->focusElement){ untested();
-    }else if(graph(mouseActions()->focusElement)){ untested();
-        break;
-    }else{ untested();
-    }
-
-    QMessageBox::critical(this, tr("Error"), tr("Please select a diagram graph!"));
-    return;
-  }
-
-  /*QString s = Q3FileDialog::getSaveFileName(
-     lastDir.isEmpty() ? QString(".") : lastDir,
-     tr("CSV file")+" (*.csv);;" + tr("Any File")+" (*)",
-     this, 0, tr("Enter an Output File Name"));
-     */
-  QString s = QFileDialog::getSaveFileName(this, tr("Enter an Output File Name"),
-    lastDir.isEmpty() ? QString(".") : lastDir, tr("CSV file")+" (*.csv);;" + tr("Any File")+" (*)");
-
-  if(s.isEmpty())
-    return;
-
-  QFileInfo Info(s);
-  lastDir = Info.absolutePath();  // remember last directory
-  if(Info.suffix().isEmpty())
-    s += ".csv";
-
-  QFile File(s);
-  if(File.exists())
-    if(QMessageBox::information(this, tr("Info"),
-          tr("Output file already exists!")+"\n"+tr("Overwrite it?"),
-          tr("&Yes"), tr("&No"), 0,1,1))
-      return;
-
-  if(!File.open(QIODevice::WriteOnly)) { untested();
-    QMessageBox::critical(this, QObject::tr("Error"),
-                          QObject::tr("Cannot create output file!"));
-    return;
-  }
-
-  QTextStream Stream(&File);
-
-
-  DataX const *pD;
-  Graph const*g = graph(mouseActions()->focusElement);
-  // First output the names of independent and dependent variables.
-  for(unsigned ii=0; (pD=g->axis(ii)); ++ii){ untested();
-    Stream << '\"' << pD->Var << "\";";
-  }
-  Stream << "\"r " << g->Var << "\";\"i " << g->Var << "\"\n";
-
-
-  int n, m;
-  double *py = g->cPointsY;
-  int Count = g->countY * g->axis(0)->count;
-  for(n = 0; n < Count; n++) { untested();
-    m = n;
-	 for(unsigned ii=0; (pD=g->axis(ii)); ++ii) { untested();
-      Stream << *(pD->Points + m%pD->count) << ';';
-      m /= pD->count;
-    }
-
-    Stream << *(py) << ';' << *(py+1) << '\n';
-    py += 2;
-  }
-
-  File.close();
-}
-#endif
-
+/*--------------------------------------------------------------------------*/
 rect_t Diagram::bounding_rect() const
 { untested();
 	QPointF tl(0, -y2); // eek
 	QPointF br(x2, 0);
 	return rect_t(QRectF(tl, br));
 }
-
+/*--------------------------------------------------------------------------*/
 } // qucs
+/*--------------------------------------------------------------------------*/
+/*--------------------------------------------------------------------------*/

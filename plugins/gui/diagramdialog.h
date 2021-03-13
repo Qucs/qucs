@@ -1635,60 +1635,66 @@ void DiagramDialog::slotManualZ(int state)
 		startZ->setEnabled(true);
 		//}
 		stopZ->setEnabled(true);
-		if(GridLogZ) if(GridLogZ->isChecked())  return;
+		if(GridLogZ){
+			if(GridLogZ->isChecked()){
+				return;
+			}
+		}
 		stepZ->setEnabled(true);
-	}
-	else { untested();
+	} else { untested();
 		startZ->setEnabled(false);
 		stepZ->setEnabled(false);
 		stopZ->setEnabled(false);
 	}
 }
-
-/*!
-  Is called if the current tab of the QTabWidget changes.
-  */
+/*--------------------------------------------------------------------------*/
+// Is called if the current tab of the QTabWidget changes.
 void DiagramDialog::slotChangeTab(QWidget*)
 { untested();
-	if(stepX == 0) return;   // defined ?
-	if(GridLogX) { untested();
-		if(GridLogX->isChecked())  stepX->setEnabled(false);
-		else  if(manualX->isChecked())  stepX->setEnabled(true);
+	if(stepX == 0) return;   // BUG
+
+	if(!GridLogX) { untested();
+	}else if(GridLogX->isChecked()) {
+		stepX->setEnabled(false);
+	}else if(manualX->isChecked()) {
+		stepX->setEnabled(true);
+	}else{
 	}
-	if(GridLogY) { untested();
-		if(GridLogY->isChecked())  stepY->setEnabled(false);
-		else  if(manualY->isChecked())  stepY->setEnabled(true);
+
+	if(!GridLogY) { untested();
+	}else if(GridLogY->isChecked()){
+	 	stepY->setEnabled(false);
+	}else if(manualY->isChecked()){
+	  	stepY->setEnabled(true);
+	}else{
 	}
-	if(GridLogZ) { untested();
-		if(GridLogZ->isChecked())  stepZ->setEnabled(false);
-		else  if(manualZ->isChecked())  stepZ->setEnabled(true);
+
+	if(!GridLogZ) { untested();
+	}else if(GridLogZ->isChecked()){
+	 	stepZ->setEnabled(false);
+	}else if(manualZ->isChecked()){
+		stepZ->setEnabled(true);
+	}else{
 	}
 }
-
-
-/*!
-  Is called when the slider for rotation angle is changed.
-  */
+/*--------------------------------------------------------------------------*/
+// The slider for rotation angle has changed
 void DiagramDialog::slotNewRotX(int Value)
 { untested();
 	rotationX->setText(QString::number(Value));
 	DiagCross->rotX = float(Value) * pi/180.0;
 	DiagCross->update();
 }
-
-/*!
-  Is called when the slider for rotation angle is changed.
-  */
+/*--------------------------------------------------------------------------*/
+// The slider for rotation angle has changed
 void DiagramDialog::slotNewRotY(int Value)
 { untested();
 	rotationY->setText(QString::number(Value));
 	DiagCross->rotY = float(Value) * pi/180.0;
 	DiagCross->update();
 }
-
-/*!
-  Is called when the slider for rotation angle is changed.
-  */
+/*--------------------------------------------------------------------------*/
+// The slider for rotation angle has changed
 void DiagramDialog::slotNewRotZ(int Value)
 { untested();
 	rotationZ->setText(QString::number(Value));
@@ -1696,45 +1702,40 @@ void DiagramDialog::slotNewRotZ(int Value)
 	DiagCross->update();
 }
 
-/*!
-  Is called when the number (text) for rotation angle is changed.
-  */
+/*--------------------------------------------------------------------------*/
+// the number (text) for rotation angle has changed
 void DiagramDialog::slotEditRotX(const QString& Text)
 { untested();
 	SliderRotX->setValue(Text.toInt());
 	DiagCross->rotX = Text.toFloat() * pi/180.0;
 	DiagCross->update();
 }
-
-/*!
-  Is called when the number (text) for rotation angle is changed.
-  */
+/*--------------------------------------------------------------------------*/
+// the number (text) for rotation angle has changed
 void DiagramDialog::slotEditRotY(const QString& Text)
 { untested();
 	SliderRotY->setValue(Text.toInt());
 	DiagCross->rotY = Text.toFloat() * pi/180.0;
 	DiagCross->update();
 }
-
-/*!
-  Is called when the number (text) for rotation angle is changed.
-  */
+/*--------------------------------------------------------------------------*/
+// The number (text) for rotation angle has changed
 void DiagramDialog::slotEditRotZ(const QString& Text)
 { untested();
 	SliderRotZ->setValue(Text.toInt());
 	DiagCross->rotZ = Text.toFloat() * pi/180.0;
 	DiagCross->update();
 }
-
-class DialogFactory : public Widget /*?*/ {
+/*--------------------------------------------------------------------------*/
+class DialogFactory : public Widget {
 	Widget* clone() const override{
 		SchematicDialog* wd = new DiagramDialog();
 		return wd;
 	}
 }F;
 static Dispatcher<Widget>::INSTALL p1(&qucs::widget_dispatcher, "RectDialog|DiagramDialog", &F);
-
+/*--------------------------------------------------------------------------*/
 } // namespace
-
-
+/*--------------------------------------------------------------------------*/
+/*--------------------------------------------------------------------------*/
 #endif

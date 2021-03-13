@@ -15,7 +15,6 @@
 #ifndef QUCS_DIAGRAM_H
 #define QUCS_DIAGRAM_H
 
-// #include "../legacy/marker.h" // BUG
 #include "element.h"
 #include "viewpainter.h"
 #include "exception.h"
@@ -25,7 +24,6 @@
 #include <QList>
 
 #define MIN_SCROLLBAR_SIZE 8
-
 #define INVALID_STR QObject::tr(" <invalid>")
 
 // BUG obsolete_paintings
@@ -53,6 +51,7 @@ namespace qucs{
 	class Graph;
 }
 
+// Element?
 struct Axis {
   double  min, max; // least and greatest values of all graph data
   double  low, up;  // the limits of the diagram
@@ -69,10 +68,15 @@ struct Axis {
 // yikes.
 #include "graph.h"
 
+/*--------------------------------------------------------------------------*/
 namespace qucs {
+/*--------------------------------------------------------------------------*/
 typedef qucs::Graph::iterator GraphIterator;
-
+/*--------------------------------------------------------------------------*/
 class Diagram : public Element {
+public:
+	typedef std::pair<float, float> diag_coordinate_t;
+
 protected:
 	Diagram(Diagram const& d);
 public:
@@ -88,10 +92,7 @@ public:
 	  return E->newOne();
   }
   virtual int  calcDiagram() { return 0; };
-  virtual void calcCoordinate
-               (const double*, const double*, const double*, float*, float*, Axis const*) const {}
-  void calcCoordinateP (const double*x, const double*y, const double*z, GraphIterator& p, Axis const* A) const;
-  virtual void calcCoordinatePh(const double*, float*, float*, Axis const*, Axis const*) const{};
+  virtual diag_coordinate_t calcCoordinate(double const& x, double const& y) const = 0;
   virtual void finishMarkerCoordinates(float&, float&) const;
   virtual void calcLimits() {}
   virtual QString extraMarkerText(Marker const*) const {return "";}
@@ -131,21 +132,20 @@ public:
 	ElementList* scope(){ return _subckt; }
 
 public: // ??!
-  virtual void paintDiagram(ViewPainter* p);
-  void paintMarkers(ViewPainter* p, bool paintAll = true);
+	// void paint(ViewPainter* p) override;
+	void paintDiagram(ViewPainter* p);
+	void paintMarkers(ViewPainter* p, bool paintAll = true);
 //  void    setCenter(int, int, bool relative=false);
 //  void    paintScheme(SchematicDoc*) const;
-  void    Bounding(int&, int&, int&, int&);
-  bool    getSelected(int, int);
-  bool    resizeTouched(float, float, float);
-  bool    load(const QString&, istream_t&); // TODO: remove.
+	void    Bounding(int&, int&, int&, int&);
+	bool    resizeTouched(float, float, float);
+	bool    load(const QString&, istream_t&); // TODO: remove.
 
-  void getAxisLimits(Graph*);
-  void updateGraphData();
-  void loadGraphData(const QString&);
-  void recalcGraphData();
+//  void getAxisLimits(Graph*);
+//  void updateGraphData();
+//  void loadGraphData(const QString&);
+//  void recalcGraphData();
   bool sameDependencies(Graph const*, Graph const*) const;
-  int  checkColumnWidth(const QString&, const FontMetrics&, int, int, int);
 
   virtual bool insideDiagram(float, float) const;
   bool insideDiagramP(GraphIterator const& ) const;
@@ -154,11 +154,6 @@ public: // ??!
 private: // internals
 public: // BUG/incomplete
   QPen    GridPen;
-
-//  QList<Graph *>  Graphs;
-//  QList<Arc *>    Arcs;
-//  QList<Line *>   Lines;
-//  QList<Text *>   Texts;
 
   QString sfreq;
   double *freq=nullptr;
@@ -178,9 +173,8 @@ protected:
 //  void calcSmithAxisScale(Axis*, int&, int&);
 //  void createSmithChart(Axis*, int Mode=7);
 
-  bool calcAxisScale(Axis*, double&, double&, double&, double&, double);
   bool calcAxisLogScale(Axis*, int&, double&, double&, double&, int);
-  bool calcYAxis(Axis*, int);
+  // bool calcYAxis(Axis*, int);
   virtual void createAxisLabels();
 
   int  regionCode(float, float) const;
@@ -188,6 +182,11 @@ protected:
   void rectClip(GraphIterator &) const;
 
   virtual void calcData(Graph*);
+
+  ElementList* subckt(){return _subckt;}
+
+public:
+  ElementList const* subckt() const{return _subckt;}
 
 private:
 	void new_subckt();
@@ -212,7 +211,8 @@ protected:
 private:
   ElementList* _subckt{nullptr};
 }; // Diagram
-
+/*--------------------------------------------------------------------------*/
 } // qucs
-
+/*--------------------------------------------------------------------------*/
+/*--------------------------------------------------------------------------*/
 #endif

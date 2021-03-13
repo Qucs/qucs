@@ -49,7 +49,9 @@ public:
   static Element* info_y(QString&, char* &, bool getNewOne=false);
   int  calcDiagram();
   void calcLimits();
-  void calcCoordinate(const double*, const double*, const double*, float*, float*, Axis const*) const;
+  virtual diag_coordinate_t calcCoordinate(double const& x, double const& y) const override{
+    incomplete();
+  }
   QString extraMarkerText(Marker const*) const;
 public: // legacy cruft.
   QList<Graph *>  Graphs;
@@ -103,6 +105,7 @@ SmithDiagram::~SmithDiagram()
 
 // ------------------------------------------------------------
 // calculate the screen coordinates for the graph data
+#if 0
 void SmithDiagram::calcCoordinate(const double*, const double* yD, const double*,
                                   float *px, float *py, Axis const*) const
 {
@@ -117,6 +120,7 @@ void SmithDiagram::calcCoordinate(const double*, const double* yD, const double*
 
   *px = *py = float(cx()) / 2.0;
 }
+#endif
 
 // ------------------------------------------------------------
 void SmithDiagram::calcLimits()

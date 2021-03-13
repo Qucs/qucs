@@ -46,6 +46,11 @@ public:
 
   void createAxisLabels() {};   // no labels in this diagram
 
+public: // it's not actually a diagram. so what?
+  virtual diag_coordinate_t calcCoordinate(double const& x, double const& y) const override{
+	  return diag_coordinate_t();
+  }
+
 public: // legacy cruft.
   QList<Graph *>  Graphs;
   QList<Arc *>    Arcs;
@@ -618,6 +623,26 @@ void DiagramDialog::slotButtApply()
   ((SchematicDoc*)parent())->viewport()->repaint();
   copyDiagramGraphs();
   if(changed) transfer = true;   // changes have been applied ?
+}
+#endif
+
+#if 0 // also used in 2 others?
+int Diagram::checkColumnWidth(const QString& Str,
+		const FontMetrics& metrics, int colWidth, int x, int y)
+{
+  //qDebug("%i", metrics.charWidth(Str,0));
+  int w = metrics.boundingRect(Str).width();  // width of text
+  if(w > colWidth) {
+    colWidth = w;
+    if((x+colWidth) >= x2) {    // enough space for text ?
+      // mark lack of space with a small arrow
+      Lines.append(new Line(x2-6, y-4, x2+7, y-4, QPen(Qt::red,2)));
+      Lines.append(new Line(x2,   y-7, x2+6, y-4, QPen(Qt::red,2)));
+      Lines.append(new Line(x2,   y-1, x2+6, y-4, QPen(Qt::red,2)));
+      return -1;
+    }
+  }
+  return colWidth;
 }
 #endif
 

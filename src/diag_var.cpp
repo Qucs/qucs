@@ -10,35 +10,51 @@
  *   (at your option) any later version.                                   *
  *                                                                         *
  ***************************************************************************/
-
+/*--------------------------------------------------------------------------*/
+// Ideally, some painting will be shared across diagrams. Not yet sure how to
+// do excactly.
+//
+// This represents a variable in a plot, similar to "Graph" in around 0.0.20.
+// Not sure if it should do any painting, or better leave it to the Diagram.
+//
+// The diagram could clip, but perhaps Qt should take care of it anyway.
+/*--------------------------------------------------------------------------*/
 #include "data.h"
+#include "output.h"
 #include "exception.h"
 #include "output.h"
 #include "qucs_globals.h"
 #include "element_list.h"
 #include "sckt_base.h"
+#include "viewpainter.h"
+#include <QPainterPath> // BUG.
 /*--------------------------------------------------------------------------*/
 namespace{
 /*--------------------------------------------------------------------------*/
 using qucs::Data;
+using qucs::Painting;
 using qucs::CommonData;
 using qucs::ViewPainter;
 using qucs::ElementList;
 using qucs::SubcktBase;
 using qucs::SimOutputDir;
 using qucs::data_dispatcher;
+using qucs::SimOutputData;
 /*--------------------------------------------------------------------------*/
-class DiagramVariable : public Data {
+class DiagramVariable : public Data, public Painting {
 public:
 	DiagramVariable() : Data() {}
 	DiagramVariable(DiagramVariable const& e)
 	  : Data(e), _color(e._color), _thick(e._thick) {}
 
+public: // Painting
+	virtual rect_t bounding_rect() const;
+	void paint(ViewPainter*) const override;
+
 public: // Element
 	Element* clone() const override{itested();
 		return new DiagramVariable(*this);
 	}
-	void paint(ViewPainter*) const{}
 	index_t param_count() const{return 6;}
 	void set_param_by_index(index_t i, std::string const& value) override;
 	void set_param_by_name(std::string const& name, std::string const& value) override{ untested();
@@ -106,7 +122,8 @@ private:
 	{
 		if(!where){ untested();
 			return nullptr;
-		}else if(auto d = dynamic_cast<SubcktBase const*>(where)) {
+		}else if(dynamic_cast<SubcktBase const*>(where)) {
+		//}else if(auto d = dynamic_cast<SubcktBase const*>(where)) {
 #if 0
 			trace1("var sckt", d->label());
 			if(d->scope()) {
@@ -208,6 +225,69 @@ std::string DiagramVariable::param_value(index_t i) const
 		return "..";
 	}
 }
+/*--------------------------------------------------------------------------*/
+rect_t DiagramVariable::bounding_rect() const
+{ untested();
+	if(auto p=dynamic_cast<Painting const*>(owner())){
+		return p->bounding_rect();
+	}else{
+		unreachable(); //?
+		return rect_t();
+	}
+}
+/*--------------------------------------------------------------------------*/
+// under construction
+void paint_graph_data(CommonData const* cd, ViewPainter* p)
+{
+	auto pp = prechecked_cast<SimOutputData const*>(cd);
+	assert(pp);
+	if(pp->numDeps()==1){
+		auto dd = dynamic_cast<SimOutputData const*>(pp->dep(0));
+		assert(dd);
+		int num = pp->size();
+		QVector<double> x(num), y(num);
+		trace3("var copy", num, pp->min(), pp->max());
+		trace3("var copy", num, dd->min(), dd->max());
+		int ii = 0;
+
+		double minx = dd->min();
+		double maxx = dd->max();
+		double miny = pp->min();
+		double maxy = pp->max();
+		QPainterPath path;
+		for (auto xx : *pp){
+			++ii;
+			auto x = xx.first;
+			auto y = xx.second.real();
+
+			// if first? path.moveTo(x,y);
+			path.lineTo(x,y);
+		}
+
+		p->drawPath(path); // yikes.
+		assert(ii==num);
+
+	}else{
+		incomplete();
+	}
+
+}
+/*--------------------------------------------------------------------------*/
+void DiagramVariable::paint(ViewPainter* v) const
+{
+	trace0("diagvariable::paint");
+	v->drawLine(-100, -100, 100, 100);
+	v->drawLine(-100, 100, 100, -100);
+
+	paint_graph_data(common(), v);
+}
+/*--------------------------------------------------------------------------*/
+// QPainterPath DiagramVariable::shape() const
+// {
+//     QPainterPath path;
+//     path.addEllipse(boundingRect());
+//     return path;
+// }
 /*--------------------------------------------------------------------------*/
 } // namespace
 /*--------------------------------------------------------------------------*/

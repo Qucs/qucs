@@ -22,8 +22,6 @@
 #include "data.h"
 /* -------------------------------------------------------------------------------- */
 /* -------------------------------------------------------------------------------- */
-class DataX; // BUG
-/* -------------------------------------------------------------------------------- */
 namespace qucs {
 /* -------------------------------------------------------------------------------- */
 // a SimOutputDir provides a named list of CommonData
@@ -127,7 +125,6 @@ public:
 	typedef std::pair<double, std::complex<double> > valuetype;
 	class const_iterator{
 		friend class SimOutputData; // need to access constructor.
-		friend class SimOutputDat; // bug.
 	protected:
 	public:
 		const_iterator(double const* x, double const* y) : seekx(x), seeky(y) {};
@@ -148,7 +145,7 @@ public:
 		static valuetype _v; // bit of a hack. lets see...
 	};
 public:
-	SimOutputData() : CommonData() {}
+	SimOutputData();
 	virtual ~SimOutputData(){}
 
 public:
@@ -162,12 +159,12 @@ public:
 	virtual CommonData const* dep(index_t) const {unreachable(); return nullptr;}
 
 public:
-	const double& min()const {return Min;}
-	const double& max()const {return Max;}
+	const double& min()const {return _min;}
+	const double& max()const {return _max;}
 
 protected:
-	double Min;
-	double Max;
+	double _min;
+	double _max;
 }; // SimOutputData
 /* -------------------------------------------------------------------------------- */
 } // qucs

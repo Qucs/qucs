@@ -129,8 +129,14 @@ private:
 	int loadIndepVarData(std::string const& Variable, char *FileString, DataX* pD);
 
 	void setLimit(const double& x){ untested();
-		if (Min>x) Min=x;
-		if (Max<x) Max=x;
+		if (_min > x){ untested();
+		  	_min = x;
+		}else{ untested();
+		}
+		if (_max < x){ untested();
+		  	_max = x;
+		}else{ untested();
+		}
 	}
 
 	index_t numDeps() const override;
@@ -473,11 +479,11 @@ SimOutputData const* SimOutputDatVar::refresh(QByteArray FileContent)
 #if 0 // FIXME there is no Name here.
 			if(Name[0] != 'C')
 #endif
-			if(0) { untested();
-				if(fabs(y) >= 1e-250){ untested();
-				  	x = sqrt(x*x+y*y);
-				}else{ untested();
-				}
+			if(1) { untested();
+				//if(fabs(y) >= 1e-250){ untested();
+				//  	x = sqrt(x*x+y*y);
+				//}else{ untested();
+				//}
 				if(std::isfinite(x)){ untested();
 				  	setLimit(x);
 				}else{ untested();
