@@ -8,6 +8,7 @@ build/
 *.qm
 qucs/qucs
 *.swp
+*.lo
 
 # Qt stuff
 *.moc.cpp
