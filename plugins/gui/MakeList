@@ -13,6 +13,16 @@ QT_PLUGIN_SRC = \
 	schematic_action.cpp \
 	wiredialog.cc
 
+# CMAKE an automoc, list filename as is
+QT_PLUGIN_SRC_CMAKE = \
+	diagramdialog.h \
+	textdoc.h \
+	taskeltdlg.h \
+	symboldialog.h \
+	schematic_doc.h \
+	schematic_action.cpp \
+	wiredialog.h
+
 MORE_LATER = \
 	changedialog.cpp \
 	settingsdialog.h \
