@@ -76,7 +76,7 @@ add_subdirectory(${CMAKE_SOURCE_DIR}/main)
 
 # add_subdirectory(man)
 # add_subdirectory(plugins)
-# add_subdirectory(legacy)
+ add_subdirectory(legacy)
 # add_subdirectory(qucs-activefilter)
 # add_subdirectory(qucs-attenuator)
 # # ADD_SUBDIRECTORY( qucs-doc )
