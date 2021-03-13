@@ -22,7 +22,8 @@ option(CompileDependencies "Compile dependencies related to qucs (qucsator ...),
 # add compiler definitions/symbols
 set(PACKAGE_VERSION "${PROJECT_VERSION}")
 add_compile_definitions(QUCS_PREFIX="${prefix}")
-add_compile_definitions(QUCS_PLUGPATH="${pkglibdir}")
+#add_compile_definitions(QUCS_PLUGPATH="${pkglibdir}")
+add_compile_definitions(QUCS_PLUGPATH="../") # crash if not defined
 
 # qucsschematic
 # add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/../src src)
