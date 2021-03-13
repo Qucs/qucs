@@ -3,6 +3,9 @@ TARGET = qucsator
 QT_PLUGIN_SRC = \
 	qucsator.cc
 
+QT_PLUGIN_SRC_CMAKE = \
+	qucsator.h
+
 EXTRA_DIST =
 
 RAW_SRC =
