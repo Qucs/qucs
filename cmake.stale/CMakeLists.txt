@@ -72,6 +72,7 @@ add_definitions(${QT_DEFINITIONS} -DQT_DEPRECATED_WARNINGS)
 # Process CMakeLists.txt relative to this source file
 add_subdirectory(${CMAKE_SOURCE_DIR}/src)
 add_subdirectory(${CMAKE_SOURCE_DIR}/main)
+#add_subdirectory(${CMAKE_SOURCE_DIR}/bitmaps) no need, added from qrc file
 
 # add_subdirectory(man)
 # add_subdirectory(plugins)

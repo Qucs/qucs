@@ -136,10 +136,16 @@ if(UNIX AND ENABLE_RPATH)
   set(CMAKE_MACOSX_RPATH true)
 endif()
 
+#
+# Generate rules for building source files from bitmap resources
+#
+SET(RESOURCES ${CMAKE_CURRENT_SOURCE_DIR}/../../src/qucs_.qrc)
+QT5_ADD_RESOURCES(RESOURCES_SRCS ${RESOURCES})
+
 ##
 ## CMake's way of creating an executable
 ##
-add_executable(qucs MACOSX_BUNDLE WIN32 ${CMAKE_CURRENT_SOURCE_DIR}/../../main/main.cpp)
+add_executable(qucs MACOSX_BUNDLE WIN32 ${CMAKE_CURRENT_SOURCE_DIR}/../../main/main.cpp ${RESOURCES_SRCS})
 target_link_libraries(qucs qucsschematic)
 target_link_libraries(qucs Qt5::Widgets)
 target_link_libraries(qucs Qt5::Svg)
