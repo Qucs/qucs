@@ -106,6 +106,9 @@ configure_file("${CMAKE_SOURCE_DIR}/../config.h.cmake"
 
 add_definitions(-DHAVE_CONFIG_H)
 
+# set qt_compat.h
+add_definitions(-DQT_MAJOR_VERSION=5)
+
 
 # Process CMakeLists.txt relative to this source file
 add_subdirectory(${CMAKE_SOURCE_DIR}/src)
