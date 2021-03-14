@@ -369,6 +369,7 @@ void Diagram::createAxisLabels()
 }
 
 // ------------------------------------------------------------
+#if 0
 int Diagram::regionCode(float x, float y) const
 { untested();
   int code=0;   // code for clipping
@@ -384,6 +385,7 @@ int Diagram::regionCode(float x, float y) const
 
   return code;
 }
+#endif
 
 // ------------------------------------------------------------
 // Is virtual. This one is for round diagrams only.
@@ -415,7 +417,6 @@ Marker* Diagram::setMarker(int x, int y)
   }
   return NULL;
 }
-#endif
 
 // Cohen-Sutherland clipping algorithm
 // possibly better to leave this to Qt.
@@ -495,69 +496,8 @@ endWithHidden:
     (p-2)->setScr(x_2, y_2);
     p -= 1;
 }
+#endif
 
-/*!
-   Clipping for round diagrams (smith, polar, ...)
-*/
-void Diagram::clip(Graph::iterator &p) const
-{ untested();
-  float R = float(x2) / 2.0;
-  float x_1 = (p-2)->getScrX() - R, y_1 = (p-2)->getScrY() - R;
-  float x_2 = (p-1)->getScrX() - R, y_2 = (p-1)->getScrY() - R;
-
-  float dt1 = R*R;   // square of radius
-  float dt2 = dt1 - x_2*x_2 - y_2*y_2;
-  dt1 -= x_1*x_1 + y_1*y_1;
-
-  if(dt1 >= 0.0) if(dt2 >= 0.0)  return;  // line completly inside ?
-
-  if(dt1 < 0.0) if((p-3)->isPt()) { // is there already a line end flag ?
-    p++;
-    (p-3)->setStrokeEnd();
-  }
-
-  float x = x_1-x_2;
-  float y = y_1-y_2;
-  float C = x_1*x + y_1*y;
-  float D = x*x + y*y;
-  float F = C*C + dt1*D;
-
-  x_1 += R;
-  y_1 += R;
-  x_2 += R;
-  y_2 += R;
-  if(F <= 0.0) {   // line not visible at all ?
-    (p-2)->setScr(x_2, y_2);
-    p -= 1;
-    return;
-  }
-
-  int code = 0;
-  R   = sqrt(F);
-  dt1 = C - R;
-  if((dt1 > 0.0) && (dt1 < D)) { // intersection outside start/end point ?
-    (p-2)->setScr(x_1 - x*dt1 / D, y_1 - y*dt1 / D);
-    code |= 1;
-  }
-  else { untested();
-    (p-2)->setScr(x_1, y_1);
-  }
-
-  dt2 = C + R;
-  if((dt2 > 0.0) && (dt2 < D)) { // intersection outside start/end point ?
-    (p-1)->setScr(x_1 - x*dt2 / D, y_1 - y*dt2 / D);
-    p->setStrokeEnd();
-    p += 2;
-    code |= 2;
-  }
-  (p-1)->setScr(x_2, y_2);
-
-  if(code == 0) {   // intersections both lie outside ?
-    (p-2)->setScr(x_2, y_2);
-    --p;
-  }
-
-}
 
 
 // ------------------------------------------------------------
@@ -1089,13 +1029,10 @@ int Graph::loadIndepVarData(const QString& Variable,
 }
 #endif
 
-/*!
-   Checks if the two graphs have the same independent variables.
-*/
+#if 0
 bool Diagram::sameDependencies(Graph const*, Graph const*) const
 { untested();
   incomplete();
-#if 0
   // FIXME
   // return g1->same(*g2);
   if(g1 == g2)  return true;
@@ -1106,9 +1043,9 @@ bool Diagram::sameDependencies(Graph const*, Graph const*) const
   }
 
   return true;
-#endif
   return false;
 }
+#endif
 
 // ------------------------------------------------------------
 
@@ -1425,110 +1362,6 @@ bool Diagram::load(const QString& Line, istream_t& stream)
 // ------------------------------------------------------------
 
 
-/*!
-  Calculations for logarithmical Cartesian diagrams
-  (RectDiagram and  Rect3DDiagram).
-
- \param       Axis   - pointer to the axis to scale
- \param       len    - length of axis in pixel on the screen
- \return value: "true" if axis runs from largest to smallest value
-
- \param[out]  z      - screen coordinate where the first grid is placed
- \param[out]  zD     - number where the first grid is placed
- \param[out]  zDstep - number increment from one grid to the next
- \param[out]  coor   - scale factor for calculate screen coordinate
-
- \todo use this as example to document other methods
-*/
-bool Diagram::calcAxisLogScale(Axis *Axis, int& z, double& zD,
-				double& zDstep, double& corr, int len)
-{itested();
-  if(fabs(Axis->max-Axis->min) < 1e-200) { // if max = min, double difference
-    Axis->max *= 10.0;
-    Axis->min /= 10.0;
-  }
-  Axis->low = Axis->min; Axis->up = Axis->max;
-
-  if(!Axis->autoScale) { untested();
-    Axis->low = Axis->limit_min;
-    Axis->up  = Axis->limit_max;
-  }
-
-
-  bool mirror=false, mirror2=false;
-  double tmp;
-  if(Axis->up < 0.0) {   // for negative values
-    tmp = Axis->low;
-    Axis->low = -Axis->up;
-    Axis->up  = -tmp;
-    mirror = true;
-  }
-
-  double Base, Expo;
-  if(Axis->autoScale) {itested();
-    if(mirror) {   // set back values ?
-      tmp = Axis->min;
-      Axis->min = -Axis->max;
-      Axis->max = -tmp;
-    }
-
-    Expo = floor(log10(Axis->max));
-    Base = Axis->max/pow(10.0,Expo);
-    if(Base > 3.0001) Axis->up = pow(10.0,Expo+1.0);
-    else  if(Base < 1.0001) Axis->up = pow(10.0,Expo);
-	  else Axis->up = 3.0 * pow(10.0,Expo);
-
-    Expo = floor(log10(Axis->min));
-    Base = Axis->min/pow(10.0,Expo);
-    if(Base < 2.999) Axis->low = pow(10.0,Expo);
-    else  if(Base > 9.999) Axis->low = pow(10.0,Expo+1.0);
-	  else Axis->low = 3.0 * pow(10.0,Expo);
-
-    corr = double(len) / log10(Axis->up / Axis->low);
-
-    z = 0;
-    zD = Axis->low;
-    zDstep = pow(10.0,Expo);
-
-    if(mirror) {   // set back values ?
-      tmp = Axis->min;
-      Axis->min = -Axis->max;
-      Axis->max = -tmp;
-    }
-  }
-  else {   // user defined limits
-    if(Axis->up < Axis->low) { untested();
-      tmp = Axis->low;
-      Axis->low = Axis->up;
-      Axis->up  = tmp;
-      mirror2 = true;
-    }
-
-    Expo = floor(log10(Axis->low));
-    Base = ceil(Axis->low/pow(10.0,Expo));
-    zD = Base * pow(10.0, Expo);
-    zDstep = pow(10.0,Expo);
-    if(zD > 9.5*zDstep)  zDstep *= 10.0;
-
-    corr = double(len) / log10(Axis->up / Axis->low);
-    z = int(corr*log10(zD / Axis->low) + 0.5); // int(..) implies floor(..)
-
-    if(mirror2) {   // set back values ?
-      tmp = Axis->low;
-      Axis->low = Axis->up;
-      Axis->up  = tmp;
-    }
-  }
-
-  if(mirror) {   // set back values ?
-    tmp = Axis->low;
-    Axis->low = -Axis->up;
-    Axis->up  = -tmp;
-  }
-
-  if(mirror == mirror2)  return false;
-  else  return true;
-}
 
 // --------------------------------------------------------------
 

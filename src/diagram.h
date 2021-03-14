@@ -144,16 +144,11 @@ public: // ??!
 	void    Bounding(int&, int&, int&, int&);
 	bool    resizeTouched(float, float, float);
 	bool    load(const QString&, istream_t&); // TODO: remove.
+	// bool sameDependencies(Graph const*, Graph const*) const;
 
-//  void getAxisLimits(Graph*);
-//  void updateGraphData();
-//  void loadGraphData(const QString&);
-//  void recalcGraphData();
-  bool sameDependencies(Graph const*, Graph const*) const;
-
-  virtual bool insideDiagram(float, float) const;
-  bool insideDiagramP(GraphIterator const& ) const;
-  Marker* setMarker(int x, int y);
+	virtual bool insideDiagram(float, float) const;
+	bool insideDiagramP(GraphIterator const& ) const;
+	Marker* setMarker(int x, int y);
 
 private: // internals
 public: // BUG/incomplete
@@ -165,9 +160,6 @@ public: // BUG/incomplete
   int x3, y3, sc;
   Axis  xAxis, yAxis, zAxis;   // axes (x, y left, y right)
 
-  /* PHASOR DIAGRAM RELATED
-  Axis  xAxisV, yAxisV, zAxisV, xAxisI, yAxisI, zAxisI, xAxisP, yAxisP, zAxisP, xAxisZ, yAxisZ,
- zAxisZ, *xAxisA, *yAxisA, *zAxisA;*/
   int State;  // to remember which resize area was touched
 
   bool hideLines;       // for "Rect3D": hide invisible lines ?
@@ -177,13 +169,12 @@ protected:
 //  void calcSmithAxisScale(Axis*, int&, int&);
 //  void createSmithChart(Axis*, int Mode=7);
 
-  bool calcAxisLogScale(Axis*, int&, double&, double&, double&, int);
   // bool calcYAxis(Axis*, int);
   virtual void createAxisLabels();
 
-  int  regionCode(float, float) const;
-  virtual void clip(GraphIterator &) const;
-  void rectClip(GraphIterator &) const;
+//  int  regionCode(float, float) const;
+//  virtual void clip(GraphIterator &) const;
+//  void rectClip(GraphIterator &) const;
 
   virtual void calcData(Graph*);
 
@@ -196,11 +187,11 @@ private:
 	void new_subckt();
 
 public: // from mouseactions.cpp
-  virtual bool scrollTo(int, int, int){return false;}
-  virtual int scroll(int){return 0;}
-  virtual int xAxis_limit_min() const{
-	  return xAxis.limit_min;
-  }
+//  virtual bool scrollTo(int, int, int){return false;}
+//  virtual int scroll(int){return 0;}
+//  virtual int xAxis_limit_min() const{
+//	  return xAxis.limit_min;
+//  }
 
   // returns drawn, for now.
 //  bool pressElement(SchematicDoc* Doc, Element*& selElem, QMouseEvent* Event);

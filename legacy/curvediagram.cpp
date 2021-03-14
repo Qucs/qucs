@@ -278,13 +278,16 @@ Frame:
 // ------------------------------------------------------------
 bool CurveDiagram::insideDiagram(float x, float y) const
 {
-  return (regionCode(x, y) == 0);
+	incomplete();
+	return false;
+//  return (regionCode(x, y) == 0);
 }
 
 // ------------------------------------------------------------
 void CurveDiagram::clip(Graph::iterator &p) const
 {
-  rectClip(p);
+	incomplete();
+  // rectClip(p);
 }
 
 // ------------------------------------------------------------

@@ -47,38 +47,38 @@ namespace {
 using namespace qucs;
 
 class RectDiagram : public Diagram, public Painting{
-  RectDiagram(RectDiagram const& c) : Diagram(c) {}
+	RectDiagram(RectDiagram const& c) : Diagram(c) {}
 public:
-  explicit RectDiagram();
- ~RectDiagram();
+	explicit RectDiagram();
+	~RectDiagram();
 
 private:
-  Element* clone() const override {itested(); return new RectDiagram(*this);}
-  static Element* info(QString&, char* &, bool getNewOne=false);
-  int calcDiagram();
-  void calcLimits();
-  bool calcAxisScale(Axis*, double&, double&, double&, double&, double);
-  bool calcYAxis(Axis*, int);
- // void calcCoordinate(const double*, const double*, const double*, float*, float*, Axis const*) const;
-  void finishMarkerCoordinates(float&, float&) const;
-  bool insideDiagram(float, float) const;
-  void recalcGraphData();
-  void updateGraphData();
-  void getAxisLimits(CommonData const* g);
+	Element* clone() const override {itested(); return new RectDiagram(*this);}
+	static Element* info(QString&, char* &, bool getNewOne=false);
+	int calcDiagram();
+	void calcLimits();
+	bool calcAxisScale(Axis*, double&, double&, double&, double&, double);
+	bool calcYAxis(Axis*, int);
+	void finishMarkerCoordinates(float&, float&) const;
+	bool insideDiagram(float, float) const;
+	void recalcGraphData();
+	void updateGraphData();
+	void getAxisLimits(CommonData const* g);
+	bool calcAxisLogScale(Axis*, int&, double&, double&, double&, int);
 
-  pos_t center() const override{itested();
-    return Element::center();
-  }
+	pos_t center() const override{itested();
+		return Element::center();
+	}
 
 private: // Diagram
-  virtual diag_coordinate_t calcCoordinate(double const& x, double const& y) const;
+	virtual diag_coordinate_t calcCoordinate(double const& x, double const& y) const;
 
 private: // Painting
-  rect_t bounding_rect() const override { itested();
-    QPointF tl(0, -y2); // eek
-    QPointF br(x2, 0);
-    return rect_t(QRectF(tl, br));
-  }
+	rect_t bounding_rect() const override { itested();
+		QPointF tl(0, -y2); // eek
+		QPointF br(x2, 0);
+		return rect_t(QRectF(tl, br));
+	}
 
 	void paint(ViewPainter* v) const override;
 
@@ -107,6 +107,110 @@ protected:
 Dispatcher<Diagram>::INSTALL p(&diagram_dispatcher, "Rect", &D);
 Module::INSTALL pp("diagrams", &D);
 
+/*!
+  Calculations for logarithmical Cartesian diagrams
+  (RectDiagram and  Rect3DDiagram).
+
+ \param       Axis   - pointer to the axis to scale
+ \param       len    - length of axis in pixel on the screen
+ \return value: "true" if axis runs from largest to smallest value
+
+ \param[out]  z      - screen coordinate where the first grid is placed
+ \param[out]  zD     - number where the first grid is placed
+ \param[out]  zDstep - number increment from one grid to the next
+ \param[out]  coor   - scale factor for calculate screen coordinate
+
+ \todo use this as example to document other methods
+*/
+bool RectDiagram::calcAxisLogScale(Axis *Axis, int& z, double& zD,
+				double& zDstep, double& corr, int len)
+{itested();
+  if(fabs(Axis->max-Axis->min) < 1e-200) { // if max = min, double difference
+    Axis->max *= 10.0;
+    Axis->min /= 10.0;
+  }
+  Axis->low = Axis->min; Axis->up = Axis->max;
+
+  if(!Axis->autoScale) { untested();
+    Axis->low = Axis->limit_min;
+    Axis->up  = Axis->limit_max;
+  }
+
+
+  bool mirror=false, mirror2=false;
+  double tmp;
+  if(Axis->up < 0.0) {   // for negative values
+    tmp = Axis->low;
+    Axis->low = -Axis->up;
+    Axis->up  = -tmp;
+    mirror = true;
+  }
+
+  double Base, Expo;
+  if(Axis->autoScale) {itested();
+    if(mirror) {   // set back values ?
+      tmp = Axis->min;
+      Axis->min = -Axis->max;
+      Axis->max = -tmp;
+    }
+
+    Expo = floor(log10(Axis->max));
+    Base = Axis->max/pow(10.0,Expo);
+    if(Base > 3.0001) Axis->up = pow(10.0,Expo+1.0);
+    else  if(Base < 1.0001) Axis->up = pow(10.0,Expo);
+	  else Axis->up = 3.0 * pow(10.0,Expo);
+
+    Expo = floor(log10(Axis->min));
+    Base = Axis->min/pow(10.0,Expo);
+    if(Base < 2.999) Axis->low = pow(10.0,Expo);
+    else  if(Base > 9.999) Axis->low = pow(10.0,Expo+1.0);
+	  else Axis->low = 3.0 * pow(10.0,Expo);
+
+    corr = double(len) / log10(Axis->up / Axis->low);
+
+    z = 0;
+    zD = Axis->low;
+    zDstep = pow(10.0,Expo);
+
+    if(mirror) {   // set back values ?
+      tmp = Axis->min;
+      Axis->min = -Axis->max;
+      Axis->max = -tmp;
+    }
+  }
+  else {   // user defined limits
+    if(Axis->up < Axis->low) { untested();
+      tmp = Axis->low;
+      Axis->low = Axis->up;
+      Axis->up  = tmp;
+      mirror2 = true;
+    }
+
+    Expo = floor(log10(Axis->low));
+    Base = ceil(Axis->low/pow(10.0,Expo));
+    zD = Base * pow(10.0, Expo);
+    zDstep = pow(10.0,Expo);
+    if(zD > 9.5*zDstep)  zDstep *= 10.0;
+
+    corr = double(len) / log10(Axis->up / Axis->low);
+    z = int(corr*log10(zD / Axis->low) + 0.5); // int(..) implies floor(..)
+
+    if(mirror2) {   // set back values ?
+      tmp = Axis->low;
+      Axis->low = Axis->up;
+      Axis->up  = tmp;
+    }
+  }
+
+  if(mirror) {   // set back values ?
+    tmp = Axis->low;
+    Axis->low = -Axis->up;
+    Axis->up  = -tmp;
+  }
+
+  if(mirror == mirror2)  return false;
+  else  return true;
+}
 
 RectDiagram::RectDiagram() : Diagram(0, 0)
 {itested();
@@ -126,22 +230,21 @@ RectDiagram::~RectDiagram()
 /*--------------------------------------------------------------------------*/
 // map graph point to local scene coordinates
 Diagram::diag_coordinate_t RectDiagram::calcCoordinate(double const& x_, double const& y_) const
-{ untested();
+{ itested();
 	double x = x_;
 	double y = y_;
 
 	float xret;
 	float yret;
-	trace3("diag_coordinate_t x", xAxis.up, xAxis.low, x2);
 
-	if(xAxis.log) { untested();
+	if(xAxis.log) { itested();
 		x /= xAxis.low;
 		if(x <= 0.0) {
 			xret = -1e5;   // "negative infinity"
 		}else{
 			xret = float(log10(x)/log10(xAxis.up / xAxis.low) * double(x2));
 		}
-	}else{
+	}else{ untested();
 		xret = float((x-xAxis.low)/(xAxis.up-xAxis.low)*double(x2));
 	}
 
@@ -151,24 +254,22 @@ Diagram::diag_coordinate_t RectDiagram::calcCoordinate(double const& x_, double 
 		//
 		yret = float(log10(y/fabs(yAxis.low)) /
 				log10(yAxis.up/yAxis.low) * double(y2));
-		trace3("diag_coordinate_t log y", yAxis.low, yAxis.up, y2);
-	}else{ untested();
+	}else{ itested();
 		//    if(fabs(yi) > 1e-250) {
 		//      // preserve negative values if not complex number
 		//      yr = sqrt(yr*yr + yi*yi);
 		//    }else{
 		//    }
 		yret = float((y-yAxis.low)/(yAxis.up-yAxis.low)*double(y2));
-		trace3("diag_coordinate_t y", yAxis.low, yAxis.up, y2);
 	}
 
-	if(!std::isfinite(xret)){
+	if(!std::isfinite(xret)){ untested();
 		xret = 0.0;
-	}else{
+	}else{ itested();
 	}
-	if(!std::isfinite(yret)){
+	if(!std::isfinite(yret)){ untested();
 		yret = 0.0;
-	}else{
+	}else{ itested();
 	}
 
 	return diag_coordinate_t(xret, yret);
@@ -359,6 +460,7 @@ Frame:
 }
 
 // ------------------------------------------------------------
+#if 0
 bool RectDiagram::insideDiagram(float x, float y) const
 { untested();
   return (regionCode(x, y) == 0);
@@ -369,6 +471,7 @@ void RectDiagram::clip(Graph::iterator &p) const
 { untested();
   rectClip(p);
 }
+#endif
 
 // ------------------------------------------------------------
 #if 0

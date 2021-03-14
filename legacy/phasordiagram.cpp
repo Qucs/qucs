@@ -38,6 +38,9 @@
 #include "misc.h"
 
 // found this somewhere.
+  /* PHASOR DIAGRAM RELATED
+  Axis  xAxisV, yAxisV, zAxisV, xAxisI, yAxisI, zAxisI, xAxisP, yAxisP, zAxisP, xAxisZ, yAxisZ,
+ zAxisZ, *xAxisA, *yAxisA, *zAxisA;*/
 //draws the vectors of phasor diagram
 void Graph::drawvect(int x0, int y0, ViewPainter *p) const
 {

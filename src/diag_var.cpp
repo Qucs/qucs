@@ -243,10 +243,7 @@ rect_t DiagramVariable::bounding_rect() const
 /*--------------------------------------------------------------------------*/
 void DiagramVariable::paint(ViewPainter* v) const
 {
-	trace0("diagvariable::paint");
-	v->drawLine(-100, -100, 100, 100);
-	v->drawLine(-100, 100, 100, -100);
-
+	// is this a bug? can paint and prepare run concurrently?
 	paint_graph_data(common(), v);
 }
 /*--------------------------------------------------------------------------*/
@@ -272,14 +269,8 @@ void DiagramVariable::paint_graph_data(CommonData const* cd, ViewPainter* p) con
 		assert(dd);
 		int num = pp->size();
 		QVector<double> x(num), y(num);
-		trace3("var copy", num, pp->min(), pp->max());
-		trace3("var copy", num, dd->min(), dd->max());
 		int ii = 0;
 
-		double minx = dd->min();
-		double maxx = dd->max();
-		double miny = pp->min();
-		double maxy = pp->max();
 		QPainterPath path;
 		for (auto xx : *pp){
 			++ii;

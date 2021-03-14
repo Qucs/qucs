@@ -60,6 +60,7 @@ public: // legacy cruft.
   QList<Text *>   Texts;
   void calcSmithAxisScale(Axis*, int&, int&){incomplete();}
   void createSmithChart(Axis*, int Mode=7){incomplete();}
+  void clip(Graph::iterator &p) const;
 
 }D;
 Dispatcher<Diagram>::INSTALL p(&diagram_dispatcher, "Smith", &D);
@@ -81,6 +82,70 @@ void c2p(double &Real, double &Imag) {
   Real = sqrt(Real * Real + Imag * Imag); // magnitude
   Imag = 180.0 / pi * atan2(Imag, Real_); // phase in degree
 }
+
+/*!
+   Clipping for round diagrams (smith, polar, ...)
+*/
+void SmithDiagram::clip(Graph::iterator &p) const
+{ untested();
+  float R = float(x2) / 2.0;
+  float x_1 = (p-2)->getScrX() - R, y_1 = (p-2)->getScrY() - R;
+  float x_2 = (p-1)->getScrX() - R, y_2 = (p-1)->getScrY() - R;
+
+  float dt1 = R*R;   // square of radius
+  float dt2 = dt1 - x_2*x_2 - y_2*y_2;
+  dt1 -= x_1*x_1 + y_1*y_1;
+
+  if(dt1 >= 0.0) if(dt2 >= 0.0)  return;  // line completly inside ?
+
+  if(dt1 < 0.0) if((p-3)->isPt()) { // is there already a line end flag ?
+    p++;
+    (p-3)->setStrokeEnd();
+  }
+
+  float x = x_1-x_2;
+  float y = y_1-y_2;
+  float C = x_1*x + y_1*y;
+  float D = x*x + y*y;
+  float F = C*C + dt1*D;
+
+  x_1 += R;
+  y_1 += R;
+  x_2 += R;
+  y_2 += R;
+  if(F <= 0.0) {   // line not visible at all ?
+    (p-2)->setScr(x_2, y_2);
+    p -= 1;
+    return;
+  }
+
+  int code = 0;
+  R   = sqrt(F);
+  dt1 = C - R;
+  if((dt1 > 0.0) && (dt1 < D)) { // intersection outside start/end point ?
+    (p-2)->setScr(x_1 - x*dt1 / D, y_1 - y*dt1 / D);
+    code |= 1;
+  }
+  else { untested();
+    (p-2)->setScr(x_1, y_1);
+  }
+
+  dt2 = C + R;
+  if((dt2 > 0.0) && (dt2 < D)) { // intersection outside start/end point ?
+    (p-1)->setScr(x_1 - x*dt2 / D, y_1 - y*dt2 / D);
+    p->setStrokeEnd();
+    p += 2;
+    code |= 2;
+  }
+  (p-1)->setScr(x_2, y_2);
+
+  if(code == 0) {   // intersections both lie outside ?
+    (p-2)->setScr(x_2, y_2);
+    --p;
+  }
+
+}
+
 
 }
 
