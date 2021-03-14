@@ -12,18 +12,18 @@ set(compPath ${CMAKE_CURRENT_SOURCE_DIR}/../../../legacy/components)
 
 # Srcs
 readVariable(${compPath}/MakeList DEFAULT_COMPONENTS DEFAULT_)
-#readVariable(${compPath}/MakeList LUMPED_COMPONENTS LUMPED_)
-#readVariable(${compPath}/MakeList RF_COMPONENTS RF_)
-#readVariable(${compPath}/MakeList TASK_ELEMENTS TASK_)
+readVariable(${compPath}/MakeList LUMPED_COMPONENTS LUMPED_)
+readVariable(${compPath}/MakeList RF_COMPONENTS RF_)
+readVariable(${compPath}/MakeList TASK_ELEMENTS TASK_)
 ##readVariable(${compPath}/MakeList NOTYET_SIM ?_)
 ##readVariable(${compPath}/MakeList LOGIC_COMPONENTS ?_)
-#readVariable(${compPath}/MakeList OTHERCOMPONENTS OTHER_)
+readVariable(${compPath}/MakeList OTHERCOMPONENTS OTHER_)
 
 list(TRANSFORM DEFAULT_ PREPEND ${compPath}/)
-#list(TRANSFORM LUMPED_ PREPEND ${compPath}/)
-#list(TRANSFORM RF_ PREPEND ${compPath}/)
-#list(TRANSFORM TASK_ PREPEND ${compPath}/)
-#list(TRANSFORM OTHER_ PREPEND ${compPath}/)
+list(TRANSFORM LUMPED_ PREPEND ${compPath}/)
+list(TRANSFORM RF_ PREPEND ${compPath}/)
+list(TRANSFORM TASK_ PREPEND ${compPath}/)
+list(TRANSFORM OTHER_ PREPEND ${compPath}/)
 
 set(PLUGIN components)
 
@@ -53,15 +53,19 @@ set(PLUGIN components)
 
 add_library(${PLUGIN} SHARED
   ${DEFAULT_}
-  #${LUMPED_}
-  #${RF_}
-  #${TASK_}
-  #${OTHER_}
+  ${LUMPED_}
+  ${RF_}
+  ${TASK_}
+  ${OTHER_}
   #${COMPONENTS_MOC_SRCS})
   #${MOC_})
   )
 
-target_include_directories(${PLUGIN} PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/../../../include)
+# BUG there are 2 headers with the same name:
+#./legacy/components/component.h
+#./include/component.h
+target_include_directories(${PLUGIN} PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/../../../legacy/components)
+target_include_directories(${PLUGIN} PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/../../../include) # for node?
 target_include_directories(${PLUGIN} PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/../../../src)
 target_include_directories(${PLUGIN} PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/../../../)
 
