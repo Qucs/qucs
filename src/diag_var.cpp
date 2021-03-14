@@ -20,6 +20,7 @@
 // The diagram could clip, but perhaps Qt should take care of it anyway.
 /*--------------------------------------------------------------------------*/
 #include "data.h"
+#include "diagram.h"
 #include "output.h"
 #include "exception.h"
 #include "output.h"
@@ -32,6 +33,7 @@
 namespace{
 /*--------------------------------------------------------------------------*/
 using qucs::Data;
+using qucs::Diagram;
 using qucs::Painting;
 using qucs::CommonData;
 using qucs::ViewPainter;
@@ -168,6 +170,8 @@ private:
 			return nullptr;
 		}
 	}
+private:
+	void paint_graph_data(CommonData const* cd, ViewPainter* p) const;
 
 private:
 	std::string _color;
@@ -236,12 +240,34 @@ rect_t DiagramVariable::bounding_rect() const
 	}
 }
 /*--------------------------------------------------------------------------*/
+/*--------------------------------------------------------------------------*/
+void DiagramVariable::paint(ViewPainter* v) const
+{
+	trace0("diagvariable::paint");
+	v->drawLine(-100, -100, 100, 100);
+	v->drawLine(-100, 100, 100, -100);
+
+	paint_graph_data(common(), v);
+}
+/*--------------------------------------------------------------------------*/
+// QPainterPath DiagramVariable::shape() const
+// {
+//     QPainterPath path;
+//     path.addEllipse(boundingRect());
+//     return path;
+// }
+/*--------------------------------------------------------------------------*/
 // under construction
-void paint_graph_data(CommonData const* cd, ViewPainter* p)
+void DiagramVariable::paint_graph_data(CommonData const* cd, ViewPainter* p) const
 {
 	auto pp = prechecked_cast<SimOutputData const*>(cd);
 	assert(pp);
-	if(pp->numDeps()==1){
+
+	Element const* o = owner();
+	auto diag = dynamic_cast<Diagram const*>(o);
+	if(!diag){
+		incomplete();
+	}else if(pp->numDeps()==1){
 		auto dd = dynamic_cast<SimOutputData const*>(pp->dep(0));
 		assert(dd);
 		int num = pp->size();
@@ -260,8 +286,11 @@ void paint_graph_data(CommonData const* cd, ViewPainter* p)
 			auto x = xx.first;
 			auto y = xx.second.real();
 
+			auto pp = diag->calcCoordinate(x, y);
+			trace4("var::paint", x,y,pp.first, pp.second);
+
 			// if first? path.moveTo(x,y);
-			path.lineTo(x,y);
+			path.lineTo(getX(pp), getY(pp));
 		}
 
 		p->drawPath(path); // yikes.
@@ -272,23 +301,6 @@ void paint_graph_data(CommonData const* cd, ViewPainter* p)
 	}
 
 }
-/*--------------------------------------------------------------------------*/
-void DiagramVariable::paint(ViewPainter* v) const
-{
-	trace0("diagvariable::paint");
-	v->drawLine(-100, -100, 100, 100);
-	v->drawLine(-100, 100, 100, -100);
-
-	paint_graph_data(common(), v);
-}
-/*--------------------------------------------------------------------------*/
-// QPainterPath DiagramVariable::shape() const
-// {
-//     QPainterPath path;
-//     path.addEllipse(boundingRect());
-//     return path;
-// }
-/*--------------------------------------------------------------------------*/
 } // namespace
 /*--------------------------------------------------------------------------*/
 /*--------------------------------------------------------------------------*/

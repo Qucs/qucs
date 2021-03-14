@@ -48,11 +48,13 @@ class istream_t;
 class FontMetrics;
 
 namespace qucs{
-	class Graph;
-}
+
+class Graph;
 
 // Element?
 struct Axis {
+  void fit_in_data(double lo, double hi);
+
   double  min, max; // least and greatest values of all graph data
   double  low, up;  // the limits of the diagram
   bool    log;      // in "rectdiagram": logarithmic or linear
@@ -62,8 +64,10 @@ struct Axis {
 
   bool   autoScale;    // manual limits or auto-scale ?
   double limit_min, limit_max, step;   // if not auto-scale
+
 };
 
+}
 
 // yikes.
 #include "graph.h"

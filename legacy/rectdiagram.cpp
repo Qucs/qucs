@@ -53,7 +53,7 @@ public:
  ~RectDiagram();
 
 private:
-  Element* clone() const override {untested(); return new RectDiagram(*this);}
+  Element* clone() const override {itested(); return new RectDiagram(*this);}
   static Element* info(QString&, char* &, bool getNewOne=false);
   int calcDiagram();
   void calcLimits();
@@ -66,7 +66,7 @@ private:
   void updateGraphData();
   void getAxisLimits(CommonData const* g);
 
-  pos_t center() const override{ untested();
+  pos_t center() const override{itested();
     return Element::center();
   }
 
@@ -82,7 +82,7 @@ private: // Painting
 
 	void paint(ViewPainter* v) const override;
 
-	void prepare() override{ untested();
+	void prepare() override{itested();
 		Diagram::prepare();
 		// calcData /// not sure what it did. some drawing cache, and all the rest of it?!
 		// loadGraphData(); // dats were parsed here.
@@ -109,7 +109,7 @@ Module::INSTALL pp("diagrams", &D);
 
 
 RectDiagram::RectDiagram() : Diagram(0, 0)
-{ untested();
+{itested();
   x1 = 10;      // position of label text
   y1 = y3 = 33;
   x2 = 240;    // initial size of diagram
@@ -121,55 +121,57 @@ RectDiagram::RectDiagram() : Diagram(0, 0)
 }
 
 RectDiagram::~RectDiagram()
-{ untested();
+{itested();
 }
 /*--------------------------------------------------------------------------*/
 // map graph point to local scene coordinates
 Diagram::diag_coordinate_t RectDiagram::calcCoordinate(double const& x_, double const& y_) const
 { untested();
-	auto pa = &yAxis;
 	double x = x_;
 	double y = y_;
 
 	float xret;
 	float yret;
+	trace3("diag_coordinate_t x", xAxis.up, xAxis.low, x2);
 
-  if(xAxis.log) { untested();
-    x /= xAxis.low;
-    if(x <= 0.0) {
-      xret = -1e5;   // "negative infinity"
-    }else{
-      xret = float(log10(x)/log10(xAxis.up / xAxis.low) * double(x2));
-    }
-  }else{
-    xret = float((x-xAxis.low)/(xAxis.up-xAxis.low)*double(x2));
-  }
+	if(xAxis.log) { untested();
+		x /= xAxis.low;
+		if(x <= 0.0) {
+			xret = -1e5;   // "negative infinity"
+		}else{
+			xret = float(log10(x)/log10(xAxis.up / xAxis.low) * double(x2));
+		}
+	}else{
+		xret = float((x-xAxis.low)/(xAxis.up-xAxis.low)*double(x2));
+	}
 
-  if(pa->log) { untested();
-    // yr = sqrt(yr*yr + yi*yi);
-    //if(yr <= 0.0)  *py = -1e5;   // "negative infinity"
-	 //
-	 yret = float(log10(y/fabs(pa->low)) /
-                     log10(pa->up/pa->low) * double(y2));
-  }else{ untested();
-//    if(fabs(yi) > 1e-250) {
-//      // preserve negative values if not complex number
-//      yr = sqrt(yr*yr + yi*yi);
-//    }else{
-//    }
-    yret = float((y-pa->low)/(pa->up-pa->low)*double(y2));
-  }
+	if(yAxis.log) { untested();
+		// yr = sqrt(yr*yr + yi*yi);
+		//if(yr <= 0.0)  *py = -1e5;   // "negative infinity"
+		//
+		yret = float(log10(y/fabs(yAxis.low)) /
+				log10(yAxis.up/yAxis.low) * double(y2));
+		trace3("diag_coordinate_t log y", yAxis.low, yAxis.up, y2);
+	}else{ untested();
+		//    if(fabs(yi) > 1e-250) {
+		//      // preserve negative values if not complex number
+		//      yr = sqrt(yr*yr + yi*yi);
+		//    }else{
+		//    }
+		yret = float((y-yAxis.low)/(yAxis.up-yAxis.low)*double(y2));
+		trace3("diag_coordinate_t y", yAxis.low, yAxis.up, y2);
+	}
 
-  if(!std::isfinite(xret)){
-    xret = 0.0;
-  }else{
-  }
-  if(!std::isfinite(yret)){
-    yret = 0.0;
-  }else{
-  }
+	if(!std::isfinite(xret)){
+		xret = 0.0;
+	}else{
+	}
+	if(!std::isfinite(yret)){
+		yret = 0.0;
+	}else{
+	}
 
-  return diag_coordinate_t(xret, yret);
+	return diag_coordinate_t(xret, yret);
 }
 
 // --------------------------------------------------------------
@@ -211,24 +213,11 @@ void RectDiagram::calcLimits()
     yAxis.limit_max = yAxis.up;
   }else{
   }
-
-  if(zAxis.autoScale) {
-    // check before, to preserve limit exchange (max < min)
-    if(zAxis.log) { untested();
-      calcAxisLogScale(&zAxis, i, a, b, c, y2);
-      zAxis.step = 1.0;
-    }else{
-      calcAxisScale(&zAxis, a, b, c, zAxis.step, double(y2));
-    }
-    zAxis.limit_min = zAxis.low;
-    zAxis.limit_max = zAxis.up;
-  }else{
-  }
 }
 
                     // axes, ticks.// --------------------------------------------------------------
 int RectDiagram::calcDiagram()
-{ untested();
+{itested();
 	assert(scope());
 
 
@@ -260,20 +249,13 @@ int RectDiagram::calcDiagram()
 	}else{
 	}
 
-	zAxis.step = fabs(zAxis.step);
-	if(zAxis.limit_min > zAxis.limit_max){
-		zAxis.step *= -1.0;
-	}else{
-	}
-
-
 	// ====  x grid  =======================================================
-	if(xAxis.log) { untested();
-		if(xAxis.autoScale) { untested();
+	if(xAxis.log) {itested();
+		if(xAxis.autoScale) {itested();
 			if(xAxis.max*xAxis.min < 1e-200){ untested();
 				trace2("RectDiagram::calcDiagram", xAxis.max, xAxis.min);
 				goto Frame;  // invalid
-			}else{ untested();
+			}else{itested();
 			}
 		}else if(xAxis.limit_min*xAxis.limit_max < 1e-200){
 			goto Frame;  // invalid
@@ -284,25 +266,25 @@ int RectDiagram::calcDiagram()
 
 		if(back){ untested();
 		  	z = x2;
-		}else{ untested();
+		}else{itested();
 		}
-		while((z <= x2) && (z >= 0)) { untested();
+		while((z <= x2) && (z >= 0)) {itested();
 	  		// create grid lines
 			if(!xAxis.GridOn){ untested();
-			}else if(z >= x2){ untested();
-			}else if(z > 0){ untested();
+			}else if(z >= x2){itested();
+			}else if(z > 0){itested();
 				Lines.prepend(new Line(z, y2, z, 0, GridPen));  // x grid
-			}else{ untested();
+			}else{itested();
 			}
 
-			if((zD < 1.5*zDstep) || (z == 0) || (z == x2)) { untested();
+			if((zD < 1.5*zDstep) || (z == 0) || (z == x2)) {itested();
 				tmp = misc::StringNiceNum(zD);
 				if(xAxis.up < 0.0)  tmp = '-'+tmp;
 				w = metrics.width(tmp);  // width of text
 				// center text horizontally under the x tick mark
 				Texts.append(new Text(z-(w>>1), -y1, tmp));
 				Lines.append(new Line(z, 5, z, -5, QPen(Qt::black,0)));  // x tick marks
-			}else{untested();
+			}else{itested();
 			}
 
 			zD += zDstep;
@@ -310,7 +292,7 @@ int RectDiagram::calcDiagram()
 			if(back) { untested();
 				z = int(corr*log10(zD / fabs(xAxis.up)) + 0.5); // int() implies floor()
 				z = x2 - z;
-			}else{ untested();
+			}else{itested();
 				z = int(corr*log10(zD / fabs(xAxis.low)) + 0.5);// int() implies floor()
 			}
 		}
@@ -355,14 +337,10 @@ int RectDiagram::calcDiagram()
 
 
 	// ====  y grid  =======================================================
-	if(zAxis.numGraphs > 0){
-	  	if(calcYAxis(&zAxis, x2)){
-		  	valid |= 2;
-		}else{
-		}
+	if(yAxis.numGraphs > 0){ // ?
 	}else{
 	}
-	if(yAxis.numGraphs > 0){
+	if(1){
 		if(calcYAxis(&yAxis, 0)){
 		 	valid |= 1;
 		}
@@ -659,7 +637,7 @@ else {  // not logarithmical
 /*--------------------------------------------------------------------------*/
 // Calculate diagram again without reading dataset from file.
 void RectDiagram::recalcGraphData()
-{ untested();
+{itested();
   yAxis.min = zAxis.min = xAxis.min =  DBL_MAX;
   yAxis.max = zAxis.max = xAxis.max = -DBL_MAX;
   yAxis.numGraphs = zAxis.numGraphs = 0;
@@ -695,7 +673,7 @@ void RectDiagram::recalcGraphData()
     yAxis.max = 1.0;
   }else{
   }
-  if(zAxis.min > zAxis.max) { untested();
+  if(zAxis.min > zAxis.max) {itested();
     zAxis.min = 0.0;
     zAxis.max = 1.0;
   }else{
@@ -704,6 +682,7 @@ void RectDiagram::recalcGraphData()
   updateGraphData();
 }
 /*--------------------------------------------------------------------------*/
+// set axis limits
 void RectDiagram::getAxisLimits(CommonData const* g)
 {itested();
 	trace0("RectDiagram::getAxisLimits");
@@ -711,42 +690,26 @@ void RectDiagram::getAxisLimits(CommonData const* g)
 	double x, y, *p;
 	QString var, find;
 	auto pg = dynamic_cast<SimOutputData const*>(g);
-	assert(pg);
-	auto const* pD = pg->dep(0);
-	if(auto pd = dynamic_cast<SimOutputData const*>(pD)){
-		trace2("RectDiagram::getAxisLimits", pd->min(), pd->max());
-	}else if(pD == 0){
-		incomplete();
-		return;
-	}else{
+	assert(pg); // really?
+
+	if(pg){
+		trace2("RectDiagram::getAxisLimits y", pg->min(), pg->max());
+		yAxis.fit_in_data(pg->min(), pg->max());
+	}else{ untested();
 	}
 
-#if 0
-	p = pD->Points;
-	for(z=pD->count; z>0; z--) {
-		x = *(p++);
-		if(std::isfinite(x)) {itested();
-			if(x > xAxis.max) xAxis.max = x;
-			if(x < xAxis.min) xAxis.min = x;
-		}
-	}
-
-	Axis *pa = &yAxis;
-	(pa->numGraphs)++;    // count graphs
-	p = pg->cPointsY;
-	if(p == 0) return;    // if no data => invalid
-	for(z=pg->countY*pD->count; z>0; z--) {  // check every y coordinate
-		x = *(p++);
-		y = *(p++);
-
-		if(fabs(y) >= 1e-250) x = sqrt(x*x+y*y);
-		if(std::isfinite(x)) {itested();
-			if(x > pa->max) pa->max = x;
-			if(x < pa->min) pa->min = x;
+	if(pg->numDeps()){
+		auto const* pD = pg->dep(0);
+		if(auto pd = dynamic_cast<SimOutputData const*>(pD)){
+			trace2("RectDiagram::getAxisLimits x", pd->min(), pd->max());
+			xAxis.fit_in_data(pd->min(), pd->max());
+		}else if(pD == 0){
+			incomplete();
+			return;
 		}else{
 		}
+	}else{ untested();
 	}
-#endif
 }
 /*--------------------------------------------------------------------------*/
 void RectDiagram::updateGraphData()

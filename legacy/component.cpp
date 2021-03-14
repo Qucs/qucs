@@ -211,7 +211,7 @@ Component::Component() : Symbol(),  _rotated(0)
 }
 
 Element* Component::clone() const
-{ untested();
+{itested();
   Component const* e=this;
   Component* E=const_cast<Component*>(e);
   Component* ret = E->newOne();

@@ -44,7 +44,7 @@ Element* element(ElementGraphics* g)
 {
 	if(!g){ untested();
 		return nullptr;
-	}else{ untested();
+	}else{itested();
 		return &**g;
 	}
 }
@@ -193,7 +193,7 @@ static void redo_children(ElementGraphics* g)
 		new ElementText(g);
 
 		if(auto s = sym->subckt()){itested();
-			for(auto o : *s){untested();
+			for(auto o : *s){itested();
 				if(auto i=dynamic_cast<Element*>(o)){
 					QGraphicsItem* cg = new ElementGraphics(i->clone());
 					cg->setParentItem(g);
@@ -213,7 +213,7 @@ void ElementGraphics::attachElement(Element* e)
 	if(e->owner()){itested();
 		// freshly parsed model
 		// when loading a schematic
-	}else{ untested();
+	}else{itested();
 		// something else.
 		// "ghost", freely moving but not interacting
 	}

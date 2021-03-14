@@ -128,14 +128,14 @@ private:
 	unsigned numAxes() const { return CPointsX.size();}
 	int loadIndepVarData(std::string const& Variable, char *FileString, DataX* pD);
 
-	void setLimit(const double& x){ untested();
-		if (_min > x){ untested();
+	void setLimit(const double& x){itested();
+		if (_min > x){itested();
 		  	_min = x;
-		}else{ untested();
+		}else{itested();
 		}
-		if (_max < x){ untested();
+		if (_max < x){itested();
 		  	_max = x;
-		}else{ untested();
+		}else{itested();
 		}
 	}
 
@@ -143,12 +143,12 @@ private:
 	CommonData const* dep(index_t) const override;
 
 public: // obsolete interface. don't use.
-	DataX const* axis(uint i) const { untested();
+	DataX const* axis(uint i) const {itested();
 		trace2("datax axis", i, axis_count);
-		if (i<numAxes()){ untested();
+		if (i<numAxes()){itested();
 			assert(i < CPointsX.size()); // ??
 		  	return CPointsX[i];
-		}else{ untested();
+		}else{itested();
 			return NULL;
 		}
 	}
@@ -462,7 +462,7 @@ SimOutputData const* SimOutputDatVar::refresh(QByteArray FileContent)
 			pPos = pEnd + 1;
 			if(*pEnd < ' ')   // is there an imaginary part ?
 				y = 0.0;
-			else { untested();
+			else {itested();
 				if(((*pEnd != '+') && (*pEnd != '-')) || (*pPos != 'j')) { untested();
 					incomplete();
 					// throw??
@@ -479,12 +479,12 @@ SimOutputData const* SimOutputDatVar::refresh(QByteArray FileContent)
 #if 0 // FIXME there is no Name here.
 			if(Name[0] != 'C')
 #endif
-			if(1) { untested();
+			if(1) {itested();
 				//if(fabs(y) >= 1e-250){ untested();
 				//  	x = sqrt(x*x+y*y);
 				//}else{ untested();
 				//}
-				if(std::isfinite(x)){ untested();
+				if(std::isfinite(x)){itested();
 				  	setLimit(x);
 				}else{ untested();
 				}

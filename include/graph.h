@@ -22,10 +22,9 @@
 #include <QDateTime>
 #include <vector>
 
-struct Axis; // BUG
 
 namespace qucs {
-
+  struct Axis; // BUG?
   class Marker; // BUG
 
 typedef enum{

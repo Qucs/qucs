@@ -65,7 +65,7 @@ private: // BUG? a SubcktBase is a Painting...
 		trace4("LibComp::br", label(), subckt()->size(), br.tl(), br.br());
 		return br;
 	}
-	void paint(ViewPainter* v) const override{ untested();
+	void paint(ViewPainter* v) const override{itested();
 		assert(subckt());
 		for(auto e : *subckt()){ itested();
 			incomplete(); // BUG. honour p->legacyTransformhack
