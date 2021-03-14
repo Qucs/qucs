@@ -1,17 +1,21 @@
 # This file is part of Qucs.
-# Create actions library
+# Create misc library
 
 # (C) 2021 Guilherme Brondani Torri
 
+# TODO get rid of these relative paths
 include(../../readMakeList.txt)
 
-set(legacyPath ${CMAKE_CURRENT_SOURCE_DIR}/../../../legacy/action)
+set(pluginPath ${CMAKE_CURRENT_SOURCE_DIR}/../../../plugins/misc)
 
-readVariable(${legacyPath}/MakeList PLUGIN_SRC SRCS)
+# TODO check uniformity of list names on MakeList
+# Hack on Makelist breaks the macro
+# mixup of .cc (conver to .h) and .cpp makes it impossible to find the file...
+readVariable(${pluginPath}/MakeList RAW_SRCS SRCS)
 
-list(TRANSFORM SRCS PREPEND ${legacyPath}/)
+list(TRANSFORM SRCS PREPEND ${pluginPath}/)
 
-set(PLUGIN action)
+set(PLUGIN misc)
 
 add_library(${PLUGIN} SHARED ${SRCS} ${HDR})
 
@@ -27,7 +31,7 @@ target_link_libraries(${PLUGIN} Qt5::Gui)
 set_target_properties(${PLUGIN} PROPERTIES PREFIX "")
 
 # See attach_default_plugins() for expected paths
-# Should go into /legacy/action.so
+# Should go into /plugins/misc.so
 # TODO figure out way to copy plugin into expected QUCS_PLUGPATH
 add_custom_command(TARGET ${PLUGIN} POST_BUILD
   COMMAND ${CMAKE_COMMAND} -E copy

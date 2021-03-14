@@ -1,4 +1,5 @@
-# this file is part of Qucs.
+# This file is part of Qucs.
+# Create qucsator library
 
 # (C) 2021 Guilherme Brondani Torri
 
@@ -10,29 +11,29 @@ readVariable(${legacyPath}/MakeList QT_PLUGIN_SRC_CMAKE SRCS)
 
 list(TRANSFORM SRCS PREPEND ${legacyPath}/)
 
-add_library(qucsator SHARED ${SRCS} ${HDR})
+set(PLUGIN qucsator)
 
-# cmake cannot figure out the linker for some reason
-set_target_properties(qucsator PROPERTIES LINKER_LANGUAGE CXX)
+add_library(${PLUGIN} SHARED ${SRCS} ${HDR})
 
-# why again? move to top most cmakelists?
-find_package(
-  Qt5
-  REQUIRED
-  Widgets
-  Core
-  Gui
-  )
+# cmake cannot figure out the correct linker for some reason
+set_target_properties(${PLUGIN} PROPERTIES LINKER_LANGUAGE CXX)
 
-add_definitions(${QT_DEFINITIONS} -DQT_DEPRECATED_WARNINGS)
+target_include_directories(${PLUGIN} PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/../../../include)
+target_include_directories(${PLUGIN} PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/../../../src)
+target_include_directories(${PLUGIN} PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/../../../)
 
-target_include_directories(qucsator PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/../../../include)
-target_include_directories(qucsator PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/../../../src)
-target_include_directories(qucsator PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/../../../)
-
-target_link_libraries(qucsator Qt5::Widgets)
-target_link_libraries(qucsator Qt5::Core)
-target_link_libraries(qucsator Qt5::Gui)
+target_link_libraries(${PLUGIN} Qt5::Widgets)
+target_link_libraries(${PLUGIN} Qt5::Core)
+target_link_libraries(${PLUGIN} Qt5::Gui)
 
 # drop lib from lib[*].so
-set_target_properties(qucsator PROPERTIES PREFIX "")
+set_target_properties(${PLUGIN} PROPERTIES PREFIX "")
+
+# See attach_default_plugins() for expected paths
+# Should go into /legacy/qucsator.so
+# TODO figure out way to copy plugin into expected QUCS_PLUGPATH
+add_custom_command(TARGET ${PLUGIN} POST_BUILD
+  COMMAND ${CMAKE_COMMAND} -E copy
+     "$<TARGET_FILE:${PLUGIN}>"
+     "${CMAKE_CURRENT_BINARY_DIR}/../$<TARGET_FILE_NAME:${PLUGIN}>"
+     COMMENT "Copying to plugin directory")

@@ -1,17 +1,17 @@
 # This file is part of Qucs.
-# Create actions library
+# Create paintings library
 
 # (C) 2021 Guilherme Brondani Torri
 
 include(../../readMakeList.txt)
 
-set(legacyPath ${CMAKE_CURRENT_SOURCE_DIR}/../../../legacy/action)
+set(SRC_PATH ${CMAKE_CURRENT_SOURCE_DIR}/../../../legacy/paintings)
 
-readVariable(${legacyPath}/MakeList PLUGIN_SRC SRCS)
+readVariable(${SRC_PATH}/MakeList SRCS SRCS)
 
-list(TRANSFORM SRCS PREPEND ${legacyPath}/)
+list(TRANSFORM SRCS PREPEND ${SRC_PATH}/)
 
-set(PLUGIN action)
+set(PLUGIN paintings)
 
 add_library(${PLUGIN} SHARED ${SRCS} ${HDR})
 
@@ -27,7 +27,7 @@ target_link_libraries(${PLUGIN} Qt5::Gui)
 set_target_properties(${PLUGIN} PROPERTIES PREFIX "")
 
 # See attach_default_plugins() for expected paths
-# Should go into /legacy/action.so
+# Should go into /legacy/paintings.so
 # TODO figure out way to copy plugin into expected QUCS_PLUGPATH
 add_custom_command(TARGET ${PLUGIN} POST_BUILD
   COMMAND ${CMAKE_COMMAND} -E copy

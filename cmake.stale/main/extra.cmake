@@ -7,7 +7,7 @@ if(UNIX AND NOT APPLE)
 	set(DESKTOP ${CMAKE_CURRENT_SOURCE_DIR}/../../main/qucs.desktop)
 	install(FILES ${DESKTOP}
 		DESTINATION ${CMAKE_INSTALL_PREFIX}/share/applications)
-		
+
     set(BITMAPS_HICOLOR_PATH ${CMAKE_CURRENT_SOURCE_DIR}/../../src/bitmaps/hicolor)
     set(BITMAPS_HICOLOR_DESTINATION ${CMAKE_INSTALL_PREFIX}/share/icons/hicolor)
 

@@ -1,4 +1,5 @@
-# this file is part of Qucs.
+# This file is part of Qucs.
+# Create legacy library
 
 # (C) 2021 Felix Salfelder
 #     2021 Guilherme Brondani Torri
@@ -13,28 +14,26 @@ readVariable(${legacyPath}/MakeList HDR HDR)
 list(TRANSFORM SRCS PREPEND ${legacyPath}/)
 list(TRANSFORM HDR PREPEND ${legacyPath}/)
 
-add_definitions(-DHAVE_CONFIG_H)
-
 add_library(legacy SHARED ${SRCS} ${HDR})
 
-# why again? move to top most cmakelists?
-find_package(
-  Qt5
-  REQUIRED
-  Widgets
-  Svg
-  PrintSupport
-  )
+set(PLUGIN legacy)
 
-target_include_directories(legacy PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/../../include)
-target_include_directories(legacy PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/../../src)
-target_include_directories(legacy PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/../../)
+target_include_directories(${PLUGIN} PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/../../include)
+target_include_directories(${PLUGIN} PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/../../src)
+target_include_directories(${PLUGIN} PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/../../)
 
-target_link_libraries(legacy Qt5::Core)
-target_link_libraries(legacy Qt5::Gui)
-target_link_libraries(legacy Qt5::Widgets)
+target_link_libraries(${PLUGIN} Qt5::Core)
+target_link_libraries(${PLUGIN} Qt5::Gui)
+target_link_libraries(${PLUGIN} Qt5::Widgets)
 
-# drop lib from liblegacy.so
-set_target_properties(legacy PROPERTIES PREFIX "")
+# drop lib from lib*.so
+set_target_properties(${PLUGIN} PROPERTIES PREFIX "")
 
-# TODO, somehow copy library into QUCS_PLUGPATH during build and relocate during install ?
+# See attach_default_plugins() for expected paths
+# Should go into /${PLUGIN}.so
+# TODO figure out way to copy plugin into expected QUCS_PLUGPATH
+add_custom_command(TARGET ${PLUGIN} POST_BUILD
+  COMMAND ${CMAKE_COMMAND} -E copy
+     "$<TARGET_FILE:${PLUGIN}>"
+     "${PROJECT_BINARY_DIR}/$<TARGET_FILE_NAME:${PLUGIN}>"
+     COMMENT "Copying to plugin directory")
