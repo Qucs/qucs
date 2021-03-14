@@ -9,8 +9,11 @@ include(../../readMakeList.txt)
 set(pluginPath ${CMAKE_CURRENT_SOURCE_DIR}/../../../plugins/gui)
 
 # TODO check uniformity of list names on MakeList
+
 # Hack on Makelist breaks the macro
-# mixup of .cc (conver to .h) and .cpp makes it impossible to find the file...
+
+# BUG mixup of .cc (conver to .h) and .cpp makes it impossible to find the file...
+
 # TODO some files are failing to compile
 #readVariable(${pluginPath}/MakeList QT_PLUGIN_SRC SRCS)
 readVariable(${pluginPath}/MakeList QT_PLUGIN_SRC_CMAKE SRCS)
@@ -21,9 +24,11 @@ set(PLUGIN gui)
 
 add_library(${PLUGIN} SHARED ${SRCS} ${HDR})
 
+#target_include_directories(${PLUGIN} PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/../../../legacy/components)
 target_include_directories(${PLUGIN} PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/../../../include)
 target_include_directories(${PLUGIN} PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/../../../src)
-target_include_directories(${PLUGIN} PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/../../../)
+#target_include_directories(${PLUGIN} PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/../../../)
+target_include_directories(${PLUGIN} PRIVATE ${CMAKE_CURRENT_BINARY_DIR}/../../) # pick generated config.h
 
 target_link_libraries(${PLUGIN} Qt5::Widgets)
 target_link_libraries(${PLUGIN} Qt5::Core)
