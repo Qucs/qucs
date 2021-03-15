@@ -1,6 +1,6 @@
 /***************************************************************************
-                           digisettingsdialog.cpp
-                          ------------------------
+                             digisettingsdialog.h
+                            ----------------------
     begin                : Sat Apr 01 2006
     copyright            : (C) 2006 by Michael Margraf
     email                : michael.margraf@alumni.tu-berlin.de
@@ -14,6 +14,14 @@
  *   (at your option) any later version.                                   *
  *                                                                         *
  ***************************************************************************/
+
+#ifndef DIGISETTINGSDIALOG_H
+#define DIGISETTINGSDIALOG_H
+
+#include <QDialog>
+#include <QRegExp>
+#include <QLabel>
+
 #include <QLabel>
 #include <QLineEdit>
 #include <QValidator>
@@ -26,12 +34,44 @@
 #include <QStringList>
 #include <QVBoxLayout>
 #include <QHBoxLayout>
-
-#include "digisettingsdialog.h"
 #include "misc.h"
+#include "qucsdoc.h"
 
 
-DigiSettingsDialog::DigiSettingsDialog(QucsDoc *Doc_)
+class TextDoc;
+class QLineEdit;
+class QPushButton;
+class QRegExpValidator;
+class QLabel;
+class QRadioButton;
+
+namespace {
+#if 0 // it does not compile yet
+
+using namespace qucs;
+
+class DigiSettingsDialog : public QDialog  {
+Q_OBJECT
+public:
+  DigiSettingsDialog(Doc*);
+ ~DigiSettingsDialog();
+
+  QString SimTime;
+  QLineEdit *TimeEdit, *LibEdit, *NameEdit;
+  QLabel *TimeLabel, *LibLabel, *NameLabel;
+  QRadioButton *simRadio, *comRadio;
+
+private slots:
+  void slotOk();
+  void slotChangeMode(int);
+
+private:
+  Doc* _doc;
+  QRegExp Expr;
+  QRegExpValidator *Validator;
+};
+
+DigiSettingsDialog::DigiSettingsDialog(Doc *Doc_)
                   : QDialog(nullptr) 
 {
 	auto w = dynamic_cast<QWidget*>(Doc_);
@@ -183,3 +223,8 @@ void DigiSettingsDialog::slotChangeMode(int idx)
     break;
   }
 }
+
+#endif
+} // namespace
+
+#endif

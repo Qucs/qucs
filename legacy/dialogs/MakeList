@@ -1,12 +1,12 @@
 
 TARGET = dialogs
 
-QT_PLUGIN_SRC = \
-	digisettingsdialog.cc \
-	vasettingsdialog.cc \
-	matchdialog.cc
+PLUGIN_SRC = \
+	digisettingsdialog.hqt \
+	vasettingsdialog.hqt \
+	matchdialog.hqt
 
 DOES_NOT_COMPILE_YET = \
 	spicedialog.cc
 
-EXTRA_DIST = ${QT_PLUGIN_SRC:%.cc=%.h}
+EXTRA_DIST =

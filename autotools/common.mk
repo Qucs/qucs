@@ -54,10 +54,15 @@ EXTRA_DIST += MakeList
 here_rel = $(subst ${abs_top_srcdir},,${abs_srcdir})
 instdir = $(pkglibdir)/$(here_rel)/..
 
-# TODO: drop -I[..]/src
-.h.cc:
-	$(MOC) -I${top_srcdir}/include -I${top_srcdir}/src -DQT_MAJOR_VERSION=${QT_MAJOR_VERSION} -o $@ $< # 2
+# # TODO: drop -I[..]/src
+# .h.cc:
+# 	$(MOC) -I${top_srcdir}/include -I${top_srcdir}/src -DQT_MAJOR_VERSION=${QT_MAJOR_VERSION} -o $@ $< # 2
 
+# still used?
 SUFFIXES += .moc.cpp
 .h.moc.cpp:
 	$(MOC) -I${top_srcdir}/include -I${top_srcdir}/src -DQT_MAJOR_VERSION=${QT_MAJOR_VERSION} -o $@ $< # 1
+
+SUFFIXES += .hqt
+.hqt.cpp:
+	$(MOC) -I${top_srcdir}/include -DQT_MAJOR_VERSION=${QT_MAJOR_VERSION} -o $@ $<

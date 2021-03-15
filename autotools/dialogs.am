@@ -26,8 +26,6 @@ dialogs_la_LDFLAGS = -module -avoid-version
 dialogs_la_CPPFLAGS = $(AM_CPPFLAGS)
 dialogs_la_CPPFLAGS += $(QT_INCLUDES)
 
-# is this necessary?
-dialogs_la_SOURCES = ${QT_PLUGIN_SRC}
-BUILT_SOURCES = ${dialogs_la_SOURCES}
+dialogs_la_SOURCES = ${PLUGIN_SRC}
 
 noinst_HEADERS = $(HDR)

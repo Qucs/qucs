@@ -60,7 +60,7 @@ private:
 	bool calcAxisScale(Axis*, double&, double&, double&, double&, double);
 	bool calcYAxis(Axis*, int);
 	void finishMarkerCoordinates(float&, float&) const;
-	bool insideDiagram(float, float) const;
+	bool insideDiagram(float, float) const{ incomplete(); return false; }
 	void recalcGraphData();
 	void updateGraphData();
 	void getAxisLimits(CommonData const* g);

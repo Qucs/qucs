@@ -1,8 +1,6 @@
 TARGET = qucsator
 
-QT_PLUGIN_SRC = \
-	qucsator.cc
+PLUGIN_SRC = \
+	qucsator.hqt
 
 EXTRA_DIST =
-
-RAW_SRC =

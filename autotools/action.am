@@ -30,8 +30,6 @@ action_la_LDFLAGS = -module -avoid-version
 action_la_CPPFLAGS = $(AM_CPPFLAGS)
 action_la_CPPFLAGS += $(QT_INCLUDES)
 
-# is this necessary?
-action_la_SOURCES = ${QT_PLUGIN_SRC} ${PLUGIN_SRC}
-BUILT_SOURCES = ${action_la_SOURCES}
+action_la_SOURCES = ${PLUGIN_SRC}
 
 noinst_HEADERS = $(HDR)

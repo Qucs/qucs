@@ -15,7 +15,6 @@
 #ifndef QUCS_QTPLUGIN_H
 #define QUCS_QTPLUGIN_H
 
-#include "diagramdialog.h"
 #include "component.h"
 #include "data.h"
 #include "output.h" // really?

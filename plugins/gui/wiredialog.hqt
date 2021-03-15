@@ -23,7 +23,6 @@
 #include "swap.h"
 #include "symbol.h"
 #include "widget.h"
-#include "wiredialog.h"
 
 #include <QLabel>
 #include <QLineEdit>

@@ -1,19 +1,14 @@
 
 TARGET = gui
 
-#  non-.h does not work with moc.
-#      .h does not work in autotools
-# use .cc for now, but this is NOT the source.
-QT_PLUGIN_SRC = \
-	diagramdialog.cc \
-	textdoc.cc \
-	taskeltdlg.cc \
-	symboldialog.cc \
-	schematic_doc.cc \
-	wiredialog.cc
-
 PLUGIN_SRC = \
-	schematic_action.cpp
+	schematic_action.cpp \
+	diagramdialog.hqt \
+	textdoc.hqt \
+	taskeltdlg.hqt \
+	symboldialog.hqt \
+	schematic_doc.hqt \
+	wiredialog.hqt
 
 MORE_LATER = \
 	changedialog.cpp \

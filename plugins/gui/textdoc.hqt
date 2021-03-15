@@ -21,7 +21,6 @@ Copyright (C) 2006 by Michael Margraf <michael.margraf@alumni.tu-berlin.de>
 
 #include "qucs_app.h"
 #include "qucs_globals.h"
-#include "textdoc.h"
 #include "syntax.h"
 #include "misc.h"
 #include "qucsdoc.h"

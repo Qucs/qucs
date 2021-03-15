@@ -20,8 +20,6 @@
 #include "platform.h"
 #include "schematic_dialog.h"
 
-#include "taskeltdlg.h"
-
 #include <QDialog>
 #include <assert.h>
 

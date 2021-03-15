@@ -25,7 +25,6 @@
 #define QUCS_MATCHDIALOG_H
 
 #include "element.h"
-#include "matchdialog.h"
 #include "material_props.h"
 #include "misc.h"
 #include "qucs_app.h"

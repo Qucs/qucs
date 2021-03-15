@@ -16,7 +16,6 @@
 #include "symbol.h"
 #include "settings.h"
 #include "schematic_dialog.h"
-#include "symboldialog.h"
 #include "schematic_edit.h"
 #include "qt_compat.h"
 #include "qucs_globals.h"
