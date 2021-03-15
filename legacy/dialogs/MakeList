@@ -2,9 +2,9 @@
 TARGET = dialogs
 
 PLUGIN_SRC = \
-	digisettingsdialog.hqt \
-	vasettingsdialog.hqt \
-	matchdialog.hqt
+	digisettingsdialog.hxx \
+	vasettingsdialog.hxx \
+	matchdialog.hxx
 
 DOES_NOT_COMPILE_YET = \
 	spicedialog.cc

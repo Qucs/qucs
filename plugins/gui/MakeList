@@ -3,12 +3,12 @@ TARGET = gui
 
 PLUGIN_SRC = \
 	schematic_action.cpp \
-	diagramdialog.hqt \
-	textdoc.hqt \
-	taskeltdlg.hqt \
-	symboldialog.hqt \
-	schematic_doc.hqt \
-	wiredialog.hqt
+	diagramdialog.hxx \
+	textdoc.hxx \
+	taskeltdlg.hxx \
+	symboldialog.hxx \
+	schematic_doc.hxx \
+	wiredialog.hxx
 
 MORE_LATER = \
 	changedialog.cpp \
