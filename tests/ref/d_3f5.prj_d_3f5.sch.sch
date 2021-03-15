@@ -22,10 +22,10 @@
 </Symbol>
 <Components>
     <GND * 5 490 380 0 0 0 0>
-    <Lib d_3f52 1 490 340 0 0 0 0 "1" 0 "0" 0>
-    <Lib ammeter1 1 400 300 0 0 0 0 "" 0 "" 0>
+    <Lib d_3f52 1 490 340 0 0 0 0 "Xyce" 0 "d_3f5" 0>
+    <Lib ammeter1 1 400 300 0 0 0 0 "Xyce" 0 "ammeter" 0>
     <GND * 5 330 360 0 0 0 0>
-    <Lib v_dc1 1 350 350 0 0 0 0 "dcsweep" 0 "" 0>
+    <Lib v_dc1 1 350 350 0 0 0 0 "Xyce" 0 "v_dc" 0>
 </Components>
 <Wires>
 <440 300 490 300 "" 0 0 0 "">

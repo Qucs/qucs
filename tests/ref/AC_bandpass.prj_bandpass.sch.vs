@@ -7,8 +7,8 @@ GND #(.$xposition(480), .$yposition(150), .$vflip(1), .$hflip(1), .$tx(0), .$ty(
 C #(.$xposition(210), .$yposition(210), .$vflip(1), .$hflip(1), .$tx(-26), .$ty(-26), .C(0.1 uF), .V(), .Symbol(neutral)) C1(net_180_210, net_240_210);
 R #(.$xposition(210), .$yposition(150), .$vflip(1), .$hflip(1), .$tx(-26), .$ty(-26), .R(10 kOhm), .Temp(26.85), .Tc1(0.0), .Tc2(0.0), .Tnom(26.85), .Symbol(european)) R2(net_180_150, net_240_150);
 R #(.$xposition(520), .$yposition(150), .$vflip(1), .$hflip(1), .$tx(-26), .$ty(-26), .R(10 kOhm), .Temp(26.85), .Tc1(0.0), .Tc2(0.0), .Tnom(26.85), .Symbol(european)) R5(net_490_150, net_550_150);
-Sub #(.$xposition(340), .$yposition(180), .$vflip(1), .$hflip(1), .$ty(-20), .$tx(0), .File(opa227.sch)) OPA227_1(net_310_210, net_310_150, net_370_180);
-Sub #(.$xposition(620), .$yposition(180), .$vflip(1), .$hflip(1), .$ty(-20), .$tx(0), .File(opa227.sch)) OPA227_2(net_590_210, net_590_150, net_650_180);
+Sub #(.$xposition(340), .$yposition(180), .$vflip(1), .$hflip(1), .$ty(-20), .$tx(44), .File(opa227.sch)) OPA227_1(net_310_210, net_310_150, net_370_180);
+Sub #(.$xposition(620), .$yposition(180), .$vflip(1), .$hflip(1), .$ty(-20), .$tx(44), .File(opa227.sch)) OPA227_2(net_590_210, net_590_150, net_650_180);
 //AC1
 GND #(.$xposition(100), .$yposition(310), .$vflip(1), .$hflip(1), .$tx(0), .$ty(0)) anonymous_gnd_hack_4(net_100_310);
 Vac #(.$xposition(100), .$yposition(260), .$vflip(1), .$hflip(1), .$tx(18), .$ty(18), .U(1 V), .f(1 kHz), .Phase(0), .Theta(0)) V1(net_100_230, net_100_290);

@@ -30,10 +30,15 @@ public:
 	~EqnDefined() {};
 	Element* clone() const{ return new EqnDefined(*this); }
 	static Element* info(QString&, char* &, bool getNewOne=false);
+	void setParameter(index_t i, std::string const&) override;
 
 protected:
 	QString netlist() const;
 	void createSymbol();
+
+	void prepare() override{ untested();
+		createSymbol();
+	}
 }d;
 Dispatcher<Symbol>::INSTALL p(&symbol_dispatcher, "EDD", &d);
 
@@ -65,6 +70,12 @@ EqnDefined::EqnDefined(EqnDefined const& p) : Component(p)
   Props.at(0)->Value = p.Props.at(0)->Value;
   Props.at(1)->Value = p.Props.at(1)->Value;
   recreate(0); // what?
+}
+void EqnDefined::setParameter(index_t i, std::string const& v)
+{
+	trace2("EqnDefined::setParameter", i, v);
+	Component::setParameter(i, v);
+	prepare();
 }
 
 // -------------------------------------------------------
@@ -124,12 +135,14 @@ void EqnDefined::createSymbol()
 
   // adjust branch number
   int Num = Props.at(1)->Value.toInt();
-  if(Num < 1) Num = 1;
-  else if(Num > 4) {
+  if(Num < 1) {
+	  Num = 1;
+  } else if(Num > 4) {
     PortDistance = 40;
     if(Num > 20) Num = 20;
   }
   Props.at(1)->Value = QString::number(Num);
+  trace1("EqnDefined::createSymbol", Num);
 
   // adjust actual number of properties
   int NumProps = (Props.count() - 2) / 2; // current number of properties
@@ -165,6 +178,7 @@ void EqnDefined::createSymbol()
 
   i=0;
   int y = PortDistance/2-h, yh; // y is the actual vertical center
+  Ports.clear();
   while(i<Num) { // for every branch
     i++;
     // left connection with port

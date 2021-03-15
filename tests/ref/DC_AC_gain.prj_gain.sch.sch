@@ -27,7 +27,7 @@
     <.AC AC1 1 440 170 0 33  0 0 "log" 1 "1" 1 "10 MHz" 1 "200" 1 "no" 0 "" 1 "" 1 "" 1 "" 1 "" 1>
     <.DC DC1 1 440 100 0 33  0 0 "26.85" 0 "0.001" 0 "1 pA" 0 "1 uV" 0 "no" 0 "150" 0 "no" 0 "none" 0 "" 1>
     <Eqn Eqn1 1 360 370 -23 12 0 0 "Gain=dB(Output.v/Input.v)" 1 "Phase=phase(Output.v/Input.v)" 1 "yes" 0>
-    <Sub OPV1 1 200 220 25 0 0 0 "singleOPV.sch" 0>
+    <Sub OPV1 1 200 220 25 -51 0 0 "singleOPV.sch" 0>
     <R R3 1 130 310 -26 -43 0 2 "1.7k" 1 "26.85" 0 "0.0" 0 "0.0" 0 "26.85" 0 "european" 0>
 </Components>
 <Wires>

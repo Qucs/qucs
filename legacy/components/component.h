@@ -134,7 +134,7 @@ protected: // Symbol
   std::string paramValue(std::string const& name) const override;
 
 protected:
-  void setParameter(unsigned i, std::string const&) override;
+  void setParameter(index_t i, std::string const&) override;
 	static const int num_symbol_params;
 	static const int num_component_params;
 

@@ -36,7 +36,7 @@
     <L Ls 1 200 410 -26 10 0 0 "LS" 1 "" 0>
     <Port Source 1 90 410 -23 12 0 0 "1" 1 "analog" 0>
     <R Rin 1 240 320 -26 15 0 0 "RIN" 1 "26.85" 0 "0.0" 0 "0.0" 0 "26.85" 0 "european" 0>
-    <EDD D2 1 310 180 -57 -113 1 2 "explicit" 0 "1" 0 "0" 1 "CGD*V1" 1>
+    <EDD D2 1 310 180 -26 -40 1 2 "explicit" 0 "1" 0 "0" 1 "CGD*V1" 0>
     <Port Drain 1 90 180 -23 -69 1 0 "3" 1 "analog" 0>
     <R Rd 1 220 180 -39 -85 1 0 "RD" 1 "26.85" 0 "0.0" 0 "0.0" 0 "26.85" 0 "european" 0>
     <L Ld 1 140 180 -26 10 0 0 "LD" 1 "" 0>
@@ -45,7 +45,7 @@
     <Port Gate 1 360 30 -85 -42 0 3 "2" 1 "analog" 0>
     <Eqn Eqn1 1 490 20 -32 16 0 0 "Vt=kB/q*TK" 1 "GMIN=1e-12" 1 "TK=Temp+273.15" 1 "TnK=Tnom+273.15" 1 "yes" 0>
     <Eqn Eqn2 1 490 240 -32 16 0 0 "TR=TK/TnK" 1 "IsT=IS*exp(XTI/N*ln(TR) - EG/N/Vt*(1-TR))" 1 "yes" 0>
-    <EDD D1 1 300 270 -238 221 0 3 "explicit" 0 "4" 0 "V1<-VBR+50*Vt ? -IsT*(1+exp(-(VBR+V1)/Vt)) + GMIN*V1 : 0" 1 "0" 1 "V1>=-VBR+50*Vt && V1<-5*Vt ? -IsT+GMIN*V1 : V1>=-5*Vt ? IsT*(exp(V1/(N*Vt))-1) + GMIN*V1 : 0" 1 "0" 1 "V1-VT0>0 ? Beta*(V1-VT0)^2*(1+Lambda*V3)*tanh(Alpha*V3) : 0" 1 "CDS*V3 + TAU*I3" 1 "0" 1 "CGS*V4" 1>
+    <EDD D1 1 300 270 -26 -130 0 3 "explicit" 0 "4" 0 "V1<-VBR+50*Vt ? -IsT*(1+exp(-(VBR+V1)/Vt)) + GMIN*V1 : 0" 1 "0" 0 "V1>=-VBR+50*Vt && V1<-5*Vt ? -IsT+GMIN*V1 : V1>=-5*Vt ? IsT*(exp(V1/(N*Vt))-1) + GMIN*V1 : 0" 0 "0" 0 "V1-VT0>0 ? Beta*(V1-VT0)^2*(1+Lambda*V3)*tanh(Alpha*V3) : 0" 0 "CDS*V3 + TAU*I3" 0 "0" 0 "CGS*V4" 0>
 </Components>
 <Wires>
 <270 300 270 320 "" 0 0 0 "">

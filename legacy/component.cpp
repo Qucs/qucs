@@ -561,6 +561,7 @@ void Component::setParameter(index_t pos, std::string const& v)
   }else if(pos<Symbol::paramCount()){ untested();
     Symbol::setParameter(pos, v);
   }else if (p<int(Props.size())){
+    trace3("Component::setParameter props fallback", pos, p, v);
     assert(Props.at(p));
     //Props.at(p)->setValue(v);
     Props.at(p)->Value = QString::fromStdString(v);

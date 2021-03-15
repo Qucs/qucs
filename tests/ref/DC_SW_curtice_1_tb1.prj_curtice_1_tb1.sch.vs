@@ -8,7 +8,7 @@ GND #(.$xposition(380), .$yposition(160), .$vflip(1), .$hflip(1), .$tx(0), .$ty(
 Vdc #(.$xposition(380), .$yposition(120), .$vflip(1), .$hflip(1), .$tx(18), .$ty(18), .U(Vds)) V1(net_380_90, net_380_150);
 GND #(.$xposition(210), .$yposition(160), .$vflip(1), .$hflip(1), .$tx(0), .$ty(0)) anonymous_gnd_hack_2(net_210_160);
 IProbe #(.$xposition(320), .$yposition(60), .$vflip(-1), .$hflip(1), .$tx(-26), .$ty(-26)) Pr1(net_350_60, net_290_60);
-Sub #(.$xposition(210), .$yposition(120), .$vflip(1), .$hflip(1), .$ty(1), .$tx(0), .File(1m)) Curtice1(net_210_160, net_180_120, net_210_80);
+Sub #(.$xposition(210), .$yposition(120), .$vflip(1), .$hflip(1), .$ty(20), .$tx(-46), .File(curtice_1.sch)) Curtice1(net_210_160, net_180_120, net_210_80);
 wire #(.$xposition(380), .$yposition(150), .$vflip(1), .$hflip(1)) noname(net_380_150, net_380_160);
 wire #(.$xposition(380), .$yposition(60), .$vflip(1), .$hflip(1)) noname(net_380_60, net_380_90);
 wire #(.$xposition(210), .$yposition(60), .$vflip(1), .$hflip(1)) noname(net_210_60, net_290_60);

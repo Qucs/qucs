@@ -12,8 +12,8 @@ GND #(.$xposition(130), .$yposition(270), .$vflip(1), .$hflip(1), .$tx(0), .$ty(
 Pac #(.$xposition(-20), .$yposition(190), .$vflip(1), .$hflip(1), .$tx(18), .$ty(18), .Num(1), .Z(100 Ohm), .P(0 dBm), .f(1 GHz), .Temp(26.85)) P1(net_-20_160, net_-20_220);
 GND #(.$xposition(-20), .$yposition(240), .$vflip(1), .$hflip(1), .$tx(0), .$ty(0)) anonymous_gnd_hack_1(net_-20_240);
 GND #(.$xposition(870), .$yposition(190), .$vflip(1), .$hflip(1), .$tx(0), .$ty(0)) anonymous_gnd_hack_2(net_870_190);
-Sub #(.$xposition(160), .$yposition(150), .$vflip(1), .$hflip(1), .$ty(-10), .$tx(0), .File(IdealBalun.sch)) Balun1(net_130_90, net_190_90, net_130_150, net_190_150, net_130_210);
-Sub #(.$xposition(820), .$yposition(150), .$vflip(-1), .$hflip(1), .$ty(-40), .$tx(0), .File(IdealBalun.sch)) Balun2(net_850_90, net_790_90, net_850_150, net_790_150, net_850_210);
+Sub #(.$xposition(160), .$yposition(150), .$vflip(1), .$hflip(1), .$ty(-10), .$tx(34), .File(IdealBalun.sch)) Balun1(net_130_90, net_190_90, net_130_150, net_190_150, net_130_210);
+Sub #(.$xposition(820), .$yposition(150), .$vflip(-1), .$hflip(1), .$ty(-40), .$tx(34), .File(IdealBalun.sch)) Balun2(net_850_90, net_790_90, net_850_150, net_790_150, net_850_210);
 GND #(.$xposition(80), .$yposition(210), .$vflip(1), .$hflip(1), .$tx(0), .$ty(0)) anonymous_gnd_hack_3(net_80_210);
 Vdc #(.$xposition(80), .$yposition(160), .$vflip(1), .$hflip(1), .$tx(18), .$ty(18), .U(1V)) V1(net_80_130, net_80_190);
 VProbe #(.$xposition(920), .$yposition(130), .$vflip(1), .$hflip(1), .$tx(28), .$ty(28)) Pr1(net_910_150, net_930_150);

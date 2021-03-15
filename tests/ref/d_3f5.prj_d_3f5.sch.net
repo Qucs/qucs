@@ -1,9 +1,10 @@
 # Qucs
-## declarations 2
-# unresolved symbol (empty)
-# unresolved symbol Lib:1:0
+## declarations 3
+# unresolved symbol Lib:Xyce:ammeter
+# unresolved symbol Lib:Xyce:d_3f5
+# unresolved symbol Lib:Xyce:v_dc
 ## declarations end
 
-Sub:d_3f52 Type="1_0"
-(empty):ammeter1
-(empty):v_dc1
+Sub:d_3f52 Type="Xyce_d_3f5"
+Sub:ammeter1 Type="Xyce_ammeter"
+Sub:v_dc1 Type="Xyce_v_dc"

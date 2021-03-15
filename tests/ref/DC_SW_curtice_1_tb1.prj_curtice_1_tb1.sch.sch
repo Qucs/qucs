@@ -34,7 +34,7 @@
     <Vdc V1 1 380 120 18 -26 0 1 "Vds" 1>
     <GND * 5 210 160 0 0 0 0>
     <IProbe Pr1 1 320 60 -26 16 1 2>
-    <Sub Curtice1 1 210 120 1 0 0 0 "1m" 0>
+    <Sub Curtice1 1 210 120 20 -46 0 0 "curtice_1.sch" 0>
 </Components>
 <Wires>
 <380 150 380 160 "" 0 0 0 "">

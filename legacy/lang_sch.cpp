@@ -778,18 +778,26 @@ Symbol* LegacySchematicLanguage::parseSymbol(istream_t& cs, Symbol* sym) const
 //		return NULL;
 //	}
 //	s = s.mid(1, s.length()-2);   // cut off start and end character
+	bool use_obsolete_callback = dynamic_cast<::Component*>(sym);
+
+	if(sym->typeName()=="EDD"){ untested();
+		use_obsolete_callback = false;
+	}else{ untested();
+	}
 
 	if(sym->typeName()=="wire"){
 		// yikes.
 		obsolete_wireload(sym, s);
-	}else if(auto cc=dynamic_cast<::Component*>(sym)){
+	}else if(use_obsolete_callback){
+		auto cc=dynamic_cast<::Component*>(sym);
 		trace2("compon callback", s, cc->label());
 		// HACK
 		parseComponentObsoleteCallback(s, cc);
 	}else{
-
 		QString label=s.section(' ',1,1);
 		sym->set_label(label.toStdString());
+
+		trace1("nonobsolete parse", sym->short_label());
 
 		QString n;
 		n  = s.section(' ',2,2);      // flags
@@ -862,8 +870,8 @@ Symbol* LegacySchematicLanguage::parseSymbol(istream_t& cs, Symbol* sym) const
 		// set parameters.
 		unsigned position = 0;
 
-		// skip the first 4. x y tx ty.
-		unsigned offset = 4; // Symbol::paramCountBase()
+		// skip the first 6. x y tx ty mirror rotate
+		unsigned offset = 6; // Symbol::paramCountBase()
 		unsigned int z=0;
 		int counts = s.count('"');
 		trace2("set?", s, counts);
@@ -872,8 +880,8 @@ Symbol* LegacySchematicLanguage::parseSymbol(istream_t& cs, Symbol* sym) const
 			n = s.section('"',z,z);    // property value. gaah parse over and over again?
 			z++;
 
-			trace2("legacy:set", position, n);
 			try{
+				trace2("legacy:set", position + offset, n);
 				sym->setParameter(position + offset, n.toStdString());
 			}catch(qucs::ExceptionCantFind const*){ untested();
 				incomplete(); // CS has error messages...
@@ -1015,8 +1023,6 @@ static ::Component* parseComponentObsoleteCallback(const QString& _s, ::Componen
 		tmp = 2;   // first property (File) already exists
 	}else if(Model == "Lib"){ untested();
 		tmp = 3;
-	}else if(Model == "EDD"){ untested();
-		tmp = 5;
 	}else if(Model == "RFEDD"){ untested();
 		tmp = 8;
 	}else if(Model == "VHDL"){ untested();
@@ -1107,7 +1113,7 @@ static ::Component* parseComponentObsoleteCallback(const QString& _s, ::Componen
 		qDebug() << "Model" << Model;
 #if 1
 		// gaah. breaks Eqn.
-		if(Model != "EDD" && Model != "RFEDD" && Model != "RFEDD2P")
+		if(Model != "RFEDD" && Model != "RFEDD2P"){
 			if(p1->Description.isEmpty()) {  // unknown number of properties ?
 				p1->Name = n.section('=',0,0);
 				n = n.section('=',1);
@@ -1117,6 +1123,7 @@ static ::Component* parseComponentObsoleteCallback(const QString& _s, ::Componen
 					c->Props.prev();
 				}
 			}
+		}
 #endif
 		if(z == 6 && counts == 6) {
 			// backward compatible
@@ -1135,7 +1142,7 @@ static ::Component* parseComponentObsoleteCallback(const QString& _s, ::Componen
 		p1->display = (n.at(1) == '1');
 	}
 
-	trace1("done legacy load", c->label());
+	trace3("done legacy load", c->label(), s, z);
 	return c;
 }
 /*--------------------------------------------------------------------------*/

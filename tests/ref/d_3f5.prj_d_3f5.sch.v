@@ -1,9 +1,9 @@
 module main();
 GND #() *(gnd);
-Lib$1$0 #(.Lib(1), .Component(0)) d_3f52();
-(empty) #(.Lib(), .Component()) ammeter1();
+Lib$Xyce$d_3f5 #(.Lib(Xyce), .Component(d_3f5)) d_3f52();
+Lib$Xyce$ammeter #(.Lib(Xyce), .Component(ammeter)) ammeter1();
 GND #() *(gnd);
-(empty) #(.Lib(dcsweep), .Component()) v_dc1();
+Lib$Xyce$v_dc #(.Lib(Xyce), .Component(v_dc)) v_dc1();
 endmodule // main
 
 module :SymbolSection:();
