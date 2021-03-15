@@ -7,7 +7,7 @@ include(../../readMakeList.txt)
 
 set(legacyPath ${CMAKE_CURRENT_SOURCE_DIR}/../../../legacy/qucsator)
 
-readVariable(${legacyPath}/MakeList QT_PLUGIN_SRC_CMAKE SRCS)
+readVariable(${legacyPath}/MakeList PLUGIN_SRC SRCS)
 
 list(TRANSFORM SRCS PREPEND ${legacyPath}/)
 
