@@ -1,9 +1,6 @@
 /***************************************************************************
-                               eqndefined.cpp
-                              ----------------
-    begin                : Thu Apr 19 2007
     copyright            : (C) 2007 by Stefan Jahn
-    email                : stefan@lkcc.org
+                               2021 Felix Salfelder
  ***************************************************************************/
 
 /***************************************************************************
@@ -14,12 +11,31 @@
  *   (at your option) any later version.                                   *
  *                                                                         *
  ***************************************************************************/
-#include "eqndefined.h"
+#include "qucs_globals.h"
 #include "qucs_app.h"
 #include "qucsdoc.h"
 #include "some_font_stuff.h"
+#include "component.h"
 
-#include <QFileInfo>
+namespace {
+
+using qucs::Element;
+using qucs::Symbol;
+using qucs::symbol_dispatcher;
+
+class EqnDefined : public Component {
+public:
+	explicit EqnDefined();
+	EqnDefined(EqnDefined const&);
+	~EqnDefined() {};
+	Element* clone() const{ return new EqnDefined(*this); }
+	static Element* info(QString&, char* &, bool getNewOne=false);
+
+protected:
+	QString netlist() const;
+	void createSymbol();
+}d;
+Dispatcher<Symbol>::INSTALL p(&symbol_dispatcher, "EDD", &d);
 
 EqnDefined::EqnDefined()
 {
@@ -44,13 +60,11 @@ EqnDefined::EqnDefined()
 }
 
 // -------------------------------------------------------
-Component* EqnDefined::newOne()
+EqnDefined::EqnDefined(EqnDefined const& p) : Component(p)
 {
-  EqnDefined* p = new EqnDefined();
-  p->Props.at(0)->Value = Props.at(0)->Value;
-  p->Props.at(1)->Value = Props.at(1)->Value;
-  p->recreate(0);
-  return p;
+  Props.at(0)->Value = p.Props.at(0)->Value;
+  Props.at(1)->Value = p.Props.at(1)->Value;
+  recreate(0); // what?
 }
 
 // -------------------------------------------------------
@@ -182,3 +196,5 @@ void EqnDefined::createSymbol()
   tx = x1+4;
   ty = y1 - 2*metrics.lineSpacing() - 4;
 }
+
+} // namespace

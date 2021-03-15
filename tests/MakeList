@@ -34,6 +34,7 @@ PRJ_TESTS = \
 	DC_SP_LPF-Balun3.prj \
 	DC_SP_opamp_gyrator.prj \
 	DC_TR_active_mixer.prj \
+	DC_SW_curtice_1_tb1.prj \
 	SP_mscoupler.prj \
 	SP_wilkinson.prj \
 	TR_resistor.prj \

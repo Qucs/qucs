@@ -793,7 +793,6 @@ void RectDiagram::getAxisLimits(CommonData const* g)
 	double x, y, *p;
 	QString var, find;
 	auto pg = dynamic_cast<SimOutputData const*>(g);
-	assert(pg); // really?
 
 	if(pg){
 		trace2("RectDiagram::getAxisLimits y", pg->min(), pg->max());
@@ -801,7 +800,9 @@ void RectDiagram::getAxisLimits(CommonData const* g)
 	}else{ untested();
 	}
 
-	if(pg->numDeps()){
+	if(!pg){
+		incomplete();
+	}else if(pg->numDeps()){
 		auto const* pD = pg->dep(0);
 		if(auto pd = dynamic_cast<SimOutputData const*>(pD)){
 			trace2("RectDiagram::getAxisLimits x", pd->min(), pd->max());

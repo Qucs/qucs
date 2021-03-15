@@ -244,7 +244,12 @@ rect_t DiagramVariable::bounding_rect() const
 void DiagramVariable::paint(ViewPainter* v) const
 {
 	// is this a bug? can paint and prepare run concurrently?
-	paint_graph_data(common(), v);
+
+	// Diagram::paint??
+	if(common()){
+		paint_graph_data(common(), v);
+	}else{
+	}
 }
 /*--------------------------------------------------------------------------*/
 // QPainterPath DiagramVariable::shape() const

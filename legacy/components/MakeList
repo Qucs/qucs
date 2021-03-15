@@ -203,7 +203,6 @@ HEADERS_ = \
     dmux3to8.h \
     dmux4to16.h \
     ecvs.h \
-    eqndefined.h \
     etr_sim.h \
     fa1b.h \
     fa2b.h \

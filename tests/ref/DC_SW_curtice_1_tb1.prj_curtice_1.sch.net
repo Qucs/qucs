@@ -1,0 +1,18 @@
+# Qucs
+## declarations 0
+## declarations end
+
+R:Rs _net3 _net21 R="RS" Temp="26.85" Tc1="0.0" Tc2="0.0" Tnom="26.85"
+L:Ls Source _net3 L="LS" I=""
+Port:Source Source Source Num="1" Type="analog"
+R:Rin _net23 _net21 R="RIN" Temp="26.85" Tc1="0.0" Tc2="0.0" Tnom="26.85"
+EDD:D2 _net7 _net8 Type="explicit" Branches="1" I1="0" Q1="CGD*V1"
+Port:Drain Drain Drain Num="3" Type="analog"
+R:Rd _net14 _net8 R="RD" Temp="26.85" Tc1="0.0" Tc2="0.0" Tnom="26.85"
+L:Ld Drain _net14 L="LD" I=""
+R:Rg _net7 _net17 R="RG" Temp="26.85" Tc1="0.0" Tc2="0.0" Tnom="26.85"
+L:Lg _net17 Gate L="LG" I=""
+Port:Gate Gate Gate Num="2" Type="analog"
+Eqn:Eqn1 Vt="kB/q*TK" GMIN="1e-12" TK="Temp+273.15" TnK="Tnom+273.15" Export="yes"
+Eqn:Eqn2 TR="TK/TnK" IsT="IS*exp(XTI/N*ln(TR) - EG/N/Vt*(1-TR))" Export="yes"
+EDD:D1 _net18 _net20 Type="explicit" Branches="4" I1="V1<-VBR+50*Vt ? -IsT*(1+exp(-(VBR+V1)/Vt)) + GMIN*V1 : 0" Q1="0" p="V1>=-VBR+50*Vt && V1<-5*Vt ? -IsT+GMIN*V1 : V1>=-5*Vt ? IsT*(exp(V1/(N*Vt))-1) + GMIN*V1 : 0" p="0" p="V1-VT0>0 ? Beta*(V1-VT0)^2*(1+Lambda*V3)*tanh(Alpha*V3) : 0" p="CDS*V3 + TAU*I3" p="0" p="CGS*V4"

@@ -294,16 +294,22 @@ void Paramset::refreshSymbol(std::string const& fn)
 	setTypeName("Sub"); // still // dev_type_key
 	assert(_factory);
 	Component const* new_parent = _factory->newSymbol(fn);
-	assert(new_parent);
-//	auto cc = new_common->clone(); //really? set modelname in factory.
-	assert(new_parent->common());
-	auto cc = new_parent->common()->clone(); //really? set modelname in factory.
-//	cc->set_modelname(type_name);
-//	assert(cc->modelname()==type_name);
-	attach_common(cc); // not actually shared yet. but will.
-	assert(common()->modelname()==type_name);
 
-	init(new_parent);
+	if(new_parent){
+		assert(new_parent);
+	//	auto cc = new_common->clone(); //really? set modelname in factory.
+		assert(new_parent->common());
+		auto cc = new_parent->common()->clone(); //really? set modelname in factory.
+	//	cc->set_modelname(type_name);
+	//	assert(cc->modelname()==type_name);
+		attach_common(cc); // not actually shared yet. but will.
+		assert(common()->modelname()==type_name);
+
+		init(new_parent);
+	}else{
+		// show error message? dummy symbol?
+		incomplete();
+	}
 }
 /*--------------------------------------------------------------------------*/
 void Paramset::init(Component const* proto)
