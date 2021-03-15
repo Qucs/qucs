@@ -1,122 +1,9 @@
-# Qucs application creation
-# (C) 2014 Guilherme Brondani Torri
+# This file is part of Qucs.
+# Create Qucs application executable
+
+# (C) 2014-2021 Guilherme Brondani Torri
 #     2020 Martin Marmsoler
 #     2020 Felix Salfelder
-
-
-project(qucs_gui)
-cmake_minimum_required(VERSION 3.16)
-
-# use top VERSION file
-file(STRINGS ${PROJECT_SOURCE_DIR}/../../VERSION QUCS_VERSION)
-message(STATUS "Configuring ${PROJECT_NAME} (GUI): VERSION ${QUCS_VERSION}")
-
-set(PROJECT_VENDOR "Qucs team. This program is licensed under the GNU GPL")
-set(PROJECT_COPYRIGHT_YEAR "2020")
-set(PROJECT_DOMAIN_FIRST "qucs")
-set(PROJECT_DOMAIN_SECOND "org")
-
-# when true, all the dependencies (Qucsator, legacy and so on are also compiled)
-option(CompileDependencies "Compile dependencies related to qucs (qucsator ...), default ON" ON)
-
-# add compiler definitions/symbols
-set(PACKAGE_VERSION "${PROJECT_VERSION}")
-add_compile_definitions(QUCS_PREFIX="${prefix}")
-add_compile_definitions(QUCS_PLUGPATH="${pkglibdir}")
-
-# qucsschematic
-# add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/../src src)
-
-## ------ WHY needed?
-# If Git hash not defined, try to define it
-#if(NOT GIT)
-#  if(EXISTS ${CMAKE_CURRENT_SOURCE_DIR}/../../.git)
-#    find_package(Git)
-#    # Get the latest abbreviated commit hash of the working branch
-#    execute_process(
-#      COMMAND ${GIT_EXECUTABLE} log --pretty=format:%h -n 1u
-#      WORKING_DIRECTORY ${CMAKE_SOURCE_DIR}
-#      OUTPUT_VARIABLE GIT_COMMIT_HASH)
-#    set(GIT ${GIT_COMMIT_HASH})
-#    message(STATUS "Found Git repository, last commit hash: ${GIT}")
-#  endif()
-#endif()
-
-#if(UNIX AND NOT APPLE)
-#  # string(TOLOWER ${PROJECT_NAME} PROJECT_NAME_LOWERCASE) set(BIN_INSTALL_DIR
-#  # "bin") set(DOC_INSTALL_DIR "share/doc/${PROJECT_NAME_LOWERCASE}/")
-#else()
-#  # set(BIN_INSTALL_DIR ".") set(DOC_INSTALL_DIR ".")
-#endif()
-
-#
-add_definitions(-DHAVE_CONFIG_H)
-
-# TODO. move *cmake files to cmake directory
-configure_file("${PROJECT_SOURCE_DIR}/../../config.h.cmake"
-               "${PROJECT_BINARY_DIR}/config.h")
-
-#include_directories("${PROJECT_BINARY_DIR}")
-#include_directories(${CMAKE_SOURCE_DIR})
-
-#set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wall ") # enable warning level
-#set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++0x ") # enable C++11
-
-## flag not available in mingw 4.8.2, MSVC10
-#if(NOT WIN32)
-#  set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wno-deprecated-register ")
-#endif()
-
-## For some reason, on Windows QT_LIBRARIES point to static(?) .a libs which do
-## not provide the needed symbols. They are found on the .dll libraries.
-#if(WIN32)
-#  link_directories("${QT_BINARY_DIR}")
-#endif(WIN32)
-
-#
-# Set position independed code PIC
-#
-#if(UNIX AND NOT APPLE)
-#  if(CMAKE_SYSTEM_PROCESSOR STREQUAL "x86_64")
-#    set(CMAKE_POSITION_INDEPENDENT_CODE ON)
-#  endif()
-#endif()
-
-# why?
-find_package(
-  Qt5
-  REQUIRED
-  Widgets
-  Svg
-  PrintSupport
-  )
-
-##
-## configure Apple bundle information
-##
-#if(APPLE)
-#  # set information on Info.plist file
-#  set(MACOSX_BUNDLE_INFO_STRING "${PROJECT_NAME} ${PROJECT_VERSION}")
-#  set(MACOSX_BUNDLE_BUNDLE_VERSION "${PROJECT_NAME} ${PROJECT_VERSION}")
-#  set(MACOSX_BUNDLE_LONG_VERSION_STRING "${PROJECT_NAME} ${PROJECT_VERSION}")
-#  set(MACOSX_BUNDLE_SHORT_VERSION_STRING "${PROJECT_VERSION}")
-#  set(MACOSX_BUNDLE_COPYRIGHT "${PROJECT_COPYRIGHT_YEAR} ${PROJECT_VENDOR}")
-#  set(MACOSX_BUNDLE_GUI_IDENTIFIER
-#      "${PROJECT_DOMAIN_SECOND}.${PROJECT_DOMAIN_FIRST}")
-#  set(MACOSX_BUNDLE_BUNDLE_NAME "${PROJECT_NAME}")
-#  set(MACOSX_BUNDLE_ICON_FILE qucs.icns)
-
-#  # set where in the bundle to put the icns file
-#  set_source_files_properties(${CMAKE_CURRENT_SOURCE_DIR}/bitmaps/qucs.icns
-#                              PROPERTIES MACOSX_PACKAGE_LOCATION Resources)
-#  # include the icns file in the target
-#  set(QUCS_SRCS ${QUCS_SRCS} ${CMAKE_CURRENT_SOURCE_DIR}/bitmaps/qucs.icns)
-
-#  # This tells cmake where to place the translations inside the bundle
-#  # SET_SOURCE_FILES_PROPERTIES( ${LANG_SRCS} PROPERTIES MACOSX_PACKAGE_LOCATION
-#  # Resources/lang ) include the translation files in the target
-#  # SET(RESOURCES_SRCS ${RESOURCES_SRCS} ${LANG_SRCS})
-#endif(APPLE)
 
 #
 # Set up RPATH for the project
@@ -135,10 +22,17 @@ if(UNIX AND ENABLE_RPATH)
   set(CMAKE_MACOSX_RPATH true)
 endif()
 
+#
+# Generate rules for building source files from bitmap resources
+#
+SET(RESOURCES ${CMAKE_CURRENT_SOURCE_DIR}/../../src/qucs_.qrc)
+QT5_ADD_RESOURCES(RESOURCES_SRCS ${RESOURCES})
+
 ##
 ## CMake's way of creating an executable
 ##
-add_executable(qucs MACOSX_BUNDLE WIN32 ${CMAKE_CURRENT_SOURCE_DIR}/../../main/main.cpp)
+add_executable(qucs MACOSX_BUNDLE WIN32 ${CMAKE_CURRENT_SOURCE_DIR}/../../main/main.cpp ${RESOURCES_SRCS})
+
 target_link_libraries(qucs qucsschematic)
 target_link_libraries(qucs Qt5::Widgets)
 target_link_libraries(qucs Qt5::Svg)
@@ -150,6 +44,7 @@ target_link_libraries(qucs Qt5::Svg)
 target_include_directories(qucs PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/../../include
  ${CMAKE_CURRENT_SOURCE_DIR}/../../src
  ${CMAKE_CURRENT_BINARY_DIR}
+ ${CMAKE_CURRENT_BINARY_DIR}/..
  )
 
 # TODO: disentangle
