@@ -9,13 +9,24 @@ include(../../readMakeList.txt)
 set(pluginPath ${CMAKE_CURRENT_SOURCE_DIR}/../../../plugins/gui)
 
 # TODO check uniformity of list names on MakeList
+
+# cmake automoc seems to create issues here
+# the headers are included into the moc_compilation.cpp creating redefinitions
+# definitions (F, p1,...) end up on the same translation unit (?) 
+
+# try to use moc manually
+
 readVariable(${pluginPath}/MakeList PLUGIN_SRC SRCS)
 
 list(TRANSFORM SRCS PREPEND ${pluginPath}/)
 
 set(PLUGIN gui)
 
-add_library(${PLUGIN} SHARED ${SRCS})
+set(CMAKE_AUTOMOC OFF)
+
+QT5_WRAP_CPP(MOC ${SRCS})
+
+add_library(${PLUGIN} SHARED ${SRCS} ${MOC})
 
 
 #target_include_directories(${PLUGIN} PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/../../../legacy/components)
