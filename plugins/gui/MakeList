@@ -10,8 +10,10 @@ QT_PLUGIN_SRC = \
 	taskeltdlg.cc \
 	symboldialog.cc \
 	schematic_doc.cc \
-	schematic_action.cpp \
 	wiredialog.cc
+
+PLUGIN_SRC = \
+	schematic_action.cpp
 
 MORE_LATER = \
 	changedialog.cpp \
@@ -20,4 +22,4 @@ MORE_LATER = \
 	sweepdialog.cpp \
 	sweepdialog.h
 
-EXTRA_DIST = ${QT_PLUGIN_SRC:%.cc=%.h}
+EXTRA_DIST =

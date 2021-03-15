@@ -31,8 +31,11 @@ gui_la_LDFLAGS = -module -avoid-version
 gui_la_CPPFLAGS = $(AM_CPPFLAGS)
 gui_la_CPPFLAGS += $(QT_INCLUDES)
 
+gui_la_SOURCES = ${QT_PLUGIN_SRC} ${PLUGIN_SRC}
+
 # is this necessary?
-gui_la_SOURCES = ${QT_PLUGIN_SRC}
-BUILT_SOURCES = ${gui_la_SOURCES}
+BUILT_SOURCES = ${QT_PLUGIN_SRC}
 
 noinst_HEADERS = $(HDR)
+
+EXTRA_DIST = ${QT_PLUGIN_SRC:%.cc=%.h}
