@@ -15,6 +15,8 @@ set(PLUGIN paintings)
 
 add_library(${PLUGIN} SHARED ${SRCS} ${HDR})
 
+# TODO: define once?
+target_include_directories(${PLUGIN} PRIVATE ${CMAKE_CURRENT_BINARY_DIR}/../../include)
 target_include_directories(${PLUGIN} PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/../../../include)
 target_include_directories(${PLUGIN} PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/../../../src)
 target_include_directories(${PLUGIN} PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/../../../)

@@ -6,10 +6,10 @@ $ cmake ../cmake
 
 *** this is under construction ***
 TODO:
- - something wrong with config.h?
  - environment variables
  - tests dont run
  - qucs-conf is missing
+ - "make install" does not seem to do much
 
 
 To have CMake pick a Qt installation of your choice that won't be found

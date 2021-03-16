@@ -11,14 +11,18 @@ readVariable(${legacyPath}/MakeList PLUGIN_SRC SRCS)
 
 list(TRANSFORM SRCS PREPEND ${legacyPath}/)
 
+# basename of legacyPath?
 set(PLUGIN action)
 
 add_library(${PLUGIN} SHARED ${SRCS} ${HDR})
 
+# TODO: define once?
+target_include_directories(${PLUGIN} PRIVATE ${CMAKE_CURRENT_BINARY_DIR}/../../include)
 target_include_directories(${PLUGIN} PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/../../../include)
 target_include_directories(${PLUGIN} PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/../../../src)
 target_include_directories(${PLUGIN} PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/../../../)
 
+# really?
 target_link_libraries(${PLUGIN} Qt5::Widgets)
 target_link_libraries(${PLUGIN} Qt5::Core)
 target_link_libraries(${PLUGIN} Qt5::Gui)
@@ -27,7 +31,7 @@ target_link_libraries(${PLUGIN} Qt5::Gui)
 set_target_properties(${PLUGIN} PROPERTIES PREFIX "")
 
 # See attach_default_plugins() for expected paths
-# Should go into /legacy/action.so
+# Should go into /legacy/action.so or legacy/action/_
 # TODO figure out way to copy plugin into expected QUCS_PLUGPATH
 add_custom_command(TARGET ${PLUGIN} POST_BUILD
   COMMAND ${CMAKE_COMMAND} -E copy

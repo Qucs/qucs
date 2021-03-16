@@ -64,11 +64,15 @@ add_library(${PLUGIN} SHARED
 # BUG there are 2 headers with the same name:
 #./legacy/components/component.h
 #./include/component.h
+
+# TODO: define once?
+target_include_directories(${PLUGIN} PRIVATE ${CMAKE_CURRENT_BINARY_DIR}/../../include)
 target_include_directories(${PLUGIN} PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/../../../legacy/components)
 target_include_directories(${PLUGIN} PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/../../../include) # for node?
 target_include_directories(${PLUGIN} PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/../../../src)
 target_include_directories(${PLUGIN} PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/../../../)
 
+#really?
 target_link_libraries(${PLUGIN} Qt5::Widgets)
 target_link_libraries(${PLUGIN} Qt5::Core)
 target_link_libraries(${PLUGIN} Qt5::Gui)

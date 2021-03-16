@@ -16,8 +16,10 @@ list(TRANSFORM HDR PREPEND ${legacyPath}/)
 
 add_library(legacy SHARED ${SRCS} ${HDR})
 
+# todo: use common CMakeList
 set(PLUGIN legacy)
 
+target_include_directories(${PLUGIN} PRIVATE ${CMAKE_CURRENT_BINARY_DIR}/../include)
 target_include_directories(${PLUGIN} PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/../../include)
 target_include_directories(${PLUGIN} PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/../../src)
 target_include_directories(${PLUGIN} PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/../../)

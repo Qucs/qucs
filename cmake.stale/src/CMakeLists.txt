@@ -38,6 +38,8 @@ add_library(coreSchematic OBJECT ${QUCS_SRCS} ${QUCS_RESOURCES} ${QUCS_UI_FILES}
 
 add_definitions(${QT_DEFINITIONS} -DQT_DEPRECATED_WARNINGS)
 
+# BUG: define once, but where?
+target_include_directories(coreSchematic PRIVATE ${CMAKE_CURRENT_BINARY_DIR}/../include)
 target_include_directories(coreSchematic PRIVATE ${coreSchematicPath}/../include)
 target_include_directories(coreSchematic PRIVATE ${coreSchematicPath}/..)
 target_include_directories(coreSchematic PRIVATE ${coreSchematicPath})

@@ -99,10 +99,8 @@ set(QT_DEBUG TRUE)
 
 add_definitions(${QT_DEFINITIONS} -DQT_DEPRECATED_WARNINGS)
 
-
-# TODO. move *cmake files to cmake directory
-configure_file("${CMAKE_SOURCE_DIR}/../config.h.cmake"
-               "${CMAKE_BINARY_DIR}/config.h")
+configure_file("${CMAKE_SOURCE_DIR}/config.h.cmake"
+               "${CMAKE_BINARY_DIR}/include/config.h")
 
 add_definitions(-DHAVE_CONFIG_H)
 
