@@ -1,14 +1,15 @@
 build qucs with cmake
 
-$ cmake .
-
-or
-
 $ mkdir build
 $ cd build
-$ cmake ..
+$ cmake ../cmake
 
 *** this is under construction ***
+TODO:
+ - something wrong with config.h?
+ - environment variables
+ - tests dont run
+ - qucs-conf is missing
 
 
 To have CMake pick a Qt installation of your choice that won't be found
@@ -16,7 +17,7 @@ automatically, set the CMAKE_PREFIX_PATH environment variable. For example:
 "export CMAKE_PREFIX_PATH=/usr/local/trolltech/qt4.3.5"
 
 You can change the install location by running cmake like this: mkdir build;
-cd build cmake .. -DCMAKE_INSTALL_PREFIX=/new/install/prefix
+cd build cmake ../cmake -DCMAKE_INSTALL_PREFIX=/new/install/prefix
 
 By default, the prefix is "/usr/local"
 
