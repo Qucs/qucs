@@ -58,7 +58,7 @@ VerilogNetlister::VerilogNetlister() : DocumentFormat()
 }
 /*--------------------------------------------------------------------------*/
 void VerilogNetlister::do_it(istream_t& cs, ElementList* o)
-{ untested();
+{
 	lang = qucs::language_dispatcher["verilog"];
 	assert(lang);
 

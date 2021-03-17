@@ -554,7 +554,7 @@ void LegacySchematicLanguage::print_instance(ostream_t& s, qucs::Component const
 			// (this is implemented somewhere else already...)
 			if(hflip==-1 and vflip==-1 and a==3){ untested();
 				s << "0 1";
-			}else if(hflip==1){ untested();
+			}else if(hflip==1){
 				s << (1-vflip) / 2;
 				s << " " << (angle/90) % 4;
 			}else if(vflip==1){ untested();
@@ -780,9 +780,9 @@ Symbol* LegacySchematicLanguage::parseSymbol(istream_t& cs, Symbol* sym) const
 //	s = s.mid(1, s.length()-2);   // cut off start and end character
 	bool use_obsolete_callback = dynamic_cast<::Component*>(sym);
 
-	if(sym->typeName()=="EDD"){ untested();
+	if(sym->typeName()=="EDD"){
 		use_obsolete_callback = false;
-	}else{ untested();
+	}else{
 	}
 
 	if(sym->typeName()=="wire"){

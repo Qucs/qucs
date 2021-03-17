@@ -84,7 +84,7 @@ static void prepare_env()
 }
 /*--------------------------------------------------------------------------*/
 static void read_startup_files(void)
-{ untested();
+{
 #if 1
   CMD::command(std::string("load plugins/misc"), &static_model);
 #else

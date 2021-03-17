@@ -715,7 +715,7 @@ QString Diagram::save() const
        QString::number(rotZ);
 
   // labels can contain spaces -> must be last items in the line
-  double sfreq=0; // ?
+  QString sfreq="0"; // ?
   s += " \""+xAxis.Label+"\" \""+yAxis.Label+"\" \""+zAxis.Label+"\" \""+sfreq+"\">\n";
 
   return s;

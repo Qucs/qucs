@@ -153,7 +153,7 @@ Wire::Wire(pos_t const& p0, pos_t const& p1)
     _port1(),
     _scale(1.),
     _has_netname(false)
-{ untested();
+{
 	Symbol::setPosition(p0);
 
 	pos_t pp1((p1 - p0).first, (p1 - p0).second);
@@ -181,11 +181,11 @@ void Wire::findScaleAndAngle(pos_t p1)
 	if(!_scale){itested();
 	}else if(x2 > 0){itested();
 		setAngle(0);
-	}else if(x2<0){ untested();
+	}else if(x2<0){
 		setAngle(180);
 	}else if(y2>0){itested();
 		setAngle(270);
-	}else if(y2<0){ untested();
+	}else if(y2<0){
 		setAngle(90);
 	}else{ untested();
 	}
@@ -201,21 +201,21 @@ void Wire::findScaleAndAngle(pos_t p1)
 }
 /*--------------------------------------------------------------------------*/
 SubcktBase* Wire::intersectPorts(Symbol const* s) const
-{ untested();
+{
 	std::vector<pos_t> split;
-	for(unsigned i=0; i<s->numPorts(); ++i){ untested();
+	for(unsigned i=0; i<s->numPorts(); ++i){
 		pos_t p = s->nodePosition(i);
 		trace4("intersectPorts", i, s->nodePosition(i), s->label(), s->typeName());
 
 		if(nodePosition(0) == p) {itested();
 		}else if(nodePosition(1) == p) {itested();
-		}else if(isInterior(p)) { untested();
+		}else if(isInterior(p)) {
 			trace1("found split", p);
 			split.push_back(p);
 		}
 	}
 
-	if(split.size()){ untested();
+	if(split.size()){
 		trace2("intersectPorts", split.size(), split[0]);
 		split.push_back(nodePosition(0));
 		split.push_back(nodePosition(1));
@@ -233,7 +233,7 @@ SubcktBase* Wire::intersectPorts(Symbol const* s) const
 		auto pp = split.begin();
 		auto next = pp;
 		++next;
-		while(next!=split.end()){ untested();
+		while(next!=split.end()){
 			m->push_back(new Wire(*pp, *next));
 			trace3("intersectPorts new wire", *pp, *next, split.size());
 			pp = next;
@@ -246,7 +246,7 @@ SubcktBase* Wire::intersectPorts(Symbol const* s) const
 }
 /*--------------------------------------------------------------------------*/
 SubcktBase* Wire::extendTowards(pos_t const& other) const
-{ untested();
+{
 	auto n0 = nodePosition(0);
 	auto n1 = nodePosition(1);
 
@@ -256,12 +256,12 @@ SubcktBase* Wire::extendTowards(pos_t const& other) const
 //	assert(_port0.isConnected());
 //	assert(_port1.isConnected());
 	unsigned np0 = 2; // hack
-	if(_port0.isConnected()){ untested();
+	if(_port0.isConnected()){
 		np0 = _port0->numPorts();
 	}else{ untested();
 	}
 	unsigned np1 = 2; // hack
-	if(_port1.isConnected()){ untested();
+	if(_port1.isConnected()){
 		np1 = _port1->numPorts();
 	}else{ untested();
 	}
@@ -270,18 +270,18 @@ SubcktBase* Wire::extendTowards(pos_t const& other) const
 	// trace2("extendTowards", _port0->numPorts(), _port1->numPorts());
 	Wire* w = nullptr;
 
-	if(in_order(n0, other, n1)){ untested();
+	if(in_order(n0, other, n1)){
 		w = clone();
-	}else if(in_order(other, n1, n0) && np1==2){ untested();
+	}else if(in_order(other, n1, n0) && np1==2){
 		trace3("extend1", other, n1, n0);
 		w = new Wire(other, n0);
 	}else if(in_order(other, n0, n1) && np0==2){ untested();
 		trace3("extend2",other, n0, n1);
 		w = new Wire(other, n1);
-	}else{ untested();
+	}else{
 	}
 
-	if(w){ untested();
+	if(w){
 		Component *s = qucs::device_dispatcher.clone("subckt_proto");
 		auto sckt = prechecked_cast<SubcktBase*>(s);
 		assert(sckt);
@@ -289,13 +289,13 @@ SubcktBase* Wire::extendTowards(pos_t const& other) const
 		assert(sckt->subckt());
 		sckt->subckt()->push_back(w);
 		return sckt;
-	}else{ untested();
+	}else{
 		return nullptr;
 	}
 }
 /*--------------------------------------------------------------------------*/
 SubcktBase* Wire::newTee(Wire const* o) const
-{ untested();
+{
 	assert((angle() - o->angle() )%180);
 	pos_t t0 = nodePosition(0);
 	pos_t t1 = nodePosition(1);
@@ -304,13 +304,13 @@ SubcktBase* Wire::newTee(Wire const* o) const
 	Symbol const* teew = o;
 
 	trace2("interior?", o->nodePosition(0), o->nodePosition(1));
-	if(isInterior(o->nodePosition(0))){ untested();
+	if(isInterior(o->nodePosition(0))){
 		s = new Wires();
 		split = o->nodePosition(0);
 	}else if(isInterior(o->nodePosition(1))){ untested();
 		s = new Wires();
 		split = o->nodePosition(1);
-	}else if(o->isInterior(nodePosition(0))){ untested();
+	}else if(o->isInterior(nodePosition(0))){
 		// BUG: call o->newUnion(this)
 		s = new Wires();
 		split = nodePosition(0);
@@ -324,10 +324,10 @@ SubcktBase* Wire::newTee(Wire const* o) const
 		t0 = o->nodePosition(0);
 		t1 = o->nodePosition(1);
 		teew = this;
-	}else{ untested();
+	}else{
 	}
 
-	if(s){ untested();
+	if(s){
 		trace1("building tee", split);
 		s->new_subckt();
 		ElementList* m = s->subckt();
@@ -337,7 +337,7 @@ SubcktBase* Wire::newTee(Wire const* o) const
 		m->push_back(new Wire(t0, split));
 		m->push_back(teew->clone());
 		m->push_back(new Wire(t1, split));
-	}else{ untested();
+	}else{
 		trace1("no tee", split);
 	}
 
@@ -345,27 +345,27 @@ SubcktBase* Wire::newTee(Wire const* o) const
 }
 /*--------------------------------------------------------------------------*/
 SubcktBase* Wire::newUnion(Symbol const* s) const
-{ untested();
+{
 	trace3("Wire::newUnion(Symbol)", s->label(), nodePosition(0), nodePosition(1));
 //	auto p = dynamic_cast<Place const*>(s);
 	auto o = dynamic_cast<Wire const*>(s);
 //	if(p){ untested();
 //		return newPort(p);
 //	}else
-	if(o){ untested();
+	if(o){
 		trace2("Wire::newUnion(Wire)", o->nodePosition(0), o->nodePosition(1));
 //		trace2("Wire::newUnion(Wire)", _port0->degree(), _port1->degree());
 		trace2("Wire::newUnion(Wire)", angle(), o->angle());
 		
-		if( (360 + angle() - o->angle() )%180 ){ untested();
+		if( (360 + angle() - o->angle() )%180 ){
 			return newTee(o);
-		}else if(isNet(o->nodePosition(0))){ untested();
+		}else if(isNet(o->nodePosition(0))){
 			return extendTowards(o->nodePosition(1));
 		}else if(isNet(o->nodePosition(1))){ untested();
 			return extendTowards(o->nodePosition(0));
 		}else{ untested();
 		}
-	}else{ untested();
+	}else{
 		return intersectPorts(s);
 	}
 	return nullptr;
@@ -525,14 +525,14 @@ void Wire::set_port_by_index(index_t i, std::string const& value)
 	assert(i<2);
 	if(port_value(i)=="(null)"){itested();
 	}else if(port_value(i)==""){ untested();
-	}else if(value==""){ untested();
+	}else if(value==""){
 		disconnectNode(i);
 	}else{ untested();
 	}
 
 	Symbol::set_port_by_index(i, value);
 
-	if(value==""){ untested();
+	if(value==""){
 		assert(port_value(i)=="(null)");
 	}else{itested();
 		trace2("wire::spbi", i, value);
@@ -564,9 +564,9 @@ void Wire::connectNode(index_t i)
 			n->setNetLabel(n2->netLabel());
 		}else if(!n2->hasNetLabel()){itested();
 			n2->setNetLabel(n->netLabel());
-		}else if(n->netLabel() == n2->netLabel()){ untested();
+		}else if(n->netLabel() == n2->netLabel()){
 			// nothing to do
-		}else{ untested();
+		}else{
 			message(qucs::MsgWarning, ("possible label conflict. not sure what to do in "
 					+ n->netLabel() + " vs " + n2->netLabel()).c_str());
 		}
@@ -586,7 +586,7 @@ void Wire::connectNode(index_t i)
 }
 // ----------------------------------------------------------------
 void Wire::disconnectNode(index_t i)
-{ untested();
+{
 	assert(scope());
 	assert(scope()->nodes());
 	auto& nm = *scope()->nodes();
@@ -595,7 +595,7 @@ void Wire::disconnectNode(index_t i)
 	if(!hasNet()){ untested();
 		unreachable(); // happens after bogus connect calls
 		return;
-	}else{ untested();
+	}else{
 	}
 //	Node* n = Symbol::disconnectNode(i, nm);
 	Node* n = port(i).value();
@@ -605,8 +605,8 @@ void Wire::disconnectNode(index_t i)
 	//Conductor::removeEdge(n, nm);?
 	nm.removeEdge(n, this);
 
-	if(degree()){ untested();
-	}else{ untested();
+	if(degree()){
+	}else{
 		nm.deregisterVertex(this);
 	}
 
@@ -614,18 +614,18 @@ void Wire::disconnectNode(index_t i)
 }
 /*--------------------------------------------------------------------------*/
 bool Wire::isInterior(pos_t const& p) const
-{ untested();
-	if(p == nodePosition(0)){ untested();
+{
+	if(p == nodePosition(0)){
 		return false;
 	}else if(p == nodePosition(1)){itested();
 		return false;
-	}else{ untested();
+	}else{
 		return isNet(p);
 	}
 }
 /*--------------------------------------------------------------------------*/
 bool Wire::isNet(pos_t const& p) const
-{ untested();
+{
 	int x = getX(p);
 	int y = getY(p);
 	x -= cx();

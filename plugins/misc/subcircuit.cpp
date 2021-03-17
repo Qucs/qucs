@@ -374,8 +374,8 @@ void Paramset::init(Component const* proto)
 
 	// find painting...
 	if(!symsect){ untested();
-	}else if(!symsect->scope()->size()){ untested();
-	}else if(auto p=dynamic_cast<Painting const*>(symsect)){ untested();
+	}else if(!symsect->scope()->size()){
+	}else if(auto p=dynamic_cast<Painting const*>(symsect)){
 		trace2("got painting from symbol section", symsect->scope()->size(), symsect->numPorts());
 		_painting = p;
 		// check nuber f ports??

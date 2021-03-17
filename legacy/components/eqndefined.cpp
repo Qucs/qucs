@@ -36,7 +36,7 @@ protected:
 	QString netlist() const;
 	void createSymbol();
 
-	void prepare() override{ untested();
+	void prepare() override{
 		createSymbol();
 	}
 }d;
@@ -69,7 +69,7 @@ EqnDefined::EqnDefined(EqnDefined const& p) : Component(p)
 {
   Props.at(0)->Value = p.Props.at(0)->Value;
   Props.at(1)->Value = p.Props.at(1)->Value;
-  recreate(0); // what?
+//  recreate(0); // what?
 }
 void EqnDefined::setParameter(index_t i, std::string const& v)
 {

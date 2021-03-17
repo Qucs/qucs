@@ -58,7 +58,7 @@ ostream_t::ostream_t(std::string f)
 	auto q = new QFile(QString_(f)); // memory leak
 	if(!q->open(QIODevice::WriteOnly | QFile::Truncate)) { untested();
 		throw qucs::Exception("can't open " + f + " for writing");
-	}else{ untested();
+	}else{
 	}
 	_s = new QTextStream(q);
 }
