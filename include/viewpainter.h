@@ -125,6 +125,12 @@ public: // just forward
 	QTransform worldMatrix(){
 		return Painter->worldTransform();
 	}
+	void scale(float x, float y){
+		Painter->scale(x, y);
+	}
+	void translate(float x, float y){
+		Painter->translate(x, y);
+	}
 	void translate(pos_t const& p){
 		Painter->translate(getX(p), getY(p));
 	}

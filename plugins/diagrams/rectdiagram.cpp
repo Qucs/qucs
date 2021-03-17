@@ -231,8 +231,8 @@ public:
 
 private:
 	rect_t bounding_rect() const override{ itested();
-		QPointF tl(0, -y2); // eek
-		QPointF br(x2, 0);
+		QPointF tl(0, -_height); // eek
+		QPointF br(_width, 0);
 		return rect_t(QRectF(tl, br));
 	}
    void paint(ViewPainter* v) const override{
@@ -250,11 +250,11 @@ private:
 private:
 	// does not work.
 	QWidget* newWidget(){ itested();
-		trace2("rect newWidget", short_label(), y2);
+		trace2("rect newWidget", short_label(), _height);
 		if(_widget){ untested();
 		}else{ untested();
 			_widget = new RectDiagramWidget(this);
-			_widget->move(0, -y2); // gaah. the origin must be in the top left corner.
+			_widget->move(0, -_height); // gaah. the origin must be in the top left corner.
 		}
 		return _widget;
 	}

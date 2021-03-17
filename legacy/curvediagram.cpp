@@ -37,6 +37,9 @@
 #include "obsolete_stuff.h"
 #include "diagram.h"
 
+#define x2 _width
+#define y2 _height
+
 namespace{
 
 using namespace qucs;

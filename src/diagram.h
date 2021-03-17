@@ -193,10 +193,9 @@ public: // from mouseactions.cpp
 //  bool pressElement(SchematicDoc* Doc, Element*& selElem, QMouseEvent* Event);
 
 protected: // FIXME
-  int x2;
-  int y2;
-private:
-  int Bounding_x1, Bounding_x2, Bounding_y1, Bounding_y2;
+  int _width;
+  int _height;
+
 protected:
   QString Name; // the label, but sometimes the type. yikes.
 private:

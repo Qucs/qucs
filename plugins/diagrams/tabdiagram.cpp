@@ -75,7 +75,7 @@ private:
 	QWidget* newWidget(){ untested();
 		QWidget* w=new DiagramWidget(this);
 		//w->move(_cx, _cy-y2); // gaah. the origin must be in the top left corner.
-		w->move(0, -y2); // gaah. the origin must be in the top left corner.
+		w->move(0, -_height); // gaah. the origin must be in the top left corner.
 		return w;
 	}
 
@@ -95,8 +95,8 @@ TabDiagram::TabDiagram(int _cx, int _cy) : Diagram(_cx, _cy)
 {
   x1 = 0;    // no extension to select area
   y1 = 0;
-  x2 = x3 = 300;  // initial size of diagram
-  y2 = 200;
+  _width = x3 = 300;  // initial size of diagram
+  _height = 200;
   Name = "Tab";
   xAxis.limit_min = 0.0;  // scroll bar position (needs to be saved in file)
 

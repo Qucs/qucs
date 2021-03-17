@@ -38,6 +38,7 @@
 #include "painting.h"
 #include "qucs_app.h"
 #include "qucs_globals.h"
+#include "qt_compat.h"
 #include "some_font_stuff.h"
 
 #include <QLineEdit>
@@ -74,13 +75,17 @@ private: // Diagram
 	virtual diag_coordinate_t calcCoordinate(double const& x, double const& y) const;
 
 private: // Painting
-	rect_t bounding_rect() const override { itested();
-		QPointF tl(0, -y2); // eek
-		QPointF br(x2, 0);
-		return rect_t(QRectF(tl, br));
-	}
-
 	void paint(ViewPainter* v) const override;
+
+	// careful: the bounding box is not where you'd expect.
+	// The whole thing seems shifted, not mirrored
+	rect_t bounding_rect() const override
+	{ untested();
+		assert(_height);
+		assert(_width);
+		return rect_t(0, -_height, _width, _height);
+	}
+/*--------------------------------------------------------------------------*/
 
 	void prepare() override{itested();
 		Diagram::prepare();
@@ -216,8 +221,8 @@ RectDiagram::RectDiagram() : Diagram(0, 0)
 {itested();
   x1 = 10;      // position of label text
   y1 = y3 = 33;
-  x2 = 240;    // initial size of diagram
-  y2 = 160;
+  _width = 240;    // initial size of diagram
+  _height = 160;
   x3 = 247;    // with some distance for right axes text
 
   setTypeName("Rect");
@@ -242,10 +247,10 @@ Diagram::diag_coordinate_t RectDiagram::calcCoordinate(double const& x_, double 
 		if(x <= 0.0) {
 			xret = -1e5;   // "negative infinity"
 		}else{
-			xret = float(log10(x)/log10(xAxis.up / xAxis.low) * double(x2));
+			xret = float(log10(x)/log10(xAxis.up / xAxis.low) * double(_width));
 		}
 	}else{ untested();
-		xret = float((x-xAxis.low)/(xAxis.up-xAxis.low)*double(x2));
+		xret = float((x-xAxis.low)/(xAxis.up-xAxis.low)*double(_width));
 	}
 
 	if(yAxis.log) { untested();
@@ -253,14 +258,14 @@ Diagram::diag_coordinate_t RectDiagram::calcCoordinate(double const& x_, double 
 		//if(yr <= 0.0)  *py = -1e5;   // "negative infinity"
 		//
 		yret = float(log10(y/fabs(yAxis.low)) /
-				log10(yAxis.up/yAxis.low) * double(y2));
+				log10(yAxis.up/yAxis.low) * double(_height));
 	}else{ itested();
 		//    if(fabs(yi) > 1e-250) {
 		//      // preserve negative values if not complex number
 		//      yr = sqrt(yr*yr + yi*yi);
 		//    }else{
 		//    }
-		yret = float((y-yAxis.low)/(yAxis.up-yAxis.low)*double(y2));
+		yret = float((y-yAxis.low)/(yAxis.up-yAxis.low)*double(_height));
 	}
 
 	if(!std::isfinite(xret)){ untested();
@@ -272,7 +277,11 @@ Diagram::diag_coordinate_t RectDiagram::calcCoordinate(double const& x_, double 
 	}else{ itested();
 	}
 
-	return diag_coordinate_t(xret, yret);
+	// mirror up, because origin is in lower left corner.
+	return diag_coordinate_t(xret, -yret);
+
+	// move up, because origin is in lower left corner?
+	return diag_coordinate_t(xret, yret-_height);
 }
 
 // --------------------------------------------------------------
@@ -292,10 +301,10 @@ void RectDiagram::calcLimits()
 
   if(xAxis.autoScale) {// check before, to preserve limit exchange (max < min)
     if(xAxis.log) { untested();
-      calcAxisLogScale(&xAxis, i, a, b, c, x2);
+      calcAxisLogScale(&xAxis, i, a, b, c, _width);
       xAxis.step = 1.0;
     }else{
-      calcAxisScale(&xAxis, a, b, c, xAxis.step, double(x2));
+      calcAxisScale(&xAxis, a, b, c, xAxis.step, double(_width));
     }
     xAxis.limit_min = xAxis.low;
     xAxis.limit_max = xAxis.up;
@@ -305,10 +314,10 @@ void RectDiagram::calcLimits()
   if(yAxis.autoScale) {
     // check before, to preserve limit exchange (max < min)
     if(yAxis.log) { untested();
-      calcAxisLogScale(&yAxis, i, a, b, c, y2);
+      calcAxisLogScale(&yAxis, i, a, b, c, _height);
       yAxis.step = 1.0;
     }else {
-      calcAxisScale(&yAxis, a, b, c, yAxis.step, double(y2));
+      calcAxisScale(&yAxis, a, b, c, yAxis.step, double(_height));
     }
     yAxis.limit_min = yAxis.low;
     yAxis.limit_max = yAxis.up;
@@ -332,7 +341,7 @@ int RectDiagram::calcDiagram()
 	y1 = 18; // was: QucsSettings.fontSize() + 6;
 
 	x1 = 10;      // position of label text
-	x3 = x2 + 7;
+	x3 = _width + 7;
 	QString tmp;
 	bool back = false;
 	int  z, w, valid = 0;
@@ -363,22 +372,22 @@ int RectDiagram::calcDiagram()
 		}else{
 		}
 
-		back = calcAxisLogScale(&xAxis, z, zD, zDstep, corr, x2);
+		back = calcAxisLogScale(&xAxis, z, zD, zDstep, corr, _width);
 
 		if(back){ untested();
-		  	z = x2;
+		  	z = _width;
 		}else{itested();
 		}
-		while((z <= x2) && (z >= 0)) {itested();
+		while((z <= _width) && (z >= 0)) {itested();
 	  		// create grid lines
 			if(!xAxis.GridOn){ untested();
-			}else if(z >= x2){itested();
+			}else if(z >= _width){itested();
 			}else if(z > 0){itested();
-				Lines.prepend(new Line(z, y2, z, 0, GridPen));  // x grid
+				Lines.prepend(new Line(z, _height, z, 0, GridPen));  // x grid
 			}else{itested();
 			}
 
-			if((zD < 1.5*zDstep) || (z == 0) || (z == x2)) {itested();
+			if((zD < 1.5*zDstep) || (z == 0) || (z == _width)) {itested();
 				tmp = misc::StringNiceNum(zD);
 				if(xAxis.up < 0.0)  tmp = '-'+tmp;
 				w = metrics.width(tmp);  // width of text
@@ -392,14 +401,14 @@ int RectDiagram::calcDiagram()
 			if(zD > 9.5*zDstep)  zDstep *= 10.0;
 			if(back) { untested();
 				z = int(corr*log10(zD / fabs(xAxis.up)) + 0.5); // int() implies floor()
-				z = x2 - z;
+				z = _width - z;
 			}else{itested();
 				z = int(corr*log10(zD / fabs(xAxis.low)) + 0.5);// int() implies floor()
 			}
 		}
 	}else{ untested();
 		// not logarithmical
-		calcAxisScale(&xAxis, GridNum, zD, zDstep, GridStep, double(x2));
+		calcAxisScale(&xAxis, GridNum, zD, zDstep, GridStep, double(_width));
 		trace1("RectDiagram::calcDiagram done axisScele", GridNum);
 
 		double Expo;
@@ -411,7 +420,7 @@ int RectDiagram::calcDiagram()
 
 		zD += 0.5;     // perform rounding
 		z = int(zD);   //  "int(...)" implies "floor(...)"
-		while((z <= x2) && (z >= 0)) { untested();
+		while((z <= _width) && (z >= 0)) { untested();
 			// create grid lines
 			if(fabs(GridNum) < 0.01*pow(10.0, Expo)){
 			  	GridNum = 0.0;// make 0 really 0
@@ -424,9 +433,9 @@ int RectDiagram::calcDiagram()
 			GridNum += GridStep;
 
 			if(!xAxis.GridOn){
-			}else if(z >= x2){
+			}else if(z >= _width){
 			}else	if(z > 0){
-				Lines.prepend(new Line(z, y2, z, 0, GridPen)); // x grid
+				Lines.prepend(new Line(z, _height, z, 0, GridPen)); // x grid
 			}else{
 			}
 
@@ -450,16 +459,18 @@ int RectDiagram::calcDiagram()
 
 Frame:
 	// outer frame
-	Lines.append(new Line(0,  y2, x2, y2, QPen(Qt::black,0)));
-	Lines.append(new Line(x2, y2, x2,  0, QPen(Qt::black,0)));
-	Lines.append(new Line(0,   0, x2,  0, QPen(Qt::black,0)));
-	Lines.append(new Line(0,  y2,  0,  0, QPen(Qt::black,0)));
-	trace3("rectdiagram", Lines.size(), y2, x2);
+	Lines.append(new Line(0,  _height, _width, _height, QPen(Qt::black,0)));
+	Lines.append(new Line(_width, _height, _width,  0, QPen(Qt::black,0)));
+	Lines.append(new Line(0,   0, _width,  0, QPen(Qt::black,0)));
+	Lines.append(new Line(0,  _height,  0,  0, QPen(Qt::black,0)));
+	trace3("rectdiagram", Lines.size(), _height, _width);
 	trace2("rectdiagram", Texts.size(), Arcs.size());
 	return valid;
 }
 
 // ------------------------------------------------------------
+
+
 #if 0
 bool RectDiagram::insideDiagram(float x, float y) const
 { untested();
@@ -487,6 +498,11 @@ Element* RectDiagram::info(QString& Name, char* &BitmapFile, bool getNewOne)
 #endif
 void RectDiagram::paint(ViewPainter* v) const
 {
+
+	// move the view down. that moves the drawing up...
+	// v->translate(0, -_height);
+ 	v->scale(1.0, -1.0);
+
 	Diagram const* cd = this;
 	Diagram* d=const_cast<Diagram*>(cd);
 	d->paintDiagram(v); // really?
@@ -506,12 +522,16 @@ void RectDiagram::paint(ViewPainter* v) const
 
 	assert(subckt());
 
+	// v->translate(0, _height);
+	v->scale(1.0, -1.0);
+
 	for(auto x : *subckt()){
 		if(auto p=dynamic_cast<Painting const*>(x)) {
 			p->paint(v);
 		}else{
 		}
 	}
+
 	//		Element::paint(p);
 }
 /*--------------------------------------------------------------------------*/
@@ -666,10 +686,10 @@ if(Axis->log) { untested();
   }
   else  if(Axis->limit_min*Axis->limit_max <= 0.0)  return false;  // invalid
 
-  back = calcAxisLogScale(Axis, z, zD, zDstep, corr, y2);
+  back = calcAxisLogScale(Axis, z, zD, zDstep, corr, _height);
 
-  if(back) z = y2;
-  while((z <= y2) && (z >= 0)) {    // create all grid lines
+  if(back) z = _height;
+  while((z <= _height) && (z >= 0)) {    // create all grid lines
 #if 0
     if(Axis->GridOn)  if(z < y2)  if(z > 0)
       Lines.prepend(new Line(0, z, x2, z, GridPen));  // y grid
@@ -696,14 +716,14 @@ if(Axis->log) { untested();
     if(zD > 9.5*zDstep)  zDstep *= 10.0;
     if(back) { untested();
       z = int(corr*log10(zD / fabs(Axis->up)) + 0.5); // int() implies floor()
-      z = y2 - z;
+      z = _height - z;
     }
     else
       z = int(corr*log10(zD / fabs(Axis->low)) + 0.5);// int() implies floor()
   }
 }
 else {  // not logarithmical
-  back = calcAxisScale(Axis, GridNum, zD, zDstep, GridStep, double(y2));
+  back = calcAxisScale(Axis, GridNum, zD, zDstep, GridStep, double(_height));
 
   double Expo;
   if(Axis->up == 0.0)  Expo = log10(fabs(Axis->up-Axis->low));
@@ -711,7 +731,7 @@ else {  // not logarithmical
 
   zD += 0.5;     // perform rounding
   z = int(zD);   //  "int(...)" implies "floor(...)"
-  while((z <= y2) && (z >= 0)) {  // create all grid lines
+  while((z <= _height) && (z >= 0)) {  // create all grid lines
     if(fabs(GridNum) < 0.01*pow(10.0, Expo)) GridNum = 0.0;// make 0 really 0
     tmp = misc::StringNiceNum(GridNum);
 
@@ -724,7 +744,7 @@ else {  // not logarithmical
       GridNum += GridStep;
 
 
-///     if(Axis->GridOn && z < y2 && z > 0){
+///     if(Axis->GridOn && z < _height && z > 0){
 ///       Lines.prepend(new Line(0, z, x2, z, GridPen));  // y grid
 ///     }else{
 ///      }
@@ -733,8 +753,8 @@ else {  // not logarithmical
     z = int(zD);
   }
 } // of "if(ylog) ... else ..."
-  if(x0 == 0)  x1 = maxWidth+14;
-  else  x3 = x2+maxWidth+14;
+  if(x0 == 0)  x1 = maxWidth + 14;
+  else  x3 = _width + maxWidth + 14;
   return true;
 }
 /*--------------------------------------------------------------------------*/
@@ -789,7 +809,7 @@ void RectDiagram::recalcGraphData()
 void RectDiagram::getAxisLimits(CommonData const* g)
 {itested();
 	trace0("RectDiagram::getAxisLimits");
-	int z=0;
+	int z = 0;
 	double x, y, *p;
 	QString var, find;
 	auto pg = dynamic_cast<SimOutputData const*>(g);

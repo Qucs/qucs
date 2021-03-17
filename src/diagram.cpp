@@ -56,12 +56,8 @@ namespace qucs {
 
 Diagram::Diagram(Diagram const& p)
   : Element(p),
-    x2(p.x2),
-    y2(p.y2),
-    Bounding_x1(p.Bounding_x1),
-    Bounding_x2(p.Bounding_x2),
-    Bounding_y1(p.Bounding_y1),
-    Bounding_y2(p.Bounding_y2),
+    _width(p._width),
+    _height(p._height),
     Name(p.Name) // yikes.
 {
 
@@ -90,7 +86,7 @@ Diagram::Diagram(int cx, int cy)
   
   // x1, x2, y1, y2 are the selectable boundings of the diagram, but these
   // are the real boundings. They are set in "createAxisLabels()".
-  Bounding_x1 = Bounding_x2 = Bounding_y1 = Bounding_y2 = 0;
+  // Bounding_x1 = Bounding_x2 = Bounding_y1 = Bounding_y2 = 0;
 
   xAxis.numGraphs = yAxis.numGraphs = zAxis.numGraphs = 0;
   xAxis.min = xAxis.low =
@@ -147,10 +143,10 @@ void Diagram::set_param_by_index(index_t i, std::string const& v)
 		cy = n.toInt(&ok);
 		break;
 	case 2: untested();
-		x2 = n.toInt(&ok);
+		_width = n.toInt(&ok);
 		break;
 	case 3: untested();
-		y2 = n.toInt(&ok);
+		_height = n.toInt(&ok);
 		break;
 	case 4:
 		c = n.at(0).toLatin1() - '0';
@@ -173,7 +169,7 @@ void Diagram::set_param_by_index(index_t i, std::string const& v)
 		break;
 	}
 
-	trace4("Diag param", cx, cy, x2, y2);
+	trace4("Diag param", cx, cy, _width, _height);
 
 	if(!ok){
 		throw qucs::Exception("bad value");
@@ -196,10 +192,10 @@ void Diagram::paintDiagram(ViewPainter *p)
       p->setPen(QPen(Qt::darkGray,3));
       p->drawRect(x_-5, y_-5, TO_INT(fx_), TO_INT(fy_));
       p->setPen(QPen(Qt::darkRed,2));
-      p->drawResizeRect(0, y2);  // markers for changing the size
+      p->drawResizeRect(0, _height);  // markers for changing the size
       p->drawResizeRect(0, 0);
-      p->drawResizeRect(x2, y2);
-      p->drawResizeRect(x2, 0 );
+      p->drawResizeRect(_width, _height);
+      p->drawResizeRect(_width, 0 );
     }
 #endif
 }
@@ -235,7 +231,7 @@ void Diagram::createAxisLabels()
   int LineSpacing = metrics.lineSpacing();
 
   nfreqa=0;
-  x = (x2>>1);
+  x = _width / 2;
   y = -y1;
   if(xAxis.Label.isEmpty()) {itested();
     // write all x labels ----------------------------------------
@@ -265,16 +261,16 @@ void Diagram::createAxisLabels()
     if(w > wmax)  wmax = w;
     // Texts.append(new Text(x-w, y, Str, Qt::black, 12.0));
   }
-  Bounding_y2 = 0;
-  Bounding_y1 = y - LineSpacing;
-  Bounding_x2 = wmax - (x2 >> 1);
-  if(Bounding_x2 < 0) Bounding_x2 = 0;
-  Bounding_x1 = Bounding_x2;
+  // Bounding_y2 = 0;
+  // Bounding_y1 = y - LineSpacing;
+  // Bounding_x2 = wmax - (x2 >> 1);
+  // if(Bounding_x2 < 0) Bounding_x2 = 0;
+  // Bounding_x1 = Bounding_x2;
 
 
   wmax = 0;
   x = -x1;
-  y = y2>>1;
+  y = _height / 2;
   if(yAxis.Label.isEmpty()) {itested();
     // draw left y-label for all graphs ------------------------------
 #if 0
@@ -307,11 +303,11 @@ void Diagram::createAxisLabels()
     // Texts.append(new Text(x, y-w, Str, Qt::black, 12.0, 0.0, 1.0));
     x -= LineSpacing;
   }
-  if(Bounding_x1 < -x) Bounding_x1 = -x;
+//   if(Bounding_x1 < -x) Bounding_x1 = -x;
 
 
   x = x3;
-  y = y2>>1;
+  y = _height / 2;
   if(zAxis.Label.isEmpty()) {itested();
     // draw right y-label for all graphs ------------------------------
 #if 0
@@ -346,20 +342,20 @@ void Diagram::createAxisLabels()
     if(w > wmax)  wmax = w;
     // Texts.append(new Text(x, y+w, Str, Qt::black, 12.0, 0.0, -1.0));
   }
-  x -= x2;
-  if(Bounding_x2 < x){
-    Bounding_x2 = x;
-  }else{
-  }
+  x -= _width;
+//  if(Bounding_x2 < x){
+//    Bounding_x2 = x;
+//  }else{
+//  }
 
-  wmax -= y2 >> 1;
+  wmax -= _height / 2;
   if(wmax > 0) { untested();
-    Bounding_y2 = wmax;
+//    Bounding_y2 = wmax;
     wmax *= -1;
-    if(wmax < Bounding_y1) Bounding_y1 = wmax;
+//    if(wmax < Bounding_y1) Bounding_y1 = wmax;
   }else{
   }
-}
+} // createAxisLabels
 
 // ------------------------------------------------------------
 #if 0
@@ -628,7 +624,7 @@ void Diagram::finishMarkerCoordinates(float& fCX, float& fCY) const
 QString Diagram::save() const
 {
   QString s = "<"+Name+" "+QString::number(cx())+" "+QString::number(cy())+" ";
-  s += QString::number(x2)+" "+QString::number(y2)+" ";
+  s += QString::number(_width)+" "+QString::number(_height)+" ";
   char c = '0';
   if(xAxis.GridOn){
 	  c |= 1;
@@ -725,14 +721,14 @@ bool Diagram::load(const QString& Line, istream_t& stream)
 	setCenter(pos_t(cx, cy));
 
 	n  = s.section(' ',3,3);    // x2
-	x2 = n.toInt(&ok);
+	_width = n.toInt(&ok);
 	if(!ok){ untested();
 		return false;
 	}else{
 	}
 
 	n  = s.section(' ',4,4);    // y2
-	y2 = n.toInt(&ok);
+	_height = n.toInt(&ok);
 	if(!ok) return false;
 
 	char c;
@@ -861,13 +857,6 @@ Widget* Diagram::schematicWidget(Doc* Doc) const
   incomplete();
   return nullptr;
 //  return new DiagramDialog(Doc); // memory leak?
-}
-/*--------------------------------------------------------------------------*/
-rect_t Diagram::bounding_rect() const
-{ untested();
-	QPointF tl(0, -y2); // eek
-	QPointF br(x2, 0);
-	return rect_t(QRectF(tl, br));
 }
 /*--------------------------------------------------------------------------*/
 void Axis::fit_in_data(double lo, double hi)

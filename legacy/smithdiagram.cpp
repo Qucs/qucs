@@ -35,6 +35,10 @@
 #include "qucs_globals.h"
 #include "module.h"
 
+
+#define x2 _width
+#define y2 _height
+
 namespace{
 
 using namespace qucs;
