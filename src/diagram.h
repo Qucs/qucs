@@ -124,12 +124,9 @@ public: // Parameters
 //	virtual bool paramIsPrintable()const;
 	virtual void set_param_by_name(std::string const&, std::string const&){unreachable();}
 	virtual void set_param_by_index(index_t, std::string const&);
-	virtual std::string param_value(index_t i) const{ untested();
-		throw qucs::ExceptionCantFind( short_label(), std::to_string(i), "params");
-	}
-	virtual std::string param_name(index_t n) const{ untested();
-		throw qucs::ExceptionCantFind( short_label(), std::to_string(n), "params");
-	}
+	virtual std::string param_by_name(std::string const& n)const;
+	virtual std::string param_value(index_t i) const;
+	virtual std::string param_name(index_t n) const;
 
 public:
 	ElementList* scope(){ return _subckt; }

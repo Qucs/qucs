@@ -151,7 +151,6 @@ private:
 			QCustomPlot::xAxis->setRange(minx, maxx);
 			QCustomPlot::yAxis->setRange(miny, maxy);
 
-
 		}else{
 			incomplete();
 		}
@@ -165,12 +164,36 @@ private:
 			CommonData::attach(d->common(), &p);
 			copy_graph_data(p, i);
 			CommonData::detach(&p);
+
+
 		}else{
 		}
 	}
 
 	void refresh_plots(){
+		assert(_diag);
 		int k = 0;
+		try{
+			if(_diag->param_by_name("$$xaxislog")=="1"){
+				xAxis->setScaleType(QCPAxis::stLogarithmic);
+			}else{
+				xAxis->setScaleType(QCPAxis::stLinear);
+			}
+		}catch(...){
+			incomplete();
+				// xAxis->setScaleType(QCPAxis::stLogarithmic);
+		}
+		try{
+			if(_diag->param_by_name("$$yaxislog")=="1"){
+				yAxis->setScaleType(QCPAxis::stLogarithmic);
+			}else{
+				yAxis->setScaleType(QCPAxis::stLinear);
+			}
+		}catch(...){
+			incomplete();
+				// yAxis->setScaleType(QCPAxis::stLogarithmic);
+		}
+
 		for(auto i : *_diag->scope()){
 			if(auto d=prechecked_cast<Data const*>(i)){
 				add_data(d, k);
@@ -280,148 +303,6 @@ RectDiagram::RectDiagram(RectDiagram const& c)
 	scope()->push_back(v);
 #endif
 }
-/*--------------------------------------------------------------------------*/
-// obsolete.
-#if 0
-bool RectDiagram::load(const QString& Line, istream_t& stream)
-{
-	trace1("RD obsolet load", Line);
-	incomplete();
-	bool ok;
-	QString s = Line;
-
-	if(s.at(0) != '<') return false;
-	if(s.at(s.length()-1) != '>'){ untested();
-		return false;
-	}else{ untested();
-	}
-	s = s.mid(1, s.length()-2);   // cut off start and end character
-
-	QString n;
-	n = s.section(' ',9,9);   // xAxis.autoScale
-	if(n.at(0) == '"') {
-		// seems to be a label.
-	}else{
-		// backward compatible
-		if(n == "1") {
-			xAxis.autoScale = true;
-		}else{
-			xAxis.autoScale = false;
-		}
-
-		n = s.section(' ',10,10);    // xAxis.limit_min
-		xAxis.limit_min = n.toDouble(&ok);
-		if(!ok) return false;
-
-		n = s.section(' ',11,11);  // xAxis.step
-		xAxis.step = n.toDouble(&ok);
-		if(!ok) return false;
-
-		n = s.section(' ',12,12);  // xAxis.limit_max
-		xAxis.limit_max = n.toDouble(&ok);
-		if(!ok) return false;
-
-		n = s.section(' ',13,13);    // yAxis.autoScale
-		if(n == "1")  yAxis.autoScale = true;
-		else  yAxis.autoScale = false;
-
-		n = s.section(' ',14,14);    // yAxis.limit_min
-		yAxis.limit_min = n.toDouble(&ok);
-		if(!ok) return false;
-
-		n = s.section(' ',15,15);    // yAxis.step
-		yAxis.step = n.toDouble(&ok);
-		if(!ok) return false;
-
-		n = s.section(' ',16,16);    // yAxis.limit_max
-		yAxis.limit_max = n.toDouble(&ok);
-		if(!ok) return false;
-
-		n = s.section(' ',17,17);    // zAxis.autoScale
-		if(n == "1")  zAxis.autoScale = true;
-		else  zAxis.autoScale = false;
-
-		n = s.section(' ',18,18);    // zAxis.limit_min
-		zAxis.limit_min = n.toDouble(&ok);
-		if(!ok) return false;
-
-		n = s.section(' ',19,19);    // zAxis.step
-		zAxis.step = n.toDouble(&ok);
-		if(!ok) return false;
-
-		n = s.section(' ',20,20);    // zAxis.limit_max
-		zAxis.limit_max = n.toDouble(&ok);
-		if(!ok) return false;
-
-		n = s.section(' ',21,21); // rotX
-		if(n.at(0) != '"') {
-			// backward compatible
-			rotX = n.toInt(&ok);
-			if(!ok) return false;
-
-			n = s.section(' ',22,22); // rotY
-			rotY = n.toInt(&ok);
-			if(!ok) return false;
-
-			n = s.section(' ',23,23); // rotZ
-			rotZ = n.toInt(&ok);
-			if(!ok) return false;
-		}else{ untested();
-		}
-	}
-
-	trace3("load diag", short_label(), Element::cx(), Element::cy());
-
-
-	xAxis.Label = s.section('"',1,1);   // xLabel
-	yAxis.Label = s.section('"',3,3);   // yLabel left
-	zAxis.Label = s.section('"',5,5);   // yLabel right
-
-	return true; // use new__instance, below.
-
-//	Graph *pg;
-	// .......................................................
-	// load graphs of the diagram
-	while(!stream.atEnd()) {
-		s = QString_(stream.read_line());
-		s = s.trimmed();
-		if(s.isEmpty()) continue;
-
-		//trace2("diagram::load", Name, short_label());
-		if(s == ("</"+QString_(short_label())+">")){
-			return true;  // found end tag ?
-		}else if(s.section(' ', 0,0) == "<Mkr") { untested();
-
-			// .......................................................
-			// load markers of the diagram
-#if 0
-			pg = Graphs.last();
-			if(!pg){ untested();
-				return false;
-			}else{ untested();
-			}
-			assert(pg->parentDiagram() == this);
-			Marker *pm = new Marker(pg);
-			if(!pm->load(s)) { untested();
-				delete pm;
-				return false;
-			}
-			pg->Markers.append(pm);
-			continue;
-		}else{
-			pg = new Graph(this);
-			trace2("graph load", s, Name);
-			if(!pg->load(s)) { untested();
-				delete pg;
-				return false;
-			}
-			Graphs.append(pg);
-#endif
-		}
-	}
-	return false;   // end tag missing
-}
-#endif
 /*--------------------------------------------------------------------------*/
 static Diagram* parseDiagram(RectDiagram* d, istream_t& cmd)
 {

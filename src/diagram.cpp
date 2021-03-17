@@ -125,6 +125,33 @@ index_t Diagram::param_count() const
   return 8; // yikes. too many.
 }
 
+// not sure if this is needed.
+std::string Diagram::param_by_name(std::string const& n)const
+{
+	if(n == "$$xaxislog"){ untested();
+		return std::to_string(xAxis.log);
+	}else if(n == "$$yaxislog"){ untested();
+		return std::to_string(yAxis.log);
+	}else{ untested();
+		incomplete();
+	}
+}
+
+std::string Diagram::param_value(index_t i)const
+{
+	if(i==7){
+		incomplete(); // some mangling. move to legacy.
+		return std::to_string(xAxis.log);
+	}else{
+		throw qucs::ExceptionCantFind( short_label(), std::to_string(i), "params");
+	}
+}
+
+std::string Diagram::param_name(index_t n) const
+{
+	throw qucs::ExceptionCantFind( short_label(), std::to_string(n), "params");
+}
+
 void Diagram::set_param_by_index(index_t i, std::string const& v)
 { untested();
 
