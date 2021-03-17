@@ -559,3 +559,290 @@ bool DiagramDialog::testvar (QString a)
     return false;
 }
 #endif
+
+/* PHASOR AND WAVEAC RELATED CODE
+//only for phasor diagram detect if the points are in the diagram,
+//  if not tell with are the limits that the point has passed
+bool Diagram::insideDiagramPh(Graph::iterator const& p ,float* xn, float* yn) const 
+{ untested();
+  float f1 = p->getScrX();
+  float f2 = p->getScrY();
+  float xa,ya;
+
+  xa = f1;
+  ya = f2;
+
+  if(f1 < 0.0)
+    xa = 0.0;
+  if(f1 > float(x2))
+    xa = float(x2);
+  if(f2 < 0.0)
+    ya = 0.0;
+  if(f2 > float(y2))
+    ya = float(y2);
+  
+  *xn = xa;
+  *yn = ya;
+
+  return ((xa == f1)&&(ya == f2));
+}
+//for phasor if the original point isn't in diagram with the limits calculated in insideDiagramPh
+//  will create a point inside the diagram if possible
+bool Diagram::newcoordinate(Graph::iterator const& p,float* xn, float* yn) const
+{ untested();
+  float f1 = (p-1)->getScrX();
+  float f2 = (p-1)->getScrY();
+  float f3 = p->getScrX();
+  float f4 = p->getScrY();
+  float xc = *xn;
+  float yc = *yn;
+  float xt,yt;
+  float d;
+  float b;
+  
+  if(((f1 > f3 - 3) && (f1 < f3 + 3)) || ((f2 > f4 - 3) && (f2 < f4 + 3)))
+  { untested();
+    d = 0.0;
+    b = 0.0;
+  }
+  else
+  { untested();
+    d = (f4 - f2) / (f3 - f1);
+    b = f2 - d * f1;
+  }
+
+
+  if((f1 > f3 - 3) && (f1 < f3 + 3) && (f2 != f4))
+  { untested();
+    xt = f1;
+    yt = yc;
+  }
+  else
+  { untested();
+    if((f2 > f4 - 3) && (f2 < f4 + 3) && (f1 != f3))
+    { untested();
+      xt = xc;
+      yt = f2;
+    }
+    else
+    { untested();
+      yt = d*xc + b;
+      xt = (yc - b) / d;
+    }
+  }
+  if((yt >= 0.0) && (yt <= float(y2)))
+  { untested();
+      *yn = yt;
+      return true;
+  }
+  else
+  { untested();
+    if((xt >= 0.0) && (xt <= float(x2)))
+    { untested();
+	*xn = xt;
+	return true;
+    }
+    else
+	return false;
+	
+  }  
+}
+
+//  will read the values receive and find if is one the values determined by AC and remove repeated number.
+//  if there isn't any value that match will find the closest number and replace
+void Diagram::findfreq(Graph *g)
+{ untested();
+  if(freq!=nullptr) delete[] freq;
+  freq= nullptr;
+  int z = QString::compare(g->axis(0)->Var,"acfrequency",Qt::CaseInsensitive);//meaning that only work in AC 
+  if(z != 0)
+  { untested();
+    nfreqt=1;
+    freq = new double;
+    freq[0] = 0;
+    sfreq = "0 Hz;";
+    return;
+  }
+  double scale = 1.0;
+  QString num;
+  bool ok;
+  double freqnum;
+  int n=0; 
+  int m=0;
+  int a;
+  QString value;
+  int s;
+  n=sfreq.count(';')+1;
+  freq= new double[n];
+
+  do{ untested();
+    n = sfreq.indexOf(";",m,Qt::CaseInsensitive);
+    if(n==-1 || Name == "Waveac") n = sfreq.size()-1;
+    value=sfreq.mid(m,n+1-m);
+    a=value.size();
+
+    if(value.indexOf("ghz",0,Qt::CaseInsensitive) != -1)
+    { untested();
+      scale = 1e9;
+      a = value.indexOf("ghz",0,Qt::CaseInsensitive);    
+    }
+    else if(value.indexOf("mhz",0,Qt::CaseInsensitive) != -1)
+    { untested();
+      scale = 1e6;
+      a = value.indexOf("mhz",0,Qt::CaseInsensitive);     
+    }
+    else if(value.indexOf("khz",0,Qt::CaseInsensitive) != -1)
+    { untested();
+      scale = 1e3;
+      a = value.indexOf("khz",0,Qt::CaseInsensitive);
+    }
+    else if(value.indexOf("hz",0,Qt::CaseInsensitive) != -1)
+    { untested();
+      scale = 1.0;
+      a = value.indexOf("hz",0,Qt::CaseInsensitive);
+    }
+
+    double *px,f=0;
+    int i,z;
+    double d,dmin=DBL_MAX;
+    num = value.mid(0,a);
+    freqnum = num.toDouble(&ok) * scale;
+    if(!ok)
+    { untested();
+      scale = 1.0;
+      for(s=a;s>0;s--)
+      { untested();
+	num = value.mid(0,s);
+	freqnum = num.toDouble(&ok) * scale;
+	if(ok)
+	{ untested();
+	  value.resize(s);
+	  break;
+	}
+      }
+      if(s==0)
+	goto end;
+    }
+
+    for(i=g->countY; i>0; i--) {  // every branch of curves
+      px = g->axis(0)->Points;
+      for(z=g->axis(0)->count; z>0; z--) {  // every point
+	if(*px > 0)
+	{ untested();
+	  d=fabs(freqnum - *px);
+	  if(d<dmin) 
+	  { untested();
+	    dmin=d;
+	    f= *px; 
+	  }
+	}
+	++px;
+      }
+    }
+    freqnum = f;
+    for(s=0;s<nfreqt;s++)
+    { untested();
+      if(freq[s]==freqnum)
+      { untested();
+	freqnum = 0;
+	break;
+      }
+      if(freq[s]>freqnum)
+      { untested();
+	f=freq[s];
+	freq[s]=freqnum;
+	freqnum=f;
+      }
+    }  
+    if(freqnum == 0) 
+    { untested();
+      value.clear();
+      goto end;
+    }
+    nfreqt++;
+    freq[nfreqt-1]=freqnum;
+end:
+    m=n+1;
+    
+  }while(n!=sfreq.size()-1);
+
+  if(freqnum==0 &&nfreqt==0)
+  { untested();
+    nfreqt=1;
+    freq[0] = 0;
+    sfreq = "0 Hz;";
+    return;   
+  }
+  nfreqa=0;
+  sfreq.clear();
+  while(nfreqa<nfreqt)
+  { untested();
+    freqnum=freq[nfreqa];
+
+    if(freqnum >= 1e9)
+    { untested();
+      freqnum/= 1e9;
+      value.setNum(freqnum);
+      value+= " GHz;";
+    }
+    else if(freqnum >= 1e6)
+    { untested();
+      freqnum/= 1e6;
+      value.setNum(freqnum);
+      value+= " MHz;";
+    }
+    else if(freqnum >= 1e3)
+    { untested();
+      freqnum/= 1e3;
+      value.setNum(freqnum);
+      value+= " KHz;";
+    }
+    else
+    { untested();
+      value.setNum(freqnum);
+      value+= " Hz;";
+    }
+
+    sfreq.append(value);
+    nfreqa++;
+  }
+
+  
+
+  
+}
+
+// for phasor will find the biggest absolute value of all max limits and replace the others
+void Diagram::setlimitsphasor(Axis *x ,Axis *y)
+{ untested();
+  double yrx,yrn,yix,yin;
+
+    yrn = x->min;
+    yrx = x->max;
+    yin = y->min;
+    yix = y->max;
+
+    if(fabs(yrn) > yrx)
+      yrx = fabs(yrn);
+    else
+      yrn = (-1.0) * yrx;
+
+    if(fabs(yin) > yix)
+      yix = fabs(yin);
+    else
+      yin = (-1.0) * yix;
+    
+    if(yrx < yix)
+      yrx = yix;
+
+    x->max = y->max = yrx ;
+    x->min = y->min = (-1.0) * yrx;
+
+}
+
+//for marker of waveac to find the value of x
+double Diagram::wavevalX(int i) const
+{ untested();
+    return i*xAxis.up/(sc*50); 
+}
+*/

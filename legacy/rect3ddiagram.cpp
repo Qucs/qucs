@@ -38,8 +38,13 @@
 #include "some_font_stuff.h"
 #include "obsolete_paintings.h"
 
+
 Rect3DDiagram::Rect3DDiagram(int _cx, int _cy) : Diagram(_cx, _cy)
 {
+  rotX = 315;  // for 3D diagram
+  rotY = 0;
+  rotZ = 225;
+  hideLines = true;  // hide invisible lines
 	auto cx=Element::cx();
 	auto cy=Element::cy();
   x1 = 10;     // position of label text

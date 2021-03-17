@@ -223,7 +223,7 @@ public:
 	~RectDiagram(){}
 
 public:
-	bool load(const QString& Line, istream_t& stream);
+//	bool load(const QString& Line, istream_t& stream);
 	Element* clone() const override{ untested();
 		return new RectDiagram(*this);
 	}
@@ -282,6 +282,7 @@ RectDiagram::RectDiagram(RectDiagram const& c)
 }
 /*--------------------------------------------------------------------------*/
 // obsolete.
+#if 0
 bool RectDiagram::load(const QString& Line, istream_t& stream)
 {
 	trace1("RD obsolet load", Line);
@@ -420,6 +421,7 @@ bool RectDiagram::load(const QString& Line, istream_t& stream)
 	}
 	return false;   // end tag missing
 }
+#endif
 /*--------------------------------------------------------------------------*/
 static Diagram* parseDiagram(RectDiagram* d, istream_t& cmd)
 {

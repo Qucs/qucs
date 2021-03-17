@@ -634,6 +634,8 @@ bool Marker::getSelected(int, int)
 /*will find the y value of a point in time for waveac*/
 double Marker::wavevalY(double xn,std::vector<double>& VarPos)  
 {
+return 0;
+#if 0
   double n;
   double af=0.0; //angles
   double A = 0.0;
@@ -649,6 +651,7 @@ double Marker::wavevalY(double xn,std::vector<double>& VarPos)
   A = sqrt(yp[1]*yp[1] +yp[0]*yp[0]);
   VarPos[0]=n;
   return A*sin(2*pi*(diag()->freq[0])*xn + af);
+#endif
 }
 // ------------------------------------------------------------------------
 /*

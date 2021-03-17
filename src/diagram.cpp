@@ -112,10 +112,6 @@ Diagram::Diagram(int cx, int cy)
   yAxisI = yAxisV = yAxisP = yAxisZ = yAxis;
   zAxisI = zAxisV = zAxisP = zAxisZ = zAxis;*/
 
-  rotX = 315;  // for 3D diagram
-  rotY = 0;
-  rotZ = 225;
-  hideLines = true;  // hide invisible lines
 
 //  Type = isDiagram;
   GridPen = QPen(Qt::lightGray,0);
@@ -125,9 +121,6 @@ Diagram::Diagram(int cx, int cy)
 
 Diagram::~Diagram()
 {
-  if(freq!=nullptr) delete[] freq;
-  freq= nullptr;
-
   delete _subckt;
 }
 
@@ -162,7 +155,7 @@ void Diagram::set_param_by_index(index_t i, std::string const& v)
 	case 4:
 		c = n.at(0).toLatin1() - '0';
 		xAxis.GridOn = yAxis.GridOn = (c & 1) != 0;
-		hideLines = (c & 2) != 0;
+		// hideLines = (c & 2) != 0; // 3d diagram?
 		break;
 	case 5:
 		co.setNamedColor(n);
@@ -370,24 +363,6 @@ void Diagram::createAxisLabels()
 
 // ------------------------------------------------------------
 #if 0
-int Diagram::regionCode(float x, float y) const
-{ untested();
-  int code=0;   // code for clipping
-  if(x < 0.0)
-    code |= 1;
-  else if(x > float(x2))  // compare as float to avoid integer overflow
-    code |= 2;
-
-  if(y < 0.0)
-    code |= 4;
-  else if(y > float(y2))  // compare as float to avoid integer overflow
-    code |= 8;
-
-  return code;
-}
-#endif
-
-// ------------------------------------------------------------
 // Is virtual. This one is for round diagrams only.
 bool Diagram::insideDiagram(float x, float y) const
 { untested();
@@ -399,7 +374,6 @@ bool Diagram::insideDiagram(float x, float y) const
   return ((x*x + y*y) <= R*R);
 }
 
-#if 0
 // (try to) set a Marker to a diagram
 Marker* Diagram::setMarker(int x, int y)
 { untested();
@@ -596,31 +570,9 @@ for(int zz=0; zz<60; zz+=2)
 
 
 // -------------------------------------------------------
-// doesn't seem to be the bounding box
-void Diagram::Bounding(int& _x1, int& _y1, int& _x2, int& _y2)
-{itested();
-  _x1 =  - Bounding_x1;
-  _y1 =  - y2 - Bounding_y2;
-  _x2 =  + x2 + Bounding_x2;
-  _y2 =  - Bounding_y1;
-  trace5("bounding diag", label(), _x1, _x2, _y1, _y2);
-}
-
-// -------------------------------------------------------
-QRectF Diagram::boundingRect() const
-{itested();
-  int x1_, y1_, x2_, y2_;
-
-  Diagram* d=const_cast<Diagram*>(this);
-  d->Bounding(x1_, y1_, x2_, y2_);
-
-  QPointF tl(0, -y2);
-  QPointF br(x2, 0);
-  return QRectF(tl, br);
-}
-
 // Check if the resize area was clicked. If so return "true" and sets
 // x1/y1 and x2/y2 to the border coordinates to draw a rectangle.
+#if 0
 bool Diagram::resizeTouched(float fX, float fY, float len)
 { untested();
   float fCX = float(cx()), fCY = float(cy());
@@ -638,396 +590,9 @@ bool Diagram::resizeTouched(float fX, float fY, float len)
 
   return true;
 }
+#endif
 
 // --------------------------------------------------------------------------
-
-// --------------------------------------------------------------------------
-#if 0
-void Diagram::loadGraphData(const QString& defaultDataSet)
-{itested();
-  int yNum = yAxis.numGraphs;
-  int zNum = zAxis.numGraphs;
-  yAxis.numGraphs = zAxis.numGraphs = 0;
-
-  double xmin = xAxis.min, ymin = yAxis.min, zmin = zAxis.min;
-  double xmax = xAxis.max, ymax = yAxis.max, zmax = zAxis.max;
-  yAxis.min = zAxis.min = xAxis.min =  DBL_MAX;
-  yAxis.max = zAxis.max = xAxis.max = -DBL_MAX;
-
-  int No=0;
-#if 0
-  foreach(Graph *pg, Graphs) {itested();
-    qDebug() << "load GraphData load" << defaultDataSet << pg->Var;
-    if(pg->loadDatFile(defaultDataSet) != 1)   // load data, determine max/min values
-      No++;
-    getAxisLimits(pg);
-  }
-#endif
-
-  if(No <= 0) {   // All dataset files unchanged ?
-    yAxis.numGraphs = yNum;  // rebuild scrollbar position
-    zAxis.numGraphs = zNum;
-
-    xAxis.min = xmin; yAxis.min = ymin; zAxis.min = zmin;
-    xAxis.max = xmax; yAxis.max = ymax; zAxis.max = zmax;
-    return;    // -> no update neccessary
-  }
-
-  if(xAxis.min > xAxis.max)
-    xAxis.min = xAxis.max = 0.0;
-  if(yAxis.min > yAxis.max)
-    yAxis.min = yAxis.max = 0.0;
-  if(zAxis.min > zAxis.max) 
-    zAxis.min = zAxis.max = 0.0;
-
-/*  if((Name == "Polar") || (Name == "Smith")) {  // one axis only
-    if(yAxis.min > zAxis.min)  yAxis.min = zAxis.min;
-    if(yAxis.max < zAxis.max)  yAxis.max = zAxis.max;
-  }*/
-  updateGraphData();
-}
-#endif
-
-
-// ------------------------------------------------------------------------
-
-// --------------------------------------------------------------------------
-/*!
- * does not (yet) load a dat file. only part of it.
- * this way, it would belong to graph.cpp. but it's too obsolete, lets see..
- *
- * FIXME: must invalidate markers.
- */
-// obsolete.
-#if 0
-int Graph::loadDatFile(const QString&)
-{itested();
-  Graph* g = this;
-  QFile file;
-  QString Variable;
-  QFileInfo Info(fileName);
-
-  int pos = g->Var.indexOf(':');
-//  if(g->Var.right(3) == "].X")  // e.g. stdl[8:0].X
-//    if(pos > g->Var.indexOf('['))
-//      pos = -1;
-
-  /* WORK-AROUND: A bug in SCIM (libscim) which Qt is linked to causes
-     to change the locale to the default. */
-  setlocale (LC_NUMERIC, "C");
-
-  if(pos <= 0) {itested();
-    file.setFileName(fileName);
-    Variable = g->Var;
-  }
-  else { untested();
-    file.setFileName(Info.path()+QDir::separator() + g->Var.left(pos)+".dat");
-    Variable = g->Var.mid(pos+1);
-  }
-
-  Info.setFile(file);
-  if(g->lastLoaded.isValid())
-    if(g->lastLoaded > Info.lastModified())
-      return 1;    // dataset unchanged -> no update neccessary
-
-  g->countY = 0;
-  g->mutable_axes().clear(); // HACK
-  if(g->cPointsY) { delete[] g->cPointsY;  g->cPointsY = 0; }
-  if(Variable.isEmpty()) return 0;
-
-#if 0 // FIXME encapsulation. implement digital waves later.
-  if(Variable.right(2) == ".X")
-    if(Name.at(0) != 'T')
-      return 0;  // digital variables only for tabulars and ziming diagram
-#endif
-
-
-  if(!file.open(QIODevice::ReadOnly))  return 0;
-
-  // *****************************************************************
-  // To strongly speed up the file read operation the whole file is
-  // read into the memory in one piece.
-  QByteArray FileContent;
-  FileContent = file.readAll();
-  file.close();
-  char *FileString = FileContent.data();
-  if(!FileString)  return 0;
-  char *pPos = FileString+FileContent.size()-1;
-  if(*pPos > ' ')  if(*pPos != '>')  return 0;
-  *pPos = 0;
-
-
-  // *****************************************************************
-  // look for variable name in data file  ****************************
-  bool isIndep = false;
-  Variable = "dep "+Variable+" ";
-  // "pFile" is used through-out the whole function and must NOT used
-  // for other purposes!
-  char *pFile = strstr(FileString, Variable.toLatin1());
-  while(pFile) {itested();
-    if(*(pFile-1) == '<')     // is dependent variable ?
-      break;
-    else if(strncmp(pFile-3, "<in", 3) == 0) {  // is independent variable ?
-      isIndep = true;
-      break;
-    }
-    pFile = strstr(pFile+4, Variable.toLatin1());
-  }
-
-  if(!pFile)  return 0;   // data not found
-
-  QString Line, tmp;
-  pFile += Variable.length();
-  pPos = strchr(pFile, '>');
-  if(!pPos)  return 0;   // file corrupt
-  *pPos = 0;
-  Line = QString(pFile);
-  *pPos = '>';
-  pFile = pPos+1;
-  if(!isIndep) {itested();
-    pos = 0;
-    tmp = Line.section(' ', pos, pos);
-    while(!tmp.isEmpty()) {itested();
-      g->mutable_axes().push_back(new DataX(tmp));  // name of independet variable
-      pos++;
-      tmp = Line.section(' ', pos, pos);
-    }
-  }
-
-  // *****************************************************************
-  // get independent variable ****************************************
-  bool ok=true;
-  double *p;
-  int counting = 0;
-  if(isIndep) {    // create independent variable by myself ?
-    counting = Line.toInt(&ok);  // get number of values
-    g->mutable_axes().push_back(new DataX("number", 0, counting));
-    if(!ok)  return 0;
-
-    p = new double[counting];  // memory of new independent variable
-    g->countY = 1;
-    g->mutable_axes().back()->Points = p;
-    for(int z=1; z<=counting; z++)  *(p++) = double(z);
-    auto Axis = g->mutable_axes().back();
-    Axis->min(1.);
-    Axis->max(double(counting));
-  }
-  else {  // ...................................
-    // get independent variables from data file
-    g->countY = 1;
-#if 0 // FIXME: we do not have a Name.
-    DataX *bLast = 0;
-    if(Name == "Rect3D")  bLast = g->axis(1);  // y axis for Rect3D
-#endif
-
-#if 0 // FIXME: this is about diagram. do after load.
-    double min_tmp = xAxis.min, max_tmp = xAxis.max;
-#endif
-    DataX const *pD;
-    for(int ii= g->numAxes(); (pD = g->axis(--ii)); ) {itested();
-#if 0 // FIXME: this is about diagram. do after load.
-      pa = &xAxis;
-      if(pD == g->axis(0)) { untested();
-        xAxis.min = min_tmp;    // only count first independent variable
-        xAxis.max = max_tmp;
-      }
-      else if(pD == bLast)  pa = &yAxis;   // y axis for Rect3D
-#endif
-      counting = loadIndepVarData(pD->Var, FileString, mutable_axis(ii));
-      if(counting <= 0)  return 0;
-
-      g->countY *= counting;
-    }
-    g->countY /= counting;
-  }
-
-
-  // *****************************************************************
-  // get dependent variables *****************************************
-  counting  *= g->countY;
-  p = new double[2*counting]; // memory for dependent variables
-  g->cPointsY = p;
-#if 0 // FIXME: what does this do?!
-  if(g->yAxisNo == 0)  pa = &yAxis;   // for which axis
-  else  pa = &zAxis;
-  (pa->numGraphs)++;    // count graphs
-#endif
-
-  char *pEnd;
-  double x, y;
-  pPos = pFile;
-
-if(Variable.right(3) != ".X ") { // not "digital"
-
-  for(int z=counting; z>0; z--) {itested();
-    pEnd = 0;
-    while((*pPos) && (*pPos <= ' '))  pPos++; // find start of next number
-    x = strtod(pPos, &pEnd);  // real part
-    pPos = pEnd + 1;
-    if(*pEnd < ' ')   // is there an imaginary part ?
-      y = 0.0;
-    else { untested();
-      if(((*pEnd != '+') && (*pEnd != '-')) || (*pPos != 'j')) { untested();
-        delete[] g->cPointsY;  g->cPointsY = 0;
-        return 0;
-      }
-      *pPos = *pEnd;  // overwrite 'j' with sign
-      pEnd = 0;
-      y = strtod(pPos, &pEnd); // imaginary part
-      *pPos = 'j';   // write back old character
-      pPos = pEnd;
-    }
-    *(p++) = x;
-    *(p++) = y;
-#if 0 // FIXME there is no Name here.
-    if(Name[0] != 'C')
-#endif
-	 {itested();
-      if(fabs(y) >= 1e-250) x = sqrt(x*x+y*y);
-      if(std::isfinite(x)) {itested();
-			auto Axis = g->mutable_axes().back();
-			Axis->min(x);
-			Axis->max(x);
-      }
-    }
-
-#if 0 // this is not location curce code.
-    else {   // location curve needs different treatment
-      if(std::isfinite(x)) { untested();
-        if(x > xAxis.max) xAxis.max = x;
-        if(x < xAxis.min) xAxis.min = x;
-      }
-      if(std::isfinite(y)) { untested();
-        if(y > pa->max) pa->max = y;
-        if(y < pa->min) pa->min = y;
-      }
-    }
-#endif
-  }
-
-} else {  // of "if not digital"
-
-  char *pc = (char*)p;
-  pEnd = pc + 2*(counting-1)*sizeof(double);
-  // for digital variables (e.g. 100ZX0):
-  for(int z=counting; z>0; z--) { untested();
-
-    while((*pPos) && (*pPos <= ' '))  pPos++; // find start of next bit vector
-    if(*pPos == 0) { untested();
-      delete[] g->cPointsY;  g->cPointsY = 0;
-      return 0;
-    }
-
-    while(*pPos > ' ') {    // copy bit vector
-      *(pc++) = *(pPos++);
-      if(pEnd <= pc) { untested();
-        counting = pc - (char*)g->cPointsY;
-        pc = (char*)realloc(g->cPointsY, counting+1024);
-        pEnd = pc;
-        g->cPointsY = (double*)pEnd;
-        pc += counting;
-        pEnd += counting+1020;
-      }
-    }
-    *(pc++) = 0;   // terminate each vector with NULL
-  }
-
-}  // of "if not digital"
-
-  lastLoaded = QDateTime::currentDateTime();
-  return 2;
-  return 0;
-}
-#endif
-
-#if 0 // obsolete
-int Graph::loadIndepVarData(const QString& Variable,
-			      char *FileString, DataX* pD)
-{itested();
-  bool isIndep = false;
-  QString Line, tmp;
-
-  /* WORK-AROUND: A bug in SCIM (libscim) which Qt is linked to causes
-     to change the locale to the default. */
-  setlocale (LC_NUMERIC, "C");
-
-  Line = "dep "+Variable+" ";
-  // "pFile" is used through-out the whole function and must NOT used
-  // for other purposes!
-  char *pFile = strstr(FileString, Line.toLatin1());
-  while(pFile) {itested();
-    if(*(pFile-1) == '<')     // is dependent variable ?
-      break;
-    else if(strncmp(pFile-3, "<in", 3) == 0) {  // is independent variable ?
-      isIndep = true;
-      break;
-    }
-    pFile = strstr(pFile+4, Line.toLatin1());
-  }
-
-  if(!pFile)  return -1;   // data not found
-
-  pFile += Line.length();
-  char *pPos = strchr(pFile, '>');
-  if(!pPos)  return -1;   // file corrupt
-  *pPos = 0;
-  Line = QString(pFile);
-  *pPos = '>';
-  pFile = pPos+1;
-  char *pEnd;
-  if(!isIndep) {           // dependent variable can also be used...
-    if(Line.indexOf(' ') >= 0)  return -1; // ...if only one dependency
-    Line = "<indep "+Line+" ";
-    pPos = strstr(FileString, Line.toLatin1());
-    if(!pPos)  return -1;
-    pPos += Line.length();
-    pEnd = strchr(pPos, '>');
-    if(!pEnd)  return -1;   // file corrupt
-    *pEnd = 0;
-    Line = QString(pPos);
-    *pEnd = '>';
-  }
-
-
-  bool ok;
-  int n = Line.toInt(&ok);  // number of values
-  if(!ok)  return -1;
-
-  double *p = new double[n];     // memory for new independent variable
-//  DataX *pD = pg->mutable_axes().back();
-  pD->Points = p;
-  pD->count  = n;
-
-
-  double x;
-  pPos = pFile;
-  // find first position containing no whitespace
-  while((*pPos) && (*pPos <= ' '))  pPos++;
-
-  for(int z=0; z<n; z++) {itested();
-    pEnd = 0;
-    x = strtod(pPos, &pEnd);  // real part
-    if(pPos == pEnd) { untested();
-      delete[] pD->Points;  pD->Points = 0;
-      return -1;
-    }
-    
-    *(p++) = x;
-#if 0 // this is not location curve code
-    if(Name[0] != 'C')   // not for location curves
-      if(std::isfinite(x)) { untested();
-        if(x > pa->max) pa->max = x;
-        if(x < pa->min) pa->min = x;
-      }
-#endif
-    
-    pPos = pEnd;
-    while((*pPos) && (*pPos <= ' '))  pPos++;  // find start of next number
-  }
-
-  return n;   // return number of independent data
-}
-#endif
 
 #if 0
 bool Diagram::sameDependencies(Graph const*, Graph const*) const
@@ -1048,49 +613,14 @@ bool Diagram::sameDependencies(Graph const*, Graph const*) const
 #endif
 
 // ------------------------------------------------------------
-
-// ------------------------------------------------------------
-//void Diagram::setCenter(int x, int y, bool relative)
-//{
-//  if(relative) { untested();
-//    _cx += x;  _cy += y;
-//  } else {
-//    _cx = x;  _cy = y;
-//  }
-//}
-
-// -------------------------------------------------------
-// override Element::center... not needed?
-//pos_t Diagram::center() const
-//{ untested();
-//  return pos_t(_cx, _cy);
-//}
-
-// -------------------------------------------------------
-//void Diagram::getCenter(int& x, int& y)
-//{ untested();
-//
-//  trace3("diag getcenter", label(), _cx, _cy);
-//  assert(false);
-//  //????
-//  x = _cx;
-//  y = _cy;
-//}
-
-// ------------------------------------------------------------
-// Object* Diagram::newOne() const
-// { untested();
-//   unreachable();
-//   return new Diagram();
-// }
-
-// ------------------------------------------------------------
 void Diagram::finishMarkerCoordinates(float& fCX, float& fCY) const
 { untested();
+#if 0
   if(!insideDiagram(fCX, fCY)) { untested();
       fCX = float(x2 >> 1);
       fCY = float(y2 >> 1);
   }
+#endif
 }
 
 // ------------------------------------------------------------
@@ -1104,10 +634,11 @@ QString Diagram::save() const
 	  c |= 1;
   }else{
   }
-  if(hideLines) {
-	  c |= 2;
-  }else{
-  }
+// 3d?
+//  if(hideLines) {
+//	  c |= 2;
+//  }else{
+//  }
   s += c;
   s += " " + GridPen.color().name() + " " + QString::number(GridPen.style());
 
@@ -1153,22 +684,17 @@ QString Diagram::save() const
   s += QString::number(zAxis.step) + " ";
   s += QString::number(zAxis.limit_max) + " ";
 
+  // 3d
+  int rotX = 0;
+  int rotY = 0;
+  int rotZ = 0;
   s += QString::number(rotX)+" "+QString::number(rotY)+" "+
        QString::number(rotZ);
 
   // labels can contain spaces -> must be last items in the line
+  double sfreq=0; // ?
   s += " \""+xAxis.Label+"\" \""+yAxis.Label+"\" \""+zAxis.Label+"\" \""+sfreq+"\">\n";
 
-  return s;
-
-#if 0
-  foreach(Graph *pg, Graphs)
-    s += pg->save()+"\n";
-#else
-    s += "legacy. does not work\n";
-#endif
-
-  s += "  </"+Name+">";
   return s;
 }
 
@@ -1213,7 +739,7 @@ bool Diagram::load(const QString& Line, istream_t& stream)
 	n = s.section(' ',5,5);    // GridOn
 	c = n.at(0).toLatin1() - '0';
 	xAxis.GridOn = yAxis.GridOn = (c & 1) != 0;
-	hideLines = (c & 2) != 0;
+	// hideLines = (c & 2) != 0; // 3d?
 
 	n = s.section(' ',6,6);    // color for GridPen
 	QColor co;
@@ -1287,15 +813,15 @@ bool Diagram::load(const QString& Line, istream_t& stream)
 		n = s.section(' ',21,21); // rotX
 		if(n.at(0) != '"') {
 			// backward compatible
-			rotX = n.toInt(&ok);
+			/* rotX = */ n.toInt(&ok);
 			if(!ok) return false;
 
 			n = s.section(' ',22,22); // rotY
-			rotY = n.toInt(&ok);
+			/* rotY = */ n.toInt(&ok);
 			if(!ok) return false;
 
 			n = s.section(' ',23,23); // rotZ
-			rotZ = n.toInt(&ok);
+			/* rotZ = */ n.toInt(&ok);
 			if(!ok) return false;
 		}else{ untested();
 		}
@@ -1311,361 +837,16 @@ bool Diagram::load(const QString& Line, istream_t& stream)
 	Graph *pg;
 	return true;
 	// rest is done in lang_sch now.
-	// .......................................................
-	// load graphs of the diagram
-	while(!stream.atEnd()) {
-		s = QString::fromStdString(stream.read_line());
-		s = s.trimmed();
-		if(s.isEmpty()) continue;
-
-		trace2("diagram::load", Name, label());
-		if(s == ("</"+Name+">")){
-			return true;  // found end tag ?
-		}else if(s.section(' ', 0,0) == "<Mkr") { untested();
-			incomplete(); // load like variables??
-
-			// .......................................................
-			// load markers of the diagram
-			// pg = Graphs.last();
-			// if(!pg){ untested();
-			// 	return false;
-			// }else{ untested();
-			// }
-			// assert(pg->parentDiagram() == this);
-			/// 		 Marker *pm = new Marker(nullptr);
-			/// 		 if(!pm->load(s)) { untested();
-			/// 			 delete pm;
-			/// 			 return false;
-			/// 		 }
-			//      pg->Markers.append(pm);
-			continue;
-		}
-
-		pg = new Graph(this);
-		trace2("graph load", s, Name);
-		if(!pg->load(s)) { untested();
-			delete pg;
-			return false;
-		}
-		// Graphs.append(pg);
-	}
-	return false;   // end tag missing
 }
-
-// --------------------------------------------------------------
-
-// ------------------------------------------------------------
-
-
-// --------------------------------------------------------------
-
-// ------------------------------------------------------------
-
-
-
 // --------------------------------------------------------------
 
 // convenience wrappers
-bool Diagram::insideDiagramP(Graph::iterator const& p) const
-{ untested();
-  float f1 = p->getScrX();
-  float f2 = p->getScrY();
-  return insideDiagram(f1,f2);
-}
-// void Diagram::calcCoordinateP (const double*x, const double*y, const double*z, Graph::iterator& p, Axis const* A) const
-// {itested();
-//   float f1, f2;
-//   calcCoordinate(x, y, z, &f1, &f2, A);
-//   p->setScr(f1, f2);
-// };
-
-
-/* PHASOR AND WAVEAC RELATED CODE
-//only for phasor diagram detect if the points are in the diagram,
-//  if not tell with are the limits that the point has passed
-bool Diagram::insideDiagramPh(Graph::iterator const& p ,float* xn, float* yn) const 
-{ untested();
-  float f1 = p->getScrX();
-  float f2 = p->getScrY();
-  float xa,ya;
-
-  xa = f1;
-  ya = f2;
-
-  if(f1 < 0.0)
-    xa = 0.0;
-  if(f1 > float(x2))
-    xa = float(x2);
-  if(f2 < 0.0)
-    ya = 0.0;
-  if(f2 > float(y2))
-    ya = float(y2);
-  
-  *xn = xa;
-  *yn = ya;
-
-  return ((xa == f1)&&(ya == f2));
-}
-//for phasor if the original point isn't in diagram with the limits calculated in insideDiagramPh
-//  will create a point inside the diagram if possible
-bool Diagram::newcoordinate(Graph::iterator const& p,float* xn, float* yn) const
-{ untested();
-  float f1 = (p-1)->getScrX();
-  float f2 = (p-1)->getScrY();
-  float f3 = p->getScrX();
-  float f4 = p->getScrY();
-  float xc = *xn;
-  float yc = *yn;
-  float xt,yt;
-  float d;
-  float b;
-  
-  if(((f1 > f3 - 3) && (f1 < f3 + 3)) || ((f2 > f4 - 3) && (f2 < f4 + 3)))
-  { untested();
-    d = 0.0;
-    b = 0.0;
-  }
-  else
-  { untested();
-    d = (f4 - f2) / (f3 - f1);
-    b = f2 - d * f1;
-  }
-
-
-  if((f1 > f3 - 3) && (f1 < f3 + 3) && (f2 != f4))
-  { untested();
-    xt = f1;
-    yt = yc;
-  }
-  else
-  { untested();
-    if((f2 > f4 - 3) && (f2 < f4 + 3) && (f1 != f3))
-    { untested();
-      xt = xc;
-      yt = f2;
-    }
-    else
-    { untested();
-      yt = d*xc + b;
-      xt = (yc - b) / d;
-    }
-  }
-  if((yt >= 0.0) && (yt <= float(y2)))
-  { untested();
-      *yn = yt;
-      return true;
-  }
-  else
-  { untested();
-    if((xt >= 0.0) && (xt <= float(x2)))
-    { untested();
-	*xn = xt;
-	return true;
-    }
-    else
-	return false;
-	
-  }  
-}
-
-//  will read the values receive and find if is one the values determined by AC and remove repeated number.
-//  if there isn't any value that match will find the closest number and replace
-void Diagram::findfreq(Graph *g)
-{ untested();
-  if(freq!=nullptr) delete[] freq;
-  freq= nullptr;
-  int z = QString::compare(g->axis(0)->Var,"acfrequency",Qt::CaseInsensitive);//meaning that only work in AC 
-  if(z != 0)
-  { untested();
-    nfreqt=1;
-    freq = new double;
-    freq[0] = 0;
-    sfreq = "0 Hz;";
-    return;
-  }
-  double scale = 1.0;
-  QString num;
-  bool ok;
-  double freqnum;
-  int n=0; 
-  int m=0;
-  int a;
-  QString value;
-  int s;
-  n=sfreq.count(';')+1;
-  freq= new double[n];
-
-  do{ untested();
-    n = sfreq.indexOf(";",m,Qt::CaseInsensitive);
-    if(n==-1 || Name == "Waveac") n = sfreq.size()-1;
-    value=sfreq.mid(m,n+1-m);
-    a=value.size();
-
-    if(value.indexOf("ghz",0,Qt::CaseInsensitive) != -1)
-    { untested();
-      scale = 1e9;
-      a = value.indexOf("ghz",0,Qt::CaseInsensitive);    
-    }
-    else if(value.indexOf("mhz",0,Qt::CaseInsensitive) != -1)
-    { untested();
-      scale = 1e6;
-      a = value.indexOf("mhz",0,Qt::CaseInsensitive);     
-    }
-    else if(value.indexOf("khz",0,Qt::CaseInsensitive) != -1)
-    { untested();
-      scale = 1e3;
-      a = value.indexOf("khz",0,Qt::CaseInsensitive);
-    }
-    else if(value.indexOf("hz",0,Qt::CaseInsensitive) != -1)
-    { untested();
-      scale = 1.0;
-      a = value.indexOf("hz",0,Qt::CaseInsensitive);
-    }
-
-    double *px,f=0;
-    int i,z;
-    double d,dmin=DBL_MAX;
-    num = value.mid(0,a);
-    freqnum = num.toDouble(&ok) * scale;
-    if(!ok)
-    { untested();
-      scale = 1.0;
-      for(s=a;s>0;s--)
-      { untested();
-	num = value.mid(0,s);
-	freqnum = num.toDouble(&ok) * scale;
-	if(ok)
-	{ untested();
-	  value.resize(s);
-	  break;
-	}
-      }
-      if(s==0)
-	goto end;
-    }
-
-    for(i=g->countY; i>0; i--) {  // every branch of curves
-      px = g->axis(0)->Points;
-      for(z=g->axis(0)->count; z>0; z--) {  // every point
-	if(*px > 0)
-	{ untested();
-	  d=fabs(freqnum - *px);
-	  if(d<dmin) 
-	  { untested();
-	    dmin=d;
-	    f= *px; 
-	  }
-	}
-	++px;
-      }
-    }
-    freqnum = f;
-    for(s=0;s<nfreqt;s++)
-    { untested();
-      if(freq[s]==freqnum)
-      { untested();
-	freqnum = 0;
-	break;
-      }
-      if(freq[s]>freqnum)
-      { untested();
-	f=freq[s];
-	freq[s]=freqnum;
-	freqnum=f;
-      }
-    }  
-    if(freqnum == 0) 
-    { untested();
-      value.clear();
-      goto end;
-    }
-    nfreqt++;
-    freq[nfreqt-1]=freqnum;
-end:
-    m=n+1;
-    
-  }while(n!=sfreq.size()-1);
-
-  if(freqnum==0 &&nfreqt==0)
-  { untested();
-    nfreqt=1;
-    freq[0] = 0;
-    sfreq = "0 Hz;";
-    return;   
-  }
-  nfreqa=0;
-  sfreq.clear();
-  while(nfreqa<nfreqt)
-  { untested();
-    freqnum=freq[nfreqa];
-
-    if(freqnum >= 1e9)
-    { untested();
-      freqnum/= 1e9;
-      value.setNum(freqnum);
-      value+= " GHz;";
-    }
-    else if(freqnum >= 1e6)
-    { untested();
-      freqnum/= 1e6;
-      value.setNum(freqnum);
-      value+= " MHz;";
-    }
-    else if(freqnum >= 1e3)
-    { untested();
-      freqnum/= 1e3;
-      value.setNum(freqnum);
-      value+= " KHz;";
-    }
-    else
-    { untested();
-      value.setNum(freqnum);
-      value+= " Hz;";
-    }
-
-    sfreq.append(value);
-    nfreqa++;
-  }
-
-  
-
-  
-}
-
-// for phasor will find the biggest absolute value of all max limits and replace the others
-void Diagram::setlimitsphasor(Axis *x ,Axis *y)
-{ untested();
-  double yrx,yrn,yix,yin;
-
-    yrn = x->min;
-    yrx = x->max;
-    yin = y->min;
-    yix = y->max;
-
-    if(fabs(yrn) > yrx)
-      yrx = fabs(yrn);
-    else
-      yrn = (-1.0) * yrx;
-
-    if(fabs(yin) > yix)
-      yix = fabs(yin);
-    else
-      yin = (-1.0) * yix;
-    
-    if(yrx < yix)
-      yrx = yix;
-
-    x->max = y->max = yrx ;
-    x->min = y->min = (-1.0) * yrx;
-
-}
-
-//for marker of waveac to find the value of x
-double Diagram::wavevalX(int i) const
-{ untested();
-    return i*xAxis.up/(sc*50); 
-}
-*/
+// bool Diagram::insideDiagramP(Graph::iterator const& p) const
+// { untested();
+//   float f1 = p->getScrX();
+//   float f2 = p->getScrY();
+//   return insideDiagram(f1,f2);
+// }
 /*--------------------------------------------------------------------------*/
 void Diagram::prepare()
 {

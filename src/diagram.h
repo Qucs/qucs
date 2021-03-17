@@ -106,7 +106,6 @@ private:
 //  pos_t center() const override;
 //  void    getCenter(int&, int&); //override; //remove this.
   Widget* schematicWidget(Doc* Doc) const override;
-  virtual QRectF boundingRect() const; // { unreachable(); return QRectF(); }
 
 protected:
   rect_t bounding_rect() const;
@@ -141,29 +140,26 @@ public: // ??!
 	void paintMarkers(ViewPainter* p, bool paintAll = true);
 //  void    setCenter(int, int, bool relative=false);
 //  void    paintScheme(SchematicDoc*) const;
-	void    Bounding(int&, int&, int&, int&);
-	bool    resizeTouched(float, float, float);
+	// bool    resizeTouched(float, float, float);
 	bool    load(const QString&, istream_t&); // TODO: remove.
 	// bool sameDependencies(Graph const*, Graph const*) const;
 
-	virtual bool insideDiagram(float, float) const;
-	bool insideDiagramP(GraphIterator const& ) const;
-	Marker* setMarker(int x, int y);
+	// virtual bool insideDiagram(float, float) const;
+	// bool insideDiagramP(GraphIterator const& ) const;
+	// Marker* setMarker(int x, int y);
 
 private: // internals
 public: // BUG/incomplete
   QPen    GridPen;
 
-  QString sfreq;
-  double *freq=nullptr;
+//  QString sfreq;
+//  double *freq=nullptr;
   int nfreqt,nfreqa;
   int x3, y3, sc;
   Axis  xAxis, yAxis, zAxis;   // axes (x, y left, y right)
 
   int State;  // to remember which resize area was touched
 
-  bool hideLines;       // for "Rect3D": hide invisible lines ?
-  int rotX, rotY, rotZ; // for "Rect3D": rotation around x, y and z axis
 
 protected:
 //  void calcSmithAxisScale(Axis*, int&, int&);

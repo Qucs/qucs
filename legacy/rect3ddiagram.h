@@ -85,6 +85,9 @@ private:
   float  xorig, yorig; // where is the 3D origin with respect to cx/cy
   double cxx, cxy, cxz, cyx, cyy, cyz, czx, czy, czz; // coefficients 3D -> 2D
   double scaleX, scaleY;
+
+  bool hideLines;       // for "Rect3D": hide invisible lines ?
+  int rotX, rotY, rotZ; // for "Rect3D": rotation around x, y and z axis
 };
 
 #endif
