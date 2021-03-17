@@ -147,12 +147,16 @@ void Footprint::collectPlaces(ElementGraphics const* e)
 	assert(scn);
 
 	if(auto s=dynamic_cast<Symbol const*>(element(e))){
+		trace2("Footprint", s->short_label(), s->numPorts());
 		for(unsigned i=0; i<s->numPorts(); ++i){
+			trace2("Footprint", i, s->port_value(i));
 			// if s->isConnected(i) ...
 			auto pp = s->nodePosition(i);
 			ElementGraphics* pg = scn->find_place(pp);
 			Place const* place = prechecked_cast<Place const*>(element(pg));
-			if(!place){
+			if(s->port_value(i)=="(null)"){
+				unreachable();
+			}else if(!place){
 				assert(!pg);
 			}else if(s->port_value(i) == place->port_value(0)){
 				p.insert(pg);

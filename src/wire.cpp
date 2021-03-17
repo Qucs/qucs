@@ -352,23 +352,28 @@ SubcktBase* Wire::newUnion(Symbol const* s) const
 //	if(p){ untested();
 //		return newPort(p);
 //	}else
+	SubcktBase* ret = nullptr;
 	if(o){
 		trace2("Wire::newUnion(Wire)", o->nodePosition(0), o->nodePosition(1));
 //		trace2("Wire::newUnion(Wire)", _port0->degree(), _port1->degree());
 		trace2("Wire::newUnion(Wire)", angle(), o->angle());
 		
 		if( (360 + angle() - o->angle() )%180 ){
-			return newTee(o);
+			ret = newTee(o);
 		}else if(isNet(o->nodePosition(0))){
-			return extendTowards(o->nodePosition(1));
+			ret = extendTowards(o->nodePosition(1));
 		}else if(isNet(o->nodePosition(1))){ untested();
-			return extendTowards(o->nodePosition(0));
+			ret = extendTowards(o->nodePosition(0));
 		}else{ untested();
 		}
 	}else{
-		return intersectPorts(s);
+		ret = intersectPorts(s);
 	}
-	return nullptr;
+	if(ret){ untested();
+		trace1("newUnion", ret->subckt()->size());
+	}else{ untested();
+	}
+	return ret;
 }
 /*--------------------------------------------------------------------------*/
 // NOT HERE ? //

@@ -185,7 +185,7 @@ Element* ElementGraphics::cloneElement() const
 /*--------------------------------------------------------------------------*/
 static void redo_children(ElementGraphics* g)
 {
-	if(auto sym = dynamic_cast<Symbol const*>(element(g))){
+	if(auto sym = dynamic_cast<SubcktBase const*>(element(g))){
 		for(auto c : g->childItems()){
 			delete c;
 		}
@@ -254,7 +254,7 @@ void ElementGraphics::attachElement(Element* e)
 		a->setPlainText(QString::fromStdString(e->label()));
 	}else{
 	}
-	auto sym = dynamic_cast<Symbol const*>(_e);
+	auto sym = dynamic_cast<SubcktBase const*>(_e);
 
 	if (auto w=_e->newWidget()){ untested();
 		// BUG: this may break if there are multiple views.
@@ -269,6 +269,8 @@ void ElementGraphics::attachElement(Element* e)
 		}
 		trace2("attached proxy", this, w);
 	}else if(sym){itested();
+		assert(sym->subckt());
+		trace1("got children", sym->subckt()->size());
 		redo_children(this);
 	}else{
 	}
@@ -519,7 +521,7 @@ QRectF ElementGraphics::boundingRect() const
 {itested();
 	if(auto pp=dynamic_cast<Painting const*>(_e)){
 		auto rr = pp->bounding_rect().toRectF();
-		trace2("br", rr, _e->label());
+//		trace2("br", rr, _e->label());
 		return rr;
 	}else{itested();
 		return QRectF();
