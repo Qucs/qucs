@@ -51,6 +51,4 @@ noinst_LIBRARIES = libtranscalc.a
 libtranscalc_a_SOURCES = ${LIB_SRC}
 libtranscalc_a_CXXFLAGS = ${AM_CXXFLAGS} -fPIC
 
-CLEANFILES = *~ qucstrans_.cpp
-MAINTAINERCLEANFILES = Makefile.in *.moc.cpp
-DISTCLEANFILES = *.moc.cpp
+CLEANFILES += qucstrans_.cpp

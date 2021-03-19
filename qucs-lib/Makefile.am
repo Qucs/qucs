@@ -42,8 +42,3 @@ qucslib_LDFLAGS = $(X11_LDFLAGS) $(QT_LIBS)
 qucslib_LDADD = $(X11_LIBS) $(QT_LIBS)
 
 noinst_HEADERS = $(MOCHEADERS)
-
-CLEANFILES = *~ qucslib_.cpp
-MAINTAINERCLEANFILES = Makefile.in *.moc.cpp
-DISTCLEANFILES = *.moc.cpp
-EXTRA_DIST += bitmaps/home.png bitmaps/big.qucs.xpm

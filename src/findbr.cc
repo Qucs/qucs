@@ -21,12 +21,14 @@
  */
 #include "library.h"
 //#include "constant.h"
-#include "e_cardlist.h"
+// #include "e_cardlist.h"
 #include "ap.h"
 //#include "e_card.h"
 /*--------------------------------------------------------------------------*/
 // QUCS hacks.
 #include "object.h"
+#include "element_list.h"
+typedef qucs::ElementList CARD_LIST;
 #include "sckt_base.h"
 #define CARD Object
 #define CS istream_t

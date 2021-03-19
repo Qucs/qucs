@@ -20,7 +20,7 @@
  * save is list with direction to file
  */
 //testing=script 2006.07.17
-#include "e_cardlist.h"
+//#include "e_cardlist.h"
 #include "u_lang.h"
 //#include "c_comand.h"
 #include "qucs_globals.h"
@@ -31,7 +31,9 @@
 #include "qio.h"
 #include "settings.h"
 #include "command.h"
+#include "element_list.h"
 #define print_item printItem
+#define CARD_LIST ElementList
 #define CS istream_t
 #define OPT tQucsSettings
 #define CMD Command

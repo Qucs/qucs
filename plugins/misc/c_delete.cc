@@ -30,7 +30,7 @@
 #define CS istream_t
 
 #include "qucs_globals.h"
-#include "e_cardlist.h"
+#include "element_list.h"
 #include "command.h"
 #define CARD_LIST ElementList
 #define CMD Command

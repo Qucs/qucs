@@ -6,9 +6,7 @@ SRCS = \
 	helpdialog.cpp \
 	mycolorbox.cpp \
 	myresistancebox.cpp \
+	qucsrescodes.qrc \
 	notation.cpp \
 	qresistor.cpp \
 	resistor.cpp
-
-RESOURCES = \
-	qucsrescodes.qrc

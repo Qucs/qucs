@@ -2,3 +2,5 @@ include MakeList
 
 bitmap_DATA = $(XPMS) $(PNGS)
 bitmapdir = ${pkgdatadir}/bitmaps
+
+EXTRA_DIST = ${bitmap_DATA}

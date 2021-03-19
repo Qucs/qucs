@@ -863,7 +863,6 @@ AC_CONFIG_FILES([
     tools/rescodes/Makefile:autotools/rescodes.in
     tools/powercombining/Makefile:autotools/powercombining.in
     src/Makefile:autotools/src.in
-    src/action/Makefile
     src/bitmaps/Makefile:autotools/bitmaps.in
     src/tests/Makefile
     tests/Makefile

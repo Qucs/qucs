@@ -3,6 +3,7 @@ TARGET = action
 
 PLUGIN_SRC = \
 	move.cc \
+	paste.cc \
 	select.cc \
 	wire.cc \
 	zoom.cc

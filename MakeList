@@ -15,4 +15,11 @@ SUBDIRS = \
 	legacy \
 	plugins
 
-EXTRA_DIST =
+EXTRA_DIST = \
+	ar-lib \
+	bootstrap \
+	depcomp \
+	PLATFORMS \
+	RELEASE \
+	Info.plist
+

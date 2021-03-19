@@ -122,7 +122,7 @@ dist-hook:
 	done
 
 	mkdir -p $(distdir)/ref
-	cp $(abs_srcdir)/ref/*.{v,vs,net,dup,out} $(distdir)/ref
+	cp $(abs_srcdir)/ref/*.{sch,v,vs,net,out} $(distdir)/ref
 
 clean-local:
 	rm -rf out/
@@ -137,7 +137,7 @@ EXTRA_DIST += \
 	$(SH_TESTS) \
 	$(QX_TESTS)
 
-CLEANFILES = \
+CLEANFILES += \
 	*.sch.net \
 	*.out *core
 

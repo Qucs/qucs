@@ -17,4 +17,5 @@ MORE_LATER = \
 	sweepdialog.cpp \
 	sweepdialog.h
 
-EXTRA_DIST =
+EXTRA_DIST = \
+	schematic_action.h

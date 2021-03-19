@@ -36,9 +36,6 @@ _: | ${TARGET}.la
 
 SUFFIXES = .qrc
 
-.qrc.cpp:
-	$(RCC) -o $@ $<
-
 
 # TODO: does not make sense anymore.
 $(MOCFILES): $(top_builddir)/qt_version
@@ -54,15 +51,20 @@ EXTRA_DIST += MakeList
 here_rel = $(subst ${abs_top_srcdir},,${abs_srcdir})
 instdir = $(pkglibdir)/$(here_rel)/..
 
-# # TODO: drop -I[..]/src
-# .h.cc:
-# 	$(MOC) -I${top_srcdir}/include -I${top_srcdir}/src -DQT_MAJOR_VERSION=${QT_MAJOR_VERSION} -o $@ $< # 2
-
 # still used?
 SUFFIXES += .moc.cpp
 .h.moc.cpp:
 	$(MOC) -I${top_srcdir}/include -I${top_srcdir}/src -DQT_MAJOR_VERSION=${QT_MAJOR_VERSION} -o $@ $< # 1
 
+SUFFIXES += .qrc
+.qrc.C:
+	$(RCC) -o $@ $<
+
 SUFFIXES += .hqt
-.hqt.cpp:
+.hqt.C:
 	$(MOC) -I${top_srcdir}/include -DQT_MAJOR_VERSION=${QT_MAJOR_VERSION} -o $@ $<
+
+CLEANFILES = *~ *.rej *.orig qucs_.cpp *.moc.cpp *.C *_.cpp qucs \
+	${UICFILES}
+MAINTAINERCLEANFILES = Makefile.in *.moc.cpp *.qm
+DISTCLEANFILES = *.qm

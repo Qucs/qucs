@@ -677,7 +677,6 @@ QUndoCommand* MouseActionNewElement::press(QEvent* ev)
 }
 /*--------------------------------------------------------------------------*/
 /*--------------------------------------------------------------------------*/
-#include "action/paste.cpp" // for now.
 /*--------------------------------------------------------------------------*/
 /*--------------------------------------------------------------------------*/
 /*--------------------------------------------------------------------------*/
@@ -780,6 +779,11 @@ SchematicActions::SchematicActions(qucs::Doc* ctx)
 	maZoomIn = dynamic_cast<MouseAction*>(cc);
 	assert(maZoomIn);
 
+	cc = action_dispatcher.clone("actionPaste");
+	setParent_(cc, this);
+	maEditPaste = dynamic_cast<MouseAction*>(cc);
+	assert(maEditPaste);
+
 //	maZoomOut = new MouseActionZoomOut(*this); // not a mouseaction.
 
 	//  maMove = new MouseActionMove(*this);
@@ -813,7 +817,7 @@ SchematicActions::SchematicActions(qucs::Doc* ctx)
 	maRotate = new MouseActionRotate(this);
 	setParent_(maRotate, this);
 
-	maEditPaste = new MouseActionPaste();
+	assert(maEditPaste);
 	setParent_(maEditPaste, this);
 
 	assert(_toolbar);

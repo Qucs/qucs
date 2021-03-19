@@ -10,6 +10,7 @@ TODO:
  - tests dont run
  - qucs-conf is missing
  - "make install" does not seem to do much
+ - cleanup MakeLists more and deduplicate
 
 
 To have CMake pick a Qt installation of your choice that won't be found

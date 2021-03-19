@@ -36,8 +36,6 @@ subdirs:
 
 .PHONY: subdirs
 
-EXTRA_DIST += ar-lib bootstrap depcomp PLATFORMS RELEASE Info.plist
-
 # MacOSX specific installation of applications
 # FIXME: don't install twice.
 if COND_MACOSX
@@ -105,8 +103,3 @@ else
 install-exec-hook:
 uninstall-hook:
 endif
-
-CLEANFILES = *~ *.rej *.orig
-MAINTAINERCLEANFILES = aclocal.m4 config.h.in configure Makefile.in \
-        stamp-h.in stamp-h[0-9].in
-DISTCLEANFILES = config.cache config.log

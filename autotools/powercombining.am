@@ -21,6 +21,8 @@
 # Boston, MA 02110-1301, USA.
 #
 
+include ../../autotools/common.mk
+
 bin_PROGRAMS = qucspowercombining
 
 MOCHEADERS = qucspowercombiningtool.h
@@ -28,14 +30,8 @@ MOCFILES = $(MOCHEADERS:.h=.moc.cpp)
 
 dist_man_MANS = qucspowercombining.1
 
-include ../../autotools/common.mk
-
-qucspowercombining_SOURCES = ${SRCS} ${RESOURCES}
+qucspowercombining_SOURCES = ${SRCS}
 qucspowercombining_CXXFLAGS = ${AM_CXXFLAGS} -fPIC
-
-EXTRA_DIST += qucspowercombining.qrc
-qrc_qucspowercombining.cpp: qucspowercombining.qrc
-	$(RCC) -o $@ $<
 
 nodist_qucspowercombining_SOURCES = $(MOCFILES)
 
@@ -45,6 +41,4 @@ qucspowercombining_LDADD = $(X11_LIBS) $(QT_LIBS)
 
 noinst_HEADERS = $(MOCHEADERS)
 
-CLEANFILES = *~
-MAINTAINERCLEANFILES = Makefile.in *.moc.cpp
-DISTCLEANFILES = *.moc.cpp
+CLEANFILES += qucspowercombining.cpp

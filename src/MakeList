@@ -116,8 +116,10 @@ HDR1 = \
 	qucsdoc.h \
 	syntax.h \
 	schematic_lang.h \
+	schematic_dialog.h \
 	schematic_edit.h \
 	swap.h \
+	swap_gfx.h \
 	some_font_stuff.h
 
 # must be installed. but later

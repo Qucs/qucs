@@ -43,5 +43,3 @@ qucsattenuator_LDFLAGS = $(X11_LDFLAGS) $(QT_LIBS)
 qucsattenuator_LDADD = $(X11_LIBS) $(QT_LIBS)
 
 noinst_HEADERS = $(MOCHEADERS) attenuatorfunc.h
-
-CLEANFILES = *~ *_.cpp qucsattenuator.moc.cpp

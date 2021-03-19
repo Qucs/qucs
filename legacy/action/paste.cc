@@ -1,5 +1,5 @@
 /***************************************************************************
-    copyright            : (C) 2018-2020 Felix Salfelder
+    copyright            : (C) 2018-2020, 2021 Felix Salfelder
  ***************************************************************************/
 
 /***************************************************************************
@@ -11,14 +11,31 @@
  *                                                                         *
  ***************************************************************************/
 #include <QApplication>
+#include <QGraphicsView>
 #include <QClipboard>
+#include <QMouseEvent>
+#include <QGraphicsSceneMouseEvent>
+
 #include "docfmt.h"
 #include "sckt_base.h"
 #include "language.h"
 #include "qio.h"
-
+#include "mouseaction.h"
+#include "schematic_edit.h"
+#include "qucs_globals.h"
+/*--------------------------------------------------------------------------*/
 static const std::string cnp_lang = "leg_sch";
 /*--------------------------------------------------------------------------*/
+namespace {
+/*--------------------------------------------------------------------------*/
+using qucs::Action;
+using qucs::Element;
+using qucs::MouseAction;
+using qucs::MouseActions;
+using qucs::Widget;
+using qucs::SubcktBase;
+using qucs::SchematicEdit;
+using qucs::Painting;
 // TODO: "NewElementCommand", deduplicate
 class PasteCommand : public SchematicEdit {
 public:
@@ -105,13 +122,14 @@ private:
 private:
 	ElementGraphics* _gfx;
 	Element const* _proto;
-};
+}a;
+static Dispatcher<Widget>::INSTALL p1(&qucs::action_dispatcher, "actionPaste", &a);
 /*--------------------------------------------------------------------------*/
-class pastebuffer : public SubcktBase{
+class pastebuffer : public SubcktBase {
 public:
 	explicit pastebuffer(){ untested();
 		new_subckt();
-		auto const* lang = language_dispatcher[cnp_lang];
+		auto const* lang = qucs::language_dispatcher[cnp_lang];
 		assert(lang);
 
 		QClipboard *cb = QApplication::clipboard();
@@ -335,6 +353,7 @@ QUndoCommand* MouseActionPaste::leave(QEvent* ev)
 	return nullptr;
 }
 /*--------------------------------------------------------------------------*/
+static const rotate_after_mirror1_t ninety_degree_transform(90, false);
 QUndoCommand* MouseActionPaste::rotate(QEvent*)
 { untested();
 	if(!_gfx){ untested();
@@ -368,3 +387,7 @@ QUndoCommand* MouseActionPaste::press(QEvent* ev)
 	}
 	return cmd;
 }
+/*--------------------------------------------------------------------------*/
+} // namespace
+/*--------------------------------------------------------------------------*/
+/*--------------------------------------------------------------------------*/

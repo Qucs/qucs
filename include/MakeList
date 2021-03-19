@@ -5,6 +5,7 @@ HDR = \
 	c_comand.h \
 	component.h \
 	command.h \
+	common_sckt.h \
 	conductor.h \
 	data.h \
 	dot.h \
@@ -12,6 +13,7 @@ HDR = \
 	e_base.h \
 	element.h \
 	element_list.h \
+	factory.h \
 	geometry.h \
 	graph.h \
 	exception.h \
@@ -20,6 +22,7 @@ HDR = \
 	l_compar.h \
 	l_dispatcher_.h \
 	library.h \
+	message.h \
 	node.h \
 	object.h \
 	output.h \
@@ -38,4 +41,5 @@ HDR = \
 	task_element.h \
 	tasks.h \
 	u_lang.h \
-	viewpainter.h
+	viewpainter.h \
+	widget.h

@@ -33,3 +33,5 @@ gui_la_CPPFLAGS += $(QT_INCLUDES)
 
 gui_la_SOURCES = ${PLUGIN_SRC}
 noinst_HEADERS = $(HDR)
+
+CLEANFILES += ${PLUGIN_SRC:%.hqt=%.cpp}

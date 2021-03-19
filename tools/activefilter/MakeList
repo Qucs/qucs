@@ -1,4 +1,3 @@
-EXTRA_DIST =
 
 SRCS = \
 	filter.cpp \
@@ -13,3 +12,19 @@ SRCS = \
 
 RESOURCES = \
 	qucsactivefilter_.qrc
+
+EXTRA_DIST = \
+	bitmaps/high-pass.svg \
+	bitmaps/cauer-bandpass.svg \
+	bitmaps/trfunc.png \
+	bitmaps/mfb-bandpass.svg \
+	bitmaps/sk-lowpass.svg \
+	bitmaps/mfb-lowpass.svg \
+	bitmaps/bandstop.svg \
+	bitmaps/big.qucs.xpm \
+	bitmaps/AFR.svg \
+	bitmaps/sk-highpass.svg \
+	bitmaps/mfb-highpass.svg \
+	bitmaps/cauer.svg \
+	bitmaps/sk-bandpass.svg \
+	bitmaps/bandpass.svg

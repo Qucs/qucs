@@ -1,9 +1,30 @@
 
-EXTRA_DIST = 
+# TARGET = qucspowercombining
 
 SRCS = \
 	main.cpp \
-	qucspowercombiningtool.cpp
-
-RESOURCES = \
+	qucspowercombiningtool.cpp \
 	qucspowercombining.qrc
+
+EXTRA_DIST = \
+	bitmaps/Bagley_idealTL.svg \
+	bitmaps/Bagley_microstrip.svg \
+	bitmaps/big.qucs.xpm \
+	bitmaps/Branchline_idealTL.svg \
+	bitmaps/Branchline_microstrip.svg \
+	bitmaps/DoubleBoxBranchline_idealTL.svg \
+	bitmaps/DoubleBoxBranchline_microstrip.svg \
+	bitmaps/Gysel_idealTL.svg \
+	bitmaps/Gysel_microstrip.svg \
+	bitmaps/MultistageWilkinson_idealTL.svg \
+	bitmaps/MultistageWilkinsonLC.svg \
+	bitmaps/MultistageWilkinson_microstrip.svg \
+	bitmaps/Tee_idealTL.svg \
+	bitmaps/Tee_microstrip.svg \
+	bitmaps/TravellingWave_idealTL.svg \
+	bitmaps/TravellingWave_microstrip.svg \
+	bitmaps/Tree_idealTL.svg \
+	bitmaps/Tree_microstrip.svg \
+	bitmaps/Wilkinson_idealTL.svg \
+	bitmaps/WilkinsonLC.svg \
+	bitmaps/Wilkinson_microstrip.svg

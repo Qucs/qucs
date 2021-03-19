@@ -4,6 +4,7 @@ SRCS = \
 	librarydialog.cpp \
 	main.cpp \
 	qucslib.cpp \
+	qucslib_.qrc \
 	symbolwidget.cpp
 
 MOCHEADERS = \
@@ -13,8 +14,6 @@ MOCHEADERS = \
 	qucslib.h \
 	symbolwidget.h
 
-
-RESOURCES = \
-	qucslib_.qrc
-
-EXTRA_DIST = 
+EXTRA_DIST = \
+	bitmaps/home.png \
+	bitmaps/big.qucs.xpm

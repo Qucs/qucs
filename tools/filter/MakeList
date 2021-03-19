@@ -12,11 +12,34 @@ SRCS = \
 	qf_poly.cpp \
 	quarterwave_filter.cpp \
 	qucsfilter.cpp \
+	qucsfilter_.qrc \
 	qw_coupled_ring_filter.cpp \
 	stepz_filter.cpp \
 	tl_filter.cpp
 
-EXTRA_DIST = 
-
-RESOURCES = \
-	qucsfilter_.qrc
+EXTRA_DIST = \
+	bitmaps/Quarterwave_Notch_Microstrip.svg \
+	bitmaps/CCoupled_Lines_Microstrip.svg \
+	bitmaps/CCoupled_Shunt_Resonators.svg \
+	bitmaps/LC_cauer_notch.svg \
+	bitmaps/Quarterwave_Bandpass_Microstrip.svg \
+	bitmaps/RFEDD.svg \
+	bitmaps/LC_Ladder_Tee_HPF.svg \
+	bitmaps/Quarterwave_Notch_Ideal.svg \
+	bitmaps/LC_Ladder_Pi_BPF.svg \
+	bitmaps/Quarterwave_Side_Coupled_Ring.svg \
+	bitmaps/LC_Ladder_Pi_Notch.svg \
+	bitmaps/LC_Ladder_Pi_HPF.svg \
+	bitmaps/LC_Ladder_Tee_LPF.svg \
+	bitmaps/Stepped_Impedance_Ideal.svg \
+	bitmaps/Stepped_Impedance_Microstrip.svg \
+	bitmaps/CCoupled.svg \
+	bitmaps/CCoupled_Microstrip.svg \
+	bitmaps/LC_Ladder_Tee_Notch.svg \
+	bitmaps/big.qucs.xpm \
+	bitmaps/LC_cauer_bandpass.svg \
+	bitmaps/LC_cauer_lowpass.svg \
+	bitmaps/Quarterwave_Bandpass_Ideal.svg \
+	bitmaps/LC_Ladder_Pi_LPF.svg \
+	bitmaps/LC_Ladder_Tee_BPF.svg \
+	bitmaps/CCoupled_Lines.svg

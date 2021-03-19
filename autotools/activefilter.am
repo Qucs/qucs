@@ -43,24 +43,3 @@ qucsactivefilter_LDADD = $(X11_LIBS) $(QT_LIBS)
 noinst_HEADERS = $(MOCHEADERS) qf_matrix.h bessel.h legendre.h \
                  sallenkey.h filter.h mfbfilter.h \
                  schcauer.h qf_poly.h
-
-CLEANFILES = *~ qucsactivefilter_.cpp
-MAINTAINERCLEANFILES = Makefile.in *.moc.cpp
-DISTCLEANFILES = *.moc.cpp
-EXTRA_DIST += $(BITMAPS)
-
-BITMAPS = \
-bitmaps/high-pass.svg \
-bitmaps/cauer-bandpass.svg \
-bitmaps/trfunc.png \
-bitmaps/mfb-bandpass.svg \
-bitmaps/sk-lowpass.svg \
-bitmaps/mfb-lowpass.svg \
-bitmaps/bandstop.svg \
-bitmaps/big.qucs.xpm \
-bitmaps/AFR.svg \
-bitmaps/sk-highpass.svg \
-bitmaps/mfb-highpass.svg \
-bitmaps/cauer.svg \
-bitmaps/sk-bandpass.svg \
-bitmaps/bandpass.svg
