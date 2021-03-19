@@ -85,15 +85,16 @@ void VerilogNetlister::createNetlist(ostream_t& stream,
 {
 	assert(m);
 
-	QString s, Time;
+	qucs::Element const* main_=nullptr;
 	for(auto pc : *m){
 		auto sym = dynamic_cast<Symbol const*>(pc);
 
 #if 0 // TODO
 		lang->printItem(stream, pc);
 #else
-		if(pc->label()=="main"){
+		if(pc->label()=="main"){ untested();
 			lang->printItem(stream, pc);
+			// main_ = pc;
 		}else if(!sym){
 			lang->printItem(stream, pc);
 		}else if(dynamic_cast<Conductor const*>(sym)){
@@ -105,6 +106,11 @@ void VerilogNetlister::createNetlist(ostream_t& stream,
 			lang->printItem(stream, pc);
 		}
 #endif
+	}
+
+	if(main_){untested();
+		lang->printItem(stream, main_);
+	}else{untested();
 	}
 }
 /*--------------------------------------------------------------------------*/

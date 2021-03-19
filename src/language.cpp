@@ -135,7 +135,7 @@ Element const* Language::find_proto(const std::string& Name, const Element* Scop
 	trace1("find_proto", Name);
 	Element const* p=nullptr;
 	if(Scope){
-		try {
+		try { untested();
 			p = Scope->find_looking_out(Name);
 			trace2("found", Name, p);
 		}catch (qucs::ExceptionCantFind& e) {

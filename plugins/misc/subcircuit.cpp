@@ -203,7 +203,7 @@ public:
 	Element* clone_instance() const override;
 	Element* clone()const{return new SubFactory(*this);}
 
-	Component const* newSymbol(std::string const& fn) const;
+	Component const* newSymbol(std::string const& fn); //  const;
 private:
 	void set_param_by_name(std::string const& name, std::string const& v) override
 	{
@@ -402,7 +402,7 @@ void Paramset::init(Component const* proto)
 // create a subdevice from a file.
 // if its already there, use it.
 // TODO: factory needs a refresh hook.
-Component const* SubFactory::newSymbol(std::string const& fn) const
+Component const* SubFactory::newSymbol(std::string const& fn) // const
 {
 	trace1("SubFactory::newSymbol", fn);
 //	QString FileName(Props.getFirst()->Value);
@@ -440,6 +440,19 @@ Component const* SubFactory::newSymbol(std::string const& fn) const
 		Component* ss = qucs::device_dispatcher.clone("subckt_proto");
 		auto s = prechecked_cast<SubcktBase*>(ss);
 		assert(s);
+
+		assert(owner());
+		s->set_owner(owner());
+
+		{ // move to subckt_proto variant?
+			auto a = qucs::device_dispatcher.clone("subckt_proto");
+			assert(a);
+			a->set_label("main");
+			a->set_owner(ss);
+			assert(s->scope());
+			s->scope()->push_back(a);
+		}
+
 
 		istream_t pstream(istream_t::_WHOLE_FILE, file_found);
 		build_sckt(pstream, s);

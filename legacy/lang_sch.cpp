@@ -1293,9 +1293,8 @@ std::string LegacySchematicLanguage::find_type_in_string(istream_t& c) const
 	}else{
 	}
 
-	trace1("legsch::findType", typestring);
+	trace2("legsch::findType", c.fullstring(), typestring);
 	return typestring;
-
 }
 /*--------------------------------------------------------------------------*/
 // was Schematic::loadProperties

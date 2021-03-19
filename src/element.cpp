@@ -92,8 +92,8 @@ pos_t /* const & */ Element::center()const
 // borrowed/modified from e_card.h
 const Element* Element::find_looking_out(const std::string& name)const
 {
-	trace2("find_looking_out1", name, label());
-	try {
+	trace3("Element::find_looking_out", name, label(), owner());
+	try { untested();
 		return find_in_parent_scope(name);
 	}catch (qucs::ExceptionCantFind&) {
 		if (auto o=dynamic_cast<Element const*>(owner())) {
@@ -119,11 +119,11 @@ const Element* Element::find_in_parent_scope(const std::string& name)const
   assert(name != "");
   auto const* p_scope = (scope()->parent()) ? scope()->parent() : scope();
 
-  if(!p_scope){
+  if(!p_scope){ untested();
 	  // unreachable(); happens in some lib files
 	  trace2("no scope", name, label());
 	  throw qucs::ExceptionCantFind(name, label());
-  }else{
+  }else{ untested();
   }
 
   auto i = p_scope->find_(name);

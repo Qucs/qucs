@@ -455,7 +455,8 @@ void LegacyNetlister::createNetlist(ostream_t& stream,
 // could eject "include" statements instead, but need to convert sub schematics
 // to target language somewhere else.
 
-void LegacyNetlister::throughAllComps(ostream_t&, ElementList const* scope_,
+// obsolete.
+void LegacyNetlister::throughAllComps(ostream_t& xx, ElementList const* scope_,
 		std::map<std::string, Element const*>& declarations) const
 { incomplete();
 	QString s;
@@ -530,8 +531,17 @@ void LegacyNetlister::throughAllComps(ostream_t&, ElementList const* scope_,
 			auto& d = declarations[key];
 
 			// only one proto per key
-			assert(!d || d == proto);
-		  	d = proto;
+			if(!d){ untested();
+				d = proto;
+
+				if(!d){
+				}else if(d->scope()){
+					throughAllComps(xx, d->scope(), declarations);
+				}else{
+				}
+			}else{ untested();
+				assert(d==proto);
+			}
 		}else if(sym && sym->subckt()){
 			// really??
 			std::string key = sym->dev_type();

@@ -566,7 +566,8 @@ void VS::printSubckt(SubcktBase const* x, ostream_t& o) const
 	}else{ untested();
 	}
 
-	std::vector<Element*> places;
+	std::vector<Element const*> places;
+//	Element const* main_;
 	if(scope){
 		assert(x);
 
@@ -579,6 +580,9 @@ void VS::printSubckt(SubcktBase const* x, ostream_t& o) const
 				places.push_back(ci);
 			}else if(dynamic_cast<Conductor const*>(ci)){
 				// TODO: defer
+				printItem(o, ci);
+			}else if(ci->label() == "main"){ untested();
+				// main_ = ci;
 				printItem(o, ci);
 			}else if(ci->label()[0] == ':'){ untested();
 				// ?
@@ -608,27 +612,6 @@ class VerilogSchematicFormat : public DocumentFormat{
 private: //command
   void do_it(istream_t&, ElementList*) override;
 
-private: // legacy cruft
-  bool isSymbolMode() const{ return false; }
-//  PaintingList const& symbolPaints(SchematicSymbol const& m) const{ untested();
-//    assert(m.symbolPaintings());
-//    return *m.symbolPaintings();
-//  }
-#if 0
-  DiagramList const& diagrams(SchematicSymbol const& m) const{ untested();
-    return m.diagrams();
-  }
-  PaintingList const& paintings(SchematicSymbol const& m) const{ untested();
-    return m.paintings();
-  }
-  NodeMap const& nodes(SchematicSymbol const& m) const{ untested();
-    return m.nodes();
-  }
-  ElementList const& components(SchematicSymbol const& m) const{ untested();
-    return m.components();
-  }
-#endif
-
 private: // hacks.
   void printSymbol(Symbol const*, ostream_t&) const;
 }VS;
@@ -653,20 +636,6 @@ void VerilogSchematicFormat::do_it(istream_t& cs, ElementList* scope)
 		V_.printItem(stream, main);
 	}else{ untested();
 	}
-
-#if 0
-	for(auto pc : *o){ untested();
-		if(dynamic_cast<TaskElement const*>(pc)){ untested();
-			unreachable();
-			// BUG. a TaskElement is not a Component
-			continue;
-		}else if(pc->label()[0] == ':'){ untested();
-			stream << "// skip sckt " << pc->label() << "\n";
-		}else if(auto s=dynamic_cast<Symbol const*>(pc)){ untested();
-			V_.printItem(stream, s);
-		}
-	}
-#endif
 }
 /* -------------------------------------------------------------------------------- */
 /* "module" <name> "(" <ports> ")" ";"

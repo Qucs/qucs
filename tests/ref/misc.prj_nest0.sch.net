@@ -1,13 +1,22 @@
 # Qucs
-## declarations 2
+## declarations 3
 # unresolved symbol (unreachable)
 ### item Sub:nest1
 # sckt Sub:nest1
 
 .Def:nest1 P1 P2
-# 21
+# 22
 C:C1 gnd P2 C="1 pF" V=""
-R:R1 P1 _net7 R="0 Ohm" Temp="26.85" Tc1="0.0" Tc2="0.0" Tnom="26.85"
+Sub:SC2 P2 _net9 Type="nest2"
+R:R1 P1 _net9 R="0 Ohm" Temp="26.85" Tc1="0.0" Tc2="0.0" Tnom="26.85"
+.Def:End
+### item Sub:nest2
+# sckt Sub:nest2
+
+.Def:nest2 P1 P2
+# 26
+R:R1 P1 P2 R="0 Ohm" Temp="26.85" Tc1="0.0" Tc2="0.0" Tnom="26.85"
+C:C1 gnd P2 C="1 pF" V=""
 .Def:End
 ## declarations end
 
