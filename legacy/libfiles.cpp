@@ -49,7 +49,8 @@ private:
 	void do_it(istream_t&, ElementList* scope) override;
 	void load_single(std::string what, ElementList* scope);
 	void stash(std::string const& t, Component* ssym, ElementList* scope) {
-		auto i = new Dispatcher<Symbol>::INSTALL(&symbol_dispatcher, t, ssym);
+		// introduce model_dispatcher??
+		auto i = new Dispatcher<Component>::INSTALL(&device_dispatcher, t, ssym);
 		_stash.push_back(i);
 	}
 

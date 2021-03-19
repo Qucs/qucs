@@ -1,8 +1,8 @@
 # Qucs
 ## declarations 1
-# unresolved symbol (empty)
+# unresolved symbol Lib:Ideal:Notch2
 ## declarations end
 
 Vdc:V1 _net4 gnd U="1 V"
 R:R1 _net0 gnd R="50 Ohm" Temp="26.85" Tc1="0.0" Tc2="0.0" Tnom="26.85"
-(empty):IB1
+Sub:IB1 fc="1E3" Q="1" Type="Ideal_Notch2"

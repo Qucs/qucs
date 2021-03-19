@@ -377,17 +377,24 @@ private:
 		if(_component.Value == "") { untested();
 		}else if(_section.Value == "") { untested();
 		}else{
-			Symbol* s = symbol_dispatcher[t]; // BUG: userlib. need find_looking_out
-			trace2("Lib::attachProto", t, s);
-//			attach_common(s->mutable_common());
-			_parent = s;
-			if(!_parent){
-				message(MsgCritical, ("cannot find " + t).c_str());
-			}else{
+			Element const* s = nullptr;
+			try{ untested();
+				find_looking_out(t);
+			}catch(qucs::ExceptionCantFind const&){ untested();
+			}
+
+			if((_parent = dynamic_cast<Component const*>(s))){ untested();
+				trace2("Lib::attachProto local", t, _parent);
+			}else if((_parent = device_dispatcher[t])){ untested();
+				trace2("Lib::attachProto device", t, _parent);
+			}else if((_parent = symbol_dispatcher[t])){ untested();
+				trace2("Lib::attachProto symbol", t, _parent);
+			}else{ untested();
 			}
 		}
 
 		if(!_parent){
+			message(MsgCritical, ("cannot find " + t).c_str());
 			_parent = &d0;
 		}else{
 		}
