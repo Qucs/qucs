@@ -134,14 +134,14 @@ private: // Symbol
 	std::string const portName(index_t) const override;
 
 	void set_param_by_name(std::string const& name, std::string const& value) override;
-	void setParameter(index_t i, std::string const& value) override;
-	index_t paramCount() const override{
-	  return 3 + Symbol::paramCount();
+	void set_param_by_index(index_t i, std::string const& value) override;
+	index_t param_count() const override{
+	  return 3 + Symbol::param_count();
 	}
 
-	std::string paramName(index_t i) const override;
-	std::string paramValue(index_t i) const override{
-		switch (int(Paramset::paramCount()) - (1 + i)) {
+	std::string param_name(index_t i) const override;
+	std::string param_value(index_t i) const override{
+		switch (int(Paramset::param_count()) - (1 + i)) {
 		case 0:
 			return _filename;
 //		case 1: untested();
@@ -151,18 +151,18 @@ private: // Symbol
 		case 2:
 			return std::to_string(_tx);
 		default:
-			return Symbol::paramValue(i);
+			return Symbol::param_value(i);
 		}
 	}
-	std::string paramValue(std::string const& name) const override{
-		trace1("Paramset::paramValue", name);
+	std::string param_value_by_name(std::string const& name) const override{
+		trace1("Paramset::param_value_by_name", name);
 		if(name=="$tx"){
 			return std::to_string(_tx);
 		}else if(name=="$ty"){
 			return std::to_string(_ty);
 		}else{
 			incomplete();
-			return Symbol::paramValue(name);
+			return Symbol::param_value_by_name(name);
 		}
 	}
 	void init(Component const* proto);
@@ -207,7 +207,7 @@ public:
 private:
 	void set_param_by_name(std::string const& name, std::string const& v) override
 	{
-		trace2("SF::set_param", name, v);
+		trace2("SF::set_param_by_index", name, v);
 		if(name=="$SUB_PATH"){
 			_subPath = v;
 		}else{ untested();
@@ -247,9 +247,9 @@ Paramset::Paramset(CommonComponent* cc)
 #endif
 /*--------------------------------------------------------------------------*/
 // use common params eventually.
-std::string Paramset::paramName(index_t i) const
+std::string Paramset::param_name(index_t i) const
 {
-	switch (int(Paramset::paramCount()) - (1 + i)) {
+	switch (int(Paramset::param_count()) - (1 + i)) {
 	case 0:
 		return "File";
 		// return "porttype"; // or so
@@ -258,7 +258,7 @@ std::string Paramset::paramName(index_t i) const
 	case 2:
 		return "$ty";
 	default:
-		return Symbol::paramName(i);
+		return Symbol::param_name(i);
 	}
 }
 /*--------------------------------------------------------------------------*/
@@ -334,7 +334,7 @@ void Paramset::init(Component const* proto)
 
 	incomplete();
 #if 0 // BUG BUG copy from proto. better: use common...
-	for(index_t i=0; i<proto->paramCount(); ++i)
+	for(index_t i=0; i<proto->param_count(); ++i)
 	{
 		[..]
 		_params.push_back(p);
@@ -607,9 +607,9 @@ void Paramset::set_param_by_name(std::string const& name, std::string const& v)
 	}
 }
 /*--------------------------------------------------------------------------*/
-void Paramset::setParameter(index_t i, std::string const& v)
+void Paramset::set_param_by_index(index_t i, std::string const& v)
 {
-	switch (int(Paramset::paramCount()) - (1 + i)) {
+	switch (int(Paramset::param_count()) - (1 + i)) {
 	case 0:
 		_filename = v;
 		refreshSymbol(v);

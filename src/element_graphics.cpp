@@ -113,14 +113,14 @@ public:
 		}else{
 		}
 		if(auto s=dynamic_cast<Symbol const*>(e)){
-			int show = atoi(s->paramValue("$param_display").c_str());
-			for(unsigned i=0; i<s->paramCount(); ++i){
-				auto n = QString::fromStdString(s->paramName(i));
+			int show = atoi(s->param_value_by_name("$param_display").c_str());
+			for(unsigned i=0; i<s->param_count(); ++i){
+				auto n = QString::fromStdString(s->param_value(i));
 				if(n.at(0)=='$'){
 				}else if(show % 2){
 					auto t=new QGraphicsTextItem(this);
 					t->setFlags(ItemIgnoresTransformations);
-					auto v = QString::fromStdString(s->paramValue(i));
+					auto v = QString::fromStdString(s->param_value(i));
 					t->setPlainText(n+"="+v);
 					t->setPos(0, k/2);
 					k += t->boundingRect().height();
@@ -192,16 +192,21 @@ static void redo_children(ElementGraphics* g)
 
 		new ElementText(g);
 
-		if(auto s = sym->subckt()){itested();
-			for(auto o : *s){itested();
-				if(auto i=dynamic_cast<Element*>(o)){
-					QGraphicsItem* cg = new ElementGraphics(i->clone());
-					cg->setParentItem(g);
-				}else{
-				}
+		auto s = sym->subckt();
+		assert(s);
+		for(auto o : *s){itested();
+			if(auto i=dynamic_cast<QWidget*>(o)){ untested();
+				incomplete(); // good idea?
+			}else if(auto i=dynamic_cast<QGraphicsItem*>(o)){ untested();
+				// just display it?
+				incomplete();
+			}else if(auto i=dynamic_cast<Element*>(o)){
+				QGraphicsItem* cg = new ElementGraphics(i->clone());
+				cg->setParentItem(g);
+			}else{
 			}
-		}else{itested();
 		}
+	}else{
 	}
 }
 /*--------------------------------------------------------------------------*/
@@ -229,11 +234,15 @@ void ElementGraphics::attachElement(Element* e)
 		flags |= ItemIsSelectable;
 		flags |= ItemIsMovable;
 	}
+
+	// obsolete?
 	if(_e->legacyTransformHack()){ untested();
 		flags |= ItemIgnoresTransformations;
 	}else{itested();
 	}
+
 	setFlags(flags);
+
 	// BUG: ask element?
 	setAcceptHoverEvents(true);
 
@@ -249,11 +258,6 @@ void ElementGraphics::attachElement(Element* e)
 	}else{ itested();
 	}
 
-	if(0){
-		auto a = new QGraphicsTextItem(this);
-		a->setPlainText(QString::fromStdString(e->label()));
-	}else{
-	}
 	auto sym = dynamic_cast<SubcktBase const*>(_e);
 
 	if (auto w=_e->newWidget()){ untested();
@@ -281,9 +285,9 @@ void ElementGraphics::attachElement(Element* e)
 		// throw that in the bin some day..
 	}else if(auto s=dynamic_cast<Symbol const*>(_e)){itested();
 		// could be made accessible through Symbol interface.
-		int hflip = atoi(s->paramValue("$hflip").c_str());
-		int vflip = atoi(s->paramValue("$vflip").c_str());
-		int angle = atoi(s->paramValue("$angle").c_str());
+		int hflip = atoi(s->param_value_by_name("$hflip").c_str());
+		int vflip = atoi(s->param_value_by_name("$vflip").c_str());
+		int angle = atoi(s->param_value_by_name("$angle").c_str());
 		assert(hflip==1 || hflip==-1);
 		assert(vflip==1 || vflip==-1);
 
@@ -441,7 +445,7 @@ void ElementGraphics::transform(qucsSymbolTransform a, std::pair<int, int> pivot
 		int my = 0;
 		unsigned r = 0;
 		try {itested();
-			std::string mxs = s->paramValue("$hflip"); // indicates if x axis is mirrored
+			std::string mxs = s->param_value_by_name("$hflip"); // indicates if x axis is mirrored
 			mx = atoi(mxs.c_str()); // \pm 1
 			trace3("hflip", mx, my, r);
 			assert(mx == 1);
@@ -451,14 +455,14 @@ void ElementGraphics::transform(qucsSymbolTransform a, std::pair<int, int> pivot
 			incomplete();
 		}
 		try {itested();
-			std::string mys = s->paramValue("$vflip"); // indicates if y axis is mirrored
+			std::string mys = s->param_value_by_name("$vflip"); // indicates if y axis is mirrored
 			my = atoi(mys.c_str());
 			my -= 1;
 			my /= -2;
 		}catch(qucs::ExceptionCantFind const&){ untested();
 		}
 		try {itested();
-			std::string rs = s->paramValue("$angle");
+			std::string rs = s->param_value_by_name("$angle");
 			r = atoi(rs.c_str());
 			assert(!(r%90));
 			assert(r<360);
@@ -702,9 +706,9 @@ void ElementGraphics::hide()
 	assert(_e);
 	_selected = QGraphicsItem::isSelected();
 	assert(isVisible());
-	auto l = childItems();
-	trace1("ElementGraphics hide", childItems().size());
-	for(auto i: childItems()){
+	auto cis = childItems();
+	trace1("ElementGraphics hide", cis.size());
+	for(auto i: cis){
 		if(auto p = dynamic_cast<QGraphicsProxyWidget*>(i)){
 			trace2("hide it's a proxy", p, this);
 			p->setWidget(nullptr); // the Element has a reference to it.

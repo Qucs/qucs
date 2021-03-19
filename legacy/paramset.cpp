@@ -68,25 +68,24 @@ private: // Symbol
 		}else{
 			unreachable();
 		}
-		// Symbol::setParameter(n, v);
 	}
-	void setParameter(unsigned n, std::string const& v) override{
+	void set_param_by_index(unsigned n, std::string const& v) override{
 		// BUG: proto is not shared.
 		if(_proto){
 			trace3("paramset fwd", label(), n, v);
 
-			_proto->setParameter(n, v);
+			_proto->set_param_by_index(n, v);
 		}else{
 		}
 	}
 	// used in list-entries
-	std::string paramValue(std::string const& n) const override{
+	std::string param_value_by_name(std::string const& n) const override{
 		if (n=="$tx"){
 			return "0";
 		}else if (n=="$ty"){
 			return "0";
 		}else{
-			return Symbol::paramValue(n);
+			return Symbol::param_value_by_name(n);
 		}
 	}
 	rect_t bounding_rect() const override{ untested();

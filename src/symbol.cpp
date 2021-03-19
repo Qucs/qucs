@@ -76,7 +76,7 @@ pos_t Symbol::center()const
 	return Element::center(); // pos_t(_cx, _cy);
 }
 /*--------------------------------------------------------------------------*/
-std::string Symbol::paramValue(std::string const& n) const
+std::string Symbol::param_value_by_name(std::string const& n) const
 {
 	if(n=="$xposition"){
 		return std::to_string(cx());
@@ -94,7 +94,7 @@ std::string Symbol::paramValue(std::string const& n) const
 	}else if(n=="$angle"){
 		return std::to_string(_angle);
 	}else{ untested();
-		return Component::paramValue(n);
+		return Component::param_value_by_name(n);
 	}
 }
 /*--------------------------------------------------------------------------*/
@@ -155,14 +155,12 @@ bool Symbol::paramIsPrintable() const
 	return true;
 }
 /*--------------------------------------------------------------------------*/
-unsigned Symbol::paramCount() const
+unsigned Symbol::param_count() const
 {
-	return 4; // TODO:  angle mfactor ...?
-	return 2; // TODO:  vflip hflip angle mfactor ...?
-	return 6;
+	return 4; // xy position hv flip  TODO?  angle mfactor ...
 }
 /*--------------------------------------------------------------------------*/
-std::string Symbol::paramValue(index_t i) const
+std::string Symbol::param_value(index_t i) const
 {
 	switch(i){
 	case 0:
@@ -174,11 +172,11 @@ std::string Symbol::paramValue(index_t i) const
 	case 3:
 		return std::to_string(_hflip);
 	default:
-		return Component::paramValue(i); // really??
+		return Component::param_value(i); // really??
 	}
 }
 /*--------------------------------------------------------------------------*/
-std::string Symbol::paramName(unsigned i) const
+std::string Symbol::param_name(unsigned i) const
 {
 	trace2("Symbol::paramName", label(), i);
 	switch(i){
@@ -195,7 +193,7 @@ std::string Symbol::paramName(unsigned i) const
 	}
 }
 /*--------------------------------------------------------------------------*/
-void Symbol::setParameter(index_t n, std::string const& v)
+void Symbol::set_param_by_index(index_t n, std::string const& v)
 {
 	if(n==0){ // xpos
 		setPosition(pos_t(atoi(v.c_str()), cy()));
@@ -205,10 +203,10 @@ void Symbol::setParameter(index_t n, std::string const& v)
 		_vflip = atoi(v.c_str()); // TODO: parameters.
 	}else if(n==3){ // hflip
 		_hflip = atoi(v.c_str()); // TODO: parameters.
-	}else if(n<Symbol::paramCount()){
+	}else if(n<Symbol::param_count()){
 		unreachable();
 	}else{
-		return Component::setParameter(n, v);
+		return Component::set_param_by_index(n, v);
 	}
 }
 /*--------------------------------------------------------------------------*/

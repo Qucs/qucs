@@ -106,7 +106,7 @@ static std::string netLabel(Node const* nn)
 /* -------------------------------------------------------------------------------- */
 static void printDefHack(Symbol const* p, ostream_t& s)
 { untested();
-	std::string hack = p->paramValue("qucsatorsckthack");
+	std::string hack = p->param_value_by_name("qucsatorsckthack");
 	s << hack;
 }
 /* -------------------------------------------------------------------------------- */

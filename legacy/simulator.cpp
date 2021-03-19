@@ -498,7 +498,7 @@ void LegacyNetlister::throughAllComps(ostream_t&, ElementList const* scope_,
 			assert(sym->label()=="main");
 		}
 
-		if(pc->paramValue("$mfactor") == "0"){
+		if(pc->param_value_by_name("$mfactor") == "0"){
 			incomplete();
 			continue;
 		}else if(isAnalog) {
@@ -596,7 +596,7 @@ void LegacyNetlister::throughAllComps(ostream_t&, ElementList const* scope_,
 		if(model_hack == "SPICE") { // BUG
 			incomplete(); // move to Symbol->tac
 			//s = pc->Props.first()->Value;
-			s = QString::fromStdString(pc->paramValue("filename_maybe"));
+			s = QString::fromStdString(pc->param_value_by_name("filename_maybe"));
 			// tell the spice component it belongs to this schematic
 			//      pc->setSchematic (this);
 			if(s.isEmpty()) { untested();

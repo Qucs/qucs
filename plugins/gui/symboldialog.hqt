@@ -349,7 +349,7 @@ void SymbolDialog::updateCompPropsList()
 
 	int row=0; // row counter
 	//for(Property *p = c->Props.first(); p != 0; p = c->Props.next()) {}
-	for(unsigned i=0; i< c->paramCount(); ++i){
+	for(unsigned i=0; i< c->param_count(); ++i){
 
 		// do not insert if already on first tab
 		// this is the reason it was originally from back to front...
@@ -367,8 +367,8 @@ void SymbolDialog::updateCompPropsList()
 			prop->setRowCount(prop->rowCount()+1);
 		}
 
-		auto pn = QString::fromStdString(c->paramName(i));
-		auto pv = QString::fromStdString(c->paramValue(i));
+		auto pn = QString::fromStdString(c->param_name(i));
+		auto pv = QString::fromStdString(c->param_value(i));
 
 		QTableWidgetItem *cell;
 		cell = new QTableWidgetItem(pn);
@@ -619,7 +619,7 @@ void SymbolDialog::slotApplyInput()
 	assert(sym_clone);
 	sym_clone->set_owner(_sym->owner());
 
-	unsigned old_show = atoi(sym_clone->paramValue("$param_display").c_str());
+	unsigned old_show = atoi(sym_clone->param_value_by_name("$param_display").c_str());
 	trace1("old_show", old_show);
 
 	if(sym_clone->showLabel() != showName->isChecked()) {
@@ -649,9 +649,9 @@ void SymbolDialog::slotApplyInput()
 		new_show *= 2;
 		new_show |= display;
 
-		if(_sym->paramValue(row) != value) {
+		if(_sym->param_value(row) != value) {
 			trace2("symbol apply", row, value);
-			sym_clone->setParameter(row, value);
+			sym_clone->set_param_by_index(row, value);
 			changed = true;
 		}else{
 		}
@@ -679,7 +679,7 @@ void SymbolDialog::slotApplyInput()
 		_sym = prechecked_cast<Symbol*>(c); // was const.
 		assert(_sym);
 
-//		if ( (int) _sym->paramCount() != prop->rowCount()) {
+//		if ( (int) _sym->param_count() != prop->rowCount()) {
 //			updateCompPropsList();
 //		}else{
 //		}

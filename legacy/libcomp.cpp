@@ -73,16 +73,16 @@ public:
 private:
 	bool is_device() const override {return false;}
 	ElementList* scope() override {return subckt();}
-	std::string paramValue(unsigned n) const override{ untested();
-		return SubcktBase::paramValue(n);
+	std::string param_value(index_t n) const override{ untested();
+		return SubcktBase::param_value(n);
 	}
-	std::string paramValue(std::string const& n) const override{
+	std::string param_value_by_name(std::string const& n) const override{
 		if(n=="$tx"){
 			return "0";
 		}else if(n=="$ty"){
 			return "0";
 		}else{
-			return SubcktBase::paramValue(n);
+			return SubcktBase::param_value_by_name(n);
 		}
 	}
 //	unsigned numPorts() const override{
@@ -273,60 +273,22 @@ private: // Symbol
 		}else{ untested();
 		}
 	}
-	index_t paramCount() const{ return Symbol::paramCount() + 4 + _params.size(); }
-	void setParameter(index_t n, std::string const& v) override{
-		bool redo = false;
-		int m = int(n) - int(Symbol::paramCount());
-		trace4("Lib:SP", n, v, m, _params.size());
-//		assert(n<Lib::paramCount()); not necessarily.
-		switch(m){
-		case 0:
-			break;
-		case 1:
-			break;
-		case 2:
-			_section.Value = QString::fromStdString(v);
-			redo = true;
-			break;
-		case 3:
-			_component.Value = QString::fromStdString(v);
-			redo = true;
-			break;
-		default:itested();
-			trace3("fwd", n, m, v);
-			if(m - 4 < 0){
-				Symbol::setParameter(n, v);
-			}else if(m - 4 >= int(_params.size())){itested();
-				incomplete();
-			// 	Symbol::setParameter(n, v);
-			}else if(auto p = dynamic_cast<PARAMETER<double>* >(_params[m-4])){ untested();
-				*p = v;
-			}else{
-				unreachable();
-			}
-			break;
-		}
 
-		if(_section.Value == ""){
-		}else if(_component.Value == ""){
-		}else if(redo){
-			// BUG: not here.
-			attachProto();	
-			assert(_parent); // for now.
-		}else{itested();
-		}
+	index_t param_count() const override {
+		return Symbol::param_count() + 4 + _params.size();
 	}
-	std::string paramValue(std::string const& n) const override{
+	void set_param_by_index(index_t n, std::string const& v) override;
+	std::string param_value_by_name(std::string const& n) const override{
 		if (n=="$tx"){
 			return std::to_string(_tx);
 		}else if (n=="$ty"){
 			return std::to_string(_ty);
 		}else{itested();
-			return Symbol::paramValue(n);
+			return Symbol::param_value_by_name(n);
 		}
 	}
-	std::string paramValue(unsigned i) const override{
-		int m = i - Symbol::paramCount();
+	std::string param_value(index_t i) const override{
+		int m = i - Symbol::param_count();
 		switch(m){
 		case 0:
 			return std::to_string(_tx);
@@ -338,9 +300,9 @@ private: // Symbol
 			return _component.Value.toStdString();
 		default:
 			if(m - 4 < 0){
-				return Symbol::paramValue(i);
+				return Symbol::param_value(i);
 			}else if(m - 4 >= int(_param_names.size())){ untested();
-				return Symbol::paramValue(i);
+				return Symbol::param_value(i);
 			}else if(auto p = dynamic_cast<PARAMETER<double>* >(_params[m-4])){
 			  	return p->string();
 			}else{
@@ -349,8 +311,8 @@ private: // Symbol
 			}
 		}
 	}
-	std::string paramName(unsigned i) const override{
-		int m = i - Symbol::paramCount();
+	std::string param_name(index_t i) const override{
+		int m = i - Symbol::param_count();
 		switch(m){
 		case 0:
 			return "$tx";
@@ -362,11 +324,11 @@ private: // Symbol
 			return "Component";
 		default:itested();
 			if(m - 4 < 0){
-				return Symbol::paramName(i);
+				return Symbol::param_name(i);
 			}else if(m - 4 < int(_param_names.size())){
 			  	return _param_names[m-4];
 			}else{
-				return Symbol::paramName(i);
+				return Symbol::param_name(i);
 			}
 		}
 	}
@@ -378,18 +340,18 @@ private:
 		}else if(_section.Value == "") { untested();
 		}else{
 			Element const* s = nullptr;
-			try{ untested();
-				find_looking_out(t);
-			}catch(qucs::ExceptionCantFind const&){ untested();
+			try{
+				s = find_looking_out(t);
+			}catch(qucs::ExceptionCantFind const&){
 			}
 
 			if((_parent = dynamic_cast<Component const*>(s))){ untested();
 				trace2("Lib::attachProto local", t, _parent);
-			}else if((_parent = device_dispatcher[t])){ untested();
+			}else if((_parent = device_dispatcher[t])){
 				trace2("Lib::attachProto device", t, _parent);
 			}else if((_parent = symbol_dispatcher[t])){ untested();
 				trace2("Lib::attachProto symbol", t, _parent);
-			}else{ untested();
+			}else{
 			}
 		}
 
@@ -454,6 +416,50 @@ private:
 }; // Lib
 Lib D(&cl);
 static Dispatcher<Symbol>::INSTALL p(&symbol_dispatcher, "Lib", &D);
+/*--------------------------------------------------------------------------*/
+void Lib::set_param_by_index(index_t n, std::string const& v)
+{
+	bool redo = false;
+	int m = int(n) - int(Symbol::param_count());
+	trace4("Lib:SP", n, v, m, _params.size());
+//		assert(n<Lib::param_count()); not necessarily.
+	switch(m){
+	case 0:
+		break;
+	case 1:
+		break;
+	case 2:
+		_section.Value = QString::fromStdString(v);
+		redo = true;
+		break;
+	case 3:
+		_component.Value = QString::fromStdString(v);
+		redo = true;
+		break;
+	default:itested();
+		trace3("fwd", n, m, v);
+		if(m - 4 < 0){
+			Symbol::set_param_by_index(n, v);
+		}else if(m - 4 >= int(_params.size())){itested();
+			incomplete();
+		// 	Symbol::setParameter(n, v);
+		}else if(auto p = dynamic_cast<PARAMETER<double>* >(_params[m-4])){ untested();
+			*p = v;
+		}else{
+			unreachable();
+		}
+		break;
+	}
+
+	if(_section.Value == ""){
+	}else if(_component.Value == ""){
+	}else if(redo){
+		// BUG: not here.
+		attachProto();	
+		assert(_parent); // for now.
+	}else{itested();
+	}
+}
 /*--------------------------------------------------------------------------*/
 Lib::Lib(Component const* p)
 	  : Symbol(), _tx(0), _ty(0), _parent(p)

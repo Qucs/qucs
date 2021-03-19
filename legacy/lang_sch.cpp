@@ -441,14 +441,14 @@ void LegacySchematicLanguage::printPainting(Painting const* p, ostream_t& s) con
 /*--------------------------------------------------------------------------*/
 static void printArgs(qucs::Component const* sym, ostream_t& s)
 {
-	s << " " << sym->paramValue("$mfactor");
-	s << " " << sym->paramValue("$xposition");
-	s << " " << sym->paramValue("$yposition");
-	s << " " << sym->paramValue("$tx");
-	s << " " << sym->paramValue("$ty");
-	int angle = atoi(sym->paramValue("$angle").c_str());
-	int hflip = atoi(sym->paramValue("$hflip").c_str());
-	int vflip = atoi(sym->paramValue("$vflip").c_str());
+	s << " " << sym->param_value_by_name("$mfactor");
+	s << " " << sym->param_value_by_name("$xposition");
+	s << " " << sym->param_value_by_name("$yposition");
+	s << " " << sym->param_value_by_name("$tx");
+	s << " " << sym->param_value_by_name("$ty");
+	int angle = atoi(sym->param_value_by_name("$angle").c_str());
+	int hflip = atoi(sym->param_value_by_name("$hflip").c_str());
+	int vflip = atoi(sym->param_value_by_name("$vflip").c_str());
 	assert(hflip);
 	assert(vflip);
 	if(hflip==1){
@@ -465,18 +465,19 @@ static void printArgs(qucs::Component const* sym, ostream_t& s)
 		s << " TODO" << ((180+angle)/90) % 4;
 	}
 
-	int show = atoi(sym->paramValue("$param_display").c_str());
-	for(index_t i=0; i<sym->paramCount(); ++i){
-		trace3("display", i, show, sym->paramName(i));
+	int show = atoi(sym->param_value_by_name("$param_display").c_str());
+	for(index_t i=0; i<sym->param_count(); ++i){
+		trace3("display", i, show, sym->param_name(i));
 		// if(sym->paramIsPrintabl(i))
-		std::string n = sym->paramName(i);
+		std::string n = sym->param_name(i);
 		if(n.at(0)=='$'){
 		}else{
-			s << " \"" << sym->paramValue(i) << "\" " << (show % 2);
+			s << " \"" << sym->param_value(i) << "\" " << (show % 2);
 		}
 		show /= 2;
 	}
 }
+/*--------------------------------------------------------------------------*/
 static void printwirehack(qucs::Symbol const* w, ostream_t& d)
 {
 	assert(w);
@@ -493,10 +494,10 @@ static void printwirehack(qucs::Symbol const* w, ostream_t& d)
   std::tie(x1, y1) = w->nodePosition(0);
   std::tie(x2, y2) = w->nodePosition(1);
 
-//  int cx = atoi(sym->paramValue("$xposition").c_str());
-//  int cy = atoi(sym->paramValue("$yposition").c_str());
-//  int dx = atoi(sym->paramValue("deltax").c_str());
-//  int dy = atoi(sym->paramValue("deltay").c_str());
+//  int cx = atoi(sym->param_value_by_name("$xposition").c_str());
+//  int cy = atoi(sym->param_value_by_name("$yposition").c_str());
+//  int dx = atoi(sym->param_value_by_name("deltax").c_str());
+//  int dy = atoi(sym->param_value_by_name("deltay").c_str());
 
   d << "<" << x1 << " " << y1
     << " " << x2 << " " << y2;
@@ -543,9 +544,9 @@ void LegacySchematicLanguage::print_instance(ostream_t& s, qucs::Component const
 		s << " "+QString::number(c->tx)+" "+QString::number(c->ty);
 		s << " ";
 		if(!sym->legacyTransformHack()){
-			int angle = atoi(sym->paramValue("$angle").c_str());
-			int hflip = atoi(sym->paramValue("$hflip").c_str());
-			int vflip = atoi(sym->paramValue("$vflip").c_str());
+			int angle = atoi(sym->param_value_by_name("$angle").c_str());
+			int hflip = atoi(sym->param_value_by_name("$hflip").c_str());
+			int vflip = atoi(sym->param_value_by_name("$vflip").c_str());
 			assert(hflip);
 			assert(vflip);
 			int a = (angle/90) % 4;
@@ -864,7 +865,7 @@ Symbol* LegacySchematicLanguage::parseSymbol(istream_t& cs, Symbol* sym) const
 
 			tmp *= 90;
 			sym->set_param_by_name("$angle", std::to_string(tmp));
-			assert(sym->paramValue("$angle") == std::to_string(tmp));
+			assert(sym->param_value_by_name("$angle") == std::to_string(tmp));
 		}
 
 		// set parameters.
@@ -882,7 +883,7 @@ Symbol* LegacySchematicLanguage::parseSymbol(istream_t& cs, Symbol* sym) const
 
 			try{
 				trace2("legacy:set", position + offset, n);
-				sym->setParameter(position + offset, n.toStdString());
+				sym->set_param_by_index(position + offset, n.toStdString());
 			}catch(qucs::ExceptionCantFind const*){ untested();
 				incomplete(); // CS has error messages...
 				cs.warn(MsgFatal, "cannot parse Symbol param " +
@@ -1004,7 +1005,7 @@ static ::Component* parseComponentObsoleteCallback(const QString& _s, ::Componen
 
 		tmp *= 90;
 		sym->set_param_by_name("$angle", std::to_string(tmp));
-		if(sym->paramValue("$angle") == std::to_string(tmp)){
+		if(sym->param_value_by_name("$angle") == std::to_string(tmp)){
 		}else{
 			unreachable();
 		}
@@ -1136,7 +1137,7 @@ static ::Component* parseComponentObsoleteCallback(const QString& _s, ::Componen
 		p1->Value = n; // TODO: remove
 
 		Symbol* sym = c;
-		sym->setParameter(position++, n.toStdString()); // BUG: also do for non-Components.
+		sym->set_param_by_index(position++, n.toStdString()); // BUG: also do for non-Components.
 
 		n  = s.section('"',z,z);    // display
 		p1->display = (n.at(1) == '1');
@@ -1208,7 +1209,7 @@ DEV_DOT* LegacySchematicLanguage::parseCommand(istream_t& c, DEV_DOT* x) const
 #else
 	auto scope = x->scope();
 	if(scope){
-	}else{ untested();
+	}else{
 	}
 #endif
 

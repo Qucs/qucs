@@ -41,7 +41,7 @@ void union0()
 	assert(w);
 	// assert(!w->subckt());
 
-	trace2("DBG", w->paramValue("$xposition"), w->paramValue("$yposition"));
+	trace2("DBG", w->param_value_by_name("$xposition"), w->param_value_by_name("$yposition"));
 
 	//assert(w->nodePosition(0) == pos_t(0,0));
 	//assert(w->nodePosition(1) == pos_t(10,0));

@@ -139,11 +139,11 @@ void WireDialog::attach(ElementGraphics* gfx)
   _all->addWidget(hbox2);
 
  	std::string some_text =
-		"$xposition" + Comp->paramValue("$xposition") + "\n"
-		"$yposition" + Comp->paramValue("$yposition") + "\n"
-		"$vflip" + Comp->paramValue("$vflip") + "\n"
-		"$hflip" + Comp->paramValue("$hflip") + "\n"
-		"$angle" + Comp->paramValue("$angle") + "\n"
+		"$xposition" + Comp->param_value_by_name("$xposition") + "\n"
+		"$yposition" + Comp->param_value_by_name("$yposition") + "\n"
+		"$vflip" + Comp->param_value_by_name("$vflip") + "\n"
+		"$hflip" + Comp->param_value_by_name("$hflip") + "\n"
+		"$angle" + Comp->param_value_by_name("$angle") + "\n"
 		"ports" + Comp->port_value(0) + " " + Comp->port_value(1) + "\n"
 		"net TODO" + "\n";
 
@@ -160,7 +160,7 @@ void WireDialog::attach(ElementGraphics* gfx)
   connect(cancel, SIGNAL(clicked()), SLOT(slotButtCancel()));
 
   // ------------------------------------------------------------
-  std::string netname = Comp->paramValue("netname");
+  std::string netname = Comp->param_value_by_name("netname");
   CompNameEdit->setText(QString::fromStdString(netname));
   // showName->setChecked(Comp->showName);
   _changed = false;

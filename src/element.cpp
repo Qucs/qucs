@@ -79,7 +79,8 @@ void Element::set_param_by_name(std::string const& name, std::string const&)
 	throw qucs::ExceptionCantFind("parameter " + name, label());
 }
 /*--------------------------------------------------------------------------*/
-std::string Element::get_param_by_name(std::string const& name) const{
+std::string Element::param_value_by_name(std::string const& name) const
+{
 	throw qucs::ExceptionCantFind("parameter " + name, label());
 }
 /*--------------------------------------------------------------------------*/

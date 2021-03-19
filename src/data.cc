@@ -21,7 +21,7 @@ Data::~Data()
 	CommonData::attach(nullptr, &_common);
 }
 /* -------------------------------------------------------------------------------- */
-std::string Data::get_param_by_name(std::string const&) const
+std::string Data::param_value_by_name(std::string const&) const
 {
 	unreachable();
 	return "wrong";

@@ -64,15 +64,15 @@ public:
 	virtual ElementList const* symbolPaintings() const;
 
 public: // Parameters
-	virtual unsigned paramCount()const;
+	virtual index_t param_count()const override;
 	virtual bool paramIsPrintable()const;
 
-	virtual void set_param_by_name(std::string const& name, std::string const& value);
-	virtual void setParameter(unsigned i, std::string const&);
+	virtual void set_param_by_name(std::string const& name, std::string const& value) override;
+	virtual void set_param_by_index(index_t i, std::string const&) override;
 
-	virtual std::string paramValue(std::string const&s) const;
-	virtual std::string paramValue(unsigned i) const;
-	virtual std::string paramName(unsigned i) const;
+	virtual std::string param_value_by_name(std::string const&s) const override;
+	virtual std::string param_value(index_t i) const override;
+	virtual std::string param_name(index_t i) const override;
 
 public: // Port stuff
 	pos_t nodePosition(unsigned) const;

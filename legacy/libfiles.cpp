@@ -128,7 +128,11 @@ void LIB::load_single(std::string what, ElementList* scope)
 			std::string t = "P:" + parsedlib.name.toStdString() + ":" + c.name.toStdString();
 			sym->set_label(t);
 
-			if(symbol_dispatcher[type]){
+			if(symbol_dispatcher[type]){ untested();
+				sym->setTypeName(type);
+				L->load(stream, sym);
+				new Module::INSTALL(parsedlib.name.toStdString(), sym);
+			}else if(device_dispatcher[type]){ untested();
 				sym->setTypeName(type);
 				L->load(stream, sym);
 				new Module::INSTALL(parsedlib.name.toStdString(), sym);

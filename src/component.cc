@@ -51,17 +51,17 @@ Component::~Component()
 	_subckt = nullptr;
 }
 /*--------------------------------------------------------------------------*/
-index_t Component::paramCount() const
+index_t Component::param_count() const
 {
 	return 0; // for now.
 }
 /*--------------------------------------------------------------------------*/
-std::string Component::paramValue(index_t i) const
+std::string Component::param_value(index_t i) const
 {
 	throw qucs::ExceptionCantFind(label(), std::to_string(i), "param values");
 }
 /*--------------------------------------------------------------------------*/
-std::string Component::paramValue(std::string const& n) const
+std::string Component::param_value_by_name(std::string const& n) const
 {
 	throw qucs::ExceptionCantFind(label(), n, "params");
 }
@@ -72,13 +72,13 @@ void Component::set_port_by_name(std::string const&, std::string const&)
 	assert(false);
 }
 /*--------------------------------------------------------------------------*/
-std::string Component::paramName(index_t i) const
+std::string Component::param_name(index_t i) const
 {
 	incomplete(); // ask common
 	return "incomplete";
 }
 /*--------------------------------------------------------------------------*/
-void Component::setParameter(index_t n, std::string const& v)
+void Component::set_param_by_index(index_t n, std::string const& v)
 {
 	throw qucs::ExceptionCantFind(label(), std::to_string(n), "params");
 }

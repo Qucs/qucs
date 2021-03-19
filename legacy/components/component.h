@@ -113,12 +113,12 @@ public: // Element interface, private?!
   Element* clone() const;
 
 protected: // Symbol
-  virtual unsigned numPorts() const override{ return Ports.count(); }
-  Port& port(unsigned i) override{
-	  assert(i<unsigned(Ports.count()));
+  virtual index_t numPorts() const override{ return Ports.count(); }
+  Port& port(index_t i) override{
+	  assert(i<index_t(Ports.count()));
 	  return *Ports[i]; 
   }
-  pos_t portPosition(unsigned i) const override{
+  pos_t portPosition(index_t i) const override{
 	  return Ports[i]->position();
   }
   //virtual Port const* portValue(unsigned i) const { return Ports[i]; } ... ?
@@ -128,19 +128,20 @@ protected: // Symbol
 //	  Ports[i]->connect(n);
 //  }
 
-  unsigned paramCount() const override;
-  std::string paramValue(unsigned i) const override;
-  std::string paramName(unsigned i) const override;
-  std::string paramValue(std::string const& name) const override;
+	index_t param_count() const override;
+	std::string param_value(index_t i) const override;
+	std::string param_name(index_t i) const override;
+	std::string param_value_by_name(std::string const& name) const override;
+public: // BUG
+	void set_param_by_name(std::string const& name, std::string const& value) override;
+
 
 protected:
-  void setParameter(index_t i, std::string const&) override;
+	void set_param_by_index(index_t i, std::string const&) override;
+
+protected: // really?
 	static const int num_symbol_params;
 	static const int num_component_params;
-
-
-public: // BUG
-  void set_param_by_name(std::string const& name, std::string const& value) override;
 
 public: // BUG
   void    print(ViewPainter*, float);

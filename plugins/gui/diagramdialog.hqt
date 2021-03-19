@@ -1115,7 +1115,7 @@ void DiagramDialog::SelectGraph(Data *g)
 
 	//  if(Diag->name() != "Tab") {
 	//    if(Diag->name() != "Truth") {
-	std::string a = g->get_param_by_name("thick");
+	std::string a = g->param_value_by_name("thick");
 	Property2->setText(QString_(a));
 #if 0 // use params.
 	misc::setPickerColor(ColorButt, g->Color);

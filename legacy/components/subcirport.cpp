@@ -51,11 +51,11 @@ private:
   bool useObsoleteProps() const override{ return true; }
 
 private:
-  void setParameter(unsigned i, std::string const&) override;
-  std::string paramName(unsigned i) const override;
-  std::string paramValue(unsigned i) const override;
-  unsigned paramCount() const override{
-	  return Symbol::paramCount() + num_component_params + 2;
+  void set_param_by_index(index_t i, std::string const&) override;
+  std::string param_name(index_t i) const override;
+  std::string param_value(index_t i) const override;
+  index_t param_count() const override{
+	  return Symbol::param_count() + num_component_params + 2;
   }
 
 protected:
@@ -109,7 +109,7 @@ void SubCirPort::set_port_by_index(index_t i, std::string const& value)
 	try{
 		// don't know why this is a parameter and not a local variable
 		// (does it make any sense?)
-		pp = QString::fromStdString(paramValue(num_component_params + Symbol::paramCount()));
+		pp = QString::fromStdString(param_value(num_component_params + Symbol::param_count()));
 	}catch(qucs::ExceptionCantFind const&){ untested();
 		ok = false;
 	}
@@ -198,37 +198,37 @@ void SubCirPort::createSymbol()
   Ports.append(new ComponentPort(  0,  0));
 }
 // -------------------------------------------------------
-std::string SubCirPort::paramName(unsigned n) const
+std::string SubCirPort::param_name(index_t n) const
 {
-	if(n == num_component_params + Symbol::paramCount()){
+	if(n == num_component_params + Symbol::param_count()){
 		return "Num";
-	}else if(n== num_component_params + Symbol::paramCount() + 1){
+	}else if(n== num_component_params + Symbol::param_count() + 1){
 		return "Type";
 	}else{
-		return Component::paramName(n);
+		return Component::param_name(n);
 	}
 }
 /*--------------------------------------------------------------------------*/
-std::string SubCirPort::paramValue(unsigned n) const
+std::string SubCirPort::param_value(index_t n) const
 {
 //	this is not correct.
-	if(n == num_component_params + Symbol::paramCount()){
+	if(n == num_component_params + Symbol::param_count()){
 		trace1("SubCirPort::paramValue", _pos);
 		return std::to_string(_pos);
-	}else if(n==num_component_params + Symbol::paramCount() + 1){
+	}else if(n==num_component_params + Symbol::param_count() + 1){
 		return _some_type;
 	}else{
-		return Component::paramValue(n);
+		return Component::param_value(n);
 	}
 }
 // -------------------------------------------------------
-void SubCirPort::setParameter(unsigned n, std::string const& vv)
+void SubCirPort::set_param_by_index(index_t n, std::string const& vv)
 {
 	trace3("SubCirPort::setParameter", label(), n, vv);
-	Component::setParameter(n, vv); // noop?
+	Component::set_param_by_index(n, vv); // noop?
 	QString v = QString::fromStdString(vv);
 
-	if(n==num_component_params + Symbol::paramCount()){
+	if(n==num_component_params + Symbol::param_count()){
 		bool ok;
 		int pos = v.toInt(&ok);
 		trace1("SubCirPort::setParameter portno", pos);
@@ -250,7 +250,7 @@ void SubCirPort::setParameter(unsigned n, std::string const& vv)
 		}else{
 			_pos = pos+1;
 		}
-	}else if(n==1 + num_component_params + Symbol::paramCount()){
+	}else if(n==1 + num_component_params + Symbol::param_count()){
 		_some_type = vv;
 	}else{
 		incomplete();

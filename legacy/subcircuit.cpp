@@ -96,8 +96,8 @@ private: // Symbol
   void setParameter(unsigned i, std::string const& value) override;
   unsigned paramCount() const override;
 
-  std::string paramName(unsigned i) const override;
-  std::string paramValue(unsigned i) const override{
+  std::string param_name(index_t i) const override;
+  std::string param_value(index_t i) const override{
 	  if(i == num_component_params + Symbol::paramCount()){
 		  // BUG. don't use Props
 		  assert(Props.at(0));
@@ -106,7 +106,7 @@ private: // Symbol
 		  return Component::paramName(i);
 	  }
   }
-  std::string paramValue(std::string const& x) const override{
+  std::string param_value_by_name(std::string const& x) const override{
 	  trace1("Subcircuit::paramValue", x);
 	  incomplete();
 	  return Component::paramValue(x);

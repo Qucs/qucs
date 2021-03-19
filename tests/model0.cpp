@@ -121,8 +121,8 @@ void test1()
 	for(auto i : cM){
 		Symbol* s = prechecked_cast<Symbol*>(i);
 		assert(s);
-		int cx = atoi(s->paramValue("$xposition").c_str());
-		int cy = atoi(s->paramValue("$xposition").c_str());
+		int cx = atoi(s->param_value_by_name("$xposition").c_str());
+		int cy = atoi(s->param_value_by_name("$xposition").c_str());
 		std::cout << "W" << cx << cy << "\n";
 	}
 	

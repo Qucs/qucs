@@ -56,12 +56,9 @@ private: // Symbol
 	  }
   }
 
-  index_t paramCount() const override{
+  index_t param_count() const override{
 	  return 0;
   }
-//  std::string paramName(unsigned i) const override;
-//  std::string paramValue(unsigned i) const override;
-//  std::string paramValue(std::string const& x) const override;
 
 private:
   int _numports;

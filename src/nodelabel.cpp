@@ -32,7 +32,7 @@ private:
 	}
 
 	void paint(ViewPainter*) const override;
-	std::string paramValue(std::string const& n) const override;
+	std::string param_value_by_name(std::string const& n) const override;
 	void set_param_by_name(std::string const& n, std::string const& v) override;
 	virtual unsigned numPorts() const {return 1;}
 	rect_t bounding_rect() const override;
@@ -45,9 +45,9 @@ private:
 static Dispatcher<Symbol>::INSTALL p(&qucs::symbol_dispatcher, "NodeLabel", &d);
 /*--------------------------------------------------------------------------*/
 /*--------------------------------------------------------------------------*/
-std::string NodeLabel::paramValue(std::string const& n) const
+std::string NodeLabel::param_value_by_name(std::string const& n) const
 {
-	return Symbol::paramValue(n);
+	return Symbol::param_value_by_name(n);
 }
 /*--------------------------------------------------------------------------*/
 void NodeLabel::set_param_by_name(std::string const& n, std::string const& v)

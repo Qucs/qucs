@@ -70,7 +70,7 @@ public: // Element
 		}
 	}
 	std::string param_value(index_t) const override;
-	std::string get_param_by_name(std::string const& name) const override{ untested();
+	std::string param_value_by_name(std::string const& name) const override{ untested();
 		if(name=="color"){ untested();
 			return _color;
 		}else if(name=="thick"){ untested();

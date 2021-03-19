@@ -77,7 +77,7 @@ public:
 
 private: // Component
   Component* clone() const{return new sda(*this);}
-  std::string get_param_by_name(std::string const& n) const override{
+  std::string param_value_by_name(std::string const& n) const override{
 	  if(n == "$filename"){ untested();
 		  return _full_path;
 	  }else{ untested();

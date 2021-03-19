@@ -115,15 +115,15 @@ public:
 	virtual std::string dev_type()const{ return "(unreachable)";}
 
 public: // Parameters
-	virtual unsigned paramCount()const;
+	virtual index_t param_count()const;
 	virtual bool paramIsPrintable()const;
 
-	virtual void set_param_by_name(std::string const& name, std::string const& value);
-	virtual void setParameter(unsigned i, std::string const&);
+	virtual void set_param_by_name(std::string const&, std::string const&) override;
+	virtual void set_param_by_index(index_t i, std::string const&) override;
 
-	virtual std::string paramValue(std::string const&s) const;
-	virtual std::string paramValue(unsigned i) const;
-	virtual std::string paramName(unsigned i) const;
+	virtual std::string param_value_by_name(std::string const&s) const override;
+	virtual std::string param_value(index_t i) const override;
+	virtual std::string param_name(index_t i) const; // override?
 
 #if 0
 public: // qt?

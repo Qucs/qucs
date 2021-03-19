@@ -134,6 +134,7 @@ std::string Diagram::param_by_name(std::string const& n)const
 		return std::to_string(yAxis.log);
 	}else{ untested();
 		incomplete();
+		return ("incomplete_unnamed");
 	}
 }
 

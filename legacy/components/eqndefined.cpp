@@ -30,7 +30,7 @@ public:
 	~EqnDefined() {};
 	Element* clone() const{ return new EqnDefined(*this); }
 	static Element* info(QString&, char* &, bool getNewOne=false);
-	void setParameter(index_t i, std::string const&) override;
+	void set_param_by_index(index_t i, std::string const&) override;
 
 protected:
 	QString netlist() const;
@@ -71,10 +71,10 @@ EqnDefined::EqnDefined(EqnDefined const& p) : Component(p)
   Props.at(1)->Value = p.Props.at(1)->Value;
 //  recreate(0); // what?
 }
-void EqnDefined::setParameter(index_t i, std::string const& v)
+void EqnDefined::set_param_by_index(index_t i, std::string const& v)
 {
 	trace2("EqnDefined::setParameter", i, v);
-	Component::setParameter(i, v);
+	Component::set_param_by_index(i, v);
 	prepare();
 }
 

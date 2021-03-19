@@ -549,17 +549,17 @@ void Component::rotate()
 }
 // -------------------------------------------------------
 
-void Component::setParameter(index_t pos, std::string const& v)
+void Component::set_param_by_index(index_t pos, std::string const& v)
 {
-  int p = int(pos) - int(Symbol::paramCount()) - num_component_params ;
+  int p = int(pos) - int(Symbol::param_count()) - num_component_params ;
 
   trace2("Component::setParameter", pos, v);
-  if(pos==Symbol::paramCount()){
+  if(pos==Symbol::param_count()){
     // tx
-  }else if(pos < Symbol::paramCount()+num_component_params){
+  }else if(pos < Symbol::param_count()+num_component_params){
     // ty
-  }else if(pos<Symbol::paramCount()){ untested();
-    Symbol::setParameter(pos, v);
+  }else if(pos<Symbol::param_count()){ untested();
+    Symbol::set_param_by_index(pos, v);
   }else if (p<int(Props.size())){
     trace3("Component::setParameter props fallback", pos, p, v);
     assert(Props.at(p));
@@ -647,7 +647,7 @@ static int paramDisplay(P const& p, int offset)
 }
 
 // -------------------------------------------------------
-std::string Component::paramValue(std::string const& name) const
+std::string Component::param_value_by_name(std::string const& name) const
 {
   if(name=="$angle" && legacyTransformHack()){
     trace1("Component::paramValue", _rotated);
@@ -669,11 +669,11 @@ std::string Component::paramValue(std::string const& name) const
     int m = 1 - mirroredY * 2;
     return std::to_string(m);
   }else if(name=="$param_display"){
-    return std::to_string(paramDisplay(Props, 2 + Symbol::paramCount()));
+    return std::to_string(paramDisplay(Props, 2 + Symbol::param_count()));
   }else if(name=="$mfactor"){
     return isActive?"1":"0";
   }else{
-    return Symbol::paramValue(name);
+    return Symbol::param_value_by_name(name);
   }
 }
 
@@ -1525,16 +1525,16 @@ rect_t Component::bounding_rect() const
   return rect_t(x1, y1, x2-x1, y2-y1);
 }
 /*--------------------------------------------------------------------------*/
-unsigned Component::paramCount() const
+index_t Component::param_count() const
 {
-  return Props.count() + Symbol::paramCount() + num_component_params;
+  return Props.count() + Symbol::param_count() + num_component_params;
 }
 /*--------------------------------------------------------------------------*/
-std::string Component::paramValue(index_t i) const
+std::string Component::param_value(index_t i) const
 {
-  unsigned s = Symbol::paramCount();
-  if(i<Symbol::paramCount()){
-    return Symbol::paramValue(i);
+  index_t s = Symbol::param_count();
+  if(i<Symbol::param_count()){
+    return Symbol::param_value(i);
   }else if(i==s){
     return std::to_string(tx);
   }else if(i==s+1){
@@ -1548,11 +1548,11 @@ std::string Component::paramValue(index_t i) const
   }
 }
 /*--------------------------------------------------------------------------*/
-std::string Component::paramName(index_t i) const
+std::string Component::param_name(index_t i) const
 {
-  unsigned s = Symbol::paramCount();
-  if(i<Symbol::paramCount()){
-    return Symbol::paramName(i);
+  unsigned s = Symbol::param_count();
+  if(i<Symbol::param_count()){
+    return Symbol::param_name(i);
   }else if(i==s){
     return "$tx";
   }else if(i==s+1){

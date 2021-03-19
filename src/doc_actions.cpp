@@ -1646,7 +1646,7 @@ bool MouseActions::handle(QEvent*e)
   }
 
 }
-
+/* -------------------------------------------------------------------------------- */
 void MouseActions::executeCommand(QUndoCommand* c)
 { untested();
 }

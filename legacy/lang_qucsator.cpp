@@ -69,11 +69,11 @@ private: // Symbol
 			Symbol::set_param_by_name(name, value);
 		}
 	}
-	std::string paramValue(std::string const& name) const override{
+	std::string param_value_by_name(std::string const& name) const override{
 		if(name == "qucsatorsckthack"){
 			return _text;
 		}else{ untested();
-			return Symbol::paramValue(name);
+			return Symbol::param_value_by_name(name);
 		}
 	}
 
@@ -178,9 +178,9 @@ static void printSymbol_(Symbol const* c, ostream_t& s)
 			s << " " << N;
 		}
 
-		for(unsigned ii=0; ii<sym->paramCount(); ++ii) {
-			trace3("param", c->label(), ii, sym->paramCount());
-			std::string name = sym->paramName(ii);
+		for(unsigned ii=0; ii<sym->param_count(); ++ii) {
+			trace3("param", c->label(), ii, sym->param_count());
+			std::string name = sym->param_name(ii);
 			//trace2("param", name, value);
 
 			if(name.at(0)=='$'){
@@ -197,7 +197,7 @@ static void printSymbol_(Symbol const* c, ostream_t& s)
 			}else if(name == "Symbol") { untested();
 				// hack??
 			}else{
-				std::string value = sym->paramValue(ii);
+				std::string value = sym->param_value(ii);
 				s << " " << name << "=\"" << value << "\"";
 			}
 		}
@@ -285,13 +285,13 @@ Element* QucsatorLang::parseItem(istream_t& s, Element* x) const
 /* -------------------------------------------------------------------------------- */
 static void printDefHack(Symbol const* p, ostream_t& s)
 {
-	std::string hack = p->paramValue("qucsatorsckthack");
+	std::string hack = p->param_value_by_name("qucsatorsckthack");
 	s << hack;
 }
 /* -------------------------------------------------------------------------------- */
 static void print_ports(ostream_t& o, const qucs::Component* x)
 {
-	for(unsigned i=0; x->portExists(i); ++i){
+	for(index_t i=0; x->portExists(i); ++i){
 		std::string N = netLabel(x, i);
 		o << " " << N;
 	}
@@ -481,9 +481,9 @@ void QucsatorLang::printComponent(::Component const* c, ostream_t& s) const
 			s << " " << N;
 		}
 
-		for(unsigned ii=0; ii<sym->paramCount(); ++ii) {
-			trace3("param", c->label(), ii, sym->paramCount());
-			std::string name = sym->paramName(ii);
+		for(unsigned ii=0; ii<sym->param_count(); ++ii) {
+			trace3("param", c->label(), ii, sym->param_count());
+			std::string name = sym->param_name(ii);
 			//trace2("param", name, value);
 
 			if(name.at(0)=='$'){
@@ -496,7 +496,7 @@ void QucsatorLang::printComponent(::Component const* c, ostream_t& s) const
 			}else if(name == "Symbol") {
 				// hack??
 			}else{
-				std::string value = sym->paramValue(ii);
+				std::string value = sym->param_value(ii);
 				s << " " << name << "=\"" << value << "\"";
 			}
 		}

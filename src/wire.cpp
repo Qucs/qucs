@@ -73,7 +73,8 @@ private:
 
 private: // Symbol
 	void set_param_by_name(std::string const& name, std::string const& value) override;
-	std::string paramValue(std::string const& name) const override;
+	std::string param_value_by_name(std::string const& name) const override;
+
 	bool showLabel() const override{ return false; }
 	void expand() override;
 	unsigned numPorts() const override;
@@ -369,9 +370,9 @@ SubcktBase* Wire::newUnion(Symbol const* s) const
 	}else{
 		ret = intersectPorts(s);
 	}
-	if(ret){ untested();
+	if(ret){
 		trace1("newUnion", ret->subckt()->size());
-	}else{ untested();
+	}else{
 	}
 	return ret;
 }
@@ -432,7 +433,7 @@ void Wire::setName(const QString&, const QString&, int, int, int)
 }
 #endif
 /*--------------------------------------------------------------------------*/
-std::string Wire::paramValue(std::string const& n) const
+std::string Wire::param_value_by_name(std::string const& n) const
 {itested();
 	if(n=="symbol_scale"){ untested();
 		return std::to_string(_scale);
@@ -445,7 +446,7 @@ std::string Wire::paramValue(std::string const& n) const
 	}else if(n=="netname"){ untested();
 		return _netname;
 	}else{itested();
-		return Symbol::paramValue(n);
+		return Symbol::param_value_by_name(n);
 	}
 }
 // ----------------------------------------------------------------

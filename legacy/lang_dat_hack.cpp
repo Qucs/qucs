@@ -663,7 +663,7 @@ int SimOutputDatVar::loadIndepVarData(std::string const& Variable,
 /* -------------------------------------------------------------------------------- */
 class DatFile : public Data{
 public:
-	explicit DatFile() : Data(){itested();
+	explicit DatFile() : Data(){
 		set_label("datfile");
 	}
 	DatFile(DatFile const&d) : Data(d){ }

@@ -283,7 +283,7 @@ void transformElement(Element* e, qucsSymbolTransform a, pos_t pivot)
 		int my = 0;
 		unsigned r = 0;
 		try {itested();
-			std::string mxs = s->paramValue("$hflip");
+			std::string mxs = s->param_value_by_name("$hflip");
 			hflip = atoi(mxs.c_str()); // \pm 1
 			//assert(hflip == 1); // for now.
 			// 1  |-> 0
@@ -294,7 +294,7 @@ void transformElement(Element* e, qucsSymbolTransform a, pos_t pivot)
 		}
 		try {itested();
 			// this is what legacy used ("mirrorX", vertical flip);
-			std::string mys = s->paramValue("$vflip");
+			std::string mys = s->param_value_by_name("$vflip");
 			vflip = atoi(mys.c_str());
 			// 1  |-> 0
 			// -1 |-> 1
@@ -303,7 +303,7 @@ void transformElement(Element* e, qucsSymbolTransform a, pos_t pivot)
 			unreachable();
 		}
 		try {itested();
-			std::string rs = s->paramValue("$angle");
+			std::string rs = s->param_value_by_name("$angle");
 			angle = atoi(rs.c_str());
 			assert(!(angle%90));
 			assert(angle<360);
