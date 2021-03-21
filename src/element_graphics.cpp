@@ -112,11 +112,13 @@ public:
 			k += _labeltext->boundingRect().height();
 		}else{
 		}
-		if(auto s=dynamic_cast<Symbol const*>(e)){
+		if(auto s=dynamic_cast<Component const*>(e)){ untested();
 			int show = atoi(s->param_value_by_name("$param_display").c_str());
 			for(unsigned i=0; i<s->param_count(); ++i){
-				auto n = QString::fromStdString(s->param_value(i));
-				if(n.at(0)=='$'){
+				auto n = QString_(s->param_name(i));
+				if(n.size() == 0){
+					incomplete();
+				}else if(n.at(0)=='$'){
 				}else if(show % 2){
 					auto t=new QGraphicsTextItem(this);
 					t->setFlags(ItemIgnoresTransformations);
@@ -128,7 +130,7 @@ public:
 				}
 				show/=2;
 			}
-		}else{
+		}else{ untested();
 		}
 	}
 	~ElementText(){itested();
@@ -185,13 +187,14 @@ Element* ElementGraphics::cloneElement() const
 /*--------------------------------------------------------------------------*/
 static void redo_children(ElementGraphics* g)
 {
-	if(auto sym = dynamic_cast<SubcktBase const*>(element(g))){
+	if(auto sym = dynamic_cast<Component const*>(element(g))){ untested();
 		for(auto c : g->childItems()){
 			delete c;
 		}
+	}else{ untested();
+	}
 
-		new ElementText(g);
-
+	if(auto sym = dynamic_cast<SubcktBase const*>(element(g))){ untested();
 		auto s = sym->subckt();
 		assert(s);
 		for(auto o : *s){itested();
@@ -206,8 +209,14 @@ static void redo_children(ElementGraphics* g)
 			}else{
 			}
 		}
-	}else{
+	}else{ untested();
 	}
+
+	if(auto sym = dynamic_cast<Component const*>(element(g))){ untested();
+		new ElementText(g);
+	}else{ untested();
+	}
+
 }
 /*--------------------------------------------------------------------------*/
 void ElementGraphics::attachElement(Element* e)
@@ -275,9 +284,9 @@ void ElementGraphics::attachElement(Element* e)
 	}else if(sym){itested();
 		assert(sym->subckt());
 		trace1("got children", sym->subckt()->size());
-		redo_children(this);
 	}else{
 	}
+	redo_children(this);
 	trace1("ElementGraphics unpacked", childItems().size());
 
 	if(!_e){ untested();
