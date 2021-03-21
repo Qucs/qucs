@@ -79,8 +79,9 @@ Diagram::Diagram(Diagram const& p)
 	 }
 }
 
-Diagram::Diagram(int cx, int cy)
-  : Element(cx, cy)
+#if 1
+Diagram::Diagram()
+  : Element()
 {
 	new_subckt();
   
@@ -114,6 +115,7 @@ Diagram::Diagram(int cx, int cy)
 
   set_label("diag");
 }
+#endif
 
 Diagram::~Diagram()
 {
@@ -214,11 +216,11 @@ void Diagram::paintDiagram(ViewPainter *p)
     // draws some box with corners to resize.
     // need a similar thing for scalable symbols.
     if(1) {itested();
-      int x_, y_;
-      float fx_, fy_;
+      // int x_, y_;
+      // float fx_, fy_;
+      // p->drawRect(x_-5, y_-5, TO_INT(fx_), TO_INT(fy_));
 
       p->setPen(QPen(Qt::darkGray,3));
-      p->drawRect(x_-5, y_-5, TO_INT(fx_), TO_INT(fy_));
       p->setPen(QPen(Qt::darkRed,2));
       p->drawResizeRect(0, _height);  // markers for changing the size
       p->drawResizeRect(0, 0);
@@ -234,7 +236,7 @@ void Diagram::new_subckt()
 	_subckt = new ElementList();
 }
 
-void Diagram::paintMarkers(ViewPainter *, bool paintAll)
+void Diagram::paintMarkers(ViewPainter *, bool)
 {itested();
   incomplete();
 #if 0
@@ -637,7 +639,7 @@ bool Diagram::sameDependencies(Graph const*, Graph const*) const
 #endif
 
 // ------------------------------------------------------------
-void Diagram::finishMarkerCoordinates(float& fCX, float& fCY) const
+void Diagram::finishMarkerCoordinates(float&, float&) const
 { untested();
 #if 0
   if(!insideDiagram(fCX, fCY)) { untested();
@@ -724,7 +726,7 @@ QString Diagram::save() const
 
 // ------------------------------------------------------------
 // BUG: lang_sch. MOVE to legacy
-bool Diagram::load(const QString& Line, istream_t& stream)
+bool Diagram::load(const QString& Line, istream_t&)
 {
 	incomplete();
 	bool ok;
@@ -858,7 +860,6 @@ bool Diagram::load(const QString& Line, istream_t& stream)
 	yAxis.Label = s.section('"',3,3);   // yLabel left
 	zAxis.Label = s.section('"',5,5);   // yLabel right
 
-	Graph *pg;
 	return true;
 	// rest is done in lang_sch now.
 }
@@ -879,7 +880,7 @@ void Diagram::prepare()
 	}
 }
 /*--------------------------------------------------------------------------*/
-Widget* Diagram::schematicWidget(Doc* Doc) const
+Widget* Diagram::schematicWidget(Doc*) const
 { untested();
   trace0("Component::editElement");
   incomplete();

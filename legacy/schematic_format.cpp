@@ -43,11 +43,6 @@ private: //Command
 	void do_it(istream_t&, ElementList*) override;
 private: // legacy cruft
 	bool isSymbolMode() const{ return false; }
-	ElementList const& symbolPaints(SchematicSymbol const& m) const{
-		assert(false);
-		//assert( m.symbolPaintings());
-		//return *m.symbolPaintings();
-	}
 	ElementList const& section(ElementList const* m, std::string name) const{
 		assert(m);
 		auto p = m->find_(name);
@@ -60,14 +55,6 @@ private: // legacy cruft
 		}else{
 			return empty;
 		}
-	}
-	NodeMap const& nodes(SchematicSymbol const& m) const{
-		assert(false);
-//		return m.nodes();
-	}
-	ElementList const& components(SchematicSymbol const& m) const{
-		assert(false);
-//		return m.components();
 	}
 }d0;
 static Dispatcher<Command>::INSTALL p0(&command_dispatcher, "leg_sch", &d0);

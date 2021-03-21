@@ -32,8 +32,8 @@ class TabDiagram : public Diagram  {
 private:
 	TabDiagram(TabDiagram const& d) : Diagram(d) {}
 public: 
-  TabDiagram(int _cx=0, int _cy=0);
- ~TabDiagram();
+	explicit TabDiagram();
+	~TabDiagram();
 
   Diagram* newOne() { unreachable(); return nullptr; }
   Element* clone() const { return new TabDiagram(*this); }
@@ -47,7 +47,7 @@ public:
   void createAxisLabels() {};   // no labels in this diagram
 
 public: // it's not actually a diagram. so what?
-  virtual diag_coordinate_t calcCoordinate(double const& x, double const& y) const override{
+  virtual diag_coordinate_t calcCoordinate(double const&, double const&) const override{
 	  return diag_coordinate_t();
   }
 
@@ -63,7 +63,7 @@ protected:
 Dispatcher<Diagram>::INSTALL p(&diagram_dispatcher, "Tab", &D);
 Module::INSTALL pp("diagrams", &D);
 
-TabDiagram::TabDiagram(int _cx, int _cy) : Diagram(_cx, _cy)
+TabDiagram::TabDiagram() : Diagram()
 {
   x1 = 0;    // no extension to select area
   y1 = 0;
@@ -176,7 +176,7 @@ int TabDiagram::calcDiagram()
   FontMetrics metrics;
   int tHeight = metrics.lineSpacing();
   QString Str;
-  int colWidth=0, x=8, y;
+  int y;
 
   if(_height < (41 + MIN_SCROLLBAR_SIZE))
     _height = 41 + MIN_SCROLLBAR_SIZE;
@@ -198,6 +198,8 @@ int TabDiagram::calcDiagram()
 //  Graph *firstGraph;
 
 #if 0
+  int x = 8;
+  int colWidth = 0;
   QListIterator<Graph *> ig(Graphs);
   Graph *g = 0;
   if (ig.hasNext()) // point to first graph
@@ -395,6 +397,7 @@ funcEnd:
 }
 
 // ------------------------------------------------------------
+#if 0
 int TabDiagram::scroll(int clickPos)
 {
 //	auto cx=Element::cx();
@@ -450,7 +453,6 @@ bool TabDiagram::scrollTo(int initial, int, int dy)
 
 
 // ------------------------------------------------------------
-#if 0
 Element* TabDiagram::info(QString& Name, char* &BitmapFile, bool getNewOne)
 {
   Name = QObject::tr("Tabular");

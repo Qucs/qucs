@@ -93,7 +93,7 @@ pos_t /* const & */ Element::center()const
 const Element* Element::find_looking_out(const std::string& name)const
 {
 	trace3("Element::find_looking_out", name, label(), owner());
-	try { untested();
+	try {
 		return find_in_parent_scope(name);
 	}catch (qucs::ExceptionCantFind&) {
 		if (auto o=dynamic_cast<Element const*>(owner())) {
@@ -123,7 +123,7 @@ const Element* Element::find_in_parent_scope(const std::string& name)const
 	  // unreachable(); happens in some lib files
 	  trace2("no scope", name, label());
 	  throw qucs::ExceptionCantFind(name, label());
-  }else{ untested();
+  }else{
   }
 
   auto i = p_scope->find_(name);

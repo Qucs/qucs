@@ -67,6 +67,7 @@ Ampere_dc::~Ampere_dc()
 {
 }
 
+#if 0
 Element* Ampere_dc::info(QString& Name, char* &BitmapFile, bool getNewOne)
 {
   Name = QObject::tr("dc Current Source");
@@ -75,5 +76,6 @@ Element* Ampere_dc::info(QString& Name, char* &BitmapFile, bool getNewOne)
   if(getNewOne)  return new Ampere_dc();
   return 0;
 }
+#endif
 
 }

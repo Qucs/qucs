@@ -7,6 +7,7 @@ PLUGIN_SRC = \
 	matchdialog.hqt
 
 DOES_NOT_COMPILE_YET = \
+	packagedialog.h \
 	spicedialog.cc
 
 EXTRA_DIST =

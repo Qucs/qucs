@@ -35,5 +35,3 @@ vadim_la_CPPFLAGS = ${AM_CPPFLAGS} $(QT_CFLAGS)
 
 #BUG
 AM_CPPFLAGS += -I$(top_srcdir)/src
-
-CLEANFILES = *~ Makefile.in

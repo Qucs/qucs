@@ -27,5 +27,3 @@ include ../autotools/common.mk
 
 dist_bin_SCRIPTS = ps2sp
 dist_man_MANS = ps2sp.1
-
-CLEANFILES = *~ Makefile.in *.rej *.orig

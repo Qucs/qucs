@@ -217,7 +217,7 @@ bool RectDiagram::calcAxisLogScale(Axis *Axis, int& z, double& zD,
   else  return true;
 }
 
-RectDiagram::RectDiagram() : Diagram(0, 0)
+RectDiagram::RectDiagram() : Diagram()
 {itested();
   x1 = 10;      // position of label text
   y1 = y3 = 33;
@@ -809,8 +809,8 @@ void RectDiagram::recalcGraphData()
 void RectDiagram::getAxisLimits(CommonData const* g)
 {itested();
 	trace0("RectDiagram::getAxisLimits");
-	int z = 0;
-	double x, y, *p;
+//	int z = 0;
+//	double x, y, *p;
 	QString var, find;
 	auto pg = dynamic_cast<SimOutputData const*>(g);
 
@@ -838,11 +838,13 @@ void RectDiagram::getAxisLimits(CommonData const* g)
 /*--------------------------------------------------------------------------*/
 void RectDiagram::updateGraphData()
 {itested();
-  int valid = calcDiagram();   // do not calculate graph data if invalid
+	// int valid =
+	calcDiagram();
 
 #if 0
   foreach(Graph *pg, Graphs) {itested();
     pg->clear();
+	// do not calculate graph data if invalid
     if((valid & (pg->yAxisNo+1)) != 0){
       calcData(pg);   // calculate screen coordinates
 	 } else if(pg->cPointsY) { untested();

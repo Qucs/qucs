@@ -72,13 +72,13 @@ void Component::set_port_by_name(std::string const&, std::string const&)
 	assert(false);
 }
 /*--------------------------------------------------------------------------*/
-std::string Component::param_name(index_t i) const
+std::string Component::param_name(index_t) const
 {
 	incomplete(); // ask common
 	return "incomplete";
 }
 /*--------------------------------------------------------------------------*/
-void Component::set_param_by_index(index_t n, std::string const& v)
+void Component::set_param_by_index(index_t n, std::string const&)
 {
 	throw qucs::ExceptionCantFind(label(), std::to_string(n), "params");
 }
@@ -89,7 +89,7 @@ void Component::new_subckt()
 	_subckt = new ElementList();
 }
 /*--------------------------------------------------------------------------*/
-void Component::set_param_by_name(std::string const& name, std::string const& v)
+void Component::set_param_by_name(std::string const& name, std::string const&)
 {
 	throw qucs::ExceptionCantFind(label(), name, "params");
 }

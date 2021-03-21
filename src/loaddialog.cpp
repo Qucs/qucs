@@ -287,20 +287,16 @@ void LoadDialog::slotChangeIcon()
   if (!file.open(QIODevice::ReadWrite | QIODevice::Text)){
     QMessageBox::critical(this, tr("Error"),
                           tr("File not found: %1").arg(filename));
-  }
-  else {
+  }else{
     QTextStream in(&file);
     while ( !in.atEnd() )
     {
       QString line = in.readLine();
       if (line.contains("BitmapFile")){
-          QString change =
-                  QString("  \"BitmapFile\" : \"%1\",").arg(newIcon);
-          ba.append(change+"\n");
+          line = QString("  \"BitmapFile\" : \"%1\",").arg(newIcon);
+      } else{
       }
-      else{
-          ba.append(line+"\n");
-      }
+      ba.append((line+"\n").toLatin1());
     }
   }
 

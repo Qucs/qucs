@@ -54,8 +54,8 @@ struct SubParameter {
 // not sure what this is.
 class ID_Text : public LegacyPainting  {
 public:
-  ID_Text(int cx_=0, int cy_=0);
-  ~ID_Text();
+	explicit ID_Text();
+	~ID_Text();
   Element* clone() const{
 	  return new ID_Text(*this);
   }
@@ -82,7 +82,7 @@ Dispatcher<Element>::INSTALL p(&element_dispatcher, ".ID", &D);
 Module::INSTALL pp("paintings", &D);
 }
 
-ID_Text::ID_Text(int cx_, int cy_) : LegacyPainting(cx_, cy_)
+ID_Text::ID_Text() : LegacyPainting()
 {
   Name = ".ID ";
   x2 = y2 = 20;

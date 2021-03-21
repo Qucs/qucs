@@ -46,12 +46,6 @@ static Symbol* symbol(ElementGraphics* e)
 	}
 }
 /*--------------------------------------------------------------------------*/
-static Symbol* symbol(QGraphicsItem* g)
-{ untested();
-	auto e = dynamic_cast<ElementGraphics*>(g);
-	return symbol(&**e);
-}
-/*--------------------------------------------------------------------------*/
 static bool isWire(Symbol const* e)
 {
 	assert(e);

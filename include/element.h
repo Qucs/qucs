@@ -87,7 +87,6 @@ protected:
 	Element(Element const&);
 public:
 	Element();
-	Element(int cx, int cy) : _position(cx, cy) { unreachable(); }
 	virtual ~Element();
 
 public:	// "elaborate"

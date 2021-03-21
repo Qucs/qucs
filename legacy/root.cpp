@@ -156,7 +156,7 @@ private:
   Node const* portValue(unsigned)const {unreachable(); return nullptr;}
   void setPort(unsigned, Node*){incomplete();}
 
-  Widget* schematicWidget(qucs::Doc* d) const { untested();
+  Widget* schematicWidget(qucs::Doc*) const { untested();
 	  trace0("root::schematicWidget");
 
 	  Widget const* w = qucs::widget_dispatcher["SchematicDoc"];

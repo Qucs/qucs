@@ -86,6 +86,7 @@ Component* DIODE_SPICE::newOne()
   return new DIODE_SPICE(*this);
 }
 
+#if 0
 Element* DIODE_SPICE::info(QString& Name, char* &BitmapFile, bool getNewOne)
 {
   Name = QObject::tr("D Diode");
@@ -95,7 +96,6 @@ Element* DIODE_SPICE::info(QString& Name, char* &BitmapFile, bool getNewOne)
   return 0;
 }
 
-#if 0
 QString DIODE_SPICE::netlist()
 {
     return QString("");

@@ -85,31 +85,6 @@ private:
 /// }
 /// #endif
 /* -------------------------------------------------------------------------------- */
-static std::string netLabel(Node const* nn)
-{ untested();
-	if(!nn){ untested();
-		return "(null)";
-	}else{ untested();
-
-	}
-	Net const* n = nn->net();
-
-	if(!n){ untested();
-		unreachable();
-		return "(null)";
-	}else if(n->hasLabel()){ untested();
-		return n->short_label();
-	}else{ untested();
-		return "_net" + std::to_string(n->pos());
-	}
-}
-/* -------------------------------------------------------------------------------- */
-static void printDefHack(Symbol const* p, ostream_t& s)
-{ untested();
-	std::string hack = p->param_value_by_name("qucsatorsckthack");
-	s << hack;
-}
-/* -------------------------------------------------------------------------------- */
 // legacy Qucsator process (wrapping a QProcess)
 class Qucsator : public Simulator{
 public:

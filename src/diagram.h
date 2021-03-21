@@ -84,7 +84,7 @@ public:
 protected:
 	Diagram(Diagram const& d);
 public:
-  Diagram(int _cx=0, int _cy=0);
+  Diagram();
   virtual ~Diagram();
   virtual Diagram* newOne(){ // BUG: pure. legacy interface.
 	  unreachable();

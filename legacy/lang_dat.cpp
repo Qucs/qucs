@@ -38,7 +38,7 @@ private: // Language
   void printItem(ostream_t&, Element const*) const override;
 
 private: // local
-	Data* parseData(istream_t& s, Data* x) const {incomplete(); return nullptr; }
+	Data* parseData(istream_t&, Data*) const {incomplete(); return nullptr; }
 	void printData(Data const*, ostream_t&) const;
 	void printCommonData(CommonData const*, ostream_t&) const;
 }d0;

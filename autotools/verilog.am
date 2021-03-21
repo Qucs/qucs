@@ -29,5 +29,3 @@ verilog_la_LDFLAGS = -module -avoid-version
 
 # BUG
 AM_CPPFLAGS += $(X11_INCLUDES) $(QT_CFLAGS)
-
-CLEANFILES = _

@@ -548,20 +548,14 @@ void SchematicScene::connectPorts(Symbol* c)
 	}
 }
 /*--------------------------------------------------------------------------*/
+// still used?
 void SchematicScene::attachToModel(Element* e)
-{
+{ untested();
 	Element const* ce = e;
 	assert(!ce->owner());
 	
 	doc()->addElement(e);
 	assert(ce->owner());
-	if(auto s=dynamic_cast<Symbol*>(e)){
-		trace1("not connecting", e->label());
-//		assert(false);
-		// this is WRONG. the scene is not responsible for port values.
-//		connectPorts(s);
-	}else{
-	}
 }
 /*--------------------------------------------------------------------------*/
 void SchematicScene::possiblyRename(Element* e) const

@@ -283,11 +283,6 @@ QList<ElementGraphics*> SchematicEdit::items(QRectF const& r) const
 	return _scn->items(r);
 }
 /*--------------------------------------------------------------------------*/
-void stash_more_places(Symbol* s)
-{
-	// ...
-}
-/*--------------------------------------------------------------------------*/
 // merge new item into existing.
 // return false if new item does not interfere with existing.
 template<class T>
@@ -306,7 +301,6 @@ bool SchematicEdit::addmerge(ElementGraphics* new_elt, T& del_done)
 		// gfxi could be a place hit by the new element.
 			// port hit by bb.
 			// if they are disconnected now, we may not need them later on.
-//		stash_more_places(element(gfxi));
 
 		// gfxi is already on scene.
 		if(dynamic_cast<Place const*>( element(gfxi))){
@@ -378,18 +372,16 @@ void SchematicEdit::postRmPort(Place const* remove_at, T& del_done)
 
 	assert(remove_at->port_value(0)!="");
 
-	ElementGraphics* placegfx = nullptr;
 	unsigned deg = remove_at->node_degree();
 	trace2("postremove", deg, remove_at->label());
 	if( deg == 2 || deg == 0 ) {
 		auto it = items(makeQPointF(remove_at->position()));
 
-		unsigned np=0;
+		unsigned np = 0;
 		for(auto gfx : it){
 			if(dynamic_cast<Place*>(element(gfx))){
 				assert(element(gfx) == remove_at);
 				incomplete(); // disconnect?
-				placegfx = gfx;
 				++np;
 				// delete gfx; below.
 			}else{

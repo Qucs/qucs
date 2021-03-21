@@ -79,6 +79,7 @@ void EqnDefined::set_param_by_index(index_t i, std::string const& v)
 }
 
 // -------------------------------------------------------
+#if 0
 Element* EqnDefined::info(QString& Name, char* &BitmapFile, bool getNewOne)
 {
   Name = QObject::tr("Equation Defined Device");
@@ -93,6 +94,7 @@ Element* EqnDefined::info(QString& Name, char* &BitmapFile, bool getNewOne)
   }
   return 0;
 }
+#endif
 
 // -------------------------------------------------------
 QString EqnDefined::netlist() const

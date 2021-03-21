@@ -65,6 +65,7 @@ SUFFIXES += .hqt
 	$(MOC) -I${top_srcdir}/include -DQT_MAJOR_VERSION=${QT_MAJOR_VERSION} -o $@ $<
 
 CLEANFILES = *~ *.rej *.orig qucs_.cpp *.moc.cpp *.C *_.cpp qucs \
-	${UICFILES}
+	${UICFILES} \
+	_
 MAINTAINERCLEANFILES = Makefile.in *.moc.cpp *.qm
 DISTCLEANFILES = *.qm

@@ -64,7 +64,7 @@ static QString valstr (qf_double_t num) {
   return buffer;
 }
 
-void qf_cmp1::dump (unsigned n1, unsigned n2,
+void qf_cmp1::dump (unsigned, unsigned n2,
 		    QTextStream& com, QTextStream& wir) {
 
   // type of component
@@ -106,7 +106,7 @@ void qf_cmp1::dump (unsigned n1, unsigned n2,
   }
 }
 
-void qf_cmplc::dump (unsigned n1, unsigned n2,
+void qf_cmplc::dump (unsigned, unsigned n2,
 		     QTextStream& com, QTextStream& wir) {
 
   if (name == "PLC") {

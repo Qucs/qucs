@@ -281,7 +281,7 @@ private:
 		}
 		return _widget;
 	}
-	diag_coordinate_t calcCoordinate(double const& x, double const& y) const{
+	diag_coordinate_t calcCoordinate(double const&, double const&) const{
 		incomplete();
 		return diag_coordinate_t();
 	}

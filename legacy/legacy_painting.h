@@ -32,9 +32,8 @@ namespace{
 
 class LegacyPainting : public Element, public Painting {
 public:
-  LegacyPainting();
-  LegacyPainting(int cx, int cy) : Element(cx, cy) {}
- ~LegacyPainting() {}
+	LegacyPainting();
+	~LegacyPainting() {}
 
   virtual void getCenter(int&, int &) {}
   virtual bool getSelected(float, float, float) { return false; }

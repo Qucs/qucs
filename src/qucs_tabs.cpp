@@ -86,7 +86,7 @@ void DocTabWidget::showContextMenu(const QPoint& point)
 
     // get the document where the context menu was opened
 	 // yikes. why involve App?!
-    Doc *d = _app->getDoc(contextTabIndex);
+    // Doc *d = _app->getDoc(contextTabIndex);
     // save the document name (full path)
     // docName = d->docName();
 

@@ -460,6 +460,7 @@ int main(int argc, char *argv[])
     } else if (print_flag) { untested();
       incomplete();
       Command::command(std::string("doprint "), nullptr);
+      (void) dpi;
 //      return doPrint(inputfile, outputfile,
 //          page, dpi, color, orientation);
     }else{

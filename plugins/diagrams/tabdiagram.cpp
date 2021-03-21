@@ -62,9 +62,9 @@ private:
 class TabDiagram : public Diagram  {
 private:
 	TabDiagram(TabDiagram const& d) : Diagram(d) {}
-public: 
-  TabDiagram(int _cx=0, int _cy=0);
- ~TabDiagram();
+public:
+	TabDiagram();
+	~TabDiagram();
 
   Element* clone() const { return new TabDiagram(*this); }
   static Element* info(QString&, char* &, bool getNewOne=false);
@@ -80,7 +80,7 @@ private:
 	}
 
 	// it's not a diagram. so what
-	diag_coordinate_t calcCoordinate(double const& x, double const& y) const{
+	diag_coordinate_t calcCoordinate(double const&, double const&) const{
 		unreachable();
 		return diag_coordinate_t();
 	}
@@ -91,7 +91,7 @@ protected:
 Dispatcher<Diagram>::INSTALL p(&qucs::diagram_dispatcher, "Tab", &D);
 Module::INSTALL pp("diagrams", &D);
 /*--------------------------------------------------------------------------*/
-TabDiagram::TabDiagram(int _cx, int _cy) : Diagram(_cx, _cy)
+TabDiagram::TabDiagram() : Diagram()
 {
   x1 = 0;    // no extension to select area
   y1 = 0;
@@ -113,7 +113,7 @@ void TabDiagram::paint(ViewPainter *p)
     paintDiagram(p);
 }
 /*--------------------------------------------------------------------------*/
-void TabDiagram::paintDiagram(ViewPainter *p)
+void TabDiagram::paintDiagram(ViewPainter *)
 {
 }
 /*--------------------------------------------------------------------------*/

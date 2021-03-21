@@ -218,11 +218,13 @@ static double getDouble (QDomDocument * doc, const QString type,
   return getXml (doc, type, attr, group).toDouble ();
 }
 
+#if 0
 static QString getString (QDomDocument * doc, const QString type,
 			  const QString attr, const QString group = "")
 {
   return getXml (doc, type, attr, group);
 }
+#endif
 
 // #########################################################################
 // Loads the XML settings file and stores the settings.

@@ -45,9 +45,9 @@ namespace{
 using namespace qucs;
 
 class CurveDiagram : public Diagram  {
-public: 
-  CurveDiagram(int _cx=0, int _cy=0);
- ~CurveDiagram();
+public:
+	explicit CurveDiagram();
+	~CurveDiagram();
 
   Element* clone() const{ return new CurveDiagram(); }
 
@@ -74,7 +74,7 @@ protected:
   void clip(Graph::iterator&) const;
 };
 
-CurveDiagram::CurveDiagram(int _cx, int _cy) : Diagram(_cx, _cy)
+CurveDiagram::CurveDiagram() : Diagram()
 {
   x1 = 10;      // position of label text
   y1 = y3 = 33;
@@ -279,7 +279,7 @@ Frame:
 }
 
 // ------------------------------------------------------------
-bool CurveDiagram::insideDiagram(float x, float y) const
+bool CurveDiagram::insideDiagram(float, float) const
 {
 	incomplete();
 	return false;

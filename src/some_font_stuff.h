@@ -34,7 +34,7 @@ public:
 //		QFontMetrics f(QucsSettings.font, 0); // crashes.
 //		return f.height();
 	}
-	int width(QString const& s) const{
+	int width(QString const&) const{
 		return 0;
 //		QFontMetrics f(QucsSettings.font, 0); // crashes.
 //		return f.horizontalAdvance(s);

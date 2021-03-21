@@ -56,7 +56,3 @@ noinst_HEADERS = $(MOCHEADERS) \
        qf_transform.h\
        qf_settings.h\
        qf_zigzag.h
-
-CLEANFILES = *~
-MAINTAINERCLEANFILES = Makefile.in *.moc.cpp
-DISTCLEANFILES = *.moc.cpp

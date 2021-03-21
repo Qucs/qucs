@@ -324,3 +324,26 @@ Element* Waveac::info(QString& Name, char* &BitmapFile, bool getNewOne)
   if(getNewOne)  return new Waveac();
   return 0;
 }
+
+#if 0
+/*will find the y value of a point in time for waveac*/
+double Marker::wavevalY(double xn,std::vector<double>& VarPos)  
+{
+  double n;
+  double af=0.0; //angles
+  double A = 0.0;
+  double yp[2];
+
+  n=VarPos[0];
+  VarPos[0]= diag()->freq[0];
+  auto p = pGraph->findSample(VarPos);
+  yp[0]=p.first;
+  yp[1]=p.second;
+
+  af = atan2 (yp[1],yp[0]);
+  A = sqrt(yp[1]*yp[1] +yp[0]*yp[0]);
+  VarPos[0]=n;
+  return A*sin(2*pi*(diag()->freq[0])*xn + af);
+}
+// ------------------------------------------------------------------------
+#endif

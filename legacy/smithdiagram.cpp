@@ -53,8 +53,9 @@ public:
   static Element* info_y(QString&, char* &, bool getNewOne=false);
   int  calcDiagram();
   void calcLimits();
-  virtual diag_coordinate_t calcCoordinate(double const& x, double const& y) const override{
+  virtual diag_coordinate_t calcCoordinate(double const&, double const&) const override{
     incomplete();
+    return diag_coordinate_t();
   }
   QString extraMarkerText(Marker const*) const;
 public: // legacy cruft.
@@ -63,7 +64,7 @@ public: // legacy cruft.
   QList<Line *>   Lines;
   QList<Text *>   Texts;
   void calcSmithAxisScale(Axis*, int&, int&){incomplete();}
-  void createSmithChart(Axis*, int Mode=7){incomplete();}
+  void createSmithChart(Axis*, int /*Mode=7*/){incomplete();}
   void clip(Graph::iterator &p) const;
 
 }D;
@@ -71,6 +72,8 @@ Dispatcher<Diagram>::INSTALL p(&diagram_dispatcher, "Smith", &D);
 Module::INSTALL pp("diagrams", &D);
 
 const double pi = 3.1415926535897932384626433832795029;  /* pi   */
+
+#if 0
 void p2c(double &Real, double &Imag) {
   double Real_ = Real;
   Real = Real_ * cos(Imag * pi / 180.0); // real part
@@ -149,11 +152,12 @@ void SmithDiagram::clip(Graph::iterator &p) const
   }
 
 }
+#endif
 
 
-}
+} // namespace
 
-SmithDiagram::SmithDiagram(int _cx, int _cy, bool ImpMode) : Diagram(_cx, _cy)
+SmithDiagram::SmithDiagram(int, int, bool ImpMode) : Diagram()
 {
   x1 = 10;     // position of label text
   y1 = 2;
@@ -210,8 +214,11 @@ int SmithDiagram::calcDiagram()
   Arcs.clear();
 
   x3 = x2 + 7;
-  if(Name.at(0) == 'y')  createSmithChart(&yAxis, 6);
-  else  createSmithChart(&yAxis);
+  if(Name.at(0) == 'y') {
+    createSmithChart(&yAxis, 6);
+  }else{
+    createSmithChart(&yAxis, 7);
+  }
 
   // outer most circle
   Arcs.append(new Arc(0, x2, x2, x2, 0, 16*360, QPen(Qt::black,0)));
@@ -223,6 +230,7 @@ int SmithDiagram::calcDiagram()
 }
 
 // ------------------------------------------------------------
+#if 0
 Element* SmithDiagram::info(QString& Name, char* &BitmapFile, bool getNewOne)
 {
   Name = QObject::tr("Smith Chart");
@@ -241,6 +249,7 @@ Element* SmithDiagram::info_y(QString& Name, char* &BitmapFile, bool getNewOne)
   if(getNewOne)  return new SmithDiagram(0, 0, false);
   return 0;
 }
+#endif
 
 QString SmithDiagram::extraMarkerText(Marker const*) const
 {
