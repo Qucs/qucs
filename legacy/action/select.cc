@@ -51,13 +51,15 @@ static bool isWire(Symbol const* e)
 	assert(e);
 	if(e->numPorts()!=2){
 		return false;
+	}else if(!e->portValue(0)){
+		unreachable();
+		return false;
+	}else if(!e->portValue(1)){
+		unreachable();
+		return false;
 	}else{
+		return e->portValue(0)->net() == e->portValue(1)->net();
 	}
-
-	assert(e->portValue(0));
-	assert(e->portValue(1));
-
-	return e->portValue(0)->net() == e->portValue(1)->net();
 }
 /*--------------------------------------------------------------------------*/
 static void selectWireLine(ElementGraphics *g)

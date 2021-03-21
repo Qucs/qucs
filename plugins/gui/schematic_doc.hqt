@@ -1254,8 +1254,8 @@ bool SchematicDoc::event(QEvent* e)
 }
 
 bool SchematicDoc::handleMouseActions(QEvent* e)
-{ untested();
-	if(mouseActions()){ untested();
+{ itested();
+	if(mouseActions()){ itested();
 		return mouseActions()->handle(e);
 	}else{ untested();
 		// race?

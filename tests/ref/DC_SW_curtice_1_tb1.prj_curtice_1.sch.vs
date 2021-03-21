@@ -4,7 +4,7 @@ R #(.$xposition(280), .$yposition(410), .$vflip(1), .$hflip(1), .$tx(-26), .$ty(
 L #(.$xposition(200), .$yposition(410), .$vflip(1), .$hflip(1), .$tx(-26), .$ty(-26), .L(LS), .I()) Ls(net_170_410, net_230_410);
 Port #(.$xposition(90), .$yposition(410), .$vflip(1), .$hflip(1), .$tx(-23), .$ty(-23), .Num(1), .Type(analog)) Source(Source, net_90_410);
 R #(.$xposition(240), .$yposition(320), .$vflip(1), .$hflip(1), .$tx(-26), .$ty(-26), .R(RIN), .Temp(26.85), .Tc1(0.0), .Tc2(0.0), .Tnom(26.85), .Symbol(european)) Rin(net_210_320, net_270_320);
-EDD #(.$xposition(310), .$yposition(180), .$vflip(-1), .$hflip(1), .$tx(-26), .$ty(-26), .Type(explicit), .Branches(1), .I1(0), .Q1(CGD*V1)) D2(net_340_180, net_280_180);
+EDD #(.$xposition(310), .$yposition(180), .$vflip(-1), .$hflip(1), .$tx(-57), .$ty(-57), .Type(explicit), .Branches(1), .I1(0), .Q1(CGD*V1)) D2(net_340_180, net_280_180);
 Port #(.$xposition(90), .$yposition(180), .$vflip(-1), .$hflip(1), .$tx(-23), .$ty(-23), .Num(3), .Type(analog)) Drain(Drain, net_90_180);
 R #(.$xposition(220), .$yposition(180), .$vflip(-1), .$hflip(1), .$tx(-39), .$ty(-39), .R(RD), .Temp(26.85), .Tc1(0.0), .Tc2(0.0), .Tnom(26.85), .Symbol(european)) Rd(net_190_180, net_250_180);
 L #(.$xposition(140), .$yposition(180), .$vflip(1), .$hflip(1), .$tx(-26), .$ty(-26), .L(LD), .I()) Ld(net_110_180, net_170_180);

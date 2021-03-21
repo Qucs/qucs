@@ -109,6 +109,7 @@ void Symbol::paint(ViewPainter* p) const
 		int y = getY(pp);
 
 		if(!port(i).isConnected()){itested();
+			trace4("BUG port not connected", short_label(), i, getX(nodePosition(i)), getY(nodePosition(i)));
 			unreachable();
 			p->setPen(QPen(Qt::green,2));
 			p->drawEllipse(x-1, y-1, 2, 2);
@@ -139,9 +140,9 @@ pos_t Symbol::nodePosition(unsigned i) const
 		// ports use external coordinates...
 	}else{
 		rotate_after_mirror a(_angle, (1-_hflip)/2, (1-_vflip)/2);
-		trace4("nodePosition pre", pp, _angle, _hflip, _vflip);
+//		trace4("nodePosition pre", pp, _angle, _hflip, _vflip);
 		pp = a.apply(pp);
-		trace2("nodePosition post", pp, center());
+//		trace2("nodePosition post", pp, center());
 	}
 	return pp + center();
 }

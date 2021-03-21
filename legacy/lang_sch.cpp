@@ -894,10 +894,11 @@ Symbol* LegacySchematicLanguage::parseSymbol(istream_t& cs, Symbol* sym) const
 			n  = s.section('"',z,z);    // display
 		}
 
-		trace1("done sym parse", sym->label());
+		trace2("done sym parse", sym->label(), sym->numPorts());
 	}
 
 	// setPort?
+//	Symbol const* csym = sym;
 	auto Scope = sym->scope();
 	assert(Scope);
 	for(unsigned i=0; i<sym->numPorts(); ++i){
@@ -907,6 +908,8 @@ Symbol* LegacySchematicLanguage::parseSymbol(istream_t& cs, Symbol* sym) const
 		
 		std::string const& l = q->label();
 		sym->set_port_by_index(i, l);
+		trace4("portplace", sym->label(), i, p, l);
+//		trace2("portplace", csym->port(i), i);
 #else
 		sym->connectNode(i, Scope->nodes());
 #endif

@@ -16,32 +16,33 @@
 #include "qucsdoc.h"
 #include "some_font_stuff.h"
 #include "component.h"
-
+/*--------------------------------------------------------------------------*/
 namespace {
-
+/*--------------------------------------------------------------------------*/
 using qucs::Element;
 using qucs::Symbol;
 using qucs::symbol_dispatcher;
-
+/*--------------------------------------------------------------------------*/
 class EqnDefined : public Component {
 public:
 	explicit EqnDefined();
 	EqnDefined(EqnDefined const&);
 	~EqnDefined() {};
 	Element* clone() const{ return new EqnDefined(*this); }
-	static Element* info(QString&, char* &, bool getNewOne=false);
 	void set_param_by_index(index_t i, std::string const&) override;
 
 protected:
-	QString netlist() const;
 	void createSymbol();
 
 	void prepare() override{
 		createSymbol();
 	}
+
+private:
+	int _num{0};
 }d;
 Dispatcher<Symbol>::INSTALL p(&symbol_dispatcher, "EDD", &d);
-
+/*--------------------------------------------------------------------------*/
 EqnDefined::EqnDefined()
 {
   set_label("equation defined device");
@@ -63,14 +64,15 @@ EqnDefined::EqnDefined()
 
   createSymbol();
 }
-
-// -------------------------------------------------------
-EqnDefined::EqnDefined(EqnDefined const& p) : Component(p)
+/*--------------------------------------------------------------------------*/
+EqnDefined::EqnDefined(EqnDefined const& p)
+    : Component(p), _num(p._num)
 {
-  Props.at(0)->Value = p.Props.at(0)->Value;
-  Props.at(1)->Value = p.Props.at(1)->Value;
+	Props.at(0)->Value = p.Props.at(0)->Value;
+	Props.at(1)->Value = p.Props.at(1)->Value;
 //  recreate(0); // what?
 }
+/*--------------------------------------------------------------------------*/
 void EqnDefined::set_param_by_index(index_t i, std::string const& v)
 {
 	trace2("EqnDefined::setParameter", i, v);
@@ -95,35 +97,10 @@ Element* EqnDefined::info(QString& Name, char* &BitmapFile, bool getNewOne)
   return 0;
 }
 #endif
-
-// -------------------------------------------------------
-QString EqnDefined::netlist() const
-{
-#if 0
-  QString s = Model+":"+name();
-  QString e = "\n";
-
-  // output all node names
-  foreach(Port *p1, Ports)
-    s += " "+p1->Connection->name();   // node names
-
-  // output all properties
-  Property *p2 = Props.at(2);
-  while(p2) {
-    s += " "+p2->name()+"=\""+name()+"."+p2->name()+"\"";
-    e += "  Eqn:Eqn"+name()+p2->name()+" "+
-      name()+"."+p2->name()+"=\""+p2->Value+"\" Export=\"no\"\n";
-    p2 = Props.next();
-  }
-
-  return s+e;
-#endif
-  return "";
-}
-
-// -------------------------------------------------------
+/*--------------------------------------------------------------------------*/
+// BUG. don't create symbol
 void EqnDefined::createSymbol()
-{  
+{
 //  QFont Font(QucsSettings.font); // default application font
 //  // symbol text is smaller (10 pt default)
 //  //Font.setPointSizeF(Font.pointSizeF()/1.2);  // symbol text size proportional to default font size
@@ -137,6 +114,13 @@ void EqnDefined::createSymbol()
 
   // adjust branch number
   int Num = Props.at(1)->Value.toInt();
+
+  if(_num == Num){
+	  return; // BUG
+  }else{
+	  _num = Num;
+  }
+
   if(Num < 1) {
 	  Num = 1;
   } else if(Num > 4) {
@@ -144,7 +128,7 @@ void EqnDefined::createSymbol()
     if(Num > 20) Num = 20;
   }
   Props.at(1)->Value = QString::number(Num);
-  trace1("EqnDefined::createSymbol", Num);
+  trace2("EqnDefined::createSymbol", Num, short_label());
 
   // adjust actual number of properties
   int NumProps = (Props.count() - 2) / 2; // current number of properties
@@ -172,6 +156,7 @@ void EqnDefined::createSymbol()
   }
 
   // draw symbol
+  Lines.clear();
   int h = (PortDistance/2)*((Num-1)) + PortDistance/2; // total component half-height
   Lines.append(new Line(-15, -h, 15, -h,QPen(Qt::darkBlue,2))); // top side
   Lines.append(new Line( 15, -h, 15,  h,QPen(Qt::darkBlue,2))); // right side
@@ -212,5 +197,7 @@ void EqnDefined::createSymbol()
   tx = x1+4;
   ty = y1 - 2*metrics.lineSpacing() - 4;
 }
-
+/*--------------------------------------------------------------------------*/
 } // namespace
+/*--------------------------------------------------------------------------*/
+/*--------------------------------------------------------------------------*/

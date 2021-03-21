@@ -156,7 +156,7 @@ Component::Component(Component const& p)
     showName(p.showName)
 {
   trace3("Component::Component", p.Name, p.Model, _rotated);
-  trace2("Component::Component", typeName(), p.typeName());
+  trace3("Component::Component", typeName(), p.typeName(), p.Ports.size());
 
   setTypeName(p.Model.toStdString()); // BUG
 
