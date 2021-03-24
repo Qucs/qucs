@@ -66,7 +66,7 @@ Module::INSTALL pp("paintings", &D);
 
 GraphicLine::GraphicLine()
 {
-	// setTypeName("Line");
+	// set_dev_type("Line");
 	Name = "Line"; //??
 }
 

@@ -39,7 +39,6 @@ public: // construct
 	virtual ~Symbol();
 
 protected: // Element
-	void paint(ViewPainter*) const override;
 	Widget* schematicWidget(Doc*) const override;
 
 public: // Element
@@ -65,7 +64,6 @@ public:
 
 public: // Parameters
 	virtual index_t param_count()const override;
-	virtual bool paramIsPrintable()const;
 
 	virtual void set_param_by_name(std::string const& name, std::string const& value) override;
 	virtual void set_param_by_index(index_t i, std::string const&) override;
@@ -77,6 +75,10 @@ public: // Parameters
 public: // Port stuff
 	pos_t nodePosition(unsigned) const;
 	Node const* portNode(unsigned) const;
+
+public: // Painting
+	rect_t bounding_rect() const override;
+	void paint(ViewPainter*) const override;
 
 public: // graphics
 	// hmm, maybe just dispatch a gfx object.

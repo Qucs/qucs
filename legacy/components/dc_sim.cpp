@@ -49,7 +49,7 @@ DC_Sim::DC_Sim() : LegacyTaskElement()
 {
   auto Description = QObject::tr("dc simulation");
   set_label("DC");
-  setTypeName("DC");
+  set_dev_type("DC");
 
   QString s = Description;
   int a = s.indexOf(" ");

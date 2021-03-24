@@ -158,7 +158,7 @@ Component::Component(Component const& p)
   trace3("Component::Component", p.Name, p.Model, _rotated);
   trace3("Component::Component", typeName(), p.typeName(), p.Ports.size());
 
-  setTypeName(p.Model.toStdString()); // BUG
+  set_dev_type(p.Model.toStdString()); // BUG
 
   assert(!Props.count());
   for(auto i : p.Props){

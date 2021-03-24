@@ -28,7 +28,7 @@ static Place const* place_at(pos_t p, Symbol* m)
 		auto s = prechecked_cast<Place*>(c);
 		assert(s);
 		s->setPosition(p);
-		s->setTypeName("place");
+		s->set_dev_type("place");
 		s->set_label(ps);
 		s->set_owner(m->owner());
 		s->set_port_by_index(0, ps);

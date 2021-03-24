@@ -34,7 +34,9 @@
 #include "platform.h"
 #include "command.h"
 #include "element_list.h"
+#ifndef CARD_LIST
 #define CARD_LIST ElementList
+#endif
 #define CS istream_t
 using qucs::ElementList;
 //#include "e_card.h"

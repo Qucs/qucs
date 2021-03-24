@@ -531,7 +531,7 @@ void LegacyNetlister::throughAllComps(ostream_t& xx, ElementList const* scope_,
 			auto& d = declarations[key];
 
 			// only one proto per key
-			if(!d){ untested();
+			if(!d){
 				d = proto;
 
 				if(!d){
@@ -539,7 +539,7 @@ void LegacyNetlister::throughAllComps(ostream_t& xx, ElementList const* scope_,
 					throughAllComps(xx, d->scope(), declarations);
 				}else{
 				}
-			}else{ untested();
+			}else{
 				assert(d==proto);
 			}
 		}else if(sym && sym->subckt()){

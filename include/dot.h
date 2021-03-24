@@ -25,6 +25,7 @@
 #define QUCS_DOT_H
 //#include "e_card.h"
 #include "element.h"
+#include "command.h"
 #define DEV_DOT Dot
 /*--------------------------------------------------------------------------*/
 namespace qucs {

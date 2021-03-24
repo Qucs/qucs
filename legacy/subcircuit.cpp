@@ -139,7 +139,7 @@ Subcircuit::Subcircuit(CommonComponent* cc)
 //		QObject::tr("name of qucs schematic file")));
 
   set_dev_type("Sub");
-  setTypeName("Sub");
+  set_dev_type("Sub");
 
   // Do NOT call createSymbol() here. But create port to let it rotate.
   Ports.append(new ComponentPort(0, 0, false));
@@ -169,7 +169,7 @@ Subcircuit::Subcircuit(Subcircuit const&x) : Component(x),
   Props.append(new Property("File", "", false,
 		QObject::tr("name of qucs schematic file")));
 
-  setTypeName("Sub");
+  set_dev_type("Sub");
 
   new_subckt(); // triggers sckt expansion
 }
@@ -180,7 +180,7 @@ Subcircuit::Subcircuit(Subcircuit const&x, ElementList* hack) : Component(x),
   Props.append(new Property("File", "", false,
 		QObject::tr("name of qucs schematic file")));
 
-  setTypeName("Sub");
+  set_dev_type("Sub");
 
   new_subckt(); // triggers sckt expansion
 }
@@ -594,7 +594,7 @@ void Subcircuit::proto(ElementList const* scope)
 		trace3("sckt::proto install", typeName(), s->typeName(), s->common()->modelname());
 		trace3("sckt::proto install", typeName(), s->dev_type(), dev_type());
 		assert(s->dev_type() == typeName());
-		setTypeName("Sub"); // key.
+		set_dev_type("Sub"); // key.
 
 		assert(s->common());
 		attach_common(s->common()->clone());
@@ -660,7 +660,7 @@ void Subcircuit::build_sckt(SubcktBase* proto) const
 	}
 #endif
 
-	proto->setTypeName(s.toStdString());
+	proto->set_dev_type(s.toStdString());
 	assert(proto->common());
 }
 
@@ -705,7 +705,7 @@ void Subcircuit::setParameter(unsigned i, std::string const& value)
 		std::string newTypeName = "Sub" + typesep + v.left(v.length()-4).toStdString();
 		trace2("Subcircuit::setParameter", v, newTypeName);
 		set_dev_type(newTypeName);
-		setTypeName(newTypeName); // needed? should be Sub.
+		set_dev_type(newTypeName); // needed? should be Sub.
 		build(); // tmp hack.
 		trace2("Subcircuit::setParameter2", v, newTypeName);
 	}else{ untested();

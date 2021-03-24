@@ -239,8 +239,8 @@ public: // BUG
   std::string typeName() const override {
 	  return Model.toStdString();
   }
-  void setTypeName(std::string const& x) override{
-	  Symbol::setTypeName(x);
+  void set_dev_type(std::string const& x) override{
+	  Symbol::set_dev_type(x);
 	  // tmp kludge, store type in Model...
 	  Model = QString::fromStdString(x);
   }

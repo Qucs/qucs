@@ -43,7 +43,7 @@ static Module::INSTALL pp("vadim", &D);
 
 DIODE_SPICE::DIODE_SPICE()
 {
-	setTypeName("DIODE_SPICE");
+	set_dev_type("DIODE_SPICE");
 	set_label("SPICE D:\nMultiple line ngspice or Xyce D model specifications allowed using \"+\" continuation lines.\nLeave continuation lines blank when NOT in use.");
 
 

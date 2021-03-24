@@ -35,7 +35,7 @@ public:
   static Element* info(QString&, char* &, bool getNewOne=false);
   static Element* info_us(QString&, char* &, bool getNewOne=false);
 
-  void set_dev_type(){ incomplete(); }
+//  void set_dev_type(){ incomplete(); }
 //  QString name() const // use Component::name
 
 protected:
@@ -70,7 +70,7 @@ Resistor::Resistor(bool european)
   createSymbol();
   tx = x1+4;
   ty = y2+4;
-  setTypeName("R");
+  set_dev_type("R");
   // Name  = "R";
 }
 

@@ -116,7 +116,7 @@ public:
 
 public: // Parameters
 	virtual index_t param_count()const;
-	virtual bool paramIsPrintable()const;
+	virtual bool param_is_printable()const;
 
 	virtual void set_param_by_name(std::string const&, std::string const&) override;
 	virtual void set_param_by_index(index_t i, std::string const&) override;

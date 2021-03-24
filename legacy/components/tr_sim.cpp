@@ -59,7 +59,7 @@ TR_Sim::TR_Sim()
   tx = 0;
   ty = y2+1;
   set_label("TR");
-  setTypeName("TR");
+  set_dev_type("TR");
 
   // The index of the first 4 properties must not changed. Used in recreate().
   Props.append(new Property("Type", "lin", true,

@@ -22,6 +22,8 @@ CPP_SRC = \
 	e_base.cc \
 	element.cpp \
 	element_graphics.cpp \
+	element_list.cpp \
+	factory.cc \
 	findbr.cc \
 	geometry.cpp \
 	graph.cpp \
@@ -57,7 +59,6 @@ CPP_SRC = \
 	schematic_edit.cpp \
 	schematic_element.cpp \
 	schematic_file.cpp \
-	schematic_model.cpp \
 	schematic_scene.cpp \
 	schematic_symbol.cpp \
 	sckt_proto.cpp \

@@ -26,20 +26,16 @@
 #include "place.h"
 #include "qio.h"
 #include <QFile> // BUG
-
-unsigned gndhackn=0;
-
-class DiagramList;
-class WireList;
-class ComponentList;
-
-namespace qucs{
+/* -------------------------------------------------------------------------------- */
+unsigned gndhackn = 0;
+/* -------------------------------------------------------------------------------- */
+namespace qucs {
 	class Conductor;
 	class Painting;
 	class Diagram;
 	class TaskElement;
 }
-
+/* -------------------------------------------------------------------------------- */
 namespace {
 /* -------------------------------------------------------------------------------- */
 using qucs::Conductor;
@@ -54,6 +50,7 @@ using qucs::SubcktBase;
 using qucs::Symbol;
 using qucs::Component;
 /* -------------------------------------------------------------------------------- */
+#if 0
 static std::string netLabel(Node const* nn)
 { untested();
 	if(!nn){ untested();
@@ -70,6 +67,7 @@ static std::string netLabel(Node const* nn)
 		return "_net" + std::to_string(n->pos());
 	}
 }
+#endif
 /* -------------------------------------------------------------------------------- */
 class Verilog : public Language {
 protected: // in
@@ -161,7 +159,7 @@ static void parse_type(istream_t& cmd, Element* x)
   assert(x);
   std::string new_type;
   cmd >> new_type;
-  // x->set_dev_type(new_type); TODO
+  x->set_dev_type(new_type);
 }
 /*--------------------------------------------------------------------------*/
 static void parse_args_instance(istream_t& cmd, Element* x)

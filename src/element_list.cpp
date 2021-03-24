@@ -241,7 +241,7 @@ static Place const* place_at(pos_t p, Symbol* m)
 		auto s = prechecked_cast<Place*>(c);
 		assert(s);
 		s->setPosition(p);
-		s->setTypeName("place");
+		s->set_dev_type("place");
 		s->set_label(ps);
 		s->set_owner(m->owner());
 		s->set_port_by_index(0, ps);
@@ -336,6 +336,16 @@ bool operator==(Object const*p, std::string const&s)
 	}else{
 		return false;
 	}
+}
+/*--------------------------------------------------------------------------*/
+ElementList::iterator ElementList::find_again(std::string const& short_name,
+						ElementList::iterator /*Begin*/)
+{
+	// incomplete, does not find again.
+	trace1("find_again", short_name);
+	auto it = std::find(_cl.begin(), _cl.end(), short_name);
+	trace2("found?", _cl.size(), it==_cl.end());
+	return it;
 }
 /*--------------------------------------------------------------------------*/
 ElementList::const_iterator ElementList::find_again(const std::string& short_name,

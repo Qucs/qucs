@@ -55,21 +55,6 @@ Symbol::Symbol(Symbol const& s)
 {
 }
 /*--------------------------------------------------------------------------*/
-#if 0
-// obsolete? portValue?
-QString const& Symbol::netLabel(unsigned i) const
-{ untested();
-//	assert(hasPort(i));
-	return portValue(i);
-}
-#endif
-/*--------------------------------------------------------------------------*/
-void set_port_by_name(std::string const& name, std::string const& value)
-{
-	incomplete();
-	assert(false);
-}
-/*--------------------------------------------------------------------------*/
 // same as Element::center?
 pos_t Symbol::center()const
 {
@@ -96,6 +81,14 @@ std::string Symbol::param_value_by_name(std::string const& n) const
 	}else{ untested();
 		return Component::param_value_by_name(n);
 	}
+}
+/*--------------------------------------------------------------------------*/
+rect_t Symbol::bounding_rect() const {
+
+	// if(auto p=dynamic_cast<CommonSymbol const*>(common())){
+	//   return p->bouning_rect();
+	// }else{
+	// }
 }
 /*--------------------------------------------------------------------------*/
 void Symbol::paint(ViewPainter* p) const
@@ -149,11 +142,6 @@ pos_t Symbol::nodePosition(unsigned i) const
 /*--------------------------------------------------------------------------*/
 Symbol::~Symbol()
 {
-}
-/*--------------------------------------------------------------------------*/
-bool Symbol::paramIsPrintable() const
-{
-	return true;
 }
 /*--------------------------------------------------------------------------*/
 unsigned Symbol::param_count() const

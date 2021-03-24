@@ -61,7 +61,7 @@ public:
   // do somehting with buttons. can sb think of a more descriptive name?
   virtual void dialgButtStuff(ComponentDialog&)const;
 
-//  void setTypeName(std::string const&){ incomplete(); }
+//  void set_dev_type(std::string const&){ incomplete(); }
 //  std::string typeName() const{ return "taskNameIncomplete"; }
   /// QList<Line *>     Lines;
   /// QList<struct Arc *>      Arcs;

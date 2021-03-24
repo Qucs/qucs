@@ -22,14 +22,13 @@
 #include "net.h"
 #include "exception.h"
 #include "sckt_base.h"
-
+/*--------------------------------------------------------------------------*/
 namespace{
-
-//using qucs::DocumentFormat;
+/*--------------------------------------------------------------------------*/
 using qucs::Language;
 using qucs::Conductor;
 using qucs::Symbol;
-
+/*--------------------------------------------------------------------------*/
 // generate a simulateable netlist in verilog
 // contracts wires into nets, similar to qucsator
 // TODO: generic netlister
@@ -92,7 +91,7 @@ void VerilogNetlister::createNetlist(ostream_t& stream,
 #if 0 // TODO
 		lang->printItem(stream, pc);
 #else
-		if(pc->label()=="main"){ untested();
+		if(pc->label()=="main"){
 			lang->printItem(stream, pc);
 			// main_ = pc;
 		}else if(!sym){
@@ -110,7 +109,7 @@ void VerilogNetlister::createNetlist(ostream_t& stream,
 
 	if(main_){untested();
 		lang->printItem(stream, main_);
-	}else{untested();
+	}else{
 	}
 }
 /*--------------------------------------------------------------------------*/

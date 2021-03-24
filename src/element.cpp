@@ -31,7 +31,7 @@ Element::Element(Element const& e)
    _owner(nullptr) // sic.
 	//Name(e.Name) // yikes.
 {
-  setTypeName(e.typeName());
+  set_dev_type(e.typeName());
 
   // BUG
   // Selected = false;
@@ -133,6 +133,25 @@ const Element* Element::find_in_parent_scope(const std::string& name)const
   }
   return *i;
 
+}
+/*--------------------------------------------------------------------------*/
+/* find_in_my_scope: find in same scope as myself
+ * whatever is found will have the same owner as me.
+ * capable of finding me.
+ * throws exception if can't find.
+ */
+Element* Element::find_in_my_scope(std::string const& name)
+{
+  assert(name != "");
+  assert(scope());
+
+  ElementList::iterator i = scope()->find_(name);
+  if (i == scope()->end()) {
+    throw qucs::ExceptionCantFind(long_label(), name,
+			      ((owner()) ? owner()->long_label() : "(root)"));
+  }else{
+  }
+  return *i;
 }
 /*--------------------------------------------------------------------------*/
 } // qucs

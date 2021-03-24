@@ -2,7 +2,7 @@
 TARGET = verilog
 
 RAW_SRCS = \
-	verilog.cpp \
-	verilog_nl.cpp
+	lang.cc \
+	netlist.cc
 
 EXTRA_DIST =

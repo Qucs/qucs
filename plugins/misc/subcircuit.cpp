@@ -14,7 +14,6 @@
 #include <io_trace.h>
 #include <limits.h>
 
-#include "common_sckt.h"
 #include "docfmt.h"
 #include "symbol.h"
 #include "dot.h"
@@ -26,7 +25,9 @@
 #include "qio.h"
 #include "qucs_globals.h"
 #include "sckt_base.h"
-
+#include "common_sckt.h"
+/*--------------------------------------------------------------------------*/
+const std::string defsym(":SYMBOL_"); // use a parameter?
 /*--------------------------------------------------------------------------*/
 namespace qucs {
 	class ViewPainter;
@@ -36,7 +37,6 @@ namespace qucs {
 namespace {
 /*--------------------------------------------------------------------------*/
 const std::string typesep(":");
-const std::string defsym(":SYMBOL_"); // use a parameter?
 /*--------------------------------------------------------------------------*/
 using qucs::CommonComponent;
 using qucs::CommonSubckt;
@@ -46,55 +46,50 @@ using qucs::Language;
 using qucs::Module;
 using qucs::SubcktBase;
 using qucs::Symbol;
+using qucs::SymbolFactory;
+using qucs::FactorySymbol;
 using qucs::ViewPainter;
+using qucs::symbol_dispatcher;
 /*--------------------------------------------------------------------------*/
-// possibly not needed.
-class CommonSub : public CommonComponent{
+class Sub : public FactorySymbol {
 public:
-	explicit CommonSub(int i=0) : CommonComponent(i) {}
-private:
-	CommonComponent* clone() const override{ untested();
-		return new CommonSub(*this);
-	}
-};
-CommonSub cs(CC_STATIC_);
-/*--------------------------------------------------------------------------*/
-class SubFactory;
-/*--------------------------------------------------------------------------*/
-// a subcircuit instance with a factory hook
-// not really a paramset yet...
-class Paramset : public Symbol {
-public:
-	explicit Paramset(CommonComponent* cc);
-	explicit Paramset() {}
-	~Paramset() {}
+	explicit Sub(CommonComponent* cc);
+	explicit Sub() : FactorySymbol() {}
+	~Sub();
 
 private:
-	Paramset(Paramset const&x);
-
+	Sub(Sub const&x);
 	std::string dev_type()const override { untested();
 		return "Sub";
 	}
 
+	Component const* new_model(std::string const& fn);
+	void build_sckt(istream_t&, SubcktBase* proto) const;
 public:
 	Element* clone() const override{
-		trace0("Paramset::clone");
-		return new Paramset(*this);
+		trace0("Sub::clone");
+		return new Sub(*this);
 	}
 
-	virtual rect_t bounding_rect() const{
-		if(_painting){
+	virtual rect_t bounding_rect() const{ untested();
+		// if(auto p=dynamic_cast<CommonSymbol const*>(common())){ untested();
+		//   return p->bouning_rect();
+		// }else
+		if(_painting){ untested();
 			return _painting->bounding_rect();
-		}else{
+		}else{ untested();
 			// assert...
 			incomplete();
 			return rect_t();
 		}
 	}
-	virtual void paint(ViewPainter* v) const{
-		if(_painting){
+	virtual void paint(ViewPainter* v) const{ untested();
+		// if(auto p=dynamic_cast<CommonSymbol const*>(common())){ untested();
+		//   return p->paint(v);
+		// }else
+		if(_painting){ untested();
 			_painting->paint(v);
-		}else{
+		}else{ untested();
 			// assert...
 			incomplete();
 		}
@@ -102,21 +97,15 @@ public:
 
 public:
 	pos_t portPosition(index_t i) const override{
-		trace2("Paramset::portPosition", i, common());
+		trace2("Sub::portPosition", i, common());
 		if(auto s=dynamic_cast<Component const*>(_painting)){
 			// BUG. ask CommonSubckt?
 			assert(i < s->numPorts());
 			auto p = s->portPosition(i);
-			trace3("Paramset::portPosition", i, s->numPorts(), p);
+			trace3("Sub::portPosition", i, s->numPorts(), p);
 			return p;
 		}else{ untested();
 			assert(false);
-		}
-		auto cs = prechecked_cast<CommonSubckt const*>(common());
-		if(cs){ untested();
-			return cs->portPosition(i);
-		}else{
-			message(qucs::MsgWarning, "bogus port\n");
 		}
 		auto cc = dynamic_cast<CommonSubckt const*>(common());
 		trace3("portPosition", i, common(), cc);
@@ -141,11 +130,9 @@ private: // Symbol
 
 	std::string param_name(index_t i) const override;
 	std::string param_value(index_t i) const override{
-		switch (int(Paramset::param_count()) - (1 + i)) {
+		switch (int(Sub::param_count()) - (1 + i)) {
 		case 0:
 			return _filename;
-//		case 1: untested();
-//			return "dunno";
 		case 1:
 			return std::to_string(_ty);
 		case 2:
@@ -155,7 +142,7 @@ private: // Symbol
 		}
 	}
 	std::string param_value_by_name(std::string const& name) const override{
-		trace1("Paramset::param_value_by_name", name);
+		trace1("Sub::param_value_by_name", name);
 		if(name=="$tx"){
 			return std::to_string(_tx);
 		}else if(name=="$ty"){
@@ -165,7 +152,7 @@ private: // Symbol
 			return Symbol::param_value_by_name(name);
 		}
 	}
-	void init(Component const* proto);
+	void init(Component const* owner);
 
 private: // overrides
 	index_t numPorts() const override{
@@ -176,235 +163,25 @@ private: // overrides
 		return _ports[i];
 	}
 
-public:
-	SubFactory* _factory{nullptr};
-
 private:
 	int _tx{0};
 	int _ty{0};
-	std::string _subPath;
 	std::string _filename; // "File" parameter.
 	std::vector<Port> _ports;
 	std::vector<std::string> _param_names; // could be common?
 	std::vector<PARA_BASE*> _params; // could be common
 	Painting const* _painting{nullptr};
-}p1; // Paramset
+}p1; // Sub
+static Dispatcher<Element>::INSTALL d1(&symbol_dispatcher, "Sub", &p1);
 /*--------------------------------------------------------------------------*/
-class SubFactory : public Element, public SymbolFactory {
-public:
-	explicit SubFactory() : Element(), SymbolFactory() {}
-	SubFactory(SubFactory const& f) : Element(f), SymbolFactory(f)
-	{
-//		_proto = symbol_dispatcher.clone("paramset"); ?
-		_proto = new Paramset();
-		_proto->_factory = this;
-	}
-	
-	Element* clone_instance() const override;
-	Element* clone()const{return new SubFactory(*this);}
-
-	Component const* newSymbol(std::string const& fn); //  const;
-private:
-	void set_param_by_name(std::string const& name, std::string const& v) override
-	{
-		trace2("SF::set_param_by_index", name, v);
-		if(name=="$SUB_PATH"){
-			_subPath = v;
-		}else{ untested();
-			throw qucs::ExceptionCantFind(name, label());
-		}
-	}
-	void build_sckt(istream_t&, SubcktBase* proto) const;
-
-private:
-	Paramset* _proto{nullptr};
-	std::string _subPath;
-}d0;
-static Dispatcher<Element>::INSTALL p(&qucs::element_dispatcher, "LegacySub", &d0);
-static Module::INSTALL pp("stuff", &d0);
-/*--------------------------------------------------------------------------*/
-Element* SubFactory::clone_instance() const
-{
-	assert(_proto);
-	auto new_instance = prechecked_cast<Paramset*>(_proto->clone());
-	assert(!new_instance->subckt());
-
-	if(this == &d0){ untested();
-	}else{
-		assert(new_instance->_factory == this);
-	}
-
-	return new_instance;
-}
-/*--------------------------------------------------------------------------*/
-#if 0
-Paramset::Paramset(CommonComponent* cc)
-	: Symbol() // sckt?
-{ untested();
-	attach_common(cc);
-	setTypeName("Sub"); // dev_type_key.
-}
-#endif
-/*--------------------------------------------------------------------------*/
-// use common params eventually.
-std::string Paramset::param_name(index_t i) const
-{
-	switch (int(Paramset::param_count()) - (1 + i)) {
-	case 0:
-		return "File";
-		// return "porttype"; // or so
-	case 1:
-		return "$tx";
-	case 2:
-		return "$ty";
-	default:
-		return Symbol::param_name(i);
-	}
-}
-/*--------------------------------------------------------------------------*/
-Paramset::Paramset(Paramset const&x)
-  : Symbol(x),
-    _factory(x._factory),
-	 _tx(x._tx),
-	 _ty(x._ty),
-    _painting(x._painting)
-{
-	setTypeName("Sub"); // dev_type_key
-	_ports.resize(x._ports.size());
-}
-/*--------------------------------------------------------------------------*/
-// void Paramset::set_dev_type(const std::string& new_type){ untested();
-//    hmm, type does not reflect file name, cant build it...
-// }
-/*--------------------------------------------------------------------------*/
-void Paramset::refreshSymbol(std::string const& fn)
-{
-	auto dotplace = fn.find_last_of(".");
-
-#ifndef NDEBUG
-	std::string type_name;
-	if (dotplace == std::string::npos) { untested();
-		// throw?? or try and recover??
-		type_name = "Sub" + typesep + "invalid_filename";
-	}else{
-		type_name = "Sub" + typesep + fn.substr(0, dotplace);
-	}
-#endif
-
-	setTypeName("Sub"); // still // dev_type_key
-	assert(_factory);
-	Component const* new_parent = _factory->newSymbol(fn);
-
-	if(new_parent){
-		assert(new_parent);
-	//	auto cc = new_common->clone(); //really? set modelname in factory.
-		assert(new_parent->common());
-		auto cc = new_parent->common()->clone(); //really? set modelname in factory.
-	//	cc->set_modelname(type_name);
-	//	assert(cc->modelname()==type_name);
-		attach_common(cc); // not actually shared yet. but will.
-		assert(common()->modelname()==type_name);
-
-		init(new_parent);
-	}else{
-		// show error message? dummy symbol?
-		incomplete();
-	}
-}
-/*--------------------------------------------------------------------------*/
-void Paramset::init(Component const* proto)
-{
-	auto ps = proto->scope();
-	assert(ps); // won't work for Components.
-
-	auto p_ = ps->find_("main");
-	if(p_==ps->end()){
-		_ports.resize(proto->numPorts());
-	}else if(auto mm=dynamic_cast<Component const*>(*p_)){
-		_ports.resize(mm->numPorts());
-	}
-
-	for(auto i : _params){
-		delete i;
-	}
-	_params.clear();
-	_param_names.clear();
-
-	trace3("Paramset::init", proto->label(), _ports.size(), proto->numPorts());
-
-	incomplete();
-#if 0 // BUG BUG copy from proto. better: use common...
-	for(index_t i=0; i<proto->param_count(); ++i)
-	{
-		[..]
-		_params.push_back(p);
-		_param_names.push_back(name);
-	}
-#else
-
-	SubcktBase const* symsect=nullptr;
-	p_ = ps->find_(":SymbolSection:");
-	if(p_==ps->end()){
-		// no symbol
-	}else if(auto p = dynamic_cast<SubcktBase const*>(*p_)){
-		symsect = p;
-		assert(p->scope());
-		for(auto i : *p->scope()){
-			if(auto a=dynamic_cast<DEV_DOT*>(i)){
-				istream_t cs(istream_t::_STRING, a->s());
-				if(cs.umatch("parameter")){ // portparameter?
-					trace1("LibComp DOT", a->s());
-					std::string name;
-					std::string defv;
-					cs >> name;
-					cs >> defv;
-					auto p = new PARAMETER<double>;
-					*p = defv;
-					_params.push_back(p);
-					_param_names.push_back(name);
-				}else{
-					// port HERE?
-				}
-			}else{
-			}
-		}
-	}else{
-		incomplete(); // or no painting??
-	}
-
-	// find painting...
-	if(!symsect){ untested();
-	}else if(!symsect->scope()->size()){
-	}else if(auto p=dynamic_cast<Painting const*>(symsect)){
-		trace2("got painting from symbol section", symsect->scope()->size(), symsect->numPorts());
-		_painting = p;
-		// check nuber f ports??
-	}else{
-	}
-
-	if(!_painting){
-		int np = numPorts();
-		std::string defpaint = defsym + std::to_string(np);
-//		auto e = find_looking_out(defpaint);
-		trace2("default painting", np, defpaint);
-		auto e = qucs::symbol_dispatcher[defpaint];
-		assert(e);
-		if(auto p=dynamic_cast<Painting const*>(e)){
-			_painting = p;
-		}else{
-		}
-
-	}else{
-	}
-#endif
-}
 /*--------------------------------------------------------------------------*/
 // create a subdevice from a file.
 // if its already there, use it.
 // TODO: factory needs a refresh hook.
-Component const* SubFactory::newSymbol(std::string const& fn) // const
+Component const* Sub::new_model(std::string const& fn) // const
 {
-	trace1("SubFactory::newSymbol", fn);
+	auto subPath = factory_param("$SUB_PATH");
+	trace2("SubFactory::newSymbol", fn, subPath);
 //	QString FileName(Props.getFirst()->Value);
 	auto dotplace = fn.find_last_of(".");
 	std::string type_name;
@@ -417,16 +194,16 @@ Component const* SubFactory::newSymbol(std::string const& fn) // const
 		type_name = "Sub" + typesep + fn.substr(0, dotplace);
 	}
 
-	auto cached_ = _scope->find_(type_name);
-	Element* cached = nullptr;
-	if(cached_ != _scope->end()){
+	auto cached_ = find_proto(type_name);
+	Element const* cached = nullptr;
+	if(cached_){
 		// TODO: find_again.
-		cached = *cached_;
+		cached = cached_;
 	}else{
 	}
 
-	std::string file_found = findFile(fn, _subPath, R_OK);
-	trace4("SubFactory::newCommon", label(), fn, _subPath, file_found);
+	std::string file_found = findFile(fn, subPath, R_OK);
+	trace4("SubFactory::newCommon", label(), fn, subPath, file_found);
 
 	if(auto sym = dynamic_cast<Component const*>(cached)){
 		return sym; // ->common();
@@ -437,7 +214,7 @@ Component const* SubFactory::newSymbol(std::string const& fn) // const
 		assert(os);
 		assert(os->scope());
 
-		Component* ss = qucs::device_dispatcher.clone("subckt_proto");
+		Component* ss = qucs::device_dispatcher.clone("subckt_proto"); // Sub?
 		auto s = prechecked_cast<SubcktBase*>(ss);
 		assert(s);
 
@@ -455,18 +232,15 @@ Component const* SubFactory::newSymbol(std::string const& fn) // const
 
 
 		istream_t pstream(istream_t::_WHOLE_FILE, file_found);
+
 		build_sckt(pstream, s);
 
 		s->set_dev_type(type_name);
 		s->set_label(type_name);
 
-		assert(_scope);
-
-		trace4("made proto", s->label(), type_name, s->typeName(), s->numPorts());
-		assert(_scope->find_(type_name) == _scope->end());
-		_scope->push_back(s);
-
+		// submit.
 		assert(s->label()==type_name);
+		stash_proto(s);
 
 #if 0
 		if(loadSymbol(FileName) > 0) { untested();
@@ -486,6 +260,7 @@ Component const* SubFactory::newSymbol(std::string const& fn) // const
 #endif
 		return s;
 	}else{ untested();
+		message(qucs::MsgFatal,"cannot find " + fn + " in " + subPath);
 		incomplete();
 		return nullptr;
 	}
@@ -506,11 +281,12 @@ static void parse_portcmd(istream_t& cs, SubcktBase* s)
 		trace3("got port", x, y, s->numPorts());
 		trace3("pd", n, l, cs.fullstring());
 		s->set_port_by_index(n, l);
-	}else{
+	}else{ untested();
 	}
 }
 /*--------------------------------------------------------------------------*/
-void SubFactory::build_sckt(istream_t& cs, SubcktBase* proto) const
+/*--------------------------------------------------------------------------*/
+void Sub::build_sckt(istream_t& cs, SubcktBase* proto) const
 {
 	trace1("SubFactory::build_sckt", cs.fullstring());
 	assert(owner());
@@ -536,7 +312,7 @@ void SubFactory::build_sckt(istream_t& cs, SubcktBase* proto) const
 	auto ps = proto->scope(); // really?
 	assert(ps);
 	auto p_ = ps->find_(":SymbolSection:");
-	if(p_==ps->end()){
+	if(p_==ps->end()){ untested();
 		trace2("no SymbolSection", proto->label(), proto->numPorts());
 	}else if(auto p = dynamic_cast<SubcktBase const*>(*p_)){
 		assert(p->scope());
@@ -561,18 +337,18 @@ void SubFactory::build_sckt(istream_t& cs, SubcktBase* proto) const
 					 // *p = defv;
 					 // proto->_params.push_back(p);
 					 // proto->_param_names.push_back(name);
-				}else if(cs.umatch("portparameter")){
+				}else if(cs.umatch("portparameter")){ untested();
 				}else if(cs.umatch(".port_")){
 					trace1("symbol port", a->s());
 					parse_portcmd(cs, proto);
-				}else{
+				}else{ untested();
 					trace1("symbol other", a->s());
 				}
 			}else{
 			}
 		}
 
-	}else{
+	}else{ untested();
 		unreachable(); // wrong type
 	}
 
@@ -584,45 +360,10 @@ void SubFactory::build_sckt(istream_t& cs, SubcktBase* proto) const
 	}
 }
 /*--------------------------------------------------------------------------*/
-bool Paramset::portExists(index_t i) const
-{
-	return i<numPorts();
-	assert(scope());
-	trace1("Paramset::portExists", i);
-	incomplete();
-	return false;
-}
 /*--------------------------------------------------------------------------*/
-static std::string invalid_ = "sckt_proto_port_invalid";
-
-std::string const Paramset::portName(index_t) const
-{ untested();
-	incomplete();
-	// throw?
-	return invalid_;
-}
-/*--------------------------------------------------------------------------*/
-void Paramset::set_param_by_name(std::string const& name, std::string const& v)
+void Sub::set_param_by_index(index_t i, std::string const& v)
 {
-	trace2("Paramset::setParameter", name, v);
-	if(name=="$SUB_PATH"){ untested();
-		_subPath = v;
-	}else if(name=="$tx"){
-		_tx = atoi(v.c_str());
-	}else if(name=="$ty"){
-		_ty = atoi(v.c_str());
-	}else if(name=="File"){
-		_filename = v;
-		trace1("Paramset::setParameter2", v);
-		refreshSymbol(v);
-	}else{
-		Symbol::set_param_by_name(name, v);
-	}
-}
-/*--------------------------------------------------------------------------*/
-void Paramset::set_param_by_index(index_t i, std::string const& v)
-{
-	switch (int(Paramset::param_count()) - (1 + i)) {
+	switch (int(Sub::param_count()) - (1 + i)) {
 	case 0:
 		_filename = v;
 		refreshSymbol(v);
@@ -635,12 +376,185 @@ void Paramset::set_param_by_index(index_t i, std::string const& v)
 	break;
 	}
 
-	if(i==4){ // needed by legacy schematic parser...?
+	if(i==4){ untested();
+		// needed by legacy schematic parser...?
 		incomplete();
 		_filename = v;
-		trace1("Paramset::setParameter", v);
+		trace1("Sub::setParameter", v);
 		refreshSymbol(v);
-	};
+	}else{
+	}
+}
+/*--------------------------------------------------------------------------*/
+// use common params eventually.
+std::string Sub::param_name(index_t i) const
+{
+	switch (int(Sub::param_count()) - (1 + i)) {
+	case 0:
+		return "File";
+		// return "porttype"; // or so
+	case 1:
+		return "$tx";
+	case 2:
+		return "$ty";
+	default:
+		return Symbol::param_name(i);
+	}
+}
+/*--------------------------------------------------------------------------*/
+Sub::Sub(Sub const&x)
+  : FactorySymbol(x),
+	 _tx(x._tx),
+	 _ty(x._ty),
+    _painting(x._painting)
+{
+	_ports.resize(x._ports.size());
+}
+/*--------------------------------------------------------------------------*/
+Sub::~Sub()
+{
+	for(auto i : _params){ untested();
+		delete i;
+	}
+	_params.clear();
+	_param_names.clear();
+}
+/*--------------------------------------------------------------------------*/
+void Sub::refreshSymbol(std::string const& fn)
+{
+	Component const* new_parent = nullptr;
+	new_parent = new_model(fn);
+
+	if(new_parent){
+		// _proto == new_parent; // ?
+		assert(new_parent);
+		assert(new_parent->common());
+		auto cc = new_parent->common()->clone(); //really? set modelname in factory.
+		attach_common(cc); // not actually shared yet. but will.
+
+		init(new_parent);
+	}else{ untested();
+		incomplete();
+	}
+}
+/*--------------------------------------------------------------------------*/
+void Sub::init(Component const* proto)
+{
+	auto ps = proto->scope();
+	assert(ps); // won't work for Components.
+
+	auto p_ = ps->find_("main");
+	if(p_==ps->end()){ untested();
+		_ports.resize(proto->numPorts());
+	}else if(auto mm=dynamic_cast<Component const*>(*p_)){
+		_ports.resize(mm->numPorts());
+	}else{ untested();
+	}
+
+	for(auto i : _params){ untested();
+		delete i;
+	}
+	_params.clear();
+	_param_names.clear();
+
+	trace3("Sub::init", proto->label(), _ports.size(), proto->numPorts());
+
+	incomplete();
+#if 0 // BUG BUG copy from proto. better: use common...
+	for(index_t i=0; i<proto->param_count(); ++i)
+	{ untested();
+		[..]
+		_params.push_back(p);
+		_param_names.push_back(name);
+	}
+#else
+
+	SubcktBase const* symsect=nullptr;
+	p_ = ps->find_(":SymbolSection:");
+	if(p_==ps->end()){ untested();
+		// no symbol
+	}else if(auto p = dynamic_cast<SubcktBase const*>(*p_)){
+		symsect = p;
+		assert(p->scope());
+		for(auto i : *p->scope()){
+			if(auto a=dynamic_cast<DEV_DOT*>(i)){
+				istream_t cs(istream_t::_STRING, a->s());
+				if(cs.umatch("parameter")){ // portparameter?
+					trace1("LibComp DOT", a->s());
+					std::string name;
+					std::string defv;
+					cs >> name;
+					cs >> defv;
+					auto p = new PARAMETER<double>;
+					*p = defv;
+					_params.push_back(p);
+					_param_names.push_back(name);
+				}else{
+					// port HERE?
+				}
+			}else{
+			}
+		}
+	}else{ untested();
+		incomplete(); // or no painting??
+	}
+
+	// find painting...
+	if(!symsect){ untested();
+	}else if(!symsect->scope()->size()){
+	}else if(auto p=dynamic_cast<Painting const*>(symsect)){
+		trace2("got painting from symbol section", symsect->scope()->size(), symsect->numPorts());
+		_painting = p;
+		// check nuber f ports??
+	}else{ untested();
+	}
+
+	if(!_painting){
+		int np = numPorts();
+		std::string defpaint = defsym + std::to_string(np);
+//		auto e = find_looking_out(defpaint);
+		trace2("default painting", np, defpaint);
+		auto e = qucs::symbol_dispatcher[defpaint];
+		assert(e);
+		if(auto p=dynamic_cast<Painting const*>(e)){
+			_painting = p;
+		}else{ untested();
+		}
+
+	}else{
+	}
+#endif
+}
+/*--------------------------------------------------------------------------*/
+bool Sub::portExists(index_t i) const
+{ untested();
+	return i<numPorts();
+}
+/*--------------------------------------------------------------------------*/
+static std::string invalid_ = "sckt_proto_port_invalid";
+std::string const Sub::portName(index_t) const
+{ untested();
+	incomplete();
+	// throw?
+	return invalid_;
+}
+/*--------------------------------------------------------------------------*/
+void Sub::set_param_by_name(std::string const& name, std::string const& v)
+{ itested();
+	trace2("Sub::setParameter", name, v);
+//	if(name=="$SUB_PATH"){ untested();
+//		_subPath = v;
+//	}else
+	if(name=="$tx"){
+		_tx = atoi(v.c_str());
+	}else if(name=="$ty"){
+		_ty = atoi(v.c_str());
+	}else if(name=="File"){
+		_filename = v;
+		refreshSymbol(v);
+	}else{ itested();
+		Symbol::set_param_by_name(name, v);
+	}
 }
 /*--------------------------------------------------------------------------*/
 }

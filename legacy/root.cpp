@@ -24,60 +24,46 @@ using qucs::element_dispatcher;
 using qucs::ElementList;
 using qucs::Node;
 using qucs::SubcktBase;
+using qucs::SymbolFactory;
 using qucs::ViewPainter;
 using qucs::Widget;
 /*--------------------------------------------------------------------------*/
-class sda : public SubcktBase  {
+class SchematicRoot : public SubcktBase  {
 public:
-  explicit sda() : SubcktBase () {
-  }
-  explicit sda(sda const&x) : SubcktBase (x) {
-    new_subckt();
+	explicit SchematicRoot() : SubcktBase () {
+	}
+	explicit SchematicRoot(SchematicRoot const&x) : SubcktBase (x) {
+		new_subckt();
 
-    auto a = qucs::device_dispatcher.clone("subckt_proto");
-    assert(a);
-    a->set_label("main");
-    a->set_owner(this);
-    subckt()->push_back(a);
+		auto mm = qucs::device_dispatcher.clone("subckt_proto");
+		assert(mm);
+		mm->set_label("main");
+		mm->set_owner(this);
+		subckt()->push_back(mm);
 
 		// Sub components in this circuit.
 		// instance used when parsing a netlist.
-		_sub = element_dispatcher.clone("LegacySub");
-		if(!_sub){ // legacy
-			Component* sub = qucs::symbol_dispatcher.clone("LegacySub");
-
-			assert(sub);
-			sub->set_label("Sub");
-			sub->set_dev_type("Sub"); // why?
-			_sub = sub;
-		}else{
-			_sub->set_label("Sub"); // why?
-		}
-
-		assert(a);
+		// model_dispatcher?
+		_sub = element_dispatcher.clone("ModelFactory");
+		assert(_sub);
 		_sub->set_owner(this);
-		auto f = dynamic_cast<SymbolFactory*>(_sub);
-		assert(f);
-		f->_scope = scope();
+		_sub->set_dev_type("Sub");
 		subckt()->push_back(_sub);
-
-//		assert(_sub->common());
-//		assert(_sub->common()->modelname()=="Sub");
 
 #if 1
 		// dat file access...
 		// TODO: default according to properties in .sch file?
 		_dat = qucs::data_dispatcher.clone("datfiles");
-		assert(a);
+		assert(mm);
 		_dat->set_label("datfiles");
 		subckt()->push_back(_dat);
 #endif
   }
-  ~sda(){}
+  ~SchematicRoot(){}
 
 private: // Component
-  Component* clone() const{return new sda(*this);}
-  std::string param_value_by_name(std::string const& n) const override{
+  Component* clone() const{return new SchematicRoot(*this);}
+  std::string param_value_by_name(std::string const& n) const override{ untested();
 	  if(n == "$filename"){ untested();
 		  return _full_path;
 	  }else{ untested();
@@ -88,10 +74,10 @@ private: // Component
     if(n == "$filename") {
 		 _full_path = v;
 		 auto pos = v.find_last_of("/");
-		 if(pos==std::string::npos){
+		 if(pos==std::string::npos){ untested();
 			 // something wrong.
 			 assert(false);
-		 }else if(dynamic_cast<Component const*>(_sub)){
+		 }else if(dynamic_cast<Component const*>(_sub)){ untested();
 			 // legacy hack
 			 _sub->set_param_by_name("$SUB_PATH", v);
 		 }else{
@@ -108,38 +94,38 @@ private: // SchematicSymbol
     return subckt();
   }
   // bug, forward to schematic object (it doesn't exist yet).
-  std::string paramValue(std::string const&x) const{
-    if(x=="DocName"){
+  std::string paramValue(std::string const&x) const{ untested();
+    if(x=="DocName"){ untested();
       unreachable();
 		return "???";
-    }else if(x=="ViewX1"){
+    }else if(x=="ViewX1"){ untested();
       incomplete(); // there is no view.
       return "0";
-    }else if(x=="ViewX2"){
+    }else if(x=="ViewX2"){ untested();
       incomplete(); // there is no view.
       return "0";
-    }else if(x=="ViewY1"){
+    }else if(x=="ViewY1"){ untested();
       incomplete(); // there is no view.
       return "0";
-    }else if(x=="ViewY2"){
+    }else if(x=="ViewY2"){ untested();
       incomplete(); // there is no view.
       return "0";
-    }else if(x=="Scale"){
+    }else if(x=="Scale"){ untested();
       incomplete(); // there is no view.
       return "0";
-    }else if(x=="GridOn"){
+    }else if(x=="GridOn"){ untested();
       incomplete(); // there is no view.
       return "0";
-    }else if(x=="GridX"){
+    }else if(x=="GridX"){ untested();
       incomplete(); // there is no view.
       return "0";
-    }else if(x=="GridY"){
+    }else if(x=="GridY"){ untested();
       incomplete(); // there is no view.
       return "0";
-    }else if(x=="tmpViewX1"){
+    }else if(x=="tmpViewX1"){ untested();
       incomplete(); // there is no view.
       return "0";
-    }else{
+    }else{ untested();
       incomplete();
       return "unknown";
       throw qucs::ExceptionCantFind(x, "main");
@@ -149,7 +135,7 @@ private: // SchematicSymbol
 private:
   unsigned numPorts() const override{ incomplete(); return 0; }
   virtual Port& port(unsigned) override{ return *new Port();}
-  pos_t portPosition(unsigned) const override{
+  pos_t portPosition(unsigned) const override{ untested();
     unreachable();
     return pos_t(0,0);
   }

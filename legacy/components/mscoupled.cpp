@@ -35,7 +35,7 @@ static Module::INSTALL pp("RF", &d0);
 MScoupled::MScoupled() : Component()
 {
   set_label("coupled microstrip line");
-  setTypeName("MCOUPLED");
+  set_dev_type("MCOUPLED");
 
   Lines.append(new Line(-30,-12,-16,-12,QPen(Qt::darkBlue,2)));
   Lines.append(new Line(-30,-30,-30,-12,QPen(Qt::darkBlue,2)));
@@ -65,7 +65,7 @@ MScoupled::MScoupled() : Component()
 
   tx = x1+4;
   ty = y2+4;
-  setTypeName("MCOUPLED");
+  set_dev_type("MCOUPLED");
 
   Props.append(new Property("Subst", "Subst1", true,
 	QObject::tr("name of substrate definition")));

@@ -134,7 +134,7 @@ Wire::Wire() : Symbol(),
 	assert(position() == pos_t(0, 0));
 	// Symbol::setPosition(pos_t(0, 0)); // redundant?
 
-	setTypeName("wire");
+	set_dev_type("wire");
 	set_label("noname"); // BUG
 }
 /*--------------------------------------------------------------------------*/
@@ -165,7 +165,7 @@ Wire::Wire(pos_t const& p0, pos_t const& p1)
 	assert(p0 == nodePosition(0));
 	assert(p1 == nodePosition(1));
 
-	setTypeName("wire");
+	set_dev_type("wire");
 }
 /*--------------------------------------------------------------------------*/
 Wire::~Wire()

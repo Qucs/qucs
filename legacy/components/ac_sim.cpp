@@ -82,7 +82,7 @@ AC_Sim::~AC_Sim()
 
 AC_Sim::AC_Sim(AC_Sim const& x) : LegacyTaskElement(x)
 {
-	setTypeName("AC");
+	set_dev_type("AC");
 }
 
 #if 0

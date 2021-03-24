@@ -55,7 +55,7 @@ Module::INSTALL pp("paintings", &D);
 
 PortSymbol::PortSymbol() : LegacyPainting()
 {
-	// setTypeName(".Portsym");
+	// set_dev_type(".Portsym");
   Name = ".PortSym ";
 }
 

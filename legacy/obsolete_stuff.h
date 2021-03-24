@@ -85,7 +85,7 @@ public:
 		return -1;
 	};
 	void setAutoDelete(bool) {
-		incomplete(); // this is nuts
+		// incomplete(); // this is nuts
 		_autodelete = false; // b;
 	};
 	T* first() {

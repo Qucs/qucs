@@ -197,7 +197,7 @@ public:
 	explicit Lib(CommonComponent* c=nullptr)
 		: Symbol(),
 		 _tx(0), _ty(0), _parent(nullptr) {
-		setTypeName("Lib");
+		set_dev_type("Lib");
 		attach_common(c);
 		new_subckt(); // hmm.
 	}
@@ -365,7 +365,7 @@ private:
 		trace2("Lib::attachProto", numPorts(), _ports.size());
 		// also prepare parameters here.
 		set_dev_type(t); // use common maybe?
-		setTypeName("Lib"); // assert?
+		set_dev_type("Lib"); // assert?
 
 		for(auto i : _params){
 			delete i;
@@ -464,7 +464,7 @@ void Lib::set_param_by_index(index_t n, std::string const& v)
 Lib::Lib(Component const* p)
 	  : Symbol(), _tx(0), _ty(0), _parent(p)
 {
-	setTypeName("Lib"); // really?
+	set_dev_type("Lib"); // really?
 	// new_subckt(); // hmm, maybe not.
 
 	if(p){

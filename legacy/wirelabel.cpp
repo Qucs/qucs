@@ -172,7 +172,7 @@ void WireLabel::paint(ViewPainter *p) const
 // ----------------------------------------------------------------
 void WireLabel::setName(const QString& Name_)
 {
-  //setTypeName("wirelabel"); //  = Name_; //?!
+  //set_dev_type("wirelabel"); //  = Name_; //?!
   set_label(Name_.toStdString());
   
   // get size of text using the screen-compatible metric

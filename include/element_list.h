@@ -130,9 +130,11 @@ public:
 	NodeMap* nodes() const;
 //	NodeMap const* nodes() const;
 
-//	iterator find_(const std::string& short_name)
-//					{return find_again(short_name, begin());}
-//	iterator find_again(const std::string& short_name, iterator);
+	// mutable
+	iterator find_(const std::string& short_name)
+					{return find_again(short_name, begin());}
+	iterator find_again(const std::string& short_name, iterator);
+
   // return a const_iterator
 	ElementList const* parent() const;
 	const_iterator begin()const {return _cl.begin();}

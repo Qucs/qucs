@@ -716,7 +716,7 @@ Place const* place_at(pos_t p, Symbol* m)
 		auto s = prechecked_cast<Place*>(c);
 		assert(s);
 		s->setPosition(p);
-		s->setTypeName("place");
+		s->set_dev_type("place");
 		s->set_label(ps);
 		s->set_owner(m->owner());
 		s->set_port_by_index(0, ps);
@@ -733,11 +733,6 @@ Place const* place_at(pos_t p, Symbol* m)
 Element* LegacySchematicLanguage::parseElement(istream_t& cmd, Element* x) const
 {
 	trace1("LegacySchematicLanguage::parseElement", cmd.fullstring());
-
-//	if(auto s=dynamic_cast<LegacyPainting*>(e)){
-//		return ::parsePainting(l, s);
-//	}else{
-//	}
 
 	cmd.skip1('<');
 	std::string s;
@@ -795,10 +790,12 @@ Symbol* LegacySchematicLanguage::parseSymbol(istream_t& cs, Symbol* sym) const
 		// HACK
 		parseComponentObsoleteCallback(s, cc);
 	}else{
-		QString label=s.section(' ',1,1);
-		sym->set_label(label.toStdString());
+		std::string type = s.section(' ',0,0).toStdString();
+		std::string label = s.section(' ',1,1).toStdString();
+		sym->set_dev_type(type);
+		sym->set_label(label);
 
-		trace1("nonobsolete parse", sym->short_label());
+		trace2("nonobsolete parse", type, sym->short_label());
 
 		QString n;
 		n  = s.section(' ',2,2);      // flags
@@ -897,22 +894,15 @@ Symbol* LegacySchematicLanguage::parseSymbol(istream_t& cs, Symbol* sym) const
 		trace2("done sym parse", sym->label(), sym->numPorts());
 	}
 
-	// setPort?
-//	Symbol const* csym = sym;
 	auto Scope = sym->scope();
 	assert(Scope);
-	for(unsigned i=0; i<sym->numPorts(); ++i){
-#if 1
+	for(index_t i=0; i<sym->numPorts(); ++i){
 		pos_t p = sym->nodePosition(i);
 		auto q = place_at(p, sym);
 		
 		std::string const& l = q->label();
 		sym->set_port_by_index(i, l);
 		trace4("portplace", sym->label(), i, p, l);
-//		trace2("portplace", csym->port(i), i);
-#else
-		sym->connectNode(i, Scope->nodes());
-#endif
 	}
 
 	return sym;

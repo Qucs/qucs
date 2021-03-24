@@ -34,7 +34,7 @@ static Module::INSTALL pp("RF", &d0);
 MSline::MSline() : Component()
 {
   set_label("microstrip line");
-  setTypeName("MLIN");
+  set_dev_type("MLIN");
 
   Lines.append(new Line(-30,  0,-18,  0,QPen(Qt::darkBlue,2)));
   Lines.append(new Line( 18,  0, 30,  0,QPen(Qt::darkBlue,2)));

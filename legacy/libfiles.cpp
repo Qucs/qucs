@@ -129,11 +129,11 @@ void LIB::load_single(std::string what, ElementList* scope)
 			sym->set_label(t);
 
 			if(symbol_dispatcher[type]){ untested();
-				sym->setTypeName(type);
+				sym->set_dev_type(type);
 				L->load(stream, sym);
 				new Module::INSTALL(parsedlib.name.toStdString(), sym);
 			}else if(device_dispatcher[type]){ untested();
-				sym->setTypeName(type);
+				sym->set_dev_type(type);
 				L->load(stream, sym);
 				new Module::INSTALL(parsedlib.name.toStdString(), sym);
 			}else{

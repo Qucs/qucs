@@ -38,7 +38,7 @@ static Module::INSTALL pp("RF", &d0);
 MScross::MScross() : MultiViewComponent()
 {
 	set_label("microstrip cross");
-	setTypeName("MCROSS");
+	set_dev_type("MCROSS");
 
   Model = "MCROSS";
   Name  = "MS";

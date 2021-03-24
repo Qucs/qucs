@@ -34,7 +34,7 @@ HB_Sim::HB_Sim()
 
   tx = 0;
   ty = y2+1;
-  setTypeName("HB");
+  set_dev_type("HB");
 
   Props.append(new Property("f", "1 GHz", false,
 		QObject::tr("frequency in Hertz")));

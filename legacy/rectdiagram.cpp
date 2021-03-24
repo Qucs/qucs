@@ -225,7 +225,7 @@ RectDiagram::RectDiagram() : Diagram()
   _height = 160;
   x3 = 247;    // with some distance for right axes text
 
-  setTypeName("Rect");
+  set_dev_type("Rect");
   Name = "Rect"; // BUG in lang_sch?
 }
 

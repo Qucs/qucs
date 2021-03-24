@@ -35,7 +35,7 @@ static Module::INSTALL pp("RF", &d0);
 Substrate::Substrate() : Component()
 {
   set_label("substrate definition");
-  setTypeName("SUBST");
+  set_dev_type("SUBST");
 
   Lines.append(new Line(-30,-16, 30,-16,QPen(Qt::darkBlue,2)));
   Lines.append(new Line(-30,-12, 30,-12,QPen(Qt::darkBlue,2)));

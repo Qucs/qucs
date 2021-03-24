@@ -57,7 +57,7 @@ SP_Sim::SP_Sim() : LegacyTaskElement()
 
   tx = 0;
   ty = y2+1;
-  setTypeName("SP");
+  set_dev_type("SP");
 
   // The index of the first 4 properties must not changed. Used in recreate().
   Props.append(new Property("Type", "lin", true,

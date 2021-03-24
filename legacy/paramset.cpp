@@ -33,7 +33,7 @@ using namespace qucs;
 class LibParamset : public Symbol{
 public:
 	explicit LibParamset():Symbol(){
-		setTypeName("LibParamset"); // really?
+		set_dev_type("LibParamset"); // really?
 	}
 	LibParamset( LibParamset const& l) : Symbol(l), _proto(nullptr){}
 	~LibParamset() { delete _proto; }
@@ -49,7 +49,7 @@ private: // Symbol
 		assert(_proto);
 		return prechecked_cast<Symbol*>(_proto->clone());
 	}
-	void setTypeName(std::string const& n) override{
+	void set_dev_type(std::string const& n) override{
 		trace1("paramset type", n);
 		_proto = symbol_dispatcher.clone(n);
 		if(_proto){

@@ -41,7 +41,7 @@ Component::Component(Component const& s)
 		_net_nodes(s._net_nodes)
 {
   attach_common(s._common);
-  setTypeName(s.typeName());
+  set_dev_type(s.typeName());
 }
 /*--------------------------------------------------------------------------*/
 Component::~Component()
@@ -94,7 +94,7 @@ void Component::set_param_by_name(std::string const& name, std::string const&)
 	throw qucs::ExceptionCantFind(label(), name, "params");
 }
 /*--------------------------------------------------------------------------*/
-bool Component::paramIsPrintable() const
+bool Component::param_is_printable() const
 {
 	return true;
   //if (has_common()) {
@@ -172,8 +172,8 @@ void Component::set_dev_type(const std::string& new_type)
 		}else{
 		}
 	}else{
-		assert(false); // for now
-		// CARD::set_dev_type(new_type);
+		trace1("incomplete? set_dev_type", short_label());
+		Element::set_dev_type(new_type);
 	}
 }
 /*--------------------------------------------------------------------------*/

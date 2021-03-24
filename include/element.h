@@ -155,7 +155,7 @@ public:
 	virtual /*bug*/ std::string /* const& */ typeName() const{
 		return _type;
 	}
-	virtual /*bug*/ void setTypeName(std::string const& x){
+	virtual void set_dev_type(std::string const& x){
 		_type = x;
 	}
 
@@ -177,6 +177,7 @@ public:
 	const Element* find_looking_out(const std::string& name)const;
 	const Element* find_in_parent_scope(const std::string& name)const;
 	const Element* find_in_my_scope(const std::string& name)const;
+	Element* find_in_my_scope(std::string const& name);
 
 public:
 	void message(MsgType, const char*) const;

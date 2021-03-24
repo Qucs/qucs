@@ -241,7 +241,7 @@ private:
 	RectDiagram(RectDiagram const& c);
 public:
 	explicit RectDiagram() : Diagram(), _widget(nullptr){
-		setTypeName("Rect");
+		set_dev_type("Rect");
 	}
 	~RectDiagram(){}
 

@@ -60,7 +60,10 @@ for i in $( cd ${srcdir}; ls $base/*.{sch,vs} ) ; do
 		cmd="$DIFF ${out}/${F} ${ref}/${F}"
 		eval echo "$cmd" ${REDIR}
 		eval "$cmd" ${REDIR}
-		if [ $? -ne 0 ]; then status=FAIL; fi
+		if [ $? -ne 0 ]; then
+			echo "ERROR $F"
+			status=FAIL;
+		fi
 	done
 
 done
