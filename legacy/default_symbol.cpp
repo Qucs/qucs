@@ -16,6 +16,8 @@
 
 #include "components/component.h" // BUG
 #include "qucs_globals.h"
+
+#include "viewpainter.h"
 /*--------------------------------------------------------------------------*/
 namespace{
 /*--------------------------------------------------------------------------*/
@@ -132,6 +134,44 @@ private:
 	std::vector<Element*> _sstash;
 	std::vector<disp_t*> _stash;
 }p;
+/*--------------------------------------------------------------------------*/
+static int N = 20;
+/*--------------------------------------------------------------------------*/
+class NoSymbol : public Symbol {
+public:
+	explicit NoSymbol() : Symbol() {}
+	~NoSymbol() {};
+
+private:
+	explicit NoSymbol(NoSymbol const&x)
+	    : Symbol(x){
+	}
+	std::string dev_type()const {
+		return prefix + "0";
+	}
+public:
+	Element* clone() const override{ untested();
+		return new NoSymbol(*this);
+	}
+
+private: // Symbol
+	 pos_t portPosition(unsigned) const { unreachable(); return pos_t(0,0); }
+	 index_t numPorts() const { return 0; }
+	 Port& port(index_t) { throw "not_reached"; }
+//  index_t param_count() const override{
+//	  return 0;
+//  }
+	 rect_t bounding_rect() const { untested();
+		 return rect_t(pos_t(-N,-N),pos_t(N,N));
+	 }
+	 void paint(ViewPainter *p) const{ itested();
+		 p->setPen(QPen(Qt::darkBlue,2));
+		 p->drawLine(-N, -N, N, N);
+		 p->drawLine(N, -N, -N, N);
+	 }
+
+}d1; // NoSymbol
+Dispatcher<Symbol>::INSTALL dd(&qucs::symbol_dispatcher, prefix+"0", &d1);
 /*--------------------------------------------------------------------------*/
 }//namespace
 /*--------------------------------------------------------------------------*/

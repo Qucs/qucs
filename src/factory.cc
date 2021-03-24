@@ -108,9 +108,11 @@ void FactorySymbol::set_dev_type(std::string const& name)
 	assert(owner());
 	Element* ee = find_recursive(this, name);
 	SymbolFactory* f = dynamic_cast<SymbolFactory*>(ee);
-	assert(f);
+	if(!f){
+		message(qucs::MsgFatal, "cannot find " + name);
+	}else{
+	}
 	_factory = f;
-
 	Symbol::set_dev_type(name);
 }
 /*--------------------------------------------------------------------------*/

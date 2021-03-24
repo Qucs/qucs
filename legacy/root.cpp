@@ -43,12 +43,24 @@ public:
 
 		// Sub components in this circuit.
 		// instance used when parsing a netlist.
-		// model_dispatcher?
-		_sub = element_dispatcher.clone("ModelFactory");
-		assert(_sub);
-		_sub->set_owner(this);
-		_sub->set_dev_type("Sub");
-		subckt()->push_back(_sub);
+		// get all from model_dispatcher?
+		{
+			_sub = element_dispatcher.clone("ModelFactory");
+			if(_sub){
+				_sub->set_owner(this);
+				_sub->set_dev_type("Sub");
+				subckt()->push_back(_sub);
+			}else{
+			}
+
+			_verilog = element_dispatcher.clone("ModelFactory");
+			if(_verilog){
+				_verilog->set_owner(this);
+				_verilog->set_dev_type("Verilog");
+				subckt()->push_back(_verilog);
+			}else{
+			}
+		}
 
 #if 1
 		// dat file access...
@@ -74,14 +86,21 @@ private: // Component
     if(n == "$filename") {
 		 _full_path = v;
 		 auto pos = v.find_last_of("/");
+		 std::string p = v;
 		 if(pos==std::string::npos){ untested();
-			 // something wrong.
-			 assert(false);
-		 }else if(dynamic_cast<Component const*>(_sub)){ untested();
-			 // legacy hack
-			 _sub->set_param_by_name("$SUB_PATH", v);
+			 p = "."; // something wrong?
 		 }else{
-			 _sub->set_param_by_name("$SUB_PATH", v.substr(0, pos)); // TODO: handle include paths...
+			 p = v.substr(0, pos);
+		 }
+
+       if(_sub){
+			 _sub->set_param_by_name("$SUB_PATH", p); // TODO: handle include paths...
+		 }else{
+		 }
+
+		 if(_verilog){
+			 _verilog->set_param_by_name("$SUB_PATH", p); // TODO: INCLUDE_PATH
+		 }else{
 		 }
       _dat->set_param_by_name("$schematic_filename", v);
     }else{ untested();
@@ -155,8 +174,11 @@ private:
   }
 
 
+private: // BUG
+  Element* _sub{nullptr};
+  Element* _verilog{nullptr};
+
 private:
- 	Element* _sub{nullptr};
 	Data* _dat;
 	std::string _full_path;
 }d0;
