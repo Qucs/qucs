@@ -105,13 +105,27 @@ public:
 
 		setFlags(ItemIgnoresTransformations);
 
+		int tx = 0;
+		int ty = 0;
+		if(auto s=dynamic_cast<Symbol const*>(e)){ untested();
+			try{
+				tx = atoi(s->param_value_by_name("$tx").c_str());
+				ty = atoi(s->param_value_by_name("$ty").c_str());
+			}catch(qucs::ExceptionCantFind const&){
+			}
+		}else{
+		}
+
 		int k = 0;
 		if(e->showLabel()){
 			_labeltext = new QGraphicsTextItem(this);
+			_labeltext->setPos(tx, ty+k/2);
 			_labeltext->setPlainText(QString::fromStdString(e->label()));
 			k += _labeltext->boundingRect().height();
 		}else{
 		}
+
+
 		if(auto s=dynamic_cast<Component const*>(e)){ untested();
 			int show = atoi(s->param_value_by_name("$param_display").c_str());
 			for(unsigned i=0; i<s->param_count(); ++i){
@@ -124,7 +138,7 @@ public:
 					t->setFlags(ItemIgnoresTransformations);
 					auto v = QString::fromStdString(s->param_value(i));
 					t->setPlainText(n+"="+v);
-					t->setPos(0, k/2);
+					t->setPos(tx, ty+k/2);
 					k += t->boundingRect().height();
 				}else{
 				}
@@ -187,7 +201,7 @@ Element* ElementGraphics::cloneElement() const
 /*--------------------------------------------------------------------------*/
 static void redo_children(ElementGraphics* g)
 {
-	if(auto sym = dynamic_cast<Component const*>(element(g))){ untested();
+	if(dynamic_cast<Component const*>(element(g))){ untested();
 		for(auto c : g->childItems()){
 			delete c;
 		}
@@ -212,7 +226,7 @@ static void redo_children(ElementGraphics* g)
 	}else{ untested();
 	}
 
-	if(auto sym = dynamic_cast<Component const*>(element(g))){ untested();
+	if(dynamic_cast<Component const*>(element(g))){ untested();
 		new ElementText(g);
 	}else{ untested();
 	}
