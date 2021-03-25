@@ -108,8 +108,14 @@ void Symbol::paint(ViewPainter* p) const
 			p->drawEllipse(x-1, y-1, 2, 2);
 		}else if(port(i)->numPorts()==0){ untested();
 			unreachable();
+			p->setPen(QPen(Qt::red,3));
+			p->drawEllipse(x-2, y-2, 4, 4);
 		}else if(port(i)->numPorts()==1){itested();
-			// p->setPen(QPen(Qt::red,2));
+			unreachable();
+			p->setPen(QPen(Qt::red,3));
+			p->drawEllipse(x-2, y-2, 4, 4);
+		}else if(port(i)->numPorts()==2){itested();
+			// dangling port (just this and place)
 			p->setPen(QPen(Qt::red,1));
 			p->drawEllipse(x-2, y-2, 4, 4);
 		}else if(port(i)->numPorts()>2){itested();
