@@ -78,17 +78,18 @@ std::string Symbol::param_value_by_name(std::string const& n) const
 		return std::to_string(_vflip);
 	}else if(n=="$angle"){
 		return std::to_string(_angle);
-	}else{ untested();
+	}else{itested();
 		return Component::param_value_by_name(n);
 	}
 }
 /*--------------------------------------------------------------------------*/
-rect_t Symbol::bounding_rect() const {
-
-	// if(auto p=dynamic_cast<CommonSymbol const*>(common())){
-	//   return p->bouning_rect();
-	// }else{
-	// }
+rect_t Symbol::bounding_rect() const
+{ untested();
+//	if(auto p=dynamic_cast<CommonSymbol const*>(common())){
+//	   return p->bouning_rect();
+//	}else{
+		return rect_t();
+//	}
 }
 /*--------------------------------------------------------------------------*/
 void Symbol::paint(ViewPainter* p) const

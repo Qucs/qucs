@@ -80,7 +80,7 @@ private: // Painting
 	// careful: the bounding box is not where you'd expect.
 	// The whole thing seems shifted, not mirrored
 	rect_t bounding_rect() const override
-	{ untested();
+	{itested();
 		assert(_height);
 		assert(_width);
 		return rect_t(0, -_height, _width, _height);
@@ -362,7 +362,7 @@ int RectDiagram::calcDiagram()
 	// ====  x grid  =======================================================
 	if(xAxis.log) {itested();
 		if(xAxis.autoScale) {itested();
-			if(xAxis.max*xAxis.min < 1e-200){ untested();
+			if(xAxis.max*xAxis.min < 1e-200){itested();
 				trace2("RectDiagram::calcDiagram", xAxis.max, xAxis.min);
 				goto Frame;  // invalid
 			}else{itested();
@@ -786,12 +786,12 @@ void RectDiagram::recalcGraphData()
 	}
 #endif
 
-  if(xAxis.min > xAxis.max) { untested();
+  if(xAxis.min > xAxis.max) {itested();
     xAxis.min = 0.0;
     xAxis.max = 1.0;
   }else{
   }
-  if(yAxis.min > yAxis.max) { untested();
+  if(yAxis.min > yAxis.max) {itested();
     yAxis.min = 0.0;
     yAxis.max = 1.0;
   }else{
@@ -817,7 +817,7 @@ void RectDiagram::getAxisLimits(CommonData const* g)
 	if(pg){
 		trace2("RectDiagram::getAxisLimits y", pg->min(), pg->max());
 		yAxis.fit_in_data(pg->min(), pg->max());
-	}else{ untested();
+	}else{itested();
 	}
 
 	if(!pg){

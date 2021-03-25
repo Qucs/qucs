@@ -195,7 +195,7 @@ bool TaskElement::getSelected(int x_, int y_)
 
 // -------------------------------------------------------
 void LegacyTaskElement::paint(ViewPainter *p) const
-{ untested();
+{itested();
 	int x2=0; int y2=0; //?
   int cx = center().first;
   int cy = center().second;

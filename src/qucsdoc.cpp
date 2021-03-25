@@ -186,7 +186,7 @@ App* Doc::app()
 /* -------------------------------------------------------------------------------- */
 void Doc::printCursorPosition(int x, int y)
 {
-	if(app()){ untested();
+	if(app()){itested();
 	// BUG. signal status bar?
 		app()->printCursorPosition(x, y);
 	}else{ untested();

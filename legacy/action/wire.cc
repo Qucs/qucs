@@ -204,7 +204,7 @@ Dispatcher<Symbol>::INSTALL p(&qucs::symbol_dispatcher, "__ma_ghostwire", &w);
 /*--------------------------------------------------------------------------*/
 class ActionInsertWire : public QAction{
 public:
-	explicit ActionInsertWire(QObject* parent) : QAction(parent) { untested();
+	explicit ActionInsertWire(QObject* parent) : QAction(parent) {itested();
 		setIcon(QIcon(":/bitmaps/wire.png"));
 		setText(tr("Wire"));
 		setShortcut(Qt::CTRL+Qt::Key_E);
@@ -296,10 +296,10 @@ private:
 	}
 	void new_gfx();
 
-	Action* clone() const{ untested();
+	Action* clone() const{itested();
 		return new MouseActionWire(); // this?
 	}
-	QAction* createAction(QObject* parent) const override{ untested();
+	QAction* createAction(QObject* parent) const override{itested();
 		auto x = new ActionInsertWire(parent);
 		connect(x, &QAction::toggled, this, &MouseAction::slotToggle);
 		return x;

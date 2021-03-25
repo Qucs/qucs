@@ -107,7 +107,7 @@ public:
 
 		int tx = 0;
 		int ty = 0;
-		if(auto s=dynamic_cast<Symbol const*>(e)){ untested();
+		if(auto s=dynamic_cast<Symbol const*>(e)){itested();
 			try{
 				tx = atoi(s->param_value_by_name("$tx").c_str());
 				ty = atoi(s->param_value_by_name("$ty").c_str());
@@ -126,7 +126,7 @@ public:
 		}
 
 
-		if(auto s=dynamic_cast<Component const*>(e)){ untested();
+		if(auto s=dynamic_cast<Component const*>(e)){itested();
 			int show = atoi(s->param_value_by_name("$param_display").c_str());
 			for(unsigned i=0; i<s->param_count(); ++i){
 				auto n = QString_(s->param_name(i));
@@ -201,11 +201,11 @@ Element* ElementGraphics::cloneElement() const
 /*--------------------------------------------------------------------------*/
 static void redo_children(ElementGraphics* g)
 {
-	if(dynamic_cast<Component const*>(element(g))){ untested();
+	if(dynamic_cast<Component const*>(element(g))){itested();
 		for(auto c : g->childItems()){
 			delete c;
 		}
-	}else{ untested();
+	}else{itested();
 	}
 
 	if(auto sym = dynamic_cast<SubcktBase const*>(element(g))){ untested();
@@ -223,12 +223,12 @@ static void redo_children(ElementGraphics* g)
 			}else{
 			}
 		}
-	}else{ untested();
+	}else{itested();
 	}
 
-	if(dynamic_cast<Component const*>(element(g))){ untested();
+	if(dynamic_cast<Component const*>(element(g))){itested();
 		new ElementText(g);
-	}else{ untested();
+	}else{itested();
 	}
 
 }

@@ -136,7 +136,7 @@ public:
 /*--------------------------------------------------------------------------*/
 class ActionSelect : public QAction {
 public:
-	explicit ActionSelect(QObject* parent) : QAction(parent) { untested();
+	explicit ActionSelect(QObject* parent) : QAction(parent) {itested();
 		setIcon(QIcon(":/bitmaps/pointer.png"));
 		setText(tr("Select"));
 		setStatusTip(tr("Activate select mode"));
@@ -156,10 +156,10 @@ public:
 		}
 #endif
 private:
-	Action* clone() const{ untested();
+	Action* clone() const{itested();
 		return new MouseActionSelect(); // this?
 	}
-	QAction* createAction(QObject* parent) const override{ untested();
+	QAction* createAction(QObject* parent) const override{itested();
 		auto x = new ActionSelect(parent);
 		connect(x, &QAction::toggled, this, &MouseAction::slotToggle);
 		return x;

@@ -74,7 +74,7 @@ public:
 /*--------------------------------------------------------------------------*/
 class ActionInsEqn : public QAction{
 public:
-	explicit ActionInsEqn(QObject* parent) : QAction(parent) { untested();
+	explicit ActionInsEqn(QObject* parent) : QAction(parent) {itested();
 		setIcon(QIcon(":/bitmaps/equation.png"));
 		setText(tr("Insert Equation"));
 		setShortcut(Qt::CTRL+Qt::Key_Less);
@@ -98,7 +98,7 @@ public:
 /*--------------------------------------------------------------------------*/
 class ActionRotate : public QAction{
 public:
-	explicit ActionRotate(QObject* parent) : QAction(parent) { untested();
+	explicit ActionRotate(QObject* parent) : QAction(parent) {itested();
 		setIcon(QIcon(":/bitmaps/rotate_ccw.png"));
 		setText(tr("Rotate"));
 		setShortcut(Qt::CTRL+Qt::Key_R);
@@ -110,7 +110,7 @@ public:
 /*--------------------------------------------------------------------------*/
 class ActionMirrorX : public QAction{
 public:
-	explicit ActionMirrorX(QObject* parent) : QAction(parent) { untested();
+	explicit ActionMirrorX(QObject* parent) : QAction(parent) {itested();
   		setIcon(QIcon(":/bitmaps/mirror.png"));
 		setText(tr("Mirror Y"));
 		setShortcut(Qt::CTRL+Qt::Key_J);
@@ -122,7 +122,7 @@ public:
 /*--------------------------------------------------------------------------*/
 class ActionMirrorY : public QAction{
 public:
-	explicit ActionMirrorY(QObject* parent) : QAction(parent) { untested();
+	explicit ActionMirrorY(QObject* parent) : QAction(parent) {itested();
 		setIcon(QIcon(":/bitmaps/mirrory.png"));
 		setText(tr("Mirror X"));
 		setShortcut(Qt::CTRL+Qt::Key_M);
@@ -134,7 +134,7 @@ public:
 /*--------------------------------------------------------------------------*/
 class ActionInsertPort : public QAction{
 public:
-	explicit ActionInsertPort(QObject* parent) : QAction(parent) { untested();
+	explicit ActionInsertPort(QObject* parent) : QAction(parent) {itested();
 		setIcon(QIcon(":/bitmaps/port.png"));
 		setText(tr("Insert Port"));
 		setStatusTip(tr("Insert a port symbol"));
@@ -145,7 +145,7 @@ public:
 /*--------------------------------------------------------------------------*/
 class ActionInsertGround : public QAction{
 public:
-	explicit ActionInsertGround(QObject* parent) : QAction(parent) { untested();
+	explicit ActionInsertGround(QObject* parent) : QAction(parent) {itested();
 		setIcon(QIcon(":/bitmaps/ground.png"));
 		setText(tr("Insert Ground"));
 		setShortcut(Qt::CTRL+Qt::Key_G);
@@ -175,7 +175,7 @@ private:
 	Action* clone() const{
 		return new MouseActionSelCmd<CMD>(nullptr); // this?
 	}
-	QAction* createAction(QObject* parent) const override{ untested();
+	QAction* createAction(QObject* parent) const override{itested();
 		QAction* x=nullptr;
 		if(CMD::label() == "delete"){
 			x = new ActionDelete(parent);
@@ -441,7 +441,7 @@ public:
 	Action* clone() const{
 		return new MouseActionNewElement(); // this?
 	}
-	QAction* createAction(QObject* parent) const override{ untested();
+	QAction* createAction(QObject* parent) const override{itested();
 		QAction* x = nullptr;
 		assert(_proto);
 		trace2("createAction", _proto->typeName(), _proto->label());

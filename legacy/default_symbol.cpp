@@ -161,7 +161,7 @@ private: // Symbol
 //  index_t param_count() const override{
 //	  return 0;
 //  }
-	 rect_t bounding_rect() const { untested();
+	 rect_t bounding_rect() const {itested();
 		 return rect_t(pos_t(-N,-N),pos_t(N,N));
 	 }
 	 void paint(ViewPainter *p) const{ itested();

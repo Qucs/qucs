@@ -68,11 +68,11 @@ public:
 		return new Verilog(*this);
 	}
 
-	virtual rect_t bounding_rect() const{ untested();
+	virtual rect_t bounding_rect() const{itested();
 		// if(auto p=dynamic_cast<CommonSymbol const*>(common())){ untested();
 		//   return p->bouning_rect();
 		// }else
-		if(_painting){ untested();
+		if(_painting){itested();
 			return _painting->bounding_rect();
 		}else{ untested();
 			// assert...
@@ -80,11 +80,11 @@ public:
 			return rect_t();
 		}
 	}
-	virtual void paint(ViewPainter* v) const{ untested();
+	virtual void paint(ViewPainter* v) const{itested();
 		// if(auto p=dynamic_cast<CommonSymbol const*>(common())){ untested();
 		//   return p->paint(v);
 		// }else
-		if(_painting){ untested();
+		if(_painting){itested();
 			_painting->paint(v);
 		}else{ untested();
 			// assert...
@@ -308,7 +308,7 @@ void Verilog::build_sckt(istream_t& cs, SubcktBase* proto) const
 	auto ps = proto->scope(); // really?
 	assert(ps);
 	auto p_ = ps->find_(":SymbolSection:");
-	if(p_==ps->end()){ untested();
+	if(p_==ps->end()){itested();
 		trace2("no SymbolSection", proto->label(), proto->numPorts());
 	}else if(auto p = dynamic_cast<SubcktBase const*>(*p_)){
 		assert(p->scope());
@@ -458,7 +458,7 @@ void Verilog::init(Component const* proto)
 
 	SubcktBase const* symsect=nullptr;
 	p_ = ps->find_(":SymbolSection:");
-	if(p_==ps->end()){ untested();
+	if(p_==ps->end()){itested();
 		// no symbol
 	}else if(auto p = dynamic_cast<SubcktBase const*>(*p_)){
 		symsect = p;
@@ -487,7 +487,7 @@ void Verilog::init(Component const* proto)
 	}
 
 	// find painting...
-	if(!symsect){ untested();
+	if(!symsect){itested();
 	}else if(!symsect->scope()->size()){
 	}else if(auto p=dynamic_cast<Painting const*>(symsect)){
 		trace2("got painting from symbol section", symsect->scope()->size(), symsect->numPorts());
