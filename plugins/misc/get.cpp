@@ -41,7 +41,6 @@ void Get::do_it(istream_t& cmd, ElementList* sckt)
 	trace2("get", fn, suffix);
 
 	istream_t stream (istream_t::_WHOLE_FILE, fn);
-	stream.read_line();
 
 // TODO: any language.
 // magic = stream.fullstring ...
@@ -49,9 +48,12 @@ void Get::do_it(istream_t& cmd, ElementList* sckt)
 	auto L = qucs::language_dispatcher[suffix];
 	assert(L);
 
-	while(!stream.atEnd()){
-		L->new__instance(stream, nullptr, sckt);
-		stream.read_line();
+	try{
+		while(true){
+			stream.read_line();
+			L->new__instance(stream, nullptr, sckt);
+		}
+	}catch (qucs::Exception_End_Of_Input& e) {
 	}
 }
 }

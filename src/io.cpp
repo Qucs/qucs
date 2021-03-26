@@ -91,6 +91,11 @@ std::string istream_t::read_line()
 	_ok = true;
 	_cnt = 0;
 	if(_stream){
+	   if(_stream->atEnd()){ untested();
+			throw qucs::Exception_End_Of_Input("");
+		}else{ itested();
+		}
+
 		_cmd = _stream->readLine().toStdString();
 	}else{
 		unreachable();
@@ -537,18 +542,22 @@ CS& istream_t::get_line(std::string const& prompt)
 {
   ++_line_number;
 
-  if(_stream){
+  if(_stream){ itested();
     // yikes.
+	   if(_stream->atEnd()){ itested();
+			throw qucs::Exception_End_Of_Input("");
+		}else{ itested();
+		}
       _cmd = _stream->readLine().toStdString();
       _cnt = 0;
       _length = _cmd.length();
       _ok = true;
-  }else if (is_file()) {
+  }else if (is_file()) { untested();
     _cmd = getlines(_file);
     _cnt = 0;
     _length = _cmd.length();
     _ok = true;
-  }else{itested();
+  }else{untested();
     assert(_file == stdin);
     char cmdbuf[BUFLEN];
     getcmd(prompt.c_str(), cmdbuf, BUFLEN);

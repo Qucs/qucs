@@ -989,7 +989,7 @@ bool SchematicDoc::load()
 /*--------------------------------------------------------------------------*/
 // here?? CMD::get? but need owner in new__instance...
 void SchematicDoc::parse(istream_t& s, SchematicLanguage const* L)
-{itested();
+{ untested();
 
 	incomplete(); // but still used in qucs -i $file
 	if(!L){itested();
@@ -1001,14 +1001,14 @@ void SchematicDoc::parse(istream_t& s, SchematicLanguage const* L)
 	assert(_root);
 	assert(_model);
 
-	// L->new__instance(getcmd, _root, _root->subckt());
-
-	s.read_line();
-	while(!s.atEnd()){itested();
-		assert(_root->subckt());
-		trace2("SchematicDoc::parse", s.fullstring(), _root->label());
-		L->new__instance(s, _root, _root->subckt());
-		s.read_line();
+	try{
+		while(true){untested();
+			s.read_line();
+			assert(_root->subckt());
+			trace2("SchematicDoc::parse", s.fullstring(), _root->label());
+			L->new__instance(s, _root, _root->subckt());
+		}
+	}catch(qucs::Exception_End_Of_Input const&){
 	}
 }
 

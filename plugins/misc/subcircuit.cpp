@@ -294,14 +294,17 @@ void Sub::build_sckt(istream_t& cs, SubcktBase* proto) const
 	auto LL = qucs::language_dispatcher["leg_sch"]; // use command instead?
 	auto L = dynamic_cast<Language const*>(LL);
 	assert(L);
-	cs.read_line();
-	while(!cs.is_end()){itested();
-		trace1("SubFactory::build_sckt", cs.fullstring());
-		Element* e = proto;
-		assert(e->scope());
-		L->new__instance(cs, proto, e->scope());
-		cs.read_line();
+	try{
+		while(true){itested();
+			cs.read_line();
+			trace1("SubFactory::build_sckt", cs.fullstring());
+			Element* e = proto;
+			assert(e->scope());
+			L->new__instance(cs, proto, e->scope());
+		}
+	}catch (qucs::Exception_End_Of_Input& e) {
 	}
+
 
 	assert(!proto->numPorts());
 	assert(proto->common());
@@ -426,8 +429,16 @@ void Sub::refreshSymbol(std::string const& fn)
 	if(new_parent){
 		assert(new_parent);
 		assert(new_parent->common());
+#if 1 // wrong
 		auto cc = new_parent->common()->clone(); //really? set modelname in factory.
 		attach_common(cc); // not actually shared yet. but will.
+#else
+		auto cc = new_parent->clone(); //really? set modelname in factory.
+		auto s = prechecked_cast<Component*>(cc);
+		assert(s);
+		attach_common(s->mutable_common());
+		delete cc;
+#endif
 
 		init(new_parent);
 	}else{ untested();
