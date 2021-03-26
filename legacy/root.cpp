@@ -56,8 +56,12 @@ public:
 			_verilog = element_dispatcher.clone("ModelFactory");
 			if(_verilog){
 				_verilog->set_owner(this);
-				_verilog->set_dev_type("Verilog");
-				subckt()->push_back(_verilog);
+				try{
+					_verilog->set_dev_type("Verilog");
+					subckt()->push_back(_verilog);
+				}catch(qucs::ExceptionCantFind const&){ itested();
+					message(qucs::MsgLog, "no Verilog");
+				}
 			}else{
 			}
 		}

@@ -63,11 +63,14 @@ void SymbolFactory::set_dev_type(std::string const& name)
 	}catch(qucs::ExceptionCantFind const&){
 		e = qucs::symbol_dispatcher.clone(name);
 	}
-	auto ps = prechecked_cast<Symbol*>(e);
-	assert(ps);
-	_proto = ps;
-	_scope = owner()->scope();
-	set_label(name);
+
+	if(auto ps = prechecked_cast<Symbol*>(e)){
+		_proto = ps;
+		_scope = owner()->scope();
+		set_label(name);
+	}else{ itested();
+		throw qucs::ExceptionCantFind(name, short_label());
+	}
 }
 /*--------------------------------------------------------------------------*/
 static Element* find_recursive(Element* where, std::string const& name)
