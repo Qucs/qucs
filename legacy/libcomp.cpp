@@ -141,7 +141,7 @@ private:
 	SubcktBase const* painting() const{
 		// cache?
 			assert(subckt());
-			auto p_ = subckt()->find_(":SymbolSection:");
+			auto p_ = subckt()->find_("Symbol");
 			if(p_==subckt()->end()){
 				return nullptr;
 			}else if(auto p = dynamic_cast<SubcktBase const*>(*p_)){
@@ -156,7 +156,7 @@ public: // HACK
 	ElementList const* paintings() const{
 		if(!_paint){
 			assert(subckt());
-			auto p_ = subckt()->find_(":SymbolSection:");
+			auto p_ = subckt()->find_("Symbol");
 			if(p_==subckt()->end()){
 			}else if(auto p = dynamic_cast<SubcktBase const*>(*p_)){
 				assert(p->subckt());

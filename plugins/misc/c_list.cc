@@ -95,7 +95,7 @@ void list_save(CS& cmd, ostream_t& out, CARD_LIST* scope)
 
   if (cmd.is_end()) {
     /* no args: list all		    */
-    for (CARD_LIST::const_iterator ci=scope->begin();ci!=scope->end();++ci) {
+    for (auto ci=scope->begin();ci!=scope->end();++ci) {
       lang->print_item(out, *ci);
     }
   }else{itested();

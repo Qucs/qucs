@@ -6,9 +6,6 @@ Lib$Ideal$Notch2 #(.Lib(Ideal), .Component(Notch2), .fc(1E3), .Q(1)) IB1();
 //DC1
 endmodule // main
 
-module :SymbolSection:();
-endmodule // :SymbolSection:
-
-module :Paintings:();
-endmodule // :Paintings:
+module Symbol();
+endmodule // Symbol
 

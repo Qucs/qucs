@@ -6,9 +6,6 @@ R #(.R(50 Ohm), .Temp(26.85), .Tc1(0.0), .Tc2(0.0), .Tnom(26.85), .Symbol(europe
 Vac #(.U(10 V), .f(1kHz), .Phase(0), .Theta(0)) V1(Vin, gnd);
 endmodule // main
 
-module :SymbolSection:();
-endmodule // :SymbolSection:
-
-module :Paintings:();
-endmodule // :Paintings:
+module Symbol();
+endmodule // Symbol
 

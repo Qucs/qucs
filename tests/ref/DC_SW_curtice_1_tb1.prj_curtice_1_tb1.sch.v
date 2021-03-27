@@ -10,15 +10,15 @@ IProbe #() Pr1(_net2, _net3);
 Sub$curtice_1 #(.File(curtice_1.sch)) Curtice1(gnd, _net7, _net3);
 endmodule // main
 
-module :SymbolSection:();
+module Symbol();
 painting incomplete
 painting incomplete
 painting incomplete
 painting incomplete
 painting incomplete
-endmodule // :SymbolSection:
+endmodule // Symbol
 
-module Sub:curtice_1(_net2, _net0, _net1);
+module Sub$curtice_1(_net2, _net0, _net1);
 module main(Source, Gate, Drain);
 R #(.R(RS), .Temp(26.85), .Tc1(0.0), .Tc2(0.0), .Tnom(26.85), .Symbol(european)) Rs(_net3, _net24);
 L #(.L(LS), .I()) Ls(Source, _net3);
@@ -36,7 +36,7 @@ Eqn #(.TR(TK/TnK), .IsT(IS*exp(XTI/N*ln(TR) - EG/N/Vt*(1-TR))), .Export(yes)) Eq
 EDD #(.Type(explicit), .Branches(4), .I1(V1<-VBR+50*Vt ? -IsT*(1+exp(-(VBR+V1)/Vt)) + GMIN*V1 : 0), .Q1(0), .I2(V1>=-VBR+50*Vt && V1<-5*Vt ? -IsT+GMIN*V1 : V1>=-5*Vt ? IsT*(exp(V1/(N*Vt))-1) + GMIN*V1 : 0), .Q2(0), .I3(V1-VT0>0 ? Beta*(V1-VT0)^2*(1+Lambda*V3)*tanh(Alpha*V3) : 0), .Q3(CDS*V3 + TAU*I3), .I4(0), .Q4(CGS*V4)) D1(_net22, _net24, _net22, _net24, _net8, _net24, _net22, _net26);
 endmodule // main
 
-module :SymbolSection:(_net2, _net0, _net1);
+module Symbol(_net2, _net0, _net1);
 // .port_ x=-30 y=0 n=1 label=:port2
 painting incomplete
 painting incomplete
@@ -73,13 +73,10 @@ painting incomplete
 painting incomplete
 painting incomplete
 painting incomplete
-endmodule // :SymbolSection:
+endmodule // Symbol
 
-module :Paintings:();
+module $Paintings$();
 endmodule // :Paintings:
 
 endmodule // Sub:curtice_1
-
-module :Paintings:();
-endmodule // :Paintings:
 

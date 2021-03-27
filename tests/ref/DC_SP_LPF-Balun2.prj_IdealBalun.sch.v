@@ -7,9 +7,6 @@ Port #(.Num(2), .Type(analog)) P2(P2, P2);
 Port #(.Num(1), .Type(analog)) P1(P1, P1);
 endmodule // main
 
-module :SymbolSection:();
-endmodule // :SymbolSection:
-
-module :Paintings:();
-endmodule // :Paintings:
+module Symbol();
+endmodule // Symbol
 

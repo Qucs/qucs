@@ -19,10 +19,10 @@ R #(.R(1591 Ohm), .Temp(26.85), .Tc1(0.0), .Tc2(0.0), .Tnom(26.85), .Symbol(euro
 R #(.R(1.59 Ohm), .Temp(26.85), .Tc1(0.0), .Tc2(0.0), .Tnom(26.85), .Symbol(european)) R6(_net12, _net26);
 endmodule // main
 
-module :SymbolSection:();
-endmodule // :SymbolSection:
+module Symbol();
+endmodule // Symbol
 
-module Sub:opa227(_net2, _net1, _net0);
+module Sub$opa227(_net2, _net1, _net0);
 module main(P1, P2, P3);
 VCVS #(.G(1), .T(0)) SRC2(_net6, P3, gnd, gnd);
 GND #() *(gnd);
@@ -35,7 +35,7 @@ Port #(.Num(2), .Type(analog)) P2(P2, P2);
 GND #() *(gnd);
 endmodule // main
 
-module :SymbolSection:(_net2, _net1, _net0);
+module Symbol(_net2, _net1, _net0);
 painting incomplete
 painting incomplete
 painting incomplete
@@ -52,13 +52,10 @@ painting incomplete
 painting incomplete
 painting incomplete
 painting incomplete
-endmodule // :SymbolSection:
+endmodule // Symbol
 
-module :Paintings:();
+module $Paintings$();
 endmodule // :Paintings:
 
 endmodule // Sub:opa227
-
-module :Paintings:();
-endmodule // :Paintings:
 

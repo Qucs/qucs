@@ -1,4 +1,4 @@
-module Sub:opa227(_net2, _net1, _net0);
+module Sub$opa227(_net2, _net1, _net0);
 module main(P1, P2, P3);
 VCVS #(.G(1), .T(0)) SRC2(_net6, P3, gnd, gnd);
 GND #() *(gnd);
@@ -11,7 +11,7 @@ Port #(.Num(2), .Type(analog)) P2(P2, P2);
 GND #() *(gnd);
 endmodule // main
 
-module :SymbolSection:(_net2, _net1, _net0);
+module Symbol(_net2, _net1, _net0);
 painting incomplete
 painting incomplete
 painting incomplete
@@ -28,9 +28,9 @@ painting incomplete
 painting incomplete
 painting incomplete
 painting incomplete
-endmodule // :SymbolSection:
+endmodule // Symbol
 
-module :Paintings:();
+module $Paintings$();
 endmodule // :Paintings:
 
 endmodule // Sub:opa227

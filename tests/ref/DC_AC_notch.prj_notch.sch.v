@@ -16,9 +16,6 @@ Vac #(.U(1uV), .f(1 GHz), .Phase(0), .Theta(0)) V1(In, gnd);
 //AC1
 endmodule // main
 
-module :SymbolSection:();
-endmodule // :SymbolSection:
-
-module :Paintings:();
-endmodule // :Paintings:
+module Symbol();
+endmodule // Symbol
 

@@ -92,8 +92,10 @@ void VerilogNetlister::createNetlist(ostream_t& stream,
 		lang->printItem(stream, pc);
 #else
 		if(pc->label()=="main"){
-			lang->printItem(stream, pc);
+			// BUG: eject protos in random order.
 			// main_ = pc;
+			lang->printItem(stream, pc);
+		}else if(pc->label()[0] == ':'){ untested();
 		}else if(!sym){
 			lang->printItem(stream, pc);
 		}else if(dynamic_cast<Conductor const*>(sym)){

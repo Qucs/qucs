@@ -154,7 +154,7 @@ class SymbolCommand : public Command{
 	  Component* sc = symbolSection.clone(); // symbol_dispatcher.clone("symbolSection");
 	  auto* sym = dynamic_cast<SubcktBase*>(sc);
 	  assert(sym);
-	  sym->set_label(":SymbolSection:");
+	  sym->set_label("Symbol");
 	  assert(s);
 
 	  auto lang = qucs::language_dispatcher["legacy_lib"];

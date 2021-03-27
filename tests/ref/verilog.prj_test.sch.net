@@ -1,0 +1,17 @@
+# Qucs
+## declarations 1
+### item Verilog:verilogmodel
+# sckt Verilog:verilogmodel
+
+ _net0 _net1 _net2
+# 1
+.Def:End
+## declarations end
+
+Verilog:BBBB _net0 _net10 _net2 Type="verilogmodel"
+R:R1 _net3 _net4 R="10 kOhm" Temp="26.85" Tc1="0.0" Tc2="0.0" Tnom="26.85"
+R:R3 _net5 _net6 R="1591 Ohm" Temp="26.85" Tc1="0.0" Tc2="0.0" Tnom="26.85"
+R:R6 _net7 _net8 R="1.59 Ohm" Temp="26.85" Tc1="0.0" Tc2="0.0" Tnom="26.85"
+Verilog:AAAA _net13 _net7 _net9 Type="verilogmodel"
+C:C2 _net11 _net2 C="0.1 uF" V=""
+R:R4 _net12 _net0 R="10 kOhm" Temp="26.85" Tc1="0.0" Tc2="0.0" Tnom="26.85"

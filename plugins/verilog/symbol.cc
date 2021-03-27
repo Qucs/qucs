@@ -330,7 +330,7 @@ void Verilog::build_sckt(istream_t& cmd, SubcktBase* proto) const
 	bool gotit = false;
 	auto ps = proto->scope(); // really?
 	assert(ps);
-	auto p_ = ps->find_(":SymbolSection:");
+	auto p_ = ps->find_("Symbol");
 	if(p_==ps->end()){itested();
 		trace2("no SymbolSection", proto->label(), proto->numPorts());
 	}else if(auto p = dynamic_cast<SubcktBase const*>(*p_)){ untested();
@@ -491,7 +491,7 @@ void Verilog::init(Component const* proto)
 #else
 
 	SubcktBase const* symsect = nullptr;
-	p_ = ps->find_(":SymbolSection:");
+	p_ = ps->find_("Symbol");
 	if(p_==ps->end()){itested();
 		// no symbol
 	}else if(auto p = dynamic_cast<SubcktBase const*>(*p_)){ untested();

@@ -205,7 +205,7 @@ void LegacySchematicFormat::do_it(istream_t& cs, ElementList* m)
 
 	{
 		stream << "<Symbol>\n";     // save all paintings for symbol
-		auto pc_=m->find_(":SymbolSection:");
+		auto pc_=m->find_("Symbol");
 		if(pc_==m->end()){
 		}else if(auto cc=dynamic_cast<SubcktBase*>(*pc_)){
 			assert(cc->subckt());
@@ -255,7 +255,7 @@ void LegacySchematicFormat::do_it(istream_t& cs, ElementList* m)
 				stream << "</Components>\n";
 			}else{
 			}
-		}else if(pc->label()==":SymbolSection:"){
+		}else if(pc->label()=="Symbol"){
 			// done
 		}else{
 //			L->printItem(pc, stream);

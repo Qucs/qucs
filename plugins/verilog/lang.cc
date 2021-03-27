@@ -399,7 +399,11 @@ void Verilog::print_ports_short(ostream_t& o, Component const* x) const
 
   std::string sep = "";
   auto s = x->scope();
-  assert(s);
+  if(!s){
+	  unreachable();
+	  return;
+  }else{
+  }
   auto n = s->nodes();
   assert(n);
   for (int ii = 0;  x->portExists(ii);  ++ii) {
@@ -431,8 +435,10 @@ void Verilog::printSubckt(SubcktBase const* x, ostream_t& o) const
 
 	if(scope){
 		assert(x);
+		auto label = x->short_label();
+      std::replace( label.begin(), label.end(), ':', '$');
 
-		o << "module " <<  x->short_label() << "(";
+		o << "module " <<  label << "(";
 		print_ports_short(o, x);
 		o << ");\n";
 
@@ -528,7 +534,7 @@ void VS::print_instance(ostream_t& s, Component const* sym) const
 		auto label = sym->label();
 		auto type = sym->typeName(); // dev_type_key
 		// : is not allowed in verilog
-      std::replace( type.begin(), type.end(), ':', '$');
+ //     std::replace( type.begin(), type.end(), ':', '$');
 		s << QString::fromStdString(type) << " ";
 
 		print_args(s, sym);
@@ -536,6 +542,7 @@ void VS::print_instance(ostream_t& s, Component const* sym) const
 			// bug/feature/wtf?
 			label="anonymous_gnd_hack_" + std::to_string(gndhackn++);
 		}else{
+//			std::replace( label.begin(), label.end(), ':', '$');
 		}
 		s << label << "(";
 		print_ports_short(s, sym);
@@ -586,7 +593,7 @@ void VS::printSubckt(SubcktBase const* x, ostream_t& o) const
 				printItem(o, ci);
 			}else if(ci->label()[0] == ':'){ untested();
 				// ?
-				printItem(o, ci);
+				//printItem(o, ci);
 			}else{
 				// o << "  ";
 				printItem(o, ci);

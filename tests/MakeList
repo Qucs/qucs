@@ -16,6 +16,7 @@ SH_TESTS = \
 PRJ_TESTS = \
 	d_3f5.prj \
 	misc.prj \
+	verilog.prj \
 	AC_bandpass.prj \
 	AC_groupdelay_ac.prj \
 	AC_SW_resonance.prj \

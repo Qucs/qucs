@@ -332,7 +332,7 @@ void Sub::build_sckt(istream_t& cs, SubcktBase* proto) const
 	bool gotit = false;
 	auto ps = proto->scope(); // really?
 	assert(ps);
-	auto p_ = ps->find_(":SymbolSection:");
+	auto p_ = ps->find_("Symbol");
 	if(p_==ps->end()){ untested();
 		trace2("no SymbolSection", proto->label(), proto->numPorts());
 	}else if(auto p = dynamic_cast<SubcktBase const*>(*p_)){
@@ -498,7 +498,7 @@ void Sub::init(Component const* proto)
 #else
 
 	SubcktBase const* symsect=nullptr;
-	p_ = ps->find_(":SymbolSection:");
+	p_ = ps->find_("Symbol");
 	if(p_==ps->end()){ untested();
 		// no symbol
 	}else if(auto p = dynamic_cast<SubcktBase const*>(*p_)){
