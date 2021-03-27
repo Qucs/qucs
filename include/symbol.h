@@ -72,6 +72,8 @@ public: // Parameters
 	virtual std::string param_value(index_t i) const override;
 	virtual std::string param_name(index_t i) const override;
 
+	virtual pos_t portPosition(index_t) const = 0;
+
 public: // Port stuff
 	pos_t nodePosition(unsigned) const;
 	Node const* portNode(unsigned) const;

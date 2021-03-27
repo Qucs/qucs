@@ -242,7 +242,13 @@ private: // Symbol
 	// Lib::
 	pos_t portPosition(index_t i) const override{
 		assert(_parent);
-		return _parent->portPosition(i);
+		if(auto p = dynamic_cast<Symbol const*>(_parent)){ untested();
+			return p->portPosition(i);
+		}else{
+			incomplete();
+			assert(false);
+			return pos_t(0, 0);
+		}
 	}
 	Port& port(index_t i) override{itested();
 		assert(i < _ports.size());

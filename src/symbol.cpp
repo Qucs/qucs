@@ -63,9 +63,9 @@ pos_t Symbol::center()const
 /*--------------------------------------------------------------------------*/
 std::string Symbol::param_value_by_name(std::string const& n) const
 {
-	if(n=="$xposition"){
+	if(n=="$xposition"){ untested();
 		return std::to_string(cx());
-	}else if(n=="$yposition"){
+	}else if(n=="$yposition"){ untested();
 		trace1("..", cy());
 		return std::to_string(cy());
 	}else if(n=="$mfactor"){
@@ -80,7 +80,7 @@ std::string Symbol::param_value_by_name(std::string const& n) const
 		return std::to_string(_vflip);
 	}else if(n=="$angle"){
 		return std::to_string(_angle);
-	}else{itested();
+	}else{ untested();
 		return Component::param_value_by_name(n);
 	}
 }

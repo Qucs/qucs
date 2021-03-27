@@ -32,7 +32,7 @@ private:
 	virtual Element* clone()const {unreachable(); return nullptr;}
 //	Port& port(unsigned) override {unreachable(); return *new Port();}
 public:
-	virtual pos_t portPosition(unsigned i) const;
+//	virtual pos_t portPosition(unsigned i) const;
 	virtual unsigned numPorts() const { return net_nodes(); }
 
 public: // Element

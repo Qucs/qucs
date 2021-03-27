@@ -34,6 +34,7 @@ std::string CommonSubckt::port_value(unsigned i) const
 	return p.nodeLabel();
 }
 /*--------------------------------------------------------------------------*/
+#if 0
 pos_t CommonSubckt::portPosition(index_t i) const
 {
 	// TODO: find a port connected to the node at position i..
@@ -70,6 +71,7 @@ pos_t CommonSubckt::portPosition(index_t i) const
 	unreachable();
 	return pos_t(0, 0);
 }
+#endif
 /*--------------------------------------------------------------------------*/
 } // qucs
 /*--------------------------------------------------------------------------*/
@@ -112,7 +114,7 @@ private: // bug, feature? is this a Symbol??
 	void paint(ViewPainter*) const{};
 
 private: // Symbol
-	pos_t portPosition(index_t) const;
+	// pos_t portPosition(index_t) const override;
 	Element* clone()const override{
 		auto a=new SubcktProto(*this);
 		a->attach_common(new CommonSubckt(0));
@@ -187,6 +189,7 @@ Port& SubcktProto::port(index_t i)
 	return cs->port(i);
 }
 /*--------------------------------------------------------------------------*/
+#if 0
 pos_t SubcktProto::portPosition(index_t i) const
 {
 #if 1
@@ -221,6 +224,7 @@ pos_t SubcktProto::portPosition(index_t i) const
 	}
 #endif
 }
+#endif
 /*--------------------------------------------------------------------------*/
 Node const* SubcktProto::portValue(index_t) const
 {

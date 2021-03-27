@@ -28,6 +28,7 @@ std::string SubcktBase::dev_type()const
 	return common()->modelname();
 }
 /*--------------------------------------------------------------------------*/
+#if 0
 pos_t SubcktBase::portPosition(index_t i) const
 {
 	std::string n = portName(i);
@@ -51,6 +52,7 @@ pos_t SubcktBase::portPosition(index_t i) const
 	unreachable();
 	return pos_t(0,0);
 }
+#endif
 /*--------------------------------------------------------------------------*/
 Port& SubcktBase::port(index_t i)
 {

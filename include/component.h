@@ -125,7 +125,7 @@ public: // Port stuff
 	}
 	virtual void set_port_by_index(index_t, std::string const&);
 	virtual void set_port_by_name(std::string const&, std::string const&);
-	virtual pos_t portPosition(unsigned) const = 0;
+//	virtual pos_t portPosition(unsigned) const = 0;
 //	pos_t nodePosition(unsigned) const;
 
 	std::string port_value(unsigned) const;

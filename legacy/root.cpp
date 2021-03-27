@@ -158,10 +158,12 @@ private: // SchematicSymbol
 private:
   unsigned numPorts() const override{ incomplete(); return 0; }
   virtual Port& port(unsigned) override{ return *new Port();}
+#if 0
   pos_t portPosition(unsigned) const override{ untested();
     unreachable();
     return pos_t(0,0);
   }
+#endif
   Node const* portValue(unsigned)const {unreachable(); return nullptr;}
   void setPort(unsigned, Node*){incomplete();}
 
