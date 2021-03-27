@@ -20,21 +20,22 @@
 ===== 0.1.* TODO =====
 
 - run simulations in tests, add more simulators
-- resurrect diagrams as QWidgets
-- hide text during symbols drag
+- resurrect diagrams (as QWidgets?)
+- hide text during symbols drag (why?)
 - movable (tx, ty) and editable text
-- connect error message handling (Object)
+- connect error message handling (Object?)
 - named nets and parse qucsator models
-- use dispatcher in Module::INSTALL
+- replace Module::INSTALL
 - proper "Label" symbol/component
 - implement symbol editor (standalone, not as "mode")
 - symbol text position / move text
 - refactor VHDLcode
+- drag&drop elements from left menu (remove?)
 
 stuff that broke along the way
 - copy and paste
 - wire segment selection
-- new elements from left menu
+- some bugs in "wire optimisation"
 
 wishlist/optional
 - parse verilog schematic and round trip

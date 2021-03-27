@@ -87,8 +87,9 @@ public: //??!
   QString get_VHDL_Code(int);
   QString get_Verilog_Code(int);
 
-private: // Element override
+protected:
   void paint(ViewPainter*) const override;
+private: // Element override
   Widget* schematicWidget(qucs::Doc*) const override;
   rect_t bounding_rect() const override;
   bool legacyTransformHack() const override;

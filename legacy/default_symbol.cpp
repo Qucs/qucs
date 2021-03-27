@@ -66,10 +66,47 @@ private: // Symbol
   index_t param_count() const override{
 	  return 0;
   }
+  void paint(ViewPainter *p) const;
 
 private:
   int _numports;
 }d0; // DefaultSymbol
+/*--------------------------------------------------------------------------*/
+// BUG:
+// - port names? (not known here.)
+// - text orientation. use graphicstext?
+void DefaultSymbol::paint(ViewPainter *p) const
+{
+	Component::paint(p);
+//	p->save();
+
+//	auto wm = p->worldMatrix();
+	// write all text
+	QFont f = p->font();   // save current font
+	QFont newFont = f;
+	foreach(Text *pt, Texts) {itested();
+		//p->setWorldMatrix(
+		//		QMatrix(pt->mCos, -pt->mSin, pt->mSin, pt->mCos,
+		//			p->DX + float(pt->x) * p->Scale,
+		//			p->DY + float(pt->y) * p->Scale));
+
+		newFont.setPointSizeF(p->Scale * pt->Size);
+		newFont.setOverline(pt->over);
+		newFont.setUnderline(pt->under);
+		p->setFont(newFont);
+		p->setPen(pt->Color);
+		if (1) { untested();
+			p->drawText(pt->x, pt->y, 0, 0, Qt::AlignLeft|Qt::TextDontClip, pt->s);
+		} else {itested();
+			int w, h;
+			w = p->drawTextMapped (pt->s, 0, 0, &h);
+			Q_UNUSED(w);
+		}
+	}
+//	p->setWorldMatrix(wm);
+//	p->setWorldMatrixEnabled(false);
+//	p->restore();
+}
 /*--------------------------------------------------------------------------*/
 #if 1 // bug/feature.
 // this (legacy subcircuit symbol) does not seem to scale right.

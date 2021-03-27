@@ -127,8 +127,13 @@ public:
 
 
 		if(auto s=dynamic_cast<Component const*>(e)){itested();
-			int show = atoi(s->param_value_by_name("$param_display").c_str());
-			int hide = atoi(s->param_value_by_name("$param_hidename").c_str());
+			int show = 0;
+			int hide = 0;
+			try{
+				show = atoi(s->param_value_by_name("$param_display").c_str());
+				hide = atoi(s->param_value_by_name("$param_hidename").c_str());
+			}catch(qucs::ExceptionCantFind const&){
+			}
 			trace2("param_display", show, s->param_count());
 			for(unsigned i=0; i<s->param_count(); ++i){
 				auto n = QString_(s->param_name(i));
