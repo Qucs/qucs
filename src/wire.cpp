@@ -256,6 +256,7 @@ SubcktBase* Wire::intersectPorts(Symbol const* s) const
 /*--------------------------------------------------------------------------*/
 SubcktBase* Wire::extendTowards(pos_t const& other) const
 {
+	trace3("Wire::extendTowards", getX(other), getY(other), short_label());
 	auto n0 = nodePosition(0);
 	auto n1 = nodePosition(1);
 

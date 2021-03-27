@@ -429,25 +429,11 @@ ElementGraphics* ElementGraphics::newPort(pos_t where) const
 }
 #endif
 /*--------------------------------------------------------------------------*/
-// built the union of two ElementGraphics
-// BUG: only Conductors, for now
+// build the union of two ElementGraphics
+// BUG: only Conductors, for now, Element?
 ElementGraphics* ElementGraphics::newUnion(ElementGraphics const* s) const
 {
 	ElementGraphics* ng = nullptr;
-#if 0 // is this still needed? it does not work...
-		// HACK HACK HACK
-		if(Symbol* u = o->newUnion(symbol(this)) ){ untested();
-//			assert(!dynamic_cast<Place const*>(_e));
-			trace1("new union2", u);
-			ng = new ElementGraphics(u);
-			assert(_e->owner());
-//			u->set_owner(_e->owner());
-//			ng->setParentItem(scene());
-			scene()->addItem(ng);
-		}else{itested();
-		}
-	}else
-#endif
 	if(!symbol(s)){
 		// diagram? no union
 	}else if(auto c=dynamic_cast<Conductor const*>(_e)){itested();
@@ -457,8 +443,16 @@ ElementGraphics* ElementGraphics::newUnion(ElementGraphics const* s) const
 			trace3("new union", u, symbol(s)->typeName(), symbol(s)->label());
 			ng = new ElementGraphics(u);
 			assert(_e->owner());
-//			u->set_owner(_e->owner());
-//			ng->setParentItem(scene());
+			scene()->addItem(ng);
+		}else{itested();
+			trace1("no new union", symbol(s)->typeName());
+		}
+	}else if(auto c=dynamic_cast<Conductor const*>(element(s))){untested();
+		// try the other way round.
+		if(Element* u = c->newUnion(symbol(this)) ){ untested();
+			trace3("new union", u, symbol(this)->typeName(), symbol(this)->label());
+			ng = new ElementGraphics(u);
+			assert(_e->owner());
 			scene()->addItem(ng);
 		}else{itested();
 			trace1("no new union", symbol(s)->typeName());
