@@ -865,7 +865,7 @@ AC_CONFIG_FILES([
     src/Makefile:autotools/src.in
     src/bitmaps/Makefile:autotools/bitmaps.in
     src/tests/Makefile
-    tests/Makefile
+    tests/Makefile:autotools/tests.in
     translations/Makefile
     man/qucs.1
     man/qucsdigi.1
