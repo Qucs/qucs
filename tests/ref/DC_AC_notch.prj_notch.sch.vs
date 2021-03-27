@@ -32,7 +32,7 @@ wire #(.$xposition(500), .$yposition(200), .$vflip(1), .$hflip(1)) noname(net_50
 wire #(.$xposition(340), .$yposition(260), .$vflip(1), .$hflip(1)) noname(net_340_260, net_350_260);
 wire #(.$xposition(340), .$yposition(200), .$vflip(1), .$hflip(1)) noname(net_340_200, net_340_260);
 wire #(.$xposition(340), .$yposition(200), .$vflip(1), .$hflip(1)) noname(net_340_200, net_360_200);
-wire #(.$xposition(340), .$yposition(120), .$vflip(1), .$hflip(1)) noname(net_340_120, net_500_120);
+wire #(.$xposition(340), .$yposition(120), .$vflip(1), .$hflip(1), .netname(Out), .$ty(-30), .$tx(110)) noname(net_340_120, net_500_120);
 wire #(.$xposition(500), .$yposition(120), .$vflip(1), .$hflip(1)) noname(net_500_120, net_500_140);
 wire #(.$xposition(160), .$yposition(280), .$vflip(1), .$hflip(1)) noname(net_160_280, net_180_280);
 wire #(.$xposition(160), .$yposition(280), .$vflip(1), .$hflip(1)) noname(net_160_280, net_160_320);
@@ -42,7 +42,7 @@ wire #(.$xposition(340), .$yposition(320), .$vflip(1), .$hflip(1)) noname(net_34
 wire #(.$xposition(340), .$yposition(300), .$vflip(1), .$hflip(1)) noname(net_340_300, net_340_320);
 wire #(.$xposition(500), .$yposition(280), .$vflip(1), .$hflip(1)) noname(net_500_280, net_500_320);
 wire #(.$xposition(40), .$yposition(120), .$vflip(1), .$hflip(1)) noname(net_40_120, net_40_190);
-wire #(.$xposition(40), .$yposition(120), .$vflip(1), .$hflip(1)) noname(net_40_120, net_280_120);
+wire #(.$xposition(40), .$yposition(120), .$vflip(1), .$hflip(1), .netname(In), .$ty(-30), .$tx(50)) noname(net_40_120, net_280_120);
 place #(.$xposition(130), .$yposition(370), .$vflip(1), .$hflip(1)) net_130_370(net_130_370);
 place #(.$xposition(180), .$yposition(170), .$vflip(1), .$hflip(1)) net_180_170(net_180_170);
 place #(.$xposition(240), .$yposition(170), .$vflip(1), .$hflip(1)) net_240_170(net_240_170);

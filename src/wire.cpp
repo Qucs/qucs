@@ -72,8 +72,12 @@ private:
 	bool isInterior(pos_t const&) const;
 
 private: // Symbol
+	index_t param_count() const override { return Symbol::param_count() + 3; }
 	void set_param_by_name(std::string const& name, std::string const& value) override;
 	std::string param_value_by_name(std::string const& name) const override;
+	std::string param_name(index_t i) const override;
+	std::string param_value(index_t i) const override;
+	bool param_is_printable(index_t i) const override;
 
 	bool showLabel() const override{ return false; }
 	void expand() override;
@@ -118,7 +122,9 @@ public: // FIXME, these are still around. (from element)
 private:
 	Port _port0;
 	Port _port1;
-	std::string nx, ny, delta;
+	int _tx{0};
+	int _ty{0};
+  	std::string delta;
 	std::string _netname;
 	int _scale;
 	bool _has_netname;
@@ -130,7 +136,7 @@ Wire::Wire() : Symbol(),
     _port0(), _port1(),
     _scale(1.),
     _has_netname(false)
-{itested();
+{untested();
 	assert(position() == pos_t(0, 0));
 	// Symbol::setPosition(pos_t(0, 0)); // redundant?
 
@@ -142,10 +148,12 @@ Wire::Wire(Wire const& w)
   : Symbol(w),
     _port0(),
     _port1(),
+	 _tx(w._tx),
+	 _ty(w._ty),
     _scale(w._scale),
+    _netname(w._netname),
     _has_netname(w._has_netname)
-{itested();
-	set_label(w.label());
+{untested();
 }
 /*--------------------------------------------------------------------------*/
 Wire::Wire(pos_t const& p0, pos_t const& p1)
@@ -433,16 +441,64 @@ void Wire::setName(const QString&, const QString&, int, int, int)
 }
 #endif
 /*--------------------------------------------------------------------------*/
+std::string Wire::param_name(index_t i) const
+{ untested();
+	switch (int(Wire::param_count()) - 1 - i) {
+	case 0: untested();
+		return "$tx";
+	case 1: untested();
+		return "$ty";
+	case 2: untested();
+		return "netname";
+	default: untested();
+		return Symbol::param_name(i);
+	}
+}
+/*--------------------------------------------------------------------------*/
+std::string Wire::param_value(index_t i) const
+{ untested();
+	switch (int(Wire::param_count()) - 1 - i) {
+	case 0: untested();
+		return std::to_string(_tx);
+	case 1: untested();
+		return std::to_string(_ty);
+	case 2: untested();
+		return _netname;
+	default: untested();
+		return Symbol::param_value(i);
+	}
+}
+/*--------------------------------------------------------------------------*/
+bool Wire::param_is_printable(index_t i) const
+{
+	switch (int(Wire::param_count()) - 1 - i) {
+	case 0: untested();
+	case 1: untested();
+	case 2: untested();
+		return _has_netname;
+	default: untested();
+		return Symbol::param_is_printable(i);
+	}
+}
+/*--------------------------------------------------------------------------*/
 std::string Wire::param_value_by_name(std::string const& n) const
 {itested();
 	if(n=="symbol_scale"){ untested();
 		return std::to_string(_scale);
+	}else if(n=="$tx"){ untested();
+		return std::to_string(_tx);
+	}else if(n=="$ty"){ untested();
+		return std::to_string(_ty);
 	}else if(n=="deltax"){ untested();
 		auto p = portPosition(1);
 		return std::to_string(getX(p));
 	}else if(n=="deltay"){ untested();
 		auto p = portPosition(1);
 		return std::to_string(getY(p));
+	}else if(n=="$param_display"){ untested();
+		return std::to_string(31*_has_netname);
+	}else if(n=="$param_hidename"){ untested();
+		return std::to_string(31);
 	}else if(n=="netname"){ untested();
 		return _netname;
 	}else{itested();
@@ -452,10 +508,10 @@ std::string Wire::param_value_by_name(std::string const& n) const
 // ----------------------------------------------------------------
 void Wire::set_param_by_name(std::string const& n, std::string const& v)
 {itested();
-	if(n=="nx"){itested();
-		nx = v;
-	}else if(n=="ny"){itested();
-		ny = v;
+	if(n=="$tx"){itested();
+		_tx = atoi(v.c_str());
+	}else if(n=="$ty"){itested();
+		_ty = atoi(v.c_str());
 	}else if(n=="$vflip"){ untested();
 		Symbol::set_param_by_name(n, v);
 		_scale = abs(_scale) * atoi(v.c_str());
@@ -547,7 +603,7 @@ void Wire::set_port_by_index(index_t i, std::string const& value)
 }
 // ----------------------------------------------------------------
 void Wire::connectNode(index_t i)
-{itested();
+{ untested();
 	assert(scope());
 	assert(scope()->nodes());
 	auto& nm = *scope()->nodes();

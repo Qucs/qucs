@@ -141,6 +141,8 @@ void WireDialog::attach(ElementGraphics* gfx)
  	std::string some_text =
 		"$xposition" + Comp->param_value_by_name("$xposition") + "\n"
 		"$yposition" + Comp->param_value_by_name("$yposition") + "\n"
+		"tx" + Comp->param_value_by_name("$tx") + "\n"
+		"ty" + Comp->param_value_by_name("$ty") + "\n"
 		"$vflip" + Comp->param_value_by_name("$vflip") + "\n"
 		"$hflip" + Comp->param_value_by_name("$hflip") + "\n"
 		"$angle" + Comp->param_value_by_name("$angle") + "\n"

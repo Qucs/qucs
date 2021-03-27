@@ -164,13 +164,6 @@ static bool obsolete_wireload(Symbol* w, const QString& sc)
 	QString s(sc);
 	bool ok;
 
-//	if(s.at(0) != '<'){ untested();
-//		throw qucs::ExceptionCantParse();
-//	}else if(s.at(s.length()-1) != '>'){ untested();
-//		throw qucs::ExceptionCantParse();
-//	}
-//	s = s.mid(1, s.length()-2);   // cut off start and end character
-
 	QString n;
 	n  = s.section(' ',0,0);
 	int x1 = n.toInt(&ok);
@@ -205,7 +198,7 @@ static bool obsolete_wireload(Symbol* w, const QString& sc)
 	n  = s.section(' ',3,3);    // y2
 	int y2 = n.toInt(&ok);
 	if(!ok) { untested();
-		return false; // BUG: throw
+		throw qucs::Exception("value error"); // CS_Exception?
 	}else{
 	}
 
@@ -228,8 +221,16 @@ static bool obsolete_wireload(Symbol* w, const QString& sc)
 		// a label has a position and is connected to a node.
 		// nodelabel #(.$xposition(x), .$yposition(y)) name(node);
 		// name may be used to identify the net connected to node in a flat netlist.
-		auto nx = s.section(' ',5,5);
-		auto ny = s.section(' ',6,6);
+		auto nx = s.section(' ',5,5).toInt(&ok);
+		auto ny = s.section(' ',6,6).toInt(&ok);
+		if(!ok) { untested();
+			throw qucs::Exception("value error"); // CS_Exception?
+		}else{
+		}
+
+		// TODO: emulate legacy qucs...
+		nx -= x1;
+		ny -= y1;
 		auto delta = s.section(' ',7,7);
 		auto sth = s.section('"',3,3);
 
@@ -241,8 +242,8 @@ static bool obsolete_wireload(Symbol* w, const QString& sc)
 		trace7("hack push", s, sth, delta, nx, ny, nn, n);
 		sym->set_param_by_name("netname", n.toStdString()); // what is this?
 		sym->set_param_by_name("delta", delta.toStdString()); // what is this?
-		sym->set_param_by_name("nx", nx.toStdString()); // not the node position, maybe the label position?
-		sym->set_param_by_name("ny", ny.toStdString()); // not the node position, maybe the label position?
+		sym->set_param_by_name("$tx", std::to_string(nx));
+		sym->set_param_by_name("$ty", std::to_string(ny));
 		sym->expand(); //always?
 	}else{
 	}

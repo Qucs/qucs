@@ -72,6 +72,8 @@ std::string Symbol::param_value_by_name(std::string const& n) const
 		return "1"; // isActive in Component.
 	}else if(n=="$param_display"){
 		return std::to_string(_param_display);
+	}else if(n=="$param_hidename"){ untested();
+		return "0";
 	}else if(n=="$hflip"){
 		return std::to_string(_hflip);
 	}else if(n=="$vflip"){
@@ -172,7 +174,7 @@ std::string Symbol::param_value(index_t i) const
 	}
 }
 /*--------------------------------------------------------------------------*/
-std::string Symbol::param_name(unsigned i) const
+std::string Symbol::param_name(index_t i) const
 {
 	trace2("Symbol::paramName", label(), i);
 	switch(i){

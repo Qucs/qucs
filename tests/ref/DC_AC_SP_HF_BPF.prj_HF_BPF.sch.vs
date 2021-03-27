@@ -29,7 +29,7 @@ wire #(.$xposition(100), .$yposition(90), .$vflip(1), .$hflip(1)) noname(net_100
 wire #(.$xposition(100), .$yposition(90), .$vflip(1), .$hflip(1)) noname(net_100_90, net_100_120);
 wire #(.$xposition(100), .$yposition(180), .$vflip(1), .$hflip(1)) noname(net_100_180, net_100_220);
 wire #(.$xposition(630), .$yposition(280), .$vflip(1), .$hflip(1)) noname(net_630_280, net_630_290);
-wire #(.$xposition(800), .$yposition(90), .$vflip(1), .$hflip(1)) noname(net_800_90, net_800_90);
+wire #(.$xposition(800), .$yposition(90), .$vflip(1), .$hflip(1), .netname(out), .$ty(-30), .$tx(30)) noname(net_800_90, net_800_90);
 place #(.$xposition(800), .$yposition(220), .$vflip(1), .$hflip(1)) net_800_220(net_800_220);
 place #(.$xposition(800), .$yposition(140), .$vflip(1), .$hflip(1)) net_800_140(net_800_140);
 place #(.$xposition(800), .$yposition(200), .$vflip(1), .$hflip(1)) net_800_200(net_800_200);

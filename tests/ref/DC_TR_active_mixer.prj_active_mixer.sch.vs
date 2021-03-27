@@ -31,12 +31,12 @@ wire #(.$xposition(350), .$yposition(20), .$vflip(1), .$hflip(1)) noname(net_350
 wire #(.$xposition(350), .$yposition(20), .$vflip(1), .$hflip(1)) noname(net_350_20, net_350_40);
 wire #(.$xposition(250), .$yposition(20), .$vflip(1), .$hflip(1)) noname(net_250_20, net_350_20);
 wire #(.$xposition(250), .$yposition(20), .$vflip(1), .$hflip(1)) noname(net_250_20, net_250_40);
-wire #(.$xposition(350), .$yposition(100), .$vflip(1), .$hflip(1)) noname(net_350_100, net_350_240);
+wire #(.$xposition(350), .$yposition(100), .$vflip(1), .$hflip(1), .netname(pos), .$ty(50), .$tx(30)) noname(net_350_100, net_350_240);
 wire #(.$xposition(250), .$yposition(100), .$vflip(1), .$hflip(1)) noname(net_250_100, net_250_270);
 wire #(.$xposition(250), .$yposition(270), .$vflip(1), .$hflip(1)) noname(net_250_270, net_320_270);
 wire #(.$xposition(570), .$yposition(100), .$vflip(1), .$hflip(1)) noname(net_570_100, net_570_210);
 wire #(.$xposition(500), .$yposition(270), .$vflip(1), .$hflip(1)) noname(net_500_270, net_570_270);
-wire #(.$xposition(470), .$yposition(100), .$vflip(1), .$hflip(1)) noname(net_470_100, net_470_240);
+wire #(.$xposition(470), .$yposition(100), .$vflip(1), .$hflip(1), .netname(neg), .$ty(50), .$tx(30)) noname(net_470_100, net_470_240);
 wire #(.$xposition(410), .$yposition(380), .$vflip(1), .$hflip(1)) noname(net_410_380, net_410_410);
 wire #(.$xposition(90), .$yposition(20), .$vflip(1), .$hflip(1)) noname(net_90_20, net_90_40);
 wire #(.$xposition(90), .$yposition(270), .$vflip(1), .$hflip(1)) noname(net_90_270, net_150_270);

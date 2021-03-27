@@ -46,7 +46,7 @@ wire #(.$xposition(400), .$yposition(150), .$vflip(1), .$hflip(1)) noname(net_40
 wire #(.$xposition(600), .$yposition(170), .$vflip(1), .$hflip(1)) noname(net_600_170, net_610_170);
 wire #(.$xposition(610), .$yposition(170), .$vflip(1), .$hflip(1)) noname(net_610_170, net_620_170);
 wire #(.$xposition(610), .$yposition(170), .$vflip(1), .$hflip(1)) noname(net_610_170, net_610_210);
-wire #(.$xposition(610), .$yposition(60), .$vflip(1), .$hflip(1)) noname(net_610_60, net_690_60);
+wire #(.$xposition(610), .$yposition(60), .$vflip(1), .$hflip(1), .netname(Output), .$ty(-30), .$tx(40)) noname(net_610_60, net_690_60);
 wire #(.$xposition(690), .$yposition(60), .$vflip(1), .$hflip(1)) noname(net_690_60, net_690_150);
 wire #(.$xposition(540), .$yposition(60), .$vflip(1), .$hflip(1)) noname(net_540_60, net_540_170);
 wire #(.$xposition(540), .$yposition(60), .$vflip(1), .$hflip(1)) noname(net_540_60, net_550_60);

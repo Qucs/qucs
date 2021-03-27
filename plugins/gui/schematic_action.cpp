@@ -690,6 +690,7 @@ static QPoint getDelta(ElementGraphics* e)
 }
 /*--------------------------------------------------------------------------*/
 // it's a "wire" if it has two ports that connect to the same net.
+#if 0
 static bool isWire(Symbol const* e)
 {
 	assert(e);
@@ -703,6 +704,7 @@ static bool isWire(Symbol const* e)
 
 	return e->portValue(0)->net() == e->portValue(1)->net();
 }
+#endif
 /*--------------------------------------------------------------------------*/
 inline Symbol* symbol(Element* e)
 { untested();

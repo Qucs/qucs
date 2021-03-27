@@ -95,7 +95,7 @@ void Component::set_param_by_name(std::string const& name, std::string const&)
 	throw qucs::ExceptionCantFind(label(), name, "params");
 }
 /*--------------------------------------------------------------------------*/
-bool Component::param_is_printable() const
+bool Component::param_is_printable(index_t) const
 {
 	return true;
   //if (has_common()) {

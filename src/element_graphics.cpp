@@ -128,6 +128,8 @@ public:
 
 		if(auto s=dynamic_cast<Component const*>(e)){itested();
 			int show = atoi(s->param_value_by_name("$param_display").c_str());
+			int hide = atoi(s->param_value_by_name("$param_hidename").c_str());
+			trace2("param_display", show, s->param_count());
 			for(unsigned i=0; i<s->param_count(); ++i){
 				auto n = QString_(s->param_name(i));
 				if(n.size() == 0){
@@ -137,12 +139,17 @@ public:
 					auto t=new QGraphicsTextItem(this);
 					t->setFlags(ItemIgnoresTransformations);
 					auto v = QString::fromStdString(s->param_value(i));
-					t->setPlainText(n+"="+v);
+					if(hide%2){
+						t->setPlainText(v);
+					}else{
+						t->setPlainText(n+"="+v);
+					}
 					t->setPos(tx, ty+k/2);
 					k += t->boundingRect().height();
 				}else{
 				}
 				show/=2;
+				hide/=2;
 			}
 		}else{ untested();
 		}
@@ -245,7 +252,10 @@ void ElementGraphics::attachElement(Element* e)
 		// something else.
 		// "ghost", freely moving but not interacting
 	}
-	assert(QGraphicsItem::isVisible()); // why?
+	if(QGraphicsItem::isVisible()){ untested();
+	}else{
+		unreachable(); // really?
+	}
 	QGraphicsItem::hide();
 	delete _elementText;
 	_elementText = nullptr;

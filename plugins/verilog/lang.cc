@@ -335,8 +335,11 @@ void VS::print_args(ostream_t& s, Component const* sym) const
 
 	for(unsigned i=0; i<sym->param_count(); ++i) {
 		auto name = sym->param_name(i);
-		s << comma << "." << sym->param_name(i) << "(" << sym->param_value(i) << ")";
-		comma = ", ";
+		if (sym->param_is_printable(i)) {
+			s << comma << "." << sym->param_name(i) << "(" << sym->param_value(i) << ")";
+			comma = ", ";
+		}else{
+		}
 	}
 	s << ") ";
 }
@@ -349,9 +352,10 @@ static void print_args(ostream_t& s, Component const* sym)
 	for(unsigned i=0; i<sym->param_count(); ++i) {
 		auto name = sym->param_name(i);
 		if(name.at(0) == '$'){
-		}else{
+		}else if (sym->param_is_printable(i)) {
 			s << comma << "." << sym->param_name(i) << "(" << sym->param_value(i) << ")";
 			comma = ", ";
+		}else{
 		}
 	}
 	s << ") ";

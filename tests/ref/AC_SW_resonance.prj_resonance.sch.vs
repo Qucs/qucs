@@ -10,7 +10,7 @@ L #(.$xposition(320), .$yposition(150), .$vflip(1), .$hflip(1), .$tx(10), .$ty(1
 wire #(.$xposition(120), .$yposition(180), .$vflip(1), .$hflip(1)) noname(net_120_180, net_120_240);
 wire #(.$xposition(120), .$yposition(60), .$vflip(1), .$hflip(1)) noname(net_120_60, net_320_60);
 wire #(.$xposition(120), .$yposition(60), .$vflip(1), .$hflip(1)) noname(net_120_60, net_120_120);
-wire #(.$xposition(320), .$yposition(180), .$vflip(1), .$hflip(1)) noname(net_320_180, net_320_180);
+wire #(.$xposition(320), .$yposition(180), .$vflip(1), .$hflip(1), .netname(Voltage), .$ty(-40), .$tx(-80)) noname(net_320_180, net_320_180);
 place #(.$xposition(120), .$yposition(120), .$vflip(1), .$hflip(1)) net_120_120(net_120_120);
 place #(.$xposition(120), .$yposition(180), .$vflip(1), .$hflip(1)) net_120_180(net_120_180);
 place #(.$xposition(320), .$yposition(240), .$vflip(1), .$hflip(1)) net_320_240(net_320_240);
