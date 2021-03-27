@@ -108,9 +108,9 @@ public:
 	}
 };
 /*--------------------------------------------------------------------------*/
-class ActionMirrorX : public QAction{
+class ActionMirrorY : public QAction{
 public:
-	explicit ActionMirrorX(QObject* parent) : QAction(parent) {itested();
+	explicit ActionMirrorY(QObject* parent) : QAction(parent) {itested();
   		setIcon(QIcon(":/bitmaps/mirror.png"));
 		setText(tr("Mirror Y"));
 		setShortcut(Qt::CTRL+Qt::Key_J);
@@ -120,9 +120,9 @@ public:
 	}
 };
 /*--------------------------------------------------------------------------*/
-class ActionMirrorY : public QAction{
+class ActionMirrorX : public QAction{
 public:
-	explicit ActionMirrorY(QObject* parent) : QAction(parent) {itested();
+	explicit ActionMirrorX(QObject* parent) : QAction(parent) {itested();
 		setIcon(QIcon(":/bitmaps/mirrory.png"));
 		setText(tr("Mirror X"));
 		setShortcut(Qt::CTRL+Qt::Key_M);
