@@ -36,6 +36,11 @@ private:
 	std::string dev_type()const {
 		return prefix + std::to_string(_numports);
 	}
+	pos_t portPosition(index_t i) const override {
+		auto r = Component::portPosition(i);
+		trace3("defsym pp", i, getX(r), getY(r));
+		return r;
+	}
 public:
 	Element* clone() const override{
 		return new DefaultSymbol(*this);
@@ -45,8 +50,8 @@ protected:
   void init();
 
 private: // Symbol
-  // bool portExists(unsigned) const override;
-  // std::string const portName(unsigned) const override;
+  // bool portExists(index_t) const override;
+  // std::string const portName(index_t) const override;
 
   void set_param_by_name(std::string const& name, std::string const& value) override{
 	  if(name == "$numports"){
@@ -110,7 +115,7 @@ class DefaultSymbols{
 	typedef Dispatcher<Symbol>::INSTALL disp_t;
 public:
 	DefaultSymbols(){
-		for(unsigned i=1; i<10; i++){
+		for(index_t i=1; i<10; i++){
 			auto s = d0.clone();
 			s->set_param_by_name("$numports", std::to_string(i));
 			s->set_label(prefix + std::to_string(i));
@@ -155,7 +160,10 @@ public:
 	}
 
 private: // Symbol
-	 pos_t portPosition(unsigned) const { unreachable(); return pos_t(0,0); }
+	 pos_t portPosition(index_t i) const override { untested();
+		 unreachable();
+		 return pos_t(0, 0);
+	 }
 	 index_t numPorts() const { return 0; }
 	 Port& port(index_t) { throw "not_reached"; }
 //  index_t param_count() const override{

@@ -144,7 +144,7 @@ std::string Verilog::find_type_in_string(istream_t& cmd) const
 	size_t here = cmd.cursor();
 	std::string type;
 	if ((cmd >> "//")) {
-		assert(here == 0);
+		// assert(here == 0); why?
 		type = "dev_comment";
 	}else{
 		cmd >> type;
@@ -290,10 +290,9 @@ static void parse_ports(istream_t& cmd, Component* x, bool all_new)
 /*--------------------------------------------------------------------------*/
 /*--------------------------------------------------------------------------*/
 Symbol* Verilog::parseSymbol(istream_t& cmd, Symbol* x) const
-{
-	trace1("VS::parseSymbol", cmd.fullstring());
+{ untested();
 	// parse_instance...
-	try{
+	try{ untested();
 		assert(x);
 		cmd.reset();
 		parse_type(cmd, x);
@@ -303,8 +302,7 @@ Symbol* Verilog::parseSymbol(istream_t& cmd, Symbol* x) const
 		cmd >> ';';
 		cmd.check(bWARNING, "what's this?");
 		return x;
-	}catch (qucs::Exception& e) {
-		trace1("parseSymbol", e.message());
+	}catch (qucs::Exception& e) { untested();
 		incomplete();
 		cmd.warn(bDANGER, e.message());
 		return nullptr;
@@ -318,11 +316,11 @@ SubcktBase* Verilog::parse_model(istream_t&, SubcktBase*) const
 }
 /*--------------------------------------------------------------------------*/
 Element* Verilog::parseItem(istream_t& cmd, Element* e) const
-{
+{ untested();
 	assert(e);
-	if(auto s=dynamic_cast<Symbol*>(e)){
+	if(auto s=dynamic_cast<Symbol*>(e)){ untested();
 		return parseSymbol(cmd, s);
-	}else if(auto s=dynamic_cast<DEV_DOT*>(e)){
+	}else if(auto s=dynamic_cast<DEV_DOT*>(e)){ untested();
 		return parseCommand(cmd, s);
 	}else{ untested();
 		incomplete();
@@ -652,15 +650,16 @@ SubcktBase* Verilog::parse_module(istream_t& cmd, SubcktBase* x) const
 	(cmd >> "module |macromodule ");
 	parse_label(cmd, x);
 	parse_ports(cmd, x, true/*all new*/);
+	trace2("Verilog::parse_module", cmd.fullstring(), x->numPorts());
 	cmd >> ';';
 
 	// body
 	for (;;) {
 		cmd.get_line("verilog-module>");
 
-		if (cmd >> "endmodule ") {
+		if (cmd >> "endmodule ") { untested();
 			break;
-		}else{
+		}else{ untested();
 			trace1("new_instance", cmd.fullstring());
 			new__instance(cmd, x, x->scope());
 		}
@@ -669,8 +668,7 @@ SubcktBase* Verilog::parse_module(istream_t& cmd, SubcktBase* x) const
 }
 /*--------------------------------------------------------------------------*/
 class CMD_MODULE : public Command {
-	void do_it(istream_t& cmd, ElementList* Scope) override
-	{
+	void do_it(istream_t& cmd, ElementList* Scope) override { untested();
 		// auto new_module = dynamic_cast<SubcktBase*>(device_dispatcher.clone("subckt"));
 		Component* dd = qucs::device_dispatcher.clone("subckt_proto");
 		auto new_module = dynamic_cast<SubcktBase*>(dd);
@@ -684,8 +682,8 @@ class CMD_MODULE : public Command {
 
 			trace2("new_module", new_module->label(), new_module);
 			auto f = Scope->find_(new_module->label());
-			if(f == Scope->end()){
-			}else{
+			if(f == Scope->end()){ untested();
+			}else{ untested();
 				new_module->set_owner((*f)->owner());
 				Scope->erase(f);
 			}

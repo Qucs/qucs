@@ -59,12 +59,12 @@ public:
 
 private:
 	Verilog(Verilog const&x);
-	std::string dev_type()const override { untested();
+	std::string dev_type()const override { itested();
 		return "Verilog";
 	}
 
 public:
-	Element* clone() const override{
+	Element* clone() const override{ untested();
 		return new Verilog(*this);
 	}
 
@@ -90,16 +90,17 @@ public:
 			// assert...
 			incomplete();
 		}
+		Symbol::paint(v);
 	}
 
 public:
-	pos_t portPosition(index_t i) const override{
+	pos_t portPosition(index_t i) const override{ untested();
 		trace2("Verilog::portPosition", i, common());
-		if(auto s=dynamic_cast<Component const*>(_painting)){
+		if(auto s=dynamic_cast<Component const*>(_painting)){ untested();
 			// BUG. ask CommonSubckt?
 			assert(i < s->numPorts());
 			auto p = s->portPosition(i);
-			trace3("Verilog::portPosition", i, s->numPorts(), p);
+			trace3("Verilog::portPosition from painting", i, s->numPorts(), p);
 			return p;
 		}else{ untested();
 			assert(false);
@@ -121,12 +122,12 @@ private: // Symbol
 
 	void set_param_by_name(std::string const& name, std::string const& value) override;
 	void set_param_by_index(index_t i, std::string const& value) override;
-	index_t param_count() const override{
+	index_t param_count() const override{ untested();
 	  return 3 + Symbol::param_count();
 	}
 
 	std::string param_name(index_t i) const override;
-	std::string param_value(index_t i) const override{
+	std::string param_value(index_t i) const override{ untested();
 		switch (int(Verilog::param_count()) - (1 + i)) {
 		case 0:
 			return _filename;
@@ -138,13 +139,13 @@ private: // Symbol
 			return Symbol::param_value(i);
 		}
 	}
-	std::string param_value_by_name(std::string const& name) const override{
+	std::string param_value_by_name(std::string const& name) const override{ untested();
 		trace1("Verilog::param_value_by_name", name);
-		if(name=="$tx"){
+		if(name=="$tx"){ untested();
 			return std::to_string(_tx);
-		}else if(name=="$ty"){
+		}else if(name=="$ty"){ untested();
 			return std::to_string(_ty);
-		}else{
+		}else{ untested();
 			incomplete();
 			return Symbol::param_value_by_name(name);
 		}
@@ -152,10 +153,12 @@ private: // Symbol
 	void init(Component const* owner);
 
 private: // overrides
-	index_t numPorts() const override{
+	index_t numPorts() const override{ untested();
+		trace1("Verilog::numPorts", _ports.size());
 		return _ports.size();
 	}
 	Port& port(index_t i) override{itested();
+		trace1("Verilog::port", i);
 		assert(i < _ports.size());
 		return _ports[i];
 	}
@@ -175,9 +178,9 @@ static Dispatcher<Element>::INSTALL d1(&symbol_dispatcher, "Verilog", &p1);
 // if its already there, use it.
 // TODO: factory needs a refresh hook.
 Component const* Verilog::new_model(std::string const& fn) // const
-{
+{ untested();
 	auto subPath = factory_param("$SUB_PATH");
-	trace1("VerilogFactory::newSymbol", fn);
+	trace2("VerilogFactory::new_model", subPath, fn);
 //	QString FileName(Props.getFirst()->Value);
 	auto dotplace = fn.find_last_of(".");
 	std::string type_name;
@@ -186,25 +189,24 @@ Component const* Verilog::new_model(std::string const& fn) // const
 		incomplete();
 		// throw?? or try and recover??
 		type_name = "Verilog" + typesep + "invalid_filename";
-	}else{
+	}else{ untested();
 		type_name = "Verilog" + typesep + fn.substr(0, dotplace);
 	}
 
 	auto cached_ = find_proto(type_name);
 	Element const* cached = nullptr;
-	if(cached_){
+	if(cached_){ untested();
 		// TODO: find_again.
 		cached = cached_;
-	}else{
+	}else{ untested();
 	}
 
 	std::string file_found = findFile(fn, subPath, R_OK);
 	trace4("VerilogFactory::newCommon", label(), fn, subPath, file_found);
 
-	if(auto sym = dynamic_cast<Component const*>(cached)){
+	if(auto sym = dynamic_cast<Component const*>(cached)){ untested();
 		return sym; // ->common();
-	}else if(file_found != "" ){
-		incomplete(); // rework with parser.
+	}else if(file_found != "" ){ untested();
 		assert(owner());
 		auto os = prechecked_cast<Element const*>(owner());
 		assert(os);
@@ -217,7 +219,7 @@ Component const* Verilog::new_model(std::string const& fn) // const
 		assert(owner());
 		s->set_owner(owner());
 
-		{ // move to subckt_proto variant?
+		if(0){ // move to subckt_proto variant?
 // TODO: pick a model
 			auto a = qucs::device_dispatcher.clone("subckt_proto");
 			assert(a);
@@ -227,17 +229,37 @@ Component const* Verilog::new_model(std::string const& fn) // const
 			s->scope()->push_back(a);
 		}
 
-
 		istream_t pstream(istream_t::_WHOLE_FILE, file_found);
 		build_sckt(pstream, s);
 
 		s->set_dev_type(type_name);
-		s->set_label(type_name);
+		s->set_label("Verilog");
 
-		trace4("made proto", s->label(), type_name, s->typeName(), s->numPorts());
-		stash_proto(s);
+		trace4("Verilog::made proto", s->label(), type_name, s->typeName(), s->numPorts());
+		Component* last = nullptr;
+		for(auto i: *s->scope()){ untested();
+			trace1("Verilog found", i->short_label()); // , i->num_ports());
+			if(auto c = dynamic_cast<Component*>(i)){
+				last = c;
+			}else{
+			}
+		}
+		auto a = qucs::device_dispatcher.clone("subckt_proto");
+		if(last){ untested();
+			// change label??
+			a->scope()->push_back(last);
+			a->set_dev_type(type_name);
+			a->set_label(type_name);
+			trace4("Verilog stash", dev_type(), type_name, a->common()->modelname(), last->numPorts());
+			// trace2("Verilog stash", type_name, common()->modelname());
+			for(index_t i=0; i<last->numPorts(); ++i){ untested();
+				a->set_port_by_index(i, last->port_value(i));
+			}
+			stash_proto(a);
+		}else{ untested();
+		}
 
-		assert(s->label()==type_name);
+		// assert(s->label()==type_name);
 
 #if 0
 		if(loadSymbol(FileName) > 0) { untested();
@@ -255,7 +277,7 @@ Component const* Verilog::new_model(std::string const& fn) // const
 			}
 		}
 #endif
-		return s;
+		return a;
 	}else{ untested();
 		incomplete();
 		return nullptr;
@@ -263,10 +285,10 @@ Component const* Verilog::new_model(std::string const& fn) // const
 }
 /*--------------------------------------------------------------------------*/
 static void parse_portcmd(istream_t& cs, SubcktBase* s)
-{
+{ untested();
 	trace1("port", cs.fullstring());
 	cs.reset();
-	if(cs.umatch(".port_")){
+	if(cs.umatch(".port_")){ untested();
 		int x, y, n;
 		std::string l;
 		Get(cs, "x", &x);
@@ -282,23 +304,24 @@ static void parse_portcmd(istream_t& cs, SubcktBase* s)
 }
 /*--------------------------------------------------------------------------*/
 /*--------------------------------------------------------------------------*/
-void Verilog::build_sckt(istream_t& cs, SubcktBase* proto) const
-{
-	trace1("Verilog::build_sckt", cs.fullstring());
+void Verilog::build_sckt(istream_t& cmd, SubcktBase* proto) const
+{ untested();
+	trace1("Verilog::build_sckt", cmd.fullstring());
 	assert(owner());
 
 	// TODO: parse verilog instead.
-	auto LL = qucs::language_dispatcher["leg_sch"];
-
-	auto L = dynamic_cast<Language const*>(LL);
+	Language const* L = qucs::language_dispatcher["verilog"];
 	assert(L);
-	cs.read_line();
-	while(!cs.is_end()){itested();
-		trace1("VerilogFactory::build_sckt", cs.fullstring());
-		Element* e = proto;
-		assert(e->scope());
-		L->new__instance(cs, proto, e->scope());
-		cs.read_line();
+	try{ untested();
+		while(true){ untested();
+			cmd.get_line("verilog>");
+			cmd.skipbl();
+			trace1("VerilogFactory::build_sckt", cmd.fullstring());
+			Element* e = proto;
+			assert(e->scope());
+			L->new__instance(cmd, proto, e->scope());
+		}
+	}catch (qucs::Exception_End_Of_Input& e) { untested();
 	}
 
 	assert(!proto->numPorts());
@@ -310,12 +333,12 @@ void Verilog::build_sckt(istream_t& cs, SubcktBase* proto) const
 	auto p_ = ps->find_(":SymbolSection:");
 	if(p_==ps->end()){itested();
 		trace2("no SymbolSection", proto->label(), proto->numPorts());
-	}else if(auto p = dynamic_cast<SubcktBase const*>(*p_)){
+	}else if(auto p = dynamic_cast<SubcktBase const*>(*p_)){ untested();
 		assert(p->scope());
 	
-		for(auto i : *p->scope()){
+		for(auto i : *p->scope()){ untested();
 			gotit = true;
-			if(auto a=dynamic_cast<DEV_DOT*>(i)){
+			if(auto a=dynamic_cast<DEV_DOT*>(i)){ untested();
 				istream_t cs(istream_t::_STRING, a->s());
 				if(cs.umatch("parameter")){ // portparameter?
 					trace1("symbol parameter", a->s());
@@ -324,9 +347,9 @@ void Verilog::build_sckt(istream_t& cs, SubcktBase* proto) const
 					cs >> name;
 					cs >> defv;
 
-					try{
+					try{ untested();
 						proto->set_param_by_name(name, defv);
-					}catch(qucs::ExceptionCantFind const&){
+					}catch(qucs::ExceptionCantFind const&){ untested();
 						incomplete();
 					}
 					 // auto p = new PARAMETER<double>
@@ -334,13 +357,13 @@ void Verilog::build_sckt(istream_t& cs, SubcktBase* proto) const
 					 // proto->_params.push_back(p);
 					 // proto->_param_names.push_back(name);
 				}else if(cs.umatch("portparameter")){ untested();
-				}else if(cs.umatch(".port_")){
+				}else if(cs.umatch(".port_")){ untested();
 					trace1("symbol port", a->s());
 					parse_portcmd(cs, proto);
 				}else{ untested();
 					trace1("symbol other", a->s());
 				}
-			}else{
+			}else{ untested();
 			}
 		}
 
@@ -348,17 +371,17 @@ void Verilog::build_sckt(istream_t& cs, SubcktBase* proto) const
 		unreachable(); // wrong type
 	}
 
-	if(!gotit){
+	if(!gotit){ untested();
 		incomplete();
 		trace2("build_sckt no Symbol", proto->label(), proto->numPorts());
-	}else{
+	}else{ untested();
 		trace2("build_sckt got Symbol", proto->label(), proto->numPorts());
 	}
 }
 /*--------------------------------------------------------------------------*/
 /*--------------------------------------------------------------------------*/
 void Verilog::set_param_by_index(index_t i, std::string const& v)
-{
+{ untested();
 	switch (int(Verilog::param_count()) - (1 + i)) {
 	case 0:
 		_filename = v;
@@ -378,13 +401,13 @@ void Verilog::set_param_by_index(index_t i, std::string const& v)
 		_filename = v;
 		trace1("Verilog::setParameter", v);
 		refreshSymbol(v);
-	}else{
+	}else{ untested();
 	}
 }
 /*--------------------------------------------------------------------------*/
 // use common params eventually.
 std::string Verilog::param_name(index_t i) const
-{
+{ untested();
 	switch (int(Verilog::param_count()) - (1 + i)) {
 	case 0:
 		return "File";
@@ -403,37 +426,47 @@ Verilog::Verilog(Verilog const&x)
 	 _tx(x._tx),
 	 _ty(x._ty),
     _painting(x._painting)
-{
+{ untested();
 	_ports.resize(x._ports.size());
 }
 /*--------------------------------------------------------------------------*/
 void Verilog::refreshSymbol(std::string const& fn)
-{
+{ untested();
+	trace1("refreshSymbol", fn);
 	Component const* new_parent = nullptr;
-	new_parent = new_model(fn);
 
-	if(new_parent){
+	if(fn!=""){
+		new_parent = new_model(fn);
+	}else{
+		incomplete();
+	}
+
+	trace1("refreshSymbol", fn);
+	if(new_parent){ untested();
 		// _proto == new_parent; // ?
 		assert(new_parent);
 		assert(new_parent->common());
-		auto cc = new_parent->common()->clone(); //really? set modelname in factory.
-		attach_common(cc); // not actually shared yet. but will.
-
+		auto cc = new_parent->clone_instance();
+		auto s = prechecked_cast<Component*>(cc);
+		assert(s);
+		assert(s->common() == new_parent->common());
+		attach_common(s->mutable_common());
 		init(new_parent);
+		delete cc;
 	}else{ untested();
 		incomplete();
 	}
 }
 /*--------------------------------------------------------------------------*/
 void Verilog::init(Component const* proto)
-{
+{ untested();
 	auto ps = proto->scope();
 	assert(ps); // won't work for Components.
 
 	auto p_ = ps->find_("main");
 	if(p_==ps->end()){ untested();
 		_ports.resize(proto->numPorts());
-	}else if(auto mm=dynamic_cast<Component const*>(*p_)){
+	}else if(auto mm=dynamic_cast<Component const*>(*p_)){ untested();
 		_ports.resize(mm->numPorts());
 	}else{ untested();
 	}
@@ -444,7 +477,8 @@ void Verilog::init(Component const* proto)
 	_params.clear();
 	_param_names.clear();
 
-	trace3("Verilog::init", proto->label(), _ports.size(), proto->numPorts());
+	trace4("Verilog::init", proto->dev_type(), proto->label(), _ports.size(), proto->numPorts());
+	trace2("Verilog::init", dev_type(), label());
 
 	incomplete();
 #if 0 // BUG BUG copy from proto. better: use common...
@@ -456,15 +490,15 @@ void Verilog::init(Component const* proto)
 	}
 #else
 
-	SubcktBase const* symsect=nullptr;
+	SubcktBase const* symsect = nullptr;
 	p_ = ps->find_(":SymbolSection:");
 	if(p_==ps->end()){itested();
 		// no symbol
-	}else if(auto p = dynamic_cast<SubcktBase const*>(*p_)){
+	}else if(auto p = dynamic_cast<SubcktBase const*>(*p_)){ untested();
 		symsect = p;
 		assert(p->scope());
-		for(auto i : *p->scope()){
-			if(auto a=dynamic_cast<DEV_DOT*>(i)){
+		for(auto i : *p->scope()){ untested();
+			if(auto a=dynamic_cast<DEV_DOT*>(i)){ untested();
 				istream_t cs(istream_t::_STRING, a->s());
 				if(cs.umatch("parameter")){ // portparameter?
 					trace1("LibComp DOT", a->s());
@@ -476,10 +510,10 @@ void Verilog::init(Component const* proto)
 					*p = defv;
 					_params.push_back(p);
 					_param_names.push_back(name);
-				}else{
+				}else{ untested();
 					// port HERE?
 				}
-			}else{
+			}else{ untested();
 			}
 		}
 	}else{ untested();
@@ -488,34 +522,34 @@ void Verilog::init(Component const* proto)
 
 	// find painting...
 	if(!symsect){itested();
-	}else if(!symsect->scope()->size()){
-	}else if(auto p=dynamic_cast<Painting const*>(symsect)){
+	}else if(!symsect->scope()->size()){ untested();
+	}else if(auto p=dynamic_cast<Painting const*>(symsect)){ untested();
 		trace2("got painting from symbol section", symsect->scope()->size(), symsect->numPorts());
 		_painting = p;
 		// check nuber f ports??
 	}else{ untested();
 	}
 
-	if(!_painting){
+	if(!_painting){ untested();
 		int np = numPorts();
 		std::string defpaint = defsym + std::to_string(np);
 //		auto e = find_looking_out(defpaint);
 		trace2("default painting", np, defpaint);
 		auto e = qucs::symbol_dispatcher[defpaint];
-		if(!e){
+		if(!e){ untested();
 			message(qucs::MsgFatal, "no symbol for " + label() + " " + defpaint);
-		}else if(auto p=dynamic_cast<Painting const*>(e)){
+		}else if(auto p=dynamic_cast<Painting const*>(e)){ untested();
 			_painting = p;
 		}else{ untested();
 		}
 
-	}else{
+	}else{ untested();
 	}
 #endif
 }
 /*--------------------------------------------------------------------------*/
 bool Verilog::portExists(index_t i) const
-{
+{ untested();
 	return i<numPorts();
 }
 /*--------------------------------------------------------------------------*/
@@ -530,11 +564,11 @@ std::string const Verilog::portName(index_t) const
 void Verilog::set_param_by_name(std::string const& name, std::string const& v)
 { itested();
 	trace2("Verilog::setParameter", name, v);
-	if(name=="$tx"){
+	if(name=="$tx"){ untested();
 		_tx = atoi(v.c_str());
-	}else if(name=="$ty"){
+	}else if(name=="$ty"){ untested();
 		_ty = atoi(v.c_str());
-	}else if(name=="File"){
+	}else if(name=="File"){ untested();
 		_filename = v;
 		refreshSymbol(v);
 	}else{ itested();

@@ -40,8 +40,9 @@ Component::Component(Component const& s)
 		_common(nullptr),
 		_net_nodes(s._net_nodes)
 {
+	// uninit?
   attach_common(s._common);
-  set_dev_type(s.typeName());
+//  set_dev_type(s.typeName());
 }
 /*--------------------------------------------------------------------------*/
 Component::~Component()

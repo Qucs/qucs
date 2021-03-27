@@ -89,6 +89,7 @@ private:
 	SubcktProto(SubcktProto const& p) : SubcktBase(p){
 //		attach_common(comms.clone()); // really?
 //		attach_common(new CommonSubckt(0)); // really?
+      assert(common() == p.common());
 	}
 public:
 	explicit SubcktProto(Element const* p=nullptr); // ?

@@ -93,6 +93,8 @@ public:
 			// assert...
 			incomplete();
 		}
+
+		Symbol::paint(v);
 	}
 
 public:
@@ -102,7 +104,7 @@ public:
 			// BUG. ask CommonSubckt?
 			assert(i < s->numPorts());
 			auto p = s->portPosition(i);
-			trace3("Sub::portPosition", i, s->numPorts(), p);
+			trace3("Sub::portPosition from painting", i, s->numPorts(), p);
 			return p;
 		}else{ untested();
 			assert(false);
@@ -230,9 +232,7 @@ Component const* Sub::new_model(std::string const& fn) // const
 			s->scope()->push_back(a);
 		}
 
-
 		istream_t pstream(istream_t::_WHOLE_FILE, file_found);
-
 		build_sckt(pstream, s);
 
 		s->set_dev_type(type_name);
@@ -429,11 +429,11 @@ void Sub::refreshSymbol(std::string const& fn)
 	if(new_parent){
 		assert(new_parent);
 		assert(new_parent->common());
-#if 1 // wrong
+#if 0 // wrong
 		auto cc = new_parent->common()->clone(); //really? set modelname in factory.
 		attach_common(cc); // not actually shared yet. but will.
 #else
-		auto cc = new_parent->clone(); //really? set modelname in factory.
+		auto cc = new_parent->clone_instance();
 		auto s = prechecked_cast<Component*>(cc);
 		assert(s);
 		attach_common(s->mutable_common());
