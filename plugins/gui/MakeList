@@ -18,4 +18,6 @@ MORE_LATER = \
 	sweepdialog.h
 
 EXTRA_DIST = \
-	schematic_action.h
+	schematic_action.h \
+	swap.h \
+	swap_gfx.h

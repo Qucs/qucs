@@ -43,7 +43,6 @@ CPP_SRC = \
 	nodelabel.cpp \
 	nodemap.cpp \
 	object.cpp \
-	octave_window.cpp \
 	output.cpp \
 	place.cpp \
 	port.cpp \
@@ -76,7 +75,6 @@ QMOCHEADERS = \
 	component_widget.h \
 	doc_actions.h \
 	mouseaction.h \
-	octave_window.h \
 	project_view.h \
 	qucs_app.h \
 	qucs_tabs.h \
@@ -112,14 +110,11 @@ HDR1 = \
 	printerwriter.h \
 	project_view.h \
 	property.h \
-	protomap.h \
 	qucsdoc.h \
 	syntax.h \
 	schematic_lang.h \
 	schematic_dialog.h \
 	schematic_edit.h \
-	swap.h \
-	swap_gfx.h \
 	some_font_stuff.h
 
 # must be installed. but later

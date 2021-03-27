@@ -94,9 +94,9 @@ public:
 	}
 
 public:
-	pos_t portPosition(index_t i) const override{ untested();
+	pos_t portPosition(index_t i) const override{ itested();
 		trace2("Verilog::portPosition", i, common());
-		if(auto s=dynamic_cast<Component const*>(_painting)){ untested();
+		if(auto s=dynamic_cast<Component const*>(_painting)){ itested();
 			// BUG. ask CommonSubckt?
 			assert(i < s->numPorts());
 			auto p = s->portPosition(i);

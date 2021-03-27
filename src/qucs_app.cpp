@@ -16,7 +16,7 @@
 #include "qucs_app.h"
 #include "qucs_tabs.h"
 #include "qucsdoc.h"
-#include "octave_window.h"
+//#include "octave_window.h"
 #include "misc.h"
 
 #include <QLabel>
@@ -167,7 +167,8 @@ void App::slotViewOctaveDock(bool toggle)
 	if(octDock){
 	  octDock->setVisible(toggle);
 	  if (toggle) {
-		 octave->startOctave();
+	//	 octave->startOctave();
+	  }else{
 	  }
 	}else{
 	}

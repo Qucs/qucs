@@ -17,9 +17,6 @@
 /*--------------------------------------------------------------------------*/
 #include "element.h"
 #include "exception.h"
-#include "exception.h"
-/*--------------------------------------------------------------------------*/
-class QPainter;
 /*--------------------------------------------------------------------------*/
 enum {CC_STATIC_=27342};
 /*--------------------------------------------------------------------------*/
@@ -49,9 +46,7 @@ public:
   void attach_model(const Component*)const;
 //  CommonComponent& attach(const MODEL_CARD* m) {_model = m; return *this;}
   void set_modelname(const std::string& n) {_modelname = n;}
-
   virtual CommonComponent* clone()const = 0;
-
   // virtual bool is_trivial()const {return false;}
 
 public: // params, not yet.
@@ -93,10 +88,6 @@ public: // construct
 	explicit Component();
 	virtual ~Component();
 
-	// TODO: clarify relation to "recreate"...
-	// virtual void prepare();
-	// virtual void unPrepare();
-	//
 public: // manage shared data across components
 	CommonComponent* mutable_common()	  {return _common;}
 	const CommonComponent* common()const	  {return _common;}
@@ -106,12 +97,7 @@ public: // manage shared data across components
 	void	deflate_common();
 
 public:
-//	ElementList const* scope() const;
-
-// protected: // needed in netlister. public use in parse...
-//	virtual ElementList* scope();
-
-	void set_dev_type(const std::string& new_type);
+	void set_dev_type(const std::string& new_type) override;
 	virtual std::string dev_type()const{ return "(unreachable)";}
 
 public: // Parameters
@@ -124,15 +110,6 @@ public: // Parameters
 	virtual std::string param_value_by_name(std::string const&s) const override;
 	virtual std::string param_value(index_t i) const override;
 	virtual std::string param_name(index_t i) const; // override?
-
-#if 0
-public: // qt?
-	void setParameter(QString const&, QString const&);
-	void setParameter(unsigned, QString const&);
-
-public: // non-virtual (on purpose)
-	QString const& netLabel(unsigned i) const;
-#endif
 
 public: // Node stuff
 	virtual bool is_device() const{return true;}
@@ -174,7 +151,7 @@ public: // graphics
 	virtual unsigned width()const {return 0;}
 	//  virtual void draw(QPainter&)const=0;
 	//...  more to come
-protected: // maybe not here. but need to rebase MultiViewComponent to ScktProto first.
+protected: // maybe not here
 	ElementList* _subckt; // stuff contained in this symbol.
 	// such as subckt components. meta data or symbol gfx
 	int vflip() const{return _vflip;}

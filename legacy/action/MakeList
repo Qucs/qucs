@@ -8,4 +8,4 @@ PLUGIN_SRC = \
 	wire.cc \
 	zoom.cc
 
-EXTRA_DIST = 
+EXTRA_DIST =

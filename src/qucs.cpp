@@ -55,7 +55,7 @@
 #include "searchdialog.h"
 #include "simmessage.h"
 #include "exportdialog.h"
-#include "octave_window.h"
+//#include "octave_window.h"
 #include "printerwriter.h"
 #include "imagewriter.h"
 
@@ -852,7 +852,7 @@ void App::openProject(const QString& Path)
     slotResetWarnings();
 
     QucsSettings.QucsWorkDir = str_(ProjDir.path());
-    octave->adjustDirectory();
+//    octave->adjustDirectory();
 
     Content->setProjPath(QDir_(QucsSettings.QucsWorkDir).absolutePath());
 
@@ -925,7 +925,7 @@ void App::slotMenuProjClose()
   slotResetWarnings();
   setWindowTitle("Qucs " PACKAGE_VERSION + tr(" - Project: "));
   QucsSettings.QucsWorkDir = str_(QDir::homePath()+QDir::toNativeSeparators("/.qucs"));
-  octave->adjustDirectory();
+//  octave->adjustDirectory();
 
   Content->setProjPath("");
 

@@ -19,7 +19,7 @@
 #include "qucs_globals.h"
 #include "qucs_tabs.h"
 #include "settings.h"
-#include "octave_window.h"
+//#include "octave_window.h"
 #include "component_widget.h"
 #include "project_view.h"
 
@@ -233,12 +233,14 @@ void App::initView()
 
   // ----------------------------------------------------------
   // Octave docking window
+#if 0
   octDock = new QDockWidget(tr("Octave Dock"));
 
   connect(octDock, SIGNAL(visibilityChanged(bool)), SLOT(slotToggleOctave(bool)));
   octave = new OctaveWindow(octDock);
   this->addDockWidget(Qt::BottomDockWidgetArea, octDock);
   this->setCorner(Qt::BottomLeftCorner  , Qt::LeftDockWidgetArea);
+#endif
 
   // ............................................
 

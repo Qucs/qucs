@@ -1,6 +1,4 @@
 /*
- * mousecursor.cpp - implement graphic items for mouse cursor
- *
  * Copyright (C) 2015, Guilherme Brondani Torri, guitorri@gmail.com
  *
  * Based on code from mouseactions.cpp, by:
@@ -22,6 +20,9 @@
  * along with Qucs.  If not, see <http://www.gnu.org/licenses/>.
  *
  */
+
+// graphic items for mouse cursor
+// problem: mouse cursors are not graphics items. see cursor.cpp
 
 #include <QPainter>
 
