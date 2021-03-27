@@ -64,7 +64,7 @@ private:
 	}
 
 public:
-	Element* clone() const override{ untested();
+	Element* clone() const override{
 		return new Verilog(*this);
 	}
 
@@ -426,7 +426,7 @@ Verilog::Verilog(Verilog const&x)
 	 _tx(x._tx),
 	 _ty(x._ty),
     _painting(x._painting)
-{ untested();
+{
 	_ports.resize(x._ports.size());
 }
 /*--------------------------------------------------------------------------*/

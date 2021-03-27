@@ -101,15 +101,15 @@ public:
 	// cleanup & move to baseclass ?
 	pos_t portPosition(index_t i) const override{
 		trace2("Sub::portPosition", i, common());
-		if(auto s=dynamic_cast<Symbol const*>(_painting)){ untested();
+		if(auto s=dynamic_cast<Symbol const*>(_painting)){
 			// BUG. ask CommonSubckt?
 			assert(i < s->numPorts());
 			auto p = s->portPosition(i);
 			trace3("Sub::portPosition from painting", i, s->numPorts(), p);
 			return p;
-		}else if(auto sckt=dynamic_cast<SubcktBase const*>(_painting)){ untested();
+		}else if(auto sckt=dynamic_cast<SubcktBase const*>(_painting)){
 			ElementList const* s = sckt->subckt();
-			if(!s){
+			if(!s){ untested();
 				s = sckt->scope();
 			}else{
 			}
@@ -117,7 +117,7 @@ public:
 
 			std::string n = sckt->portName(i);
 			auto ii = s->find_(n);
-			if(ii!=s->end()){ untested();
+			if(ii!=s->end()){
 				trace1("SubcktProto::portPosition hit", i);
 				return (*ii)->position();
 			}else{ untested();
@@ -555,7 +555,7 @@ void Sub::init(Component const* proto)
 }
 /*--------------------------------------------------------------------------*/
 bool Sub::portExists(index_t i) const
-{ untested();
+{
 	return i<numPorts();
 }
 /*--------------------------------------------------------------------------*/

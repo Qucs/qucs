@@ -90,7 +90,7 @@ void Language::new__instance(istream_t& cmd, Element* owner,
 		ElementList* Scope) const
 {
 	assert(Scope);
-	if (cmd.is_end()) { untested();
+	if (cmd.is_end()) {
 		return;
 	}else{
 		std::string type = find_type_in_string(cmd);

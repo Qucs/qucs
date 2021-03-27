@@ -552,7 +552,7 @@ CS& istream_t::get_line(std::string const& prompt)
       _cnt = 0;
       _length = _cmd.length();
       _ok = true;
-  }else if (is_file()) { untested();
+  }else if (is_file()) {
     _cmd = getlines(_file);
     _cnt = 0;
     _length = _cmd.length();

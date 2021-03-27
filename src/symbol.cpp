@@ -63,9 +63,9 @@ pos_t Symbol::center()const
 /*--------------------------------------------------------------------------*/
 std::string Symbol::param_value_by_name(std::string const& n) const
 {
-	if(n=="$xposition"){ untested();
+	if(n=="$xposition"){
 		return std::to_string(cx());
-	}else if(n=="$yposition"){ untested();
+	}else if(n=="$yposition"){
 		trace1("..", cy());
 		return std::to_string(cy());
 	}else if(n=="$mfactor"){
