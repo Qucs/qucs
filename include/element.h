@@ -79,9 +79,7 @@ public: // other stuff
 	virtual bool showLabel() const{ return true; }
 	//virtual bool showParam(int i) const{ return true; } // later
 
-	void setCenter(pos_t const& c){ incomplete(); _position = c; }
 	void setPosition(pos_t const& c){ _position = c; }
-	virtual void getCenter(int&, int&) const; // BUG
 
 	// BUG: remove "center"
 	// BUG: not virtual

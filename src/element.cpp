@@ -36,16 +36,9 @@ Element::Element(Element const& e)
   // BUG
   // Selected = false;
 }
-
+/*--------------------------------------------------------------------------*/
 Element::~Element()
 {
-}
-
-void Element::getCenter(int&x, int&y) const
-{
-	unreachable();
-	x = _position.first;
-	y = _position.second;
 }
 /*--------------------------------------------------------------------------*/
 void Element::detachFromModel()

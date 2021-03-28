@@ -1,6 +1,5 @@
 # Qucs
 ## declarations 2
-# unresolved symbol (unreachable)
 ### item Sub:singleOPV
 # sckt Sub:singleOPV
 
@@ -10,6 +9,7 @@ R:R1 _net13 _net1 R="4k" Temp="26.85" Tc1="0.0" Tc2="0.0" Tnom="26.85"
 C:C1 _net1 P6 C="4p" V=""
 Idc:I1 _net17 P3 I="5 uA"
 .Def:End
+# unresolved symbol wire
 ## declarations end
 
 Vac:V4 Input gnd U="1 uV" f="2 kHz" Phase="0" Theta="0"

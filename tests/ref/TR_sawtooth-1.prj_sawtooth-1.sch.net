@@ -1,7 +1,7 @@
 # Qucs
 ## declarations 2
-# unresolved symbol (unreachable)
 # unresolved symbol Lib:Z-Diodes:1N4732A
+# unresolved symbol wire
 ## declarations end
 
 Sub:D1 Type="Z_Diodes_1N4732A"

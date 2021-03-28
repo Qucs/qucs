@@ -748,7 +748,7 @@ bool Diagram::load(const QString& Line, istream_t&)
 	int cy = n.toInt(&ok);
 	if(!ok) return false;
 
-	setCenter(pos_t(cx, cy));
+	setPosition(pos_t(cx, cy));
 
 	n  = s.section(' ',3,3);    // x2
 	_width = n.toInt(&ok);

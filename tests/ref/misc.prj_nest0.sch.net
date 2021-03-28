@@ -1,6 +1,5 @@
 # Qucs
 ## declarations 3
-# unresolved symbol (unreachable)
 ### item Sub:nest1
 # sckt Sub:nest1
 
@@ -18,6 +17,7 @@ R:R1 P1 _net9 R="0 Ohm" Temp="26.85" Tc1="0.0" Tc2="0.0" Tnom="26.85"
 R:R1 P1 P2 R="0 Ohm" Temp="26.85" Tc1="0.0" Tc2="0.0" Tnom="26.85"
 C:C1 gnd P2 C="1 pF" V=""
 .Def:End
+# unresolved symbol wire
 ## declarations end
 
 Vdc:V1 in gnd U="1 V"

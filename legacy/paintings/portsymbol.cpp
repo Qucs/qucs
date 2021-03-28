@@ -64,7 +64,7 @@ void PortSymbol::setSomeArgsHack(int cx_, int cy_, const QString& numberStr_,
 {
 	unreachable();
   Name = ".PortSym ";
-  setCenter(pos_t(cx_, cy_));
+  setPosition(pos_t(cx_, cy_));
 
   Angel = 0;
   nameStr = nameStr_;
@@ -178,7 +178,7 @@ bool PortSymbol::load(const QString& s)
   int cy = n.toInt(&ok);
   if(!ok) return false;
 
-  setCenter(pos_t(cx, cy));
+  setPosition(pos_t(cx, cy));
 
   numberStr  = s.section(' ',3,3);    // number
   if(numberStr.isEmpty()) return false;

@@ -1,6 +1,6 @@
 # Qucs
 ## declarations 1
-# unresolved symbol (unreachable)
+# unresolved symbol wire
 ## declarations end
 
 Pac:P1 out gnd Num="2" Z="50 Ohm" P="0 W" f="1 GHz" Temp="-273.15"

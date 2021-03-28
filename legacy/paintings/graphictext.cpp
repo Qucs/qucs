@@ -167,14 +167,14 @@ void GraphicText::getCenter(int& x, int &y)
 // }
 // 
 // -----------------------------------------------------------------------
-Element* GraphicText::info(QString& Name, char* &BitmapFile, bool getNewOne)
-{
-  Name = QObject::tr("Text");
-  BitmapFile = (char *) "text";
-
-  if(getNewOne)  return new GraphicText();
-  return 0;
-}
+//Element* GraphicText::info(QString& Name, char* &BitmapFile, bool getNewOne)
+//{
+//  Name = QObject::tr("Text");
+//  BitmapFile = (char *) "text";
+//
+//  if(getNewOne)  return new GraphicText();
+//  return 0;
+//}
 
 // -----------------------------------------------------------------------
 bool GraphicText::load(const QString& s)
@@ -190,7 +190,7 @@ bool GraphicText::load(const QString& s)
   int cy = n.toInt(&ok);
   if(!ok) return false;
 
-  setCenter(pos_t(cx, cy));
+  setPosition(pos_t(cx, cy));
 
   n  = s.section(' ',3,3);    // Size
   Font.setPointSize(n.toInt(&ok));

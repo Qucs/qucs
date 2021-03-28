@@ -98,7 +98,7 @@ public: // manage shared data across components
 
 public:
 	void set_dev_type(const std::string& new_type) override;
-	virtual std::string dev_type()const{ return "(unreachable)";}
+	virtual std::string dev_type()const{ return typeName();}
 
 public: // Parameters
 	virtual index_t param_count()const;

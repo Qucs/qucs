@@ -51,7 +51,6 @@
 #define OPT tQucsSettings
 #define CMD Command
 static std::string I_PROMPT = "qucs> ";
-ElementList static_model;
 /*--------------------------------------------------------------------------*/
 struct JMP_BUF{
   sigjmp_buf p;
@@ -85,6 +84,7 @@ static void prepare_env()
 /*--------------------------------------------------------------------------*/
 static void read_startup_files(void)
 {
+  auto& static_model = ElementList::card_list;
 #if 1
   CMD::command(std::string("load plugins/misc"), &static_model);
 #else
@@ -192,6 +192,7 @@ static void finish(void)
 /*--------------------------------------------------------------------------*/
 static void process_cmd_line(int argc, const char *argv[])
 {
+  auto& static_model = ElementList::card_list;
   for (int ii = 1;  ii < argc;  /*inside*/) {
     try {
       if (strncmp(argv[ii], "--", 2) == 0) {
@@ -225,6 +226,7 @@ static void process_cmd_line(int argc, const char *argv[])
 /*--------------------------------------------------------------------------*/
 int main(int argc, const char *argv[])
 {
+  auto& static_model = ElementList::card_list;
   prepare_env();
   //CKT_BASE::_sim = new SIM_DATA;
   //CKT_BASE::_probe_lists = new PROBE_LISTS;

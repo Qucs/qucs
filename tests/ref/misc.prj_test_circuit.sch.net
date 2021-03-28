@@ -1,12 +1,12 @@
 # Qucs
 ## declarations 2
-# unresolved symbol (unreachable)
 ### item Sub:short_circuit
 # sckt Sub:short_circuit
 
 .Def:short_circuit P1 P1
 # 27
 .Def:End
+# unresolved symbol wire
 ## declarations end
 
 Vdc:V1 in gnd U="1 V"

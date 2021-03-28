@@ -121,7 +121,7 @@ public:
 				int dy = getY(delta);
 
 				pos_t c = elt->center() + pos_t(dx, dy);
-				elt->setCenter(c);
+				elt->setPosition(c);
 
 				qSwap(eg, elt); // gaah.
 			}else{ untested();
