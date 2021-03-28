@@ -376,6 +376,7 @@ void App::slotSetCompView (int index)
   QString Name;
 
   // if something was registered dynamicaly, get and draw icons into dock
+#if 0 //
   if (item == QObject::tr("verilog-a user devices")) { untested();
     unreachable();
     incomplete();
@@ -420,7 +421,9 @@ void App::slotSetCompView (int index)
       CompComps->addItem(icon);
       compIdx++;
     }
-  } else {itested();
+  } else 
+#endif
+  {itested();
     QString File;
     // Populate list of ComponentListWidgetItems
     // // BUG: not here.
@@ -499,6 +502,8 @@ void App::slotSearchComponent(const QString &searchText)
       }
       catIdx++;
     }
+
+#if 0
     // the "verilog-a user devices" is the last category, if present
     QMapIterator<QString, QString> i(Module::vaComponents);
     int compIdx = 0;
@@ -541,6 +546,7 @@ void App::slotSearchComponent(const QString &searchText)
       }
       compIdx++;
     }
+#endif
   }
 }
 

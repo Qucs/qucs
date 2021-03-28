@@ -27,8 +27,6 @@ namespace qucs {
 QHash<QString, Module *> Module::Modules;
 Categories Category::categories;
 
-QMap<QString, QString> Module::vaComponents;
-
 // register Elements to the gui.
 // the implementation is legacy, but the interface might survive.
 INTERFACE void guiRegisterElement (std::string const& cat, Element const* e)

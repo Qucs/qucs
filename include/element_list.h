@@ -160,6 +160,8 @@ private:
 	const ElementList* _parent;
 	std::multimap<std::string, Element*> _map;
 	mutable ParamList* _params;
+public:
+  static ElementList card_list; // in qucs::globals.cc
 }; // ElementList
 /*--------------------------------------------------------------------------*/
 } // qucs

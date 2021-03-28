@@ -38,11 +38,12 @@ public:
 public: // BUG: this is not part of Module
 //	static void registerComponent (QString, pInfoFunc);
 	static void registerElement (QString, Element const*);
+
+private:
 	static void intoCategory( std::string const& cat, Module *);
 
 public:
 	static QHash<QString, Module *> Modules;
-	static QMap<QString, QString> vaComponents;
 
 public:
 	static void registerModules (void);
