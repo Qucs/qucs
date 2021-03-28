@@ -21,6 +21,10 @@
 #include "property.h"
 #include "qucs_globals.h"
 
+#define isComponent        0x30000
+#define isComponentText    0x30002
+#define isAnalogComponent  0x10000
+#define isDigitalComponent 0x20000
 
 namespace qucs{
 	class ViewPainter;

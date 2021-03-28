@@ -15,14 +15,43 @@
 #include <QString>
 #include <QStringList>
 #include <QList>
-#include <QDebug>
 
+#include "command.h"
+#include "message.h"
 #include "element.h"
-#include "module.h"
 #include "io_trace.h"
+#include "module.h"
+#include "qio.h"
 #include "qucs_globals.h"
+#include "sckt_base.h"
+
+// why "Module"? this is supposed about Element listings in the gui.
 
 namespace qucs {
+
+using qucs::SubcktBase;
+
+Module::INSTALL::INSTALL(const std::string& cat, Element const* p) :
+		_cat(cat),
+		_p(p)
+{
+	if(!p){
+		unreachable();
+	}else{
+		registerElement(QString::fromStdString(cat), p);
+		if(p->label()==""){ untested();
+		}else if(auto pp=dynamic_cast<qucs::Component const*>(p)){
+			std::string s = "protos add " + cat + " " + pp->dev_type();
+			trace1("protos", s);
+
+			// not yet
+			// Command::command(s, &ElementList::card_list);
+		}else{
+			trace0("protos, no label");
+		}
+	}
+}
+
 // Global category and component lists.
 QHash<QString, Module *> Module::Modules;
 Categories Category::categories;
@@ -157,7 +186,62 @@ int Category::getModulesNr (QString category)
   return -1;
 }
 /*--------------------------------------------------------------------------*/
+// group element prototypes by categories.
+class Protostash : public Command{
+public:
+	~Protostash(){ incomplete(); }
+private:
+	SubcktBase* open(std::string what, ElementList* scope){ untested();
+		auto p_ = scope->find_("protos");
+		Element* a = nullptr;
+		if(p_!=scope->end()){itested();
+			a = *p_;
+		}else{
+			a = qucs::device_dispatcher.clone("subckt_proto");
+			a->set_label(what);
+			scope->push_back(a);
+		}
+		auto sckt = prechecked_cast<SubcktBase*>(a);
+		return sckt;
+	}
+
+	void do_it(istream_t& cmd, ElementList* scope){ untested();
+//		assert(scope == &ElementList::card_list); // todo
+		scope = &ElementList::card_list;
+
+		cmd >> "protos";
+		if(cmd >> "add"){
+			add(cmd, scope);
+		}else{
+		}
+	}
+
+	void add(istream_t& cmd, ElementList* scope){ untested();
+		std::string where;
+		std::string what;
+		cmd >> where;
+		cmd >> what;
+
+		SubcktBase* a = open("protos", scope);
+		assert(a);
+		scope = a->scope();
+		assert(scope);
+
+		SubcktBase* cat = open(where, scope);
+		assert(cat);
+		scope = cat->scope();
+
+		Element* proto = qucs::symbol_dispatcher.clone(what);
+		if(proto){
+	//		guiRegisterElement(where, proto);
+			scope->push_back(proto);
+		}else{
+			message(qucs::MsgWarning, "no proto >" + what + "<");
+		}
+	}
+}p1;
+Dispatcher<Command>::INSTALL d1(&qucs::command_dispatcher, "protos", &p1);
+/*--------------------------------------------------------------------------*/
 /*--------------------------------------------------------------------------*/
 } // qucs
 /*--------------------------------------------------------------------------*/
-// vim:ts=8:sw=2:noet

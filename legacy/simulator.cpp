@@ -307,13 +307,13 @@ void LegacyNetlister::prepareSave(ostream_t& stream, ElementList const* m,
 	}
 #endif
 
-	if((allTypes & isAnalogComponent) == 0) {
+	if((allTypes) == 0) {
 		if(allTypes == 0) {
 			// If no simulation exists, assume analog simulation. There may
 			// be a simulation within a SPICE file. Otherwise Qucsator will
 			// output an error.
 			// isAnalog = true;
-			allTypes |= isAnalogComponent;
+//			allTypes |= isAnalogComponent;
 			NumPorts = -1;
 		}else{ untested();
 			if(NumPorts < 1 && isTruthTable) { untested();
@@ -329,6 +329,7 @@ void LegacyNetlister::prepareSave(ostream_t& stream, ElementList const* m,
 		// isAnalog = true;
 	}
 
+#if 0
 	// first line is documentation
 	if(allTypes & isAnalogComponent)
 		stream << "#";
@@ -337,6 +338,9 @@ void LegacyNetlister::prepareSave(ostream_t& stream, ElementList const* m,
 	else{ untested();
 		stream << "--";
 	}
+#else
+	stream << "#";
+#endif
 
 	std::string DocName;
 	try{

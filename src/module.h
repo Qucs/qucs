@@ -59,16 +59,7 @@ public:
 		const std::string _cat;
 		Element const* _p;
 	public:
-		INSTALL(const std::string& cat, Element const* p) :
-			_cat(cat),
-			_p(p)
-		{
-			if(p){
-				registerElement(QString::fromStdString(cat), p);
-			}else{
-				unreachable();
-			}
-		}
+		INSTALL(const std::string& cat, Element const* p);
 
 		~INSTALL() {
 			// remove stuff from GUI display
@@ -79,7 +70,7 @@ public:
 private:
 	Element const* _e;
 	QString category; // why this?!
-};
+}; // Module
 
 class Category;
 class Categories : public QList<Category*>{};

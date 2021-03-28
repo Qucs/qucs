@@ -12,70 +12,32 @@
  *                                                                         *
  ***************************************************************************/
 
-/** \file element.h
-  * \brief Defines drawing elements for schematics
-  *
-  * element.h contains definitions of various drawing elements used
-  * used to render schematics and the schematic symbols. The following
-  * structs are defined to hold information on various drawing types:
-  *
-  *    Line
-  *    Arc
-  *    Area
-  *    Port
-  *    Text
-  *
-  * The Element class is also defined here which is a superclass
-  * of every component symbol.
-  *
-  */
-
-// Element: Superclass of all schematic drawing elements
+// Element: Superclass of schematic elements
 
 #ifndef QUCS_ELEMENT_H
 #define QUCS_ELEMENT_H
 /*--------------------------------------------------------------------------*/
 /*--------------------------------------------------------------------------*/
-#include <assert.h>
 #include "object.h"
 #include "io_trace.h"
 #include "port.h"
 #include "geometry.h"
-
+#include "platform.h"
+/*--------------------------------------------------------------------------*/
 class QWidget;
 class QPainter;
-
-class Label;
-class WireLabel;
-
+/*--------------------------------------------------------------------------*/
 namespace qucs {
-
-class NetLang;
-class Symbol;
-class Doc;
-class Node;
+/*--------------------------------------------------------------------------*/
 class Diagram;
-class Painting;
-class Widget;
-
-// valid values for Element.Type
-// The 4 least significant bits of each value are reserved for special
-// additionals !!!
-#define isDummyElement    0
-#define isSpecialMask    -16
-
-#define isComponent        0x30000
-#define isComponentText    0x30002
-#define isAnalogComponent  0x10000
-#define isDigitalComponent 0x20000
-
-#define isGraph            0x0020
-//#define isNode             0x0040
-#define isMarker           0x0080
-//#define isWire             0x0100
-
-class ViewPainter;
+class Doc;
 class ElementList;
+class NetLang;
+class Node;
+class Painting;
+class Symbol;
+class ViewPainter;
+class Widget;
 /*--------------------------------------------------------------------------*/
 // Element: has a position.
 // TODO: base on sth like card with params but no position.

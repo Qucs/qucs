@@ -3,6 +3,7 @@
     license              : GPLv3+
  ***************************************************************************/
 #include "qucs_globals.h"
+#include "element_list.h"
 
 namespace qucs{
 
@@ -17,5 +18,7 @@ Dispatcher<Widget> widget_dispatcher;
 
 // use command_dispatcher?
 Dispatcher<Action> action_dispatcher;
+
+ElementList ElementList::card_list;
 
 }
