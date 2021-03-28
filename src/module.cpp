@@ -101,11 +101,6 @@ void Module::intoCategory(std::string const& cat, Module * m)
   }
 }
 
-// waah. need one plugin per symbol list.
-void Module::registerModules (void) {itested();
-  unreachable(); // obsolete.
-}
-
 // obsolete. hook into clear
 void Module::unregisterModules (void)
 { untested();

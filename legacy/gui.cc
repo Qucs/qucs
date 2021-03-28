@@ -1097,7 +1097,6 @@ class g: public Command{
 			a.installTranslator( &tor );
 		}
 
-		qucs::Module::registerModules (); // BUG
 		auto QucsMain = new qucs::App();
 
 		QucsMain->initView();

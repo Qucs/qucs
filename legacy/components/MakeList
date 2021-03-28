@@ -278,7 +278,6 @@ HEADERS_ = \
     tff_SR.h \
     thyristor.h \
     tline_4port.h \
-    tr_sim.h \
     triac.h \
     tunneldiode.h \
     twistedpair.h \

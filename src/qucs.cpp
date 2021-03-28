@@ -96,6 +96,7 @@ App::App()
 {itested();
   setWindowTitle("Qucs " PACKAGE_VERSION);
 
+  // ask languages?
   QucsFileFilter =
     tr("Schematic") + " (*.sch);;" +
     tr("Data Display") + " (*.dpl);;" +
@@ -118,7 +119,6 @@ App::App()
   slotViewOctaveDock(false);
   slotUpdateRecentFiles();
   initCursorMenu();
-  Module::registerModules ();
 
   // instance of small text search dialog
   SearchDia = new SearchDialog(this);
@@ -452,6 +452,7 @@ void App::slotSearchComponent(const QString &searchText)
 { untested();
   incomplete();
   qDebug() << "User search: " << searchText;
+#if 0
   CompComps->clear ();   // clear the IconView
 
   // not already in "search mode"
@@ -548,6 +549,7 @@ void App::slotSearchComponent(const QString &searchText)
     }
 #endif
   }
+#endif
 }
 
 // ------------------------------------------------------------------

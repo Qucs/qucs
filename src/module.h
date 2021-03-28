@@ -46,7 +46,6 @@ public:
 	static QHash<QString, Module *> Modules;
 
 public:
-	static void registerModules (void);
 	static void unregisterModules (void);
 
 	bool has_element() const{ return _e; }
