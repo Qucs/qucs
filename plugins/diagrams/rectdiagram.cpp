@@ -119,11 +119,13 @@ private:
 	void copy_graph_data(CommonData const* p, int i){
 		auto pp = prechecked_cast<SimOutputData const*>(p);
 		assert(pp);
-		assert(i<=graphCount());
+		trace2("var copy", i, graphCount());
 		if(i==graphCount()){ untested();
 			QCustomPlot::addGraph();
+			assert(i<graphCount());
 		}else{ untested();
 		}
+		trace2("var copy", i, graphCount());
 		auto g = graph(graphCount()-1);
 		trace1("var copy", pp->numDeps());
 		if(pp->numDeps()==1){
@@ -159,20 +161,18 @@ private:
 
 	void add_data(Data const* d, int i){
 		if(d->common()){
-			trace1("var diagscope", d->short_label());
+			trace2("var diagscope", d->short_label(), i);
 			CommonData const* p = nullptr;
 			CommonData::attach(d->common(), &p);
 			copy_graph_data(p, i);
 			CommonData::detach(&p);
-
-
 		}else{
+			trace2("empty common", d->short_label(), i);
 		}
 	}
 
 	void refresh_plots(){
 		assert(_diag);
-		int k = 0;
 		try{
 			if(_diag->param_by_name("$$xaxislog")=="1"){
 				xAxis->setScaleType(QCPAxis::stLogarithmic);
@@ -194,6 +194,7 @@ private:
 				// yAxis->setScaleType(QCPAxis::stLogarithmic);
 		}
 
+		int k = 0;
 		for(auto i : *_diag->scope()){
 			if(auto d=prechecked_cast<Data const*>(i)){
 				add_data(d, k);

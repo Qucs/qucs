@@ -522,6 +522,7 @@ void LegacySchematicLanguage::print_instance(ostream_t& s, qucs::Component const
 		return printwirehack(ww, s);
 	}else{
 	}
+
 	s << "  <" << mangle(sym->typeName()) << " ";
 
 	if(sym->label()==""){ untested();
@@ -656,9 +657,10 @@ static TaskElement* loadLegacyTaskElement(const QString& _s, LegacyTaskElement* 
 		unsigned counts = s.count('"');
 		// FIXME. use c->paramCount()
 
-		tmp=0;
+		tmp=c->Props.size(); // ???
 		/// BUG FIXME. dont use Component parameter dictionary.
 		for(; tmp<=(int)counts/2; tmp++){itested();
+			trace2("taskhack append", tmp, c->Props.size());
 			c->Props.append(new Property("p", "", true, " "));
 		}
 
@@ -668,12 +670,14 @@ static TaskElement* loadLegacyTaskElement(const QString& _s, LegacyTaskElement* 
 		for(p1 = c->Props.first(); p1 != 0; p1 = c->Props.next()) {
 			z++;
 			n = s.section('"',z,z);    // property value
-			trace3("load command props", z, n, p1->Name);
+			trace3("load legacy command props", z, n, p1->Name);
 			z++;
 			//qDebug() << "LOAD: " << p1->Description;
+			//
+			// c->set_param_by_index( z/2, n); ?
 
 			// not all properties have to be mentioned (backward compatible)
-			if(z > counts) {
+			if(z > counts) { untested();
 				if(p1->Description.isEmpty()){ untested();
 					c->Props.remove();    // remove if allocated in vain
 				}else{

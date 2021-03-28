@@ -30,7 +30,7 @@
     <C C2 1 280 300 17 -26 0 1 "100n" 1 "" 0 "neutral" 0>
     <GND * 5 420 230 0 0 0 0>
     <Vdc V1 1 420 200 -60 -26 1 1 "12 V" 1>
-    <.AC AC1 1 370 280 0 33  0 0 "log" 1 "300 kHz" 1 "800 kHz" 1 "100" 1 "no" 0 "" 1 "" 1 "" 1 "" 1 "" 1>
+    <.AC AC1 1 370 280 0 33  0 0 "log" 1 "300 kHz" 1 "800 kHz" 1 "100" 1 "no" 0>
     <Eqn Eqn1 1 500 200 -23 12 0 0 "Gain=dB(Output.v/Input.v)" 1 "yes" 0>
 </Components>
 <Wires>

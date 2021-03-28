@@ -14,11 +14,11 @@ dir=`dirname $0`
 top="@abs_top_builddir@"
 top_src="@abs_top_srcdir@"
 
-if [ -z "$QUCSATOR" ]; then
-	# this will work within the current git layout,
-	# needs more thought (configuration) for standalone build.
-	QUCSATOR="$top/../qucs-core/src/qucsator";
-fi
+# if [ -z "$QUCSATOR" ]; then
+# 	# this will work within the current git layout,
+# 	# needs more thought (configuration) for standalone build.
+# 	QUCSATOR="$top/../qucs-core/src/qucsator";
+# fi
 
 if [ -z "$QUCSCONV" ]; then
 	# this will work within the current git layout,

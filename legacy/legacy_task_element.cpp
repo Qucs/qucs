@@ -259,7 +259,8 @@ void LegacyTaskElement::paint(ViewPainter *p) const
     if(p4->display) {
       p->drawText(x, y, 0, 0, Qt::TextDontClip, p4->Name+"="+p4->Value);
       y += p->LineSpacing;
-    }
+    }else{
+	 }
   }
 #endif
 

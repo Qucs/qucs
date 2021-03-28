@@ -25,7 +25,7 @@ namespace{
 
 class TR_Sim : public LegacyTaskElement  {
 public:
-  TR_Sim(TR_Sim const&) = default;
+  TR_Sim(TR_Sim const&p) : LegacyTaskElement(p) {}
   TR_Sim();
   ~TR_Sim();
   Element* clone() const{return new TR_Sim(*this);}
@@ -50,11 +50,15 @@ TR_Sim::TR_Sim()
   if (a != -1) s[a] = '\n';
 
   Texts.append(new Text(0, 0, s.left(a), Qt::darkBlue, QucsSettings.largeFontSize));
-  if (a != -1)
+  if (a != -1){
     Texts.append(new Text(0, 0, s.mid(a+1), Qt::darkBlue, QucsSettings.largeFontSize));
+  }else{
+  }
 
-  x1 = -10; y1 = -9;
-  x2 = x1+104; y2 = y1+59;
+  x1 = -10;
+  y1 = -9;
+  x2 = x1+104;
+  y2 = y1+59;
 
   tx = 0;
   ty = y2+1;
@@ -123,6 +127,7 @@ Element* TR_Sim::info(QString& Name, char* &BitmapFile, bool getNewOne)
 
 void TR_Sim::recreate(Schematic*)
 {
+	trace1("TR_Sim::recreate", Props.size());
   Property *pp = Props.first();
   if((pp->Value == "list") || (pp->Value == "const")) {
     // Call them "Symbol" to omit them in the netlist.

@@ -1,0 +1,10125 @@
+==============
+  <Eqn my_Eqn 1 0 0 1 9 0 0 "y=1" 1 "yes" 0>
+Eqn #(.y(1), .Export(yes)) my_Eqn();
+Eqn:my_Eqn y="1" Export="yes"
+==============
+  <sTr my_sTr 1 0 0 -29 78 0 0 "1" 1 "1" 1>
+sTr #(.T1(1), .T2(1)) my_sTr();
+sTr:my_sTr netlabel_BUG netlabel_BUG netlabel_BUG netlabel_BUG netlabel_BUG netlabel_BUG T1="1" T2="1"
+==============
+  <Tr my_Tr 1 0 0 -29 38 0 0 "1" 1>
+Tr #(.T(1)) my_Tr();
+Tr:my_Tr netlabel_BUG netlabel_BUG netlabel_BUG netlabel_BUG T="1"
+==============
+  <C my_C 1 0 0 -26 17 0 0 "1 pF" 1 "" 0 "neutral" 0>
+C #(.C(1 pF), .V(), .Symbol(neutral)) my_C();
+C:my_C netlabel_BUG netlabel_BUG C="1 pF" V=""
+==============
+  <L my_L 1 0 0 -26 10 0 0 "1 nH" 1 "" 0>
+L #(.L(1 nH), .I()) my_L();
+L:my_L netlabel_BUG netlabel_BUG L="1 nH" I=""
+==============
+  <OpAmp my_OpAmp 1 0 0 -26 42 0 0 "1e6" 1 "15 V" 0>
+OpAmp #(.G(1e6), .Umax(15 V)) my_OpAmp();
+OpAmp:my_OpAmp netlabel_BUG netlabel_BUG netlabel_BUG G="1e6" Umax="15 V"
+==============
+  <R my_R 1 0 0 -26 15 0 0 "50 Ohm" 1 "26.85" 0 "0.0" 0 "0.0" 0 "26.85" 0 "european" 0>
+R #(.R(50 Ohm), .Temp(26.85), .Tc1(0.0), .Tc2(0.0), .Tnom(26.85), .Symbol(european)) my_R();
+R:my_R netlabel_BUG netlabel_BUG R="50 Ohm" Temp="26.85" Tc1="0.0" Tc2="0.0" Tnom="26.85"
+==============
+  <Port my_Port 1 0 0 -23 12 0 0 "1" 1 "analog" 0>
+Port #(.Num(1), .Type()) my_Port();
+Port:my_Port netlabel_BUG netlabel_BUG Num="1" Type=""
+=====ideal transmission line=========
+  <TLIN my_TLIN 1 0 0 -26 20 0 0 "50 Ohm" 1 "1 mm" 1 "0 dB" 0 "26.85" 0>
+TLIN #(.Z(50 Ohm), .L(1 mm), .Alpha(0 dB), .Temp(26.85)) my_TLIN();
+TLIN:my_TLIN netlabel_BUG netlabel_BUG Z="50 Ohm" L="1 mm" Alpha="0 dB" Temp="26.85"
+==============
+  <GND my_GND 5 0 0 0 0 0 0>
+GND #() my_GND();
+GND:my_GND netlabel_BUG
+==============
+  <Verilog my_Verilog 1 0 0 -26 51 0 0 "sub.v" 0>
+Verilog #(.File(sub.v)) my_Verilog();
+Verilog:my_Verilog netlabel_BUG netlabel_BUG netlabel_BUG netlabel_BUG
+=====ideal dc current source=========
+  <Idc my_Idc 1 0 0 -26 18 0 0 "1 mA" 1>
+Idc #(.I(1 mA)) my_Idc();
+Idc:my_Idc netlabel_BUG netlabel_BUG I="1 mA"
+==============
+  <Vac my_Vac 1 0 0 -26 18 0 0 "1 V" 1 "1 GHz" 0 "0" 0 "0" 0>
+Vac #(.U(1 V), .f(1 GHz), .Phase(0), .Theta(0)) my_Vac();
+Vac:my_Vac netlabel_BUG netlabel_BUG U="1 V" f="1 GHz" Phase="0" Theta="0"
+==============
+  <Vdc my_Vdc 1 0 0 -26 18 0 0 "1 V" 1>
+Vdc #(.U(1 V)) my_Vdc();
+Vdc:my_Vdc netlabel_BUG netlabel_BUG U="1 V"
+==============
+  <VProbe my_VProbe 1 0 0 28 -31 0 0>
+VProbe #() my_VProbe();
+VProbe:my_VProbe netlabel_BUG netlabel_BUG
+==============
+  <Iac my_Iac 1 0 0 -26 20 0 0 "1 mA" 1 "1 GHz" 0 "0" 0 "0" 0>
+Iac #(.I(1 mA), .f(1 GHz), .Phase(0), .Theta(0)) my_Iac();
+Iac:my_Iac netlabel_BUG netlabel_BUG I="1 mA" f="1 GHz" Phase="0" Theta="0"
+=====current probe=========
+  <IProbe my_IProbe 1 0 0 -26 16 0 0>
+IProbe #() my_IProbe();
+IProbe:my_IProbe netlabel_BUG netlabel_BUG
+==============
+  <VCCS my_VCCS 1 0 0 -26 34 0 0 "1 S" 1 "0" 0>
+VCCS #(.G(1 S), .T(0)) my_VCCS();
+VCCS:my_VCCS netlabel_BUG netlabel_BUG netlabel_BUG netlabel_BUG G="1 S" T="0"
+==============
+  <VCVS my_VCVS 1 0 0 -26 34 0 0 "1" 1 "0" 0>
+VCVS #(.G(1), .T(0)) my_VCVS();
+VCVS:my_VCVS netlabel_BUG netlabel_BUG netlabel_BUG netlabel_BUG G="1" T="0"
+==============
+  <Vrect my_Vrect 1 0 0 -26 18 0 0 "1 V" 1 "1 ms" 1 "1 ms" 1 "1 ns" 0 "1 ns" 0 "0 ns" 0>
+Vrect #(.U(1 V), .TH(1 ms), .TL(1 ms), .Tr(1 ns), .Tf(1 ns), .Td(0 ns)) my_Vrect();
+Vrect:my_Vrect netlabel_BUG netlabel_BUG U="1 V" TH="1 ms" TL="1 ms" Tr="1 ns" Tf="1 ns" Td="0 ns"
+=====coupled microstrip line=========
+  <MCOUPLED my_MCOUPLED 1 0 0 -26 37 0 0 "Subst1" 1 "1 mm" 1 "10 mm" 1 "1 mm" 1 "Kirschning" 0 "Kirschning" 0 "26.85" 0>
+MCOUPLED #(.Subst(Subst1), .W(1 mm), .L(10 mm), .S(1 mm), .Model(Kirschning), .DispModel(Kirschning), .Temp(26.85)) my_MCOUPLED();
+MCOUPLED:my_MCOUPLED netlabel_BUG netlabel_BUG netlabel_BUG netlabel_BUG Subst="Subst1" W="1 mm" L="10 mm" S="1 mm" Model="Kirschning" DispModel="Kirschning" Temp="26.85"
+=====substrate definition=========
+  <SUBST my_SUBST 1 0 0 -30 24 0 0 "9.8" 1 "1 mm" 1 "35 um" 1 "2e-4" 1 "0.022e-6" 1 "0.15e-6" 1>
+SUBST #(.er(9.8), .h(1 mm), .t(35 um), .tand(2e-4), .rho(0.022e-6), .D(0.15e-6)) my_SUBST();
+SUBST:my_SUBST er="9.8" h="1 mm" t="35 um" tand="2e-4" rho="0.022e-6" D="0.15e-6"
+=====microstrip corner=========
+  <MCORN my_MCORN 1 0 0 15 -7 0 0 "Subst1" 1 "1 mm" 1>
+MCORN #(.Subst(Subst1), .W(1 mm)) my_MCORN();
+MCORN:my_MCORN netlabel_BUG netlabel_BUG Subst="Subst1" W="1 mm"
+=====microstrip cross=========
+  <MCROSS my_MCROSS 1 0 0 -26 34 0 0 "Subst1" 1 "1 mm" 1 "2 mm" 1 "1 mm" 1 "2 mm" 1 "Hammerstad" 0 "Kirschning" 0 "showNumbers" 0>
+MCROSS #(.Subst(Subst1), .W1(1 mm), .W2(2 mm), .W3(1 mm), .W4(2 mm), .MSModel(Hammerstad), .MSDispModel(Kirschning), .Symbol(showNumbers)) my_MCROSS();
+MCROSS:my_MCROSS netlabel_BUG netlabel_BUG netlabel_BUG netlabel_BUG Subst="Subst1" W1="1 mm" W2="2 mm" W3="1 mm" W4="2 mm" MSModel="Hammerstad" MSDispModel="Kirschning"
+=====microstrip lange coupler=========
+  <MLANGE my_MLANGE 1 0 0 -26 37 0 0 "Subst1" 1 "1 mm" 1 "10 mm" 1 "1 mm" 1 "Kirschning" 0 "Kirschning" 0 "26.85" 0>
+MLANGE #(.Subst(Subst1), .W(1 mm), .L(10 mm), .S(1 mm), .Model(Kirschning), .DispModel(Kirschning), .Temp(26.85)) my_MLANGE();
+MLANGE:my_MLANGE netlabel_BUG netlabel_BUG netlabel_BUG netlabel_BUG Subst="Subst1" W="1 mm" L="10 mm" S="1 mm" Model="Kirschning" DispModel="Kirschning" Temp="26.85"
+=====microstrip line=========
+  <MLIN my_MLIN 1 0 0 -26 15 0 0 "Subst1" 1 "1 mm" 1 "10 mm" 1 "Hammerstad" 0 "Kirschning" 0 "26.85" 0>
+MLIN #(.Subst(Subst1), .W(1 mm), .L(10 mm), .Model(Hammerstad), .DispModel(Kirschning), .Temp(26.85)) my_MLIN();
+MLIN:my_MLIN netlabel_BUG netlabel_BUG Subst="Subst1" W="1 mm" L="10 mm" Model="Hammerstad" DispModel="Kirschning" Temp="26.85"
+=====microstrip impedance step=========
+  <MSTEP my_MSTEP 1 0 0 -26 17 0 0 "Subst1" 1 "2 mm" 1 "1 mm" 1 "Hammerstad" 0 "Kirschning" 0>
+MSTEP #(.Subst(Subst1), .W1(2 mm), .W2(1 mm), .MSModel(Hammerstad), .MSDispModel(Kirschning)) my_MSTEP();
+MSTEP:my_MSTEP netlabel_BUG netlabel_BUG Subst="Subst1" W1="2 mm" W2="1 mm" MSModel="Hammerstad" MSDispModel="Kirschning"
+=====microstrip tee=========
+  <MTEE my_MTEE 1 0 0 -26 -25 0 0 "Subst1" 1 "1 mm" 1 "1 mm" 1 "2 mm" 1 "Hammerstad" 0 "Kirschning" 0 "26.85" 0 "showNumbers" 0>
+MTEE #(.Subst(Subst1), .W1(1 mm), .W2(1 mm), .W3(2 mm), .MSModel(Hammerstad), .MSDispModel(Kirschning), .Temp(26.85), .Symbol(showNumbers)) my_MTEE();
+MTEE:my_MTEE netlabel_BUG netlabel_BUG netlabel_BUG Subst="Subst1" W1="1 mm" W2="1 mm" W3="2 mm" MSModel="Hammerstad" MSDispModel="Kirschning" Temp="26.85"
+==============
+  <Pac my_Pac 1 0 0 -26 18 0 0 "1" 1 "50 Ohm" 1 "0 dBm" 0 "1 GHz" 0 "26.85" 0>
+Pac #(.Num(1), .Z(50 Ohm), .P(0 dBm), .f(1 GHz), .Temp(26.85)) my_Pac();
+Pac:my_Pac netlabel_BUG netlabel_BUG Num="1" Z="50 Ohm" P="0 dBm" f="1 GHz" Temp="26.85"
+==============
+  <.AC my_AC 1 0 0 0 33  0 0 "lin" 1 "1 GHz" 1 "10 GHz" 1 "19" 1 "no" 0>
+//my_AC
+.AC:my_AC Type="lin" Start="1 GHz" Stop="10 GHz" Points="19" Noise="no"
+=====DC=========
+  <.DC my_DC 1 0 0 0 33  0 0>
+//my_DC
+.DC:my_DC
+=====TR=========
+  <.TR my_TR 1 0 0 0 51  0 0 "lin" 1 "0" 1 "1 ms" 1 "11" 0 "Trapezoidal" 0 "2" 0 "1 ns" 0 "1e-16" 0 "150" 0 "0.001" 0 "1 pA" 0 "1 uV" 0 "26.85" 0 "1e-3" 0 "1e-6" 0 "1" 0 "CroutLU" 0 "no" 0 "yes" 0 "0" 0>
+//my_TR
+.TR:my_TR Type="lin" Start="0" Stop="1 ms" Points="11" IntegrationMethod="Trapezoidal" Order="2" InitialStep="1 ns" MinStep="1e-16" MaxIter="150" reltol="0.001" abstol="1 pA" vntol="1 uV" Temp="26.85" LTEreltol="1e-3" LTEabstol="1e-6" LTEfactor="1" Solver="CroutLU" relaxTSR="no" initialDC="yes" MaxStep="0"
+==============
+  <Diode my_Diode 1 0 0 -26 15 0 0 "1e-15 A" 1 "1" 1 "10 fF" 1 "0.5" 0 "0.7 V" 0 "0.5" 0 "0.0 fF" 0 "0.0" 0 "2.0" 0 "0.0 Ohm" 0 "0.0 ps" 0 "0" 0 "0.0" 0 "1.0" 0 "1.0" 0 "0" 0 "1 mA" 0 "26.85" 0 "3.0" 0 "1.11" 0 "0.0" 0 "0.0" 0 "0.0" 0 "0.0" 0 "0.0" 0 "0.0" 0 "26.85" 0 "1.0" 0 "normal" 0>
+Diode #(.Is(1e-15 A), .N(1), .Cj0(10 fF), .M(0.5), .Vj(0.7 V), .Fc(0.5), .Cp(0.0 fF), .Isr(0.0), .Nr(2.0), .Rs(0.0 Ohm), .Tt(0.0 ps), .Ikf(0), .Kf(0.0), .Af(1.0), .Ffe(1.0), .Bv(0), .Ibv(1 mA), .Temp(26.85), .Xti(3.0), .Eg(1.11), .Tbv(0.0), .Trs(0.0), .Ttt1(0.0), .Ttt2(0.0), .Tm1(0.0), .Tm2(0.0), .Tnom(26.85), .Area(1.0), .Symbol(normal)) my_Diode();
+Diode:my_Diode netlabel_BUG netlabel_BUG Is="1e-15 A" N="1" Cj0="10 fF" M="0.5" Vj="0.7 V" Fc="0.5" Cp="0.0 fF" Isr="0.0" Nr="2.0" Rs="0.0 Ohm" Tt="0.0 ps" Ikf="0" Kf="0.0" Af="1.0" Ffe="1.0" Bv="0" Ibv="1 mA" Temp="26.85" Xti="3.0" Eg="1.11" Tbv="0.0" Trs="0.0" Ttt1="0.0" Ttt2="0.0" Tm1="0.0" Tm2="0.0" Tnom="26.85" Area="1.0"
+==============
+  <EArc 0 0 0 0 0 0 #000000 1 1>
+painting incomplete
+==============
+  <Ellipse 0 0 0 0 #000000 1 1 #c0c0c0 1 0>
+painting incomplete
+==============
+  <Line 0 0 0 0 #000000 1 1>
+painting incomplete
+==============
+  <Text 0 0 12 #000000 0 "">
+painting incomplete
+=====?????=========
+  <.ID 0 0 ?????>
+painting incomplete
+==============
+  <.PortSym 0 0  0>
+painting incomplete
+==============
+  <Rectangle 0 0 0 0 #000000 1 1 #000000 0 1>
+painting incomplete
+=====GBU4G=========
+module GBU4G();
+endmodule // GBU4G
+
+# sckt GBU4G
+
+
+# 0
+.Def:End
+=====DF005=========
+module DF005();
+endmodule // DF005
+
+# sckt DF005
+
+
+# 0
+.Def:End
+=====DF01=========
+module DF01();
+endmodule // DF01
+
+# sckt DF01
+
+
+# 0
+.Def:End
+=====DF02=========
+module DF02();
+endmodule // DF02
+
+# sckt DF02
+
+
+# 0
+.Def:End
+=====DF04=========
+module DF04();
+endmodule // DF04
+
+# sckt DF04
+
+
+# 0
+.Def:End
+=====DF06=========
+module DF06();
+endmodule // DF06
+
+# sckt DF06
+
+
+# 0
+.Def:End
+=====DF08=========
+module DF08();
+endmodule // DF08
+
+# sckt DF08
+
+
+# 0
+.Def:End
+=====DF10=========
+module DF10();
+endmodule // DF10
+
+# sckt DF10
+
+
+# 0
+.Def:End
+=====1KAB5=========
+module 1KAB5();
+endmodule // 1KAB5
+
+# sckt 1KAB5
+
+
+# 0
+.Def:End
+=====1KAB10=========
+module 1KAB10();
+endmodule // 1KAB10
+
+# sckt 1KAB10
+
+
+# 0
+.Def:End
+=====1KAB20=========
+module 1KAB20();
+endmodule // 1KAB20
+
+# sckt 1KAB20
+
+
+# 0
+.Def:End
+=====1KAB40=========
+module 1KAB40();
+endmodule // 1KAB40
+
+# sckt 1KAB40
+
+
+# 0
+.Def:End
+=====1KAB60=========
+module 1KAB60();
+endmodule // 1KAB60
+
+# sckt 1KAB60
+
+
+# 0
+.Def:End
+=====1KAB80=========
+module 1KAB80();
+endmodule // 1KAB80
+
+# sckt 1KAB80
+
+
+# 0
+.Def:End
+=====1KAB100=========
+module 1KAB100();
+endmodule // 1KAB100
+
+# sckt 1KAB100
+
+
+# 0
+.Def:End
+=====18DB05=========
+module 18DB05();
+endmodule // 18DB05
+
+# sckt 18DB05
+
+
+# 0
+.Def:End
+=====18DB1=========
+module 18DB1();
+endmodule // 18DB1
+
+# sckt 18DB1
+
+
+# 0
+.Def:End
+=====18DB2=========
+module 18DB2();
+endmodule // 18DB2
+
+# sckt 18DB2
+
+
+# 0
+.Def:End
+=====18DB4=========
+module 18DB4();
+endmodule // 18DB4
+
+# sckt 18DB4
+
+
+# 0
+.Def:End
+=====18DB6=========
+module 18DB6();
+endmodule // 18DB6
+
+# sckt 18DB6
+
+
+# 0
+.Def:End
+=====18DB8=========
+module 18DB8();
+endmodule // 18DB8
+
+# sckt 18DB8
+
+
+# 0
+.Def:End
+=====18DB10=========
+module 18DB10();
+endmodule // 18DB10
+
+# sckt 18DB10
+
+
+# 0
+.Def:End
+=====2KBB5=========
+module 2KBB5();
+endmodule // 2KBB5
+
+# sckt 2KBB5
+
+
+# 0
+.Def:End
+=====2KBB10=========
+module 2KBB10();
+endmodule // 2KBB10
+
+# sckt 2KBB10
+
+
+# 0
+.Def:End
+=====2KBB20=========
+module 2KBB20();
+endmodule // 2KBB20
+
+# sckt 2KBB20
+
+
+# 0
+.Def:End
+=====2KBB40=========
+module 2KBB40();
+endmodule // 2KBB40
+
+# sckt 2KBB40
+
+
+# 0
+.Def:End
+=====2KBB60=========
+module 2KBB60();
+endmodule // 2KBB60
+
+# sckt 2KBB60
+
+
+# 0
+.Def:End
+=====2KBB80=========
+module 2KBB80();
+endmodule // 2KBB80
+
+# sckt 2KBB80
+
+
+# 0
+.Def:End
+=====2KBB100=========
+module 2KBB100();
+endmodule // 2KBB100
+
+# sckt 2KBB100
+
+
+# 0
+.Def:End
+=====2KBP005=========
+module 2KBP005();
+endmodule // 2KBP005
+
+# sckt 2KBP005
+
+
+# 0
+.Def:End
+=====2KBP01=========
+module 2KBP01();
+endmodule // 2KBP01
+
+# sckt 2KBP01
+
+
+# 0
+.Def:End
+=====2KBP02=========
+module 2KBP02();
+endmodule // 2KBP02
+
+# sckt 2KBP02
+
+
+# 0
+.Def:End
+=====2KBP04=========
+module 2KBP04();
+endmodule // 2KBP04
+
+# sckt 2KBP04
+
+
+# 0
+.Def:End
+=====2KBP06=========
+module 2KBP06();
+endmodule // 2KBP06
+
+# sckt 2KBP06
+
+
+# 0
+.Def:End
+=====2KBP08=========
+module 2KBP08();
+endmodule // 2KBP08
+
+# sckt 2KBP08
+
+
+# 0
+.Def:End
+=====2KBP10=========
+module 2KBP10();
+endmodule // 2KBP10
+
+# sckt 2KBP10
+
+
+# 0
+.Def:End
+=====KBPC1005=========
+module KBPC1005();
+endmodule // KBPC1005
+
+# sckt KBPC1005
+
+
+# 0
+.Def:End
+=====KBPC101=========
+module KBPC101();
+endmodule // KBPC101
+
+# sckt KBPC101
+
+
+# 0
+.Def:End
+=====KBPC102=========
+module KBPC102();
+endmodule // KBPC102
+
+# sckt KBPC102
+
+
+# 0
+.Def:End
+=====KBPC104=========
+module KBPC104();
+endmodule // KBPC104
+
+# sckt KBPC104
+
+
+# 0
+.Def:End
+=====KBPC106=========
+module KBPC106();
+endmodule // KBPC106
+
+# sckt KBPC106
+
+
+# 0
+.Def:End
+=====KBPC108=========
+module KBPC108();
+endmodule // KBPC108
+
+# sckt KBPC108
+
+
+# 0
+.Def:End
+=====KBPC110=========
+module KBPC110();
+endmodule // KBPC110
+
+# sckt KBPC110
+
+
+# 0
+.Def:End
+=====KBPC6005=========
+module KBPC6005();
+endmodule // KBPC6005
+
+# sckt KBPC6005
+
+
+# 0
+.Def:End
+=====KBPC601=========
+module KBPC601();
+endmodule // KBPC601
+
+# sckt KBPC601
+
+
+# 0
+.Def:End
+=====KBPC602=========
+module KBPC602();
+endmodule // KBPC602
+
+# sckt KBPC602
+
+
+# 0
+.Def:End
+=====KBPC604=========
+module KBPC604();
+endmodule // KBPC604
+
+# sckt KBPC604
+
+
+# 0
+.Def:End
+=====KBPC606=========
+module KBPC606();
+endmodule // KBPC606
+
+# sckt KBPC606
+
+
+# 0
+.Def:End
+=====KBPC608=========
+module KBPC608();
+endmodule // KBPC608
+
+# sckt KBPC608
+
+
+# 0
+.Def:End
+=====KBPC610=========
+module KBPC610();
+endmodule // KBPC610
+
+# sckt KBPC610
+
+
+# 0
+.Def:End
+=====1BQ20=========
+module 1BQ20();
+endmodule // 1BQ20
+
+# sckt 1BQ20
+
+
+# 0
+.Def:End
+=====1BQ40=========
+module 1BQ40();
+endmodule // 1BQ40
+
+# sckt 1BQ40
+
+
+# 0
+.Def:End
+=====VSum=========
+module VSum();
+endmodule // VSum
+
+# sckt VSum
+
+
+# 0
+.Def:End
+=====VSub=========
+module VSub();
+endmodule // VSub
+
+# sckt VSub
+
+
+# 0
+.Def:End
+=====VDelay=========
+module VDelay();
+endmodule // VDelay
+
+# sckt VDelay
+
+
+# 0
+.Def:End
+=====VCO=========
+module VCO();
+endmodule // VCO
+
+# sckt VCO
+
+
+# 0
+.Def:End
+=====Sqrt=========
+module Sqrt();
+endmodule // Sqrt
+
+# sckt Sqrt
+
+
+# 0
+.Def:End
+=====Quantizer=========
+module Quantizer();
+endmodule // Quantizer
+
+# sckt Quantizer
+
+
+# 0
+.Def:End
+=====OpAmp=========
+module OpAmp();
+endmodule // OpAmp
+
+# sckt OpAmp
+
+
+# 0
+.Def:End
+=====Notch2=========
+module Notch2();
+endmodule // Notch2
+
+# sckt Notch2
+
+
+# 0
+.Def:End
+=====Mul=========
+module Mul();
+endmodule // Mul
+
+# sckt Mul
+
+
+# 0
+.Def:End
+=====Limiter=========
+module Limiter();
+endmodule // Limiter
+
+# sckt Limiter
+
+
+# 0
+.Def:End
+=====LP2=========
+module LP2();
+endmodule // LP2
+
+# sckt LP2
+
+
+# 0
+.Def:End
+=====LP1=========
+module LP1();
+endmodule // LP1
+
+# sckt LP1
+
+
+# 0
+.Def:End
+=====Int=========
+module Int();
+endmodule // Int
+
+# sckt Int
+
+
+# 0
+.Def:End
+=====HardLimiter=========
+module HardLimiter();
+endmodule // HardLimiter
+
+# sckt HardLimiter
+
+
+# 0
+.Def:End
+=====HP2=========
+module HP2();
+endmodule // HP2
+
+# sckt HP2
+
+
+# 0
+.Def:End
+=====HP1=========
+module HP1();
+endmodule // HP1
+
+# sckt HP1
+
+
+# 0
+.Def:End
+=====Div=========
+module Div();
+endmodule // Div
+
+# sckt Div
+
+
+# 0
+.Def:End
+=====Diff=========
+module Diff();
+endmodule // Diff
+
+# sckt Diff
+
+
+# 0
+.Def:End
+=====BP2=========
+module BP2();
+endmodule // BP2
+
+# sckt BP2
+
+
+# 0
+.Def:End
+=====Abs=========
+module Abs();
+endmodule // Abs
+
+# sckt Abs
+
+
+# 0
+.Def:End
+=====AP2=========
+module AP2();
+endmodule // AP2
+
+# sckt AP2
+
+
+# 0
+.Def:End
+=====AP1=========
+module AP1();
+endmodule // AP1
+
+# sckt AP1
+
+
+# 0
+.Def:End
+=====infrared=========
+module infrared();
+endmodule // infrared
+
+# sckt infrared
+
+
+# 0
+.Def:End
+=====red=========
+module red();
+endmodule // red
+
+# sckt red
+
+
+# 0
+.Def:End
+=====yellow=========
+module yellow();
+endmodule // yellow
+
+# sckt yellow
+
+
+# 0
+.Def:End
+=====green=========
+module green();
+endmodule // green
+
+# sckt green
+
+
+# 0
+.Def:End
+=====blue=========
+module blue();
+endmodule // blue
+
+# sckt blue
+
+
+# 0
+.Def:End
+=====IRFZ24N=========
+module IRFZ24N();
+endmodule // IRFZ24N
+
+# sckt IRFZ24N
+
+
+# 0
+.Def:End
+=====IRFZ34N=========
+module IRFZ34N();
+endmodule // IRFZ34N
+
+# sckt IRFZ34N
+
+
+# 0
+.Def:End
+=====IRFZ44N=========
+module IRFZ44N();
+endmodule // IRFZ44N
+
+# sckt IRFZ44N
+
+
+# 0
+.Def:End
+=====IRFZ46N=========
+module IRFZ46N();
+endmodule // IRFZ46N
+
+# sckt IRFZ46N
+
+
+# 0
+.Def:End
+=====IRF730=========
+module IRF730();
+endmodule // IRF730
+
+# sckt IRF730
+
+
+# 0
+.Def:End
+=====2N7000=========
+module 2N7000();
+endmodule // 2N7000
+
+# sckt 2N7000
+
+
+# 0
+.Def:End
+=====2N7002=========
+module 2N7002();
+endmodule // 2N7002
+
+# sckt 2N7002
+
+
+# 0
+.Def:End
+=====BS170=========
+module BS170();
+endmodule // BS170
+
+# sckt BS170
+
+
+# 0
+.Def:End
+=====BSP125=========
+module BSP125();
+endmodule // BSP125
+
+# sckt BSP125
+
+
+# 0
+.Def:End
+=====BSP149=========
+module BSP149();
+endmodule // BSP149
+
+# sckt BSP149
+
+
+# 0
+.Def:End
+=====BSP295=========
+module BSP295();
+endmodule // BSP295
+
+# sckt BSP295
+
+
+# 0
+.Def:End
+=====BSP299=========
+module BSP299();
+endmodule // BSP299
+
+# sckt BSP299
+
+
+# 0
+.Def:End
+=====BSP318=========
+module BSP318();
+endmodule // BSP318
+
+# sckt BSP318
+
+
+# 0
+.Def:End
+=====BSP319=========
+module BSP319();
+endmodule // BSP319
+
+# sckt BSP319
+
+
+# 0
+.Def:End
+=====BSP88=========
+module BSP88();
+endmodule // BSP88
+
+# sckt BSP88
+
+
+# 0
+.Def:End
+=====BSP89=========
+module BSP89();
+endmodule // BSP89
+
+# sckt BSP89
+
+
+# 0
+.Def:End
+=====BSS87=========
+module BSS87();
+endmodule // BSS87
+
+# sckt BSS87
+
+
+# 0
+.Def:End
+=====BSS88=========
+module BSS88();
+endmodule // BSS88
+
+# sckt BSS88
+
+
+# 0
+.Def:End
+=====BSS89=========
+module BSS89();
+endmodule // BSS89
+
+# sckt BSS89
+
+
+# 0
+.Def:End
+=====BSS98=========
+module BSS98();
+endmodule // BSS98
+
+# sckt BSS98
+
+
+# 0
+.Def:End
+=====BSS100=========
+module BSS100();
+endmodule // BSS100
+
+# sckt BSS100
+
+
+# 0
+.Def:End
+=====BSS101=========
+module BSS101();
+endmodule // BSS101
+
+# sckt BSS101
+
+
+# 0
+.Def:End
+=====BSS119=========
+module BSS119();
+endmodule // BSS119
+
+# sckt BSS119
+
+
+# 0
+.Def:End
+=====BSS125=========
+module BSS125();
+endmodule // BSS125
+
+# sckt BSS125
+
+
+# 0
+.Def:End
+=====BSS129=========
+module BSS129();
+endmodule // BSS129
+
+# sckt BSS129
+
+
+# 0
+.Def:End
+=====BSS135=========
+module BSS135();
+endmodule // BSS135
+
+# sckt BSS135
+
+
+# 0
+.Def:End
+=====BSS145=========
+module BSS145();
+endmodule // BSS145
+
+# sckt BSS145
+
+
+# 0
+.Def:End
+=====BSS229=========
+module BSS229();
+endmodule // BSS229
+
+# sckt BSS229
+
+
+# 0
+.Def:End
+=====BSS295=========
+module BSS295();
+endmodule // BSS295
+
+# sckt BSS295
+
+
+# 0
+.Def:End
+=====BSS296=========
+module BSS296();
+endmodule // BSS296
+
+# sckt BSS296
+
+
+# 0
+.Def:End
+=====BSS297=========
+module BSS297();
+endmodule // BSS297
+
+# sckt BSS297
+
+
+# 0
+.Def:End
+=====BUZ10L=========
+module BUZ10L();
+endmodule // BUZ10L
+
+# sckt BUZ10L
+
+
+# 0
+.Def:End
+=====BUZ10M=========
+module BUZ10M();
+endmodule // BUZ10M
+
+# sckt BUZ10M
+
+
+# 0
+.Def:End
+=====BUZ10=========
+module BUZ10();
+endmodule // BUZ10
+
+# sckt BUZ10
+
+
+# 0
+.Def:End
+=====BUZ11_2=========
+module BUZ11_2();
+endmodule // BUZ11_2
+
+# sckt BUZ11_2
+
+
+# 0
+.Def:End
+=====BUZ11GE=========
+module BUZ11GE();
+endmodule // BUZ11GE
+
+# sckt BUZ11GE
+
+
+# 0
+.Def:End
+=====BUZ11=========
+module BUZ11();
+endmodule // BUZ11
+
+# sckt BUZ11
+
+
+# 0
+.Def:End
+=====BUZ12AL=========
+module BUZ12AL();
+endmodule // BUZ12AL
+
+# sckt BUZ12AL
+
+
+# 0
+.Def:End
+=====BUZ12=========
+module BUZ12();
+endmodule // BUZ12
+
+# sckt BUZ12
+
+
+# 0
+.Def:End
+=====BUZ20=========
+module BUZ20();
+endmodule // BUZ20
+
+# sckt BUZ20
+
+
+# 0
+.Def:End
+=====BUZ21=========
+module BUZ21();
+endmodule // BUZ21
+
+# sckt BUZ21
+
+
+# 0
+.Def:End
+=====BUZ22=========
+module BUZ22();
+endmodule // BUZ22
+
+# sckt BUZ22
+
+
+# 0
+.Def:End
+=====BUZ30A=========
+module BUZ30A();
+endmodule // BUZ30A
+
+# sckt BUZ30A
+
+
+# 0
+.Def:End
+=====BUZ31=========
+module BUZ31();
+endmodule // BUZ31
+
+# sckt BUZ31
+
+
+# 0
+.Def:End
+=====BUZ40B=========
+module BUZ40B();
+endmodule // BUZ40B
+
+# sckt BUZ40B
+
+
+# 0
+.Def:End
+=====BUZ41A=========
+module BUZ41A();
+endmodule // BUZ41A
+
+# sckt BUZ41A
+
+
+# 0
+.Def:End
+=====BUZ45B=========
+module BUZ45B();
+endmodule // BUZ45B
+
+# sckt BUZ45B
+
+
+# 0
+.Def:End
+=====BUZ50B=========
+module BUZ50B();
+endmodule // BUZ50B
+
+# sckt BUZ50B
+
+
+# 0
+.Def:End
+=====BUZ51=========
+module BUZ51();
+endmodule // BUZ51
+
+# sckt BUZ51
+
+
+# 0
+.Def:End
+=====BUZ53A=========
+module BUZ53A();
+endmodule // BUZ53A
+
+# sckt BUZ53A
+
+
+# 0
+.Def:End
+=====BUZ60=========
+module BUZ60();
+endmodule // BUZ60
+
+# sckt BUZ60
+
+
+# 0
+.Def:End
+=====BUZ61A=========
+module BUZ61A();
+endmodule // BUZ61A
+
+# sckt BUZ61A
+
+
+# 0
+.Def:End
+=====BUZ64=========
+module BUZ64();
+endmodule // BUZ64
+
+# sckt BUZ64
+
+
+# 0
+.Def:End
+=====BUZ70=========
+module BUZ70();
+endmodule // BUZ70
+
+# sckt BUZ70
+
+
+# 0
+.Def:End
+=====BUZ71LGE=========
+module BUZ71LGE();
+endmodule // BUZ71LGE
+
+# sckt BUZ71LGE
+
+
+# 0
+.Def:End
+=====BUZ71L=========
+module BUZ71L();
+endmodule // BUZ71L
+
+# sckt BUZ71L
+
+
+# 0
+.Def:End
+=====BUZ71=========
+module BUZ71();
+endmodule // BUZ71
+
+# sckt BUZ71
+
+
+# 0
+.Def:End
+=====BUZ72GE=========
+module BUZ72GE();
+endmodule // BUZ72GE
+
+# sckt BUZ72GE
+
+
+# 0
+.Def:End
+=====BUZ72=========
+module BUZ72();
+endmodule // BUZ72
+
+# sckt BUZ72
+
+
+# 0
+.Def:End
+=====BUZ73AGE=========
+module BUZ73AGE();
+endmodule // BUZ73AGE
+
+# sckt BUZ73AGE
+
+
+# 0
+.Def:End
+=====BUZ73L=========
+module BUZ73L();
+endmodule // BUZ73L
+
+# sckt BUZ73L
+
+
+# 0
+.Def:End
+=====BUZ73=========
+module BUZ73();
+endmodule // BUZ73
+
+# sckt BUZ73
+
+
+# 0
+.Def:End
+=====BUZ74A=========
+module BUZ74A();
+endmodule // BUZ74A
+
+# sckt BUZ74A
+
+
+# 0
+.Def:End
+=====BUZ76=========
+module BUZ76();
+endmodule // BUZ76
+
+# sckt BUZ76
+
+
+# 0
+.Def:End
+=====BUZ77A=========
+module BUZ77A();
+endmodule // BUZ77A
+
+# sckt BUZ77A
+
+
+# 0
+.Def:End
+=====BUZ78=========
+module BUZ78();
+endmodule // BUZ78
+
+# sckt BUZ78
+
+
+# 0
+.Def:End
+=====BUZ80A=========
+module BUZ80A();
+endmodule // BUZ80A
+
+# sckt BUZ80A
+
+
+# 0
+.Def:End
+=====BUZ81=========
+module BUZ81();
+endmodule // BUZ81
+
+# sckt BUZ81
+
+
+# 0
+.Def:End
+=====BUZ84A=========
+module BUZ84A();
+endmodule // BUZ84A
+
+# sckt BUZ84A
+
+
+# 0
+.Def:End
+=====BUZ90=========
+module BUZ90();
+endmodule // BUZ90
+
+# sckt BUZ90
+
+
+# 0
+.Def:End
+=====BUZ91A=========
+module BUZ91A();
+endmodule // BUZ91A
+
+# sckt BUZ91A
+
+
+# 0
+.Def:End
+=====BUZ92=========
+module BUZ92();
+endmodule // BUZ92
+
+# sckt BUZ92
+
+
+# 0
+.Def:End
+=====BUZ100_1=========
+module BUZ100_1();
+endmodule // BUZ100_1
+
+# sckt BUZ100_1
+
+
+# 0
+.Def:End
+=====BUZ100_2=========
+module BUZ100_2();
+endmodule // BUZ100_2
+
+# sckt BUZ100_2
+
+
+# 0
+.Def:End
+=====BUZ101=========
+module BUZ101();
+endmodule // BUZ101
+
+# sckt BUZ101
+
+
+# 0
+.Def:End
+=====BUZ102=========
+module BUZ102();
+endmodule // BUZ102
+
+# sckt BUZ102
+
+
+# 0
+.Def:End
+=====BUZ104=========
+module BUZ104();
+endmodule // BUZ104
+
+# sckt BUZ104
+
+
+# 0
+.Def:End
+=====BUZ220=========
+module BUZ220();
+endmodule // BUZ220
+
+# sckt BUZ220
+
+
+# 0
+.Def:End
+=====BUZ305=========
+module BUZ305();
+endmodule // BUZ305
+
+# sckt BUZ305
+
+
+# 0
+.Def:End
+=====BUZ310=========
+module BUZ310();
+endmodule // BUZ310
+
+# sckt BUZ310
+
+
+# 0
+.Def:End
+=====BUZ311=========
+module BUZ311();
+endmodule // BUZ311
+
+# sckt BUZ311
+
+
+# 0
+.Def:End
+=====BUZ323=========
+module BUZ323();
+endmodule // BUZ323
+
+# sckt BUZ323
+
+
+# 0
+.Def:End
+=====BUZ325=========
+module BUZ325();
+endmodule // BUZ325
+
+# sckt BUZ325
+
+
+# 0
+.Def:End
+=====BUZ326=========
+module BUZ326();
+endmodule // BUZ326
+
+# sckt BUZ326
+
+
+# 0
+.Def:End
+=====BUZ331=========
+module BUZ331();
+endmodule // BUZ331
+
+# sckt BUZ331
+
+
+# 0
+.Def:End
+=====BUZ334=========
+module BUZ334();
+endmodule // BUZ334
+
+# sckt BUZ334
+
+
+# 0
+.Def:End
+=====BUZ338=========
+module BUZ338();
+endmodule // BUZ338
+
+# sckt BUZ338
+
+
+# 0
+.Def:End
+=====BUZ341=========
+module BUZ341();
+endmodule // BUZ341
+
+# sckt BUZ341
+
+
+# 0
+.Def:End
+=====BUZ342KL=========
+module BUZ342KL();
+endmodule // BUZ342KL
+
+# sckt BUZ342KL
+
+
+# 0
+.Def:End
+=====BUZ342=========
+module BUZ342();
+endmodule // BUZ342
+
+# sckt BUZ342
+
+
+# 0
+.Def:End
+=====BUZ344=========
+module BUZ344();
+endmodule // BUZ344
+
+# sckt BUZ344
+
+
+# 0
+.Def:End
+=====BUZ345=========
+module BUZ345();
+endmodule // BUZ345
+
+# sckt BUZ345
+
+
+# 0
+.Def:End
+=====BUZ346=========
+module BUZ346();
+endmodule // BUZ346
+
+# sckt BUZ346
+
+
+# 0
+.Def:End
+=====BUZ350=========
+module BUZ350();
+endmodule // BUZ350
+
+# sckt BUZ350
+
+
+# 0
+.Def:End
+=====BUZ356=========
+module BUZ356();
+endmodule // BUZ356
+
+# sckt BUZ356
+
+
+# 0
+.Def:End
+=====BUZ358=========
+module BUZ358();
+endmodule // BUZ358
+
+# sckt BUZ358
+
+
+# 0
+.Def:End
+=====IRF1010E=========
+module IRF1010E();
+endmodule // IRF1010E
+
+# sckt IRF1010E
+
+
+# 0
+.Def:End
+=====IRF1010EZ=========
+module IRF1010EZ();
+endmodule // IRF1010EZ
+
+# sckt IRF1010EZ
+
+
+# 0
+.Def:End
+=====IRF1010N=========
+module IRF1010N();
+endmodule // IRF1010N
+
+# sckt IRF1010N
+
+
+# 0
+.Def:End
+=====IRF1010NS=========
+module IRF1010NS();
+endmodule // IRF1010NS
+
+# sckt IRF1010NS
+
+
+# 0
+.Def:End
+=====IRF1010ZSL=========
+module IRF1010ZSL();
+endmodule // IRF1010ZSL
+
+# sckt IRF1010ZSL
+
+
+# 0
+.Def:End
+=====IRF1104=========
+module IRF1104();
+endmodule // IRF1104
+
+# sckt IRF1104
+
+
+# 0
+.Def:End
+=====IRF1310NS=========
+module IRF1310NS();
+endmodule // IRF1310NS
+
+# sckt IRF1310NS
+
+
+# 0
+.Def:End
+=====IRF1310=========
+module IRF1310();
+endmodule // IRF1310
+
+# sckt IRF1310
+
+
+# 0
+.Def:End
+=====IRF1324S-7PPBF=========
+module IRF1324S-7PPBF();
+endmodule // IRF1324S-7PPBF
+
+# sckt IRF1324S-7PPBF
+
+
+# 0
+.Def:End
+=====IRF1404=========
+module IRF1404();
+endmodule // IRF1404
+
+# sckt IRF1404
+
+
+# 0
+.Def:End
+=====IRF1404S=========
+module IRF1404S();
+endmodule // IRF1404S
+
+# sckt IRF1404S
+
+
+# 0
+.Def:End
+=====IRF1404ZSL=========
+module IRF1404ZSL();
+endmodule // IRF1404ZSL
+
+# sckt IRF1404ZSL
+
+
+# 0
+.Def:End
+=====IRF1404Z=========
+module IRF1404Z();
+endmodule // IRF1404Z
+
+# sckt IRF1404Z
+
+
+# 0
+.Def:End
+=====IRF1405=========
+module IRF1405();
+endmodule // IRF1405
+
+# sckt IRF1405
+
+
+# 0
+.Def:End
+=====IRF1405ZS-7P=========
+module IRF1405ZS-7P();
+endmodule // IRF1405ZS-7P
+
+# sckt IRF1405ZS-7P
+
+
+# 0
+.Def:End
+=====IRF1405Z=========
+module IRF1405Z();
+endmodule // IRF1405Z
+
+# sckt IRF1405Z
+
+
+# 0
+.Def:End
+=====IRF1407=========
+module IRF1407();
+endmodule // IRF1407
+
+# sckt IRF1407
+
+
+# 0
+.Def:End
+=====IRF1503S=========
+module IRF1503S();
+endmodule // IRF1503S
+
+# sckt IRF1503S
+
+
+# 0
+.Def:End
+=====IRF2804S7P=========
+module IRF2804S7P();
+endmodule // IRF2804S7P
+
+# sckt IRF2804S7P
+
+
+# 0
+.Def:End
+=====IRF2804_S_L=========
+module IRF2804_S_L();
+endmodule // IRF2804_S_L
+
+# sckt IRF2804_S_L
+
+
+# 0
+.Def:End
+=====IRF2804=========
+module IRF2804();
+endmodule // IRF2804
+
+# sckt IRF2804
+
+
+# 0
+.Def:End
+=====IRF2807S_L=========
+module IRF2807S_L();
+endmodule // IRF2807S_L
+
+# sckt IRF2807S_L
+
+
+# 0
+.Def:End
+=====IRF2807=========
+module IRF2807();
+endmodule // IRF2807
+
+# sckt IRF2807
+
+
+# 0
+.Def:End
+=====IRF2807ZS_L=========
+module IRF2807ZS_L();
+endmodule // IRF2807ZS_L
+
+# sckt IRF2807ZS_L
+
+
+# 0
+.Def:End
+=====IRF2807Z=========
+module IRF2807Z();
+endmodule // IRF2807Z
+
+# sckt IRF2807Z
+
+
+# 0
+.Def:End
+=====IRF2907Z_S_L=========
+module IRF2907Z_S_L();
+endmodule // IRF2907Z_S_L
+
+# sckt IRF2907Z_S_L
+
+
+# 0
+.Def:End
+=====IRF3205=========
+module IRF3205();
+endmodule // IRF3205
+
+# sckt IRF3205
+
+
+# 0
+.Def:End
+=====IRF3205S=========
+module IRF3205S();
+endmodule // IRF3205S
+
+# sckt IRF3205S
+
+
+# 0
+.Def:End
+=====IRF3305=========
+module IRF3305();
+endmodule // IRF3305
+
+# sckt IRF3305
+
+
+# 0
+.Def:End
+=====IRF3315=========
+module IRF3315();
+endmodule // IRF3315
+
+# sckt IRF3315
+
+
+# 0
+.Def:End
+=====IRF3415=========
+module IRF3415();
+endmodule // IRF3415
+
+# sckt IRF3415
+
+
+# 0
+.Def:End
+=====IRF3706SL=========
+module IRF3706SL();
+endmodule // IRF3706SL
+
+# sckt IRF3706SL
+
+
+# 0
+.Def:End
+=====IRF3707ZCS_L=========
+module IRF3707ZCS_L();
+endmodule // IRF3707ZCS_L
+
+# sckt IRF3707ZCS_L
+
+
+# 0
+.Def:End
+=====IRF3707Z_S_L=========
+module IRF3707Z_S_L();
+endmodule // IRF3707Z_S_L
+
+# sckt IRF3707Z_S_L
+
+
+# 0
+.Def:End
+=====IRF3708=========
+module IRF3708();
+endmodule // IRF3708
+
+# sckt IRF3708
+
+
+# 0
+.Def:End
+=====IRF3709ZCS_L=========
+module IRF3709ZCS_L();
+endmodule // IRF3709ZCS_L
+
+# sckt IRF3709ZCS_L
+
+
+# 0
+.Def:End
+=====IRF3709Z_S_L=========
+module IRF3709Z_S_L();
+endmodule // IRF3709Z_S_L
+
+# sckt IRF3709Z_S_L
+
+
+# 0
+.Def:End
+=====IRF3710=========
+module IRF3710();
+endmodule // IRF3710
+
+# sckt IRF3710
+
+
+# 0
+.Def:End
+=====IRF3710S=========
+module IRF3710S();
+endmodule // IRF3710S
+
+# sckt IRF3710S
+
+
+# 0
+.Def:End
+=====IRF3710Z_S_L=========
+module IRF3710Z_S_L();
+endmodule // IRF3710Z_S_L
+
+# sckt IRF3710Z_S_L
+
+
+# 0
+.Def:End
+=====IRF3710Z=========
+module IRF3710Z();
+endmodule // IRF3710Z
+
+# sckt IRF3710Z
+
+
+# 0
+.Def:End
+=====IRF3711=========
+module IRF3711();
+endmodule // IRF3711
+
+# sckt IRF3711
+
+
+# 0
+.Def:End
+=====IRF3805S-7P=========
+module IRF3805S-7P();
+endmodule // IRF3805S-7P
+
+# sckt IRF3805S-7P
+
+
+# 0
+.Def:End
+=====IRF3805SL=========
+module IRF3805SL();
+endmodule // IRF3805SL
+
+# sckt IRF3805SL
+
+
+# 0
+.Def:End
+=====IRF3808=========
+module IRF3808();
+endmodule // IRF3808
+
+# sckt IRF3808
+
+
+# 0
+.Def:End
+=====IRF4104SL=========
+module IRF4104SL();
+endmodule // IRF4104SL
+
+# sckt IRF4104SL
+
+
+# 0
+.Def:End
+=====IRF510=========
+module IRF510();
+endmodule // IRF510
+
+# sckt IRF510
+
+
+# 0
+.Def:End
+=====IRF520N=========
+module IRF520N();
+endmodule // IRF520N
+
+# sckt IRF520N
+
+
+# 0
+.Def:End
+=====IRF520NS=========
+module IRF520NS();
+endmodule // IRF520NS
+
+# sckt IRF520NS
+
+
+# 0
+.Def:End
+=====IRF530N=========
+module IRF530N();
+endmodule // IRF530N
+
+# sckt IRF530N
+
+
+# 0
+.Def:End
+=====IRF530NS=========
+module IRF530NS();
+endmodule // IRF530NS
+
+# sckt IRF530NS
+
+
+# 0
+.Def:End
+=====IRF540N=========
+module IRF540N();
+endmodule // IRF540N
+
+# sckt IRF540N
+
+
+# 0
+.Def:End
+=====IRF540NS=========
+module IRF540NS();
+endmodule // IRF540NS
+
+# sckt IRF540NS
+
+
+# 0
+.Def:End
+=====IRF540ZS_L=========
+module IRF540ZS_L();
+endmodule // IRF540ZS_L
+
+# sckt IRF540ZS_L
+
+
+# 0
+.Def:End
+=====IRF540Z=========
+module IRF540Z();
+endmodule // IRF540Z
+
+# sckt IRF540Z
+
+
+# 0
+.Def:End
+=====IRF5801=========
+module IRF5801();
+endmodule // IRF5801
+
+# sckt IRF5801
+
+
+# 0
+.Def:End
+=====IRF5802=========
+module IRF5802();
+endmodule // IRF5802
+
+# sckt IRF5802
+
+
+# 0
+.Def:End
+=====IRF610=========
+module IRF610();
+endmodule // IRF610
+
+# sckt IRF610
+
+
+# 0
+.Def:End
+=====IRF620=========
+module IRF620();
+endmodule // IRF620
+
+# sckt IRF620
+
+
+# 0
+.Def:End
+=====IRF630=========
+module IRF630();
+endmodule // IRF630
+
+# sckt IRF630
+
+
+# 0
+.Def:End
+=====IRF640NS=========
+module IRF640NS();
+endmodule // IRF640NS
+
+# sckt IRF640NS
+
+
+# 0
+.Def:End
+=====IRF640=========
+module IRF640();
+endmodule // IRF640
+
+# sckt IRF640
+
+
+# 0
+.Def:End
+=====IRF640S=========
+module IRF640S();
+endmodule // IRF640S
+
+# sckt IRF640S
+
+
+# 0
+.Def:End
+=====IRF644S=========
+module IRF644S();
+endmodule // IRF644S
+
+# sckt IRF644S
+
+
+# 0
+.Def:End
+=====IRF6603=========
+module IRF6603();
+endmodule // IRF6603
+
+# sckt IRF6603
+
+
+# 0
+.Def:End
+=====IRF6604=========
+module IRF6604();
+endmodule // IRF6604
+
+# sckt IRF6604
+
+
+# 0
+.Def:End
+=====IRF6607=========
+module IRF6607();
+endmodule // IRF6607
+
+# sckt IRF6607
+
+
+# 0
+.Def:End
+=====IRF6608=========
+module IRF6608();
+endmodule // IRF6608
+
+# sckt IRF6608
+
+
+# 0
+.Def:End
+=====IRF6609=========
+module IRF6609();
+endmodule // IRF6609
+
+# sckt IRF6609
+
+
+# 0
+.Def:End
+=====IRF6610=========
+module IRF6610();
+endmodule // IRF6610
+
+# sckt IRF6610
+
+
+# 0
+.Def:End
+=====IRF6611=========
+module IRF6611();
+endmodule // IRF6611
+
+# sckt IRF6611
+
+
+# 0
+.Def:End
+=====IRF6612=========
+module IRF6612();
+endmodule // IRF6612
+
+# sckt IRF6612
+
+
+# 0
+.Def:End
+=====IRF6613=========
+module IRF6613();
+endmodule // IRF6613
+
+# sckt IRF6613
+
+
+# 0
+.Def:End
+=====IRF6614=========
+module IRF6614();
+endmodule // IRF6614
+
+# sckt IRF6614
+
+
+# 0
+.Def:End
+=====IRF6616=========
+module IRF6616();
+endmodule // IRF6616
+
+# sckt IRF6616
+
+
+# 0
+.Def:End
+=====IRF6617=========
+module IRF6617();
+endmodule // IRF6617
+
+# sckt IRF6617
+
+
+# 0
+.Def:End
+=====IRF6618=========
+module IRF6618();
+endmodule // IRF6618
+
+# sckt IRF6618
+
+
+# 0
+.Def:End
+=====IRF6619=========
+module IRF6619();
+endmodule // IRF6619
+
+# sckt IRF6619
+
+
+# 0
+.Def:End
+=====IRF6620=========
+module IRF6620();
+endmodule // IRF6620
+
+# sckt IRF6620
+
+
+# 0
+.Def:End
+=====IRF6621=========
+module IRF6621();
+endmodule // IRF6621
+
+# sckt IRF6621
+
+
+# 0
+.Def:End
+=====IRF6622=========
+module IRF6622();
+endmodule // IRF6622
+
+# sckt IRF6622
+
+
+# 0
+.Def:End
+=====IRF6623=========
+module IRF6623();
+endmodule // IRF6623
+
+# sckt IRF6623
+
+
+# 0
+.Def:End
+=====IRF6626=========
+module IRF6626();
+endmodule // IRF6626
+
+# sckt IRF6626
+
+
+# 0
+.Def:End
+=====IRF6628PBF=========
+module IRF6628PBF();
+endmodule // IRF6628PBF
+
+# sckt IRF6628PBF
+
+
+# 0
+.Def:End
+=====IRF6629PBF=========
+module IRF6629PBF();
+endmodule // IRF6629PBF
+
+# sckt IRF6629PBF
+
+
+# 0
+.Def:End
+=====IRF6631=========
+module IRF6631();
+endmodule // IRF6631
+
+# sckt IRF6631
+
+
+# 0
+.Def:End
+=====IRF6633=========
+module IRF6633();
+endmodule // IRF6633
+
+# sckt IRF6633
+
+
+# 0
+.Def:End
+=====IRF6635=========
+module IRF6635();
+endmodule // IRF6635
+
+# sckt IRF6635
+
+
+# 0
+.Def:End
+=====IRF6636=========
+module IRF6636();
+endmodule // IRF6636
+
+# sckt IRF6636
+
+
+# 0
+.Def:End
+=====IRF6638=========
+module IRF6638();
+endmodule // IRF6638
+
+# sckt IRF6638
+
+
+# 0
+.Def:End
+=====IRF6644=========
+module IRF6644();
+endmodule // IRF6644
+
+# sckt IRF6644
+
+
+# 0
+.Def:End
+=====IRF6645=========
+module IRF6645();
+endmodule // IRF6645
+
+# sckt IRF6645
+
+
+# 0
+.Def:End
+=====IRF6646=========
+module IRF6646();
+endmodule // IRF6646
+
+# sckt IRF6646
+
+
+# 0
+.Def:End
+=====IRF6648=========
+module IRF6648();
+endmodule // IRF6648
+
+# sckt IRF6648
+
+
+# 0
+.Def:End
+=====IRF6665=========
+module IRF6665();
+endmodule // IRF6665
+
+# sckt IRF6665
+
+
+# 0
+.Def:End
+=====IRF6668=========
+module IRF6668();
+endmodule // IRF6668
+
+# sckt IRF6668
+
+
+# 0
+.Def:End
+=====IRF6691=========
+module IRF6691();
+endmodule // IRF6691
+
+# sckt IRF6691
+
+
+# 0
+.Def:End
+=====IRF6712SPBF=========
+module IRF6712SPBF();
+endmodule // IRF6712SPBF
+
+# sckt IRF6712SPBF
+
+
+# 0
+.Def:End
+=====IRF6775MPBF=========
+module IRF6775MPBF();
+endmodule // IRF6775MPBF
+
+# sckt IRF6775MPBF
+
+
+# 0
+.Def:End
+=====IRF7201=========
+module IRF7201();
+endmodule // IRF7201
+
+# sckt IRF7201
+
+
+# 0
+.Def:End
+=====IRF720=========
+module IRF720();
+endmodule // IRF720
+
+# sckt IRF720
+
+
+# 0
+.Def:End
+=====IRF730A=========
+module IRF730A();
+endmodule // IRF730A
+
+# sckt IRF730A
+
+
+# 0
+.Def:End
+=====IRF730=========
+module IRF730();
+endmodule // IRF730
+
+# sckt IRF730
+
+
+# 0
+.Def:End
+=====IRF7401=========
+module IRF7401();
+endmodule // IRF7401
+
+# sckt IRF7401
+
+
+# 0
+.Def:End
+=====IRF7403=========
+module IRF7403();
+endmodule // IRF7403
+
+# sckt IRF7403
+
+
+# 0
+.Def:End
+=====IRF740LC=========
+module IRF740LC();
+endmodule // IRF740LC
+
+# sckt IRF740LC
+
+
+# 0
+.Def:End
+=====IRF7413=========
+module IRF7413();
+endmodule // IRF7413
+
+# sckt IRF7413
+
+
+# 0
+.Def:End
+=====IRF7413Z=========
+module IRF7413Z();
+endmodule // IRF7413Z
+
+# sckt IRF7413Z
+
+
+# 0
+.Def:End
+=====IRF7450=========
+module IRF7450();
+endmodule // IRF7450
+
+# sckt IRF7450
+
+
+# 0
+.Def:End
+=====IRF7451=========
+module IRF7451();
+endmodule // IRF7451
+
+# sckt IRF7451
+
+
+# 0
+.Def:End
+=====IRF7452=========
+module IRF7452();
+endmodule // IRF7452
+
+# sckt IRF7452
+
+
+# 0
+.Def:End
+=====IRF7453=========
+module IRF7453();
+endmodule // IRF7453
+
+# sckt IRF7453
+
+
+# 0
+.Def:End
+=====IRF7456=========
+module IRF7456();
+endmodule // IRF7456
+
+# sckt IRF7456
+
+
+# 0
+.Def:End
+=====IRF7457=========
+module IRF7457();
+endmodule // IRF7457
+
+# sckt IRF7457
+
+
+# 0
+.Def:End
+=====IRF7460=========
+module IRF7460();
+endmodule // IRF7460
+
+# sckt IRF7460
+
+
+# 0
+.Def:End
+=====IRF7463=========
+module IRF7463();
+endmodule // IRF7463
+
+# sckt IRF7463
+
+
+# 0
+.Def:End
+=====IRF7464=========
+module IRF7464();
+endmodule // IRF7464
+
+# sckt IRF7464
+
+
+# 0
+.Def:End
+=====IRF7465=========
+module IRF7465();
+endmodule // IRF7465
+
+# sckt IRF7465
+
+
+# 0
+.Def:End
+=====IRF7469=========
+module IRF7469();
+endmodule // IRF7469
+
+# sckt IRF7469
+
+
+# 0
+.Def:End
+=====IRF7470=========
+module IRF7470();
+endmodule // IRF7470
+
+# sckt IRF7470
+
+
+# 0
+.Def:End
+=====IRF7473=========
+module IRF7473();
+endmodule // IRF7473
+
+# sckt IRF7473
+
+
+# 0
+.Def:End
+=====IRF7475=========
+module IRF7475();
+endmodule // IRF7475
+
+# sckt IRF7475
+
+
+# 0
+.Def:End
+=====IRF7476=========
+module IRF7476();
+endmodule // IRF7476
+
+# sckt IRF7476
+
+
+# 0
+.Def:End
+=====IRF7477=========
+module IRF7477();
+endmodule // IRF7477
+
+# sckt IRF7477
+
+
+# 0
+.Def:End
+=====IRF7478=========
+module IRF7478();
+endmodule // IRF7478
+
+# sckt IRF7478
+
+
+# 0
+.Def:End
+=====IRF7484Q=========
+module IRF7484Q();
+endmodule // IRF7484Q
+
+# sckt IRF7484Q
+
+
+# 0
+.Def:End
+=====IRF7484=========
+module IRF7484();
+endmodule // IRF7484
+
+# sckt IRF7484
+
+
+# 0
+.Def:End
+=====IRF7492=========
+module IRF7492();
+endmodule // IRF7492
+
+# sckt IRF7492
+
+
+# 0
+.Def:End
+=====IRF7494=========
+module IRF7494();
+endmodule // IRF7494
+
+# sckt IRF7494
+
+
+# 0
+.Def:End
+=====IRF7495=========
+module IRF7495();
+endmodule // IRF7495
+
+# sckt IRF7495
+
+
+# 0
+.Def:End
+=====IRF7601=========
+module IRF7601();
+endmodule // IRF7601
+
+# sckt IRF7601
+
+
+# 0
+.Def:End
+=====IRF7603=========
+module IRF7603();
+endmodule // IRF7603
+
+# sckt IRF7603
+
+
+# 0
+.Def:End
+=====IRF7607=========
+module IRF7607();
+endmodule // IRF7607
+
+# sckt IRF7607
+
+
+# 0
+.Def:End
+=====IRF7805=========
+module IRF7805();
+endmodule // IRF7805
+
+# sckt IRF7805
+
+
+# 0
+.Def:End
+=====IRF7807=========
+module IRF7807();
+endmodule // IRF7807
+
+# sckt IRF7807
+
+
+# 0
+.Def:End
+=====IRF7807V=========
+module IRF7807V();
+endmodule // IRF7807V
+
+# sckt IRF7807V
+
+
+# 0
+.Def:End
+=====IRF7809AV=========
+module IRF7809AV();
+endmodule // IRF7809AV
+
+# sckt IRF7809AV
+
+
+# 0
+.Def:End
+=====IRF7811AV=========
+module IRF7811AV();
+endmodule // IRF7811AV
+
+# sckt IRF7811AV
+
+
+# 0
+.Def:End
+=====IRF7811W=========
+module IRF7811W();
+endmodule // IRF7811W
+
+# sckt IRF7811W
+
+
+# 0
+.Def:End
+=====IRF7821=========
+module IRF7821();
+endmodule // IRF7821
+
+# sckt IRF7821
+
+
+# 0
+.Def:End
+=====IRF7822=========
+module IRF7822();
+endmodule // IRF7822
+
+# sckt IRF7822
+
+
+# 0
+.Def:End
+=====IRF7831=========
+module IRF7831();
+endmodule // IRF7831
+
+# sckt IRF7831
+
+
+# 0
+.Def:End
+=====IRF7832=========
+module IRF7832();
+endmodule // IRF7832
+
+# sckt IRF7832
+
+
+# 0
+.Def:End
+=====IRF7832Z=========
+module IRF7832Z();
+endmodule // IRF7832Z
+
+# sckt IRF7832Z
+
+
+# 0
+.Def:End
+=====IRF7834=========
+module IRF7834();
+endmodule // IRF7834
+
+# sckt IRF7834
+
+
+# 0
+.Def:End
+=====IRF7855PBF=========
+module IRF7855PBF();
+endmodule // IRF7855PBF
+
+# sckt IRF7855PBF
+
+
+# 0
+.Def:End
+=====IRF8113=========
+module IRF8113();
+endmodule // IRF8113
+
+# sckt IRF8113
+
+
+# 0
+.Def:End
+=====IRF820=========
+module IRF820();
+endmodule // IRF820
+
+# sckt IRF820
+
+
+# 0
+.Def:End
+=====IRF830=========
+module IRF830();
+endmodule // IRF830
+
+# sckt IRF830
+
+
+# 0
+.Def:End
+=====IRF840=========
+module IRF840();
+endmodule // IRF840
+
+# sckt IRF840
+
+
+# 0
+.Def:End
+=====IRF9410=========
+module IRF9410();
+endmodule // IRF9410
+
+# sckt IRF9410
+
+
+# 0
+.Def:End
+=====IRFB17N50L=========
+module IRFB17N50L();
+endmodule // IRFB17N50L
+
+# sckt IRFB17N50L
+
+
+# 0
+.Def:End
+=====IRFB18N50K=========
+module IRFB18N50K();
+endmodule // IRFB18N50K
+
+# sckt IRFB18N50K
+
+
+# 0
+.Def:End
+=====IRFB3077PBF=========
+module IRFB3077PBF();
+endmodule // IRFB3077PBF
+
+# sckt IRFB3077PBF
+
+
+# 0
+.Def:End
+=====IRFB31N20D=========
+module IRFB31N20D();
+endmodule // IRFB31N20D
+
+# sckt IRFB31N20D
+
+
+# 0
+.Def:End
+=====IRFB4020PBF=========
+module IRFB4020PBF();
+endmodule // IRFB4020PBF
+
+# sckt IRFB4020PBF
+
+
+# 0
+.Def:End
+=====IRFB4103PBF=========
+module IRFB4103PBF();
+endmodule // IRFB4103PBF
+
+# sckt IRFB4103PBF
+
+
+# 0
+.Def:End
+=====IRFB4110PBF=========
+module IRFB4110PBF();
+endmodule // IRFB4110PBF
+
+# sckt IRFB4110PBF
+
+
+# 0
+.Def:End
+=====IRFB4227PBF=========
+module IRFB4227PBF();
+endmodule // IRFB4227PBF
+
+# sckt IRFB4227PBF
+
+
+# 0
+.Def:End
+=====IRFB4229PBF=========
+module IRFB4229PBF();
+endmodule // IRFB4229PBF
+
+# sckt IRFB4229PBF
+
+
+# 0
+.Def:End
+=====IRFB42N20D=========
+module IRFB42N20D();
+endmodule // IRFB42N20D
+
+# sckt IRFB42N20D
+
+
+# 0
+.Def:End
+=====IRFB4321PBF=========
+module IRFB4321PBF();
+endmodule // IRFB4321PBF
+
+# sckt IRFB4321PBF
+
+
+# 0
+.Def:End
+=====IRFB4332PBF=========
+module IRFB4332PBF();
+endmodule // IRFB4332PBF
+
+# sckt IRFB4332PBF
+
+
+# 0
+.Def:End
+=====IRFB4710=========
+module IRFB4710();
+endmodule // IRFB4710
+
+# sckt IRFB4710
+
+
+# 0
+.Def:End
+=====IRFB59N10D=========
+module IRFB59N10D();
+endmodule // IRFB59N10D
+
+# sckt IRFB59N10D
+
+
+# 0
+.Def:End
+=====IRFB61N15D=========
+module IRFB61N15D();
+endmodule // IRFB61N15D
+
+# sckt IRFB61N15D
+
+
+# 0
+.Def:End
+=====IRFBA1405P=========
+module IRFBA1405P();
+endmodule // IRFBA1405P
+
+# sckt IRFBA1405P
+
+
+# 0
+.Def:End
+=====IRFBA90N20D=========
+module IRFBA90N20D();
+endmodule // IRFBA90N20D
+
+# sckt IRFBA90N20D
+
+
+# 0
+.Def:End
+=====IRFBC20=========
+module IRFBC20();
+endmodule // IRFBC20
+
+# sckt IRFBC20
+
+
+# 0
+.Def:End
+=====IRFBC30=========
+module IRFBC30();
+endmodule // IRFBC30
+
+# sckt IRFBC30
+
+
+# 0
+.Def:End
+=====IRFBC40=========
+module IRFBC40();
+endmodule // IRFBC40
+
+# sckt IRFBC40
+
+
+# 0
+.Def:End
+=====IRFBE20=========
+module IRFBE20();
+endmodule // IRFBE20
+
+# sckt IRFBE20
+
+
+# 0
+.Def:End
+=====IRFBE30=========
+module IRFBE30();
+endmodule // IRFBE30
+
+# sckt IRFBE30
+
+
+# 0
+.Def:End
+=====IRFBF20=========
+module IRFBF20();
+endmodule // IRFBF20
+
+# sckt IRFBF20
+
+
+# 0
+.Def:End
+=====IRFBF30=========
+module IRFBF30();
+endmodule // IRFBF30
+
+# sckt IRFBF30
+
+
+# 0
+.Def:End
+=====IRFBG20=========
+module IRFBG20();
+endmodule // IRFBG20
+
+# sckt IRFBG20
+
+
+# 0
+.Def:End
+=====IRFBG30=========
+module IRFBG30();
+endmodule // IRFBG30
+
+# sckt IRFBG30
+
+
+# 0
+.Def:End
+=====IRFI1010N=========
+module IRFI1010N();
+endmodule // IRFI1010N
+
+# sckt IRFI1010N
+
+
+# 0
+.Def:End
+=====IRFI1310N=========
+module IRFI1310N();
+endmodule // IRFI1310N
+
+# sckt IRFI1310N
+
+
+# 0
+.Def:End
+=====IRFI4227PBF=========
+module IRFI4227PBF();
+endmodule // IRFI4227PBF
+
+# sckt IRFI4227PBF
+
+
+# 0
+.Def:End
+=====IRFI520N=========
+module IRFI520N();
+endmodule // IRFI520N
+
+# sckt IRFI520N
+
+
+# 0
+.Def:End
+=====IRFI530N=========
+module IRFI530N();
+endmodule // IRFI530N
+
+# sckt IRFI530N
+
+
+# 0
+.Def:End
+=====IRFI540N=========
+module IRFI540N();
+endmodule // IRFI540N
+
+# sckt IRFI540N
+
+
+# 0
+.Def:End
+=====IRFI840GLC=========
+module IRFI840GLC();
+endmodule // IRFI840GLC
+
+# sckt IRFI840GLC
+
+
+# 0
+.Def:End
+=====IRFI840G=========
+module IRFI840G();
+endmodule // IRFI840G
+
+# sckt IRFI840G
+
+
+# 0
+.Def:End
+=====IRFIZ44N=========
+module IRFIZ44N();
+endmodule // IRFIZ44N
+
+# sckt IRFIZ44N
+
+
+# 0
+.Def:End
+=====IRFIZ46N=========
+module IRFIZ46N();
+endmodule // IRFIZ46N
+
+# sckt IRFIZ46N
+
+
+# 0
+.Def:End
+=====IRFIZ48N=========
+module IRFIZ48N();
+endmodule // IRFIZ48N
+
+# sckt IRFIZ48N
+
+
+# 0
+.Def:End
+=====IRFL024Z=========
+module IRFL024Z();
+endmodule // IRFL024Z
+
+# sckt IRFL024Z
+
+
+# 0
+.Def:End
+=====IRFL4105=========
+module IRFL4105();
+endmodule // IRFL4105
+
+# sckt IRFL4105
+
+
+# 0
+.Def:End
+=====IRFL4310=========
+module IRFL4310();
+endmodule // IRFL4310
+
+# sckt IRFL4310
+
+
+# 0
+.Def:End
+=====IRFP044N=========
+module IRFP044N();
+endmodule // IRFP044N
+
+# sckt IRFP044N
+
+
+# 0
+.Def:End
+=====IRFP048N=========
+module IRFP048N();
+endmodule // IRFP048N
+
+# sckt IRFP048N
+
+
+# 0
+.Def:End
+=====IRFP054N=========
+module IRFP054N();
+endmodule // IRFP054N
+
+# sckt IRFP054N
+
+
+# 0
+.Def:End
+=====IRFP064N=========
+module IRFP064N();
+endmodule // IRFP064N
+
+# sckt IRFP064N
+
+
+# 0
+.Def:End
+=====IRFP064V=========
+module IRFP064V();
+endmodule // IRFP064V
+
+# sckt IRFP064V
+
+
+# 0
+.Def:End
+=====IRFP1405=========
+module IRFP1405();
+endmodule // IRFP1405
+
+# sckt IRFP1405
+
+
+# 0
+.Def:End
+=====IRFP140N=========
+module IRFP140N();
+endmodule // IRFP140N
+
+# sckt IRFP140N
+
+
+# 0
+.Def:End
+=====IRFP150N=========
+module IRFP150N();
+endmodule // IRFP150N
+
+# sckt IRFP150N
+
+
+# 0
+.Def:End
+=====IRFP250N=========
+module IRFP250N();
+endmodule // IRFP250N
+
+# sckt IRFP250N
+
+
+# 0
+.Def:End
+=====IRFP260N=========
+module IRFP260N();
+endmodule // IRFP260N
+
+# sckt IRFP260N
+
+
+# 0
+.Def:End
+=====IRFP2907=========
+module IRFP2907();
+endmodule // IRFP2907
+
+# sckt IRFP2907
+
+
+# 0
+.Def:End
+=====IRFP2907Z=========
+module IRFP2907Z();
+endmodule // IRFP2907Z
+
+# sckt IRFP2907Z
+
+
+# 0
+.Def:End
+=====IRFP350=========
+module IRFP350();
+endmodule // IRFP350
+
+# sckt IRFP350
+
+
+# 0
+.Def:End
+=====IRFP3703=========
+module IRFP3703();
+endmodule // IRFP3703
+
+# sckt IRFP3703
+
+
+# 0
+.Def:End
+=====IRFP3710=========
+module IRFP3710();
+endmodule // IRFP3710
+
+# sckt IRFP3710
+
+
+# 0
+.Def:End
+=====IRFP4232PBF=========
+module IRFP4232PBF();
+endmodule // IRFP4232PBF
+
+# sckt IRFP4232PBF
+
+
+# 0
+.Def:End
+=====IRFP440=========
+module IRFP440();
+endmodule // IRFP440
+
+# sckt IRFP440
+
+
+# 0
+.Def:End
+=====IRFP450A=========
+module IRFP450A();
+endmodule // IRFP450A
+
+# sckt IRFP450A
+
+
+# 0
+.Def:End
+=====IRFP450=========
+module IRFP450();
+endmodule // IRFP450
+
+# sckt IRFP450
+
+
+# 0
+.Def:End
+=====IRFP460A=========
+module IRFP460A();
+endmodule // IRFP460A
+
+# sckt IRFP460A
+
+
+# 0
+.Def:End
+=====IRFP460N=========
+module IRFP460N();
+endmodule // IRFP460N
+
+# sckt IRFP460N
+
+
+# 0
+.Def:End
+=====IRFP460=========
+module IRFP460();
+endmodule // IRFP460
+
+# sckt IRFP460
+
+
+# 0
+.Def:End
+=====IRFPS3810=========
+module IRFPS3810();
+endmodule // IRFPS3810
+
+# sckt IRFPS3810
+
+
+# 0
+.Def:End
+=====IRFPS3815=========
+module IRFPS3815();
+endmodule // IRFPS3815
+
+# sckt IRFPS3815
+
+
+# 0
+.Def:End
+=====IRFR014=========
+module IRFR014();
+endmodule // IRFR014
+
+# sckt IRFR014
+
+
+# 0
+.Def:End
+=====IRFR024N=========
+module IRFR024N();
+endmodule // IRFR024N
+
+# sckt IRFR024N
+
+
+# 0
+.Def:End
+=====IRFR110=========
+module IRFR110();
+endmodule // IRFR110
+
+# sckt IRFR110
+
+
+# 0
+.Def:End
+=====IRFR1205=========
+module IRFR1205();
+endmodule // IRFR1205
+
+# sckt IRFR1205
+
+
+# 0
+.Def:End
+=====IRFR120N=========
+module IRFR120N();
+endmodule // IRFR120N
+
+# sckt IRFR120N
+
+
+# 0
+.Def:End
+=====IRFR13N20D=========
+module IRFR13N20D();
+endmodule // IRFR13N20D
+
+# sckt IRFR13N20D
+
+
+# 0
+.Def:End
+=====IRFR18N15D=========
+module IRFR18N15D();
+endmodule // IRFR18N15D
+
+# sckt IRFR18N15D
+
+
+# 0
+.Def:End
+=====IRFR210=========
+module IRFR210();
+endmodule // IRFR210
+
+# sckt IRFR210
+
+
+# 0
+.Def:End
+=====IRFR220=========
+module IRFR220();
+endmodule // IRFR220
+
+# sckt IRFR220
+
+
+# 0
+.Def:End
+=====IRFR2405=========
+module IRFR2405();
+endmodule // IRFR2405
+
+# sckt IRFR2405
+
+
+# 0
+.Def:End
+=====IRFR24N15D=========
+module IRFR24N15D();
+endmodule // IRFR24N15D
+
+# sckt IRFR24N15D
+
+
+# 0
+.Def:End
+=====IRFR320=========
+module IRFR320();
+endmodule // IRFR320
+
+# sckt IRFR320
+
+
+# 0
+.Def:End
+=====IRFR3303=========
+module IRFR3303();
+endmodule // IRFR3303
+
+# sckt IRFR3303
+
+
+# 0
+.Def:End
+=====IRFR3518=========
+module IRFR3518();
+endmodule // IRFR3518
+
+# sckt IRFR3518
+
+
+# 0
+.Def:End
+=====IRFR3910=========
+module IRFR3910();
+endmodule // IRFR3910
+
+# sckt IRFR3910
+
+
+# 0
+.Def:End
+=====IRFR3911=========
+module IRFR3911();
+endmodule // IRFR3911
+
+# sckt IRFR3911
+
+
+# 0
+.Def:End
+=====IRFR4105=========
+module IRFR4105();
+endmodule // IRFR4105
+
+# sckt IRFR4105
+
+
+# 0
+.Def:End
+=====IRFR420A=========
+module IRFR420A();
+endmodule // IRFR420A
+
+# sckt IRFR420A
+
+
+# 0
+.Def:End
+=====IRFS4227PBF=========
+module IRFS4227PBF();
+endmodule // IRFS4227PBF
+
+# sckt IRFS4227PBF
+
+
+# 0
+.Def:End
+=====IRFS4710=========
+module IRFS4710();
+endmodule // IRFS4710
+
+# sckt IRFS4710
+
+
+# 0
+.Def:End
+=====IRFS52N15D=========
+module IRFS52N15D();
+endmodule // IRFS52N15D
+
+# sckt IRFS52N15D
+
+
+# 0
+.Def:End
+=====IRFSL4321PBF=========
+module IRFSL4321PBF();
+endmodule // IRFSL4321PBF
+
+# sckt IRFSL4321PBF
+
+
+# 0
+.Def:End
+=====IRFU110=========
+module IRFU110();
+endmodule // IRFU110
+
+# sckt IRFU110
+
+
+# 0
+.Def:End
+=====IRFU1205=========
+module IRFU1205();
+endmodule // IRFU1205
+
+# sckt IRFU1205
+
+
+# 0
+.Def:End
+=====IRFU120N=========
+module IRFU120N();
+endmodule // IRFU120N
+
+# sckt IRFU120N
+
+
+# 0
+.Def:End
+=====IRFU220=========
+module IRFU220();
+endmodule // IRFU220
+
+# sckt IRFU220
+
+
+# 0
+.Def:End
+=====IRFU320=========
+module IRFU320();
+endmodule // IRFU320
+
+# sckt IRFU320
+
+
+# 0
+.Def:End
+=====IRFU3910=========
+module IRFU3910();
+endmodule // IRFU3910
+
+# sckt IRFU3910
+
+
+# 0
+.Def:End
+=====IRFU4105=========
+module IRFU4105();
+endmodule // IRFU4105
+
+# sckt IRFU4105
+
+
+# 0
+.Def:End
+=====IRFZ14=========
+module IRFZ14();
+endmodule // IRFZ14
+
+# sckt IRFZ14
+
+
+# 0
+.Def:End
+=====IRFZ24N=========
+module IRFZ24N();
+endmodule // IRFZ24N
+
+# sckt IRFZ24N
+
+
+# 0
+.Def:End
+=====IRFZ24NS=========
+module IRFZ24NS();
+endmodule // IRFZ24NS
+
+# sckt IRFZ24NS
+
+
+# 0
+.Def:End
+=====IRFZ24V=========
+module IRFZ24V();
+endmodule // IRFZ24V
+
+# sckt IRFZ24V
+
+
+# 0
+.Def:End
+=====IRFZ34E=========
+module IRFZ34E();
+endmodule // IRFZ34E
+
+# sckt IRFZ34E
+
+
+# 0
+.Def:End
+=====IRFZ34N=========
+module IRFZ34N();
+endmodule // IRFZ34N
+
+# sckt IRFZ34N
+
+
+# 0
+.Def:End
+=====IRFZ34NS=========
+module IRFZ34NS();
+endmodule // IRFZ34NS
+
+# sckt IRFZ34NS
+
+
+# 0
+.Def:End
+=====IRFZ44E=========
+module IRFZ44E();
+endmodule // IRFZ44E
+
+# sckt IRFZ44E
+
+
+# 0
+.Def:End
+=====IRFZ44N=========
+module IRFZ44N();
+endmodule // IRFZ44N
+
+# sckt IRFZ44N
+
+
+# 0
+.Def:End
+=====IRFZ44NS=========
+module IRFZ44NS();
+endmodule // IRFZ44NS
+
+# sckt IRFZ44NS
+
+
+# 0
+.Def:End
+=====IRFZ44Z_S_L=========
+module IRFZ44Z_S_L();
+endmodule // IRFZ44Z_S_L
+
+# sckt IRFZ44Z_S_L
+
+
+# 0
+.Def:End
+=====IRFZ46N=========
+module IRFZ46N();
+endmodule // IRFZ46N
+
+# sckt IRFZ46N
+
+
+# 0
+.Def:End
+=====IRFZ46NS=========
+module IRFZ46NS();
+endmodule // IRFZ46NS
+
+# sckt IRFZ46NS
+
+
+# 0
+.Def:End
+=====IRFZ46Z_S_L=========
+module IRFZ46Z_S_L();
+endmodule // IRFZ46Z_S_L
+
+# sckt IRFZ46Z_S_L
+
+
+# 0
+.Def:End
+=====IRFZ48N=========
+module IRFZ48N();
+endmodule // IRFZ48N
+
+# sckt IRFZ48N
+
+
+# 0
+.Def:End
+=====IRFZ48NS=========
+module IRFZ48NS();
+endmodule // IRFZ48NS
+
+# sckt IRFZ48NS
+
+
+# 0
+.Def:End
+=====IRFZ48VS=========
+module IRFZ48VS();
+endmodule // IRFZ48VS
+
+# sckt IRFZ48VS
+
+
+# 0
+.Def:End
+=====IRFZ48Z_S_L=========
+module IRFZ48Z_S_L();
+endmodule // IRFZ48Z_S_L
+
+# sckt IRFZ48Z_S_L
+
+
+# 0
+.Def:End
+=====IRL1004=========
+module IRL1004();
+endmodule // IRL1004
+
+# sckt IRL1004
+
+
+# 0
+.Def:End
+=====IRL1404=========
+module IRL1404();
+endmodule // IRL1404
+
+# sckt IRL1404
+
+
+# 0
+.Def:End
+=====IRL1404Z=========
+module IRL1404Z();
+endmodule // IRL1404Z
+
+# sckt IRL1404Z
+
+
+# 0
+.Def:End
+=====IRL2203N=========
+module IRL2203N();
+endmodule // IRL2203N
+
+# sckt IRL2203N
+
+
+# 0
+.Def:End
+=====IRL2203NS=========
+module IRL2203NS();
+endmodule // IRL2203NS
+
+# sckt IRL2203NS
+
+
+# 0
+.Def:End
+=====IRL2505=========
+module IRL2505();
+endmodule // IRL2505
+
+# sckt IRL2505
+
+
+# 0
+.Def:End
+=====IRL2505S=========
+module IRL2505S();
+endmodule // IRL2505S
+
+# sckt IRL2505S
+
+
+# 0
+.Def:End
+=====IRL2703=========
+module IRL2703();
+endmodule // IRL2703
+
+# sckt IRL2703
+
+
+# 0
+.Def:End
+=====IRL2703S=========
+module IRL2703S();
+endmodule // IRL2703S
+
+# sckt IRL2703S
+
+
+# 0
+.Def:End
+=====IRL2910=========
+module IRL2910();
+endmodule // IRL2910
+
+# sckt IRL2910
+
+
+# 0
+.Def:End
+=====IRL2910S=========
+module IRL2910S();
+endmodule // IRL2910S
+
+# sckt IRL2910S
+
+
+# 0
+.Def:End
+=====IRL3102=========
+module IRL3102();
+endmodule // IRL3102
+
+# sckt IRL3102
+
+
+# 0
+.Def:End
+=====IRL3102S=========
+module IRL3102S();
+endmodule // IRL3102S
+
+# sckt IRL3102S
+
+
+# 0
+.Def:End
+=====IRL3103=========
+module IRL3103();
+endmodule // IRL3103
+
+# sckt IRL3103
+
+
+# 0
+.Def:End
+=====IRL3103S=========
+module IRL3103S();
+endmodule // IRL3103S
+
+# sckt IRL3103S
+
+
+# 0
+.Def:End
+=====IRL3302=========
+module IRL3302();
+endmodule // IRL3302
+
+# sckt IRL3302
+
+
+# 0
+.Def:End
+=====IRL3303=========
+module IRL3303();
+endmodule // IRL3303
+
+# sckt IRL3303
+
+
+# 0
+.Def:End
+=====IRL3303S=========
+module IRL3303S();
+endmodule // IRL3303S
+
+# sckt IRL3303S
+
+
+# 0
+.Def:End
+=====IRL3402=========
+module IRL3402();
+endmodule // IRL3402
+
+# sckt IRL3402
+
+
+# 0
+.Def:End
+=====IRL3705N=========
+module IRL3705N();
+endmodule // IRL3705N
+
+# sckt IRL3705N
+
+
+# 0
+.Def:End
+=====IRL3705NS=========
+module IRL3705NS();
+endmodule // IRL3705NS
+
+# sckt IRL3705NS
+
+
+# 0
+.Def:End
+=====IRL3705Z_S_L=========
+module IRL3705Z_S_L();
+endmodule // IRL3705Z_S_L
+
+# sckt IRL3705Z_S_L
+
+
+# 0
+.Def:End
+=====IRL3713SL=========
+module IRL3713SL();
+endmodule // IRL3713SL
+
+# sckt IRL3713SL
+
+
+# 0
+.Def:End
+=====IRL3713=========
+module IRL3713();
+endmodule // IRL3713
+
+# sckt IRL3713
+
+
+# 0
+.Def:End
+=====IRL3714=========
+module IRL3714();
+endmodule // IRL3714
+
+# sckt IRL3714
+
+
+# 0
+.Def:End
+=====IRL3714Z_S_L=========
+module IRL3714Z_S_L();
+endmodule // IRL3714Z_S_L
+
+# sckt IRL3714Z_S_L
+
+
+# 0
+.Def:End
+=====IRL3803S=========
+module IRL3803S();
+endmodule // IRL3803S
+
+# sckt IRL3803S
+
+
+# 0
+.Def:End
+=====IRL520=========
+module IRL520();
+endmodule // IRL520
+
+# sckt IRL520
+
+
+# 0
+.Def:End
+=====IRL530N=========
+module IRL530N();
+endmodule // IRL530N
+
+# sckt IRL530N
+
+
+# 0
+.Def:End
+=====IRL530NS=========
+module IRL530NS();
+endmodule // IRL530NS
+
+# sckt IRL530NS
+
+
+# 0
+.Def:End
+=====IRL540NS=========
+module IRL540NS();
+endmodule // IRL540NS
+
+# sckt IRL540NS
+
+
+# 0
+.Def:End
+=====IRL540=========
+module IRL540();
+endmodule // IRL540
+
+# sckt IRL540
+
+
+# 0
+.Def:End
+=====IRL8113SL=========
+module IRL8113SL();
+endmodule // IRL8113SL
+
+# sckt IRL8113SL
+
+
+# 0
+.Def:End
+=====IRLBA3803=========
+module IRLBA3803();
+endmodule // IRLBA3803
+
+# sckt IRLBA3803
+
+
+# 0
+.Def:End
+=====IRLI2203N=========
+module IRLI2203N();
+endmodule // IRLI2203N
+
+# sckt IRLI2203N
+
+
+# 0
+.Def:End
+=====IRLI2505=========
+module IRLI2505();
+endmodule // IRLI2505
+
+# sckt IRLI2505
+
+
+# 0
+.Def:End
+=====IRLI2910=========
+module IRLI2910();
+endmodule // IRLI2910
+
+# sckt IRLI2910
+
+
+# 0
+.Def:End
+=====IRLI3705N=========
+module IRLI3705N();
+endmodule // IRLI3705N
+
+# sckt IRLI3705N
+
+
+# 0
+.Def:End
+=====IRLI3803=========
+module IRLI3803();
+endmodule // IRLI3803
+
+# sckt IRLI3803
+
+
+# 0
+.Def:End
+=====IRLI530N=========
+module IRLI530N();
+endmodule // IRLI530N
+
+# sckt IRLI530N
+
+
+# 0
+.Def:End
+=====IRLIB4343=========
+module IRLIB4343();
+endmodule // IRLIB4343
+
+# sckt IRLIB4343
+
+
+# 0
+.Def:End
+=====IRLIZ24N=========
+module IRLIZ24N();
+endmodule // IRLIZ24N
+
+# sckt IRLIZ24N
+
+
+# 0
+.Def:End
+=====IRLIZ34N=========
+module IRLIZ34N();
+endmodule // IRLIZ34N
+
+# sckt IRLIZ34N
+
+
+# 0
+.Def:End
+=====IRLIZ44N=========
+module IRLIZ44N();
+endmodule // IRLIZ44N
+
+# sckt IRLIZ44N
+
+
+# 0
+.Def:End
+=====IRLL014N=========
+module IRLL014N();
+endmodule // IRLL014N
+
+# sckt IRLL014N
+
+
+# 0
+.Def:End
+=====IRLL024Z=========
+module IRLL024Z();
+endmodule // IRLL024Z
+
+# sckt IRLL024Z
+
+
+# 0
+.Def:End
+=====IRLL2705=========
+module IRLL2705();
+endmodule // IRLL2705
+
+# sckt IRLL2705
+
+
+# 0
+.Def:End
+=====IRLL3303=========
+module IRLL3303();
+endmodule // IRLL3303
+
+# sckt IRLL3303
+
+
+# 0
+.Def:End
+=====IRLML2402=========
+module IRLML2402();
+endmodule // IRLML2402
+
+# sckt IRLML2402
+
+
+# 0
+.Def:End
+=====IRLML2502=========
+module IRLML2502();
+endmodule // IRLML2502
+
+# sckt IRLML2502
+
+
+# 0
+.Def:End
+=====IRLML2803=========
+module IRLML2803();
+endmodule // IRLML2803
+
+# sckt IRLML2803
+
+
+# 0
+.Def:End
+=====IRLMS1902=========
+module IRLMS1902();
+endmodule // IRLMS1902
+
+# sckt IRLMS1902
+
+
+# 0
+.Def:End
+=====IRLMS2002=========
+module IRLMS2002();
+endmodule // IRLMS2002
+
+# sckt IRLMS2002
+
+
+# 0
+.Def:End
+=====IRLR024N=========
+module IRLR024N();
+endmodule // IRLR024N
+
+# sckt IRLR024N
+
+
+# 0
+.Def:End
+=====IRLR120N=========
+module IRLR120N();
+endmodule // IRLR120N
+
+# sckt IRLR120N
+
+
+# 0
+.Def:End
+=====IRLR2703=========
+module IRLR2703();
+endmodule // IRLR2703
+
+# sckt IRLR2703
+
+
+# 0
+.Def:End
+=====IRLR2705=========
+module IRLR2705();
+endmodule // IRLR2705
+
+# sckt IRLR2705
+
+
+# 0
+.Def:End
+=====IRLR2905=========
+module IRLR2905();
+endmodule // IRLR2905
+
+# sckt IRLR2905
+
+
+# 0
+.Def:End
+=====IRLR2908=========
+module IRLR2908();
+endmodule // IRLR2908
+
+# sckt IRLR2908
+
+
+# 0
+.Def:End
+=====IRLR3103=========
+module IRLR3103();
+endmodule // IRLR3103
+
+# sckt IRLR3103
+
+
+# 0
+.Def:End
+=====IRLR3303=========
+module IRLR3303();
+endmodule // IRLR3303
+
+# sckt IRLR3303
+
+
+# 0
+.Def:End
+=====IRLR3410=========
+module IRLR3410();
+endmodule // IRLR3410
+
+# sckt IRLR3410
+
+
+# 0
+.Def:End
+=====IRLR3915=========
+module IRLR3915();
+endmodule // IRLR3915
+
+# sckt IRLR3915
+
+
+# 0
+.Def:End
+=====IRLR8103V=========
+module IRLR8103V();
+endmodule // IRLR8103V
+
+# sckt IRLR8103V
+
+
+# 0
+.Def:End
+=====IRLR8503=========
+module IRLR8503();
+endmodule // IRLR8503
+
+# sckt IRLR8503
+
+
+# 0
+.Def:End
+=====IRLR8711CPBF=========
+module IRLR8711CPBF();
+endmodule // IRLR8711CPBF
+
+# sckt IRLR8711CPBF
+
+
+# 0
+.Def:End
+=====IRLU024N=========
+module IRLU024N();
+endmodule // IRLU024N
+
+# sckt IRLU024N
+
+
+# 0
+.Def:End
+=====IRLU120N=========
+module IRLU120N();
+endmodule // IRLU120N
+
+# sckt IRLU120N
+
+
+# 0
+.Def:End
+=====IRLU2703=========
+module IRLU2703();
+endmodule // IRLU2703
+
+# sckt IRLU2703
+
+
+# 0
+.Def:End
+=====IRLU2705=========
+module IRLU2705();
+endmodule // IRLU2705
+
+# sckt IRLU2705
+
+
+# 0
+.Def:End
+=====IRLU2905=========
+module IRLU2905();
+endmodule // IRLU2905
+
+# sckt IRLU2905
+
+
+# 0
+.Def:End
+=====IRLU3103=========
+module IRLU3103();
+endmodule // IRLU3103
+
+# sckt IRLU3103
+
+
+# 0
+.Def:End
+=====IRLU3303=========
+module IRLU3303();
+endmodule // IRLU3303
+
+# sckt IRLU3303
+
+
+# 0
+.Def:End
+=====IRLZ14S=========
+module IRLZ14S();
+endmodule // IRLZ14S
+
+# sckt IRLZ14S
+
+
+# 0
+.Def:End
+=====IRLZ34N=========
+module IRLZ34N();
+endmodule // IRLZ34N
+
+# sckt IRLZ34N
+
+
+# 0
+.Def:End
+=====IRLZ34NS=========
+module IRLZ34NS();
+endmodule // IRLZ34NS
+
+# sckt IRLZ34NS
+
+
+# 0
+.Def:End
+=====IRLZ44N=========
+module IRLZ44N();
+endmodule // IRLZ44N
+
+# sckt IRLZ44N
+
+
+# 0
+.Def:End
+=====IRLZ44NS=========
+module IRLZ44NS();
+endmodule // IRLZ44NS
+
+# sckt IRLZ44NS
+
+
+# 0
+.Def:End
+=====IRLZ44ZSL=========
+module IRLZ44ZSL();
+endmodule // IRLZ44ZSL
+
+# sckt IRLZ44ZSL
+
+
+# 0
+.Def:End
+=====VN10LF=========
+module VN10LF();
+endmodule // VN10LF
+
+# sckt VN10LF
+
+
+# 0
+.Def:End
+=====ZVN0124=========
+module ZVN0124();
+endmodule // ZVN0124
+
+# sckt ZVN0124
+
+
+# 0
+.Def:End
+=====ZVN2106=========
+module ZVN2106();
+endmodule // ZVN2106
+
+# sckt ZVN2106
+
+
+# 0
+.Def:End
+=====ZVN3306F=========
+module ZVN3306F();
+endmodule // ZVN3306F
+
+# sckt ZVN3306F
+
+
+# 0
+.Def:End
+=====ZVN3306=========
+module ZVN3306();
+endmodule // ZVN3306
+
+# sckt ZVN3306
+
+
+# 0
+.Def:End
+=====ZVN4106=========
+module ZVN4106();
+endmodule // ZVN4106
+
+# sckt ZVN4106
+
+
+# 0
+.Def:End
+=====ZVN4210=========
+module ZVN4210();
+endmodule // ZVN4210
+
+# sckt ZVN4210
+
+
+# 0
+.Def:End
+=====ZVN4310=========
+module ZVN4310();
+endmodule // ZVN4310
+
+# sckt ZVN4310
+
+
+# 0
+.Def:End
+=====uA741=========
+module uA741();
+endmodule // uA741
+
+# sckt uA741
+
+
+# 0
+.Def:End
+=====op27(mod)=========
+module op27(mod)();
+endmodule // op27(mod)
+
+# sckt op27(mod)
+
+
+# 0
+.Def:End
+=====op27(boyle)=========
+module op27(boyle)();
+endmodule // op27(boyle)
+
+# sckt op27(boyle)
+
+
+# 0
+.Def:End
+=====ua741(mod)=========
+module ua741(mod)();
+endmodule // ua741(mod)
+
+# sckt ua741(mod)
+
+
+# 0
+.Def:End
+=====ua741(boyle)=========
+module ua741(boyle)();
+endmodule // ua741(boyle)
+
+# sckt ua741(boyle)
+
+
+# 0
+.Def:End
+=====ua741(TI)=========
+module ua741(TI)();
+endmodule // ua741(TI)
+
+# sckt ua741(TI)
+
+
+# 0
+.Def:End
+=====opa27(TI)=========
+module opa27(TI)();
+endmodule // opa27(TI)
+
+# sckt opa27(TI)
+
+
+# 0
+.Def:End
+=====tl081(TI)=========
+module tl081(TI)();
+endmodule // tl081(TI)
+
+# sckt tl081(TI)
+
+
+# 0
+.Def:End
+=====tl071(TI)=========
+module tl071(TI)();
+endmodule // tl071(TI)
+
+# sckt tl071(TI)
+
+
+# 0
+.Def:End
+=====OP07(TI)=========
+module OP07(TI)();
+endmodule // OP07(TI)
+
+# sckt OP07(TI)
+
+
+# 0
+.Def:End
+=====OP37(TI)=========
+module OP37(TI)();
+endmodule // OP37(TI)
+
+# sckt OP37(TI)
+
+
+# 0
+.Def:End
+=====mc1458(TI)=========
+module mc1458(TI)();
+endmodule // mc1458(TI)
+
+# sckt mc1458(TI)
+
+
+# 0
+.Def:End
+=====AD825=========
+module AD825();
+endmodule // AD825
+
+# sckt AD825
+
+
+# 0
+.Def:End
+=====LM3886=========
+module LM3886();
+endmodule // LM3886
+
+# sckt LM3886
+
+
+# 0
+.Def:End
+=====BSP171=========
+module BSP171();
+endmodule // BSP171
+
+# sckt BSP171
+
+
+# 0
+.Def:End
+=====BSP315=========
+module BSP315();
+endmodule // BSP315
+
+# sckt BSP315
+
+
+# 0
+.Def:End
+=====BSP316=========
+module BSP316();
+endmodule // BSP316
+
+# sckt BSP316
+
+
+# 0
+.Def:End
+=====BSP317=========
+module BSP317();
+endmodule // BSP317
+
+# sckt BSP317
+
+
+# 0
+.Def:End
+=====BSS92_1=========
+module BSS92_1();
+endmodule // BSS92_1
+
+# sckt BSS92_1
+
+
+# 0
+.Def:End
+=====BSS92=========
+module BSS92();
+endmodule // BSS92
+
+# sckt BSS92
+
+
+# 0
+.Def:End
+=====BSS110=========
+module BSS110();
+endmodule // BSS110
+
+# sckt BSS110
+
+
+# 0
+.Def:End
+=====BUZ171=========
+module BUZ171();
+endmodule // BUZ171
+
+# sckt BUZ171
+
+
+# 0
+.Def:End
+=====BUZ173=========
+module BUZ173();
+endmodule // BUZ173
+
+# sckt BUZ173
+
+
+# 0
+.Def:End
+=====BUZ271=========
+module BUZ271();
+endmodule // BUZ271
+
+# sckt BUZ271
+
+
+# 0
+.Def:End
+=====BUZ272=========
+module BUZ272();
+endmodule // BUZ272
+
+# sckt BUZ272
+
+
+# 0
+.Def:End
+=====IRF4905=========
+module IRF4905();
+endmodule // IRF4905
+
+# sckt IRF4905
+
+
+# 0
+.Def:End
+=====IRF4905S=========
+module IRF4905S();
+endmodule // IRF4905S
+
+# sckt IRF4905S
+
+
+# 0
+.Def:End
+=====IRF5210=========
+module IRF5210();
+endmodule // IRF5210
+
+# sckt IRF5210
+
+
+# 0
+.Def:End
+=====IRF5210S=========
+module IRF5210S();
+endmodule // IRF5210S
+
+# sckt IRF5210S
+
+
+# 0
+.Def:End
+=====IRF5305=========
+module IRF5305();
+endmodule // IRF5305
+
+# sckt IRF5305
+
+
+# 0
+.Def:End
+=====IRF5305S=========
+module IRF5305S();
+endmodule // IRF5305S
+
+# sckt IRF5305S
+
+
+# 0
+.Def:End
+=====IRF5803=========
+module IRF5803();
+endmodule // IRF5803
+
+# sckt IRF5803
+
+
+# 0
+.Def:End
+=====IRF5805=========
+module IRF5805();
+endmodule // IRF5805
+
+# sckt IRF5805
+
+
+# 0
+.Def:End
+=====IRF6100=========
+module IRF6100();
+endmodule // IRF6100
+
+# sckt IRF6100
+
+
+# 0
+.Def:End
+=====IRF6215=========
+module IRF6215();
+endmodule // IRF6215
+
+# sckt IRF6215
+
+
+# 0
+.Def:End
+=====IRF6216=========
+module IRF6216();
+endmodule // IRF6216
+
+# sckt IRF6216
+
+
+# 0
+.Def:End
+=====IRF6217=========
+module IRF6217();
+endmodule // IRF6217
+
+# sckt IRF6217
+
+
+# 0
+.Def:End
+=====IRF7204=========
+module IRF7204();
+endmodule // IRF7204
+
+# sckt IRF7204
+
+
+# 0
+.Def:End
+=====IRF7220=========
+module IRF7220();
+endmodule // IRF7220
+
+# sckt IRF7220
+
+
+# 0
+.Def:End
+=====IRF7233=========
+module IRF7233();
+endmodule // IRF7233
+
+# sckt IRF7233
+
+
+# 0
+.Def:End
+=====IRF7404=========
+module IRF7404();
+endmodule // IRF7404
+
+# sckt IRF7404
+
+
+# 0
+.Def:End
+=====IRF7406=========
+module IRF7406();
+endmodule // IRF7406
+
+# sckt IRF7406
+
+
+# 0
+.Def:End
+=====IRF7410=========
+module IRF7410();
+endmodule // IRF7410
+
+# sckt IRF7410
+
+
+# 0
+.Def:End
+=====IRF7416=========
+module IRF7416();
+endmodule // IRF7416
+
+# sckt IRF7416
+
+
+# 0
+.Def:End
+=====IRF7424=========
+module IRF7424();
+endmodule // IRF7424
+
+# sckt IRF7424
+
+
+# 0
+.Def:End
+=====IRF7425=========
+module IRF7425();
+endmodule // IRF7425
+
+# sckt IRF7425
+
+
+# 0
+.Def:End
+=====IRF7604=========
+module IRF7604();
+endmodule // IRF7604
+
+# sckt IRF7604
+
+
+# 0
+.Def:End
+=====IRF7606=========
+module IRF7606();
+endmodule // IRF7606
+
+# sckt IRF7606
+
+
+# 0
+.Def:End
+=====IRF7705=========
+module IRF7705();
+endmodule // IRF7705
+
+# sckt IRF7705
+
+
+# 0
+.Def:End
+=====IRF7707=========
+module IRF7707();
+endmodule // IRF7707
+
+# sckt IRF7707
+
+
+# 0
+.Def:End
+=====IRF9510=========
+module IRF9510();
+endmodule // IRF9510
+
+# sckt IRF9510
+
+
+# 0
+.Def:End
+=====IRF9520=========
+module IRF9520();
+endmodule // IRF9520
+
+# sckt IRF9520
+
+
+# 0
+.Def:End
+=====IRF9530=========
+module IRF9530();
+endmodule // IRF9530
+
+# sckt IRF9530
+
+
+# 0
+.Def:End
+=====IRF9540N=========
+module IRF9540N();
+endmodule // IRF9540N
+
+# sckt IRF9540N
+
+
+# 0
+.Def:End
+=====IRF9640=========
+module IRF9640();
+endmodule // IRF9640
+
+# sckt IRF9640
+
+
+# 0
+.Def:End
+=====IRF9Z24N=========
+module IRF9Z24N();
+endmodule // IRF9Z24N
+
+# sckt IRF9Z24N
+
+
+# 0
+.Def:End
+=====IRF9Z34N=========
+module IRF9Z34N();
+endmodule // IRF9Z34N
+
+# sckt IRF9Z34N
+
+
+# 0
+.Def:End
+=====IRFP9140N=========
+module IRFP9140N();
+endmodule // IRFP9140N
+
+# sckt IRFP9140N
+
+
+# 0
+.Def:End
+=====IRFP9240=========
+module IRFP9240();
+endmodule // IRFP9240
+
+# sckt IRFP9240
+
+
+# 0
+.Def:End
+=====IRFR5305=========
+module IRFR5305();
+endmodule // IRFR5305
+
+# sckt IRFR5305
+
+
+# 0
+.Def:End
+=====IRFR5410=========
+module IRFR5410();
+endmodule // IRFR5410
+
+# sckt IRFR5410
+
+
+# 0
+.Def:End
+=====IRFR9024N=========
+module IRFR9024N();
+endmodule // IRFR9024N
+
+# sckt IRFR9024N
+
+
+# 0
+.Def:End
+=====IRFR9120N=========
+module IRFR9120N();
+endmodule // IRFR9120N
+
+# sckt IRFR9120N
+
+
+# 0
+.Def:End
+=====IRFR9210=========
+module IRFR9210();
+endmodule // IRFR9210
+
+# sckt IRFR9210
+
+
+# 0
+.Def:End
+=====IRFU9014=========
+module IRFU9014();
+endmodule // IRFU9014
+
+# sckt IRFU9014
+
+
+# 0
+.Def:End
+=====IRFU9120=========
+module IRFU9120();
+endmodule // IRFU9120
+
+# sckt IRFU9120
+
+
+# 0
+.Def:End
+=====IRFU9220=========
+module IRFU9220();
+endmodule // IRFU9220
+
+# sckt IRFU9220
+
+
+# 0
+.Def:End
+=====IRFU9310=========
+module IRFU9310();
+endmodule // IRFU9310
+
+# sckt IRFU9310
+
+
+# 0
+.Def:End
+=====IRL5602S=========
+module IRL5602S();
+endmodule // IRL5602S
+
+# sckt IRL5602S
+
+
+# 0
+.Def:End
+=====IRLIB9343=========
+module IRLIB9343();
+endmodule // IRLIB9343
+
+# sckt IRLIB9343
+
+
+# 0
+.Def:End
+=====IRLML5103=========
+module IRLML5103();
+endmodule // IRLML5103
+
+# sckt IRLML5103
+
+
+# 0
+.Def:End
+=====IRLML5203=========
+module IRLML5203();
+endmodule // IRLML5203
+
+# sckt IRLML5203
+
+
+# 0
+.Def:End
+=====IRLML6302=========
+module IRLML6302();
+endmodule // IRLML6302
+
+# sckt IRLML6302
+
+
+# 0
+.Def:End
+=====IRLML6401=========
+module IRLML6401();
+endmodule // IRLML6401
+
+# sckt IRLML6401
+
+
+# 0
+.Def:End
+=====IRLML6402=========
+module IRLML6402();
+endmodule // IRLML6402
+
+# sckt IRLML6402
+
+
+# 0
+.Def:End
+=====IRLRU9343=========
+module IRLRU9343();
+endmodule // IRLRU9343
+
+# sckt IRLRU9343
+
+
+# 0
+.Def:End
+=====ZVP2106G=========
+module ZVP2106G();
+endmodule // ZVP2106G
+
+# sckt ZVP2106G
+
+
+# 0
+.Def:End
+=====ZVP2106=========
+module ZVP2106();
+endmodule // ZVP2106
+
+# sckt ZVP2106
+
+
+# 0
+.Def:End
+=====ZVP3306=========
+module ZVP3306();
+endmodule // ZVP3306
+
+# sckt ZVP3306
+
+
+# 0
+.Def:End
+=====PVR100AZ-B12V=========
+module PVR100AZ-B12V();
+endmodule // PVR100AZ-B12V
+
+# sckt PVR100AZ-B12V
+
+
+# 0
+.Def:End
+=====PVR100AZ-B5V0=========
+module PVR100AZ-B5V0();
+endmodule // PVR100AZ-B5V0
+
+# sckt PVR100AZ-B5V0
+
+
+# 0
+.Def:End
+=====PVR100AZ-B3V3=========
+module PVR100AZ-B3V3();
+endmodule // PVR100AZ-B3V3
+
+# sckt PVR100AZ-B3V3
+
+
+# 0
+.Def:End
+=====PVR100AZ-B3V0=========
+module PVR100AZ-B3V0();
+endmodule // PVR100AZ-B3V0
+
+# sckt PVR100AZ-B3V0
+
+
+# 0
+.Def:End
+=====PVR100AZ-B2V5=========
+module PVR100AZ-B2V5();
+endmodule // PVR100AZ-B2V5
+
+# sckt PVR100AZ-B2V5
+
+
+# 0
+.Def:End
+=====LM140-5V=========
+module LM140-5V();
+endmodule // LM140-5V
+
+# sckt LM140-5V
+
+
+# 0
+.Def:End
+=====LM317K-1=========
+module LM317K-1();
+endmodule // LM317K-1
+
+# sckt LM317K-1
+
+
+# 0
+.Def:End
+=====LM317K-2=========
+module LM317K-2();
+endmodule // LM317K-2
+
+# sckt LM317K-2
+
+
+# 0
+.Def:End
+=====LM337K=========
+module LM337K();
+endmodule // LM337K
+
+# sckt LM337K
+
+
+# 0
+.Def:End
+=====LM311=========
+module LM311();
+endmodule // LM311
+
+# sckt LM311
+
+
+# 0
+.Def:End
+=====LM324=========
+module LM324();
+endmodule // LM324
+
+# sckt LM324
+
+
+# 0
+.Def:End
+=====LM358=========
+module LM358();
+endmodule // LM358
+
+# sckt LM358
+
+
+# 0
+.Def:End
+=====MAX495=========
+module MAX495();
+endmodule // MAX495
+
+# sckt MAX495
+
+
+# 0
+.Def:End
+=====NE5532=========
+module NE5532();
+endmodule // NE5532
+
+# sckt NE5532
+
+
+# 0
+.Def:End
+=====NE5534=========
+module NE5534();
+endmodule // NE5534
+
+# sckt NE5534
+
+
+# 0
+.Def:End
+=====ad822=========
+module ad822();
+endmodule // ad822
+
+# sckt ad822
+
+
+# 0
+.Def:End
+=====ad822a=========
+module ad822a();
+endmodule // ad822a
+
+# sckt ad822a
+
+
+# 0
+.Def:End
+=====ad822b=========
+module ad822b();
+endmodule // ad822b
+
+# sckt ad822b
+
+
+# 0
+.Def:End
+=====ad822s=========
+module ad822s();
+endmodule // ad822s
+
+# sckt ad822s
+
+
+# 0
+.Def:End
+=====LF411=========
+module LF411();
+endmodule // LF411
+
+# sckt LF411
+
+
+# 0
+.Def:End
+=====BD675=========
+module BD675();
+endmodule // BD675
+
+# sckt BD675
+
+
+# 0
+.Def:End
+=====BD675A=========
+module BD675A();
+endmodule // BD675A
+
+# sckt BD675A
+
+
+# 0
+.Def:End
+=====BD676=========
+module BD676();
+endmodule // BD676
+
+# sckt BD676
+
+
+# 0
+.Def:End
+=====BD676A=========
+module BD676A();
+endmodule // BD676A
+
+# sckt BD676A
+
+
+# 0
+.Def:End
+=====BD677=========
+module BD677();
+endmodule // BD677
+
+# sckt BD677
+
+
+# 0
+.Def:End
+=====BD677A=========
+module BD677A();
+endmodule // BD677A
+
+# sckt BD677A
+
+
+# 0
+.Def:End
+=====BD678=========
+module BD678();
+endmodule // BD678
+
+# sckt BD678
+
+
+# 0
+.Def:End
+=====BD678A=========
+module BD678A();
+endmodule // BD678A
+
+# sckt BD678A
+
+
+# 0
+.Def:End
+=====BD679=========
+module BD679();
+endmodule // BD679
+
+# sckt BD679
+
+
+# 0
+.Def:End
+=====BD679A=========
+module BD679A();
+endmodule // BD679A
+
+# sckt BD679A
+
+
+# 0
+.Def:End
+=====BD680=========
+module BD680();
+endmodule // BD680
+
+# sckt BD680
+
+
+# 0
+.Def:End
+=====BD680A=========
+module BD680A();
+endmodule // BD680A
+
+# sckt BD680A
+
+
+# 0
+.Def:End
+=====BD681=========
+module BD681();
+endmodule // BD681
+
+# sckt BD681
+
+
+# 0
+.Def:End
+=====BD682=========
+module BD682();
+endmodule // BD682
+
+# sckt BD682
+
+
+# 0
+.Def:End
+=====B32K130=========
+module B32K130();
+endmodule // B32K130
+
+# sckt B32K130
+
+
+# 0
+.Def:End
+=====B32K150=========
+module B32K150();
+endmodule // B32K150
+
+# sckt B32K150
+
+
+# 0
+.Def:End
+=====B32K230=========
+module B32K230();
+endmodule // B32K230
+
+# sckt B32K230
+
+
+# 0
+.Def:End
+=====B32K250=========
+module B32K250();
+endmodule // B32K250
+
+# sckt B32K250
+
+
+# 0
+.Def:End
+=====B32K275=========
+module B32K275();
+endmodule // B32K275
+
+# sckt B32K275
+
+
+# 0
+.Def:End
+=====B32K320=========
+module B32K320();
+endmodule // B32K320
+
+# sckt B32K320
+
+
+# 0
+.Def:End
+=====B32K385=========
+module B32K385();
+endmodule // B32K385
+
+# sckt B32K385
+
+
+# 0
+.Def:End
+=====B32K420=========
+module B32K420();
+endmodule // B32K420
+
+# sckt B32K420
+
+
+# 0
+.Def:End
+=====B32K440=========
+module B32K440();
+endmodule // B32K440
+
+# sckt B32K440
+
+
+# 0
+.Def:End
+=====B32K460=========
+module B32K460();
+endmodule // B32K460
+
+# sckt B32K460
+
+
+# 0
+.Def:End
+=====B32K550=========
+module B32K550();
+endmodule // B32K550
+
+# sckt B32K550
+
+
+# 0
+.Def:End
+=====B32K680=========
+module B32K680();
+endmodule // B32K680
+
+# sckt B32K680
+
+
+# 0
+.Def:End
+=====B32K750=========
+module B32K750();
+endmodule // B32K750
+
+# sckt B32K750
+
+
+# 0
+.Def:End
+=====B40K75=========
+module B40K75();
+endmodule // B40K75
+
+# sckt B40K75
+
+
+# 0
+.Def:End
+=====B40K130=========
+module B40K130();
+endmodule // B40K130
+
+# sckt B40K130
+
+
+# 0
+.Def:End
+=====B40K150=========
+module B40K150();
+endmodule // B40K150
+
+# sckt B40K150
+
+
+# 0
+.Def:End
+=====B40K230=========
+module B40K230();
+endmodule // B40K230
+
+# sckt B40K230
+
+
+# 0
+.Def:End
+=====B40K250=========
+module B40K250();
+endmodule // B40K250
+
+# sckt B40K250
+
+
+# 0
+.Def:End
+=====B40K275=========
+module B40K275();
+endmodule // B40K275
+
+# sckt B40K275
+
+
+# 0
+.Def:End
+=====B40K320=========
+module B40K320();
+endmodule // B40K320
+
+# sckt B40K320
+
+
+# 0
+.Def:End
+=====B40K385=========
+module B40K385();
+endmodule // B40K385
+
+# sckt B40K385
+
+
+# 0
+.Def:End
+=====B40K420=========
+module B40K420();
+endmodule // B40K420
+
+# sckt B40K420
+
+
+# 0
+.Def:End
+=====B40K440=========
+module B40K440();
+endmodule // B40K440
+
+# sckt B40K440
+
+
+# 0
+.Def:End
+=====B40K460=========
+module B40K460();
+endmodule // B40K460
+
+# sckt B40K460
+
+
+# 0
+.Def:End
+=====B40K550=========
+module B40K550();
+endmodule // B40K550
+
+# sckt B40K550
+
+
+# 0
+.Def:End
+=====B40K680=========
+module B40K680();
+endmodule // B40K680
+
+# sckt B40K680
+
+
+# 0
+.Def:End
+=====B40K750=========
+module B40K750();
+endmodule // B40K750
+
+# sckt B40K750
+
+
+# 0
+.Def:End
+=====B60K75=========
+module B60K75();
+endmodule // B60K75
+
+# sckt B60K75
+
+
+# 0
+.Def:End
+=====B60K130=========
+module B60K130();
+endmodule // B60K130
+
+# sckt B60K130
+
+
+# 0
+.Def:End
+=====B60K150=========
+module B60K150();
+endmodule // B60K150
+
+# sckt B60K150
+
+
+# 0
+.Def:End
+=====B60K230=========
+module B60K230();
+endmodule // B60K230
+
+# sckt B60K230
+
+
+# 0
+.Def:End
+=====B60K250=========
+module B60K250();
+endmodule // B60K250
+
+# sckt B60K250
+
+
+# 0
+.Def:End
+=====B60K275=========
+module B60K275();
+endmodule // B60K275
+
+# sckt B60K275
+
+
+# 0
+.Def:End
+=====B60K320=========
+module B60K320();
+endmodule // B60K320
+
+# sckt B60K320
+
+
+# 0
+.Def:End
+=====B60K385=========
+module B60K385();
+endmodule // B60K385
+
+# sckt B60K385
+
+
+# 0
+.Def:End
+=====B60K420=========
+module B60K420();
+endmodule // B60K420
+
+# sckt B60K420
+
+
+# 0
+.Def:End
+=====B60K440=========
+module B60K440();
+endmodule // B60K440
+
+# sckt B60K440
+
+
+# 0
+.Def:End
+=====B60K460=========
+module B60K460();
+endmodule // B60K460
+
+# sckt B60K460
+
+
+# 0
+.Def:End
+=====B60K550=========
+module B60K550();
+endmodule // B60K550
+
+# sckt B60K550
+
+
+# 0
+.Def:End
+=====B60K680=========
+module B60K680();
+endmodule // B60K680
+
+# sckt B60K680
+
+
+# 0
+.Def:End
+=====B60K750=========
+module B60K750();
+endmodule // B60K750
+
+# sckt B60K750
+
+
+# 0
+.Def:End
+=====B60K1000=========
+module B60K1000();
+endmodule // B60K1000
+
+# sckt B60K1000
+
+
+# 0
+.Def:End
+=====B80K130=========
+module B80K130();
+endmodule // B80K130
+
+# sckt B80K130
+
+
+# 0
+.Def:End
+=====B80K150=========
+module B80K150();
+endmodule // B80K150
+
+# sckt B80K150
+
+
+# 0
+.Def:End
+=====B80K230=========
+module B80K230();
+endmodule // B80K230
+
+# sckt B80K230
+
+
+# 0
+.Def:End
+=====B80K250=========
+module B80K250();
+endmodule // B80K250
+
+# sckt B80K250
+
+
+# 0
+.Def:End
+=====B80K275=========
+module B80K275();
+endmodule // B80K275
+
+# sckt B80K275
+
+
+# 0
+.Def:End
+=====B80K320=========
+module B80K320();
+endmodule // B80K320
+
+# sckt B80K320
+
+
+# 0
+.Def:End
+=====B80K385=========
+module B80K385();
+endmodule // B80K385
+
+# sckt B80K385
+
+
+# 0
+.Def:End
+=====B80K420=========
+module B80K420();
+endmodule // B80K420
+
+# sckt B80K420
+
+
+# 0
+.Def:End
+=====B80K440=========
+module B80K440();
+endmodule // B80K440
+
+# sckt B80K440
+
+
+# 0
+.Def:End
+=====B80K460=========
+module B80K460();
+endmodule // B80K460
+
+# sckt B80K460
+
+
+# 0
+.Def:End
+=====B80K550=========
+module B80K550();
+endmodule // B80K550
+
+# sckt B80K550
+
+
+# 0
+.Def:End
+=====B80K680=========
+module B80K680();
+endmodule // B80K680
+
+# sckt B80K680
+
+
+# 0
+.Def:End
+=====B80K750=========
+module B80K750();
+endmodule // B80K750
+
+# sckt B80K750
+
+
+# 0
+.Def:End
+=====B80K1100=========
+module B80K1100();
+endmodule // B80K1100
+
+# sckt B80K1100
+
+
+# 0
+.Def:End
+=====CU3225K11G2=========
+module CU3225K11G2();
+endmodule // CU3225K11G2
+
+# sckt CU3225K11G2
+
+
+# 0
+.Def:End
+=====CU3225K14G2=========
+module CU3225K14G2();
+endmodule // CU3225K14G2
+
+# sckt CU3225K14G2
+
+
+# 0
+.Def:End
+=====CU3225K14AUTOG2=========
+module CU3225K14AUTOG2();
+endmodule // CU3225K14AUTOG2
+
+# sckt CU3225K14AUTOG2
+
+
+# 0
+.Def:End
+=====CU3225K17G2=========
+module CU3225K17G2();
+endmodule // CU3225K17G2
+
+# sckt CU3225K17G2
+
+
+# 0
+.Def:End
+=====CU3225K17AUTOG2=========
+module CU3225K17AUTOG2();
+endmodule // CU3225K17AUTOG2
+
+# sckt CU3225K17AUTOG2
+
+
+# 0
+.Def:End
+=====CU3225K20G2=========
+module CU3225K20G2();
+endmodule // CU3225K20G2
+
+# sckt CU3225K20G2
+
+
+# 0
+.Def:End
+=====CU3225K25G2=========
+module CU3225K25G2();
+endmodule // CU3225K25G2
+
+# sckt CU3225K25G2
+
+
+# 0
+.Def:End
+=====CU3225K30G2=========
+module CU3225K30G2();
+endmodule // CU3225K30G2
+
+# sckt CU3225K30G2
+
+
+# 0
+.Def:End
+=====CU3225K30AUTOG2=========
+module CU3225K30AUTOG2();
+endmodule // CU3225K30AUTOG2
+
+# sckt CU3225K30AUTOG2
+
+
+# 0
+.Def:End
+=====CU3225K35G2=========
+module CU3225K35G2();
+endmodule // CU3225K35G2
+
+# sckt CU3225K35G2
+
+
+# 0
+.Def:End
+=====CU3225K40G2=========
+module CU3225K40G2();
+endmodule // CU3225K40G2
+
+# sckt CU3225K40G2
+
+
+# 0
+.Def:End
+=====CU3225K50G2=========
+module CU3225K50G2();
+endmodule // CU3225K50G2
+
+# sckt CU3225K50G2
+
+
+# 0
+.Def:End
+=====CU3225K60G2=========
+module CU3225K60G2();
+endmodule // CU3225K60G2
+
+# sckt CU3225K60G2
+
+
+# 0
+.Def:End
+=====CU3225K75G2=========
+module CU3225K75G2();
+endmodule // CU3225K75G2
+
+# sckt CU3225K75G2
+
+
+# 0
+.Def:End
+=====CU3225K95G2=========
+module CU3225K95G2();
+endmodule // CU3225K95G2
+
+# sckt CU3225K95G2
+
+
+# 0
+.Def:End
+=====CU3225K115G2=========
+module CU3225K115G2();
+endmodule // CU3225K115G2
+
+# sckt CU3225K115G2
+
+
+# 0
+.Def:End
+=====CU3225K130G2=========
+module CU3225K130G2();
+endmodule // CU3225K130G2
+
+# sckt CU3225K130G2
+
+
+# 0
+.Def:End
+=====CU3225K140G2=========
+module CU3225K140G2();
+endmodule // CU3225K140G2
+
+# sckt CU3225K140G2
+
+
+# 0
+.Def:End
+=====CU3225K150G2=========
+module CU3225K150G2();
+endmodule // CU3225K150G2
+
+# sckt CU3225K150G2
+
+
+# 0
+.Def:End
+=====CU3225K175G2=========
+module CU3225K175G2();
+endmodule // CU3225K175G2
+
+# sckt CU3225K175G2
+
+
+# 0
+.Def:End
+=====CU3225K230G2=========
+module CU3225K230G2();
+endmodule // CU3225K230G2
+
+# sckt CU3225K230G2
+
+
+# 0
+.Def:End
+=====CU3225K250G2=========
+module CU3225K250G2();
+endmodule // CU3225K250G2
+
+# sckt CU3225K250G2
+
+
+# 0
+.Def:End
+=====CU3225K275G2=========
+module CU3225K275G2();
+endmodule // CU3225K275G2
+
+# sckt CU3225K275G2
+
+
+# 0
+.Def:End
+=====CU3225K300G2=========
+module CU3225K300G2();
+endmodule // CU3225K300G2
+
+# sckt CU3225K300G2
+
+
+# 0
+.Def:End
+=====CU4032K11G2=========
+module CU4032K11G2();
+endmodule // CU4032K11G2
+
+# sckt CU4032K11G2
+
+
+# 0
+.Def:End
+=====CU4032K14G2=========
+module CU4032K14G2();
+endmodule // CU4032K14G2
+
+# sckt CU4032K14G2
+
+
+# 0
+.Def:End
+=====CU4032K14AUTOG2=========
+module CU4032K14AUTOG2();
+endmodule // CU4032K14AUTOG2
+
+# sckt CU4032K14AUTOG2
+
+
+# 0
+.Def:End
+=====CU4032K17G2=========
+module CU4032K17G2();
+endmodule // CU4032K17G2
+
+# sckt CU4032K17G2
+
+
+# 0
+.Def:End
+=====CU4032K17AUTOG2=========
+module CU4032K17AUTOG2();
+endmodule // CU4032K17AUTOG2
+
+# sckt CU4032K17AUTOG2
+
+
+# 0
+.Def:End
+=====CU4032K20G2=========
+module CU4032K20G2();
+endmodule // CU4032K20G2
+
+# sckt CU4032K20G2
+
+
+# 0
+.Def:End
+=====CU4032K25G2=========
+module CU4032K25G2();
+endmodule // CU4032K25G2
+
+# sckt CU4032K25G2
+
+
+# 0
+.Def:End
+=====CU4032K30G2=========
+module CU4032K30G2();
+endmodule // CU4032K30G2
+
+# sckt CU4032K30G2
+
+
+# 0
+.Def:End
+=====CU4032K30AUTOG2=========
+module CU4032K30AUTOG2();
+endmodule // CU4032K30AUTOG2
+
+# sckt CU4032K30AUTOG2
+
+
+# 0
+.Def:End
+=====CU4032K35G2=========
+module CU4032K35G2();
+endmodule // CU4032K35G2
+
+# sckt CU4032K35G2
+
+
+# 0
+.Def:End
+=====CU4032K40G2=========
+module CU4032K40G2();
+endmodule // CU4032K40G2
+
+# sckt CU4032K40G2
+
+
+# 0
+.Def:End
+=====CU4032K50G2=========
+module CU4032K50G2();
+endmodule // CU4032K50G2
+
+# sckt CU4032K50G2
+
+
+# 0
+.Def:End
+=====CU4032K60G2=========
+module CU4032K60G2();
+endmodule // CU4032K60G2
+
+# sckt CU4032K60G2
+
+
+# 0
+.Def:End
+=====CU4032K75G2=========
+module CU4032K75G2();
+endmodule // CU4032K75G2
+
+# sckt CU4032K75G2
+
+
+# 0
+.Def:End
+=====CU4032K95G2=========
+module CU4032K95G2();
+endmodule // CU4032K95G2
+
+# sckt CU4032K95G2
+
+
+# 0
+.Def:End
+=====CU4032K115G2=========
+module CU4032K115G2();
+endmodule // CU4032K115G2
+
+# sckt CU4032K115G2
+
+
+# 0
+.Def:End
+=====CU4032K130G2=========
+module CU4032K130G2();
+endmodule // CU4032K130G2
+
+# sckt CU4032K130G2
+
+
+# 0
+.Def:End
+=====CU4032K140G2=========
+module CU4032K140G2();
+endmodule // CU4032K140G2
+
+# sckt CU4032K140G2
+
+
+# 0
+.Def:End
+=====CU4032K150G2=========
+module CU4032K150G2();
+endmodule // CU4032K150G2
+
+# sckt CU4032K150G2
+
+
+# 0
+.Def:End
+=====CU4032K175G2=========
+module CU4032K175G2();
+endmodule // CU4032K175G2
+
+# sckt CU4032K175G2
+
+
+# 0
+.Def:End
+=====CU4032K230G2=========
+module CU4032K230G2();
+endmodule // CU4032K230G2
+
+# sckt CU4032K230G2
+
+
+# 0
+.Def:End
+=====CU4032K250G2=========
+module CU4032K250G2();
+endmodule // CU4032K250G2
+
+# sckt CU4032K250G2
+
+
+# 0
+.Def:End
+=====CU4032K275G2=========
+module CU4032K275G2();
+endmodule // CU4032K275G2
+
+# sckt CU4032K275G2
+
+
+# 0
+.Def:End
+=====CU4032K300G2=========
+module CU4032K300G2();
+endmodule // CU4032K300G2
+
+# sckt CU4032K300G2
+
+
+# 0
+.Def:End
+=====CN0603M4G=========
+module CN0603M4G();
+endmodule // CN0603M4G
+
+# sckt CN0603M4G
+
+
+# 0
+.Def:End
+=====CN0603M6G=========
+module CN0603M6G();
+endmodule // CN0603M6G
+
+# sckt CN0603M6G
+
+
+# 0
+.Def:End
+=====CN0603K7G=========
+module CN0603K7G();
+endmodule // CN0603K7G
+
+# sckt CN0603K7G
+
+
+# 0
+.Def:End
+=====CN0603L8G=========
+module CN0603L8G();
+endmodule // CN0603L8G
+
+# sckt CN0603L8G
+
+
+# 0
+.Def:End
+=====CN0603K11G=========
+module CN0603K11G();
+endmodule // CN0603K11G
+
+# sckt CN0603K11G
+
+
+# 0
+.Def:End
+=====CN0603K14G=========
+module CN0603K14G();
+endmodule // CN0603K14G
+
+# sckt CN0603K14G
+
+
+# 0
+.Def:End
+=====CN0805M4G=========
+module CN0805M4G();
+endmodule // CN0805M4G
+
+# sckt CN0805M4G
+
+
+# 0
+.Def:End
+=====CN0805M6G=========
+module CN0805M6G();
+endmodule // CN0805M6G
+
+# sckt CN0805M6G
+
+
+# 0
+.Def:End
+=====CN0805L8G=========
+module CN0805L8G();
+endmodule // CN0805L8G
+
+# sckt CN0805L8G
+
+
+# 0
+.Def:End
+=====CN0805K11G=========
+module CN0805K11G();
+endmodule // CN0805K11G
+
+# sckt CN0805K11G
+
+
+# 0
+.Def:End
+=====CN0805K14G=========
+module CN0805K14G();
+endmodule // CN0805K14G
+
+# sckt CN0805K14G
+
+
+# 0
+.Def:End
+=====CN0805S14BAUTOG=========
+module CN0805S14BAUTOG();
+endmodule // CN0805S14BAUTOG
+
+# sckt CN0805S14BAUTOG
+
+
+# 0
+.Def:End
+=====CN0805K17G=========
+module CN0805K17G();
+endmodule // CN0805K17G
+
+# sckt CN0805K17G
+
+
+# 0
+.Def:End
+=====CN0805K20G=========
+module CN0805K20G();
+endmodule // CN0805K20G
+
+# sckt CN0805K20G
+
+
+# 0
+.Def:End
+=====CN0805K25G=========
+module CN0805K25G();
+endmodule // CN0805K25G
+
+# sckt CN0805K25G
+
+
+# 0
+.Def:End
+=====CN1206M4G=========
+module CN1206M4G();
+endmodule // CN1206M4G
+
+# sckt CN1206M4G
+
+
+# 0
+.Def:End
+=====CN1206M6G=========
+module CN1206M6G();
+endmodule // CN1206M6G
+
+# sckt CN1206M6G
+
+
+# 0
+.Def:End
+=====CN1206L8G=========
+module CN1206L8G();
+endmodule // CN1206L8G
+
+# sckt CN1206L8G
+
+
+# 0
+.Def:End
+=====CN1206K11G=========
+module CN1206K11G();
+endmodule // CN1206K11G
+
+# sckt CN1206K11G
+
+
+# 0
+.Def:End
+=====CN1206K14G=========
+module CN1206K14G();
+endmodule // CN1206K14G
+
+# sckt CN1206K14G
+
+
+# 0
+.Def:End
+=====CN1206S14BAUTOG=========
+module CN1206S14BAUTOG();
+endmodule // CN1206S14BAUTOG
+
+# sckt CN1206S14BAUTOG
+
+
+# 0
+.Def:End
+=====CN1206K17G=========
+module CN1206K17G();
+endmodule // CN1206K17G
+
+# sckt CN1206K17G
+
+
+# 0
+.Def:End
+=====CN1206K20G=========
+module CN1206K20G();
+endmodule // CN1206K20G
+
+# sckt CN1206K20G
+
+
+# 0
+.Def:End
+=====CN1206K25G=========
+module CN1206K25G();
+endmodule // CN1206K25G
+
+# sckt CN1206K25G
+
+
+# 0
+.Def:End
+=====CN1206K30G=========
+module CN1206K30G();
+endmodule // CN1206K30G
+
+# sckt CN1206K30G
+
+
+# 0
+.Def:End
+=====CN1206K35G=========
+module CN1206K35G();
+endmodule // CN1206K35G
+
+# sckt CN1206K35G
+
+
+# 0
+.Def:End
+=====CN1206K40G=========
+module CN1206K40G();
+endmodule // CN1206K40G
+
+# sckt CN1206K40G
+
+
+# 0
+.Def:End
+=====CN1206K50G=========
+module CN1206K50G();
+endmodule // CN1206K50G
+
+# sckt CN1206K50G
+
+
+# 0
+.Def:End
+=====CN1206K60G=========
+module CN1206K60G();
+endmodule // CN1206K60G
+
+# sckt CN1206K60G
+
+
+# 0
+.Def:End
+=====CN1210M4G=========
+module CN1210M4G();
+endmodule // CN1210M4G
+
+# sckt CN1210M4G
+
+
+# 0
+.Def:End
+=====CN1210M6G=========
+module CN1210M6G();
+endmodule // CN1210M6G
+
+# sckt CN1210M6G
+
+
+# 0
+.Def:End
+=====CN1210L8G=========
+module CN1210L8G();
+endmodule // CN1210L8G
+
+# sckt CN1210L8G
+
+
+# 0
+.Def:End
+=====CN1210K11G=========
+module CN1210K11G();
+endmodule // CN1210K11G
+
+# sckt CN1210K11G
+
+
+# 0
+.Def:End
+=====CN1210K14G=========
+module CN1210K14G();
+endmodule // CN1210K14G
+
+# sckt CN1210K14G
+
+
+# 0
+.Def:End
+=====CN1210S14BAUTOG=========
+module CN1210S14BAUTOG();
+endmodule // CN1210S14BAUTOG
+
+# sckt CN1210S14BAUTOG
+
+
+# 0
+.Def:End
+=====CN1210K17G=========
+module CN1210K17G();
+endmodule // CN1210K17G
+
+# sckt CN1210K17G
+
+
+# 0
+.Def:End
+=====CN1210K20G=========
+module CN1210K20G();
+endmodule // CN1210K20G
+
+# sckt CN1210K20G
+
+
+# 0
+.Def:End
+=====CN1210K25G=========
+module CN1210K25G();
+endmodule // CN1210K25G
+
+# sckt CN1210K25G
+
+
+# 0
+.Def:End
+=====CN1210K30G=========
+module CN1210K30G();
+endmodule // CN1210K30G
+
+# sckt CN1210K30G
+
+
+# 0
+.Def:End
+=====CN1210K35G=========
+module CN1210K35G();
+endmodule // CN1210K35G
+
+# sckt CN1210K35G
+
+
+# 0
+.Def:End
+=====CN1210K40G=========
+module CN1210K40G();
+endmodule // CN1210K40G
+
+# sckt CN1210K40G
+
+
+# 0
+.Def:End
+=====CN1210K50G=========
+module CN1210K50G();
+endmodule // CN1210K50G
+
+# sckt CN1210K50G
+
+
+# 0
+.Def:End
+=====CN1210K60G=========
+module CN1210K60G();
+endmodule // CN1210K60G
+
+# sckt CN1210K60G
+
+
+# 0
+.Def:End
+=====CN1812M4G=========
+module CN1812M4G();
+endmodule // CN1812M4G
+
+# sckt CN1812M4G
+
+
+# 0
+.Def:End
+=====CN1812M6G=========
+module CN1812M6G();
+endmodule // CN1812M6G
+
+# sckt CN1812M6G
+
+
+# 0
+.Def:End
+=====CN1812L8G=========
+module CN1812L8G();
+endmodule // CN1812L8G
+
+# sckt CN1812L8G
+
+
+# 0
+.Def:End
+=====CN1812K11G=========
+module CN1812K11G();
+endmodule // CN1812K11G
+
+# sckt CN1812K11G
+
+
+# 0
+.Def:End
+=====CN1812K14G=========
+module CN1812K14G();
+endmodule // CN1812K14G
+
+# sckt CN1812K14G
+
+
+# 0
+.Def:End
+=====CN1812S14BAUTOG=========
+module CN1812S14BAUTOG();
+endmodule // CN1812S14BAUTOG
+
+# sckt CN1812S14BAUTOG
+
+
+# 0
+.Def:End
+=====CN1812K17G=========
+module CN1812K17G();
+endmodule // CN1812K17G
+
+# sckt CN1812K17G
+
+
+# 0
+.Def:End
+=====CN1812K20G=========
+module CN1812K20G();
+endmodule // CN1812K20G
+
+# sckt CN1812K20G
+
+
+# 0
+.Def:End
+=====CN1812K25G=========
+module CN1812K25G();
+endmodule // CN1812K25G
+
+# sckt CN1812K25G
+
+
+# 0
+.Def:End
+=====CN1812K30G=========
+module CN1812K30G();
+endmodule // CN1812K30G
+
+# sckt CN1812K30G
+
+
+# 0
+.Def:End
+=====CN1812K35G=========
+module CN1812K35G();
+endmodule // CN1812K35G
+
+# sckt CN1812K35G
+
+
+# 0
+.Def:End
+=====CN1812K40G=========
+module CN1812K40G();
+endmodule // CN1812K40G
+
+# sckt CN1812K40G
+
+
+# 0
+.Def:End
+=====CN1812K50G=========
+module CN1812K50G();
+endmodule // CN1812K50G
+
+# sckt CN1812K50G
+
+
+# 0
+.Def:End
+=====CN1812K60G=========
+module CN1812K60G();
+endmodule // CN1812K60G
+
+# sckt CN1812K60G
+
+
+# 0
+.Def:End
+=====CN1812S60AG=========
+module CN1812S60AG();
+endmodule // CN1812S60AG
+
+# sckt CN1812S60AG
+
+
+# 0
+.Def:End
+=====CN1812S95AG2=========
+module CN1812S95AG2();
+endmodule // CN1812S95AG2
+
+# sckt CN1812S95AG2
+
+
+# 0
+.Def:End
+=====CN2220M4G=========
+module CN2220M4G();
+endmodule // CN2220M4G
+
+# sckt CN2220M4G
+
+
+# 0
+.Def:End
+=====CN2220M6G=========
+module CN2220M6G();
+endmodule // CN2220M6G
+
+# sckt CN2220M6G
+
+
+# 0
+.Def:End
+=====CN2220L8G=========
+module CN2220L8G();
+endmodule // CN2220L8G
+
+# sckt CN2220L8G
+
+
+# 0
+.Def:End
+=====CN2220K11G=========
+module CN2220K11G();
+endmodule // CN2220K11G
+
+# sckt CN2220K11G
+
+
+# 0
+.Def:End
+=====CN2220K14G=========
+module CN2220K14G();
+endmodule // CN2220K14G
+
+# sckt CN2220K14G
+
+
+# 0
+.Def:End
+=====CN2220S14BAUTOG=========
+module CN2220S14BAUTOG();
+endmodule // CN2220S14BAUTOG
+
+# sckt CN2220S14BAUTOG
+
+
+# 0
+.Def:End
+=====CN2220S14BAUTOE2G2=========
+module CN2220S14BAUTOE2G2();
+endmodule // CN2220S14BAUTOE2G2
+
+# sckt CN2220S14BAUTOE2G2
+
+
+# 0
+.Def:End
+=====CN2220K17G=========
+module CN2220K17G();
+endmodule // CN2220K17G
+
+# sckt CN2220K17G
+
+
+# 0
+.Def:End
+=====CN2220K20G=========
+module CN2220K20G();
+endmodule // CN2220K20G
+
+# sckt CN2220K20G
+
+
+# 0
+.Def:End
+=====CN2220K25G=========
+module CN2220K25G();
+endmodule // CN2220K25G
+
+# sckt CN2220K25G
+
+
+# 0
+.Def:End
+=====CN2220K30G=========
+module CN2220K30G();
+endmodule // CN2220K30G
+
+# sckt CN2220K30G
+
+
+# 0
+.Def:End
+=====CN2220K30AUTOG=========
+module CN2220K30AUTOG();
+endmodule // CN2220K30AUTOG
+
+# sckt CN2220K30AUTOG
+
+
+# 0
+.Def:End
+=====CN2220K35G=========
+module CN2220K35G();
+endmodule // CN2220K35G
+
+# sckt CN2220K35G
+
+
+# 0
+.Def:End
+=====CN2220K40G=========
+module CN2220K40G();
+endmodule // CN2220K40G
+
+# sckt CN2220K40G
+
+
+# 0
+.Def:End
+=====CN2220K50G=========
+module CN2220K50G();
+endmodule // CN2220K50G
+
+# sckt CN2220K50G
+
+
+# 0
+.Def:End
+=====CN2220K60G=========
+module CN2220K60G();
+endmodule // CN2220K60G
+
+# sckt CN2220K60G
+
+
+# 0
+.Def:End
+=====LS40K130QP=========
+module LS40K130QP();
+endmodule // LS40K130QP
+
+# sckt LS40K130QP
+
+
+# 0
+.Def:End
+=====LS40K150QP=========
+module LS40K150QP();
+endmodule // LS40K150QP
+
+# sckt LS40K150QP
+
+
+# 0
+.Def:End
+=====LS40K230QP=========
+module LS40K230QP();
+endmodule // LS40K230QP
+
+# sckt LS40K230QP
+
+
+# 0
+.Def:End
+=====LS40K250QP=========
+module LS40K250QP();
+endmodule // LS40K250QP
+
+# sckt LS40K250QP
+
+
+# 0
+.Def:End
+=====LS40K275QP=========
+module LS40K275QP();
+endmodule // LS40K275QP
+
+# sckt LS40K275QP
+
+
+# 0
+.Def:End
+=====LS40K320QP=========
+module LS40K320QP();
+endmodule // LS40K320QP
+
+# sckt LS40K320QP
+
+
+# 0
+.Def:End
+=====LS40K385QP=========
+module LS40K385QP();
+endmodule // LS40K385QP
+
+# sckt LS40K385QP
+
+
+# 0
+.Def:End
+=====LS40K420QP=========
+module LS40K420QP();
+endmodule // LS40K420QP
+
+# sckt LS40K420QP
+
+
+# 0
+.Def:End
+=====LS40K440QP=========
+module LS40K440QP();
+endmodule // LS40K440QP
+
+# sckt LS40K440QP
+
+
+# 0
+.Def:End
+=====LS40K460QP=========
+module LS40K460QP();
+endmodule // LS40K460QP
+
+# sckt LS40K460QP
+
+
+# 0
+.Def:End
+=====LS40K550QP=========
+module LS40K550QP();
+endmodule // LS40K550QP
+
+# sckt LS40K550QP
+
+
+# 0
+.Def:End
+=====LS40K680QP=========
+module LS40K680QP();
+endmodule // LS40K680QP
+
+# sckt LS40K680QP
+
+
+# 0
+.Def:End
+=====LS40K750QP=========
+module LS40K750QP();
+endmodule // LS40K750QP
+
+# sckt LS40K750QP
+
+
+# 0
+.Def:End
+=====PD80K1100=========
+module PD80K1100();
+endmodule // PD80K1100
+
+# sckt PD80K1100
+
+
+# 0
+.Def:End
+=====S05K11=========
+module S05K11();
+endmodule // S05K11
+
+# sckt S05K11
+
+
+# 0
+.Def:End
+=====S05K14=========
+module S05K14();
+endmodule // S05K14
+
+# sckt S05K14
+
+
+# 0
+.Def:End
+=====S05K17=========
+module S05K17();
+endmodule // S05K17
+
+# sckt S05K17
+
+
+# 0
+.Def:End
+=====S05K20=========
+module S05K20();
+endmodule // S05K20
+
+# sckt S05K20
+
+
+# 0
+.Def:End
+=====S05K25=========
+module S05K25();
+endmodule // S05K25
+
+# sckt S05K25
+
+
+# 0
+.Def:End
+=====S05K30=========
+module S05K30();
+endmodule // S05K30
+
+# sckt S05K30
+
+
+# 0
+.Def:End
+=====S05K35=========
+module S05K35();
+endmodule // S05K35
+
+# sckt S05K35
+
+
+# 0
+.Def:End
+=====S05K40=========
+module S05K40();
+endmodule // S05K40
+
+# sckt S05K40
+
+
+# 0
+.Def:End
+=====S05K50=========
+module S05K50();
+endmodule // S05K50
+
+# sckt S05K50
+
+
+# 0
+.Def:End
+=====S05K60=========
+module S05K60();
+endmodule // S05K60
+
+# sckt S05K60
+
+
+# 0
+.Def:End
+=====S05K75=========
+module S05K75();
+endmodule // S05K75
+
+# sckt S05K75
+
+
+# 0
+.Def:End
+=====S05K95=========
+module S05K95();
+endmodule // S05K95
+
+# sckt S05K95
+
+
+# 0
+.Def:End
+=====S05K115=========
+module S05K115();
+endmodule // S05K115
+
+# sckt S05K115
+
+
+# 0
+.Def:End
+=====S05K130=========
+module S05K130();
+endmodule // S05K130
+
+# sckt S05K130
+
+
+# 0
+.Def:End
+=====S05K140=========
+module S05K140();
+endmodule // S05K140
+
+# sckt S05K140
+
+
+# 0
+.Def:End
+=====S05K150=========
+module S05K150();
+endmodule // S05K150
+
+# sckt S05K150
+
+
+# 0
+.Def:End
+=====S05K175=========
+module S05K175();
+endmodule // S05K175
+
+# sckt S05K175
+
+
+# 0
+.Def:End
+=====S05K230=========
+module S05K230();
+endmodule // S05K230
+
+# sckt S05K230
+
+
+# 0
+.Def:End
+=====S05K250=========
+module S05K250();
+endmodule // S05K250
+
+# sckt S05K250
+
+
+# 0
+.Def:End
+=====S05K275=========
+module S05K275();
+endmodule // S05K275
+
+# sckt S05K275
+
+
+# 0
+.Def:End
+=====S05K300=========
+module S05K300();
+endmodule // S05K300
+
+# sckt S05K300
+
+
+# 0
+.Def:End
+=====S05K385=========
+module S05K385();
+endmodule // S05K385
+
+# sckt S05K385
+
+
+# 0
+.Def:End
+=====S05K420=========
+module S05K420();
+endmodule // S05K420
+
+# sckt S05K420
+
+
+# 0
+.Def:End
+=====S05K440=========
+module S05K440();
+endmodule // S05K440
+
+# sckt S05K440
+
+
+# 0
+.Def:End
+=====S05K460=========
+module S05K460();
+endmodule // S05K460
+
+# sckt S05K460
+
+
+# 0
+.Def:End
+=====S07K11=========
+module S07K11();
+endmodule // S07K11
+
+# sckt S07K11
+
+
+# 0
+.Def:End
+=====S07K14=========
+module S07K14();
+endmodule // S07K14
+
+# sckt S07K14
+
+
+# 0
+.Def:End
+=====S07K17=========
+module S07K17();
+endmodule // S07K17
+
+# sckt S07K17
+
+
+# 0
+.Def:End
+=====S07K20=========
+module S07K20();
+endmodule // S07K20
+
+# sckt S07K20
+
+
+# 0
+.Def:End
+=====S07K25=========
+module S07K25();
+endmodule // S07K25
+
+# sckt S07K25
+
+
+# 0
+.Def:End
+=====S07K30=========
+module S07K30();
+endmodule // S07K30
+
+# sckt S07K30
+
+
+# 0
+.Def:End
+=====S07K35=========
+module S07K35();
+endmodule // S07K35
+
+# sckt S07K35
+
+
+# 0
+.Def:End
+=====S07K40=========
+module S07K40();
+endmodule // S07K40
+
+# sckt S07K40
+
+
+# 0
+.Def:End
+=====S07K50=========
+module S07K50();
+endmodule // S07K50
+
+# sckt S07K50
+
+
+# 0
+.Def:End
+=====S07K60=========
+module S07K60();
+endmodule // S07K60
+
+# sckt S07K60
+
+
+# 0
+.Def:End
+=====S07S60AGS2=========
+module S07S60AGS2();
+endmodule // S07S60AGS2
+
+# sckt S07S60AGS2
+
+
+# 0
+.Def:End
+=====S07K75=========
+module S07K75();
+endmodule // S07K75
+
+# sckt S07K75
+
+
+# 0
+.Def:End
+=====S07K95=========
+module S07K95();
+endmodule // S07K95
+
+# sckt S07K95
+
+
+# 0
+.Def:End
+=====S07S95AGS2=========
+module S07S95AGS2();
+endmodule // S07S95AGS2
+
+# sckt S07S95AGS2
+
+
+# 0
+.Def:End
+=====S07K115=========
+module S07K115();
+endmodule // S07K115
+
+# sckt S07K115
+
+
+# 0
+.Def:End
+=====S07K130=========
+module S07K130();
+endmodule // S07K130
+
+# sckt S07K130
+
+
+# 0
+.Def:End
+=====S07K140=========
+module S07K140();
+endmodule // S07K140
+
+# sckt S07K140
+
+
+# 0
+.Def:End
+=====S07K150=========
+module S07K150();
+endmodule // S07K150
+
+# sckt S07K150
+
+
+# 0
+.Def:End
+=====S07K175=========
+module S07K175();
+endmodule // S07K175
+
+# sckt S07K175
+
+
+# 0
+.Def:End
+=====S07K230=========
+module S07K230();
+endmodule // S07K230
+
+# sckt S07K230
+
+
+# 0
+.Def:End
+=====S07K250=========
+module S07K250();
+endmodule // S07K250
+
+# sckt S07K250
+
+
+# 0
+.Def:End
+=====S07K275=========
+module S07K275();
+endmodule // S07K275
+
+# sckt S07K275
+
+
+# 0
+.Def:End
+=====S07K300=========
+module S07K300();
+endmodule // S07K300
+
+# sckt S07K300
+
+
+# 0
+.Def:End
+=====S07K385=========
+module S07K385();
+endmodule // S07K385
+
+# sckt S07K385
+
+
+# 0
+.Def:End
+=====S07K420=========
+module S07K420();
+endmodule // S07K420
+
+# sckt S07K420
+
+
+# 0
+.Def:End
+=====S07K440=========
+module S07K440();
+endmodule // S07K440
+
+# sckt S07K440
+
+
+# 0
+.Def:End
+=====S07K460=========
+module S07K460();
+endmodule // S07K460
+
+# sckt S07K460
+
+
+# 0
+.Def:End
+=====S10K11=========
+module S10K11();
+endmodule // S10K11
+
+# sckt S10K11
+
+
+# 0
+.Def:End
+=====S10K14=========
+module S10K14();
+endmodule // S10K14
+
+# sckt S10K14
+
+
+# 0
+.Def:End
+=====S10K14AUTO=========
+module S10K14AUTO();
+endmodule // S10K14AUTO
+
+# sckt S10K14AUTO
+
+
+# 0
+.Def:End
+=====S10K17=========
+module S10K17();
+endmodule // S10K17
+
+# sckt S10K17
+
+
+# 0
+.Def:End
+=====S10K17AUTO=========
+module S10K17AUTO();
+endmodule // S10K17AUTO
+
+# sckt S10K17AUTO
+
+
+# 0
+.Def:End
+=====S10K20=========
+module S10K20();
+endmodule // S10K20
+
+# sckt S10K20
+
+
+# 0
+.Def:End
+=====S10K25=========
+module S10K25();
+endmodule // S10K25
+
+# sckt S10K25
+
+
+# 0
+.Def:End
+=====S10K30=========
+module S10K30();
+endmodule // S10K30
+
+# sckt S10K30
+
+
+# 0
+.Def:End
+=====S10K35=========
+module S10K35();
+endmodule // S10K35
+
+# sckt S10K35
+
+
+# 0
+.Def:End
+=====S10K40=========
+module S10K40();
+endmodule // S10K40
+
+# sckt S10K40
+
+
+# 0
+.Def:End
+=====S10K50=========
+module S10K50();
+endmodule // S10K50
+
+# sckt S10K50
+
+
+# 0
+.Def:End
+=====S10K60=========
+module S10K60();
+endmodule // S10K60
+
+# sckt S10K60
+
+
+# 0
+.Def:End
+=====S10K75=========
+module S10K75();
+endmodule // S10K75
+
+# sckt S10K75
+
+
+# 0
+.Def:End
+=====S10K95=========
+module S10K95();
+endmodule // S10K95
+
+# sckt S10K95
+
+
+# 0
+.Def:End
+=====S10K115=========
+module S10K115();
+endmodule // S10K115
+
+# sckt S10K115
+
+
+# 0
+.Def:End
+=====S10K130=========
+module S10K130();
+endmodule // S10K130
+
+# sckt S10K130
+
+
+# 0
+.Def:End
+=====S10K140=========
+module S10K140();
+endmodule // S10K140
+
+# sckt S10K140
+
+
+# 0
+.Def:End
+=====S10K150=========
+module S10K150();
+endmodule // S10K150
+
+# sckt S10K150
+
+
+# 0
+.Def:End
+=====S10K175=========
+module S10K175();
+endmodule // S10K175
+
+# sckt S10K175
+
+
+# 0
+.Def:End
+=====S10K230=========
+module S10K230();
+endmodule // S10K230
+
+# sckt S10K230
+
+
+# 0
+.Def:End
+=====S10K250=========
+module S10K250();
+endmodule // S10K250
+
+# sckt S10K250
+
+
+# 0
+.Def:End
+=====S10K275=========
+module S10K275();
+endmodule // S10K275
+
+# sckt S10K275
+
+
+# 0
+.Def:End
+=====S10K300=========
+module S10K300();
+endmodule // S10K300
+
+# sckt S10K300
+
+
+# 0
+.Def:End
+=====S10K320=========
+module S10K320();
+endmodule // S10K320
+
+# sckt S10K320
+
+
+# 0
+.Def:End
+=====S10K385=========
+module S10K385();
+endmodule // S10K385
+
+# sckt S10K385
+
+
+# 0
+.Def:End
+=====S10K420=========
+module S10K420();
+endmodule // S10K420
+
+# sckt S10K420
+
+
+# 0
+.Def:End
+=====S10K440=========
+module S10K440();
+endmodule // S10K440
+
+# sckt S10K440
+
+
+# 0
+.Def:End
+=====S10K460=========
+module S10K460();
+endmodule // S10K460
+
+# sckt S10K460
+
+
+# 0
+.Def:End
+=====S10K510=========
+module S10K510();
+endmodule // S10K510
+
+# sckt S10K510
+
+
+# 0
+.Def:End
+=====S10K550=========
+module S10K550();
+endmodule // S10K550
+
+# sckt S10K550
+
+
+# 0
+.Def:End
+=====S10K625=========
+module S10K625();
+endmodule // S10K625
+
+# sckt S10K625
+
+
+# 0
+.Def:End
+=====S10K680=========
+module S10K680();
+endmodule // S10K680
+
+# sckt S10K680
+
+
+# 0
+.Def:End
+=====S14K11=========
+module S14K11();
+endmodule // S14K11
+
+# sckt S14K11
+
+
+# 0
+.Def:End
+=====S14K14=========
+module S14K14();
+endmodule // S14K14
+
+# sckt S14K14
+
+
+# 0
+.Def:End
+=====S14K14AUTO=========
+module S14K14AUTO();
+endmodule // S14K14AUTO
+
+# sckt S14K14AUTO
+
+
+# 0
+.Def:End
+=====S14K17=========
+module S14K17();
+endmodule // S14K17
+
+# sckt S14K17
+
+
+# 0
+.Def:End
+=====S14K17AUTO=========
+module S14K17AUTO();
+endmodule // S14K17AUTO
+
+# sckt S14K17AUTO
+
+
+# 0
+.Def:End
+=====S14K20=========
+module S14K20();
+endmodule // S14K20
+
+# sckt S14K20
+
+
+# 0
+.Def:End
+=====S14K25=========
+module S14K25();
+endmodule // S14K25
+
+# sckt S14K25
+
+
+# 0
+.Def:End
+=====S14K30=========
+module S14K30();
+endmodule // S14K30
+
+# sckt S14K30
+
+
+# 0
+.Def:End
+=====S14K30AUTO=========
+module S14K30AUTO();
+endmodule // S14K30AUTO
+
+# sckt S14K30AUTO
+
+
+# 0
+.Def:End
+=====S14K35=========
+module S14K35();
+endmodule // S14K35
+
+# sckt S14K35
+
+
+# 0
+.Def:End
+=====S14K40=========
+module S14K40();
+endmodule // S14K40
+
+# sckt S14K40
+
+
+# 0
+.Def:End
+=====S14K50=========
+module S14K50();
+endmodule // S14K50
+
+# sckt S14K50
+
+
+# 0
+.Def:End
+=====S14K60=========
+module S14K60();
+endmodule // S14K60
+
+# sckt S14K60
+
+
+# 0
+.Def:End
+=====S14K75=========
+module S14K75();
+endmodule // S14K75
+
+# sckt S14K75
+
+
+# 0
+.Def:End
+=====S14K95=========
+module S14K95();
+endmodule // S14K95
+
+# sckt S14K95
+
+
+# 0
+.Def:End
+=====S14K115=========
+module S14K115();
+endmodule // S14K115
+
+# sckt S14K115
+
+
+# 0
+.Def:End
+=====S14K130=========
+module S14K130();
+endmodule // S14K130
+
+# sckt S14K130
+
+
+# 0
+.Def:End
+=====S14K140=========
+module S14K140();
+endmodule // S14K140
+
+# sckt S14K140
+
+
+# 0
+.Def:End
+=====S14K150=========
+module S14K150();
+endmodule // S14K150
+
+# sckt S14K150
+
+
+# 0
+.Def:End
+=====S14K175=========
+module S14K175();
+endmodule // S14K175
+
+# sckt S14K175
+
+
+# 0
+.Def:End
+=====S14K230=========
+module S14K230();
+endmodule // S14K230
+
+# sckt S14K230
+
+
+# 0
+.Def:End
+=====S14K250=========
+module S14K250();
+endmodule // S14K250
+
+# sckt S14K250
+
+
+# 0
+.Def:End
+=====S14K275=========
+module S14K275();
+endmodule // S14K275
+
+# sckt S14K275
+
+
+# 0
+.Def:End
+=====S14K300=========
+module S14K300();
+endmodule // S14K300
+
+# sckt S14K300
+
+
+# 0
+.Def:End
+=====S14K320=========
+module S14K320();
+endmodule // S14K320
+
+# sckt S14K320
+
+
+# 0
+.Def:End
+=====S14K385=========
+module S14K385();
+endmodule // S14K385
+
+# sckt S14K385
+
+
+# 0
+.Def:End
+=====S14K420=========
+module S14K420();
+endmodule // S14K420
+
+# sckt S14K420
+
+
+# 0
+.Def:End
+=====S14K440=========
+module S14K440();
+endmodule // S14K440
+
+# sckt S14K440
+
+
+# 0
+.Def:End
+=====S14K460=========
+module S14K460();
+endmodule // S14K460
+
+# sckt S14K460
+
+
+# 0
+.Def:End
+=====S14K510=========
+module S14K510();
+endmodule // S14K510
+
+# sckt S14K510
+
+
+# 0
+.Def:End
+=====S14K550=========
+module S14K550();
+endmodule // S14K550
+
+# sckt S14K550
+
+
+# 0
+.Def:End
+=====S14K625=========
+module S14K625();
+endmodule // S14K625
+
+# sckt S14K625
+
+
+# 0
+.Def:End
+=====S14K680=========
+module S14K680();
+endmodule // S14K680
+
+# sckt S14K680
+
+
+# 0
+.Def:End
+=====S14K1000=========
+module S14K1000();
+endmodule // S14K1000
+
+# sckt S14K1000
+
+
+# 0
+.Def:End
+=====S18K130=========
+module S18K130();
+endmodule // S18K130
+
+# sckt S18K130
+
+
+# 0
+.Def:End
+=====S18K140=========
+module S18K140();
+endmodule // S18K140
+
+# sckt S18K140
+
+
+# 0
+.Def:End
+=====S18K150=========
+module S18K150();
+endmodule // S18K150
+
+# sckt S18K150
+
+
+# 0
+.Def:End
+=====S18K175=========
+module S18K175();
+endmodule // S18K175
+
+# sckt S18K175
+
+
+# 0
+.Def:End
+=====S18K230=========
+module S18K230();
+endmodule // S18K230
+
+# sckt S18K230
+
+
+# 0
+.Def:End
+=====S18K250=========
+module S18K250();
+endmodule // S18K250
+
+# sckt S18K250
+
+
+# 0
+.Def:End
+=====S18K275=========
+module S18K275();
+endmodule // S18K275
+
+# sckt S18K275
+
+
+# 0
+.Def:End
+=====S18K300=========
+module S18K300();
+endmodule // S18K300
+
+# sckt S18K300
+
+
+# 0
+.Def:End
+=====S18K320=========
+module S18K320();
+endmodule // S18K320
+
+# sckt S18K320
+
+
+# 0
+.Def:End
+=====S18K385=========
+module S18K385();
+endmodule // S18K385
+
+# sckt S18K385
+
+
+# 0
+.Def:End
+=====S18K420=========
+module S18K420();
+endmodule // S18K420
+
+# sckt S18K420
+
+
+# 0
+.Def:End
+=====S18K440=========
+module S18K440();
+endmodule // S18K440
+
+# sckt S18K440
+
+
+# 0
+.Def:End
+=====S18K460=========
+module S18K460();
+endmodule // S18K460
+
+# sckt S18K460
+
+
+# 0
+.Def:End
+=====S20K11=========
+module S20K11();
+endmodule // S20K11
+
+# sckt S20K11
+
+
+# 0
+.Def:End
+=====S20K14=========
+module S20K14();
+endmodule // S20K14
+
+# sckt S20K14
+
+
+# 0
+.Def:End
+=====S20K14AUTO=========
+module S20K14AUTO();
+endmodule // S20K14AUTO
+
+# sckt S20K14AUTO
+
+
+# 0
+.Def:End
+=====S20K17=========
+module S20K17();
+endmodule // S20K17
+
+# sckt S20K17
+
+
+# 0
+.Def:End
+=====S20K17AUTO=========
+module S20K17AUTO();
+endmodule // S20K17AUTO
+
+# sckt S20K17AUTO
+
+
+# 0
+.Def:End
+=====S20K20=========
+module S20K20();
+endmodule // S20K20
+
+# sckt S20K20
+
+
+# 0
+.Def:End
+=====S20K25=========
+module S20K25();
+endmodule // S20K25
+
+# sckt S20K25
+
+
+# 0
+.Def:End
+=====S20K25AUTO=========
+module S20K25AUTO();
+endmodule // S20K25AUTO
+
+# sckt S20K25AUTO
+
+
+# 0
+.Def:End
+=====S20K30=========
+module S20K30();
+endmodule // S20K30
+
+# sckt S20K30
+
+
+# 0
+.Def:End
+=====S20K30AUTO=========
+module S20K30AUTO();
+endmodule // S20K30AUTO
+
+# sckt S20K30AUTO
+
+
+# 0
+.Def:End
+=====S20K35=========
+module S20K35();
+endmodule // S20K35
+
+# sckt S20K35
+
+
+# 0
+.Def:End
+=====S20K40=========
+module S20K40();
+endmodule // S20K40
+
+# sckt S20K40
+
+
+# 0
+.Def:End
+=====S20K50=========
+module S20K50();
+endmodule // S20K50
+
+# sckt S20K50
+
+
+# 0
+.Def:End
+=====S20K60=========
+module S20K60();
+endmodule // S20K60
+
+# sckt S20K60
+
+
+# 0
+.Def:End
+=====S20K75=========
+module S20K75();
+endmodule // S20K75
+
+# sckt S20K75
+
+
+# 0
+.Def:End
+=====S20K95=========
+module S20K95();
+endmodule // S20K95
+
+# sckt S20K95
+
+
+# 0
+.Def:End
+=====S20K115=========
+module S20K115();
+endmodule // S20K115
+
+# sckt S20K115
+
+
+# 0
+.Def:End
+=====S20K130=========
+module S20K130();
+endmodule // S20K130
+
+# sckt S20K130
+
+
+# 0
+.Def:End
+=====S20K140=========
+module S20K140();
+endmodule // S20K140
+
+# sckt S20K140
+
+
+# 0
+.Def:End
+=====S20K150=========
+module S20K150();
+endmodule // S20K150
+
+# sckt S20K150
+
+
+# 0
+.Def:End
+=====S20K175=========
+module S20K175();
+endmodule // S20K175
+
+# sckt S20K175
+
+
+# 0
+.Def:End
+=====S20K230=========
+module S20K230();
+endmodule // S20K230
+
+# sckt S20K230
+
+
+# 0
+.Def:End
+=====S20K250=========
+module S20K250();
+endmodule // S20K250
+
+# sckt S20K250
+
+
+# 0
+.Def:End
+=====S20K275=========
+module S20K275();
+endmodule // S20K275
+
+# sckt S20K275
+
+
+# 0
+.Def:End
+=====S20K300=========
+module S20K300();
+endmodule // S20K300
+
+# sckt S20K300
+
+
+# 0
+.Def:End
+=====S20K320=========
+module S20K320();
+endmodule // S20K320
+
+# sckt S20K320
+
+
+# 0
+.Def:End
+=====S20K385=========
+module S20K385();
+endmodule // S20K385
+
+# sckt S20K385
+
+
+# 0
+.Def:End
+=====S20K420=========
+module S20K420();
+endmodule // S20K420
+
+# sckt S20K420
+
+
+# 0
+.Def:End
+=====S20K440=========
+module S20K440();
+endmodule // S20K440
+
+# sckt S20K440
+
+
+# 0
+.Def:End
+=====S20K460=========
+module S20K460();
+endmodule // S20K460
+
+# sckt S20K460
+
+
+# 0
+.Def:End
+=====S20K510=========
+module S20K510();
+endmodule // S20K510
+
+# sckt S20K510
+
+
+# 0
+.Def:End
+=====S20K550=========
+module S20K550();
+endmodule // S20K550
+
+# sckt S20K550
+
+
+# 0
+.Def:End
+=====S20K625=========
+module S20K625();
+endmodule // S20K625
+
+# sckt S20K625
+
+
+# 0
+.Def:End
+=====S20K680=========
+module S20K680();
+endmodule // S20K680
+
+# sckt S20K680
+
+
+# 0
+.Def:End
+=====S20K1000=========
+module S20K1000();
+endmodule // S20K1000
+
+# sckt S20K1000
+
+
+# 0
+.Def:End
+=====SR1210M4S=========
+module SR1210M4S();
+endmodule // SR1210M4S
+
+# sckt SR1210M4S
+
+
+# 0
+.Def:End
+=====SR1210M6S=========
+module SR1210M6S();
+endmodule // SR1210M6S
+
+# sckt SR1210M6S
+
+
+# 0
+.Def:End
+=====SR1210L8S=========
+module SR1210L8S();
+endmodule // SR1210L8S
+
+# sckt SR1210L8S
+
+
+# 0
+.Def:End
+=====SR1S14BM105Z=========
+module SR1S14BM105Z();
+endmodule // SR1S14BM105Z
+
+# sckt SR1S14BM105Z
+
+
+# 0
+.Def:End
+=====SR1S14BM155Z=========
+module SR1S14BM155Z();
+endmodule // SR1S14BM155Z
+
+# sckt SR1S14BM155Z
+
+
+# 0
+.Def:End
+=====SR1S14BM474X=========
+module SR1S14BM474X();
+endmodule // SR1S14BM474X
+
+# sckt SR1S14BM474X
+
+
+# 0
+.Def:End
+=====SR1K20M105Z=========
+module SR1K20M105Z();
+endmodule // SR1K20M105Z
+
+# sckt SR1K20M105Z
+
+
+# 0
+.Def:End
+=====SR1K20M155Z=========
+module SR1K20M155Z();
+endmodule // SR1K20M155Z
+
+# sckt SR1K20M155Z
+
+
+# 0
+.Def:End
+=====SR1K20M474X=========
+module SR1K20M474X();
+endmodule // SR1K20M474X
+
+# sckt SR1K20M474X
+
+
+# 0
+.Def:End
+=====SR2220M4S=========
+module SR2220M4S();
+endmodule // SR2220M4S
+
+# sckt SR2220M4S
+
+
+# 0
+.Def:End
+=====SR2220M6S=========
+module SR2220M6S();
+endmodule // SR2220M6S
+
+# sckt SR2220M6S
+
+
+# 0
+.Def:End
+=====SR2220L8S=========
+module SR2220L8S();
+endmodule // SR2220L8S
+
+# sckt SR2220L8S
+
+
+# 0
+.Def:End
+=====SR2S14BM105Z=========
+module SR2S14BM105Z();
+endmodule // SR2S14BM105Z
+
+# sckt SR2S14BM105Z
+
+
+# 0
+.Def:End
+=====SR2S14BM155Z=========
+module SR2S14BM155Z();
+endmodule // SR2S14BM155Z
+
+# sckt SR2S14BM155Z
+
+
+# 0
+.Def:End
+=====SR2S14BM474X=========
+module SR2S14BM474X();
+endmodule // SR2S14BM474X
+
+# sckt SR2S14BM474X
+
+
+# 0
+.Def:End
+=====SR2K20M105Z=========
+module SR2K20M105Z();
+endmodule // SR2K20M105Z
+
+# sckt SR2K20M105Z
+
+
+# 0
+.Def:End
+=====SR2K20M155Z=========
+module SR2K20M155Z();
+endmodule // SR2K20M155Z
+
+# sckt SR2K20M155Z
+
+
+# 0
+.Def:End
+=====SR2K20M474X=========
+module SR2K20M474X();
+endmodule // SR2K20M474X
+
+# sckt SR2K20M474X
+
+
+# 0
+.Def:End
+=====BZT52C10T=========
+module BZT52C10T();
+endmodule // BZT52C10T
+
+# sckt BZT52C10T
+
+
+# 0
+.Def:End
+=====BZT52C10S=========
+module BZT52C10S();
+endmodule // BZT52C10S
+
+# sckt BZT52C10S
+
+
+# 0
+.Def:End
+=====BZT52C10=========
+module BZT52C10();
+endmodule // BZT52C10
+
+# sckt BZT52C10
+
+
+# 0
+.Def:End
+=====1N4728A=========
+module 1N4728A();
+endmodule // 1N4728A
+
+# sckt 1N4728A
+
+
+# 0
+.Def:End
+=====1N4729A=========
+module 1N4729A();
+endmodule // 1N4729A
+
+# sckt 1N4729A
+
+
+# 0
+.Def:End
+=====1N4730A=========
+module 1N4730A();
+endmodule // 1N4730A
+
+# sckt 1N4730A
+
+
+# 0
+.Def:End
+=====1N4731A=========
+module 1N4731A();
+endmodule // 1N4731A
+
+# sckt 1N4731A
+
+
+# 0
+.Def:End
+=====1N4732A=========
+module 1N4732A();
+endmodule // 1N4732A
+
+# sckt 1N4732A
+
+
+# 0
+.Def:End
+=====1N4733A=========
+module 1N4733A();
+endmodule // 1N4733A
+
+# sckt 1N4733A
+
+
+# 0
+.Def:End
+=====1N4734A=========
+module 1N4734A();
+endmodule // 1N4734A
+
+# sckt 1N4734A
+
+
+# 0
+.Def:End
+=====1N4735A=========
+module 1N4735A();
+endmodule // 1N4735A
+
+# sckt 1N4735A
+
+
+# 0
+.Def:End
+=====1N4741A=========
+module 1N4741A();
+endmodule // 1N4741A
+
+# sckt 1N4741A
+
+
+# 0
+.Def:End
+=====1N4742A=========
+module 1N4742A();
+endmodule // 1N4742A
+
+# sckt 1N4742A
+
+
+# 0
+.Def:End
+=====1N4743A=========
+module 1N4743A();
+endmodule // 1N4743A
+
+# sckt 1N4743A
+
+
+# 0
+.Def:End
+=====1N4744A=========
+module 1N4744A();
+endmodule // 1N4744A
+
+# sckt 1N4744A
+
+
+# 0
+.Def:End
+=====1N4745A=========
+module 1N4745A();
+endmodule // 1N4745A
+
+# sckt 1N4745A
+
+
+# 0
+.Def:End
+=====1N4746A=========
+module 1N4746A();
+endmodule // 1N4746A
+
+# sckt 1N4746A
+
+
+# 0
+.Def:End
+=====1N4747A=========
+module 1N4747A();
+endmodule // 1N4747A
+
+# sckt 1N4747A
+
+
+# 0
+.Def:End
+=====1N4757A=========
+module 1N4757A();
+endmodule // 1N4757A
+
+# sckt 1N4757A
+
+
+# 0
+.Def:End
+=====1N746=========
+module 1N746();
+endmodule // 1N746
+
+# sckt 1N746
+
+
+# 0
+.Def:End
+=====1N747=========
+module 1N747();
+endmodule // 1N747
+
+# sckt 1N747
+
+
+# 0
+.Def:End
+=====1N748=========
+module 1N748();
+endmodule // 1N748
+
+# sckt 1N748
+
+
+# 0
+.Def:End
+=====1N749=========
+module 1N749();
+endmodule // 1N749
+
+# sckt 1N749
+
+
+# 0
+.Def:End
+=====1N750=========
+module 1N750();
+endmodule // 1N750
+
+# sckt 1N750
+
+
+# 0
+.Def:End
+=====1N751=========
+module 1N751();
+endmodule // 1N751
+
+# sckt 1N751
+
+
+# 0
+.Def:End
+=====1N752=========
+module 1N752();
+endmodule // 1N752
+
+# sckt 1N752
+
+
+# 0
+.Def:End
+=====1N753=========
+module 1N753();
+endmodule // 1N753
+
+# sckt 1N753
+
+
+# 0
+.Def:End
+=====1N754=========
+module 1N754();
+endmodule // 1N754
+
+# sckt 1N754
+
+
+# 0
+.Def:End
+=====1N755=========
+module 1N755();
+endmodule // 1N755
+
+# sckt 1N755
+
+
+# 0
+.Def:End
+=====1N756=========
+module 1N756();
+endmodule // 1N756
+
+# sckt 1N756
+
+
+# 0
+.Def:End
+=====1N757=========
+module 1N757();
+endmodule // 1N757
+
+# sckt 1N757
+
+
+# 0
+.Def:End
+=====1N758=========
+module 1N758();
+endmodule // 1N758
+
+# sckt 1N758
+
+
+# 0
+.Def:End
+=====1N759=========
+module 1N759();
+endmodule // 1N759
+
+# sckt 1N759
+
+
+# 0
+.Def:End
+=====1N4728=========
+module 1N4728();
+endmodule // 1N4728
+
+# sckt 1N4728
+
+
+# 0
+.Def:End
+=====1N4729=========
+module 1N4729();
+endmodule // 1N4729
+
+# sckt 1N4729
+
+
+# 0
+.Def:End
+=====1N4730=========
+module 1N4730();
+endmodule // 1N4730
+
+# sckt 1N4730
+
+
+# 0
+.Def:End
+=====1N4731=========
+module 1N4731();
+endmodule // 1N4731
+
+# sckt 1N4731
+
+
+# 0
+.Def:End
+=====1N4732=========
+module 1N4732();
+endmodule // 1N4732
+
+# sckt 1N4732
+
+
+# 0
+.Def:End
+=====1N4733=========
+module 1N4733();
+endmodule // 1N4733
+
+# sckt 1N4733
+
+
+# 0
+.Def:End
+=====1N4734=========
+module 1N4734();
+endmodule // 1N4734
+
+# sckt 1N4734
+
+
+# 0
+.Def:End
+=====1N4735=========
+module 1N4735();
+endmodule // 1N4735
+
+# sckt 1N4735
+
+
+# 0
+.Def:End
+=====1N4736=========
+module 1N4736();
+endmodule // 1N4736
+
+# sckt 1N4736
+
+
+# 0
+.Def:End
+=====1N4737=========
+module 1N4737();
+endmodule // 1N4737
+
+# sckt 1N4737
+
+
+# 0
+.Def:End
+=====1N4738=========
+module 1N4738();
+endmodule // 1N4738
+
+# sckt 1N4738
+
+
+# 0
+.Def:End
+=====1N4739=========
+module 1N4739();
+endmodule // 1N4739
+
+# sckt 1N4739
+
+
+# 0
+.Def:End
+=====1N4740=========
+module 1N4740();
+endmodule // 1N4740
+
+# sckt 1N4740
+
+
+# 0
+.Def:End
+=====1N4741=========
+module 1N4741();
+endmodule // 1N4741
+
+# sckt 1N4741
+
+
+# 0
+.Def:End
+=====1N4742=========
+module 1N4742();
+endmodule // 1N4742
+
+# sckt 1N4742
+
+
+# 0
+.Def:End
+=====1N4743=========
+module 1N4743();
+endmodule // 1N4743
+
+# sckt 1N4743
+
+
+# 0
+.Def:End
+=====1N4744=========
+module 1N4744();
+endmodule // 1N4744
+
+# sckt 1N4744
+
+
+# 0
+.Def:End
+=====1N4745=========
+module 1N4745();
+endmodule // 1N4745
+
+# sckt 1N4745
+
+
+# 0
+.Def:End
+=====1N4746=========
+module 1N4746();
+endmodule // 1N4746
+
+# sckt 1N4746
+
+
+# 0
+.Def:End
+=====1N4747=========
+module 1N4747();
+endmodule // 1N4747
+
+# sckt 1N4747
+
+
+# 0
+.Def:End
+=====1N4748=========
+module 1N4748();
+endmodule // 1N4748
+
+# sckt 1N4748
+
+
+# 0
+.Def:End
+=====1N4749=========
+module 1N4749();
+endmodule // 1N4749
+
+# sckt 1N4749
+
+
+# 0
+.Def:End
+=====1N4750=========
+module 1N4750();
+endmodule // 1N4750
+
+# sckt 1N4750
+
+
+# 0
+.Def:End
+=====1N4751=========
+module 1N4751();
+endmodule // 1N4751
+
+# sckt 1N4751
+
+
+# 0
+.Def:End
+=====1N4752=========
+module 1N4752();
+endmodule // 1N4752
+
+# sckt 1N4752
+
+
+# 0
+.Def:End
+=====1N4753=========
+module 1N4753();
+endmodule // 1N4753
+
+# sckt 1N4753
+
+
+# 0
+.Def:End
+=====1N4754=========
+module 1N4754();
+endmodule // 1N4754
+
+# sckt 1N4754
+
+
+# 0
+.Def:End
+=====1N4755=========
+module 1N4755();
+endmodule // 1N4755
+
+# sckt 1N4755
+
+
+# 0
+.Def:End
+=====1N4756=========
+module 1N4756();
+endmodule // 1N4756
+
+# sckt 1N4756
+
+
+# 0
+.Def:End
+=====1N4757=========
+module 1N4757();
+endmodule // 1N4757
+
+# sckt 1N4757
+
+
+# 0
+.Def:End
+=====1N4758=========
+module 1N4758();
+endmodule // 1N4758
+
+# sckt 1N4758
+
+
+# 0
+.Def:End
+=====1N4759=========
+module 1N4759();
+endmodule // 1N4759
+
+# sckt 1N4759
+
+
+# 0
+.Def:End
+=====1N4760=========
+module 1N4760();
+endmodule // 1N4760
+
+# sckt 1N4760
+
+
+# 0
+.Def:End
+=====1N4761=========
+module 1N4761();
+endmodule // 1N4761
+
+# sckt 1N4761
+
+
+# 0
+.Def:End
+=====1N4762=========
+module 1N4762();
+endmodule // 1N4762
+
+# sckt 1N4762
+
+
+# 0
+.Def:End
+=====1N4763=========
+module 1N4763();
+endmodule // 1N4763
+
+# sckt 1N4763
+
+
+# 0
+.Def:End
+=====1N4764=========
+module 1N4764();
+endmodule // 1N4764
+
+# sckt 1N4764
+
+
+# 0
+.Def:End
+=====1N5342B=========
+module 1N5342B();
+endmodule // 1N5342B
+
+# sckt 1N5342B
+
+
+# 0
+.Def:End
+=====1N5344B=========
+module 1N5344B();
+endmodule // 1N5344B
+
+# sckt 1N5344B
+
+
+# 0
+.Def:End
+=====1N5346B=========
+module 1N5346B();
+endmodule // 1N5346B
+
+# sckt 1N5346B
+
+
+# 0
+.Def:End
+=====1N5348B=========
+module 1N5348B();
+endmodule // 1N5348B
+
+# sckt 1N5348B
+
+
+# 0
+.Def:End
+=====1N5350B=========
+module 1N5350B();
+endmodule // 1N5350B
+
+# sckt 1N5350B
+
+
+# 0
+.Def:End
+=====1N5351B=========
+module 1N5351B();
+endmodule // 1N5351B
+
+# sckt 1N5351B
+
+
+# 0
+.Def:End
+=====1N5353B=========
+module 1N5353B();
+endmodule // 1N5353B
+
+# sckt 1N5353B
+
+
+# 0
+.Def:End
+=====1N5355B=========
+module 1N5355B();
+endmodule // 1N5355B
+
+# sckt 1N5355B
+
+
+# 0
+.Def:End
+=====1N5357B=========
+module 1N5357B();
+endmodule // 1N5357B
+
+# sckt 1N5357B
+
+
+# 0
+.Def:End
+=====1N5359B=========
+module 1N5359B();
+endmodule // 1N5359B
+
+# sckt 1N5359B
+
+
+# 0
+.Def:End
+=====1N5361B=========
+module 1N5361B();
+endmodule // 1N5361B
+
+# sckt 1N5361B
+
+
+# 0
+.Def:End
+=====1N5363B=========
+module 1N5363B();
+endmodule // 1N5363B
+
+# sckt 1N5363B
+
+
+# 0
+.Def:End
+=====1N5365B=========
+module 1N5365B();
+endmodule // 1N5365B
+
+# sckt 1N5365B
+
+
+# 0
+.Def:End
+=====1N5367B=========
+module 1N5367B();
+endmodule // 1N5367B
+
+# sckt 1N5367B
+
+
+# 0
+.Def:End
+=====1N5369B=========
+module 1N5369B();
+endmodule // 1N5369B
+
+# sckt 1N5369B
+
+
+# 0
+.Def:End
+=====1N5371B=========
+module 1N5371B();
+endmodule // 1N5371B
+
+# sckt 1N5371B
+
+
+# 0
+.Def:End
+=====1N5373B=========
+module 1N5373B();
+endmodule // 1N5373B
+
+# sckt 1N5373B
+
+
+# 0
+.Def:End
+=====1N5375B=========
+module 1N5375B();
+endmodule // 1N5375B
+
+# sckt 1N5375B
+
+
+# 0
+.Def:End
+=====1N5377B=========
+module 1N5377B();
+endmodule // 1N5377B
+
+# sckt 1N5377B
+
+
+# 0
+.Def:End
+=====1N5379B=========
+module 1N5379B();
+endmodule // 1N5379B
+
+# sckt 1N5379B
+
+
+# 0
+.Def:End
+=====1N5381B=========
+module 1N5381B();
+endmodule // 1N5381B
+
+# sckt 1N5381B
+
+
+# 0
+.Def:End
+=====1N5383B=========
+module 1N5383B();
+endmodule // 1N5383B
+
+# sckt 1N5383B
+
+
+# 0
+.Def:End
+=====1N5385B=========
+module 1N5385B();
+endmodule // 1N5385B
+
+# sckt 1N5385B
+
+
+# 0
+.Def:End
+=====1N5387B=========
+module 1N5387B();
+endmodule // 1N5387B
+
+# sckt 1N5387B
+
+
+# 0
+.Def:End

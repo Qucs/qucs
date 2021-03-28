@@ -89,18 +89,22 @@ static Dispatcher<Symbol>::INSTALL p0(&symbol_dispatcher, "qucsatorScktHack", &d
 static std::string netLabel(qucs::Component const* s, index_t k)
 {
 	auto m = s->scope();
-	assert(m);
-	auto n = m->nodes();
-	assert(n);
+	if(m){
+		auto n = m->nodes();
+		assert(n);
 
-	std::string p = s->port_value(k);
+		std::string p = s->port_value(k);
 
 #if 0 // TODO.
-	return s->owner()->netName(p); //?
+		return s->owner()->netName(p); //?
 #else
-	// BUG
-	return n->netName(p);
+		// BUG
+		return n->netName(p);
 #endif
+	}else{
+		unreachable();
+		return "netlabel_BUG";
+	}
 }
 /* -------------------------------------------------------------------------------- */
 static int notalnum(char c)
@@ -160,7 +164,6 @@ static void printSymbol_(Symbol const* c, ostream_t& s)
 	// todo: mfactor/active?
 	assert(c);
 	trace2("pc", c->label(), c->typeName());
-
 	{
 		std::string type = c->typeName();
 		if(c->common()){
@@ -173,12 +176,12 @@ static void printSymbol_(Symbol const* c, ostream_t& s)
 
 		Symbol const* sym=c;
 		trace3("print", c->label(), sym->numPorts(), sym->label());
-		for(unsigned i=0; i<sym->numPorts(); ++i){
+		for(index_t i=0; i<sym->numPorts(); ++i){
 			std::string N = netLabel(sym, i);
 			s << " " << N;
 		}
 
-		for(unsigned ii=0; ii<sym->param_count(); ++ii) {
+		for(index_t ii=0; ii<sym->param_count(); ++ii) {
 			trace3("param", c->label(), ii, sym->param_count());
 			std::string name = sym->param_name(ii);
 			//trace2("param", name, value);
@@ -436,6 +439,14 @@ void QucsatorLang::printTaskElement(TaskElement const* c, ostream_t& s) const
 	s << "PROPS\n";
 }
 
+void print_ports(Symbol const* sym, ostream_t& s)
+{
+	for(index_t i=0; i<sym->numPorts(); ++i){
+		std::string N = netLabel(sym, i);
+		s << " " << N;
+	}
+}
+
 // print Component in qucsator language
 // BUG: callback: untangle isShort, isActive (mfactor?).
 void QucsatorLang::printComponent(::Component const* c, ostream_t& s) const
@@ -463,6 +474,23 @@ void QucsatorLang::printComponent(::Component const* c, ostream_t& s) const
 			s << "R:" << c->label() << "." << QString::number(z++) << " "
 				<< Node1 << " " << netLabel(c, k) << " R=\"0\"\n";
 		}
+	}else if(c->typeName() == "EDD"){
+		// HACK from eqndefined.cpp
+		s << c->typeName() << ":" << c->label();
+		print_ports(c, s);
+
+		// output all properties
+		Property *p2 = c->Props.at(2);
+		QString s_;
+		QString e = "\n";
+		QString Name = QString_(c->short_label());
+		while(p2) {
+			s_ += " "+p2->Name+"=\""+Name+"."+p2->Name+"\"";
+			e += "  Eqn:Eqn"+Name+p2->Name+" "+
+				Name+"."+p2->Name+"=\""+p2->Value+"\" Export=\"no\"\n";
+			p2 = c->Props.next();
+		}
+		s << s_ + e;
 	}else{
 		std::string type = c->typeName();
 		if(c->common()){ untested();
@@ -475,11 +503,7 @@ void QucsatorLang::printComponent(::Component const* c, ostream_t& s) const
 
 		Symbol const* sym=c;
 		trace3("print", c->label(), sym->numPorts(), sym->label());
-		for(unsigned i=0; i<sym->numPorts(); ++i){
-			std::string N = netLabel(sym, i);
-
-			s << " " << N;
-		}
+		print_ports(sym, s);
 
 		for(unsigned ii=0; ii<sym->param_count(); ++ii) {
 			trace3("param", c->label(), ii, sym->param_count());
@@ -506,9 +530,6 @@ void QucsatorLang::printComponent(::Component const* c, ostream_t& s) const
 	}
 }
 /* -------------------------------------------------------------------------------- */
-/* -------------------------------------------------------------------------------- */
-
 }//namespace
-/* -------------------------------------------------------------------------------- */
 /* -------------------------------------------------------------------------------- */
 /* -------------------------------------------------------------------------------- */
