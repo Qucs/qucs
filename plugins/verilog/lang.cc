@@ -230,13 +230,13 @@ static void parse_ports(istream_t& cmd, Component* x, bool all_new)
 					std::string value;
 					cmd >> value;
 					x->set_port_by_index(index, value);
-					if (all_new) { untested();
+					if (all_new) {
 						//    if (x->node_is_grounded(index)) { untested();
 						//      cmd.warn(bDANGER, here, "node 0 not allowed here");
 						//    }else
 						if (x->subckt() && int(x->subckt()->nodes()->size()) != index+1) { untested();
 							cmd.warn(bDANGER, here, "duplicate port name, skipping");
-						}else{ untested();
+						}else{
 							++index;
 						}
 					}else{
@@ -693,7 +693,7 @@ class CMD_MODULE : public Command {
 
 			trace2("new_module", new_module->label(), new_module);
 			auto f = Scope->find_(new_module->label());
-			if(f == Scope->end()){ untested();
+			if(f == Scope->end()){
 			}else{
 				new_module->set_owner((*f)->owner());
 				Scope->erase(f);

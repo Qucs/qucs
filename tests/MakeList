@@ -4,6 +4,7 @@ EXTRA_DIST =
 QX_TESTS = \
 	command.0.qx \
 	list.0.qx \
+	list.1.qx \
 	spice.0.qx
 
 SH_TESTS = \

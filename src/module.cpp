@@ -39,13 +39,13 @@ Module::INSTALL::INSTALL(const std::string& cat, Element const* p) :
 		unreachable();
 	}else{
 		registerElement(QString::fromStdString(cat), p);
-		if(p->label()==""){ untested();
+		if(p->label()==""){
 		}else if(auto pp=dynamic_cast<qucs::Component const*>(p)){
 			std::string s = "protos add " + cat + " " + pp->dev_type();
 			trace1("protos", s);
 
 			// not yet
-			// Command::command(s, &ElementList::card_list);
+			Command::command(s, &ElementList::card_list);
 		}else{
 			trace0("protos, no label");
 		}
@@ -191,8 +191,8 @@ class Protostash : public Command{
 public:
 	~Protostash(){ incomplete(); }
 private:
-	SubcktBase* open(std::string what, ElementList* scope){ untested();
-		auto p_ = scope->find_("protos");
+	SubcktBase* open(std::string what, ElementList* scope){
+		auto p_ = scope->find_(what);
 		Element* a = nullptr;
 		if(p_!=scope->end()){itested();
 			a = *p_;
@@ -205,7 +205,7 @@ private:
 		return sckt;
 	}
 
-	void do_it(istream_t& cmd, ElementList* scope){ untested();
+	void do_it(istream_t& cmd, ElementList* scope){
 //		assert(scope == &ElementList::card_list); // todo
 		scope = &ElementList::card_list;
 
@@ -216,7 +216,7 @@ private:
 		}
 	}
 
-	void add(istream_t& cmd, ElementList* scope){ untested();
+	void add(istream_t& cmd, ElementList* scope){
 		std::string where;
 		std::string what;
 		cmd >> where;
@@ -235,7 +235,7 @@ private:
 		if(proto){
 	//		guiRegisterElement(where, proto);
 			scope->push_back(proto);
-		}else{
+		}else{ untested();
 			message(qucs::MsgWarning, "no proto >" + what + "<");
 		}
 	}

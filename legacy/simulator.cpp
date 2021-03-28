@@ -472,7 +472,7 @@ void LegacyNetlister::throughAllComps(ostream_t& xx, ElementList const* scope_,
 	if(f!=scope_->end()){
 		assert(*f);
 		sckt = (*f)->scope();
-	}else{ untested();
+	}else{
 	}
 
 	for(auto it_ : *sckt){

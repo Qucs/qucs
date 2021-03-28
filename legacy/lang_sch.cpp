@@ -204,7 +204,7 @@ static bool obsolete_wireload(Symbol* w, const QString& sc)
 
 	if(y1<=y2){
 		// possibly the case in all legacy files
-	}else{ untested();
+	}else{
 		// nothing wrong with that, really?
 	}
 	sym->set_param_by_name("deltay", std::to_string(y2 - y1));

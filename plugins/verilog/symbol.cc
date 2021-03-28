@@ -122,12 +122,12 @@ private: // Symbol
 
 	void set_param_by_name(std::string const& name, std::string const& value) override;
 	void set_param_by_index(index_t i, std::string const& value) override;
-	index_t param_count() const override{ untested();
+	index_t param_count() const override{
 	  return 3 + Symbol::param_count();
 	}
 
 	std::string param_name(index_t i) const override;
-	std::string param_value(index_t i) const override{ untested();
+	std::string param_value(index_t i) const override{
 		switch (int(Verilog::param_count()) - (1 + i)) {
 		case 0:
 			return _filename;
@@ -139,13 +139,13 @@ private: // Symbol
 			return Symbol::param_value(i);
 		}
 	}
-	std::string param_value_by_name(std::string const& name) const override{ untested();
+	std::string param_value_by_name(std::string const& name) const override{
 		trace1("Verilog::param_value_by_name", name);
-		if(name=="$tx"){ untested();
+		if(name=="$tx"){
 			return std::to_string(_tx);
-		}else if(name=="$ty"){ untested();
+		}else if(name=="$ty"){
 			return std::to_string(_ty);
-		}else{ untested();
+		}else{
 			incomplete();
 			return Symbol::param_value_by_name(name);
 		}
@@ -153,7 +153,7 @@ private: // Symbol
 	void init(Component const* owner);
 
 private: // overrides
-	index_t numPorts() const override{ untested();
+	index_t numPorts() const override{
 		trace1("Verilog::numPorts", _ports.size());
 		return _ports.size();
 	}
@@ -178,7 +178,7 @@ static Dispatcher<Element>::INSTALL d1(&symbol_dispatcher, "Verilog", &p1);
 // if its already there, use it.
 // TODO: factory needs a refresh hook.
 Component const* Verilog::new_model(std::string const& fn) // const
-{ untested();
+{
 	auto subPath = factory_param("$SUB_PATH");
 	trace2("VerilogFactory::new_model", subPath, fn);
 //	QString FileName(Props.getFirst()->Value);
@@ -189,24 +189,24 @@ Component const* Verilog::new_model(std::string const& fn) // const
 		incomplete();
 		// throw?? or try and recover??
 		type_name = "Verilog" + typesep + "invalid_filename";
-	}else{ untested();
+	}else{
 		type_name = "Verilog" + typesep + fn.substr(0, dotplace);
 	}
 
 	auto cached_ = find_proto(type_name);
 	Element const* cached = nullptr;
-	if(cached_){ untested();
+	if(cached_){
 		// TODO: find_again.
 		cached = cached_;
-	}else{ untested();
+	}else{
 	}
 
 	std::string file_found = findFile(fn, subPath, R_OK);
 	trace4("VerilogFactory::newCommon", label(), fn, subPath, file_found);
 
-	if(auto sym = dynamic_cast<Component const*>(cached)){ untested();
+	if(auto sym = dynamic_cast<Component const*>(cached)){
 		return sym; // ->common();
-	}else if(file_found != "" ){ untested();
+	}else if(file_found != "" ){
 		assert(owner());
 		auto os = prechecked_cast<Element const*>(owner());
 		assert(os);
@@ -237,7 +237,7 @@ Component const* Verilog::new_model(std::string const& fn) // const
 
 		trace4("Verilog::made proto", s->label(), type_name, s->typeName(), s->numPorts());
 		Component* last = nullptr;
-		for(auto i: *s->scope()){ untested();
+		for(auto i: *s->scope()){
 			trace1("Verilog found", i->short_label()); // , i->num_ports());
 			if(auto c = dynamic_cast<Component*>(i)){
 				last = c;
@@ -245,14 +245,14 @@ Component const* Verilog::new_model(std::string const& fn) // const
 			}
 		}
 		auto a = qucs::device_dispatcher.clone("subckt_proto");
-		if(last){ untested();
+		if(last){
 			// change label??
 			a->scope()->push_back(last);
 			a->set_dev_type(type_name);
 			a->set_label(type_name);
 			trace4("Verilog stash", dev_type(), type_name, a->common()->modelname(), last->numPorts());
 			// trace2("Verilog stash", type_name, common()->modelname());
-			for(index_t i=0; i<last->numPorts(); ++i){ untested();
+			for(index_t i=0; i<last->numPorts(); ++i){
 				a->set_port_by_index(i, last->port_value(i));
 			}
 			stash_proto(a);
@@ -305,15 +305,15 @@ static void parse_portcmd(istream_t& cs, SubcktBase* s)
 /*--------------------------------------------------------------------------*/
 /*--------------------------------------------------------------------------*/
 void Verilog::build_sckt(istream_t& cmd, SubcktBase* proto) const
-{ untested();
+{
 	trace1("Verilog::build_sckt", cmd.fullstring());
 	assert(owner());
 
 	// TODO: parse verilog instead.
 	Language const* L = qucs::language_dispatcher["verilog"];
 	assert(L);
-	try{ untested();
-		while(true){ untested();
+	try{
+		while(true){
 			cmd.get_line("verilog>");
 			cmd.skipbl();
 			trace1("VerilogFactory::build_sckt", cmd.fullstring());
@@ -321,7 +321,7 @@ void Verilog::build_sckt(istream_t& cmd, SubcktBase* proto) const
 			assert(e->scope());
 			L->new__instance(cmd, proto, e->scope());
 		}
-	}catch (qucs::Exception_End_Of_Input& e) { untested();
+	}catch (qucs::Exception_End_Of_Input& e) {
 	}
 
 	assert(!proto->numPorts());
@@ -371,7 +371,7 @@ void Verilog::build_sckt(istream_t& cmd, SubcktBase* proto) const
 		unreachable(); // wrong type
 	}
 
-	if(!gotit){ untested();
+	if(!gotit){
 		incomplete();
 		trace2("build_sckt no Symbol", proto->label(), proto->numPorts());
 	}else{ untested();
@@ -381,7 +381,7 @@ void Verilog::build_sckt(istream_t& cmd, SubcktBase* proto) const
 /*--------------------------------------------------------------------------*/
 /*--------------------------------------------------------------------------*/
 void Verilog::set_param_by_index(index_t i, std::string const& v)
-{ untested();
+{
 	switch (int(Verilog::param_count()) - (1 + i)) {
 	case 0:
 		_filename = v;
@@ -401,13 +401,13 @@ void Verilog::set_param_by_index(index_t i, std::string const& v)
 		_filename = v;
 		trace1("Verilog::setParameter", v);
 		refreshSymbol(v);
-	}else{ untested();
+	}else{
 	}
 }
 /*--------------------------------------------------------------------------*/
 // use common params eventually.
 std::string Verilog::param_name(index_t i) const
-{ untested();
+{
 	switch (int(Verilog::param_count()) - (1 + i)) {
 	case 0:
 		return "File";
@@ -431,7 +431,7 @@ Verilog::Verilog(Verilog const&x)
 }
 /*--------------------------------------------------------------------------*/
 void Verilog::refreshSymbol(std::string const& fn)
-{ untested();
+{
 	trace1("refreshSymbol", fn);
 	Component const* new_parent = nullptr;
 
@@ -442,7 +442,7 @@ void Verilog::refreshSymbol(std::string const& fn)
 	}
 
 	trace1("refreshSymbol", fn);
-	if(new_parent){ untested();
+	if(new_parent){
 		// _proto == new_parent; // ?
 		assert(new_parent);
 		assert(new_parent->common());
@@ -459,12 +459,12 @@ void Verilog::refreshSymbol(std::string const& fn)
 }
 /*--------------------------------------------------------------------------*/
 void Verilog::init(Component const* proto)
-{ untested();
+{
 	auto ps = proto->scope();
 	assert(ps); // won't work for Components.
 
 	auto p_ = ps->find_("main");
-	if(p_==ps->end()){ untested();
+	if(p_==ps->end()){
 		_ports.resize(proto->numPorts());
 	}else if(auto mm=dynamic_cast<Component const*>(*p_)){ untested();
 		_ports.resize(mm->numPorts());
@@ -530,7 +530,7 @@ void Verilog::init(Component const* proto)
 	}else{ untested();
 	}
 
-	if(!_painting){ untested();
+	if(!_painting){
 		int np = numPorts();
 		std::string defpaint = defsym + std::to_string(np);
 //		auto e = find_looking_out(defpaint);
@@ -538,7 +538,7 @@ void Verilog::init(Component const* proto)
 		auto e = qucs::symbol_dispatcher[defpaint];
 		if(!e){ untested();
 			message(qucs::MsgFatal, "no symbol for " + label() + " " + defpaint);
-		}else if(auto p=dynamic_cast<Painting const*>(e)){ untested();
+		}else if(auto p=dynamic_cast<Painting const*>(e)){
 			_painting = p;
 		}else{ untested();
 		}
@@ -549,7 +549,7 @@ void Verilog::init(Component const* proto)
 }
 /*--------------------------------------------------------------------------*/
 bool Verilog::portExists(index_t i) const
-{ untested();
+{
 	return i<numPorts();
 }
 /*--------------------------------------------------------------------------*/
@@ -564,9 +564,9 @@ std::string const Verilog::portName(index_t) const
 void Verilog::set_param_by_name(std::string const& name, std::string const& v)
 { itested();
 	trace2("Verilog::setParameter", name, v);
-	if(name=="$tx"){ untested();
+	if(name=="$tx"){
 		_tx = atoi(v.c_str());
-	}else if(name=="$ty"){ untested();
+	}else if(name=="$ty"){
 		_ty = atoi(v.c_str());
 	}else if(name=="File"){ untested();
 		_filename = v;
