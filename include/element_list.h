@@ -10,21 +10,23 @@
  *   (at your option) any later version.                                   *
  *                                                                         *
  ***************************************************************************/
-#ifndef QUCS_SCHEMATIC_MODEL_H
-#define QUCS_SCHEMATIC_MODEL_H
+#ifndef QUCS_ELEMENT_LIST
+#define QUCS_ELEMENT_LIST
 
-#include "object.h"
-#include "tasks.h"
-#include "element.h"
-#include "symbol.h"
-#include <vector>
-#include <map>
-#include <algorithm>
+#include "platform.h"
+#include "io_trace.h"
+//#include "object.h"
+//#include "tasks.h"
+//#include "element.h"
+//#include "symbol.h"
+//#include <algorithm>
 /*--------------------------------------------------------------------------*/
 class QFileInfo; // BUG
 class QPrinter; // BUG?
+class QPainter; // BUG?
 /*--------------------------------------------------------------------------*/
 class ostream_t;
+class istream_t;
 class ParamList;
 /*--------------------------------------------------------------------------*/
 /*--------------------------------------------------------------------------*/
@@ -36,6 +38,8 @@ class NodeMap;
 class TaskElement;
 class Diagram;
 class Painting;
+class Element;
+class Symbol; // BUG
 /*--------------------------------------------------------------------------*/
 class ElementList{
 public: // stub

@@ -28,6 +28,7 @@ class Symbol;
 class Element;
 class Component;
 /*--------------------------------------------------------------------------*/
+// ModelFactory.
 class SymbolFactory : public Element{
 public:
 	explicit SymbolFactory();
@@ -38,6 +39,9 @@ protected:
 public:
 	virtual Component const* new_symbol(std::string const&){unreachable();incomplete();return nullptr;}
 	ElementList const* scope() const{ return _scope; }
+
+private:
+	ElementList* scope(){ return _scope; }
 
 private:
 	void set_dev_type(std::string const& name);
@@ -81,8 +85,21 @@ protected:
 		assert(_factory);
 		return _factory->param_value_by_name(name);
 	}
-	Element const* find_proto(std::string const&) const;
+	Element const* find_proto(std::string const&);
 	void stash_proto(Element* e);
+
+	index_t numPorts() const override{
+		incomplete();
+		return 0;
+	}
+	Port& port(index_t) override{
+		throw "incomplete";
+	}
+	std::string const /*BUG*/ portName(index_t i) const override
+	{ untested();
+		return std::string("port_") + std::to_string(i);
+	}
+/*--------------------------------------------------------------------------*/
 
 private:
 	mutable SymbolFactory* _factory{nullptr};

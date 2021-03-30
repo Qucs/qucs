@@ -23,21 +23,22 @@
  * Used for spice compatible .param statements
  * and passing arguments to models and subcircuits
  */
-//testing=script 2014.11.25
 #ifndef U_PARAMETER_H
 #define U_PARAMETER_H
 //#include "u_opt.h"
 //#include "io_.h"
 //#include "m_expression.h"
 //#include "e_cardlist.h"
+#include "qio.h"
+#include "element_list.h"
 /*--------------------------------------------------------------------------*/
 // QUCS hacks
+#include "exception.h" // BUG
 #define CARD_LIST qucs::ElementList
 #define OMSTREAM ostream_t
 #include <limits>
 #include <string>
 #include "ap.h"
-#include "element_list.h"
 #include "message.h"
 #define PARA_BASE ParameterBase
 #define PARAMETER Parameter
@@ -230,6 +231,7 @@ public:
   bool	 is_printable(int)const;
   std::string name(int)const;
   std::string value(int)const;
+  std::string value_by_name(std::string const&)const;
 
   void	eval_copy(PARAM_LIST&, const CARD_LIST*);
   bool  operator==(const PARAM_LIST& p)const {return _pl == p._pl;}

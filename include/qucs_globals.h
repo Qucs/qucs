@@ -22,6 +22,7 @@ namespace qucs {
 /*--------------------------------------------------------------------------*/
 class TaskElement;
 class Diagram;
+class Model;
 class Element;
 class Language;
 class Data;
@@ -30,7 +31,8 @@ class Widget;
 class Action;
 class Component;
 /*--------------------------------------------------------------------------*/
-extern INTERFACE Dispatcher<Element> element_dispatcher;
+extern INTERFACE Dispatcher<Element> element_dispatcher; // TODO
+extern INTERFACE Dispatcher<Model> model_dispatcher;
 extern INTERFACE Dispatcher<Command> command_dispatcher;
 extern INTERFACE Dispatcher<Component> device_dispatcher;
 extern INTERFACE Dispatcher<Diagram> diagram_dispatcher;

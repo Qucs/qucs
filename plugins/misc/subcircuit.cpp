@@ -142,7 +142,6 @@ private:
 
 private: // Symbol
 	bool portExists(index_t) const override;
-	std::string const portName(index_t) const override;
 
 	void set_param_by_name(std::string const& name, std::string const& value) override;
 	void set_param_by_index(index_t i, std::string const& value) override;
@@ -230,7 +229,6 @@ Component const* Sub::new_model(std::string const& fn) // const
 	if(auto sym = dynamic_cast<Component const*>(cached)){
 		return sym; // ->common();
 	}else if(file_found != "" ){
-		incomplete(); // rework with parser.
 		assert(owner());
 		auto os = prechecked_cast<Element const*>(owner());
 		assert(os);
@@ -428,6 +426,7 @@ Sub::Sub(Sub const&x)
 	 _tx(x._tx),
 	 _ty(x._ty),
     _painting(x._painting)
+	 // TODO: params.
 {
 	_ports.resize(x._ports.size());
 }
@@ -557,14 +556,6 @@ void Sub::init(Component const* proto)
 bool Sub::portExists(index_t i) const
 {
 	return i<numPorts();
-}
-/*--------------------------------------------------------------------------*/
-static std::string invalid_ = "sckt_proto_port_invalid";
-std::string const Sub::portName(index_t) const
-{ untested();
-	incomplete();
-	// throw?
-	return invalid_;
 }
 /*--------------------------------------------------------------------------*/
 void Sub::set_param_by_name(std::string const& name, std::string const& v)

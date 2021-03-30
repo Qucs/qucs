@@ -440,22 +440,22 @@ ElementGraphics* ElementGraphics::newUnion(ElementGraphics const* s) const
 		assert(symbol(s));
 
 		if(Element* u = c->newUnion(symbol(s)) ){ untested();
-			trace3("new union", u, symbol(s)->typeName(), symbol(s)->label());
+			trace3("new union", u, symbol(s)->dev_type(), symbol(s)->label());
 			ng = new ElementGraphics(u);
 			assert(_e->owner());
 			scene()->addItem(ng);
 		}else{itested();
-			trace1("no new union", symbol(s)->typeName());
+			trace1("no new union", symbol(s)->dev_type());
 		}
 	}else if(auto c=dynamic_cast<Conductor const*>(element(s))){untested();
 		// try the other way round.
 		if(Element* u = c->newUnion(symbol(this)) ){ untested();
-			trace3("new union", u, symbol(this)->typeName(), symbol(this)->label());
+			trace3("new union", u, symbol(this)->dev_type(), symbol(this)->label());
 			ng = new ElementGraphics(u);
 			assert(_e->owner());
 			scene()->addItem(ng);
 		}else{itested();
-			trace1("no new union", symbol(s)->typeName());
+			trace1("no new union", symbol(s)->dev_type());
 		}
 	}else{
 	}

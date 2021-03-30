@@ -34,6 +34,7 @@ CPP_SRC = \
 	language.cpp \
 	l_wmatch.cc \
 	marker.cpp \
+	model.cc \
 	misc.cpp \
 	mnemo.cpp \
 	module.cpp \
@@ -44,6 +45,7 @@ CPP_SRC = \
 	nodemap.cpp \
 	object.cpp \
 	output.cpp \
+	paramlist.cc \
 	place.cpp \
 	port.cpp \
 	printerwriter.cpp \

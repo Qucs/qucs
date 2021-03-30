@@ -14,7 +14,7 @@
 #define QUCS_COMMMAND_H
 /* -------------------------------------------------------------------------------- */
 #include "platform.h"
-#include "element.h"
+#include "data.h"
 #include "exception.h"
 #include "painting.h"
 class ComponentDialog;//really??
@@ -31,7 +31,7 @@ class QBrush; // BUG
 /* -------------------------------------------------------------------------------- */
 namespace qucs {
 /* -------------------------------------------------------------------------------- */
-class TaskElement : public Element, public Painting {
+class TaskElement : public Data, public Painting {
 protected:
   TaskElement(const TaskElement&);
   explicit TaskElement();
@@ -61,8 +61,8 @@ public:
   // do somehting with buttons. can sb think of a more descriptive name?
   virtual void dialgButtStuff(ComponentDialog&)const;
 
-//  void set_dev_type(std::string const&){ incomplete(); }
-//  std::string typeName() const{ return "taskNameIncomplete"; }
+  void set_dev_type(std::string const& t) override{ _type=t; }
+  std::string dev_type() const override{ return _type; }
   /// QList<Line *>     Lines;
   /// QList<struct Arc *>      Arcs;
   /// QList<Area *>     Rects;
@@ -104,6 +104,7 @@ protected:
   // SchematicDoc* containingSchematic;
 private:
   std::string _caption;
+  std::string _type;
 };
 /* -------------------------------------------------------------------------------- */
 } // qucs

@@ -13,6 +13,7 @@
  ***************************************************************************/
 
 #include "element.h"
+#include "component.h" // BUG
 #include "element_list.h"
 
 namespace qucs {
@@ -29,14 +30,18 @@ Element::Element(Element const& e)
    _position(e._position),
    x1(e.x1), y1(e.y1), // x2(e.x2), y2(e.y2), // BUG diagram & whatever.
    _owner(nullptr) // sic.
-	//Name(e.Name) // yikes.
 {
-  set_dev_type(e.typeName());
-
-  // BUG
-  // Selected = false;
 }
 /*--------------------------------------------------------------------------*/
+void Element::set_dev_type(const std::string& New_Type)
+{
+	trace3("Element::set_dev_type", short_label(), dev_type(), New_Type);
+  if (New_Type != dev_type()) { untested();
+    //throw Exception_Cant_Set_Type(dev_type(), New_Type);
+  }else{ untested();
+    // it matches -- ok.
+  }
+}
 Element::~Element()
 {
 }
@@ -150,30 +155,3 @@ Element* Element::find_in_my_scope(std::string const& name)
 } // qucs
 /*--------------------------------------------------------------------------*/
 
-#if 0
-// legacy stuff. pretend that Element points to an Element
-//#include "components/component.h"
-#include "diagram.h"
-#include "wirelabel.h"
-#include "task_element.h"
-#include "node.h"
-#include "painting.h"
-
-// Component* component(Element* e){ return dynamic_cast<Component*>(e); }
-TaskElement* command(Element* e){ return dynamic_cast<TaskElement*>(e); }
-// Wire* wire(Element* e){ return dynamic_cast<Wire*>(e); }
-WireLabel* wireLabel(Element* e){ return dynamic_cast<WireLabel*>(e); }
-Diagram* diagram(Element* e){ return dynamic_cast<Diagram*>(e); }
-Painting* painting(Element* e){ return dynamic_cast<Painting*>(e); }
-Marker* marker(Element* e){ return dynamic_cast<Marker*>(e); }
-//Graph* graph(Element* e){ return dynamic_cast<Graph*>(e); }
-Node* node(Element* e){ return dynamic_cast<Node*>(e); }
-//Label* label(Element* e){ return dynamic_cast<Label*>(e); }
-
-// Component const* component(Element const* e){ return dynamic_cast<Component const*>(e); }
-// Wire const* wire(Element const* e){ return dynamic_cast<Wire const*>(e); }
-WireLabel const* wireLabel(Element const* e){ return dynamic_cast<WireLabel const*>(e); }
-Diagram const* diagram(Element const* e){ return dynamic_cast<Diagram const*>(e); }
-Painting const* painting(Element const* e){ return dynamic_cast<Painting const*>(e); }
-
-#endif

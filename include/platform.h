@@ -27,6 +27,12 @@
 #include <csetjmp>
 #include <unistd.h>
 // #include <fcntl.h>	/* old style unix files (yikes?) */
+// containers
+#include <list>
+#include <vector>
+#include <queue>
+#include <map>
+#include <valarray>
 /*--------------------------------------------------------------------------*/
 /* autoconf stuff */
 #ifdef HAVE_CONFIG_H

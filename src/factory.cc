@@ -19,11 +19,13 @@
 #include "common_sckt.h"
 #include "sckt_base.h"
 #include "dot.h"
+#include "model.h"
 #include "qucs_globals.h"
 #include <vector>
 /*--------------------------------------------------------------------------*/
 namespace qucs{
 /*--------------------------------------------------------------------------*/
+// ModelFactory
 Element* SymbolFactory::clone_instance() const
 {
 	assert(_proto);
@@ -55,20 +57,20 @@ void SymbolFactory::stash(Element* e)
 /*--------------------------------------------------------------------------*/
 void SymbolFactory::set_dev_type(std::string const& name)
 {
-	trace1("SubFactory::set_dev_type", name);
+	trace1("ModelFactory::set_dev_type", name);
 	Element* e = nullptr;
-	try{
+	try{ untested();
 		e = find_looking_out(name)->clone();
 		untested();
-	}catch(qucs::ExceptionCantFind const&){
+	}catch(qucs::ExceptionCantFind const&){ untested();
 		e = qucs::symbol_dispatcher.clone(name);
 	}
 
-	if(auto ps = prechecked_cast<Symbol*>(e)){
+	if(auto ps = prechecked_cast<Symbol*>(e)){ untested();
 		_proto = ps;
 		_scope = owner()->scope();
 		set_label(name);
-	}else{ itested();
+	}else{ untested();
 		throw qucs::ExceptionCantFind(name, short_label());
 	}
 }
@@ -94,20 +96,37 @@ void FactorySymbol::stash_proto(Element* e)
 	_factory->stash(e);
 }
 /*--------------------------------------------------------------------------*/
-Element const* FactorySymbol::find_proto(std::string const& n) const
+Element const* FactorySymbol::find_proto(std::string const& n)
 {
-	SymbolFactory const* f = _factory;
-	auto i = f->scope()->find_(n);
-	if(i==f->scope()->end()){
-		return nullptr;
-	}else{
-		return *i;
+	SymbolFactory* f = _factory;
+	ElementList* scope = f->scope();
+
+	istream_t cmd(istream_t::_STRING, n);
+
+	assert(scope);
+	auto ci = findbranch(cmd, scope);
+
+	while(true){
+		if (ci.is_end()) {untested();
+			return nullptr;
+		}else if(auto p=dynamic_cast<SubcktBase*>(*ci)){
+			return p;
+		}else if(auto m=dynamic_cast<Model*>(*ci)){
+			if(m->is_valid(this)){
+				return m->component_proto();
+			}else{
+			}
+		}else{
+		}
+
+		ci = findbranch(cmd, ++ci);
 	}
+	return nullptr;
 }
 /*--------------------------------------------------------------------------*/
 void FactorySymbol::set_dev_type(std::string const& name)
 {
-	trace1("set_dev_type", name);
+	trace1("FactorySymbol::set_dev_type", name);
 	assert(owner());
 	Element* ee = find_recursive(this, name);
 	SymbolFactory* f = dynamic_cast<SymbolFactory*>(ee);

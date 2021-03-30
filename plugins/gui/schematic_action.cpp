@@ -444,12 +444,12 @@ public:
 	QAction* createAction(QObject* parent) const override{itested();
 		QAction* x = nullptr;
 		assert(_proto);
-		trace2("createAction", _proto->typeName(), _proto->label());
-		if(_proto->typeName() == "GND"){
+		trace2("createAction", _proto->dev_type(), _proto->label());
+		if(_proto->dev_type() == "GND"){
 			x = new ActionInsertGround(parent);
-		}else if(_proto->typeName() == "Port"){
+		}else if(_proto->dev_type() == "Port"){
 			x = new ActionInsertPort(parent);
-		}else if(_proto->typeName() == "Eqn"){
+		}else if(_proto->dev_type() == "Eqn"){
 			x = new ActionInsEqn(parent);
 		}else{
 			incomplete();
@@ -611,7 +611,7 @@ QUndoCommand* MouseActionNewElement::enter(QEvent* ev)
 		assert(_proto);
 		elt = _proto->clone_instance();
 		if(auto sym=dynamic_cast<Symbol const*>(elt)){
-			elt->set_label(sym->typeName());
+			elt->set_label(sym->dev_type());
 		}else{
 		}
 		elt->setPosition(pos_t(sp.x(), sp.y()));

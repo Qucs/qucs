@@ -8,46 +8,46 @@ misc plugins: wip
 legacy plugins: wip
 module protos();
 module sources();
-Idc #(.I(1 mA)) ideal dc current source();
-IProbe #() current probe();
+ #(.I(1 mA)) ideal dc current source();
+ #() current probe();
 endmodule // sources
 
 module RF();
-MCOUPLED #(.Subst(Subst1), .W(1 mm), .L(10 mm), .S(1 mm), .Model(Kirschning), .DispModel(Kirschning), .Temp(26.85)) coupled microstrip line();
-SUBST #(.er(9.8), .h(1 mm), .t(35 um), .tand(2e-4), .rho(0.022e-6), .D(0.15e-6)) substrate definition();
-MCORN #(.Subst(Subst1), .W(1 mm)) microstrip corner();
-MCROSS #(.Subst(Subst1), .W1(1 mm), .W2(2 mm), .W3(1 mm), .W4(2 mm), .MSModel(Hammerstad), .MSDispModel(Kirschning), .Symbol(showNumbers)) microstrip cross();
-MLANGE #(.Subst(Subst1), .W(1 mm), .L(10 mm), .S(1 mm), .Model(Kirschning), .DispModel(Kirschning), .Temp(26.85)) microstrip lange coupler();
-MLIN #(.Subst(Subst1), .W(1 mm), .L(10 mm), .Model(Hammerstad), .DispModel(Kirschning), .Temp(26.85)) microstrip line();
-MSTEP #(.Subst(Subst1), .W1(2 mm), .W2(1 mm), .MSModel(Hammerstad), .MSDispModel(Kirschning)) microstrip impedance step();
+ #(.Subst(Subst1), .W(1 mm), .L(10 mm), .S(1 mm), .Model(Kirschning), .DispModel(Kirschning), .Temp(26.85)) coupled microstrip line();
+ #(.er(9.8), .h(1 mm), .t(35 um), .tand(2e-4), .rho(0.022e-6), .D(0.15e-6)) substrate definition();
+ #(.Subst(Subst1), .W(1 mm)) microstrip corner();
+ #(.Subst(Subst1), .W1(1 mm), .W2(2 mm), .W3(1 mm), .W4(2 mm), .MSModel(Hammerstad), .MSDispModel(Kirschning), .Symbol(showNumbers)) microstrip cross();
+ #(.Subst(Subst1), .W(1 mm), .L(10 mm), .S(1 mm), .Model(Kirschning), .DispModel(Kirschning), .Temp(26.85)) microstrip lange coupler();
+ #(.Subst(Subst1), .W(1 mm), .L(10 mm), .Model(Hammerstad), .DispModel(Kirschning), .Temp(26.85)) microstrip line();
+ #(.Subst(Subst1), .W1(2 mm), .W2(1 mm), .MSModel(Hammerstad), .MSDispModel(Kirschning)) microstrip impedance step();
 MTEE #(.Subst(Subst1), .W1(1 mm), .W2(1 mm), .W3(2 mm), .MSModel(Hammerstad), .MSDispModel(Kirschning), .Temp(26.85), .Symbol(showNumbers)) microstrip tee();
 endmodule // RF
 
 module lumped();
-TLIN #(.Z(50 Ohm), .L(1 mm), .Alpha(0 dB), .Temp(26.85)) ideal transmission line();
+ #(.Z(50 Ohm), .L(1 mm), .Alpha(0 dB), .Temp(26.85)) ideal transmission line();
 endmodule // lumped
 
 endmodule // protos
 
 module protos();
 module sources();
-Idc #(.I(1 mA)) ideal dc current source();
-IProbe #() current probe();
+ #(.I(1 mA)) ideal dc current source();
+ #() current probe();
 endmodule // sources
 
 module RF();
-MCOUPLED #(.Subst(Subst1), .W(1 mm), .L(10 mm), .S(1 mm), .Model(Kirschning), .DispModel(Kirschning), .Temp(26.85)) coupled microstrip line();
-SUBST #(.er(9.8), .h(1 mm), .t(35 um), .tand(2e-4), .rho(0.022e-6), .D(0.15e-6)) substrate definition();
-MCORN #(.Subst(Subst1), .W(1 mm)) microstrip corner();
-MCROSS #(.Subst(Subst1), .W1(1 mm), .W2(2 mm), .W3(1 mm), .W4(2 mm), .MSModel(Hammerstad), .MSDispModel(Kirschning), .Symbol(showNumbers)) microstrip cross();
-MLANGE #(.Subst(Subst1), .W(1 mm), .L(10 mm), .S(1 mm), .Model(Kirschning), .DispModel(Kirschning), .Temp(26.85)) microstrip lange coupler();
-MLIN #(.Subst(Subst1), .W(1 mm), .L(10 mm), .Model(Hammerstad), .DispModel(Kirschning), .Temp(26.85)) microstrip line();
-MSTEP #(.Subst(Subst1), .W1(2 mm), .W2(1 mm), .MSModel(Hammerstad), .MSDispModel(Kirschning)) microstrip impedance step();
+ #(.Subst(Subst1), .W(1 mm), .L(10 mm), .S(1 mm), .Model(Kirschning), .DispModel(Kirschning), .Temp(26.85)) coupled microstrip line();
+ #(.er(9.8), .h(1 mm), .t(35 um), .tand(2e-4), .rho(0.022e-6), .D(0.15e-6)) substrate definition();
+ #(.Subst(Subst1), .W(1 mm)) microstrip corner();
+ #(.Subst(Subst1), .W1(1 mm), .W2(2 mm), .W3(1 mm), .W4(2 mm), .MSModel(Hammerstad), .MSDispModel(Kirschning), .Symbol(showNumbers)) microstrip cross();
+ #(.Subst(Subst1), .W(1 mm), .L(10 mm), .S(1 mm), .Model(Kirschning), .DispModel(Kirschning), .Temp(26.85)) microstrip lange coupler();
+ #(.Subst(Subst1), .W(1 mm), .L(10 mm), .Model(Hammerstad), .DispModel(Kirschning), .Temp(26.85)) microstrip line();
+ #(.Subst(Subst1), .W1(2 mm), .W2(1 mm), .MSModel(Hammerstad), .MSDispModel(Kirschning)) microstrip impedance step();
 MTEE #(.Subst(Subst1), .W1(1 mm), .W2(1 mm), .W3(2 mm), .MSModel(Hammerstad), .MSDispModel(Kirschning), .Temp(26.85), .Symbol(showNumbers)) microstrip tee();
 endmodule // RF
 
 module lumped();
-TLIN #(.Z(50 Ohm), .L(1 mm), .Alpha(0 dB), .Temp(26.85)) ideal transmission line();
+ #(.Z(50 Ohm), .L(1 mm), .Alpha(0 dB), .Temp(26.85)) ideal transmission line();
 endmodule // lumped
 
 endmodule // protos

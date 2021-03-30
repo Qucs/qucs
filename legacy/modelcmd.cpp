@@ -13,6 +13,7 @@
 /*--------------------------------------------------------------------------*/
 #include "command.h"
 #include "qio.h"
+#include "symbol.h"
 #include "element_list.h"
 #include "qucs_globals.h"
 #include "painting.h"

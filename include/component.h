@@ -17,6 +17,7 @@
 /*--------------------------------------------------------------------------*/
 #include "element.h"
 #include "exception.h"
+#include "parameter.h"
 /*--------------------------------------------------------------------------*/
 enum {CC_STATIC_=27342};
 /*--------------------------------------------------------------------------*/
@@ -49,15 +50,15 @@ public:
   virtual CommonComponent* clone()const = 0;
   // virtual bool is_trivial()const {return false;}
 
-public: // params, not yet.
-//   virtual bool param_is_printable(int)const;
-//   virtual std::string param_name(int)const;
-//   virtual std::string param_name(int,int)const;
-//   virtual std::string param_value(int)const;
-//   virtual void set_param_by_name(std::string, std::string);
-//   void Set_param_by_name(std::string, std::string); //BUG// see implementation
-//   virtual void set_param_by_index(int, std::string&, int);
-//   virtual int param_count()const {return 4;}
+public:
+  virtual bool param_is_printable(index_t)const;
+  virtual std::string param_name(index_t)const;
+//  virtual std::string param_name(index_t,index_t)const;
+  virtual std::string param_value(index_t)const;
+  virtual std::string param_value_by_name(std::string const&)const;
+  virtual void set_param_by_name(std::string const&, std::string const&);
+  virtual void set_param_by_index(index_t, std::string const&); // , int);
+  virtual index_t param_count()const{return 4;};
 public: // also, not yet
 //  virtual void precalc_first(const CARD_LIST*)	{}
 //  virtual void expand(const COMPONENT*)		{}
@@ -77,6 +78,11 @@ private:
   std::string	_modelname;
 //  mutable const MODEL_CARD* _model;
   int		_attach_count;
+  Parameter<double>	_tnom_c;  // specification temperature
+  Parameter<double>	_dtemp;   // rise over enclosing temperature
+  Parameter<double>	_temp_c;  // actual temperature of device
+  Parameter<double>	_mfactor; // number of devices in parallel
+  Parameter<double>	_value;
 };
 /*--------------------------------------------------------------------------*/
 /*--------------------------------------------------------------------------*/
@@ -98,10 +104,11 @@ public: // manage shared data across components
 
 public:
 	void set_dev_type(const std::string& new_type) override;
-	virtual std::string dev_type()const{ return typeName();}
 
 public: // Parameters
-	virtual index_t param_count()const;
+	virtual index_t param_count()const{
+		return ((has_common()) ? (common()->param_count()) : (0));
+	}
 	virtual bool param_is_printable(index_t i)const;
 
 	virtual void set_param_by_name(std::string const&, std::string const&) override;

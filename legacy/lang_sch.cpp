@@ -20,6 +20,7 @@
 #include "diagram.h" // BUG
 #include "docfmt.h" // BUG
 #include "dot.h"
+#include "model.h"
 #include "components/component.h"
 #include "sckt_base.h"
 #include "place.h"
@@ -104,6 +105,9 @@ static bool PaintingListLoad(QString Line, PaintingList& List)
 /*--------------------------------------------------------------------------*/
 namespace{
 /*--------------------------------------------------------------------------*/
+using qucs::Component;
+using qucs::Model;
+/*--------------------------------------------------------------------------*/
 class LegacySchematicLanguage : public SchematicLanguage {
 public:
 	LegacySchematicLanguage(bool mod=false) : SchematicLanguage(), _lib_mod(mod){
@@ -130,7 +134,8 @@ private: // local/incomplete
 	void printData(Data const*, ostream_t&) const;
 
 private:
-	void print_instance(ostream_t&, qucs::Component const*) const override;
+	void print_instance(ostream_t&, Component const*) const override;
+	void print_paramset(ostream_t&, Model const*) const override;
 	void printElement(Element const*, ostream_t&) const override;
 	void printPainting(Painting const*, ostream_t&) const override;
 	void printSubckt(SubcktBase const*, ostream_t&) const override;
@@ -373,7 +378,7 @@ void LegacySchematicLanguage::printData(Data const* x, ostream_t& s) const
 /*--------------------------------------------------------------------------*/
 void LegacySchematicLanguage::printTaskElement(TaskElement const* c, ostream_t& s) const
 {
-	s << "  <." << c->typeName() << " ";
+	s << "  <." << c->dev_type() << " ";
 
 	if(c->label()==""){
 		s << "MISSING_LABEL";
@@ -471,9 +476,12 @@ static void printArgs(qucs::Component const* sym, ostream_t& s)
 		trace3("display", i, show, sym->param_name(i));
 		// if(sym->paramIsPrintabl(i))
 		std::string n = sym->param_name(i);
-		if(n.at(0)=='$'){
-		}else{
+		if(n.size() == 0){
+			unreachable();
+		}else if(n.at(0)=='$'){
+		}else if(sym->param_is_printable(i)){
 			s << " \"" << sym->param_value(i) << "\" " << (show % 2);
+		}else{
 		}
 		show /= 2;
 	}
@@ -512,18 +520,25 @@ static void printwirehack(qucs::Symbol const* w, ostream_t& d)
 	  d << " \"\" 0 0 0 \"\">\n";
   }
 }
-// was: void Schematic::saveComponent(QTextStream& s, Component const* c) const
-void LegacySchematicLanguage::print_instance(ostream_t& s, qucs::Component const* sym) const
+/*--------------------------------------------------------------------------*/
+void LegacySchematicLanguage::print_paramset(ostream_t& s, Model const* x) const
 {
-	trace1("printSymbol", sym->typeName());
-	if(sym->typeName()!="wire"){
+	unreachable(); // there are no paramsets in a schematic atm.
+	s << "incomplete model " << x->short_label()  << "\n";
+}
+/*--------------------------------------------------------------------------*/
+// was: void Schematic::saveComponent(QTextStream& s, Component const* c) const
+void LegacySchematicLanguage::print_instance(ostream_t& s, Component const* sym) const
+{
+	trace1("printSymbol", sym->dev_type());
+	if(sym->dev_type()!="wire"){
 	}else if(auto ww=dynamic_cast<Symbol const*>(sym)){
 		// hack hack
 		return printwirehack(ww, s);
 	}else{
 	}
 
-	s << "  <" << mangle(sym->typeName()) << " ";
+	s << "  <" << mangle(sym->dev_type()) << " ";
 
 	if(sym->label()==""){ untested();
 		s << "*";
@@ -533,7 +548,7 @@ void LegacySchematicLanguage::print_instance(ostream_t& s, qucs::Component const
 
 	auto c = dynamic_cast<::Component const*>(sym);
 	auto cc = const_cast<::Component*>(c); // BUGBUGBUGBUG
-	if(c && c->useObsoleteProps()){
+	if(c && c->useObsoleteProps()){ untested();
 		s << " ";
 		int i=0;
 		if(!c->showName){
@@ -591,7 +606,7 @@ void LegacySchematicLanguage::print_instance(ostream_t& s, qucs::Component const
 				s << "0";
 			}
 		}
-	}else{
+	}else{ untested();
 		printArgs(sym, s);
 	}
 
@@ -613,7 +628,14 @@ static TaskElement* loadLegacyTaskElement(const QString& _s, LegacyTaskElement* 
 
 	if(1){
 
-		QString label=s.section(' ',1,1);
+		QString type = s.section(' ',0,0);
+		if(type[0]=='.'){
+			type = type.section('.',1,1);
+		}else{
+		}
+		c->set_dev_type(type.toStdString());
+
+		QString label = s.section(' ',1,1);
 		trace1("TASK NAME", label);
 ///		c->setName(label);//???
 		c->set_label(label.toStdString());
@@ -781,12 +803,12 @@ Symbol* LegacySchematicLanguage::parseSymbol(istream_t& cs, Symbol* sym) const
 //	s = s.mid(1, s.length()-2);   // cut off start and end character
 	bool use_obsolete_callback = dynamic_cast<::Component*>(sym);
 
-	if(sym->typeName()=="EDD"){
+	if(sym->dev_type()=="EDD"){
 		use_obsolete_callback = false;
 	}else{
 	}
 
-	if(sym->typeName()=="wire"){
+	if(sym->dev_type()=="wire"){
 		// yikes.
 		obsolete_wireload(sym, s);
 	}else if(use_obsolete_callback){
@@ -895,12 +917,11 @@ Symbol* LegacySchematicLanguage::parseSymbol(istream_t& cs, Symbol* sym) const
 
 			n  = s.section('"',z,z);    // display
 		}
-
-		trace2("done sym parse", sym->label(), sym->numPorts());
 	}
 
 	auto Scope = sym->scope();
 	assert(Scope);
+	trace2("lang_sch connect ports", sym->label(), sym->numPorts());
 	for(index_t i=0; i<sym->numPorts(); ++i){
 		pos_t p = sym->nodePosition(i);
 		auto q = place_at(p, sym);
@@ -928,8 +949,15 @@ static ::Component* parseComponentObsoleteCallback(const QString& _s, ::Componen
 		s = s.mid(1, s.length()-2);   // cut off start and end character
 	}
 
+	if(1){
+		// really?
+		QString type=s.section(' ',0,0);
+		sym->set_dev_type(type.toStdString());
+	}else{
+	}
+
 	QString label=s.section(' ',1,1);
-	c->obsolete_name_override_hack(label); //??
+	// c->obsolete_name_override_hack(label); //??
 	trace1("loadComp", label);
 	c->set_label(label.toStdString());
 

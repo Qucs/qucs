@@ -24,6 +24,7 @@
 #include "qio.h"
 #include "qucs_globals.h"
 #include "sckt_base.h"
+#include "symbol.h"
 
 // why "Module"? this is supposed about Element listings in the gui.
 

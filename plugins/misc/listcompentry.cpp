@@ -13,9 +13,10 @@
 #include "module.h"
 #include "task_element.h"
 #include "docfmt.h"
+#include "symbol.h"
 #include "language.h"
 #include "qio.h"
-#include <QFile>
+#include <QFile> // BUG
 
 namespace {
 
@@ -62,9 +63,9 @@ void createListComponentEntry::do_it(istream_t&, ElementList*)
       s << "=====" << e->label() << "=========\n";
 
       if(auto c = dynamic_cast<Symbol*>(ce)){
-	ce->set_label("my_" + c->typeName());
+	ce->set_label("my_" + c->dev_type());
       }else if(auto c = dynamic_cast<TaskElement*>(ce)){
-	ce->set_label("my_" + c->typeName());
+	ce->set_label("my_" + c->dev_type());
       }else{
 	// not sure.
       }

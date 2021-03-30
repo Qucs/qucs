@@ -37,7 +37,7 @@
 namespace qucs {
 
 TaskElement::TaskElement(TaskElement const& p)
-  : Element(p),
+  : Data(p),
     tx(p.tx),
     ty(p.ty),
     showName(p.showName)
@@ -56,7 +56,7 @@ TaskElement::TaskElement(TaskElement const& p)
  *        this one is a copy of the legacy Component class, the former
  *        baseclass for TaskElements. As such, it contains unneeded stuff.
  */
-TaskElement::TaskElement() : Element()
+TaskElement::TaskElement() : Data()
 {
   showName = true;
 

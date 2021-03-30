@@ -15,6 +15,7 @@
 #include "qucs_globals.h"
 #include "misc.h"
 #include "painting.h"
+#include "symbol.h"
 #include "qt_compat.h"
 #include "qucs_app.h"
 #include "sckt_base.h"
@@ -67,6 +68,8 @@ private:
 	CommonComponent* clone() const override{
 		return new CommonLib(*this);
 	}
+
+	index_t param_count() const override{ return 0; }
 };
 CommonLib cl(CC_STATIC_);
 /*--------------------------------------------------------------------------*/
@@ -90,7 +93,7 @@ public:
 	}
 	~LibComp() { incomplete(); };
 	Component* clone() const override{return new LibComp(*this);}
-	Symbol* clone_instance() const override;
+	Element* clone_instance() const override;
 
 private:
 	bool is_device() const override {return false;}
@@ -252,11 +255,16 @@ private: // Element
 			return rect_t();
 		}
 	}
+	void set_dev_type(std::string const& t) override{
+		_type = t;
+		Symbol::set_dev_type(t);
+	}
+	std::string dev_type() const override {return "Lib";}
 
 private: // Symbol
 	index_t numPorts() const override{
 		if(_parent){itested();
-			trace2("Lib::numPorts", label(), _parent->numPorts());
+//			trace2("Lib::numPorts", label(), _parent->numPorts());
 			return _parent->numPorts();
 		}else{itested();
 			return 0;
@@ -297,9 +305,9 @@ private: // Symbol
 			_component.Value = QString::fromStdString(v);
 			redo = true;
 		}else if(n=="$tx"){
-			incomplete();
+			_tx = atoi(v.c_str());
 		}else if(n=="$ty"){
-			incomplete();
+			_ty = atoi(v.c_str());
 		}else{itested();
 			Symbol::set_param_by_name(n, v);
 		}
@@ -388,7 +396,7 @@ private:
 			if((_parent = dynamic_cast<Component const*>(s))){ untested();
 				trace2("Lib::attachProto local", t, _parent);
 			}else if((_parent = device_dispatcher[t])){
-				trace2("Lib::attachProto device", t, _parent);
+				trace2("Lib::attachProto device", t, _parent->short_label());
 			}else if((_parent = symbol_dispatcher[t])){ untested();
 				trace2("Lib::attachProto symbol", t, _parent);
 			}else{
@@ -402,10 +410,14 @@ private:
 		}
 
 		_ports.resize(numPorts());
-		trace2("Lib::attachProto", numPorts(), _ports.size());
+		trace4("Lib::attachProto1", numPorts(), _ports.size(), t, common()->modelname());
 		// also prepare parameters here.
+		//
+//		mutable_common()->set_modelname(t);
+		set_dev_type("Lib"); // assert??
 		set_dev_type(t); // use common maybe?
-		set_dev_type("Lib"); // assert?
+		trace4("Lib::attachProto2", numPorts(), _ports.size(), t, common()->modelname());
+		// set_dev_type("Lib"); // assert?
 
 		for(auto i : _params){
 			delete i;
@@ -453,6 +465,7 @@ private:
 	std::vector<Port> _ports;
 	std::vector<std::string> _param_names; // could be common?
 	std::vector<PARA_BASE*> _params; // could be common
+	std::string _type;
 }; // Lib
 Lib D(&cl);
 static Dispatcher<Symbol>::INSTALL p(&symbol_dispatcher, "Lib", &D);
@@ -554,7 +567,7 @@ void LibComp::createSymbol()
 }
 #endif
 /*--------------------------------------------------------------------------*/
-Symbol* LibComp::clone_instance() const
+Element* LibComp::clone_instance() const
 {
 	assert(common());
 	return new Lib(this);

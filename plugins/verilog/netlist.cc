@@ -10,18 +10,17 @@
  *   (at your option) any later version.                                   *
  *                                                                         *
  ***************************************************************************/
-#include <vector>
-#include <map>
+#include "conductor.h"
 #include "docfmt.h"
 #include "element.h"
-#include "conductor.h"
-#include "qucs_globals.h"
 #include "element_list.h"
-#include "schematic_lang.h"
-#include "qio.h"
-#include "net.h"
 #include "exception.h"
+#include "net.h"
+#include "qio.h"
+#include "qucs_globals.h"
+#include "schematic_lang.h"
 #include "sckt_base.h"
+#include "symbol.h"
 /*--------------------------------------------------------------------------*/
 namespace{
 /*--------------------------------------------------------------------------*/
@@ -56,8 +55,10 @@ VerilogNetlister::VerilogNetlister() : DocumentFormat()
 	assert(lang);
 }
 /*--------------------------------------------------------------------------*/
+// use c_list??
 void VerilogNetlister::do_it(istream_t& cs, ElementList* o)
 {
+	// prepare.
 	lang = qucs::language_dispatcher["verilog"];
 	assert(lang);
 
@@ -94,6 +95,7 @@ void VerilogNetlister::createNetlist(ostream_t& stream,
 		if(pc->label()=="main"){
 			// BUG: eject protos in random order.
 			// main_ = pc;
+			pc->scope()->prepare(); // BUG
 			lang->printItem(stream, pc);
 		}else if(pc->label()[0] == ':'){
 		}else if(!sym){

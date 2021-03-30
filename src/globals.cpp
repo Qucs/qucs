@@ -10,10 +10,11 @@ namespace qucs{
 Dispatcher<Diagram> diagram_dispatcher;
 Dispatcher<Command> command_dispatcher;
 Dispatcher<Component> device_dispatcher;
-Dispatcher<Symbol> symbol_dispatcher;
+Dispatcher<Symbol> symbol_dispatcher; // share component_dispatcher?
 Dispatcher<Data> data_dispatcher;
 Dispatcher<Language> language_dispatcher;
-Dispatcher<Element> element_dispatcher;
+Dispatcher<Model> model_dispatcher;
+Dispatcher<Element> element_dispatcher; // paintings are here for now
 Dispatcher<Widget> widget_dispatcher;
 
 // use command_dispatcher?

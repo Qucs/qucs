@@ -15,8 +15,100 @@
 #include "component.h"
 #include "element_list.h"
 #include "node.h"
+#include "library.h"
 /*--------------------------------------------------------------------------*/
 namespace qucs{
+/*--------------------------------------------------------------------------*/
+	// l_pmatch.cc
+inline bool Umatch(const std::string& str1, const std::string& str2)
+{
+  CS cmd(CS::_STRING, str1); //call to CS member on string
+  if (cmd.umatch(str2)) {
+    return true;
+  }else{
+    return 0;
+  }
+}
+/*--------------------------------------------------------------------------*/
+void CommonComponent::set_param_by_index(index_t i, std::string const& Value) // , int Offset)
+{
+  switch (i) {
+  case 0:untested();  _tnom_c = Value; break;
+  case 1:untested();  _dtemp = Value; break;
+  case 2:untested();  _temp_c = Value; break;
+  case 3:  _mfactor = Value; break;
+  default:untested(); throw Exception_Too_Many(i, 3, 0); break;
+  }
+}
+/*--------------------------------------------------------------------------*/
+std::string CommonComponent::param_name(index_t i)const
+{
+  switch (i) {
+  case 0:untested();  return "tnom";
+  case 1:untested();  return "dtemp";
+  case 2:untested();  return "temp";
+  case 3:  return "m";
+  default:untested(); return "";
+  }
+}
+/*--------------------------------------------------------------------------*/
+void CommonComponent::set_param_by_name(std::string const& Name, std::string const& Value)
+{
+//  if (has_parse_params_obsolete_callback()) {untested();
+//    std::string args(Name + "=" + Value);
+//    CS cmd(CS::_STRING, args); //obsolete_callback
+//    bool ok = parse_params_obsolete_callback(cmd); //BUG//callback
+//    if (!ok) {untested();
+//      throw Exception_No_Match(Name);
+//    }else{untested();
+//    }
+//  }else
+	{
+		//BUG// ugly linear search
+		for (int i = param_count() - 1;  i >= 0;  --i) {
+//			for (int j = 0;  param_name(i,j) != "";  ++j) {
+				if (Umatch(Name, param_name(i) + ' ')) {
+					set_param_by_index(i, Value); // (, 0/*offset*/);
+					return; //success
+				}else{
+					//keep looking
+				}
+//			}
+		}
+		untested();
+		throw qucs::ExceptionNoMatch(Name);
+	}
+}
+/*--------------------------------------------------------------------------*/
+std::string CommonComponent::param_value(index_t i)const
+{
+  switch (i) {
+  case 0:untested();  return _tnom_c.string();
+  case 1:untested();  return _dtemp.string();
+  case 2:untested();  return _temp_c.string();
+  case 3:  return _mfactor.string();
+  default:untested(); return "";
+  }
+}
+/*--------------------------------------------------------------------------*/
+std::string CommonComponent::param_value_by_name(std::string const& n)const
+{
+	incomplete();
+	throw qucs::ExceptionCantFind();
+	return "ccincomplete";
+}
+/*--------------------------------------------------------------------------*/
+bool CommonComponent::param_is_printable(index_t i)const
+{
+  switch (i) {
+  case 0:  return _tnom_c.has_hard_value();
+  case 1:  return _dtemp.has_hard_value();
+  case 2:  return _temp_c.has_hard_value();
+  case 3:  return _mfactor.has_hard_value();
+  default:untested(); return false;
+  }
+}
+/*--------------------------------------------------------------------------*/
 /*--------------------------------------------------------------------------*/
 Component::Component()
     : Element(),
@@ -52,19 +144,27 @@ Component::~Component()
 	_subckt = nullptr;
 }
 /*--------------------------------------------------------------------------*/
-index_t Component::param_count() const
-{
-	return 0; // for now.
-}
-/*--------------------------------------------------------------------------*/
 std::string Component::param_value(index_t i) const
 {
-	throw qucs::ExceptionCantFind(label(), std::to_string(i), "param values");
+  if (has_common()) {
+    return common()->param_value(i);
+  }else{
+    switch (Component::param_count() - 1 - i) {
+//    case 0:  return value().string();
+//    case 1:  return _mfactor.string();
+    default:untested(); return Element::param_value(i);
+    }
+  }
+//	throw qucs::ExceptionCantFind(label(), std::to_string(i), "param values");
 }
 /*--------------------------------------------------------------------------*/
 std::string Component::param_value_by_name(std::string const& n) const
 {
+  if (has_common()) { untested();
+    return common()->param_value_by_name(n);
+  }else{ untested();
 	throw qucs::ExceptionCantFind(label(), n, "params");
+  }
 }
 /*--------------------------------------------------------------------------*/
 void Component::set_port_by_name(std::string const&, std::string const&)
@@ -73,15 +173,37 @@ void Component::set_port_by_name(std::string const&, std::string const&)
 	assert(false);
 }
 /*--------------------------------------------------------------------------*/
-std::string Component::param_name(index_t) const
-{
+std::string Component::param_name(index_t i) const
+{ untested();
+  if (has_common()) { untested();
+    return common()->param_name(i);
+  }else{
+    switch (Component::param_count() - 1 - i) {
+//    case 0:  return value_name();
+//    case 1:  return "m";
+    default:untested(); return Element::param_name(i);
+    }
+  }
 	incomplete(); // ask common
 	return "incomplete";
+	throw qucs::ExceptionCantFind(label(), std::to_string(i), "param names");
 }
 /*--------------------------------------------------------------------------*/
-void Component::set_param_by_index(index_t n, std::string const&)
+void Component::set_param_by_index(index_t i, std::string const& Value)
 {
-	throw qucs::ExceptionCantFind(label(), std::to_string(n), "params");
+  if (has_common()) {untested();
+    CommonComponent* c = common()->clone();
+    assert(c);
+    c->set_param_by_index(i, Value); // (, offset);
+    attach_common(c);
+  }else{
+    switch (Component::param_count() - 1 - i) {
+//    case 0: _value = Value; break;
+//    case 1:untested(); _mfactor = Value; break;
+    default:untested(); Element::set_param_by_index(i, Value); // (, offset);
+    }
+  }
+//	throw qucs::ExceptionCantFind(label(), std::to_string(n), "params");
 }
 /*--------------------------------------------------------------------------*/
 void Component::new_subckt()
@@ -90,9 +212,16 @@ void Component::new_subckt()
 	_subckt = new ElementList();
 }
 /*--------------------------------------------------------------------------*/
-void Component::set_param_by_name(std::string const& name, std::string const&)
+void Component::set_param_by_name(std::string const& name, std::string const& v)
 {
-	throw qucs::ExceptionCantFind(label(), name, "params");
+  if (has_common()) {untested();
+    CommonComponent* c = common()->clone();
+    assert(c);
+    c->set_param_by_name(name, v);
+    attach_common(c);
+  }else{
+	  throw qucs::ExceptionCantFind(label(), name, "params");
+  }
 }
 /*--------------------------------------------------------------------------*/
 bool Component::param_is_printable(index_t) const
@@ -165,7 +294,9 @@ std::string Component::port_value(index_t i) const
 void Component::set_dev_type(const std::string& new_type)
 {
 	if (common()) {
-		if (new_type != typeName()) {
+		trace2("Component::set_dev_type common", dev_type(), new_type);
+		if (new_type != dev_type()) {
+			trace2("Component::set_dev_type", short_label(), new_type);
 			CommonComponent* c = common()->clone();
 			assert(c);
 			c->set_modelname(new_type);
@@ -176,6 +307,7 @@ void Component::set_dev_type(const std::string& new_type)
 		trace1("incomplete? set_dev_type", short_label());
 		Element::set_dev_type(new_type);
 	}
+	trace2("Component::set_dev_type done", short_label(), dev_type());
 }
 /*--------------------------------------------------------------------------*/
 } // qucs

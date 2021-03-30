@@ -62,7 +62,7 @@ class CompCommand : public Command{
 		trace1("find DOT", sym->label());
 		for(auto i : *sym->scope()){
 			if(auto d = dynamic_cast<Symbol*>(i)){
-				if(d->typeName() == "Port"){ // BUG: use real ports.
+				if(d->dev_type() == "Port"){ // BUG: use real ports.
 					auto v = d->port_value(0);
 					index_t kk = sym->numPorts();
 					trace3("found a port", d->label(), v, kk);

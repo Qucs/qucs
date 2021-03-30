@@ -38,7 +38,7 @@ private:
   QList<Text *>     Texts;
   Q3PtrList<Property>     Props;
 }D;
-Dispatcher<TaskElement>::INSTALL p(&element_dispatcher, "DC", &D);
+Dispatcher<TaskElement>::INSTALL p(&data_dispatcher, "DC", &D);
 Module::INSTALL pp("simulations", &D);
 
 DC_Sim::DC_Sim(DC_Sim const& s) : LegacyTaskElement(s)

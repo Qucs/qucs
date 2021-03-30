@@ -32,6 +32,7 @@
 #include "settings.h"
 #include "command.h"
 #include "element_list.h"
+#include "element.h"
 #define print_item printItem
 #define CARD_LIST ElementList
 #define CS istream_t
@@ -42,6 +43,7 @@ namespace {
 /*--------------------------------------------------------------------------*/
 void list_save(CS& cmd, ostream_t& out, CARD_LIST* scope)
 {
+  trace1("list_save", cmd.fullstring());
   assert(scope);
   scope->prepare();
   for(auto i: *scope){

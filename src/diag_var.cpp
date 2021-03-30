@@ -28,6 +28,7 @@
 #include "element_list.h"
 #include "sckt_base.h"
 #include "viewpainter.h"
+#include "painting.h"
 #include <QPainterPath> // BUG.
 /*--------------------------------------------------------------------------*/
 namespace{

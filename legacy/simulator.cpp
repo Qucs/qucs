@@ -13,20 +13,20 @@
 
 // stuff related to "simulation" collected from from lots of other files.
 
-#include "simulator.h"
-#include "node.h"
-#include "qucs_globals.h"
-#include "task_element.h"
 #include "docfmt.h"
 #include "element_list.h"
-//#include "schematic_doc.h" // BUG
-#include "schematic_lang.h"
 #include "exception.h"
-#include "net.h"
 #include "misc.h"
-#include "settings.h"
-#include "sckt_base.h"
+#include "net.h"
+#include "node.h"
 #include "qio.h"
+#include "qucs_globals.h"
+#include "schematic_lang.h"
+#include "sckt_base.h"
+#include "settings.h"
+#include "simulator.h"
+#include "symbol.h"
+#include "task_element.h"
 
 #include <QString>
 #include <QFile>
@@ -49,9 +49,9 @@ private: // Command
 private: // legacy implementation
   void createNetlist(ostream_t& stream, ElementList const*,
 		std::vector<Element const*>& tasks) const;
-  void prepareSave(ostream_t& stream, ElementList const* m,
+  void prepareSave(ostream_t& stream, ElementList const* scope,
 		std::map<std::string, Element const*>& declarations) const;
-  void throughAllComps(ostream_t& d, ElementList const* m,
+  void throughAllComps(ostream_t& d, ElementList const* scope,
 		std::map<std::string, Element const*>& declarations) const;
   void clear() const;
   void printDeclarations(ostream_t& d,
@@ -157,8 +157,10 @@ void LegacyNetlister::load(istream_t&, Object*) const
 	incomplete();
 }
 /* -------------------------------------------------------------------------------- */
-void LegacyNetlister::do_it(istream_t& cs, ElementList* m)
+void LegacyNetlister::do_it(istream_t& cs, ElementList* scope)
 {
+	trace0("LegacyNetlister::do_it");
+	scope->prepare();
 	std::map<std::string, Element const*> declarations;
 	std::vector<Element const*> tasks;
 	std::string simcmd;
@@ -186,8 +188,8 @@ void LegacyNetlister::do_it(istream_t& cs, ElementList* m)
 	int SimPorts = 10;//??
 	incomplete(); // HERE
 
-	// assert(m.owner()); // root symbol does not have owner...
-	prepareSave(Stream, m, declarations);
+	// assert(scope.owner()); // root symbol does not have owner...
+	prepareSave(Stream, scope, declarations);
 
 	if(SimPorts < -5) { untested();
 		throw "not_enough_ports_exception"; // ?!
@@ -209,15 +211,8 @@ void LegacyNetlister::do_it(istream_t& cs, ElementList* m)
 
 	printDeclarations(Stream, declarations);
 	Stream << '\n';
-	createNetlist(Stream, m, tasks);
+	createNetlist(Stream, scope, tasks);
 
-#if 0
-	if(m.doc()){ untested();
-		Stream << "doc??\n";
-	}else{ untested();
-		Stream << "nodoc??\n";
-	}
-#endif
 	assert(_qucslang);
 	if(simcmd=="all"){itested();
 		Stream << "# all tasks\n";
@@ -259,7 +254,7 @@ void LegacyNetlister::printDeclarations(ostream_t& stream,
 
 // was Schematic::prepareNetlist
 // visit lot of components, strange callbacks...
-void LegacyNetlister::prepareSave(ostream_t& stream, ElementList const* m,
+void LegacyNetlister::prepareSave(ostream_t& stream, ElementList const* scope,
 		std::map<std::string, Element const*>& declarations) const
 {
 	incomplete();
@@ -344,7 +339,7 @@ void LegacyNetlister::prepareSave(ostream_t& stream, ElementList const* m,
 
 	std::string DocName;
 	try{
-//		DocName = m.paramValue("DocName");
+//		DocName = scope.paramValue("DocName");
 	}catch(qucs::ExceptionCantFind const&){ untested();
 		DocName = "unknown";
 	}
@@ -356,8 +351,8 @@ void LegacyNetlister::prepareSave(ostream_t& stream, ElementList const* m,
 		stream << "\n`timescale 1ps/100fs\n";
 	}
 
-	// assert(m.owner()); //root does not have owner...
-	throughAllComps(stream, m, declarations);
+	// assert(scope.owner()); //root does not have owner...
+	throughAllComps(stream, scope, declarations);
 }
 
 // former Schematic::createNetlist
@@ -366,10 +361,11 @@ void LegacyNetlister::createNetlist(ostream_t& stream,
 		std::vector<Element const*>& tasks) const
 {
 	assert(scope_);
-	auto s = scope_->find_("main");
-	assert(s!=scope_->end());
-	assert(*s);
-	auto scope = (*s)->scope();
+	auto mi = scope_->find_("main");
+	assert(mi!=scope_->end());
+	assert(*mi);
+	ElementList* scope = (*mi)->scope();
+	scope->prepare();
 
 	bool isAnalog=true;
 //	bool isVerilog=false;
@@ -407,9 +403,9 @@ void LegacyNetlister::createNetlist(ostream_t& stream,
 		//   ignore
 		if(dynamic_cast<Conductor const*>(pc)){
 			// possibly a wire.
-		}else if(pc->typeName()=="GND"){
+		}else if(pc->dev_type()=="GND"){
 			// qucsator hack, just ignore.
-		}else if(pc->typeName()=="NodeLabel"){ untested();
+		}else if(pc->dev_type()=="NodeLabel"){ untested();
 			// qucsator hack, just ignore.
 		}else{
 			_qucslang->printItem(stream, pc);
@@ -485,7 +481,7 @@ void LegacyNetlister::throughAllComps(ostream_t& xx, ElementList const* scope_,
 
 		Symbol const* sym = pc;
 		assert(pc);
-		trace4("tac", pc->label(), pc, sym->owner(), pc->typeName());
+		trace4("tac", pc->label(), pc, sym->owner(), pc->dev_type());
 
 		if(!sym->owner()){ untested();
 			incomplete(); //?
@@ -496,7 +492,7 @@ void LegacyNetlister::throughAllComps(ostream_t& xx, ElementList const* scope_,
 		trace2("tac", sym->label(), sym->owner()->label());
 
 		// because they are components
-//		assert(sym->owner()==&m);
+//		assert(sym->owner()==&scope);
 		if(sym->scope()==sckt){
 		}else{ untested();
 			// ?
@@ -523,7 +519,7 @@ void LegacyNetlister::throughAllComps(ostream_t& xx, ElementList const* scope_,
 		}
 
 		if(dynamic_cast<SubcktBase const*>(sym)){ untested();
-			trace2("is sckt?", sym->label(), sym->typeName());
+			trace2("is sckt?", sym->label(), sym->dev_type());
 			incomplete();
 		}else if(sym && sym->common()){
 			// linked to a model go find it.
@@ -559,16 +555,16 @@ void LegacyNetlister::throughAllComps(ostream_t& xx, ElementList const* scope_,
 			assert(!d || d == proto);
 		  	d = proto;
 
-		}else if(pc->typeName() == "GND") { // BUG.
+		}else if(pc->dev_type() == "GND") { // BUG.
 #if 0
 			Net* n = pc->Ports.first()->value()->getNet();
 			assert(n->label == "gnd");
 #endif
 		}else{
 			// no.
-			// find_type(pc->typeName()); // but where?
-			trace2("not sure", pc->typeName(), pc->label());
-//			_declarations.insert(pc->typeName());
+			// find_type(pc->dev_type()); // but where?
+			trace2("not sure", pc->dev_type(), pc->label());
+//			_declarations.insert(pc->dev_type());
 			// Symbol const* p = pc->proto(&sckt); // just expand?
 		}
 

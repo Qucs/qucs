@@ -1,5 +1,5 @@
 /***************************************************************************
-    copyright            : (C) 2003 by Michael Margraf
+    copyright            : (C) 2001, 2007 Albert Davis
                                2018, 2020 Felix Salfelder
  ***************************************************************************/
 
@@ -12,7 +12,8 @@
  *                                                                         *
  ***************************************************************************/
 
-// Element: Superclass of schematic elements
+/* base class for anything in a netlist or circuit file
+ */
 
 #ifndef QUCS_ELEMENT_H
 #define QUCS_ELEMENT_H
@@ -75,7 +76,7 @@ public: // UI stuff.
 #endif
 
 
-public: // other stuff
+public: // other stuff. move to painting?
 	virtual bool showLabel() const{ return true; }
 	//virtual bool showParam(int i) const{ return true; } // later
 
@@ -104,6 +105,8 @@ public: // params
 	virtual void set_param_by_name(std::string const& name, std::string const& v);
 	virtual std::string param_value_by_name(std::string const& n) const;
 	virtual std::string param_value(index_t) const{return "incomplete";}
+	virtual std::string param_name(index_t) const{return "incomplete";}
+	virtual bool param_is_printable(index_t)const{return true;}
 
 public: // compatibility
 	virtual bool legacyTransformHack() const{
@@ -111,13 +114,8 @@ public: // compatibility
 	}
 
 public:
-	// BUG; abused in taskElement
-	virtual /*bug*/ std::string /* const& */ typeName() const{
-		return _type;
-	}
-	virtual void set_dev_type(std::string const& x){
-		_type = x;
-	}
+	virtual std::string dev_type()const{unreachable(); return "";}
+	virtual void set_dev_type(std::string const& x);
 
 	// create a declaration, e.g. subcircuit definition or include directive
 	virtual Symbol const* proto(ElementList const*) const{return nullptr;}
@@ -153,7 +151,6 @@ protected: // BUG in Painting
 
 private:
 	Element* _owner; // can't be const it seems.
-	std::string _type;
 }; // Element
 /*--------------------------------------------------------------------------*/
 inline ElementList const* Element::scope() const

@@ -12,7 +12,6 @@
  ***************************************************************************/
 
 #include "data.h"
-#include "factory.h"
 #include "qucs_globals.h"
 #include "element_list.h"
 #include "sckt_base.h"
@@ -24,7 +23,6 @@ using qucs::element_dispatcher;
 using qucs::ElementList;
 using qucs::Node;
 using qucs::SubcktBase;
-using qucs::SymbolFactory;
 using qucs::ViewPainter;
 using qucs::Widget;
 /*--------------------------------------------------------------------------*/
@@ -41,10 +39,13 @@ public:
 		mm->set_owner(this);
 		subckt()->push_back(mm);
 
-		// Sub components in this circuit.
-		// instance used when parsing a netlist.
+		// supported types in this circuit.
 		// get all from model_dispatcher?
+		// or read root template?
 		{
+			// paramset ModelFactory Sub;
+			//   .dev_type = "Sub";
+			// endparamset
 			_sub = element_dispatcher.clone("ModelFactory");
 			if(_sub){
 				_sub->set_owner(this);
@@ -53,6 +54,9 @@ public:
 			}else{
 			}
 
+			// paramset ModelFactory Verilog;
+			//   .dev_type = "Verilog";
+			// endparamset
 			_verilog = element_dispatcher.clone("ModelFactory");
 			if(_verilog){
 				_verilog->set_owner(this);
@@ -64,6 +68,23 @@ public:
 				}
 			}else{
 			}
+
+#if 0 // not yet?
+			// paramset ModelFactory EDD;
+			//   .dev_type = "EDD";
+			// endparamset
+			auto edd = element_dispatcher.clone("ModelFactory");
+			if(edd){ untested();
+				edd->set_owner(this);
+				try{ untested();
+					edd->set_dev_type("EDD");
+					subckt()->push_back(edd);
+				}catch(qucs::ExceptionCantFind const&){ itested();
+					message(qucs::MsgLog, "no EDD");
+				}
+			}else{ untested();
+			}
+#endif
 		}
 
 #if 1
@@ -112,7 +133,11 @@ private: // Component
     }
   }
 
-private: // SchematicSymbol
+private:
+  void prepare() override{ untested();
+	  assert(scope());
+	  scope()->prepare();
+  }
   ElementList* scope(){
     return subckt();
   }

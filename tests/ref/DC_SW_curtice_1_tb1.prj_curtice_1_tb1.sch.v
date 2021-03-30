@@ -7,7 +7,7 @@ GND #() *(gnd);
 Vdc #(.U(Vds)) V1(_net2, gnd);
 GND #() *(gnd);
 IProbe #() Pr1(_net2, _net3);
-Sub$curtice_1 #(.File(curtice_1.sch)) Curtice1(gnd, _net7, _net3);
+Sub$curtice_1 #(.wrong_cpn(0), .wrong_cpn(-6), .wrong_cpn(10e10), .wrong_cpn(27), .wrong_cpn(27), .wrong_cpn(10p), .wrong_cpn(1m), .wrong_cpn(1m), .wrong_cpn(1m), .wrong_cpn(1m), .wrong_cpn(1), .wrong_cpn(40m), .wrong_cpn(1e-15), .wrong_cpn(1e-15), .wrong_cpn(1e-15), .wrong_cpn(10f), .wrong_cpn(1.11), .wrong_cpn(300f), .wrong_cpn(300f), .wrong_cpn(300f), .wrong_cpn(3m), .wrong_cpn(0.8), .File(curtice_1.sch)) Curtice1(gnd, _net7, _net3);
 endmodule // main
 
 module Symbol();

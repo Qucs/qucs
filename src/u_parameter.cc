@@ -92,6 +92,16 @@ std::string PARAM_LIST::name(int i)const
   return "";
 }
 /*--------------------------------------------------------------------------*/
+std::string PARAM_LIST::value_by_name(std::string const& n)const
+{
+  const_iterator ii = _pl.find(n);
+  if(ii != _pl.end()){ untested();
+    return ii->second.string();
+  }else{ untested();
+    throw qucs::ExceptionCantFind();
+  }
+}
+/*--------------------------------------------------------------------------*/
 std::string PARAM_LIST::value(int i)const
 {
   //BUG// ugly linear search
@@ -149,7 +159,6 @@ void PARAM_LIST::set(std::string Name, const std::string& Value)
 //    notstd::to_lower(&Name);
 //  }else{
 //  }
-  trace2("PL::set", Name, Value);
   _pl[Name] = Value;
 }
 /*--------------------------------------------------------------------------*/

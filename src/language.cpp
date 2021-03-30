@@ -18,6 +18,7 @@
 #include "symbol.h"
 #include "painting.h"
 #include "language.h"
+#include "model.h"
 #include "dot.h"
 #include "diagram.h"
 #include "sckt_base.h"
@@ -72,6 +73,8 @@ void Language::printItem(ostream_t& s, Element const* c) const
 		}
 	}else if (auto C=dynamic_cast<const Component*>(c)) {
 		print_instance(s, C);
+	}else if (auto C=dynamic_cast<const Model*>(c)) {
+		print_paramset(s, C);
 	}else if (auto C=dynamic_cast<const DEV_DOT*>(c)) {
 		print_command(s, C);
 	}else if (auto d=dynamic_cast<const Diagram*>(c)) {
@@ -81,6 +84,7 @@ void Language::printItem(ostream_t& s, Element const* c) const
 	}else if (auto p=dynamic_cast<const Painting*>(c)) {
 		printPainting(p, s);
 	}else{
+//		s << "// unknown type " << c->short_label()<<"\n";
 		incomplete();
 	}
 }
@@ -163,16 +167,20 @@ Element const* Language::find_proto(const std::string& Name, const Element* Scop
   }else if ((p = device_dispatcher[Name])) {
 	  // TaskElements are here... (move to Data?)
     return p;
-  }else if ((p = element_dispatcher[Name])) {
+  }else if ((p = model_dispatcher[Name])) {
 	  // TaskElements are here... (move to Data?)
     return p;
   }else if ((p = symbol_dispatcher[Name])) {
     return p;
 //  }else if ((p = painting_dispatcher[Name])) {
 //    return p;
+  }else if ((p = element_dispatcher[Name])) {
+    return p;
   }else if ((p = diagram_dispatcher[Name])) {
     return p;
   }else if ((p = data_dispatcher[Name])) {
+    return p;
+  }else if ((p = device_dispatcher[Name])) {
     return p;
   }else{
 	  trace1("try more", Name);

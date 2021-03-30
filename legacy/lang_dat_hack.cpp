@@ -550,20 +550,20 @@ SimOutputData const* SimOutputDatVar::refresh(QByteArray FileContent)
 	lastLoaded = QDateTime::currentDateTime();
 	return this;
 }
-
+/* -------------------------------------------------------------------------------- */
 void SimOutputDat::clear()
 { untested();
 	// memory leak
 //	SimOutputDir::clear();
 }
-
+/* -------------------------------------------------------------------------------- */
 void SimOutputDatVar::clear()
 {itested();
   for(auto i : CPointsX){ untested();
 	  delete[] i;
   }
 }
-
+/* -------------------------------------------------------------------------------- */
 // Read the data of an independent variable. Return the number of points.
 int SimOutputDatVar::loadIndepVarData(std::string const& Variable,
 			      char *FileString, DataX* pD)

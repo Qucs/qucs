@@ -235,7 +235,7 @@ Component const* Verilog::new_model(std::string const& fn) // const
 		s->set_dev_type(type_name);
 		s->set_label("Verilog");
 
-		trace4("Verilog::made proto", s->label(), type_name, s->typeName(), s->numPorts());
+		trace4("Verilog::made proto", s->label(), type_name, s->dev_type(), s->numPorts());
 		Component* last = nullptr;
 		for(auto i: *s->scope()){
 			trace1("Verilog found", i->short_label()); // , i->num_ports());

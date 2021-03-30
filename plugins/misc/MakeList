@@ -5,6 +5,7 @@ RAW_SRCS = \
 	c_list.cc \
 	c_clear.cc \
 	c_delete.cc \
+	d_edd.cc \
 	listcompentry.cpp \
 	netlist.cpp \
 	get.cpp \

@@ -13,24 +13,30 @@
 #ifndef QUCS_COMMON_SUBCKT
 #define QUCS_COMMON_SUBCKT
 
-#include "symbol.h"
 #include <memory>
-#include <vector>
+#include "paramlist.h"
 
 namespace qucs {
 
+using qucs::CommonParamlist;
+
 // TODO? use commonComponent instead and stick a symbol to it.
-class CommonSubckt : public CommonComponent{
+class CommonSubckt : public CommonParamlist{
 public:
 	explicit CommonSubckt(int x)
-		: CommonComponent(x){
+		: CommonParamlist(x){
 		_subckt = std::make_shared<ElementList>();
 	}
 	explicit CommonSubckt(CommonSubckt const& c)
-		: CommonComponent(c), _subckt(c._subckt)
+		: CommonParamlist(c), _subckt(c._subckt)
 	{
+		// use real ports?
 		for(auto& p : c._ports){
-			_ports.push_back(new Port(p)); // clone?
+			if(p){
+				_ports.push_back(new Port(p)); // clone?
+			}else{
+				_ports.push_back(nullptr);
+			}
 		}
 	}
 
@@ -43,7 +49,7 @@ public:
 public:
 	ElementList* subckt(){ return _subckt.get(); }
 	ElementList const* subckt() const{ return _subckt.get(); }
-	CommonComponent* clone()const override{
+	CommonSubckt* clone()const override{
 		incomplete();
 		return new CommonSubckt(*this);
 	}

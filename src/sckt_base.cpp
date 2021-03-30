@@ -24,8 +24,12 @@ void SubcktBase::new_subckt()
 /*--------------------------------------------------------------------------*/
 std::string SubcktBase::dev_type()const
 {
-	assert(common());
-	return common()->modelname();
+	if(common()){ untested();
+		return common()->modelname();
+	}else{ untested();
+		unreachable();
+		return "bogus_sckt_type";
+	}
 }
 /*--------------------------------------------------------------------------*/
 #if 0

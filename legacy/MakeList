@@ -9,6 +9,7 @@ SUBDIRS = \
 
 LEGACY_SRC = \
 	component.cpp \
+	edd_symbol.cpp \
 	gatecomponent.cpp \
 	curvediagram.cpp \
 	compcmd.cpp \

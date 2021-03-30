@@ -54,7 +54,7 @@ void union0()
 	auto ii = s->begin();
 	assert(ii != s->end());
 	trace1("found", (*ii)->short_label());
-	trace1("found", (*ii)->typeName());
+	trace1("found", (*ii)->dev_type());
 	auto a = prechecked_cast<Symbol const*>(*ii);
 	assert(a); // resistor.
 	++ii;
@@ -198,7 +198,7 @@ void union3()
 	auto ii = s->begin();
 	assert(ii != s->end());
 	trace1("found", (*ii)->short_label());
-	trace1("found", (*ii)->typeName());
+	trace1("found", (*ii)->dev_type());
 	auto a = prechecked_cast<Symbol const*>(*ii);
 	assert(a); // resistor.
 	++ii;

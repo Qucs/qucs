@@ -61,6 +61,8 @@ private: // Element
 	void paint(ViewPainter*) const override;
 	rect_t bounding_rect() const override;
 
+	std::string dev_type() const override{ return "wire"; }
+
 private: // Conductor
 	SubcktBase* newUnion(const Symbol*) const override;
 	bool isNet(pos_t const&) const override;
@@ -140,7 +142,6 @@ Wire::Wire() : Symbol(),
 	assert(position() == pos_t(0, 0));
 	// Symbol::setPosition(pos_t(0, 0)); // redundant?
 
-	set_dev_type("wire");
 	set_label("noname"); // BUG
 }
 /*--------------------------------------------------------------------------*/
@@ -172,8 +173,6 @@ Wire::Wire(pos_t const& p0, pos_t const& p1)
 	// assert(_scale>0); // for now?
 	assert(p0 == nodePosition(0));
 	assert(p1 == nodePosition(1));
-
-	set_dev_type("wire");
 }
 /*--------------------------------------------------------------------------*/
 Wire::~Wire()
@@ -214,7 +213,7 @@ SubcktBase* Wire::intersectPorts(Symbol const* s) const
 	std::vector<pos_t> split;
 	for(unsigned i=0; i<s->numPorts(); ++i){
 		pos_t p = s->nodePosition(i);
-		trace4("intersectPorts", i, s->nodePosition(i), s->label(), s->typeName());
+		trace4("intersectPorts", i, s->nodePosition(i), s->label(), s->dev_type());
 
 		if(nodePosition(0) == p) {itested();
 		}else if(nodePosition(1) == p) {itested();

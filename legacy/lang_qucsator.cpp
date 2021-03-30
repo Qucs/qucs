@@ -31,6 +31,8 @@
 /* -------------------------------------------------------------------------------- */
 namespace {
 /* -------------------------------------------------------------------------------- */
+using qucs::Model;
+/* -------------------------------------------------------------------------------- */
 static const std::string typesep(":");
 static const char _typesep = ':';
 
@@ -147,9 +149,10 @@ private: // local
 	Data* parseData(istream_t& s, Data* x) const;
 	void printTaskElement(TaskElement const*, ostream_t&) const;
 
-private: // local
+private: // Language
   void printElement(Element const*, ostream_t&) const override;
   void print_instance(ostream_t&, qucs::Component const*) const override;
+  void print_paramset(ostream_t&, Model const*) const override;
   void printSubckt(SubcktBase const*, ostream_t&) const;
   void printComponent(::Component const*, ostream_t&) const;
   void printPainting(Painting const*, ostream_t&) const override {incomplete();}
@@ -158,18 +161,57 @@ private: // local
 static Dispatcher<DocumentFormat>::INSTALL p(&language_dispatcher, "qucsator", &qucslang);
 /* -------------------------------------------------------------------------------- */
 /* -------------------------------------------------------------------------------- */
+static void print_ports(ostream_t& o, const qucs::Component* x)
+{
+	for(index_t i=0; x->portExists(i); ++i){
+		std::string N = netLabel(x, i);
+		o << " " << N;
+	}
+}
+/* -------------------------------------------------------------------------------- */
 // non-callback print.
 static void printSymbol_(Symbol const* c, ostream_t& s)
 {
 	// todo: mfactor/active?
 	assert(c);
-	trace2("pc", c->label(), c->typeName());
-	{
-		std::string type = c->typeName();
-		if(c->common()){
-			type = c->common()->modelname(); // "netlist mode"
-		}else{ untested();
+	trace2("pc", c->label(), c->dev_type());
+
+	std::string type = c->dev_type();
+	if(c->common()){
+		type = c->common()->modelname(); // "netlist mode"
+	}else{ untested();
+	}
+
+	if(c->dev_type() == "EDD"){
+		// HACK from eqndefined.cpp
+		// non-callback version
+		s << "EDD:" << c->label();
+		print_ports(s, c);
+
+		// output all properties
+		std::string s_ = " ";
+		std::string e = "\n";
+		std::string Name = c->short_label();
+		for(index_t k=0; k<c->param_count(); ++k) {
+			auto name = c->param_name(k);
+			if(name[0]=='$'){
+			}else if(name=="Type"){
+				auto pv = c->param_value(k);
+				s << " " << name << "=\"" << pv << "\"";
+			}else if(name=="Branches"){
+				auto pv = c->param_value(k);
+				s << " " << name << "=\"" << pv << "\"";
+			}else if(c->param_is_printable(k)){
+				auto pv = c->param_value(k);
+
+				s_ += " "+name+"=\""+Name+"."+name+"\"";
+				e += "  Eqn:Eqn"+Name+name+" "+
+					Name+"."+name+"=\""+pv+"\" Export=\"no\"\n";
+			}else{
+			}
 		}
+		s << s_ + e;
+	}else{
 		std::string hack_type = mangleType(type);
 
 		s << type << ":" << c->label();
@@ -186,9 +228,11 @@ static void printSymbol_(Symbol const* c, ostream_t& s)
 			std::string name = sym->param_name(ii);
 			//trace2("param", name, value);
 
-			if(name.at(0)=='$'){
+			if(!sym->param_is_printable(ii)){ untested();
+			}else if(name.size() == 0){
+				unreachable();
+			}else if(name.at(0)=='$'){
 				// hmmm
-//			}else if(!sym->paramIsPrintable(ii)){ untested();
 			}else if(name==""){itested();
 				incomplete();
 			}else if(name == "Component") {
@@ -210,6 +254,11 @@ static void printSymbol_(Symbol const* c, ostream_t& s)
 	}
 }
 /* -------------------------------------------------------------------------------- */
+void QucsatorLang::print_paramset(ostream_t& s, Model const* d) const
+{
+	s << "# paramset " << d->short_label() << "\n";
+}
+/* -------------------------------------------------------------------------------- */
 void QucsatorLang::print_instance(ostream_t& s, qucs::Component const* d) const
 {
 	// is_device??
@@ -226,6 +275,13 @@ void QucsatorLang::print_instance(ostream_t& s, qucs::Component const* d) const
 //	}else if(auto c=dynamic_cast<SubcktProto const*>(d)){ untested();
 //		// why is this a Symbol??
 //		printSubckt(c, s);
+	}else if(auto c=dynamic_cast<Model const*>(d)){ untested();
+		s << "# Model " << d->label() << "\n";
+		// if x = d->scope->find("qucsatormodel"){
+		//     print_item(x);
+		// }else{
+		//     // builtin.
+		// }
 	}else if(auto c=dynamic_cast<TaskElement const*>(d)){ untested();
 		// why is this a Symbol??
 		printTaskElement(c, s);
@@ -292,15 +348,6 @@ static void printDefHack(Symbol const* p, ostream_t& s)
 	s << hack;
 }
 /* -------------------------------------------------------------------------------- */
-static void print_ports(ostream_t& o, const qucs::Component* x)
-{
-	for(index_t i=0; x->portExists(i); ++i){
-		std::string N = netLabel(x, i);
-		o << " " << N;
-	}
-	o << "\n";
-}
-/* -------------------------------------------------------------------------------- */
 void QucsatorLang::printSubckt(SubcktBase const* p, ostream_t& s) const
 {
 	trace1("subckt", p->label());
@@ -342,6 +389,7 @@ void QucsatorLang::printSubckt(SubcktBase const* p, ostream_t& s) const
 	}
 
 	print_ports(s, sym);
+	s << "\n";
 
 #if 0
 	// somehow parameters are stashed as paintings.
@@ -379,11 +427,11 @@ void QucsatorLang::printSubckt(SubcktBase const* p, ostream_t& s) const
 
       if(!i){
 			incomplete();
-		}else if(i->typeName() == "Port"){
-		}else if(i->typeName() == "Wire"){ // is Conductor?
-		}else if(i->typeName() == "GND"){
+		}else if(i->dev_type() == "Port"){
+		}else if(i->dev_type() == "Wire"){ // is Conductor?
+		}else if(i->dev_type() == "GND"){
 		}else{
-			// s << "# ps" << i->typeName() << " " << i->label() << "\n";
+			// s << "# ps" << i->dev_type() << " " << i->label() << "\n";
 			print_instance(s, i);
 		}
 	}
@@ -394,7 +442,7 @@ void QucsatorLang::printSubckt(SubcktBase const* p, ostream_t& s) const
 static void printLegacyTaskElement(LegacyTaskElement const* c, ostream_t& s)
 {
 	assert(c);
-	s << "." << c->typeName() << ":" << c->label();
+	s << "." << c->dev_type() << ":" << c->label();
 
 	for(auto p2 : c->Props){ // BUG
 		if(p2->name() == "Symbol") { // hack??
@@ -424,7 +472,7 @@ void QucsatorLang::printTaskElement(TaskElement const* c, ostream_t& s) const
 	}else{
 	}
 	assert(c);
-	s << "." << c->typeName() << ":" << c->label();
+	s << "." << c->dev_type() << ":" << c->label();
 
 #if 0
 	for(auto p2 : c->Props){ // BUG
@@ -457,7 +505,7 @@ void QucsatorLang::printComponent(::Component const* c, ostream_t& s) const
 	}else{
 	}
 	assert(c);
-	trace2("pc", c->label(), c->typeName());
+	trace2("pc", c->label(), c->dev_type());
 
 	if(c->isOpen()) {
 		// nothing.
@@ -474,14 +522,15 @@ void QucsatorLang::printComponent(::Component const* c, ostream_t& s) const
 			s << "R:" << c->label() << "." << QString::number(z++) << " "
 				<< Node1 << " " << netLabel(c, k) << " R=\"0\"\n";
 		}
-	}else if(c->typeName() == "EDD"){
+	}else if(c->dev_type() == "EDD"){ untested();
 		// HACK from eqndefined.cpp
-		s << c->typeName() << ":" << c->label();
+		// obsolete callback version
+		s << c->dev_type() << ":" << c->label();
 		print_ports(c, s);
 
 		// output all properties
 		Property *p2 = c->Props.at(2);
-		QString s_;
+		QString s_ = "";
 		QString e = "\n";
 		QString Name = QString_(c->short_label());
 		while(p2) {
@@ -492,7 +541,7 @@ void QucsatorLang::printComponent(::Component const* c, ostream_t& s) const
 		}
 		s << s_ + e;
 	}else{
-		std::string type = c->typeName();
+		std::string type = c->dev_type();
 		if(c->common()){ untested();
 			type = c->common()->modelname(); // "netlist mode"
 		}else{

@@ -34,6 +34,7 @@ private: // Element
 	rect_t bounding_rect() const override;
 	void paint(ViewPainter*) const override;
 	bool showLabel() const override;
+	std::string dev_type() const override{ return "place"; }
 
 private: // Symbol
 	virtual unsigned numPorts() const {return 1;}

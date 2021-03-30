@@ -37,7 +37,7 @@ public:
   }
 private:
 } D;
-Dispatcher<LegacyTaskElement>::INSTALL p(&element_dispatcher, "TR", &D);
+Dispatcher<Data>::INSTALL p(&data_dispatcher, "TR", &D);
 Module::INSTALL pp("simulations", &D);
 
 TR_Sim::TR_Sim()

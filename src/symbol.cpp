@@ -155,7 +155,7 @@ Symbol::~Symbol()
 /*--------------------------------------------------------------------------*/
 unsigned Symbol::param_count() const
 {
-	return 4; // xy position hv flip  TODO?  angle mfactor ...
+	return 4 + Component::param_count(); // xy position hv flip  TODO?  angle mfactor ...
 }
 /*--------------------------------------------------------------------------*/
 std::string Symbol::param_value(index_t i) const
@@ -187,7 +187,7 @@ std::string Symbol::param_name(index_t i) const
 	case 3:
 		return "$hflip";
 	default:
-		throw qucs::ExceptionCantFind(label(), std::to_string(i), "param names");
+		return Component::param_name(i);
 	}
 }
 /*--------------------------------------------------------------------------*/
@@ -202,6 +202,8 @@ void Symbol::set_param_by_index(index_t n, std::string const& v)
 	}else if(n==3){ // hflip
 		_hflip = atoi(v.c_str()); // TODO: parameters.
 	}else if(n<Symbol::param_count()){
+		trace3("fail", n, v, Symbol::param_count());
+		assert(false);
 		unreachable();
 	}else{
 		return Component::set_param_by_index(n, v);

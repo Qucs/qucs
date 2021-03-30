@@ -209,10 +209,10 @@ QUndoCommand* MouseActionSelect::dblclk(QEvent* evt)
 		trace0("got editElement");
 		assert(gfx);
 		w = ew;
-	}else if(auto wp = qucs::widget_dispatcher[elt->typeName() + "Dialog"]) { untested();
+	}else if(auto wp = qucs::widget_dispatcher[elt->dev_type() + "Dialog"]) { untested();
 		w = wp->clone();
 	}else{
-		trace1("no editElement", elt->typeName());
+		trace1("no editElement", elt->dev_type());
 	}
 
 	if(w){

@@ -32,6 +32,7 @@ private: // NetLang
 private: // Language
   void printElement(Element const*, ostream_t&) const override {incomplete();}
   void printPainting(Painting const*, ostream_t&) const override {incomplete();}
+  void print_paramset(ostream_t&, Model const*) const{incomplete();}
   void printDiagram(Diagram const*, ostream_t&) const override {incomplete();}
   void print_instance(ostream_t&, Component const*) const override {incomplete();}
   void printSubckt(SubcktBase const*, ostream_t&) const override {incomplete();}

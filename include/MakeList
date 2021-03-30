@@ -28,6 +28,7 @@ HDR = \
 	output.h \
 	painting.h \
 	parameter.h \
+	paramlist.h \
 	place.h \
 	platform.h \
 	port.h \

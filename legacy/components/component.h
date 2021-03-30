@@ -145,7 +145,6 @@ protected:
 	void set_param_by_index(index_t i, std::string const&) override;
 
 protected: // really?
-	static const int num_symbol_params;
 	static const int num_component_params;
 
 public: // BUG
@@ -229,19 +228,12 @@ public:
 	  set_label(x.toStdString());
 	  Name = x;
   }
-  void obsolete_name_override_hack(QString x){
-	  Name = x;
-  }
-  void gnd_obsolete_model_override_hack(QString x){
-	  //assert (this is a gnd component); // fix later
-	  Model = x;
-  }
   QString const& description() const{
 	  return Description;
   }
 
 public: // BUG
-  std::string typeName() const override {
+  std::string dev_type() const override {
 	  return Model.toStdString();
   }
   void set_dev_type(std::string const& x) override{

@@ -138,8 +138,7 @@ private:
   Component* _comp; // should be a copy?
 };
 
-// yikes. and yikes.
-const int Component::num_symbol_params = 4;
+// yikes.
 const int Component::num_component_params = 2; // tx and ty.
 
 Component::Component(Component const& p)
@@ -156,9 +155,9 @@ Component::Component(Component const& p)
     showName(p.showName)
 {
   trace3("Component::Component", p.Name, p.Model, _rotated);
-  trace3("Component::Component", typeName(), p.typeName(), p.Ports.size());
+  trace3("Component::Component", dev_type(), p.dev_type(), p.Ports.size());
 
-  set_dev_type(p.Model.toStdString()); // BUG/FEATURE?
+//  set_dev_type(p.Model.toStdString()); // BUG/FEATURE?
 
   assert(!Props.count());
   for(auto i : p.Props){
@@ -169,7 +168,7 @@ Component::Component(Component const& p)
     Ports.append(new ComponentPort(*i));
   }
 
-  assert(typeName() == p.typeName());
+//  assert(dev_type() == p.dev_type());
 
   { // copyGraphics(p)
     // graphics must be shared (and transformed upon use).
@@ -207,7 +206,7 @@ Component::Component() : Symbol(),  _rotated(0)
 
   Model=""; //remove later.
 
-  set_label(typeName());
+  set_label(dev_type());
 }
 
 Element* Component::clone() const
@@ -1532,6 +1531,7 @@ index_t Component::param_count() const
 /*--------------------------------------------------------------------------*/
 std::string Component::param_value(index_t i) const
 {
+  trace2("Component::param_value", short_label(), i);
   index_t s = Symbol::param_count();
   if(i<Symbol::param_count()){
     return Symbol::param_value(i);
@@ -1544,7 +1544,9 @@ std::string Component::param_value(index_t i) const
     i -= (s + num_component_params);
 
     assert( Props.at(i));
-    return Props.at(i)->value().toStdString();
+    auto ret = Props.at(i)->value().toStdString();
+    trace3("Component::param_value Props", short_label(), i, ret);
+    return ret;
   }
 }
 /*--------------------------------------------------------------------------*/

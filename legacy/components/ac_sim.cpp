@@ -35,7 +35,7 @@ public:
   }
 }D;
 
-Dispatcher<TaskElement>::INSTALL p(&element_dispatcher, "AC", &D);
+Dispatcher<Data>::INSTALL p(&data_dispatcher, "AC", &D);
 Module::INSTALL pp("simulations", &D);
 
 AC_Sim::AC_Sim() : LegacyTaskElement()

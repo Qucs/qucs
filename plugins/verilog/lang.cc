@@ -13,19 +13,19 @@
 
 // verilog languages with bits from lang_verilog.cc
 
-#include "node.h"
-#include "qucs_globals.h"
 #include "docfmt.h"
-#include "task_element.h"
-#include "schematic_lang.h"
-#include "element_list.h"
-#include "net.h"
-#include "nodemap.h" // BUG
-#include "sckt_base.h"
 #include "dot.h"
+#include "element_list.h"
+#include "model.h"
+#include "net.h"
+#include "node.h"
+#include "nodemap.h" // BUG
 #include "place.h"
 #include "qio.h"
-#include <QFile> // BUG
+#include "qucs_globals.h"
+#include "schematic_lang.h"
+#include "sckt_base.h"
+#include "task_element.h"
 /* -------------------------------------------------------------------------------- */
 unsigned gndhackn = 0;
 /* -------------------------------------------------------------------------------- */
@@ -38,17 +38,18 @@ namespace qucs {
 /* -------------------------------------------------------------------------------- */
 namespace {
 /* -------------------------------------------------------------------------------- */
+using qucs::Component;
 using qucs::Conductor;
-using qucs::Net;
-using qucs::Node;
+using qucs::Diagram;
 using qucs::Element;
 using qucs::Language;
+using qucs::Model;
+using qucs::Net;
+using qucs::Node;
 using qucs::Painting;
-using qucs::TaskElement;
-using qucs::Diagram;
 using qucs::SubcktBase;
 using qucs::Symbol;
-using qucs::Component;
+using qucs::TaskElement;
 /* -------------------------------------------------------------------------------- */
 #if 0
 static std::string netLabel(Node const* nn)
@@ -81,6 +82,7 @@ public:
 private:
 	void printElement(Element const*, ostream_t&) const override;
 	void print_instance(ostream_t&, Component const*) const override;
+	void print_paramset(ostream_t&, Model const*) const override;
 	void printSubckt(SubcktBase const*, ostream_t&) const override;
 	void printPainting(Painting const*, ostream_t&) const override;
 	void print_command(ostream_t&, DEV_DOT const*) const override;
@@ -335,7 +337,9 @@ void VS::print_args(ostream_t& s, Component const* sym) const
 
 	for(unsigned i=0; i<sym->param_count(); ++i) {
 		auto name = sym->param_name(i);
-		if (sym->param_is_printable(i)) {
+		if (name.size() == 0){
+			unreachable();
+		}else if (sym->param_is_printable(i)) {
 			s << comma << "." << sym->param_name(i) << "(" << sym->param_value(i) << ")";
 			comma = ", ";
 		}else{
@@ -351,7 +355,9 @@ static void print_args(ostream_t& s, Component const* sym)
 
 	for(unsigned i=0; i<sym->param_count(); ++i) {
 		auto name = sym->param_name(i);
-		if(name.at(0) == '$'){
+		if(name.size() ==0){
+			unreachable();
+		}else if (name.at(0) == '$'){
 		}else if (sym->param_is_printable(i)) {
 			s << comma << "." << sym->param_name(i) << "(" << sym->param_value(i) << ")";
 			comma = ", ";
@@ -438,7 +444,7 @@ void Verilog::printSubckt(SubcktBase const* x, ostream_t& o) const
 		auto label = x->short_label();
       std::replace( label.begin(), label.end(), ':', '$');
 
-		o << "module " <<  label << "(";
+		o << "module " << label << "(";
 		print_ports_short(o, x);
 		o << ");\n";
 
@@ -472,6 +478,19 @@ void Verilog::printTaskElement(TaskElement const* c, ostream_t& s) const
 	s << "//" << c->label() << "\n";
 }
 /*--------------------------------------------------------------------------*/
+void Verilog::print_paramset(ostream_t& s, Model const* x) const
+{
+	incomplete();
+	s<<"// paramset " << x->short_label() << "\n";
+  // assert(x);
+  // _mode = mPARAMSET;
+  // o << "paramset " << x->short_label() << ' ' << x->dev_type() << ";\\\n";
+  // print_args(o, x);
+  // o << "\\\n"
+  //   "endparmset\n\n";
+  // _mode = mDEFAULT;
+}
+/*--------------------------------------------------------------------------*/
 void Verilog::print_instance(ostream_t& s, Component const* sym) const
 {
 #if 0
@@ -497,7 +516,7 @@ void Verilog::print_instance(ostream_t& s, Component const* sym) const
 #endif
 	{
 		auto label = sym->label();
-		auto type = sym->typeName();
+		auto type = sym->dev_type();
 		if(sym->common()){
 			type = sym->common()->modelname(); // "netlist mode"
 		}else{
@@ -532,7 +551,7 @@ void VS::print_instance(ostream_t& s, Component const* sym) const
 {
 	{
 		auto label = sym->label();
-		auto type = sym->typeName(); // dev_type_key
+		auto type = sym->dev_type();
 		// : is not allowed in verilog
  //     std::replace( type.begin(), type.end(), ':', '$');
 		s << QString::fromStdString(type) << " ";
@@ -589,6 +608,8 @@ void VS::printSubckt(SubcktBase const* x, ostream_t& o) const
 				// TODO: defer
 				printItem(o, ci);
 			}else if(ci->label() == "main"){ untested();
+				assert(ci->scope());
+				ci->scope()->prepare();
 				// main_ = ci;
 				printItem(o, ci);
 			}else if(ci->label()[0] == ':'){ untested();

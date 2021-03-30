@@ -14,12 +14,14 @@
 // print flat netlists
 /* -------------------------------------------------------------------------------- */
 #include "command.h"
-#include "qucs_globals.h"
-#include "settings.h"
-#include "language.h"
 #include "conductor.h"
+#include "element.h"
+#include "language.h"
 #include "qio.h"
 #include "qt_compat.h"
+#include "qucs_globals.h"
+#include "settings.h"
+#include "symbol.h"
 /* -------------------------------------------------------------------------------- */
 namespace {
 /* -------------------------------------------------------------------------------- */
@@ -128,9 +130,9 @@ void Netlister::printMain(ostream_t& stream,
 		//   ignore
 		if(dynamic_cast<Conductor const*>(pc)){
 			// possibly a wire.
-		}else if(pc->typeName()=="GND"){
+		}else if(pc->dev_type()=="GND"){
 			// qucsator hack, just ignore.
-		}else if(pc->typeName()=="NodeLabel"){ untested();
+		}else if(pc->dev_type()=="NodeLabel"){ untested();
 			// qucsator hack, just ignore.
 		}else{
 			lang->printItem(stream, pc);

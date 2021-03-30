@@ -11,6 +11,9 @@
  *   (at your option) any later version.                                   *
  *                                                                         *
  ***************************************************************************/
+
+// legacy edd. should work with qucsator.
+
 #include "qucs_globals.h"
 #include "qucs_app.h"
 #include "qucsdoc.h"
@@ -30,6 +33,14 @@ public:
 	~EqnDefined() {};
 	Element* clone() const{ return new EqnDefined(*this); }
 	void set_param_by_index(index_t i, std::string const&) override;
+
+private:
+	std::string dev_type() const override{
+		return "EDD"; // needed?
+	}
+	bool useObsoleteProps() const override{
+		return false;
+	}
 
 protected:
 	void createSymbol();
@@ -79,26 +90,8 @@ void EqnDefined::set_param_by_index(index_t i, std::string const& v)
 	Component::set_param_by_index(i, v);
 	prepare();
 }
-
-// -------------------------------------------------------
-#if 0
-Element* EqnDefined::info(QString& Name, char* &BitmapFile, bool getNewOne)
-{
-  Name = QObject::tr("Equation Defined Device");
-  BitmapFile = (char *) "edd";
-
-  if(getNewOne) {
-    EqnDefined* p = new EqnDefined();
-    p->Props.at(0)->Value = "explicit";
-    p->Props.at(1)->Value = "1";
-    p->recreate(0);
-    return p;
-  }
-  return 0;
-}
-#endif
 /*--------------------------------------------------------------------------*/
-// BUG. don't create symbol
+// BUG. don't create symbol, use :EDD_*
 void EqnDefined::createSymbol()
 {
 //  QFont Font(QucsSettings.font); // default application font
