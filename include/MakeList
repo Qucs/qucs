@@ -22,6 +22,7 @@ HDR = \
 	l_compar.h \
 	l_dispatcher_.h \
 	library.h \
+	model.h \
 	message.h \
 	node.h \
 	object.h \

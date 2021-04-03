@@ -1,0 +1,8 @@
+load legacy
+load legacy/components
+load legacy/qucsator
+load plugins/misc
+load plugins/verilog
+
+list l=verilog_nl
+list l=verilog_nl protos

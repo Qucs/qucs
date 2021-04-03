@@ -117,6 +117,7 @@ dist-hook:
 	for i in ${PRJ_TESTS}; do \
 		mkdir -p ${distdir}/$$i; \
 		cp $(srcdir)/$$i/*.cir $(distdir)/$$i; 2>/dev/null \
+		cp $(srcdir)/$$i/*.v $(distdir)/$$i; 2>/dev/null \
 		cp $(srcdir)/$$i/*.sch $(distdir)/$$i; \
 		cp $(srcdir)/$$i/*.sch.net $(distdir)/$$i; \
 	done
