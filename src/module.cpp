@@ -230,6 +230,7 @@ private:
 		Element* proto = qucs::symbol_dispatcher.clone(what);
 		if(proto){
 	//		guiRegisterElement(where, proto);
+			proto->set_dev_type(what);
 			scope->push_back(proto);
 		}else{ untested();
 			message(qucs::MsgWarning, "no proto >" + what + "<");

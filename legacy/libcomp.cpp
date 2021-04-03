@@ -255,10 +255,6 @@ private: // Element
 			return rect_t();
 		}
 	}
-	void set_dev_type(std::string const& t) override{
-		_type = t;
-		Symbol::set_dev_type(t);
-	}
 	std::string dev_type() const override {return "Lib";}
 
 private: // Symbol
@@ -410,14 +406,7 @@ private:
 		}
 
 		_ports.resize(numPorts());
-		trace4("Lib::attachProto1", numPorts(), _ports.size(), t, common()->modelname());
-		// also prepare parameters here.
-		//
-//		mutable_common()->set_modelname(t);
-		set_dev_type("Lib"); // assert??
-		set_dev_type(t); // use common maybe?
-		trace4("Lib::attachProto2", numPorts(), _ports.size(), t, common()->modelname());
-		// set_dev_type("Lib"); // assert?
+		set_dev_type(t);
 
 		for(auto i : _params){
 			delete i;
@@ -465,7 +454,6 @@ private:
 	std::vector<Port> _ports;
 	std::vector<std::string> _param_names; // could be common?
 	std::vector<PARA_BASE*> _params; // could be common
-	std::string _type;
 }; // Lib
 Lib D(&cl);
 static Dispatcher<Symbol>::INSTALL p(&symbol_dispatcher, "Lib", &D);
