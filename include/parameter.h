@@ -30,6 +30,7 @@
 //#include "m_expression.h"
 //#include "e_cardlist.h"
 #include "qio.h"
+#include "constant.h"
 #include "element_list.h"
 /*--------------------------------------------------------------------------*/
 // QUCS hacks
@@ -46,8 +47,6 @@
 #define error message
 //#include "l_lib.h"
 #define CS istream_t
-static const double MAXDBL=std::numeric_limits<double>::max();
-double const NOT_INPUT = -(MAXDBL)*(.9547658);	/* unlikely number	  */
 std::string to_string(int);
 /*--------------------------------------------------------------------------*/
 class LANGUAGE;

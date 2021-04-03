@@ -35,7 +35,6 @@ typedef qucs::ElementList CARD_LIST;
 /*--------------------------------------------------------------------------*/
 // stuff
 #define BUFLEN 512
-const char TOKENTERM[] = ",=()[]"; // constant.h
 bool wmatch(const std::string& s1,const std::string& s2); // lib
 /*--------------------------------------------------------------------------*/
 /* findbranch: find a matching label, by (ugh) linear search
