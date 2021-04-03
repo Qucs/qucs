@@ -160,6 +160,9 @@ Element const* Language::find_proto(const std::string& Name, const Element* Scop
 	 trace1("DOT", Name);
 	 d->set(cmd); // really?
 	 return d;
+  }else if ((p = device_dispatcher[Name])) {
+	  // TaskElements are here... (move to Data?)
+    return p;
   }else if ((p = element_dispatcher[Name])) {
 	  // TaskElements are here... (move to Data?)
     return p;

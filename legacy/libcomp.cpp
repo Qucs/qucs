@@ -36,6 +36,28 @@ class QString;
 /*--------------------------------------------------------------------------*/
 namespace{
 /*--------------------------------------------------------------------------*/
+using qucs::SubcktBase;
+/*--------------------------------------------------------------------------*/
+pos_t portPosition(SubcktBase const* sckt, index_t i)
+{
+	std::string n = sckt->portName(i);
+	ElementList const* s = sckt->scope();
+
+	if(s){
+		auto ii = s->find_(n);
+		if(ii!=s->end()){
+			trace1("SubcktProto::portPosition hit", i);
+			return (*ii)->position();
+		}else{
+			trace2("SubcktProto::portPosition miss", i, n);
+		}
+
+	}else{ untested();
+	}
+	unreachable();
+	return pos_t(0,0);
+}
+/*--------------------------------------------------------------------------*/
 using namespace qucs;
 /*--------------------------------------------------------------------------*/
 class CommonLib : public CommonComponent {
@@ -85,16 +107,16 @@ private:
 			return SubcktBase::param_value_by_name(n);
 		}
 	}
-//	unsigned numPorts() const override{
-//		if(painting()){
-//			return painting()->numPorts();
-//		}else if(subckt()){
-//			return subckt()->numPorts();
-//		}else{ untested();
-//			unreachable();
-//			return 0;
-//		}
-//	}
+	index_t numPorts() const override{
+		if(painting()){
+			return painting()->numPorts();
+////		}else if(subckt()){
+////			return subckt()->numPorts();
+		}else{ untested();
+			unreachable();
+			return 0;
+		}
+	}
 //	virtual Port& port(unsigned) {unreachable(); return *new Port();}
 //	pos_t portPosition(unsigned i) const override{
 //	//	assert(subckt());
@@ -138,6 +160,7 @@ private:
 		}
 	}
 
+public: // eek
 	SubcktBase const* painting() const{
 		// cache?
 			assert(subckt());
@@ -244,6 +267,17 @@ private: // Symbol
 		assert(_parent);
 		if(auto p = dynamic_cast<Symbol const*>(_parent)){ untested();
 			return p->portPosition(i);
+		}else if(auto p = dynamic_cast<LibComp const*>(_parent)){ untested();
+			if(p->painting()){
+				return ::portPosition(p->painting(), i);
+			}else{
+				assert(false);
+			}
+		}else if(auto p = dynamic_cast<SubcktBase const*>(_parent)){ untested();
+			incomplete();
+
+			return ::portPosition(p, i);
+
 		}else{
 			incomplete();
 			assert(false);

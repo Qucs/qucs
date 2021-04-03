@@ -80,7 +80,7 @@ void LIB::load_single(std::string what, ElementList* scope)
 
 		if(c.symbol==""){
 			c.definition += "\n<Symbol>" + parsedlib.defaultSymbol + "\n</Symbol>\n";
-			trace1("attached symbol to defn", c.definition);
+//			trace1("attached symbol to defn", c.definition);
 		}else{
 		}
 
@@ -108,10 +108,14 @@ void LIB::load_single(std::string what, ElementList* scope)
 
 			assert(ssym);
 			try{
-				// trace1("parse", c.definition);
+//				trace0("=================");
+//				trace1("parse", c.definition);
+//				trace0("/=================");
 				L->load(stream, ssym);
 
-				trace1("Lib stashing", t);
+				// todo: copy ports to top level?
+
+				trace2("Lib stashing", t, ssym->numPorts());
 				stash(t, ssym, scope);
 				new Module::INSTALL(parsedlib.name.toStdString(), ssym);
 			}catch(qucs::Exception const&){ untested();
