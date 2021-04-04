@@ -115,7 +115,7 @@ private:
 			return painting()->numPorts();
 ////		}else if(subckt()){
 ////			return subckt()->numPorts();
-		}else{ untested();
+		}else{
 			unreachable();
 			return 0;
 		}
@@ -271,7 +271,7 @@ private: // Symbol
 		assert(_parent);
 		if(auto p = dynamic_cast<Symbol const*>(_parent)){ untested();
 			return p->portPosition(i);
-		}else if(auto p = dynamic_cast<LibComp const*>(_parent)){ untested();
+		}else if(auto p = dynamic_cast<LibComp const*>(_parent)){
 			if(p->painting()){
 				return ::portPosition(p->painting(), i);
 			}else{

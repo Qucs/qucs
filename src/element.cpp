@@ -36,9 +36,9 @@ Element::Element(Element const& e)
 void Element::set_dev_type(const std::string& New_Type)
 {
 	trace3("Element::set_dev_type", short_label(), dev_type(), New_Type);
-  if (New_Type != dev_type()) { untested();
+  if (New_Type != dev_type()) {
     //throw Exception_Cant_Set_Type(dev_type(), New_Type);
-  }else{ untested();
+  }else{
     // it matches -- ok.
   }
 }
@@ -117,7 +117,7 @@ const Element* Element::find_in_parent_scope(const std::string& name)const
   assert(name != "");
   auto const* p_scope = (scope()->parent()) ? scope()->parent() : scope();
 
-  if(!p_scope){ untested();
+  if(!p_scope){
 	  // unreachable(); happens in some lib files
 	  trace2("no scope", name, label());
 	  throw qucs::ExceptionCantFind(name, label());

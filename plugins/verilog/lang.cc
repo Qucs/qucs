@@ -448,11 +448,11 @@ void Verilog::printSubckt(SubcktBase const* x, ostream_t& o) const
 		print_ports_short(o, x);
 		o << ");\n";
 
-		for (auto ci : *scope) { itested();
+		for (auto ci : *scope) {
 //			o << "  "; later.
 			if(dynamic_cast<Conductor const*>(ci)){
 			}else if(dynamic_cast<Place const*>(ci)){
-			}else{ itested();
+			}else{
 				printItem(o, ci);
 			}
 		}

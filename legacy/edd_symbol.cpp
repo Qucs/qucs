@@ -32,7 +32,7 @@ public:
   ComponentPort(const ComponentPort&p) : Port(), _p(p._p) {}
   explicit ComponentPort(int x, int y)
 	  : Port(), _p(x, y)
-  { untested();
+  {
   }
 
 public:
@@ -54,7 +54,7 @@ public:
 
 private:
 	explicit DefaultSymbol(DefaultSymbol const&x)
-	    : Symbol(x), _branches(x._branches){ untested();
+	    : Symbol(x), _branches(x._branches){
 	}
 	std::string dev_type()const { untested();
 		return prefix + std::to_string(_branches);
@@ -65,7 +65,7 @@ private:
 	// 		return r;
 	// 	}
 public:
-	Symbol* clone() const override{ untested();
+	Symbol* clone() const override{
 		return new DefaultSymbol(*this);
 	}
 
@@ -76,8 +76,8 @@ private: // Symbol
 	// bool portExists(index_t) const override;
 	// std::string const portName(index_t) const override;
 
-	void set_param_by_name(std::string const& name, std::string const& value){ untested();
-		if(name == "Branches"){ untested();
+	void set_param_by_name(std::string const& name, std::string const& value){
+		if(name == "Branches"){
 			_branches = atoi(value.c_str());
 			assert(_branches);
 			init();
@@ -155,7 +155,7 @@ void DefaultSymbol::paint(ViewPainter *p) const
 }
 /*--------------------------------------------------------------------------*/
 void DefaultSymbol::init()
-{ untested();
+{
 	//  QFont Font(QucsSettings.font); // default application font
 	//  // symbol text is smaller (10 pt default)
 	//  //Font.setPointSizeF(Font.pointSizeF()/1.2);  // symbol text size proportional to default font size
@@ -172,13 +172,13 @@ void DefaultSymbol::init()
 
 	if(_num == _branches){ untested();
 		return; // BUG
-	}else{ untested();
+	}else{
 		_num = _branches;
 	}
 
 	if(_branches < 1) { untested();
 		_branches = 1;
-	} else if(_branches > 4) { untested();
+	} else if(_branches > 4) {
 		PortDistance = 40;
 		if(_branches > 20) _branches = 20;
 	}
@@ -189,7 +189,7 @@ void DefaultSymbol::init()
 	_params.clear();
 	_param_names.clear();
 
-	for(i = NumProps; i < _branches; i++) { untested();
+	for(i = NumProps; i < _branches; i++) {
 		_param_names.push_back("I"+std::to_string(i+1));
 		_params.push_back("");
 		// QObject::tr("current equation") + " " +QString::number(i+1)));
@@ -218,7 +218,7 @@ void DefaultSymbol::init()
 		_lines.push_back( Line( 7,y+3, 10, y,QPen(Qt::black,1)));
 		_lines.push_back( Line(-10, y, 10, y,QPen(Qt::black,1)));
 
-		if (i > 1) { untested();
+		if (i > 1) {
 			yh = y-PortDistance/2; // bottom of the branch box
 			// draw horizontal separation between boxes
 			_lines.push_back( Line(-15, yh, 15, yh, QPen(Qt::darkBlue,2)));
@@ -246,8 +246,8 @@ void DefaultSymbol::init()
 class DefaultSymbols{
 	typedef Dispatcher<Symbol>::INSTALL disp_t;
 public:
-	DefaultSymbols(){ untested();
-		for(index_t i=1; i<10; i++){ untested();
+	DefaultSymbols(){
+		for(index_t i=1; i<10; i++){
 			auto s = d0.clone();
 			s->set_param_by_name("Branches", std::to_string(i));
 			s->set_label(prefix + std::to_string(i));

@@ -35,7 +35,7 @@ static int _modelcounter;// factory?
 /*--------------------------------------------------------------------------*/
 class EDD : public FactorySymbol {
 public:
-	explicit EDD() : FactorySymbol(){ untested();
+	explicit EDD() : FactorySymbol(){
 		set_label("equation defined device");
 //		Component::set_dev_type("EDD"); //BUG
 		attach_common(new qucs::COMMON_PARAMLIST());

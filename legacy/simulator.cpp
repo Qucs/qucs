@@ -483,7 +483,7 @@ void LegacyNetlister::throughAllComps(ostream_t& xx, ElementList const* scope_,
 		assert(pc);
 		trace4("tac", pc->label(), pc, sym->owner(), pc->dev_type());
 
-		if(!sym->owner()){ untested();
+		if(!sym->owner()){
 			incomplete(); //?
 //			symbolSection...
 			continue;

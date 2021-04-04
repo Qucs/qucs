@@ -59,14 +59,14 @@ void SymbolFactory::set_dev_type(std::string const& name)
 {
 	trace1("ModelFactory::set_dev_type", name);
 	Element* e = nullptr;
-	try{ untested();
+	try{
 		e = find_looking_out(name)->clone();
 		untested();
-	}catch(qucs::ExceptionCantFind const&){ untested();
+	}catch(qucs::ExceptionCantFind const&){
 		e = qucs::symbol_dispatcher.clone(name);
 	}
 
-	if(auto ps = prechecked_cast<Symbol*>(e)){ untested();
+	if(auto ps = prechecked_cast<Symbol*>(e)){
 		_proto = ps;
 		_scope = owner()->scope();
 		set_label(name);
@@ -107,7 +107,7 @@ Element const* FactorySymbol::find_proto(std::string const& n)
 	auto ci = findbranch(cmd, scope);
 
 	while(true){
-		if (ci.is_end()) {untested();
+		if (ci.is_end()) {
 			return nullptr;
 		}else if(auto p=dynamic_cast<SubcktBase*>(*ci)){
 			return p;

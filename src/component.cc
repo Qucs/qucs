@@ -174,8 +174,8 @@ void Component::set_port_by_name(std::string const&, std::string const&)
 }
 /*--------------------------------------------------------------------------*/
 std::string Component::param_name(index_t i) const
-{ untested();
-  if (has_common()) { untested();
+{
+  if (has_common()) {
     return common()->param_name(i);
   }else{
     switch (Component::param_count() - 1 - i) {
@@ -214,7 +214,7 @@ void Component::new_subckt()
 /*--------------------------------------------------------------------------*/
 void Component::set_param_by_name(std::string const& name, std::string const& v)
 {
-  if (has_common()) {untested();
+  if (has_common()) {
     CommonComponent* c = common()->clone();
     assert(c);
     c->set_param_by_name(name, v);

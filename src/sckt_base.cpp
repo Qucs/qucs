@@ -24,7 +24,7 @@ void SubcktBase::new_subckt()
 /*--------------------------------------------------------------------------*/
 std::string SubcktBase::dev_type()const
 {
-	if(common()){ untested();
+	if(common()){
 		return common()->modelname();
 	}else{ untested();
 		unreachable();

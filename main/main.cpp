@@ -220,7 +220,7 @@ int main(int argc, char *argv[])
   var = getenv("QUCSATOR");
   if(var) {
       QucsSettings.Qucsator = var;
-  } else { untested();
+  } else {
       QucsSettings.Qucsator = (QucsSettings.BinDir + "/qucsator" + executableSuffix);
   }
 

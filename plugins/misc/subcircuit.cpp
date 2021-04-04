@@ -59,7 +59,7 @@ public:
 
 private:
 	Sub(Sub const&x);
-	std::string dev_type()const override { untested();
+	std::string dev_type()const override {
 		return "Sub";
 	}
 
@@ -433,7 +433,7 @@ Sub::Sub(Sub const&x)
 /*--------------------------------------------------------------------------*/
 Sub::~Sub()
 {
-	for(auto i : _params){ untested();
+	for(auto i : _params){
 		delete i;
 	}
 	_params.clear();

@@ -522,7 +522,7 @@ void QucsatorLang::printComponent(::Component const* c, ostream_t& s) const
 			s << "R:" << c->label() << "." << QString::number(z++) << " "
 				<< Node1 << " " << netLabel(c, k) << " R=\"0\"\n";
 		}
-	}else if(c->dev_type() == "EDD"){ untested();
+	}else if(c->dev_type() == "EDD"){
 		// HACK from eqndefined.cpp
 		// obsolete callback version
 		s << c->dev_type() << ":" << c->label();

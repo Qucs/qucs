@@ -548,7 +548,7 @@ void LegacySchematicLanguage::print_instance(ostream_t& s, Component const* sym)
 
 	auto c = dynamic_cast<::Component const*>(sym);
 	auto cc = const_cast<::Component*>(c); // BUGBUGBUGBUG
-	if(c && c->useObsoleteProps()){ untested();
+	if(c && c->useObsoleteProps()){
 		s << " ";
 		int i=0;
 		if(!c->showName){
@@ -606,7 +606,7 @@ void LegacySchematicLanguage::print_instance(ostream_t& s, Component const* sym)
 				s << "0";
 			}
 		}
-	}else{ untested();
+	}else{
 		printArgs(sym, s);
 	}
 
@@ -699,7 +699,7 @@ static TaskElement* loadLegacyTaskElement(const QString& _s, LegacyTaskElement* 
 			// c->set_param_by_index( z/2, n); ?
 
 			// not all properties have to be mentioned (backward compatible)
-			if(z > counts) { untested();
+			if(z > counts) {
 				if(p1->Description.isEmpty()){ untested();
 					c->Props.remove();    // remove if allocated in vain
 				}else{

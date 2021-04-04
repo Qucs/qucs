@@ -406,7 +406,7 @@ int RectDiagram::calcDiagram()
 				z = int(corr*log10(zD / fabs(xAxis.low)) + 0.5);// int() implies floor()
 			}
 		}
-	}else{ untested();
+	}else{
 		// not logarithmical
 		calcAxisScale(&xAxis, GridNum, zD, zDstep, GridStep, double(_width));
 		trace1("RectDiagram::calcDiagram done axisScele", GridNum);
@@ -414,13 +414,13 @@ int RectDiagram::calcDiagram()
 		double Expo;
 		if(xAxis.up == 0.0){ untested();
 			Expo = log10(fabs(xAxis.up-xAxis.low));
-		}else{ untested();
+		}else{
 			Expo = log10(fabs(xAxis.up));
 		}
 
 		zD += 0.5;     // perform rounding
 		z = int(zD);   //  "int(...)" implies "floor(...)"
-		while((z <= _width) && (z >= 0)) { untested();
+		while((z <= _width) && (z >= 0)) {
 			// create grid lines
 			if(fabs(GridNum) < 0.01*pow(10.0, Expo)){
 			  	GridNum = 0.0;// make 0 really 0
@@ -680,8 +680,8 @@ bool RectDiagram::calcYAxis(Axis *Axis, int x0)
   int maxWidth = 0;
 
   bool back = false;
-if(Axis->log) { untested();
-  if(Axis->autoScale) { untested();
+if(Axis->log) {
+  if(Axis->autoScale) {
     if(Axis->max*Axis->min <= 0.0)  return false;  // invalid
   }
   else  if(Axis->limit_min*Axis->limit_max <= 0.0)  return false;  // invalid

@@ -100,7 +100,7 @@ void list_save(CS& cmd, ostream_t& out, CARD_LIST* scope)
     for (auto ci=scope->begin();ci!=scope->end();++ci) {
       lang->print_item(out, *ci);
     }
-  }else{itested();
+  }else{
     /* some args: be selective	    */
     size_t arg1 = cmd.cursor();
     CARD_LIST::fat_iterator ci = (cmd.match1('-')) 
@@ -109,7 +109,7 @@ void list_save(CS& cmd, ostream_t& out, CARD_LIST* scope)
     if (ci.is_end()) {untested();
       trace2("cantfind", cmd.fullstring(), cmd.tail());
       throw qucs::Exception_CS("can't find", cmd);
-    }else{itested();
+    }else{
     }
     
     if (cmd.match1('-')) {		/* there is a dash:  a range	    */
@@ -132,12 +132,12 @@ void list_save(CS& cmd, ostream_t& out, CARD_LIST* scope)
 	}
       }
 #endif
-    }else{itested();
+    }else{
       /* no dash: a list		    */
-      do {itested();
+      do {
 	/* each arg			    */
 	size_t next = cmd.cursor();
-	do {itested();
+	do {
 	  /* all that match this arg	    */
 	  trace1("list print", (*ci)->label());
 	  lang->print_item(out, *ci);

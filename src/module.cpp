@@ -232,7 +232,7 @@ private:
 	//		guiRegisterElement(where, proto);
 			proto->set_dev_type(what);
 			scope->push_back(proto);
-		}else{ untested();
+		}else{
 			message(qucs::MsgWarning, "no proto >" + what + "<");
 		}
 	}
