@@ -50,6 +50,7 @@ using qucs::Painting;
 using qucs::SubcktBase;
 using qucs::Symbol;
 using qucs::TaskElement;
+using qucs::command_dispatcher;
 /* -------------------------------------------------------------------------------- */
 #if 0
 static std::string netLabel(Node const* nn)
@@ -584,8 +585,9 @@ void VS::printSubckt(SubcktBase const* x, ostream_t& o) const
 	}
 
 	auto it = scope->find_("main");
-	if(it == scope->end()){
+	if(it == scope->end()){ untested();
 	}else if(dynamic_cast<SubcktBase const*>(*it)){ untested();
+//		(*it)->prepare();
 		o << "// just main scope\n";
 		scope = (*it)->scope();
 		// good idea?
@@ -728,8 +730,17 @@ class CMD_MODULE : public Command {
 		Scope->push_back(new_module);
 	}
 } p2;
-Dispatcher<Command>::INSTALL d2(&qucs::command_dispatcher, "module|macromodule", &p2);
+Dispatcher<Command>::INSTALL d2(&command_dispatcher, "module|macromodule", &p2);
+/*--------------------------------------------------------------------------*/
+class CMD_VERILOG : public Command {
+public:
+  void do_it(CS&, CARD_LIST* Scope)
+  { untested();
+    command("options lang=verilog", Scope);
+  }
+} p8;
+DISPATCHER<Command>::INSTALL d8(&command_dispatcher, "verilog", &p8);
 /*--------------------------------------------------------------------------*/
 } // namespace
-/* -------------------------------------------------------------------------------- */
-/* -------------------------------------------------------------------------------- */
+/*--------------------------------------------------------------------------*/
+/*--------------------------------------------------------------------------*/

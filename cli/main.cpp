@@ -32,7 +32,6 @@
 #include "settings.h"
 #include "docfmt.h"
 #include "printerwriter.h"
-#include "imagewriter.h"
 #include "schematic_lang.h"
 #include "simulator.h"
 
@@ -298,6 +297,37 @@ int main(int argc, const char *argv[])
 //  CKT_BASE::_sim = NULL;
   
   return 0;
+}
+/*--------------------------------------------------------------------------*/
+// temporary hack, just need to switch languages for testing...
+namespace {
+  class CMD_OPT : public Command {
+  public:
+    void do_it(CS& cmd, CARD_LIST*) {
+      size_t here = cmd.cursor();
+      bool changed = false;
+      qucs::Language* language=nullptr;
+      do{
+	ONE_OF
+	  || (Get(cmd, "lang{uage}",   &language)
+//	      && ((case_insensitive = ((language) ? (language->case_insensitive()) : false)),
+//		(units = ((language) ? (language->units()) : uSI)), true)
+		)
+	  ;
+
+	if (!cmd.stuck(&here)) {
+	  changed = true;
+	}else{ untested();
+	}
+      }while (cmd.more() && changed);
+
+      if(language){
+	OPT::language = language;
+      }else{ untested();
+      }
+    }
+  } p5;
+  Dispatcher<Command>::INSTALL d5(&qucs::command_dispatcher, "options|set|width", &p5);
 }
 /*--------------------------------------------------------------------------*/
 /*--------------------------------------------------------------------------*/

@@ -29,6 +29,12 @@
 /*--------------------------------------------------------------------------*/
 namespace qucs {
 /*--------------------------------------------------------------------------*/
+void Language::parse_top_item(istream_t& cmd, ElementList* Scope) const
+{
+  cmd.get_line(">");
+  Command::cmdproc(cmd, Scope);
+}
+/*--------------------------------------------------------------------------*/
 Element* Language::parseItem(istream_t& s, Element* c) const
 { untested();
   if (DEV_DOT* d = dynamic_cast<DEV_DOT*>(c)) { untested();
@@ -216,6 +222,29 @@ Element const* Language::find_proto(const std::string& Name, const Element* Scop
 #endif
   }
       return NULL;
+}
+/*--------------------------------------------------------------------------*/
+bool Get(istream_t& cmd, const std::string& key, Language** val)
+{
+  if (cmd.umatch(key + " {=}")) {
+    Language* lang = language_dispatcher[cmd];
+    if (lang) {
+      *val = lang;
+    }else{untested();
+      std::string choices;
+      for(Dispatcher<Language>::const_iterator
+	  i = language_dispatcher.begin(); i != language_dispatcher.end(); ++i) {untested();
+	if (i->second) {untested();
+	  choices += i->first + ' ';
+	}else{untested();
+	}
+      }
+      cmd.warn(bWARNING, "need a language (" + choices + ")");
+    }
+    return true;
+  }else{
+    return false;
+  }
 }
 /*--------------------------------------------------------------------------*/
 } // qucs

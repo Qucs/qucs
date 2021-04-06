@@ -53,8 +53,13 @@ public:
 		incomplete();
 		return new CommonSubckt(*this);
 	}
-   bool operator==(const CommonComponent&)const override{
-		return false;
+   bool operator==(const CommonComponent& x)const override{
+		auto p = dynamic_cast<const CommonSubckt*>(&x);
+		bool rv = p
+			&& _subckt == p->_subckt
+			&& CommonParamlist::operator==(x);
+
+		return rv;
 	}
 	pos_t portPosition(index_t i) const;
 	index_t numPorts() const {

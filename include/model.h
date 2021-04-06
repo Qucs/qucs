@@ -52,7 +52,7 @@ public:
 //  virtual SDP_Element* new_sdp(CommonComponent*)const {unreachable();return 0;};
   virtual bool parse_params_obsolete_callback(CS&) {unreachable(); return false;}
   virtual bool is_valid(Component const*)const {return true;}
-  const Element* component_proto()const {untested(); return _component_proto;}
+  const Element* component_proto()const { return _component_proto;}
 protected:
   const Element* _component_proto;
 public:

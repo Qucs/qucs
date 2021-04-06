@@ -92,33 +92,49 @@ static Element* find_recursive(Element* where, std::string const& name)
 /*--------------------------------------------------------------------------*/
 void FactorySymbol::stash_proto(Element* e)
 {
-	assert(_factory);
-	_factory->stash(e);
+	if(_factory){
+		_factory->stash(e);
+	}else{
+		ElementList::card_list.push_back(e);
+	}
 }
 /*--------------------------------------------------------------------------*/
 Element const* FactorySymbol::find_proto(std::string const& n)
 {
+	trace1("find_proto try", n);
 	SymbolFactory* f = _factory;
-	ElementList* scope = f->scope();
+	ElementList* scope = &ElementList::card_list;
+	if(f){
+		scope = f->scope();
+	}else{
+	}
 
 	istream_t cmd(istream_t::_STRING, n);
 
 	assert(scope);
 	auto ci = findbranch(cmd, scope);
 
+	auto k=0;
 	while(true){
 		if (ci.is_end()) {
 			return nullptr;
-		}else if(auto p=dynamic_cast<SubcktBase*>(*ci)){
+		}else{
+			trace2("find_proto try", k, (*ci)->short_label());
+			++k;
+		}
+		if(auto p=dynamic_cast<SubcktBase*>(*ci)){
 			return p;
 		}else if(auto m=dynamic_cast<Model*>(*ci)){
 			if(m->is_valid(this)){
+				trace2("find_proto gotit", m->short_label(), n);
 				return m->component_proto();
 			}else{
+				trace2("invalid", m->short_label(), n);
 			}
 		}else{
 		}
 
+		istream_t cmd(istream_t::_STRING, n);
 		ci = findbranch(cmd, ++ci);
 	}
 	return nullptr;
@@ -127,14 +143,16 @@ Element const* FactorySymbol::find_proto(std::string const& n)
 void FactorySymbol::set_dev_type(std::string const& name)
 {
 	trace1("FactorySymbol::set_dev_type", name);
-	assert(owner());
-	Element* ee = find_recursive(this, name);
-	SymbolFactory* f = dynamic_cast<SymbolFactory*>(ee);
-	if(!f){
-		message(qucs::MsgFatal, "cannot find " + name);
+	if(owner()){
+		Element* ee = find_recursive(this, name);
+		SymbolFactory* f = dynamic_cast<SymbolFactory*>(ee);
+		if(!f){
+			message(qucs::MsgFatal, "cannot find " + name);
+		}else{
+		}
+		_factory = f;
 	}else{
 	}
-	_factory = f;
 	Symbol::set_dev_type(name);
 }
 /*--------------------------------------------------------------------------*/

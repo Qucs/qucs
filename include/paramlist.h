@@ -62,15 +62,6 @@ public:
   PARAM_LIST	_params;
 };
 /*--------------------------------------------------------------------------*/
-inline bool COMMON_PARAMLIST::operator==(const COMMON_COMPONENT& x)const
-{
-  const COMMON_PARAMLIST* p = dynamic_cast<const COMMON_PARAMLIST*>(&x);
-  bool rv = p 
-    && _params == p->_params
-    && COMMON_COMPONENT::operator==(x);
-  return rv;
-}
-/*--------------------------------------------------------------------------*/
 } // qucs
 /*--------------------------------------------------------------------------*/
 #endif

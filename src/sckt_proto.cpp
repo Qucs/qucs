@@ -128,6 +128,11 @@ private: // Symbol
 	index_t numPorts() const override;
 	bool is_device() const override{return false;}
 
+	void prepare() override{
+		assert(scope());
+		scope()->prepare();
+	}
+
 private: // internal
 	ElementList* subckt() { untested();
 		CommonComponent* cc = mutable_common();

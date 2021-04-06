@@ -27,7 +27,6 @@ CPP_SRC = \
 	findbr.cc \
 	geometry.cpp \
 	graph.cpp \
-	imagewriter.cpp \
 	io.cpp \
 	io_error.cc \
 	io_findf.cc \
@@ -99,8 +98,6 @@ HDR1 = \
 	docfmt.h \
 	dynamic_cc.h \
 	element_graphics.h \
-	imagewriter.h \
-  	imagewriter.h \
 	material_props.h \
 	misc.h \
 	mnemo.h \
@@ -123,7 +120,6 @@ HDR1 = \
 HDR2 = \
 	actions.h \
 	diagram.h \
-	imagewriter.h \
 	misc.h \
 	mnemo.h \
 	module.h \

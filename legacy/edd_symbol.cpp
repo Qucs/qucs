@@ -87,7 +87,7 @@ private: // Symbol
 	}
 
 	index_t numPorts() const override{return _ports.size();}
-	pos_t portPosition(index_t i) const{ untested();
+	pos_t portPosition(index_t i) const{
 		assert(i<numPorts());
 		return _ports[i].position();
 	}

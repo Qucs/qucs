@@ -343,9 +343,10 @@ void LegacySchematicLanguage::printDiagram(Diagram const* x, ostream_t& cs) cons
 	cs << "  </" << x->label() << ">\n";
 }
 /*--------------------------------------------------------------------------*/
-void LegacySchematicLanguage::printSubckt(SubcktBase const*, ostream_t&) const
+void LegacySchematicLanguage::printSubckt(SubcktBase const* x, ostream_t& s) const
 { untested();
-	unreachable();
+	incomplete();
+	s << "  " << x->short_label() << "\n";
 }
 /*--------------------------------------------------------------------------*/
 // catchall for non-circuit stuff? let's see.
@@ -527,7 +528,6 @@ void LegacySchematicLanguage::print_paramset(ostream_t& s, Model const* x) const
 	s << "incomplete model " << x->short_label()  << "\n";
 }
 /*--------------------------------------------------------------------------*/
-// was: void Schematic::saveComponent(QTextStream& s, Component const* c) const
 void LegacySchematicLanguage::print_instance(ostream_t& s, Component const* sym) const
 {
 	trace1("printSymbol", sym->dev_type());
@@ -612,7 +612,7 @@ void LegacySchematicLanguage::print_instance(ostream_t& s, Component const* sym)
 
 	s << ">\n";
 } // printSymbol
-
+/*--------------------------------------------------------------------------*/
 static TaskElement* loadLegacyTaskElement(const QString& _s, LegacyTaskElement* c)
 {
 	trace1("loadLegacyTaskElement", c->label());

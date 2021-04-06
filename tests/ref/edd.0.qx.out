@@ -1,0 +1,16 @@
+Qacs : Qucs alternative command shell
+used for testing only
+This is free software, and you are welcome
+to redistribute it under the terms of 
+the GNU General Public License, version 3 or later.
+See the file "COPYING" for details.
+misc plugins: wip
+legacy plugins: wip
+module main();
+EDD_1 #(.Type(explicit), .Branches(1), .I1(0), .Q1(V1)) D1(_net0, _net1);
+EDD_1 #(.Type(explicit), .Branches(1), .I1(0), .Q1(V1)) D2(_net2, _net3);
+EDD_2 #(.Type(explicit), .Branches(1), .I1(0), .Q1(V1*2)) D3(_net4, _net5);
+endmodule // main
+
+// paramset EDD_1
+// paramset EDD_2

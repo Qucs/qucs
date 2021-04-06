@@ -46,7 +46,7 @@ protected:
 public:
 	virtual ~Language() {}
 
-	virtual void	parse_top_item(istream_t&, ElementList*) const {incomplete();}
+	virtual void parse_top_item(istream_t&, ElementList*) const;
 	virtual Element* parseItem(istream_t&, Element*) const;
 	virtual SubcktBase* parse_model(istream_t&, SubcktBase*) const {incomplete(); assert(false); return nullptr;} // == 0
 	virtual DEV_DOT* parseCommand(istream_t&, DEV_DOT*) const{
@@ -69,6 +69,8 @@ private: //called by printItem
 //  virtual void print_comment(ostream_t&, const DEV_COMMENT const*){incomplete();}
   virtual void print_command(ostream_t&, const DEV_DOT*) const{incomplete();}
 };
+/* -------------------------------------------------------------------------------- */
+bool Get(istream_t&, std::string const& key, Language** val);
 /* -------------------------------------------------------------------------------- */
 // group netlist languages. needed? obsolete?
 class NetLang : public Language {

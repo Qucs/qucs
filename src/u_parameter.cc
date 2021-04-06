@@ -95,9 +95,9 @@ std::string PARAM_LIST::name(int i)const
 std::string PARAM_LIST::value_by_name(std::string const& n)const
 {
   const_iterator ii = _pl.find(n);
-  if(ii != _pl.end()){ untested();
+  if(ii != _pl.end()){
     return ii->second.string();
-  }else{ untested();
+  }else{
     throw qucs::ExceptionCantFind();
   }
 }

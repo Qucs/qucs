@@ -46,6 +46,8 @@ private:
 private:
 	void set_dev_type(std::string const& name);
 	Element* clone_instance() const;
+
+public:
 	Element* clone()const{return new SymbolFactory(*this);}
 
 private:

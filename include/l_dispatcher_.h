@@ -34,6 +34,7 @@
 #include "e_base.h"
 // #include "u_opt.h"
 // #include "ap.h"
+#include "qio.h"
 #include "exception.h"
 #include "settings.h" // not options.
 /*--------------------------------------------------------------------------*/
@@ -88,7 +89,7 @@ public:
   typedef typename DISPATCHER_BASE::INSTALL INSTALL;
 public:
   TT* operator[](std::string s);
-/* QUCS  TT* operator[](CS& cmd); */
+  TT* operator[](istream_t& cmd);
   TT* clone(std::string s);
 public: // forward to BASE
   DISPATCHER_BASE* operator&() {
@@ -153,9 +154,8 @@ TT* DISPATCHER<TT>::operator[](std::string s)
   return(t);
 }
 /*--------------------------------------------------------------------------*/
-#if 0 // qucs
 template <class TT>
-TT* DISPATCHER<TT>::operator[](CS& cmd)
+TT* DISPATCHER<TT>::operator[](istream_t& cmd)
 {
   unsigned here = cmd.cursor();
   std::string s;
@@ -169,7 +169,6 @@ TT* DISPATCHER<TT>::operator[](CS& cmd)
   }
   return p;
 }
-#endif
 /*--------------------------------------------------------------------------*/
 template <class TT>
 TT* DISPATCHER<TT>::clone(std::string s)

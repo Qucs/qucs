@@ -30,7 +30,6 @@
 #include "qucs_app.h"
 #include "docfmt.h"
 #include "printerwriter.h"
-#include "imagewriter.h"
 #include "schematic_lang.h"
 #include "simulator.h"
 

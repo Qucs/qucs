@@ -160,7 +160,7 @@ std::string Component::param_value(index_t i) const
 /*--------------------------------------------------------------------------*/
 std::string Component::param_value_by_name(std::string const& n) const
 {
-  if (has_common()) { untested();
+  if (has_common()) {
     return common()->param_value_by_name(n);
   }else{ untested();
 	throw qucs::ExceptionCantFind(label(), n, "params");
@@ -309,6 +309,20 @@ void Component::set_dev_type(const std::string& new_type)
 	}
 	trace2("Component::set_dev_type done", short_label(), dev_type());
 }
+/*--------------------------------------------------------------------------*/
+bool CommonComponent::operator==(const CommonComponent& x)const
+{
+	trace2("cc op==", _modelname, x._modelname);
+  return true
+	  && _modelname == x._modelname;
+//	  && _model == x._model
+//	  && _tnom_c == x._tnom_c
+//	  && _dtemp == x._dtemp
+//	  && _temp_c == x._temp_c
+//	  && _mfactor == x._mfactor
+//	  && _value == x._value);
+}
+/*--------------------------------------------------------------------------*/
 /*--------------------------------------------------------------------------*/
 } // qucs
 /*--------------------------------------------------------------------------*/

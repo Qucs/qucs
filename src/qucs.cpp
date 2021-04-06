@@ -57,7 +57,6 @@
 #include "exportdialog.h"
 //#include "octave_window.h"
 #include "printerwriter.h"
-#include "imagewriter.h"
 
 #include "widget.h"
 #include "settings.h"
@@ -2544,6 +2543,8 @@ void App::slotSaveDiagramToGraphicsFile()
 
 void App::slotSaveSchematicToGraphicsFile(bool diagram)
 { untested();
+  incomplete();
+#if 0
   ImageWriter *writer = new ImageWriter(lastExportFilename);
   writer->setDiagram(diagram);
   if (!writer->print(DocumentTab->current())) { untested();
@@ -2551,6 +2552,7 @@ void App::slotSaveSchematicToGraphicsFile(bool diagram)
     statusBar()->showMessage(QObject::tr("Successfully exported"), 2000);
   }
   delete writer;
+#endif
 }
 
 // #########################################################################

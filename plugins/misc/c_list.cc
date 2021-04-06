@@ -46,9 +46,6 @@ void list_save(CS& cmd, ostream_t& out, CARD_LIST* scope)
   trace1("list_save", cmd.fullstring());
   assert(scope);
   scope->prepare();
-  for(auto i: *scope){
-    trace1("list??", i->label());
-  }
 
   cmd >> "list";
   std::string lang_name = "";
@@ -57,7 +54,7 @@ void list_save(CS& cmd, ostream_t& out, CARD_LIST* scope)
   do{
     Get(cmd, "l{anguage}", &lang_name);
   } while(cmd.more() && !cmd.stuck(&here));
-  trace1("list_save", lang_name);
+  trace2("list_save", lang_name, cmd.tail());
 
 #if 0
   //out.setfloatwidth(7);
@@ -90,12 +87,12 @@ void list_save(CS& cmd, ostream_t& out, CARD_LIST* scope)
   }else if(!lang){
     incomplete();
     lang = qucs::language_dispatcher["qucsator"];
-  }else{ untested();
+  }else{
   }
 
   assert(lang); // TODO
 
-  if (cmd.is_end()) {
+  if (cmd.is_end()) { untested();
     /* no args: list all		    */
     for (auto ci=scope->begin();ci!=scope->end();++ci) {
       lang->print_item(out, *ci);

@@ -53,6 +53,7 @@ Symbol::Symbol(Symbol const& s)
 		_angle(s._angle),
 		_param_display(s._param_display)
 {
+	assert(s.common()==common());
 }
 /*--------------------------------------------------------------------------*/
 // same as Element::center?
@@ -80,7 +81,7 @@ std::string Symbol::param_value_by_name(std::string const& n) const
 		return std::to_string(_vflip);
 	}else if(n=="$angle"){
 		return std::to_string(_angle);
-	}else{ untested();
+	}else{
 		return Component::param_value_by_name(n);
 	}
 }
@@ -329,19 +330,6 @@ void CommonComponent::detach_common(CommonComponent** from)
   }else{
   }
 }
-/*--------------------------------------------------------------------------*/
-bool CommonComponent::operator==(const CommonComponent& x)const
-{
-  return true
-	  && _modelname == x._modelname;
-//	  && _model == x._model
-//	  && _tnom_c == x._tnom_c
-//	  && _dtemp == x._dtemp
-//	  && _temp_c == x._temp_c
-//	  && _mfactor == x._mfactor
-//	  && _value == x._value);
-}
-/*--------------------------------------------------------------------------*/
 /*--------------------------------------------------------------------------*/
 /*--------------------------------------------------------------------------*/
 /*--------------------------------------------------------------------------*/

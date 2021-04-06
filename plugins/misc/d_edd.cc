@@ -31,6 +31,7 @@ using qucs::Symbol;
 using qucs::Model;
 using qucs::FactorySymbol;
 using qucs::symbol_dispatcher;
+using qucs::CommonParamlist;
 static int _modelcounter;// factory?
 /*--------------------------------------------------------------------------*/
 class EDD : public FactorySymbol {
@@ -45,9 +46,9 @@ public:
 	Element* clone() const{ return new EDD(*this); }
 
 private: // Symbol
-	std::string dev_type() const override{untested(); return "EDD";}
-	pos_t portPosition(index_t i) const override{ untested();
-		if(auto s=dynamic_cast<Symbol const*>(_painting)){ untested();
+	std::string dev_type() const override{ return "EDD";}
+	pos_t portPosition(index_t i) const override{
+		if(auto s=dynamic_cast<Symbol const*>(_painting)){
 			// BUG. ask CommonSubckt?
 			trace3("EDD:portPosition from painting", i, s->numPorts(), numPorts());
 			assert(numPorts() == s->numPorts());
@@ -59,16 +60,32 @@ private: // Symbol
 			return pos_t(0,0);
 		}
 	}
-	void prepare() override{ untested();
-		trace1("edd prep", short_label());
+	void prepare() override{
 		incomplete();
-		Model const* m = new_model();
+		Component const* m = new_proto();
+		auto pl = dynamic_cast<CommonParamlist const*>(m->common());
+		assert(pl);
+		trace2("edd prep", short_label(), pl->_params.size());
+		int n=pl->_params.size();
+		assert(n==pl->_params.size()); // yuck
 
-		if(m){ untested();
-			auto cc = m->new_common();
-			// attach_common(cc);
+		if(m){
+			Element* elt = m->clone_instance();
+			auto cl = dynamic_cast<Component*>(elt);
+			assert(m->common()==cl->common());
 
-			// init(m->component_proto());
+			auto pl = dynamic_cast<CommonParamlist const*>(cl->common());
+			assert(pl);
+			assert(n==pl->_params.size()); // yuck
+
+			attach_common(cl->mutable_common());
+
+			delete cl;
+
+			pl = dynamic_cast<CommonParamlist const*>(common());
+			assert(n==pl->_params.size()); // yuck
+
+			init(m);
 		}else{ untested();
 			incomplete();
 		}
@@ -77,17 +94,17 @@ protected:
 	void refreshSymbol();
 
 private: // Symbol
-	void set_param_by_name(std::string const& name, std::string const& value) override{ untested();
+	void set_param_by_name(std::string const& name, std::string const& value) override{
 		trace2("edd spbn", name, value);
 		bool ok = false;
 		bool changed = false;
-		if(name == "$tx"){ untested();
+		if(name == "$tx"){
 			ok = true;
 			_tx = atoi(value.c_str());
-		}else if(name == "$ty"){ untested();
+		}else if(name == "$ty"){
 			ok = true;
 			_ty = atoi(value.c_str());
-		}else if(name[0] == '$'){ untested();
+		}else if(name[0] == '$'){
 			FactorySymbol::set_param_by_name(name, value);
 		}else{ untested();
 			trace2("spbn fwd", name, value);
@@ -107,22 +124,22 @@ private: // Symbol
 			}else{ untested();
 			}
 		}
-		if(!ok){ untested();
+		if(!ok){
 			trace2("edd spbn fwd", name, value);
 			Symbol::set_param_by_name(name, value);
 			assert(common()->param_count() <= 4);
-		}else{ untested();
+		}else{
 		}
 		if(changed){ untested();
 			refreshSymbol();
-		}else{ untested();
+		}else{
 		}
 	}
 
-	index_t param_count() const override{ untested();
+	index_t param_count() const override{ itested();
 	  return 2 + FactorySymbol::param_count();
 	}
-	void set_param_by_index(index_t i, std::string const& v) override{ untested();
+	void set_param_by_index(index_t i, std::string const& v) override{
 		bool changed = false;
 		auto s = FactorySymbol::param_count() - common()->param_count();
 		auto e = EDD::param_count() - common()->param_count();
@@ -133,14 +150,14 @@ private: // Symbol
 			_ty = atoi(v.c_str());
 		}else if(i<s){ untested();
 			FactorySymbol::set_param_by_index(i, v);
-		}else{ untested();
+		}else{
 
-			if(i==s+3){ untested();
+			if(i==s+3){
 				index_t n = atoi(v.c_str());
 				assert(n);
 				_ports.resize(2*n);
 				changed = true;
-			}else{ untested();
+			}else{
 			}
 
 			std::string Name = param_name(i);
@@ -150,18 +167,18 @@ private: // Symbol
 			Component::set_param_by_name(Name, v);
 		}
 
-		if(changed){ untested();
+		if(changed){
 			refreshSymbol();
-		}else{ untested();
+		}else{
 		}
 	}
-	std::string param_name_(index_t i) const{ untested();
+	std::string param_name_(index_t i) const{
 		trace1("param_name_", i);
-		if(i==0){ untested();
+		if(i==0){
 			return "Type";
-		}else if(i==1){ untested();
+		}else if(i==1){
 			return "Branches";
-		}else{ untested();
+		}else{
 			std::string p;
 			if(i%2){ itested();
 				p = "Q";
@@ -171,15 +188,15 @@ private: // Symbol
 			return p + std::to_string(i/2);
 		}
 	}
-	std::string param_name(index_t i) const override{ untested();
+	std::string param_name(index_t i) const override{
 		assert(common());
 		auto s = FactorySymbol::param_count() - common()->param_count();
 		auto e = EDD::param_count() - common()->param_count();
-		if(i==s){ untested();
+		if(i==s){
 			return "$ty";
-		}else if(i==s+1){ untested();
+		}else if(i==s+1){
 			return "$tx";
-		}else if(i<e){ untested();
+		}else if(i<e){
 			auto f = FactorySymbol::param_name(i);
 			trace3("paramname", i, s, f);
 			return f;
@@ -187,19 +204,19 @@ private: // Symbol
 			return param_name_(i-e);
 		}
 	}
-	bool param_is_printable(index_t i) const { untested();
+	bool param_is_printable(index_t i) const {
 		trace2("param_is_printable", i, _ports.size());
 		assert(common());
 		auto e = EDD::param_count() - common()->param_count();
 		if(i<e){ untested();
 			return true;
-		}else if(i < e + _ports.size() + 2){ untested();
+		}else if(i < e + _ports.size() + 2){
 			return true;
-		}else{ untested();
+		}else{
 			return false;
 		}
 	}
-	std::string param_value(index_t i) const override{ untested();
+	std::string param_value(index_t i) const override{
 		assert(common());
 		auto s = FactorySymbol::param_count() - common()->param_count();
 		auto e = EDD::param_count() - common()->param_count();
@@ -209,20 +226,20 @@ private: // Symbol
 			return std::to_string(_tx);
 		}else if(i<e){ untested();
 			return FactorySymbol::param_value(i);
-		}else{ untested();
+		}else{
 			trace6("EDD::param_value, component", short_label(), i, s, common()->param_count(), i-s, param_name(i));
 			assert(has_common());
 			assert(i-e<common()->param_count());
 			return Component::param_value_by_name(param_name(i));
 		}
 	}
-	std::string param_value_by_name(std::string const& name) const override{ untested();
+	std::string param_value_by_name(std::string const& name) const override{
 		trace1("EDD::param_value_by_name", name);
-		if(name=="$tx"){ untested();
+		if(name=="$tx"){
 			return std::to_string(_tx);
-		}else if(name=="$ty"){ untested();
+		}else if(name=="$ty"){
 			return std::to_string(_ty);
-		}else{ untested();
+		}else{
 			incomplete();
 			return FactorySymbol::param_value_by_name(name);
 		}
@@ -230,7 +247,7 @@ private: // Symbol
 
 private: // internal
 	void init(Element const* proto);
-	Model const* new_model();
+	Component const* new_proto();
 
 private: // TODO: use Component?
 	index_t numPorts() const override{ itested();
@@ -241,10 +258,10 @@ private: // TODO: use Component?
 		assert(i < _ports.size());
 		return _ports[i];
 	}
-	void set_port_by_index(index_t num, std::string const& name) override{ untested();
+	void set_port_by_index(index_t num, std::string const& name) override{
 		trace3("EDD::sportbi", num, _ports.size(), name);
 		// if (num < max_nodes())
-		if (num < numPorts()) { untested();
+		if (num < numPorts()) {
 			port(num).new_node(name, this);
 		}else{ untested();
 			incomplete();
@@ -266,7 +283,7 @@ EDD::EDD(EDD const& p)
       // _branches(p._branches),
 	//	_params(p._params.size()),
       _num(p._num)
-{ untested();
+{
 #if 0
 	for( size_t i=0; i < p._params.size(); ++i){ untested();
 		auto np = new PARAMETER<double>;
@@ -282,15 +299,15 @@ EDD::EDD(EDD const& p)
 }
 /*--------------------------------------------------------------------------*/
 void EDD::refreshSymbol()
-{ untested();
-	if(!_painting){ untested();
+{
+	if(!_painting){
 		int branches = numPorts()/2;
 		std::string defpaint = defsym + std::to_string(branches);
 //		auto e = find_looking_out(defpaint);
 		auto e = qucs::symbol_dispatcher[defpaint];
 		if(!e){ untested();
 			message(qucs::MsgWarning, "no symbol for EDD: " + defpaint);
-		}else if(auto p=dynamic_cast<Painting const*>(e)){ untested();
+		}else if(auto p=dynamic_cast<Painting const*>(e)){
 			_painting = p;
 			trace2("EDD default painting", branches, defpaint);
 		}else{ untested();
@@ -303,7 +320,7 @@ void EDD::refreshSymbol()
 }
 /*--------------------------------------------------------------------------*/
 void EDD::init(Element const* pp)
-{ untested();
+{
 	assert(pp);
 	auto proto = dynamic_cast<Component const*>(pp);
 	assert(proto);
@@ -334,27 +351,32 @@ void EDD::init(Element const* pp)
 /*--------------------------------------------------------------------------*/
 class EDDModel : public Model{
 public:
-	explicit EDDModel(Component* c) : Model(c){ untested();
+	explicit EDDModel(Component* c) : Model(c){
 	}
 
 private:
 	Element* clone()const override {return new EDDModel(*this);}
-	bool is_valid(const Component* c) const override{ untested();
-		trace2("is_valid", param_count(), c->param_count());
+	bool is_valid(const Component* c) const override{
+		assert(_component_proto);
+		auto cp = dynamic_cast<Component const*>(_component_proto);
+		assert(cp);
+		assert(c);
 
-		index_t N = 5; // x, y, tx, ty, show
-		if( param_count()+N != c->param_count()){ untested();
+		auto pl = dynamic_cast<CommonParamlist const*>(c->common());
+		auto ppl = dynamic_cast<CommonParamlist const*>(cp->common());
+
+		if(!pl){ untested();
 			return false;
-		}else{ untested();
-			for(index_t i=0; i<param_count(); ++i){ untested();
-				if(param_value(i) != c->param_value(N+i)){ untested();
-					return false;
-				}
-			}
+		}else if(!ppl){ untested();
+			return false;
+		}else if(pl == ppl){
+			return true;
+		}else{
+			bool r = pl->_params == ppl->_params;
+			trace3("same params?", r, pl->_params.size(), ppl->_params.size());
+			return r;
 		}
-		return true;
 	}
-
 
 	std::string param_value(index_t i) const override{ untested();
 		assert(i<_params.size());
@@ -378,27 +400,26 @@ private:
 
 	std::vector<std::string> _params{1};
 
-}; // m0
-// Dispatcher<Model>::INSTALL d1(&qucs::model_dispatcher, "EDD", &m0);
+};
+EDDModel m0(&d);
+Dispatcher<Model>::INSTALL d1(&qucs::model_dispatcher, "EDDModel", &m0);
 /*--------------------------------------------------------------------------*/
-Model const* EDD::new_model()
-{ untested();
+// set_modelname?
+Component const* EDD::new_proto()
+{
 	std::string type_name;
 
 	// add hash(params) to the name to speed up things.
-	auto cached_ = find_proto("EDD_*");
+	auto pl = dynamic_cast<CommonParamlist const*>(common());
+	assert(pl->_params.size()); // yuck
 
-	Element const* cached = nullptr;
-	if(cached_){ untested();
-		// TODO: find_again.
-		cached = cached_;
-	}else{ untested();
-	}
+	auto cached = find_proto("EDD_*");
 
-	if(auto sym = dynamic_cast<Model const*>(cached)){ untested();
+	if(auto sym = dynamic_cast<Component const*>(cached)){
+		trace2("found a proto?", short_label(), cached->short_label());
 		return sym; // ->common();
-	}else{ untested();
-		incomplete(); // rework with parser.
+	}else{
+		incomplete();
 		assert(owner());
 		auto os = prechecked_cast<Element const*>(owner());
 		assert(os);
@@ -406,12 +427,49 @@ Model const* EDD::new_model()
 
 		// Model* m = new EDDModel(this); // qucs::model_dispatcher.clone("EDD");
 		Component* s = qucs::device_dispatcher.clone("subckt_proto");
+		assert(s);
+
+		std::string new_type = "EDD_" + std::to_string(++_modelcounter);
+		s->set_label(new_type);
+		trace2("edd::new_proto", common()->modelname(), new_type);
+		Component::set_dev_type(new_type);
+
+		// fresh instance, use mutable.
+		auto mc = s->mutable_common();
+
+#if 1
+		// BUG: just reuse/copy common?
+		auto e = EDD::param_count() - common()->param_count();
+		for(index_t i=0; i< param_count(); ++i) {
+			auto n = param_name(i);
+			std::string v;
+			untested();
+			try{
+				v = param_value_by_name(n);
+			}catch(qucs::ExceptionCantFind const&){
+				trace3("BUG cant find", n, v, short_label());
+				unreachable();
+				continue;
+			}
+					
+			assert(n != "");
+			if(n[0] != '$'){
+				trace3("EDD param export ", i, n ,v );
+				mc->set_param_by_name(n, v);
+			}else{
+			}
+	//		auto p = new PARAMETER<double>();
+	//		*p = v; // BUG //
+	   }
+#endif
 		Model* m = new EDDModel(s); // qucs::model_dispatcher.clone("EDD");
-
-		std::string new_label = "EDD_" + std::to_string(++_modelcounter);
-		m->set_label(new_label);
-
+		assert(m->is_valid(this));
+		mc->set_modelname(new_type);
+		m->set_label(new_type);
 		stash_proto(m);
+		auto cp = prechecked_cast<Component const*>(m->component_proto());
+		assert(cp);
+		assert(m->is_valid(cp));
 
 #if 0
 		if(loadSymbol(FileName) > 0) { untested();
@@ -429,7 +487,7 @@ Model const* EDD::new_model()
 			}
 		}
 #endif
-		return m;
+		return dynamic_cast<Component const*>(m->component_proto());
 	}
 }
 } // namespace

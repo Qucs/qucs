@@ -33,9 +33,9 @@ bool COMMON_PARAMLIST::param_is_printable(index_t i)const
 std::string CommonParamlist::param_value_by_name(std::string const& n)const
 {
 	trace1("CommonParamlist::param_value_by_name", n);
-	try{ untested();
+	try{
 		return _params.value_by_name(n);
-	}catch(qucs::ExceptionCantFind const&){ untested();
+	}catch(qucs::ExceptionCantFind const&){
 		trace1("fallback", n);
 		return COMMON_COMPONENT::param_value_by_name(n);
 	}
@@ -50,6 +50,26 @@ std::string COMMON_PARAMLIST::param_value(index_t i)const
 	}else{untested();
 		return COMMON_COMPONENT::param_value(i);
 	}
+}
+/*--------------------------------------------------------------------------*/
+inline std::ostream& operator<<(std::ostream& o, PARAM_LIST const& l)
+{
+	for(auto i: l){
+		o << i.first << "=" << i.second.string() << "\n";
+	}
+	return o;
+}
+/*--------------------------------------------------------------------------*/
+bool COMMON_PARAMLIST::operator==(const COMMON_COMPONENT& x)const
+{
+  const COMMON_PARAMLIST* p = dynamic_cast<const COMMON_PARAMLIST*>(&x);
+  bool rv = p
+    && _params == p->_params;
+
+  trace3("CPL::op==", rv, p->_params.size(), _params.size());
+  trace2("CPL::op==", p->_params, _params);
+  rv &= COMMON_COMPONENT::operator==(x);
+  return rv;
 }
 /*--------------------------------------------------------------------------*/
 }
