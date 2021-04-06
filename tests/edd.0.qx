@@ -14,5 +14,8 @@ options lang=leg_sch
 
 options lang=verilog_nl
 list main
+list EDD_*
 
+options lang=qucsator
+list main
 list EDD_*

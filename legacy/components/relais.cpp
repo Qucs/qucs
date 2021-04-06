@@ -1,26 +1,43 @@
 /***************************************************************************
-                                relais.cpp
-                               ------------
-    begin                : Sat Feb 25 2006
     copyright            : (C) 2006 by Michael Margraf
-    email                : michael.margraf@alumni.tu-berlin.de
+                               2021 Felix Salfelder
  ***************************************************************************/
 
 /***************************************************************************
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU General Public License as published by  *
- *   the Free Software Foundation; either version 2 of the License, or     *
+ *   the Free Software Foundation; either version 3 of the License, or     *
  *   (at your option) any later version.                                   *
  *                                                                         *
  ***************************************************************************/
 
-#include "relais.h"
+#include "component.h"
+#include "module.h"
+#include "qucs_globals.h"
+
+namespace{
+using namespace qucs;
+
+class Relais : public ::Component {
+  explicit Relais(Relais const& c) : Component(c) {}
+public:
+  explicit Relais();
+  ~Relais();
+
+  Element* clone() const override {return new Relais(*this);}
+
+//  Component* newOne();
+  static Element* info(QString&, char* &, bool getNewOne=false);
+}D;
+static Dispatcher<Symbol>::INSTALL p(&symbol_dispatcher, "Relais", &D);
+static Module::INSTALL pp("misc", &D);
 
 
-Relais::Relais()
+Relais::Relais() : Component()
 {
   Description = QObject::tr("relay");
+  set_dev_type("Relais");
 
   Lines.append(new Line(-30,-30,-30, -8,QPen(Qt::darkBlue,2)));
   Lines.append(new Line(-30,  8,-30, 30,QPen(Qt::darkBlue,2)));
@@ -72,7 +89,8 @@ Relais::~Relais()
 {
 }
 
-Component* Relais::newOne()
+#if 0
+::Component* Relais::newOne()
 {
   return new Relais();
 }
@@ -84,4 +102,7 @@ Element* Relais::info(QString& Name, char* &BitmapFile, bool getNewOne)
 
   if(getNewOne)  return new Relais();
   return 0;
+}
+#endif
+
 }

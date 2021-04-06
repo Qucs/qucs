@@ -265,7 +265,6 @@ HEADERS_ = \
     pm_modulator.h \
     potentiometer.h \
     rectline.h \
-    relais.h \
     rfedd.h \
     rfedd2p.h \
     rlcg.h \

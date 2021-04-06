@@ -111,6 +111,10 @@ VCCS:my_VCCS netlabel_BUG netlabel_BUG netlabel_BUG netlabel_BUG G="1 S" T="0"
 MTEE #(.Subst(Subst1), .W1(1 mm), .W2(1 mm), .W3(2 mm), .MSModel(Hammerstad), .MSDispModel(Kirschning), .Temp(26.85), .Symbol(showNumbers)) my_MTEE();
 MTEE:my_MTEE netlabel_BUG netlabel_BUG netlabel_BUG Subst="Subst1" W1="1 mm" W2="1 mm" W3="2 mm" MSModel="Hammerstad" MSDispModel="Kirschning" Temp="26.85"
 ==============
+  < my_ 1 0 0 49 -26 0 0 "0.5 V" 0 "0.1 V" 0 "0" 0 "1e12" 0 "26.85" 0>
+ #(.Vt(0.5 V), .Vh(0.1 V), .Ron(0), .Roff(1e12), .Temp(26.85)) my_();
+:my_ netlabel_BUG netlabel_BUG netlabel_BUG netlabel_BUG Vt="0.5 V" Vh="0.1 V" Ron="0" Roff="1e12" Temp="26.85"
+==============
   < my_ 1 0 0 -26 18 0 0 "1" 1 "50 Ohm" 1 "0 dBm" 0 "1 GHz" 0 "26.85" 0>
  #(.Num(1), .Z(50 Ohm), .P(0 dBm), .f(1 GHz), .Temp(26.85)) my_();
 :my_ netlabel_BUG netlabel_BUG Num="1" Z="50 Ohm" P="0 dBm" f="1 GHz" Temp="26.85"

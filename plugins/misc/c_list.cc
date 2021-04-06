@@ -92,7 +92,7 @@ void list_save(CS& cmd, ostream_t& out, CARD_LIST* scope)
 
   assert(lang); // TODO
 
-  if (cmd.is_end()) { untested();
+  if (cmd.is_end()) {
     /* no args: list all		    */
     for (auto ci=scope->begin();ci!=scope->end();++ci) {
       lang->print_item(out, *ci);
@@ -157,7 +157,6 @@ public:
 //    list_save(cmd, IO::mstdout, Scope);
     ostream_t out(stdout);
     list_save(cmd, out, Scope);
-    untested();
 //    IO::mstdout.flush(); // ??
     out.flush();
   }

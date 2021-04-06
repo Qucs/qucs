@@ -443,7 +443,6 @@ Component const* EDD::new_proto()
 		for(index_t i=0; i< param_count(); ++i) {
 			auto n = param_name(i);
 			std::string v;
-			untested();
 			try{
 				v = param_value_by_name(n);
 			}catch(qucs::ExceptionCantFind const&){

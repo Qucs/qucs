@@ -14,3 +14,19 @@ endmodule // main
 
 // paramset EDD_1
 // paramset EDD_2
+# sckt main
+
+
+# 9
+EDD:D1 _net0 _net1 Type="explicit" Branches="1"  I1="D1.I1" Q1="D1.Q1"
+  Eqn:EqnD1I1 D1.I1="0" Export="no"
+  Eqn:EqnD1Q1 D1.Q1="V1" Export="no"
+EDD:D2 _net2 _net3 Type="explicit" Branches="1"  I1="D2.I1" Q1="D2.Q1"
+  Eqn:EqnD2I1 D2.I1="0" Export="no"
+  Eqn:EqnD2Q1 D2.Q1="V1" Export="no"
+EDD:D3 _net4 _net5 Type="explicit" Branches="1"  I1="D3.I1" Q1="D3.Q1"
+  Eqn:EqnD3I1 D3.I1="0" Export="no"
+  Eqn:EqnD3Q1 D3.Q1="V1*2" Export="no"
+.Def:End
+# paramset EDD_1
+# paramset EDD_2

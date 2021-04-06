@@ -585,7 +585,7 @@ void VS::printSubckt(SubcktBase const* x, ostream_t& o) const
 	}
 
 	auto it = scope->find_("main");
-	if(it == scope->end()){ untested();
+	if(it == scope->end()){
 	}else if(dynamic_cast<SubcktBase const*>(*it)){ untested();
 //		(*it)->prepare();
 		o << "// just main scope\n";

@@ -40,6 +40,10 @@ PRJ_TESTS = \
 	DC_SW_curtice_1_tb1.prj \
 	SP_mscoupler.prj \
 	SP_wilkinson.prj \
+	TR_boostconverter.prj \
+	TR_buckboost.prj \
+	TR_buckconverter.prj \
+	TR_chargepump.prj \
 	TR_resistor.prj \
 	TR_sawtooth-1.prj
 
@@ -71,10 +75,6 @@ LATER_TESTS = \
 	SP_sparam.prj \
 	TR_555_Fig7.prj \
 	TR_555_Fig9.prj \
-	TR_boostconverter.prj \
-	TR_buckboost.prj \
-	TR_buckconverter.prj \
-	TR_chargepump.prj \
 	TR_classic_osci.prj \
 	TR_colpitts_base.prj \
 	TR_colpitts.prj \
