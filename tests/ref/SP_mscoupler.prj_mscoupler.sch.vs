@@ -19,21 +19,21 @@ wire #(.$xposition(300), .$yposition(40), .$vflip(1), .$hflip(1)) noname(net_300
 wire #(.$xposition(200), .$yposition(40), .$vflip(1), .$hflip(1)) noname(net_200_40, net_300_40);
 wire #(.$xposition(260), .$yposition(100), .$vflip(1), .$hflip(1)) noname(net_260_100, net_260_150);
 wire #(.$xposition(200), .$yposition(100), .$vflip(1), .$hflip(1)) noname(net_200_100, net_260_100);
-place #(.$xposition(80), .$yposition(60), .$vflip(1), .$hflip(1)) net_80_60(net_80_60);
-place #(.$xposition(80), .$yposition(120), .$vflip(1), .$hflip(1)) net_80_120(net_80_120);
-place #(.$xposition(300), .$yposition(60), .$vflip(1), .$hflip(1)) net_300_60(net_300_60);
-place #(.$xposition(300), .$yposition(120), .$vflip(1), .$hflip(1)) net_300_120(net_300_120);
-place #(.$xposition(260), .$yposition(150), .$vflip(1), .$hflip(1)) net_260_150(net_260_150);
-place #(.$xposition(260), .$yposition(210), .$vflip(1), .$hflip(1)) net_260_210(net_260_210);
-place #(.$xposition(120), .$yposition(130), .$vflip(1), .$hflip(1)) net_120_130(net_120_130);
-place #(.$xposition(120), .$yposition(190), .$vflip(1), .$hflip(1)) net_120_190(net_120_190);
-place #(.$xposition(140), .$yposition(40), .$vflip(1), .$hflip(1)) net_140_40(net_140_40);
-place #(.$xposition(200), .$yposition(40), .$vflip(1), .$hflip(1)) net_200_40(net_200_40);
-place #(.$xposition(200), .$yposition(100), .$vflip(1), .$hflip(1)) net_200_100(net_200_100);
-place #(.$xposition(140), .$yposition(100), .$vflip(1), .$hflip(1)) net_140_100(net_140_100);
-place #(.$xposition(80), .$yposition(40), .$vflip(1), .$hflip(1)) net_80_40(net_80_40);
-place #(.$xposition(120), .$yposition(100), .$vflip(1), .$hflip(1)) net_120_100(net_120_100);
-place #(.$xposition(300), .$yposition(40), .$vflip(1), .$hflip(1)) net_300_40(net_300_40);
-place #(.$xposition(260), .$yposition(100), .$vflip(1), .$hflip(1)) net_260_100(net_260_100);
+place #(.$xposition(80), .$yposition(60)) net_80_60(net_80_60);
+place #(.$xposition(80), .$yposition(120)) net_80_120(net_80_120);
+place #(.$xposition(300), .$yposition(60)) net_300_60(net_300_60);
+place #(.$xposition(300), .$yposition(120)) net_300_120(net_300_120);
+place #(.$xposition(260), .$yposition(150)) net_260_150(net_260_150);
+place #(.$xposition(260), .$yposition(210)) net_260_210(net_260_210);
+place #(.$xposition(120), .$yposition(130)) net_120_130(net_120_130);
+place #(.$xposition(120), .$yposition(190)) net_120_190(net_120_190);
+place #(.$xposition(140), .$yposition(40)) net_140_40(net_140_40);
+place #(.$xposition(200), .$yposition(40)) net_200_40(net_200_40);
+place #(.$xposition(200), .$yposition(100)) net_200_100(net_200_100);
+place #(.$xposition(140), .$yposition(100)) net_140_100(net_140_100);
+place #(.$xposition(80), .$yposition(40)) net_80_40(net_80_40);
+place #(.$xposition(120), .$yposition(100)) net_120_100(net_120_100);
+place #(.$xposition(300), .$yposition(40)) net_300_40(net_300_40);
+place #(.$xposition(260), .$yposition(100)) net_260_100(net_260_100);
 endmodule // main
 

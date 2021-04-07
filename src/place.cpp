@@ -38,6 +38,17 @@ void Place::set_param_by_name(std::string const& name, std::string const& value)
 //	}
 }
 /*--------------------------------------------------------------------------*/
+bool Place::param_is_printable(index_t i) const
+{
+	if(i==2){
+		return false; // hflip
+	}else if(i==3){
+		return false; // vflip
+	}else{
+		return true;
+	}
+}
+/*--------------------------------------------------------------------------*/
 void Place::paint(ViewPainter* p) const
 {
 	trace3("placepaint", label(), position(), node_degree());

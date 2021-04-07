@@ -39,6 +39,7 @@ private: // Element
 private: // Symbol
 	virtual unsigned numPorts() const {return 1;}
 	void set_param_by_name(std::string const&, std::string const&) override;
+	bool param_is_printable(index_t i) const override;
 
 public: // Node stuff
 	//virtual Node* connectNode(unsigned idx, NodeMap&){incomplete(); return nullptr;}

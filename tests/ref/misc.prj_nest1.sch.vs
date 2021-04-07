@@ -12,15 +12,15 @@ wire #(.$xposition(380), .$yposition(310), .$vflip(1), .$hflip(1)) noname(net_38
 wire #(.$xposition(340), .$yposition(180), .$vflip(1), .$hflip(1)) noname(net_340_180, net_380_180);
 wire #(.$xposition(180), .$yposition(180), .$vflip(1), .$hflip(1)) noname(net_180_180, net_200_180);
 wire #(.$xposition(260), .$yposition(180), .$vflip(1), .$hflip(1)) noname(net_260_180, net_280_180);
-place #(.$xposition(400), .$yposition(180), .$vflip(1), .$hflip(1)) net_400_180(net_400_180);
-place #(.$xposition(180), .$yposition(180), .$vflip(1), .$hflip(1)) net_180_180(net_180_180);
-place #(.$xposition(380), .$yposition(360), .$vflip(1), .$hflip(1)) net_380_360(net_380_360);
-place #(.$xposition(380), .$yposition(310), .$vflip(1), .$hflip(1)) net_380_310(net_380_310);
-place #(.$xposition(380), .$yposition(250), .$vflip(1), .$hflip(1)) net_380_250(net_380_250);
-place #(.$xposition(340), .$yposition(180), .$vflip(1), .$hflip(1)) net_340_180(net_340_180);
-place #(.$xposition(280), .$yposition(180), .$vflip(1), .$hflip(1)) net_280_180(net_280_180);
-place #(.$xposition(200), .$yposition(180), .$vflip(1), .$hflip(1)) net_200_180(net_200_180);
-place #(.$xposition(260), .$yposition(180), .$vflip(1), .$hflip(1)) net_260_180(net_260_180);
-place #(.$xposition(380), .$yposition(180), .$vflip(1), .$hflip(1)) net_380_180(net_380_180);
+place #(.$xposition(400), .$yposition(180)) net_400_180(net_400_180);
+place #(.$xposition(180), .$yposition(180)) net_180_180(net_180_180);
+place #(.$xposition(380), .$yposition(360)) net_380_360(net_380_360);
+place #(.$xposition(380), .$yposition(310)) net_380_310(net_380_310);
+place #(.$xposition(380), .$yposition(250)) net_380_250(net_380_250);
+place #(.$xposition(340), .$yposition(180)) net_340_180(net_340_180);
+place #(.$xposition(280), .$yposition(180)) net_280_180(net_280_180);
+place #(.$xposition(200), .$yposition(180)) net_200_180(net_200_180);
+place #(.$xposition(260), .$yposition(180)) net_260_180(net_260_180);
+place #(.$xposition(380), .$yposition(180)) net_380_180(net_380_180);
 endmodule // main
 
