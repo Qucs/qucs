@@ -1,0 +1,17 @@
+
+from FinishSimulation
+#if 0
+    QFile ifile(QucsSettings.QucsHomeDir.filePath("asco_out.dat"));
+    QFile ofile(DataSet);
+    if(ifile.open(QIODevice::ReadOnly)) {
+      if(ofile.open(QIODevice::WriteOnly)) {
+        QByteArray data = ifile.readAll();
+        ofile.write(data);
+        ofile.close();
+      }
+      ifile.close();
+    }
+      if(((Optimize_Sim*)SimOpt)->loadASCOout()){
+        ((SchematicDoc*)DocWidget)->setChanged(true,true);
+      }
+#endif

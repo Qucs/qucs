@@ -1,5 +1,5 @@
-# MakeList for Qucs
-# 2020 Felix Salfelder
+# MakeList for Qucs library
+# 2020, 2021 Felix Salfelder
 #
 SUBDIRS = \
 	. \
@@ -66,7 +66,6 @@ CPP_SRC = \
 	settings.cpp \
 	simulator.cpp \
 	symbol.cpp \
-	syntax.cpp \
 	task_element.cpp \
 	u_parameter.cc \
 	viewpainter.cpp \
@@ -105,12 +104,10 @@ HDR1 = \
 	net.h \
 	netlist.h \
 	nodemap.h \
-	spicefile.h \
 	printerwriter.h \
 	project_view.h \
 	property.h \
 	qucsdoc.h \
-	syntax.h \
 	schematic_lang.h \
 	schematic_dialog.h \
 	schematic_edit.h \
@@ -126,8 +123,7 @@ HDR2 = \
 	doc_actions.h \
 	printerwriter.h \
 	project_view.h \
-	schematic_lang.h \
-	syntax.h
+	schematic_lang.h
 
 # plugins? lets see
 DIALOG_SRC = \

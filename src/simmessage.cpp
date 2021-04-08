@@ -717,26 +717,6 @@ void SimMessage::FinishSimulation()
     file.close();
   }
 
-  if(status){
-  }else if(SimOpt) { // save optimization data
-#if 0
-    QFile ifile(QucsSettings.QucsHomeDir.filePath("asco_out.dat"));
-    QFile ofile(DataSet);
-    if(ifile.open(QIODevice::ReadOnly)) {
-      if(ofile.open(QIODevice::WriteOnly)) {
-        QByteArray data = ifile.readAll();
-        ofile.write(data);
-        ofile.close();
-      }
-      ifile.close();
-    }
-      if(((Optimize_Sim*)SimOpt)->loadASCOout()){
-        ((SchematicDoc*)DocWidget)->setChanged(true,true);
-      }
-#endif
-  }else{
-  }
-
   emit SimulationEnded(status, this /*???*/);
 } // FinishSimulation
 /*--------------------------------------------------------------------------*/

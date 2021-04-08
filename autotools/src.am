@@ -55,17 +55,9 @@ MOCHEADERS = \
 
 MOCCPP = $(MOCHEADERS:.h=.moc.cpp)
 
-# still in common...
-# # REMOVE. moc treats .h files differently
-# # and it has a special meaning in automake as well...
-# SUFFIXES += .moc.cpp
-# .h.moc.cpp:
-# 	$(MOC) -I${top_srcdir}/include -I${top_srcdir}/src -DQT_MAJOR_VERSION=${QT_MAJOR_VERSION} -o $@ $< # 1
-
 pqucsdir = ${pkglibdir}
 pqucs_LTLIBRARIES = \
 	libqucs.la
-
 
 libqucs_la_SOURCES = \
 	${CPP_SRC} \

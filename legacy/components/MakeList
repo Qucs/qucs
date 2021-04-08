@@ -271,6 +271,7 @@ HEADERS_ = \
     rs_flipflop.h \
     source_ac.h \
     spdeembed.h \
+	spicefile.h \
     spiralinductor.h \
     switch.h \
     taperedline.h \

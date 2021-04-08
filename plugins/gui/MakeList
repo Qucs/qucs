@@ -2,6 +2,7 @@
 TARGET = gui
 
 PLUGIN_SRC = \
+	syntax.cpp \
 	schematic_action.cpp \
 	diagramdialog.hqt \
 	textdoc.hqt \
@@ -20,4 +21,5 @@ MORE_LATER = \
 EXTRA_DIST = \
 	schematic_action.h \
 	swap.h \
-	swap_gfx.h
+	swap_gfx.h \
+	syntax.h

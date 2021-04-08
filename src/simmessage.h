@@ -57,14 +57,9 @@ public slots:
 private slots:
   void slotDisplayMsg(std::string&);
   void slotDisplayErr(std::string&);
-//  void slotCloseStdin();
-//  void slotStateChanged();
   void slotSimEnded();
   void slotDisplayButton();
   void AbortSim();
-
-//  void slotReadSpiceNetlist();
-//  void slotFinishSpiceNetlist(int status);
 
 /* #ifdef SPEEDUP_PROGRESSBAR
   void slotUpdateProgressBar();
@@ -86,7 +81,6 @@ public:
 	void do_it(istream_t, Doc&);
 	void setMode(std::string const&);
 	int status()const{
-		assert(_sim);
 		return 0;
 //		return _sim->status;
 	}
@@ -101,7 +95,6 @@ private:
 	Component      *SimOpt;
 	int            SimPorts;
 	bool           makeSubcircuit, insertSim;
-	Simulator* _sim;
 
 public:
   QWidget const* _docWidget;
