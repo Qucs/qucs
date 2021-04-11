@@ -2,6 +2,7 @@
 # Create gui library
 
 # (C) 2021 Guilherme Brondani Torri
+#     2021 Michał Walenciak
 
 # TODO get rid of these relative paths
 include(../../readMakeList.txt)
@@ -12,7 +13,7 @@ set(pluginPath ${CMAKE_CURRENT_SOURCE_DIR}/../../../plugins/gui)
 
 # cmake automoc seems to create issues here
 # the headers are included into the moc_compilation.cpp creating redefinitions
-# definitions (F, p1,...) end up on the same translation unit (?) 
+# definitions (F, p1,...) end up on the same translation unit (?)
 
 # try to use moc manually
 
@@ -33,7 +34,7 @@ add_library(${PLUGIN} SHARED ${SRCS} ${MOC})
 target_include_directories(${PLUGIN} PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/../../../include)
 target_include_directories(${PLUGIN} PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/../../../src)
 #target_include_directories(${PLUGIN} PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/../../../)
-target_include_directories(${PLUGIN} PRIVATE ${CMAKE_CURRENT_BINARY_DIR}/../../) # pick generated config.h
+target_include_directories(${PLUGIN} PRIVATE ${CMAKE_CURRENT_BINARY_DIR}/../../include) # pick generated config.h
 
 target_link_libraries(${PLUGIN} Qt5::Widgets)
 target_link_libraries(${PLUGIN} Qt5::Core)
