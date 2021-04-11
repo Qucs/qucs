@@ -8,25 +8,39 @@ misc plugins: wip
 legacy plugins: wip
 module main();
 EDD_1 #(.Type(explicit), .Branches(1), .I1(0), .Q1(V1)) D1(_net0, _net1);
-EDD_1 #(.Type(explicit), .Branches(1), .I1(0), .Q1(V1)) D2(_net2, _net3);
-EDD_2 #(.Type(explicit), .Branches(1), .I1(0), .Q1(V1*2)) D3(_net4, _net5);
+EDD_1 #(.Type(explicit), .Branches(1), .I1(0), .Q1(V1)) D2(_net1, _net2);
+EDD_2 #(.Type(explicit), .Branches(1), .I1(0), .Q1(V1*2)) D3(_net2, _net3);
+EDD_3 #(.Type(explicit), .Branches(2), .I1(0), .Q1(V1), .I2(1), .Q2(YY)) D4(_net4, _net5, _net6, _net7);
+EDD_3 #(.Type(explicit), .Branches(2), .I1(0), .Q1(V1), .I2(1), .Q2(YY)) D5(_net8, _net4, _net9, _net6);
 endmodule // main
 
 // paramset EDD_1
 // paramset EDD_2
+// paramset EDD_3
 # sckt main
 
 
-# 9
+# 15
 EDD:D1 _net0 _net1 Type="explicit" Branches="1"  I1="D1.I1" Q1="D1.Q1"
   Eqn:EqnD1I1 D1.I1="0" Export="no"
   Eqn:EqnD1Q1 D1.Q1="V1" Export="no"
-EDD:D2 _net2 _net3 Type="explicit" Branches="1"  I1="D2.I1" Q1="D2.Q1"
+EDD:D2 _net1 _net2 Type="explicit" Branches="1"  I1="D2.I1" Q1="D2.Q1"
   Eqn:EqnD2I1 D2.I1="0" Export="no"
   Eqn:EqnD2Q1 D2.Q1="V1" Export="no"
-EDD:D3 _net4 _net5 Type="explicit" Branches="1"  I1="D3.I1" Q1="D3.Q1"
+EDD:D3 _net2 _net3 Type="explicit" Branches="1"  I1="D3.I1" Q1="D3.Q1"
   Eqn:EqnD3I1 D3.I1="0" Export="no"
   Eqn:EqnD3Q1 D3.Q1="V1*2" Export="no"
+EDD:D4 _net4 _net5 _net6 _net7 Type="explicit" Branches="2"  I1="D4.I1" Q1="D4.Q1" I2="D4.I2" Q2="D4.Q2"
+  Eqn:EqnD4I1 D4.I1="0" Export="no"
+  Eqn:EqnD4Q1 D4.Q1="V1" Export="no"
+  Eqn:EqnD4I2 D4.I2="1" Export="no"
+  Eqn:EqnD4Q2 D4.Q2="YY" Export="no"
+EDD:D5 _net8 _net4 _net9 _net6 Type="explicit" Branches="2"  I1="D5.I1" Q1="D5.Q1" I2="D5.I2" Q2="D5.Q2"
+  Eqn:EqnD5I1 D5.I1="0" Export="no"
+  Eqn:EqnD5Q1 D5.Q1="V1" Export="no"
+  Eqn:EqnD5I2 D5.I2="1" Export="no"
+  Eqn:EqnD5Q2 D5.Q2="YY" Export="no"
 .Def:End
 # paramset EDD_1
 # paramset EDD_2
+# paramset EDD_3

@@ -7,9 +7,11 @@ load plugins/verilog
 options lang=leg_sch
 
 <Components>
-<EDD_ D1 1 10 140 -57 -113 1 2 "explicit" 0 "1" 0 "0" 1 "V1" 1>
-<EDD_ D2 1 20 140 -57 -113 1 2 "explicit" 0 "1" 0 "0" 1 "V1" 1>
-<EDD_ D3 1 30 140 -57 -113 1 2 "explicit" 0 "1" 0 "0" 1 "V1*2" 1>
+<EDD_ D1 1 0 100 -5 -11 0 0 "explicit" 0 "1" 0 "0" 1 "V1" 1>
+<EDD_ D2 1 60 100 -5 -11 0 0 "explicit" 0 "1" 0 "0" 1 "V1" 1>
+<EDD_ D3 1 120 100 -5 -11 0 0 "explicit" 0 "1" 0 "0" 1 "V1*2" 1>
+<EDD_ D4 1 200 140 -5 -11 0 1 "explicit" 0 "2" 0 "0" 1 "V1" 1 "1" 1 "YY" 1>
+<EDD_ D5 1 200 200 -5 -11 0 1 "explicit" 0 "2" 0 "0" 1 "V1" 1 "1" 1 "YY" 1>
 </Components>
 
 options lang=verilog_nl

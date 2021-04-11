@@ -32,6 +32,7 @@ using qucs::Model;
 using qucs::FactorySymbol;
 using qucs::symbol_dispatcher;
 using qucs::CommonParamlist;
+using qucs::ViewPainter;
 static int _modelcounter;// factory?
 /*--------------------------------------------------------------------------*/
 class EDD : public FactorySymbol {
@@ -47,6 +48,21 @@ public:
 
 private: // Symbol
 	std::string dev_type() const override{ return "EDD";}
+	void paint(ViewPainter* p) const override{
+		if(auto s=dynamic_cast<Symbol const*>(_painting)){
+			return s->paint(p);
+		}else{ untested();
+			incomplete();
+		}
+	}
+	rect_t bounding_rect() const override{
+		if(auto s=dynamic_cast<Symbol const*>(_painting)){
+			return s->bounding_rect();
+		}else{ untested();
+			incomplete();
+			return rect_t(0,0,0,0);
+		}
+	}
 	pos_t portPosition(index_t i) const override{
 		if(auto s=dynamic_cast<Symbol const*>(_painting)){
 			// BUG. ask CommonSubckt?
