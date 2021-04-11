@@ -49,7 +49,6 @@ CPP_SRC = \
 	port.cpp \
 	printerwriter.cpp \
 	project_view.cpp \
-	qucs_actions.cpp \
 	qucs_app.cpp \
 	qucs.cpp \
 	qucsdoc.cpp \
