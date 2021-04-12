@@ -44,7 +44,7 @@ public:
 	}
 	EDD(EDD const&);
 	~EDD() {};
-	Element* clone() const{ return new EDD(*this); }
+	Component* clone() const{ return new EDD(*this); }
 
 private: // Symbol
 	std::string dev_type() const override{ return "EDD";}
@@ -340,8 +340,8 @@ void EDD::init(Element const* pp)
 	assert(pp);
 	auto proto = dynamic_cast<Component const*>(pp);
 	assert(proto);
-	ElementList const* ps = proto->scope();
-	assert(ps); // won't work for Components.
+//	ElementList const* ps = proto->scope();
+//	assert(ps); // won't work for Components.
 
 //	_ports.resize(proto->numPorts());
 
@@ -372,6 +372,13 @@ public:
 
 private:
 	Element* clone()const override {return new EDDModel(*this);}
+//	ElementList* scope(){
+//		if(_component_proto){
+//			return _component_proto->scope();
+//		}else{
+//			return nullptr;
+//		}
+//	}
 	bool is_valid(const Component* c) const override{
 		assert(_component_proto);
 		auto cp = dynamic_cast<Component const*>(_component_proto);
@@ -441,9 +448,9 @@ Component const* EDD::new_proto()
 		assert(os);
 		assert(os->scope());
 
-		// Model* m = new EDDModel(this); // qucs::model_dispatcher.clone("EDD");
-		Component* s = qucs::device_dispatcher.clone("subckt_proto");
+		Component* s = clone(); // qucs::device_dispatcher.clone("subckt_proto");
 		assert(s);
+		assert(s->common() == common());
 
 		std::string new_type = "EDD_" + std::to_string(++_modelcounter);
 		s->set_label(new_type);
@@ -453,30 +460,6 @@ Component const* EDD::new_proto()
 		// fresh instance, use mutable.
 		auto mc = s->mutable_common();
 
-#if 1
-		// BUG: just reuse/copy common?
-		auto e = EDD::param_count() - common()->param_count();
-		for(index_t i=0; i< param_count(); ++i) {
-			auto n = param_name(i);
-			std::string v;
-			try{
-				v = param_value_by_name(n);
-			}catch(qucs::ExceptionCantFind const&){
-				trace3("BUG cant find", n, v, short_label());
-				unreachable();
-				continue;
-			}
-					
-			assert(n != "");
-			if(n[0] != '$'){
-				trace3("EDD param export ", i, n ,v );
-				mc->set_param_by_name(n, v);
-			}else{
-			}
-	//		auto p = new PARAMETER<double>();
-	//		*p = v; // BUG //
-	   }
-#endif
 		Model* m = new EDDModel(s); // qucs::model_dispatcher.clone("EDD");
 		assert(m->is_valid(this));
 		mc->set_modelname(new_type);
