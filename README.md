@@ -54,18 +54,22 @@ On Debian, install
  qtscript5-dev
  libqt5svg5-dev
 
-For development purposes (i.e. in order to bootstrap) autotools are required.
+For development purposes, autotools are required to bootstrap, see below.
 
 ## Installation
 
-Unpack the distribution tarball:
+OPTION I: Unpack the distribution tarball.
 
     $ tar xvzf qucs-<version>.tar.gz               (using GNU tar)
     $ gzip -cd qucs-<version>.tar.gz | tar xvf -   (using another tar)
-
-Change into the source directory:
-
     $ cd qucs-<version>
+
+OPTION II: Prepare source from git
+
+    $ git clone $repo_url # github or so.
+    $ cd qucs
+    $ ./bootstrap
+    $ [..]
 
 Configure and build binaries for your system.
 
@@ -74,15 +78,16 @@ Configure and build binaries for your system.
     $ ../configure
     $ make
 
+Run tests (optional).
+
+    $ make check
+
 Install Qucs (optional).
 
     $ make install
 
 You need write permissions to the prefix of the installation (default:
 /usr/local). See INSTALL for further details.
-
-Please note:  Users of the FreeBSD OS may use a GNU make (probably gmake)
-to compile and install the package.
 
 ## use CMake instead
 
