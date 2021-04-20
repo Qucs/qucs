@@ -98,6 +98,8 @@ class Doc;
 class DocTabWidget;
 class MessageDock;
 
+class MenuSlots;
+
 class App : public QMainWindow {
 	Q_OBJECT
 public:
@@ -265,7 +267,6 @@ private slots:
   void slotViewOctaveDock(bool); // toggle the dock window
   void slotToggleOctave(bool);
   void slotToggleDock(bool);
-  void slotHelpAbout();     // shows an about dialog
 
 public: // why?
   void initView();
@@ -371,18 +372,10 @@ public slots: // obsolete slots
   void slotEditCopy();        // put the marked object into the clipboard
   void slotEditPaste();   // paste the clipboard into the document
   void slotEditDelete();  // delete the selected items
-  void slotEscape();
-//  void slotSelect();
-//  void slotEditActivate();
-//  void slotMoveText();    // move property text of components
   void slotZoomIn();
   void slotEditUndo();    // makes the last operation undone
   void slotEditRedo();    // makes the last undo undone
   void slotEditFind();    // searches for a piece of text
-//  void slotSelectAll();
-//  void slotSelectMarker();
-//  void slotShowLastMsg();
-//  void slotShowLastNetlist();
 
   void slotCallEditor();
   void slotCallFilter();
@@ -429,6 +422,9 @@ private:
   friend class SaveDialog;
 public: // BUG
   QString lastExportFilename;
+
+private:
+  // MenuSlots* _menuSlots{nullptr};
 }; // App
 
 } // qucs

@@ -80,7 +80,6 @@ QMOCHEADERS = \
 	schematic_scene.h
 
 DIALG_MOCHEADERS = \
-	aboutdialog.h \
 	exportdialog.h \
 	importdialog.h \
 	librarydialog.h \
@@ -126,7 +125,6 @@ HDR2 = \
 
 # plugins? lets see
 DIALOG_SRC = \
-	aboutdialog.cpp \
 	exportdialog.cpp \
 	importdialog.cpp \
 	librarydialog.cpp \

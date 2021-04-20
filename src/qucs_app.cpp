@@ -364,14 +364,6 @@ void App::slotZoomIn()
   qd->actionZoomIn(s);
 }
 // -----------------------------------------------------------------------
-// BUG: why does the schematicDoc not catch key presses??
-void App::slotEscape()
-{
-  incomplete(); // context?!
-  // select->setChecked(true);
-  slotSearchClear();
-}
-// -----------------------------------------------------------------------
 void App::slotEditCut()
 {
   statusBar()->showMessage(tr("Cutting selection..."));
@@ -975,13 +967,6 @@ void App::slotBuildModule()
 }
 
 // ----------------------------------------------------------
-void App::slotHelpAbout()
-{
-  incomplete(); // ask dispatcher
-  // AboutDialog *ad = new AboutDialog(this);
-  // ad->exec();
-}
-
 void App::slotExportSchematic()
 {
   incomplete();

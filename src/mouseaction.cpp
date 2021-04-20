@@ -161,8 +161,7 @@ Doc* MouseAction::doc()
 #include <QGraphicsView>
 QPointF MouseAction::mapToScene(QPoint const& p) const
 {
-	// BUG
-	if(auto s=dynamic_cast<QGraphicsView const*>(this)){ untested();
+	if(auto s=dynamic_cast<QGraphicsView const*>(doc())){ untested();
 		return s->mapToScene(p);
 	}else{
 		assert(false); // for now.

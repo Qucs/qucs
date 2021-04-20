@@ -139,9 +139,20 @@ public:
 	explicit ActionSelect(QObject* parent) : QAction(parent) {itested();
 		setIcon(QIcon(":/bitmaps/pointer.png"));
 		setText(tr("Select"));
+		setShortcut(Qt::Key_Escape);
 		setStatusTip(tr("Activate select mode"));
 		setWhatsThis(tr("Select\n\nActivates select mode"));
 		setCheckable(true);
+	}
+	bool event(QEvent *e) override{ untested();
+		if(auto k=dynamic_cast<QShortcutEvent const*>(e)){ itested();
+			trace1("select escape key?", e->type());
+			setChecked(true);
+			return true;
+		}else{ untested();
+			trace1("evt", e->type());
+			return false;
+		}
 	}
 };
 /*--------------------------------------------------------------------------*/

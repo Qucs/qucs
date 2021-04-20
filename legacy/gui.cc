@@ -12,6 +12,7 @@
  ***************************************************************************/
 
 #include "command.h"
+#include "widget.h"
 #include "module.h"
 #include "qio.h"
 #include "qt_compat.h"
@@ -40,6 +41,7 @@
 #include <QTranslator>
 #include <QVBoxLayout>
 #include <QTreeWidget>
+#include <QDialog>
 
 typedef enum {
     Project = 0,
@@ -47,6 +49,10 @@ typedef enum {
     Components,
     Libraries,
 } TabViewTabs;
+
+//class MenuSlots{
+//	Q_OBJECT;
+//};
 
 namespace qucs {
 /*--------------------------------------------------------------------------*/
@@ -269,6 +275,7 @@ void App::initView()
   }
   readProjects(); // reads all projects and inserts them into the ListBox
 }
+
 void App::initStatusBar()
 {
   // To reserve enough space, insert the longest text and rewrite it afterwards.
@@ -281,6 +288,21 @@ void App::initStatusBar()
 
   statusBar()->showMessage(tr("Ready."), 2000);
 }
+/*--------------------------------------------------------------------------*/
+class EscapeAction : public QAction{
+public:
+	EscapeAction(QWidget* w) : QAction(w) {
+	  setShortcut(Qt::Key_Escape);
+	}
+private:
+	bool event(QEvent *e) override{ untested();
+		incomplete(); // see former App::slotEscape
+		e->setAccepted(false);
+		return false;
+		// select->setChecked(true); // inaccessible.
+		// slotSearchClear();
+	}
+};
 /*--------------------------------------------------------------------------*/
 void App::initActions()
 {itested();
@@ -628,11 +650,11 @@ void App::initActions()
   magMinus->setWhatsThis(tr("Zoom out\n\nZoom out the current view"));
   connect(magMinus, SIGNAL(triggered()), SLOT(slotZoomOut()));
 
-  QAction *escape = new QAction(this);
-  escape->setShortcut(Qt::Key_Escape);
-  connect(escape, SIGNAL(triggered()), SLOT(slotEscape()));
+#if 0 // does not work.
+  QAction *escape = new EscapeAction(this);
+//  connect(escape, SIGNAL(triggered()), SLOT(slotEscape()));
   this->addAction(escape);
-
+#endif
 
   selectMarker = new QAction(tr("Select Markers"), this);
   selectMarker->setShortcut(Qt::CTRL+Qt::SHIFT+Qt::Key_M);
@@ -780,16 +802,27 @@ void App::initActions()
   helpOnline->setWhatsThis(tr("Qucs-help\n\nOpen help website in the default browser."));
   connect(helpOnline, SIGNAL(triggered()), SLOT(slotHelpOnline()));
 
+  // does not work (yet?)
+//  if(!_menuSlots){
+//	  _menuSlots = new MenuSlots(this);
+//  }else{
+//  }
+//
+  Widget* w = widget_dispatcher.clone("AboutDialog"); // clone?!
+  auto aboutdialog = prechecked_cast<QDialog*>(w);
+  assert(aboutdialog);
+
   helpAboutApp = new QAction(tr("&About Qucs..."), this);
   helpAboutApp->setStatusTip(tr("About the application"));
   helpAboutApp->setWhatsThis(tr("About\n\nAbout the application"));
-  connect(helpAboutApp, SIGNAL(triggered()), SLOT(slotHelpAbout()));
+  connect(helpAboutApp, &QAction::triggered, aboutdialog, &QDialog::show);
 
   helpAboutQt = new QAction(tr("About Qt..."), this);
   helpAboutQt->setStatusTip(tr("About Qt"));
   helpAboutQt->setWhatsThis(tr("About Qt\n\nAbout Qt"));
   connect(helpAboutQt, SIGNAL(triggered()), qApp, SLOT(aboutQt()));
 }
+
 void App::initToolBar()
 {
 	fileToolbar = new QToolBar(tr("File"), this);

@@ -4,6 +4,7 @@ TARGET = gui
 PLUGIN_SRC = \
 	syntax.cpp \
 	schematic_action.cpp \
+	aboutdialog.hqt \
 	diagramdialog.hqt \
 	textdoc.hqt \
 	taskeltdlg.hqt \

@@ -1,13 +1,10 @@
-/*
- * aboutdialog.cpp - customary about dialog showing various info
- *
- * Copyright (C) 2015-2020, Qucs team (see AUTHORS file)
+/* Copyright (C) 2015-2020, Qucs team (see AUTHORS file)
  *
  * This file is part of Qucs
  *
  * Qucs is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation; either version 2, or (at your option)
+ * the Free Software Foundation; either version 3, or (at your option)
  * any later version.
  *
  * This software is distributed in the hope that it will be useful,
@@ -20,10 +17,7 @@
  *
  */
 
-/*!
- * \file aboutdialog.cpp
- * \brief Implementation of the About dialog
- */
+// an About dialog
 
 #include <array>
 #include <algorithm>
@@ -35,7 +29,8 @@
 #ifdef HAVE_CONFIG_H
 # include <config.h>
 #endif
-#include "aboutdialog.h"
+#include "qucs_globals.h"
+#include "widget.h"
 
 #include <QObject>
 #include <QTabWidget>
@@ -46,6 +41,56 @@
 #include <QPushButton>
 #include <QApplication>
 #include <QDebug>
+#include <QDialog>
+#include <QVBoxLayout>
+
+#include <random>
+#include <array>
+
+
+class QString;
+class QTextBrowser;
+
+namespace{
+using qucs::Widget;
+
+class AboutDialog : public QDialog, public Widget {
+   Q_OBJECT
+
+protected:
+	AboutDialog(AboutDialog const& x) : QDialog(nullptr), Widget(x) { untested(); }
+public:
+	AboutDialog(QWidget *parent = 0);
+	Widget* clone() const{ untested(); return new AboutDialog(*this); }
+
+protected:
+  bool eventFilter(QObject *obj, QEvent *ev);
+
+private:
+  void setAuthorsText(void);
+  void setTrText(void);
+
+  std::array<QString, 2> currAuths; // current Qucs authors
+  std::array<QString, 20> prevDevs; // previous Qucs developers
+  std::array<QString, 18> trAuths; // Qucs translators
+
+//  QVBoxLayout *all;
+	QTextBrowser* authorsBrowser;
+	QTextBrowser* trBrowser;
+
+  int prevTab; // previously selected tab
+
+  std::mt19937 rng {std::random_device{}()}; // random number generator
+
+public slots:
+  void currentChangedSlot(int index); // tab selection changed
+
+};
+
+class AboutDialog_ : public Widget{
+  Widget* clone() const{ untested(); return new AboutDialog(); }
+}d0;
+static Dispatcher<Widget>::INSTALL p1(&qucs::widget_dispatcher, "AboutDialog", &d0);
 
 
 AboutDialog::AboutDialog(QWidget *parent)
@@ -106,7 +151,7 @@ AboutDialog::AboutDialog(QWidget *parent)
 
   setWindowTitle(tr("About Qucs"));
 
-  all = new QVBoxLayout(this);
+  auto all = new QVBoxLayout(this);
   //all->setContentsMargins(0,0,0,0);
   //all->setSpacing(0);
 
@@ -149,10 +194,10 @@ AboutDialog::AboutDialog(QWidget *parent)
   all->addWidget(t);
   connect(t, SIGNAL(currentChanged(int)), this, SLOT(currentChangedSlot(int)));
 
-  authorsBrowser = new QTextBrowser;
+  authorsBrowser = new QTextBrowser(this);
   // the Ctrl-Wheel event we would like to filter is handled by the viewport
   authorsBrowser->viewport()->installEventFilter(this);
-  trBrowser = new QTextBrowser;
+  trBrowser = new QTextBrowser(this);
   trBrowser->viewport()->installEventFilter(this);
 
   QString supportText;
@@ -173,7 +218,7 @@ AboutDialog::AboutDialog(QWidget *parent)
   supportBrowser->setHtml(supportText);
 
   QString licenseText;
-  licenseText = "Qucs is free software; you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation; either version 2, or (at your option) any later version.<br/><br/>This software is distributed in the hope that it will be useful,but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License for more details..<br/><br/> You should have received a copy of the GNU General Public License along with Qucs, see the file COPYING. If not see <a href='http://www.gnu.org/licenses/'>http://www.gnu.org/licenses/</a> or write to the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,Boston, MA 02110-1301, USA.";
+  licenseText = "Qucs is free software; you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation; either version 3, or (at your option) any later version.<br/><br/>This software is distributed in the hope that it will be useful,but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License for more details..<br/><br/> You should have received a copy of the GNU General Public License along with Qucs, see the file COPYING. If not see <a href='http://www.gnu.org/licenses/'>http://www.gnu.org/licenses/</a> or write to the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,Boston, MA 02110-1301, USA.";
 
   QTextBrowser *licenseBrowser = new QTextBrowser;
   licenseBrowser->viewport()->installEventFilter(this);
@@ -255,4 +300,4 @@ bool AboutDialog::eventFilter(QObject *obj, QEvent *event) {
   }
 }
 
-
+}// namespace
