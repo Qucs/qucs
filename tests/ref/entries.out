@@ -26,10 +26,10 @@
   < my_ 1 0 0 -26 15 0 0 "50 Ohm" 1 "26.85" 0 "0.0" 0 "0.0" 0 "26.85" 0 "european" 0>
  #(.R(50 Ohm), .Temp(26.85), .Tc1(0.0), .Tc2(0.0), .Tnom(26.85), .Symbol(european)) my_();
 :my_ netlabel_BUG netlabel_BUG R="50 Ohm" Temp="26.85" Tc1="0.0" Tc2="0.0" Tnom="26.85"
-==============
-  < my_ 1 0 0 -23 12 0 0 "1" 1 "analog" 0>
- #(.Num(1), .Type()) my_();
-:my_ netlabel_BUG netlabel_BUG Num="1" Type=""
+=====scktport=========
+  <Port my_Port 1 0 0 -23 12 0 0 "1" 1 "analog" 0>
+Port #(.Num(1), .Type()) my_Port();
+Port:my_Port netlabel_BUG netlabel_BUG Num="1" Type=""
 =====ideal transmission line=========
   < my_ 1 0 0 -26 20 0 0 "50 Ohm" 1 "1 mm" 1 "0 dB" 0 "26.85" 0>
  #(.Z(50 Ohm), .L(1 mm), .Alpha(0 dB), .Temp(26.85)) my_();

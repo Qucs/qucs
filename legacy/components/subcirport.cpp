@@ -57,6 +57,9 @@ private:
   index_t param_count() const override{
 	  return Symbol::param_count() + num_component_params + 2;
   }
+  std::string dev_type() const override{
+	  return "Port";
+  }
 
 protected:
   QString netlist() const;
@@ -72,6 +75,7 @@ Module::INSTALL pp("lumped", &D);
 
 SubCirPort::SubCirPort() : Component(), _pos(1)
 {
+	set_label("scktport");
   info(Name, bitmap_file);
   Type = isComponent;   // both analog and digital
   Description = QObject::tr("port of a subcircuit");
@@ -94,6 +98,8 @@ SubCirPort::SubCirPort() : Component(), _pos(1)
 // -------------------------------------------------------
 void SubCirPort::set_port_by_index(index_t i, std::string const& value)
 {
+	trace3("port::spbi", label(), i, value);
+
    if(value==""){
 		incomplete();
 	}else{
@@ -141,7 +147,7 @@ void SubCirPort::set_port_by_index(index_t i, std::string const& value)
 	}else if(so){
 		assert(scope());
 		assert(scope()==so->scope());
-		trace2("port::spbi", pos, label());
+		trace3("port::spbi", pos, label(), value);
 		so->set_port_by_index(pos, label());
 
 		Symbol::set_port_by_index(0, label());

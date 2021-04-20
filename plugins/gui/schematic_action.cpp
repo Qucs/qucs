@@ -528,6 +528,7 @@ QUndoCommand* MouseActionNewElement::makeNew(QEvent* ev)
 	assert(element(_gfx));
 	auto elt = element(_gfx);
 	assert(elt);
+	trace1("got new", elt->label());
 
 	if(auto se=dynamic_cast<QGraphicsSceneMouseEvent*>(ev)){ untested();
 		QPointF pos = se->scenePos();
