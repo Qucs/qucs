@@ -57,7 +57,6 @@ CPP_SRC = \
 	schematic_dialog.cpp \
 	schematic_edit.cpp \
 	schematic_element.cpp \
-	schematic_file.cpp \
 	schematic_scene.cpp \
 	schematic_symbol.cpp \
 	sckt_proto.cpp \
@@ -76,8 +75,7 @@ QMOCHEADERS = \
 	mouseaction.h \
 	project_view.h \
 	qucs_app.h \
-	qucs_tabs.h \
-	schematic_scene.h
+	qucs_tabs.h
 
 DIALG_MOCHEADERS = \
 	exportdialog.h \

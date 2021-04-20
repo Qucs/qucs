@@ -164,10 +164,6 @@ public slots:
   void slotSearchComponent(const QString &);
   void slotSearchClear();
 
-  void slotEditElement();
-  void slotPowerMatching();
-  void slot2PortMatching();
-
   // for menu that appears by right click in content ListView
   void slotShowContentMenu(const QPoint &);
 
@@ -295,9 +291,7 @@ public:
           *fileSaveAll, *fileClose, *fileCloseOthers, *fileCloseAllLeft, *fileCloseAllRight,
           *fileCloseAll, *fileExamples, *fileSettings, *filePrint, *fileQuit,
           *projNew, *projOpen, *projDel, *projClose, *applSettings, *refreshSchPath;
-//          *editCut, *editCopy, *magAll, *magOne, *magMinus, *filePrintFit,
-//          *symEdit, *intoH, *popH, *simulate, *dpl_sch,
-//
+
 	QAction *undo, *redo;
 	QAction *popH;
 	// , *dcbias;

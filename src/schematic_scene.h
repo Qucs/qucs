@@ -49,9 +49,7 @@ using qucs::ElementGraphics;
 
 // TODO: move to gui?
 
-class SchematicScene : public QGraphicsScene
-{
-Q_OBJECT
+class SchematicScene : public QGraphicsScene {
 public:
   SchematicScene (QObject* parent);
   virtual ~SchematicScene ();

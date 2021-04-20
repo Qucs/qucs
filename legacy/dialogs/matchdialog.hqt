@@ -2207,4 +2207,117 @@ void MatchDialog::SchematicParser(QString laddercode, int &x_pos, double Freq,
 
 } // namespace
 
+#if 0 // TODO?
+void App::slotPowerMatching()
+{ untested();
+
+	// not here.
+
+  if(!view->focusElement) return;
+  if(view->focusElement->Type != isMarker) return;
+  Marker *pm = (Marker*)view->focusElement;
+
+//  double Z0 = 50.0;
+  QString Var = pm->pGraph->Var;
+  double Imag = pm->powImag();
+  if(Var == "Sopt")  // noise matching ?
+    Imag *= -1.0;
+
+  MatchDialog *Dia = new MatchDialog(this);
+//  Dia->Ref1Edit->setText(QString::number(Z0));
+  Dia->setS11LineEdits(pm->powReal(), Imag);
+  Dia->setFrequency(pm->powFreq());
+  Dia->setTwoPortMatch(false); // will also cause the corresponding impedance LineEdit to be updated
+
+  slotToPage();
+  if(Dia->exec() != QDialog::Accepted)
+    return;
+}
+
+// -----------------------------------------------------------
+void App::slot2PortMatching()
+{ untested();
+	// not here
+  if(!view->focusElement) return;
+  if(view->focusElement->Type != isMarker) return;
+  Marker *pm = (Marker*)view->focusElement;
+
+  QString DataSet;
+  SchematicDoc *Doc = (SchematicDoc*)DocumentTab->currentWidget();
+  int z = pm->pGraph->Var.indexOf(':');
+  if(z <= 0)  DataSet = Doc->DataSet;
+  else  DataSet = pm->pGraph->Var.mid(z+1);
+  double Freq = pm->powFreq();
+
+  QFileInfo Info(Doc->DocName);
+  DataSet = Info.path()+QDir::separator()+DataSet;
+
+  Diagram *Diag = new Diagram(); //?! which one?
+
+  // FIXME: use normal Diagrams.
+  Graph *pg = new Graph(Diag, "S[1,1]");
+  Diag->Graphs.append(pg);
+  if(!pg->loadDatFile(DataSet)) { untested();
+    QMessageBox::critical(0, tr("Error"), tr("Could not load S[1,1]."));
+    return;
+  }
+
+  pg = new Graph(Diag, "S[1,2]");
+  Diag->Graphs.append(pg);
+  if(!pg->loadDatFile(DataSet)) { untested();
+    QMessageBox::critical(0, tr("Error"), tr("Could not load S[1,2]."));
+    return;
+  }
+
+  pg = new Graph(Diag, "S[2,1]");
+  Diag->Graphs.append(pg);
+  if(!pg->loadDatFile(DataSet)) { untested();
+    QMessageBox::critical(0, tr("Error"), tr("Could not load S[2,1]."));
+    return;
+  }
+
+  pg = new Graph(Diag, "S[2,2]");
+  Diag->Graphs.append(pg);
+  if(!pg->loadDatFile(DataSet)) { untested();
+    QMessageBox::critical(0, tr("Error"), tr("Could not load S[2,2]."));
+    return;
+  }
+
+  DataX const *Data = Diag->Graphs.first()->axis(0);
+  if(Data->Var != "frequency") { untested();
+    QMessageBox::critical(0, tr("Error"), tr("Wrong dependency!"));
+    return;
+  }
+
+  double *Value = Data->Points;
+  // search for values for chosen frequency
+  for(z=0; z<Data->count; z++)
+    if(*(Value++) == Freq) break;
+
+  // get S-parameters
+  double S11real = *(Diag->Graphs.at(0)->cPointsY + 2*z);
+  double S11imag = *(Diag->Graphs.at(0)->cPointsY + 2*z + 1);
+  double S12real = *(Diag->Graphs.at(1)->cPointsY + 2*z);
+  double S12imag = *(Diag->Graphs.at(1)->cPointsY + 2*z + 1);
+  double S21real = *(Diag->Graphs.at(2)->cPointsY + 2*z);
+  double S21imag = *(Diag->Graphs.at(2)->cPointsY + 2*z + 1);
+  double S22real = *(Diag->Graphs.at(3)->cPointsY + 2*z);
+  double S22imag = *(Diag->Graphs.at(3)->cPointsY + 2*z + 1);
+  delete Diag;
+
+  MatchDialog *Dia = new MatchDialog(this);
+  Dia->setTwoPortMatch(true);
+  Dia->setFrequency(Freq);
+  Dia->setS11LineEdits(S11real, S11imag);
+  Dia->setS12LineEdits(S12real, S12imag);
+  Dia->setS21LineEdits(S21real, S21imag);
+  Dia->setS22LineEdits(S22real, S22imag);
+
+  slotToPage();
+  if(Dia->exec() != QDialog::Accepted)
+    return;
+
+}
+#endif
+
 #endif

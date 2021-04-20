@@ -115,9 +115,11 @@ void Symbol::paint(ViewPainter* p) const
 			p->setPen(QPen(Qt::red,3));
 			p->drawEllipse(x-2, y-2, 4, 4);
 		}else if(port(i)->numPorts()==1){itested();
-			unreachable();
-			p->setPen(QPen(Qt::red,3));
-			p->drawEllipse(x-2, y-2, 4, 4);
+			// getting here in ScktPort...
+#ifdef DO_TRACE
+			// p->setPen(QPen(Qt::purple,3));
+			// p->drawEllipse(x-2, y-2, 6, 6);
+#endif
 		}else if(port(i)->numPorts()==2){itested();
 			// dangling port (just this and place)
 			p->setPen(QPen(Qt::red,1));
