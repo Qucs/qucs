@@ -54,3 +54,6 @@ autom4te.cache
 
 # backup
 *~
+
+#temporary helper files
+/CMakeLists.txt

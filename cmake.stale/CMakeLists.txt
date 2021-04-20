@@ -3,6 +3,7 @@
 # (C) 2014 Guilherme Brondani Torri
 #     2020 Martin Marmsoler
 #     2020 Felix Salfelder
+#     2021 Michał Walenciak
 # License: GPLv3+
 
 # TODO
@@ -99,8 +100,8 @@ set(QT_DEBUG TRUE)
 
 add_definitions(${QT_DEFINITIONS} -DQT_DEPRECATED_WARNINGS)
 
-configure_file("${CMAKE_SOURCE_DIR}/config.h.cmake"
-               "${CMAKE_BINARY_DIR}/include/config.h")
+configure_file("${CMAKE_CURRENT_SOURCE_DIR}/config.h.cmake"
+               "${CMAKE_CURRENT_BINARY_DIR}/include/config.h")
 
 add_definitions(-DHAVE_CONFIG_H)
 
@@ -109,8 +110,8 @@ add_definitions(-DQT_MAJOR_VERSION=5)
 
 
 # Process CMakeLists.txt relative to this source file
-add_subdirectory(${CMAKE_SOURCE_DIR}/src)
-add_subdirectory(${CMAKE_SOURCE_DIR}/main)
+add_subdirectory(src)
+add_subdirectory(main)
 #add_subdirectory(${CMAKE_SOURCE_DIR}/bitmaps) no need, added from qrc file
 
 # add_subdirectory(man)

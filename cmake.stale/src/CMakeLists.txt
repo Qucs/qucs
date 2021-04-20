@@ -4,11 +4,12 @@
 # (C) 2014-2021 Guilherme Brondani Torri
 #     2020 Martin Marmsoler
 #     2020 Felix Salfelder
+#     2021 Michał Walenciak
 
 # this is where the library source is.
 set(coreSchematicPath ${CMAKE_CURRENT_SOURCE_DIR}/../../src)
 
-include(${CMAKE_SOURCE_DIR}/readMakeList.txt)
+include(${CMAKE_CURRENT_SOURCE_DIR}/../readMakeList.txt)
 
 #add_subdirectory(${coreSchematicPath}/bitmaps src/bitmaps) #-> added as resources
 #add_subdirectory(${coreSchematicPath}/octave src/octave)
@@ -39,10 +40,10 @@ add_library(coreSchematic OBJECT ${QUCS_SRCS} ${QUCS_RESOURCES} ${QUCS_UI_FILES}
 add_definitions(${QT_DEFINITIONS} -DQT_DEPRECATED_WARNINGS)
 
 # BUG: define once, but where?
+target_include_directories(coreSchematic PUBLIC ${coreSchematicPath})
+target_include_directories(coreSchematic PUBLIC ${coreSchematicPath}/../include)
 target_include_directories(coreSchematic PRIVATE ${CMAKE_CURRENT_BINARY_DIR}/../include)
-target_include_directories(coreSchematic PRIVATE ${coreSchematicPath}/../include)
 target_include_directories(coreSchematic PRIVATE ${coreSchematicPath}/..)
-target_include_directories(coreSchematic PRIVATE ${coreSchematicPath})
 
 # the order of the links is important. At least the libraries without dependencies are added
 # here the Qt ones (https://stackoverflow.com/questions/51994603/cmake-qt5-undefined-reference-to-qprinterqprinterqprinterprintermode)

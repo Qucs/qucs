@@ -86,16 +86,19 @@ to compile and install the package.
 
 ## use CMake instead
 
-(this needs work)
+$ ln -s cmake.stale cmake # for now
 
-$ cd cmake
-$ cmake .
+$ mkdir cmake/build
+$ cd cmake/build
+$ cmake ..
+$ make install # this needs work
 
 or
 
 $ mkdir cb
 $ cd cb
 $ cmake ../cmake
+$ make install # this needs work
 
 ## Getting the latest Git snapshot
 

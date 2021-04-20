@@ -4,6 +4,7 @@
 # (C) 2014-2021 Guilherme Brondani Torri
 #     2020 Martin Marmsoler
 #     2020 Felix Salfelder
+#     2021 Michał Walenciak
 
 #
 # Set up RPATH for the project
@@ -40,11 +41,8 @@ target_link_libraries(qucs Qt5::Svg)
 # why do I need the printersupport?
 #target_link_libraries(qucs Qt5::PrintSupport)
 
-# Don't like to include them all here. TODO: find cleaner method. Included in qucsschematic already. So can it be reused?
-target_include_directories(qucs PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/../../include
- ${CMAKE_CURRENT_SOURCE_DIR}/../../src
- ${CMAKE_CURRENT_BINARY_DIR}
- ${CMAKE_CURRENT_BINARY_DIR}/..
+target_include_directories(qucs PRIVATE
+ ${CMAKE_CURRENT_BINARY_DIR}/../include
  )
 
 # TODO: disentangle
