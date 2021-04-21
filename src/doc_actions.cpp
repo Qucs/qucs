@@ -1651,12 +1651,6 @@ void MouseActions::executeCommand(QUndoCommand* c)
 { untested();
 }
 /* -------------------------------------------------------------------------------- */
-void MouseAction::setCursor(QCursor const& c)
-{ untested();
-	incomplete();
-//   doc()->setCursor(c);
-}
-/* -------------------------------------------------------------------------------- */
 
 // similar to former Schematic::performtoggleaction. but take care of actions,
 // and deal with undoable commands.

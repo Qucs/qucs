@@ -230,7 +230,6 @@ public:
 				{ // BUG: not here/one call or do later?
 					ctx->addItem(eg);
 					eg->setVisible(false);
-//					ctx.takeOwnership(e);
 				}
 
 				qInsert(eg);
@@ -447,8 +446,10 @@ QUndoCommand* MouseActionWire::press1(QGraphicsSceneMouseEvent* ev)
 
 	assert(_gfx.size());
 	ElementGraphics* cur = _gfx.back();
+	assert(cur);
 	Element* ee = element(cur);
 	auto e = prechecked_cast<Symbol*>(ee);
+	assert(e);
 
 	e->set_param_by_name("x0", std::to_string(fX));
 	e->set_param_by_name("y0", std::to_string(fY));
@@ -462,29 +463,21 @@ QUndoCommand* MouseActionWire::press1(QGraphicsSceneMouseEvent* ev)
 	}else{ untested();
 	}
 
-	//Doc->PostPaintEvent (_DotLine);
-	//Doc->PostPaintEvent (_NotRop);
-	//if(drawn) { untested();
+	if(cur->isVisible()){ untested();
+	}else{ untested();
+		//why?
+		cur->show();
+	}
+
 #if 0  //ALYS - it draws some garbage, not deleted because of possible questions
 	Doc->PostPaintEvent (_Line, 0, MAy3, MAx2, MAy3); // erase old mouse cross
 	Doc->PostPaintEvent (_Line, MAx3, 0, MAx3, MAy2);
 #endif
-	//}
-	// setDrawn(false);
 
 	//   Doc->snapToGrid(MAx3, MAy3);
 	//
-	//ALYS - draw aiming cross
-	/// \todo paintAim(Doc,MAx3, MAy3);
-	//#######################
-
 	//  formerAction = 0; // keep wire action active after first wire finished
 	_phase = 2;
-	//  QucsMain->MouseMoveAction = &MouseActions::MMoveWire2;
-	//  QucsMain->MousePressAction = &MouseActions::MPressWire2;
-	// Double-click action is set in "MMoveWire2" to not initiate it
-	// during "Wire1" actions.
-	//  Doc->viewport()->update();
 	return nullptr;
 }
 /*--------------------------------------------------------------------------*/
@@ -544,9 +537,6 @@ QUndoCommand* MouseActionWire::press2(QGraphicsSceneMouseEvent* ev)
 		sceneAddItem(cur); // show, does not attach.
 	}
 
-	/// \todo paintAim(Doc,MAx2,MAy2); //ALYS - added missed aiming cross
-		/// \todo document right mouse button changes the wire corner
-	// Doc->viewport()->update();
 	return c;
 }
 /*--------------------------------------------------------------------------*/

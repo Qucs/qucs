@@ -167,7 +167,12 @@ QPointF MouseAction::mapToScene(QPoint const& p) const
 		assert(false); // for now.
 	}
 }
-
+/* -------------------------------------------------------------------------------- */
+void MouseAction::setCursor(QCursor const& c)
+{ itested();
+   view()->setCursor(c);
+}
+/* -------------------------------------------------------------------------------- */
 void MouseAction::updateViewport()
 {itested();
 	assert(ctx());
