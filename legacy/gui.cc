@@ -809,7 +809,7 @@ void App::initActions()
 //  }
 //
   Widget* w = widget_dispatcher.clone("AboutDialog"); // clone?!
-  auto aboutdialog = prechecked_cast<QDialog*>(w);
+  auto aboutdialog = dynamic_cast<QDialog*>(w);
   assert(aboutdialog);
 
   helpAboutApp = new QAction(tr("&About Qucs..."), this);
