@@ -1138,12 +1138,9 @@ class g: public Command{
 		QucsMain->initToolBar();
 		QucsMain->initStatusBar();
 
-		// creates a document called "untitled"
+		// create a document called "untitled"
 		QucsMain->DocumentTab->createEmptySchematic("");
-
-		//  select->setChecked(true);  // switch on the 'select' action
 		QucsMain->switchSchematicDoc(true);  // "untitled" document is schematic
-
 		QucsMain->lastExportFilename = QDir::homePath() + QDir::separator() + "export.png";
 
 #if 0
@@ -1169,8 +1166,13 @@ class g: public Command{
 
 		QucsMain->show();
 		auto fn = QString_(filename);
-		trace1("open", fn);
-		QucsMain->openFileAtStartup(fn);
+		trace1("startgui open", fn);
+		{ // QucsMain->openFileAtStartup(fn);
+			QFileInfo Info(fn);
+			QucsSettings.QucsWorkDir = Info.absoluteDir().absolutePath().toStdString(); // ?
+			QString p = QString_(QucsSettings.QucsWorkDir) + QDir::separator() + Info.fileName();
+			QucsMain->gotoPage(p);
+		}
 		int result = a.exec();
 		exit(result); // FIXME: throw exception_exit or so
 		//saveApplSettings(QucsMain);

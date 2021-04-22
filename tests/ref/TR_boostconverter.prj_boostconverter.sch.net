@@ -1,6 +1,6 @@
 # Qucs
 ## declarations 1
-# unresolved symbol wire
+## wire
 ## declarations end
 
 L:L1 _net4 dio L="47uH" I="0"

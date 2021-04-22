@@ -134,7 +134,7 @@ private:
 	std::string _netname;
 	bool _has_netname;
 }w;
-static Dispatcher<Symbol>::INSTALL p(&qucs::symbol_dispatcher, "Wire", &w);
+static Dispatcher<Symbol>::INSTALL p(&qucs::symbol_dispatcher, "Wire|wire", &w);
 /*--------------------------------------------------------------------------*/
 /*--------------------------------------------------------------------------*/
 Wire::Wire() : Symbol(),

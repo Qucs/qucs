@@ -1,6 +1,6 @@
 # Qucs
 ## declarations 1
-# unresolved symbol wire
+## wire
 ## declarations end
 
 C:C1 gnd P1 C="39.01pF" V=""

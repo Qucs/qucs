@@ -34,22 +34,6 @@ void App::clearWorkToolbar()
 	_docToolBar->clear();
 }
 
-// obsolete.
-// void App::addWorkToolbarAction(QAction* a)
-// { untested();
-// 	assert(_docToolBar);
-// 	_docToolBar->addAction(a);
-// }
-
-// why "AtStartup?!"
-void App::openFileAtStartup(QString const& arg)
-{
-      QFileInfo Info(arg);
-      QucsSettings.QucsWorkDir = Info.absoluteDir().absolutePath().toStdString(); // ?
-      QString p = QString_(QucsSettings.QucsWorkDir) + QDir::separator() + Info.fileName();
-      gotoPage(p);
-}
-
 // Change to the document "Name". If already open then it goes to it
 // directly, otherwise it loads it.
 // this is used "atStartup"...
@@ -68,13 +52,14 @@ bool App::gotoPage(const QString& Name)
 	}else{itested();
 	}
 
-#if 0
+#if 0 // TODO.
 	DocumentTab->load(Name);
 #else
 
 	QFileInfo Info(Name);
 	bool is_schematic = false;
 
+	// BUG duplicate, schematic_doc.hqt
 	std::string suffix = "." + Info.suffix().toStdString();
 	for(auto i : language_dispatcher){
 		trace3("a schematic?", i.first, i.second->short_label(), suffix);
@@ -85,7 +70,7 @@ bool App::gotoPage(const QString& Name)
 	}
 
 	// TODO. open schematic associated with document?
-	if(is_schematic) {itested();
+	if(is_schematic) {untested();
 		d = DocumentTab->createEmptySchematic(Name);
 	}else if(Info.suffix() == "sym") { untested();
 		incomplete();
@@ -93,24 +78,28 @@ bool App::gotoPage(const QString& Name)
 		d = DocumentTab->createEmptyTextDoc(Name);
 	}
 
-	if(!d->load()) {untested();
+	try{ untested();
+		d->load();
+	}catch(qucs::Exception const&){ untested();
 		delete d;
 		DocumentTab->setCurrentIndex(No);
 		// view->drawn = false;
-		return false;
-	}else{itested();
-		slotChangeView(DocumentTab->current()); //?
-
-		// if only an untitled document was open -> close it
-		if(!getDoc(0)->docName().isEmpty()){ untested();
-		}else if(!getDoc(0)->DocChanged){itested();
-			delete DocumentTab->widget(0);
-		}else{ untested();
-		}
-
-		//view->drawn = false;
-		return true;
+		incomplete();
+		throw;
+	//	return false;
 	}
+
+	slotChangeView(DocumentTab->current()); //?
+
+	// if only an untitled document was open -> close it
+	if(!getDoc(0)->docName().isEmpty()){ untested();
+	}else if(!getDoc(0)->DocChanged){itested();
+		delete DocumentTab->widget(0);
+	}else{ untested();
+	}
+
+	//view->drawn = false;
+	return true;
 #endif
 }
 
@@ -824,9 +813,10 @@ void App::slotExtractPackage()
 void App::slotOpenRecent()
 {
   QAction *action = qobject_cast<QAction *>(sender());
-  if (action) {
+  if (action) { untested();
     gotoPage(action->data().toString());
     updateRecentFilesList(action->data().toString());
+  }else{ untested();
   }
 }
 

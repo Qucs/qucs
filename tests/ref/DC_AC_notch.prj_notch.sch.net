@@ -1,6 +1,6 @@
 # Qucs
 ## declarations 1
-# unresolved symbol wire
+## wire
 ## declarations end
 
 C:C1 _net2 _net15 C="1.01u" V=""

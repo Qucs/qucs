@@ -24,6 +24,7 @@ MTEE #(.Subst(Subst1), .W1(1 mm), .W2(1 mm), .W3(2 mm), .MSModel(Hammerstad), .M
 endmodule // RF
 
 module lumped();
+Port #(.Num(1), .Type()) scktport();
 TLIN #(.Z(50 Ohm), .L(1 mm), .Alpha(0 dB), .Temp(26.85)) ideal transmission line();
 endmodule // lumped
 
@@ -47,6 +48,7 @@ MTEE #(.Subst(Subst1), .W1(1 mm), .W2(1 mm), .W3(2 mm), .MSModel(Hammerstad), .M
 endmodule // RF
 
 module lumped();
+Port #(.Num(1), .Type()) scktport();
 TLIN #(.Z(50 Ohm), .L(1 mm), .Alpha(0 dB), .Temp(26.85)) ideal transmission line();
 endmodule // lumped
 

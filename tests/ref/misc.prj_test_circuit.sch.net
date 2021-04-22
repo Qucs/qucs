@@ -6,7 +6,7 @@
 .Def:short_circuit P1 P1
 # 27
 .Def:End
-# unresolved symbol wire
+## wire
 ## declarations end
 
 Vdc:V1 in gnd U="1 V"

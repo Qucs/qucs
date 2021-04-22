@@ -82,7 +82,6 @@ public: // stuff saved from Schematic
 
 private:
 	void detachFromNode(Element* what, Node* from);
-	void removeRef(Element* s) { erase(std::find(begin(), end(), s)); }
 
 public:
 	ElementList& erase(const_iterator what);

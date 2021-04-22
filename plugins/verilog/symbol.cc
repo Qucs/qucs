@@ -72,7 +72,8 @@ public:
 		// if(auto p=dynamic_cast<CommonSymbol const*>(common())){ untested();
 		//   return p->bouning_rect();
 		// }else
-		if(_painting){itested();
+		assert(_painting);
+		if(_painting){untested();
 			return _painting->bounding_rect();
 		}else{ untested();
 			// assert...
@@ -84,7 +85,8 @@ public:
 		// if(auto p=dynamic_cast<CommonSymbol const*>(common())){ untested();
 		//   return p->paint(v);
 		// }else
-		if(_painting){itested();
+		assert(_painting);
+		if(_painting){untested();
 			_painting->paint(v);
 		}else{ untested();
 			// assert...

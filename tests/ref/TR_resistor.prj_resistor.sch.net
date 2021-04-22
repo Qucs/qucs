@@ -1,6 +1,6 @@
 # Qucs
 ## declarations 1
-# unresolved symbol wire
+## wire
 ## declarations end
 
 R:R2 Vout gnd R="50 Ohm" Temp="26.85" Tc1="0.0" Tc2="0.0" Tnom="26.85"
