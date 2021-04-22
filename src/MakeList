@@ -138,4 +138,5 @@ UI_FILES = searchdialog.ui
 RESOURCES = \
 	qucs_.qrc
 
-EXTRA_DIST =
+EXTRA_DIST = \
+	schematic_scene.h

@@ -1,0 +1,10 @@
+# Qucs
+## declarations 1
+## wire
+## declarations end
+
+C:C1 gnd Source C="10 pF" V=""
+R:R1 Source _net9 R="10k" Temp="26.85" Tc1="0.0" Tc2="0.0" Tnom="26.85"
+Vac:V1 Gate gnd U="5 V" f="10 MHz" Phase="0" Theta="0"
+Vac:V3 _net6 gnd U="-5 V" f="10 MHz" Phase="0" Theta="0"
+Vac:V2 Drain _net9 U="5 V" f="10 MHz" Phase="0" Theta="0"

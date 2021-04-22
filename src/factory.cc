@@ -77,12 +77,13 @@ void SymbolFactory::set_dev_type(std::string const& name)
 /*--------------------------------------------------------------------------*/
 static Element* find_recursive(Element* where, std::string const& name)
 {
-	Element* f;
+	Element* f=nullptr;
 	while(where){
 		try{
 			f = where->find_in_my_scope(name);
 			break;
 		}catch(qucs::ExceptionCantFind const&){
+			trace1("owner?", where->short_label());
 			where = where->owner();
 		}
 	}

@@ -102,7 +102,8 @@ Element* ElementList::detach(Element* what)
 		disconnect(c);
 		_cl.erase(std::find(begin(), end(), c));
 	}else{ untested();
-		unreachable();
+		unreachable(); // model?
+		_cl.erase(std::find(begin(), end(), what));
 	}
 
 	what->set_owner(nullptr);
