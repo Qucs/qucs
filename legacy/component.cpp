@@ -1529,6 +1529,23 @@ index_t Component::param_count() const
   return Props.count() + Symbol::param_count() + num_component_params;
 }
 /*--------------------------------------------------------------------------*/
+bool Component::param_is_printable(index_t i) const
+{
+  index_t s = Symbol::param_count();
+  int j = i - (s + num_component_params);
+  if(i < s){ untested();
+    return Symbol::param_is_printable(i);
+  }else if(i==s){
+    return true;
+  }else if(i==s+1){
+    return true;
+  }else if(j<Props.size()){ untested();
+    return true;
+  }else{ untested();
+    return false;
+  }
+}
+/*--------------------------------------------------------------------------*/
 std::string Component::param_value(index_t i) const
 {
   trace2("Component::param_value", short_label(), i);
@@ -1541,18 +1558,23 @@ std::string Component::param_value(index_t i) const
     return std::to_string(tx);
   }else{
     assert(i>=s + num_component_params);
-    i -= (s + num_component_params);
+    int j = i - (s + num_component_params);
 
-    assert( Props.at(i));
-    auto ret = Props.at(i)->value().toStdString();
-    trace3("Component::param_value Props", short_label(), i, ret);
-    return ret;
+    if(j >= Props.size()){
+      return "toobig";
+    }else if(Props.at(j)){
+      auto ret = Props.at(j)->value().toStdString();
+      trace3("Component::param_value Props", short_label(), j, ret);
+      return ret;
+    }else{
+      return "null";
+    }
   }
 }
 /*--------------------------------------------------------------------------*/
 std::string Component::param_name(index_t i) const
 {
-  unsigned s = Symbol::param_count();
+  index_t s = Symbol::param_count();
   if(i<Symbol::param_count()){
     return Symbol::param_name(i);
   }else if(i==s){
@@ -1561,8 +1583,13 @@ std::string Component::param_name(index_t i) const
     return "$ty";
   }else{
     i -= (s + num_component_params);
-    assert( Props.at(i));
-    return Props.at(i)->name().toStdString();
+    trace4("Component::param_name Props", param_count(), short_label(), i, s);
+    if( i<Props.size()){
+      return Props.at(i)->name().toStdString();
+    }else{
+      unreachable();
+      return "unreachable";
+    }
   }
 }
 /*--------------------------------------------------------------------------*/

@@ -224,12 +224,13 @@ void Component::set_param_by_name(std::string const& name, std::string const& v)
   }
 }
 /*--------------------------------------------------------------------------*/
-bool Component::param_is_printable(index_t) const
+bool Component::param_is_printable(index_t i) const
 {
-	return true;
-  //if (has_common()) {
-  //  return common()->param_is_printable(i);
-  //}else{
+  if (has_common()) {
+    return common()->param_is_printable(i);
+  }else{
+	  return true;
+  }
   //  switch (COMPONENT::param_count() - 1 - i) {
   //  case 0:  return value().has_hard_value();
   //  case 1:  return _mfactor.has_hard_value();

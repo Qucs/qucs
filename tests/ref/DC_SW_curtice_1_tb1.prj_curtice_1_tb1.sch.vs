@@ -8,7 +8,7 @@ GND #(.$xposition(380), .$yposition(160), .$vflip(1), .$hflip(1), .$tx(0), .$ty(
 Vdc #(.$xposition(380), .$yposition(120), .$vflip(1), .$hflip(1), .$tx(18), .$ty(18), .U(Vds)) V1(net_380_90, net_380_150);
 GND #(.$xposition(210), .$yposition(160), .$vflip(1), .$hflip(1), .$tx(0), .$ty(0)) anonymous_gnd_hack_2(net_210_160);
 IProbe #(.$xposition(320), .$yposition(60), .$vflip(-1), .$hflip(1), .$tx(-26), .$ty(-26)) Pr1(net_350_60, net_290_60);
-Sub #(.$xposition(210), .$yposition(120), .$vflip(1), .$hflip(1), .wrong_cpn(0), .wrong_cpn(-6), .wrong_cpn(10e10), .wrong_cpn(27), .wrong_cpn(27), .wrong_cpn(10p), .wrong_cpn(1m), .wrong_cpn(1m), .wrong_cpn(1m), .wrong_cpn(1m), .wrong_cpn(1), .wrong_cpn(40m), .wrong_cpn(1e-15), .wrong_cpn(1e-15), .wrong_cpn(1e-15), .wrong_cpn(10f), .wrong_cpn(1.11), .wrong_cpn(300f), .wrong_cpn(300f), .wrong_cpn(300f), .wrong_cpn(3m), .wrong_cpn(0.8), .$ty(20), .$tx(-46), .File(curtice_1.sch)) Curtice1(net_210_160, net_180_120, net_210_80);
+Sub #(.File(curtice_1.sch), .$tx(-46), .$ty(20), .RG(1m), .RD(1m), .RS(1m), .VBR(10e10), .LG(1e-15), .LD(1e-15), .LS(1e-15), .IS(10f), .N(1), .XTI(0), .EG(1.11), .Beta(3m), .Lambda(40m), .VT0(-6), .Temp(27), .Alpha(0.8), .CDS(300f), .TAU(10p), .RIN(1m), .CGS(300f), .CGD(300f), .Tnom(27), .$xposition(210), .$yposition(120), .$vflip(1), .$hflip(1)) Curtice1(net_210_160, net_180_120, net_210_80);
 wire #(.$xposition(380), .$yposition(150), .$vflip(1), .$hflip(1)) noname(net_380_150, net_380_160);
 wire #(.$xposition(380), .$yposition(60), .$vflip(1), .$hflip(1)) noname(net_380_60, net_380_90);
 wire #(.$xposition(210), .$yposition(60), .$vflip(1), .$hflip(1)) noname(net_210_60, net_290_60);

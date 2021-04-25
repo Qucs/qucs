@@ -225,7 +225,7 @@ private: // Symbol
 		assert(common());
 		auto e = EDD::param_count() - common()->param_count();
 		if(i<e){ untested();
-			return true;
+			return false;
 		}else if(i < e + _ports.size() + 2){
 			return true;
 		}else{

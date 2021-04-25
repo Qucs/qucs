@@ -57,6 +57,7 @@ CPP_SRC = \
 	schematic_dialog.cpp \
 	schematic_edit.cpp \
 	schematic_element.cpp \
+	schematic_proto.cc \
 	schematic_scene.cpp \
 	schematic_symbol.cpp \
 	sckt_proto.cpp \

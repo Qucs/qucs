@@ -64,13 +64,14 @@ public:
 
 public: // Parameters
 	virtual index_t param_count()const override;
+	bool param_is_printable(index_t i)const override;
 
-	virtual void set_param_by_name(std::string const& name, std::string const& value) override;
-	virtual void set_param_by_index(index_t i, std::string const&) override;
+	void set_param_by_name(std::string const& name, std::string const& value) override;
+	void set_param_by_index(index_t i, std::string const&) override;
 
-	virtual std::string param_value_by_name(std::string const&s) const override;
-	virtual std::string param_value(index_t i) const override;
-	virtual std::string param_name(index_t i) const override;
+	std::string param_value_by_name(std::string const&s) const override;
+	std::string param_value(index_t i) const override;
+	std::string param_name(index_t i) const override;
 
 	virtual pos_t portPosition(index_t) const = 0;
 

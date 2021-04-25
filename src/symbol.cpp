@@ -156,23 +156,37 @@ Symbol::~Symbol()
 {
 }
 /*--------------------------------------------------------------------------*/
-unsigned Symbol::param_count() const
+index_t Symbol::param_count() const
 {
 	return 4 + Component::param_count(); // xy position hv flip  TODO?  angle mfactor ...
 }
 /*--------------------------------------------------------------------------*/
+bool Symbol::param_is_printable(index_t i) const
+{
+	switch(int(Symbol::param_count()) - 1 - i){
+	case 0:
+	case 1:
+	case 2:
+	case 3:
+		return true;
+	default:
+		return Component::param_is_printable(i);
+	}
+}
+/*--------------------------------------------------------------------------*/
 std::string Symbol::param_value(index_t i) const
 {
-	switch(i){
-	case 0:
-		return std::to_string(cx());
-	case 1:
-		return std::to_string(cy());
-	case 2:
-		return std::to_string(_vflip);
+	switch(int(Symbol::param_count()) - 1 - i){
 	case 3:
+		return std::to_string(cx());
+	case 2:
+		return std::to_string(cy());
+	case 1:
+		return std::to_string(_vflip);
+	case 0:
 		return std::to_string(_hflip);
-	default:
+	default: untested();
+		trace2("fwd", Component::param_count(), i);
 		return Component::param_value(i); // really??
 	}
 }
@@ -180,14 +194,14 @@ std::string Symbol::param_value(index_t i) const
 std::string Symbol::param_name(index_t i) const
 {
 	trace2("Symbol::paramName", label(), i);
-	switch(i){
-	case 0:
-		return "$xposition";
-	case 1:
-		return "$yposition";
-	case 2:
-		return "$vflip";
+	switch(int(Symbol::param_count()) - 1 - i){
 	case 3:
+		return "$xposition";
+	case 2:
+		return "$yposition";
+	case 1:
+		return "$vflip";
+	case 0:
 		return "$hflip";
 	default:
 		return Component::param_name(i);

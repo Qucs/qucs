@@ -125,11 +125,22 @@ private: // Symbol
 	void set_param_by_name(std::string const& name, std::string const& value) override;
 	void set_param_by_index(index_t i, std::string const& value) override;
 	index_t param_count() const override{
+		trace1("Verilog:: param_count", Symbol::param_count());
 	  return 3 + Symbol::param_count();
 	}
-
+	bool param_is_printable(index_t i) const override{
+		switch (int(Verilog::param_count()) - (1 + i)) {
+		case 0:
+		case 1:
+		case 2:
+			return true;
+		default: untested();
+			return Symbol::param_is_printable(i);
+		}
+	}
 	std::string param_name(index_t i) const override;
-	std::string param_value(index_t i) const override{
+	std::string param_value(index_t i) const override{ untested();
+		trace1("Verilog:: param_value", i);
 		switch (int(Verilog::param_count()) - (1 + i)) {
 		case 0:
 			return _filename;
@@ -137,7 +148,7 @@ private: // Symbol
 			return std::to_string(_ty);
 		case 2:
 			return std::to_string(_tx);
-		default:
+		default: untested();
 			return Symbol::param_value(i);
 		}
 	}

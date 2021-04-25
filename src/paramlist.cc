@@ -19,7 +19,6 @@ std::string COMMON_PARAMLIST::param_name(index_t i)const
 /*--------------------------------------------------------------------------*/
 bool COMMON_PARAMLIST::param_is_printable(index_t i)const
 {
-  assert(i < COMMON_PARAMLIST::param_count());
   if(i < COMMON_PARAMLIST::param_count()){
 	  unreachable();
 	  return false;

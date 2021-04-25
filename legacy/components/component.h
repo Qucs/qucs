@@ -133,6 +133,7 @@ protected: // Symbol
 //	  Ports[i]->connect(n);
 //  }
 
+	bool param_is_printable(index_t) const override;
 	index_t param_count() const override;
 	std::string param_value(index_t i) const override;
 	std::string param_name(index_t i) const override;

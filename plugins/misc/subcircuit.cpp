@@ -26,6 +26,7 @@
 #include "qucs_globals.h"
 #include "sckt_base.h"
 #include "common_sckt.h"
+#include "paramlist.h"
 /*--------------------------------------------------------------------------*/
 const std::string defsym(":SYMBOL_"); // use a parameter?
 /*--------------------------------------------------------------------------*/
@@ -146,12 +147,49 @@ private: // Symbol
 	void set_param_by_name(std::string const& name, std::string const& value) override;
 	void set_param_by_index(index_t i, std::string const& value) override;
 	index_t param_count() const override{
-	  return 3 + Symbol::param_count();
+		trace3("PC", FactorySymbol::param_count(), Component::param_count(), _param_names.size());
+	  return 3 + FactorySymbol::param_count();
 	}
 
-	std::string param_name(index_t i) const override;
+	bool param_is_printable(index_t i) const override{
+		trace2("pip", short_label(), i);
+		assert(i < Sub::param_count());
+
+		switch(i){
+		case 0:
+			return true;
+		case 1:
+			return true;
+		case 2:
+			return true;
+		default: untested();
+		}
+		if(i-3<_param_names.size()){
+			return true;
+		}else{
+			return FactorySymbol::param_is_printable(i);
+		}
+	}
+	std::string param_name(index_t i) const override {
+		switch (i){
+		case 0:
+			return "File";
+			// return "porttype"; // or so
+		case 1:
+			return "$tx";
+		case 2:
+			return "$ty";
+		default:
+			break;
+		}
+		if(i-3<_param_names.size()){
+			return _param_names[i-3];
+		}else{
+			return FactorySymbol::param_name(i);
+		}
+	}
 	std::string param_value(index_t i) const override{
-		switch (int(Sub::param_count()) - (1 + i)) {
+		switch (i){
 		case 0:
 			return _filename;
 		case 1:
@@ -159,7 +197,15 @@ private: // Symbol
 		case 2:
 			return std::to_string(_tx);
 		default:
-			return Symbol::param_value(i);
+			break;
+		}
+	
+		if(i-3<_param_names.size()){
+			auto n = _param_names[i-3];
+			trace3("map param", i, n, short_label());
+			return FactorySymbol::param_value_by_name(n);
+		}else{
+			return FactorySymbol::param_value(i);
 		}
 	}
 	std::string param_value_by_name(std::string const& name) const override{
@@ -190,11 +236,52 @@ private:
 	std::string _filename; // "File" parameter.
 	std::vector<Port> _ports;
 	std::vector<std::string> _param_names; // could be common?
-	std::vector<PARA_BASE*> _params; // could be common
+	std::vector<PARA_BASE*> _params;
 	Painting const* _painting{nullptr};
 }p1; // Sub
 static Dispatcher<Element>::INSTALL d1(&symbol_dispatcher, "Sub", &p1);
 /*--------------------------------------------------------------------------*/
+/*--------------------------------------------------------------------------*/
+class PROTO : public SubcktBase{
+public:
+	PROTO() : SubcktBase(){
+		new_subckt();
+		attach_common(new qucs::CommonParamlist());
+	}
+	PROTO(PROTO const& x) : SubcktBase(x){
+		new_subckt(); // copy??
+	}
+	PROTO* clone() const override{untested(); return new PROTO(*this);}
+	bool is_device() const override{ untested();
+		return false;
+	}
+	bool makes_own_scope() const override{ untested();
+		return true;
+	}
+	ElementList* scope() override{return subckt();}
+
+	index_t param_count() const override{ return _param_names.size(); }
+	void set_param_by_index(index_t i, std::string const& v){
+		trace2("PROTO::set_param_by_index", i, v);
+		if(i<_param_names.size()){ untested();
+		}else{
+			_param_names.resize(i+1);
+		}
+
+		_param_names[i] = v;
+	}
+	std::string param_name(index_t i) const override{
+		assert(i<_param_names.size());
+		return _param_names[i];
+	}
+	void set_param_by_name(std::string const& n, std::string const& v){
+		trace2("spbn", n, v);
+		SubcktBase::set_param_by_name(n, v);
+	}
+
+private: // legacy schematic needs ordered params...
+	std::vector<std::string> _param_names;
+}sub_proto;
 /*--------------------------------------------------------------------------*/
 // create a subdevice from a file.
 // if its already there, use it.
@@ -234,15 +321,15 @@ Component const* Sub::new_model(std::string const& fn) // const
 		assert(os);
 		assert(os->scope());
 
-		Component* ss = qucs::device_dispatcher.clone("subckt_proto"); // Sub?
+		Component* ss = sub_proto.clone();
 		auto s = prechecked_cast<SubcktBase*>(ss);
 		assert(s);
 
 		assert(owner());
 		s->set_owner(owner());
 
-		{ // move to subckt_proto variant?
-			auto a = qucs::device_dispatcher.clone("subckt_proto");
+		{ // move to sub_proto constructor.
+			auto a = qucs::device_dispatcher.clone("schematic_proto");
 			assert(a);
 			a->set_label("main");
 			a->set_owner(ss);
@@ -336,6 +423,7 @@ void Sub::build_sckt(istream_t& cs, SubcktBase* proto) const
 	}else if(auto p = dynamic_cast<SubcktBase const*>(*p_)){
 		assert(p->scope());
 	
+		index_t ii = 0;
 		for(auto i : *p->scope()){
 			gotit = true;
 			if(auto a=dynamic_cast<DEV_DOT*>(i)){
@@ -349,6 +437,8 @@ void Sub::build_sckt(istream_t& cs, SubcktBase* proto) const
 
 					try{
 						proto->set_param_by_name(name, defv);
+						proto->set_param_by_index(ii, name);
+						++ii;
 					}catch(qucs::ExceptionCantFind const&){
 						incomplete();
 					}
@@ -402,22 +492,6 @@ void Sub::set_param_by_index(index_t i, std::string const& v)
 		trace1("Sub::setParameter", v);
 		refreshSymbol(v);
 	}else{
-	}
-}
-/*--------------------------------------------------------------------------*/
-// use common params eventually.
-std::string Sub::param_name(index_t i) const
-{
-	switch (int(Sub::param_count()) - (1 + i)) {
-	case 0:
-		return "File";
-		// return "porttype"; // or so
-	case 1:
-		return "$tx";
-	case 2:
-		return "$ty";
-	default:
-		return Symbol::param_name(i);
 	}
 }
 /*--------------------------------------------------------------------------*/
@@ -487,9 +561,11 @@ void Sub::init(Component const* proto)
 	trace3("Sub::init", proto->label(), _ports.size(), proto->numPorts());
 
 	incomplete();
+	for(index_t i=0; i<proto->param_count(); ++i) { untested();
+		trace2("Sub::init", i, proto->param_name(i));
+	}
 #if 0 // BUG BUG copy from proto. better: use common...
-	for(index_t i=0; i<proto->param_count(); ++i)
-	{ untested();
+	for(index_t i=0; i<proto->param_count(); ++i) { untested();
 		[..]
 		_params.push_back(p);
 		_param_names.push_back(name);
