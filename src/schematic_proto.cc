@@ -42,7 +42,7 @@ public:
 
 	virtual void build() { incomplete(); } // needed??
 	bool makes_own_scope()const override { return true;}
-	ElementList*	   scope()		{untested();return subckt();}
+	ElementList*	   scope()		{return subckt();}
 	const ElementList* scope()const		{return subckt();}
 
 private:

@@ -37,7 +37,7 @@ private: // local
   void printElement(Element const*, ostream_t&) const override { untested(); }
   void print_instance(ostream_t&, Component const*) const override;
   void print_paramset(ostream_t&, Model const*) const override;
-  void printSubckt(SubcktBase const*, ostream_t&) const {untested(); }
+  void print_module(ostream_t&, SubcktBase const*) const {untested(); }
   void printPainting(Painting const*, ostream_t&) const override { untested(); }
   void printDiagram(Diagram const*, ostream_t&) const override { untested();}
 }d0;

@@ -322,7 +322,7 @@ private: // Symbol
 		return Symbol::param_count() + 4 + _params.size();
 	}
 	void set_param_by_index(index_t n, std::string const& v) override;
-	std::string param_value_by_name(std::string const& n) const override{ untested();
+	std::string param_value_by_name(std::string const& n) const override{
 		if (n=="$tx"){
 			return std::to_string(_tx);
 		}else if (n=="$ty"){
@@ -331,11 +331,11 @@ private: // Symbol
 			return Symbol::param_value_by_name(n);
 		}
 	}
-	bool param_is_printable(index_t i) const override{ untested();
+	bool param_is_printable(index_t i) const override{
 		int m = int(Lib::param_count()) - 1 - i;
 		return m >= 0;
 	}
-	std::string param_value(index_t i) const override{ untested();
+	std::string param_value(index_t i) const override{
 		int m = i - Symbol::param_count();
 		switch(m){
 		case 0:

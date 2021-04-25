@@ -64,7 +64,7 @@ private: //called by printItem
   virtual void printDiagram(Diagram const*, ostream_t&) const = 0;
   virtual void print_instance(ostream_t&, Component const*) const = 0;
   virtual void print_paramset(ostream_t&, Model const*) const = 0;
-  virtual void printSubckt(SubcktBase const*, ostream_t&) const = 0;
+  virtual void print_module(ostream_t&, SubcktBase const*) const = 0;
   virtual void printElement(Element const*, ostream_t&) const = 0;
 //  virtual void print_comment(ostream_t&, const DEV_COMMENT const*){incomplete();}
   virtual void print_command(ostream_t&, const DEV_DOT*) const{incomplete();}

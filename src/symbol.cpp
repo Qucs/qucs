@@ -322,7 +322,7 @@ void CommonComponent::attach_common(CommonComponent*c, CommonComponent**to)
     // The new one is not used anywhere, so throw it away.
     trace1("delete", c->_attach_count);    
     delete c;
-  }else{untested();
+  }else{
     // The new and old are identical.
     // Use the old one.
     // The new one is also used somewhere else, so keep it.

@@ -245,7 +245,7 @@ void LegacyNetlister::printDeclarations(ostream_t& stream,
 		}else if(dynamic_cast<SubcktBase const*>(si.second)){
 			stream << "### item " << si.first << "\n";
 			_qucslang->printItem(stream, si.second);
-		}else{ untested();
+		}else{
 			stream << "## " << si.first << "\n";
 		}
 	}

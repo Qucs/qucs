@@ -1533,13 +1533,13 @@ bool Component::param_is_printable(index_t i) const
 {
   index_t s = Symbol::param_count();
   int j = i - (s + num_component_params);
-  if(i < s){ untested();
+  if(i < s){
     return Symbol::param_is_printable(i);
   }else if(i==s){
     return true;
   }else if(i==s+1){
     return true;
-  }else if(j<Props.size()){ untested();
+  }else if(j<Props.size()){
     return true;
   }else{ untested();
     return false;

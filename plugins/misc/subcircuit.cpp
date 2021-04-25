@@ -162,7 +162,8 @@ private: // Symbol
 			return true;
 		case 2:
 			return true;
-		default: untested();
+		default:
+			break;
 		}
 		if(i-3<_param_names.size()){
 			return true;
@@ -236,7 +237,6 @@ private:
 	std::string _filename; // "File" parameter.
 	std::vector<Port> _ports;
 	std::vector<std::string> _param_names; // could be common?
-	std::vector<PARA_BASE*> _params;
 	Painting const* _painting{nullptr};
 }p1; // Sub
 static Dispatcher<Element>::INSTALL d1(&symbol_dispatcher, "Sub", &p1);
@@ -251,8 +251,8 @@ public:
 	PROTO(PROTO const& x) : SubcktBase(x){
 		new_subckt(); // copy??
 	}
-	PROTO* clone() const override{untested(); return new PROTO(*this);}
-	bool is_device() const override{ untested();
+	PROTO* clone() const override{ return new PROTO(*this);}
+	bool is_device() const override{
 		return false;
 	}
 	bool makes_own_scope() const override{ untested();
@@ -329,6 +329,7 @@ Component const* Sub::new_model(std::string const& fn) // const
 		s->set_owner(owner());
 
 		{ // move to sub_proto constructor.
+			// TODO: share common
 			auto a = qucs::device_dispatcher.clone("schematic_proto");
 			assert(a);
 			a->set_label("main");
@@ -444,7 +445,6 @@ void Sub::build_sckt(istream_t& cs, SubcktBase* proto) const
 					}
 					 // auto p = new PARAMETER<double>
 					 // *p = defv;
-					 // proto->_params.push_back(p);
 					 // proto->_param_names.push_back(name);
 				}else if(cs.umatch("portparameter")){ untested();
 				}else if(cs.umatch(".port_")){
@@ -507,10 +507,6 @@ Sub::Sub(Sub const&x)
 /*--------------------------------------------------------------------------*/
 Sub::~Sub()
 {
-	for(auto i : _params){
-		delete i;
-	}
-	_params.clear();
 	_param_names.clear();
 }
 /*--------------------------------------------------------------------------*/
@@ -552,22 +548,17 @@ void Sub::init(Component const* proto)
 	}else{ untested();
 	}
 
-	for(auto i : _params){ untested();
-		delete i;
-	}
-	_params.clear();
 	_param_names.clear();
 
 	trace3("Sub::init", proto->label(), _ports.size(), proto->numPorts());
 
 	incomplete();
-	for(index_t i=0; i<proto->param_count(); ++i) { untested();
+	for(index_t i=0; i<proto->param_count(); ++i) {
 		trace2("Sub::init", i, proto->param_name(i));
 	}
 #if 0 // BUG BUG copy from proto. better: use common...
 	for(index_t i=0; i<proto->param_count(); ++i) { untested();
 		[..]
-		_params.push_back(p);
 		_param_names.push_back(name);
 	}
 #else
@@ -590,7 +581,6 @@ void Sub::init(Component const* proto)
 					cs >> defv;
 					auto p = new PARAMETER<double>;
 					*p = defv;
-					_params.push_back(p);
 					_param_names.push_back(name);
 				}else{
 					// port HERE?

@@ -134,12 +134,12 @@ private: // Symbol
 		case 1:
 		case 2:
 			return true;
-		default: untested();
+		default:
 			return Symbol::param_is_printable(i);
 		}
 	}
 	std::string param_name(index_t i) const override;
-	std::string param_value(index_t i) const override{ untested();
+	std::string param_value(index_t i) const override{
 		trace1("Verilog:: param_value", i);
 		switch (int(Verilog::param_count()) - (1 + i)) {
 		case 0:
@@ -148,7 +148,7 @@ private: // Symbol
 			return std::to_string(_ty);
 		case 2:
 			return std::to_string(_tx);
-		default: untested();
+		default:
 			return Symbol::param_value(i);
 		}
 	}

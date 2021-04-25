@@ -84,7 +84,7 @@ private:
 	void printElement(Element const*, ostream_t&) const override;
 	void print_instance(ostream_t&, Component const*) const override;
 	void print_paramset(ostream_t&, Model const*) const override;
-	void printSubckt(SubcktBase const*, ostream_t&) const override;
+	void print_module(ostream_t&, SubcktBase const*) const override;
 	void printPainting(Painting const*, ostream_t&) const override;
 	void print_command(ostream_t&, DEV_DOT const*) const override;
 	void printDiagram(Diagram const*, ostream_t&) const override {incomplete();}
@@ -114,7 +114,7 @@ private:
 
 private:
 	void print_instance(ostream_t&, Component const*) const override;
-	void printSubckt(SubcktBase const* x, ostream_t& o) const override;
+	void print_module(ostream_t&, SubcktBase const*) const override;
 
 	void print_ports_short(ostream_t& o, const Component* x) const;
 	void print_args(ostream_t&, Component const* sym) const;
@@ -432,9 +432,7 @@ void Verilog::print_ports_short(ostream_t& o, Component const* x) const
 #endif
 }
 /*--------------------------------------------------------------------------*/
-#define short_label label
-
-void Verilog::printSubckt(SubcktBase const* x, ostream_t& o) const
+void Verilog::print_module(ostream_t& o, SubcktBase const* x) const
 {
 	ElementList const* scope = nullptr;
 
@@ -570,7 +568,7 @@ void VS::print_instance(ostream_t& s, Component const* sym) const
 	}
 }
 /*--------------------------------------------------------------------------*/
-void VS::printSubckt(SubcktBase const* x, ostream_t& o) const
+void VS::print_module(ostream_t& o, SubcktBase const* x) const
 {
 	ElementList const* scope = nullptr;
 	o << "// VS::printSubckt " << x->label() << "\n";

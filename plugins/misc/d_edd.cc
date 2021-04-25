@@ -224,7 +224,7 @@ private: // Symbol
 		trace2("param_is_printable", i, _ports.size());
 		assert(common());
 		auto e = EDD::param_count() - common()->param_count();
-		if(i<e){ untested();
+		if(i<e){
 			return false;
 		}else if(i < e + _ports.size() + 2){
 			return true;

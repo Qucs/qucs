@@ -75,7 +75,7 @@ void Language::printItem(ostream_t& s, Element const* c) const
 		if(C->is_device()){
 			print_instance(s, C);
 		}else{
-			printSubckt(C, s);
+			print_module(s, C);
 		}
 	}else if (auto C=dynamic_cast<const Component*>(c)) {
 		print_instance(s, C);

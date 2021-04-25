@@ -138,7 +138,7 @@ private:
 	void print_paramset(ostream_t&, Model const*) const override;
 	void printElement(Element const*, ostream_t&) const override;
 	void printPainting(Painting const*, ostream_t&) const override;
-	void printSubckt(SubcktBase const*, ostream_t&) const override;
+	void print_module(ostream_t&, SubcktBase const*) const override;
    void printDiagram(Diagram const*, ostream_t&) const override;
 	bool _lib_mod; // HACK HACK
 }leg_sch;
@@ -343,7 +343,7 @@ void LegacySchematicLanguage::printDiagram(Diagram const* x, ostream_t& cs) cons
 	cs << "  </" << x->label() << ">\n";
 }
 /*--------------------------------------------------------------------------*/
-void LegacySchematicLanguage::printSubckt(SubcktBase const* x, ostream_t& s) const
+void LegacySchematicLanguage::print_module(ostream_t& s, SubcktBase const* x) const
 { untested();
 	incomplete();
 	s << "  " << x->short_label() << "\n";

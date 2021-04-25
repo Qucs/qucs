@@ -153,7 +153,7 @@ private: // Language
   void printElement(Element const*, ostream_t&) const override;
   void print_instance(ostream_t&, qucs::Component const*) const override;
   void print_paramset(ostream_t&, Model const*) const override;
-  void printSubckt(SubcktBase const*, ostream_t&) const;
+  void print_module(ostream_t&, SubcktBase const*) const;
   void printComponent(::Component const*, ostream_t&) const;
   void printPainting(Painting const*, ostream_t&) const override {incomplete();}
   void printDiagram(Diagram const*, ostream_t&) const override {incomplete();}
@@ -228,7 +228,7 @@ static void printSymbol_(Symbol const* c, ostream_t& s)
 			std::string name = sym->param_name(ii);
 			//trace2("param", name, value);
 
-			if(!sym->param_is_printable(ii)){ untested();
+			if(!sym->param_is_printable(ii)){
 			}else if(name.size() == 0){
 				unreachable();
 			}else if(name.at(0)=='$'){
@@ -268,13 +268,13 @@ void QucsatorLang::print_instance(ostream_t& s, qucs::Component const* d) const
 		if(c->is_device()){ untested();
 			// here?
 		   s << "# got sckt device " << d->label() << "\n";
-			printSubckt(c, s);
+			print_module(s, c);
 		}else{ untested();
 		   s << "# skip non-device " << d->label() << "\n";
 		}
 //	}else if(auto c=dynamic_cast<SubcktProto const*>(d)){ untested();
 //		// why is this a Symbol??
-//		printSubckt(c, s);
+//		print_module(s, c);
 	}else if(auto c=dynamic_cast<Model const*>(d)){ untested();
 		s << "# Model " << d->label() << "\n";
 		// if x = d->scope->find("qucsatormodel"){
@@ -348,7 +348,7 @@ static void printDefHack(Symbol const* p, ostream_t& s)
 	s << hack;
 }
 /* -------------------------------------------------------------------------------- */
-void QucsatorLang::printSubckt(SubcktBase const* p, ostream_t& s) const
+void QucsatorLang::print_module(ostream_t& s, SubcktBase const* p) const
 {
 	trace1("subckt", p->label());
 	Element const* e = p;

@@ -229,7 +229,7 @@ bool Component::param_is_printable(index_t i) const
   if (has_common()) {
     return common()->param_is_printable(i);
   }else{
-	  return true;
+    return true;
   }
   //  switch (COMPONENT::param_count() - 1 - i) {
   //  case 0:  return value().has_hard_value();

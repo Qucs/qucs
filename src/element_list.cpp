@@ -70,7 +70,7 @@ void ElementList::clear()
 // // possibly not needed. all actions must be undoable anyway
 // -> use detach, store reference in UndoAction.
 void ElementList::erase(Element* what)
-{ untested();
+{
 	Element* e = detach(what);
 	delete(e);
 }
@@ -85,10 +85,10 @@ Element* ElementList::detach(Element* what)
 	if(_map.find(l) == _map.end()){ untested();
 		unreachable();
 		trace1("gone", l);
-	}else{ untested();
+	}else{
 		auto pos = _map.lower_bound(l);
 		assert(pos!=_map.end());
-		while(pos->second != what){ untested();
+		while(pos->second != what){
 			++pos;
 		}
 		/// TODO: map list iterators
@@ -98,10 +98,10 @@ Element* ElementList::detach(Element* what)
 
 	if(auto d=dynamic_cast<Diagram*>(what)){ untested();
 		_cl.erase(std::find(begin(), end(), d));
-	}else if(auto c=dynamic_cast<Symbol*>(what)){ untested();
+	}else if(auto c=dynamic_cast<Symbol*>(what)){
 		disconnect(c);
 		_cl.erase(std::find(begin(), end(), c));
-	}else{ untested();
+	}else{
 		unreachable(); // model?
 		_cl.erase(std::find(begin(), end(), what));
 	}
@@ -119,7 +119,7 @@ void ElementList::push_back(Element* what)
 }
 /*--------------------------------------------------------------------------*/
 ElementList& ElementList::erase(const_iterator what)
-{ untested();
+{
 	assert(what!=end());
 	erase(*what);
 	return *this;
