@@ -1,5 +1,7 @@
 
 module something ( X, Y, Z );
+	parameter A;
+	parameter B;
 
    // Inputs and outputs
    input [2:0] in;

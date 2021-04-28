@@ -1,16 +1,16 @@
 // VS::printSubckt main
 module main();
-GND #(.$xposition(800), .$yposition(220), .$vflip(1), .$hflip(1), .$tx(0), .$ty(0)) anonymous_gnd_hack_0(net_800_220);
-Pac #(.$xposition(800), .$yposition(170), .$vflip(1), .$hflip(1), .$tx(18), .$ty(18), .Num(2), .Z(50 Ohm), .P(0 W), .f(1 GHz), .Temp(-273.15)) P1(net_800_140, net_800_200);
-GND #(.$xposition(310), .$yposition(220), .$vflip(1), .$hflip(1), .$tx(0), .$ty(0)) anonymous_gnd_hack_1(net_310_220);
+GND #(.$xposition(800), .$yposition(220), .$vflip(1), .$hflip(1)) anonymous_gnd_hack_0(net_800_220);
+Pac #(.Num(2), .Z(50 Ohm), .P(0 W), .f(1 GHz), .Temp(-273.15), .$ty(18), .$tx(18), .$xposition(800), .$yposition(170), .$vflip(1), .$hflip(1)) P1(net_800_140, net_800_200);
+GND #(.$xposition(310), .$yposition(220), .$vflip(1), .$hflip(1)) anonymous_gnd_hack_1(net_310_220);
 //DC1
-Eqn #(.$xposition(450), .$yposition(320), .$vflip(1), .$hflip(1), .$tx(-28), .$ty(-28), .S21_dB(dB(S[2,1])), .S11_dB(dB(S[1,1])), .Export(yes)) Eqn2();
-Eqn #(.$xposition(450), .$yposition(440), .$vflip(1), .$hflip(1), .$tx(-31), .$ty(-31), .Ql(200), .Qc(5000), .f0(14e6), .Export(yes)) Eqn1();
+Eqn #(.S21_dB(dB(S[2,1])), .S11_dB(dB(S[1,1])), .Export(yes), .$ty(-28), .$tx(-28), .$xposition(450), .$yposition(320), .$vflip(1), .$hflip(1)) Eqn2();
+Eqn #(.Ql(200), .Qc(5000), .f0(14e6), .Export(yes), .$ty(-31), .$tx(-31), .$xposition(450), .$yposition(440), .$vflip(1), .$hflip(1)) Eqn1();
 //AC1
-GND #(.$xposition(100), .$yposition(220), .$vflip(1), .$hflip(1), .$tx(0), .$ty(0)) anonymous_gnd_hack_2(net_100_220);
-Pac #(.$xposition(100), .$yposition(150), .$vflip(-1), .$hflip(1), .$tx(-122), .$ty(-122), .Num(1), .Z(50 Ohm), .P(0 dBm), .f(1 GHz), .Temp(-273.15)) P2(net_100_120, net_100_180);
-GND #(.$xposition(630), .$yposition(290), .$vflip(1), .$hflip(1), .$tx(0), .$ty(0)) anonymous_gnd_hack_3(net_630_290);
-Vdc #(.$xposition(630), .$yposition(250), .$vflip(-1), .$hflip(1), .$tx(-75), .$ty(-75), .U(1.1 V)) V1(net_630_220, net_630_280);
+GND #(.$xposition(100), .$yposition(220), .$vflip(1), .$hflip(1)) anonymous_gnd_hack_2(net_100_220);
+Pac #(.Num(1), .Z(50 Ohm), .P(0 dBm), .f(1 GHz), .Temp(-273.15), .$ty(-122), .$tx(-122), .$xposition(100), .$yposition(150), .$vflip(-1), .$hflip(1)) P2(net_100_120, net_100_180);
+GND #(.$xposition(630), .$yposition(290), .$vflip(1), .$hflip(1)) anonymous_gnd_hack_3(net_630_290);
+Vdc #(.U(1.1 V), .$ty(-75), .$tx(-75), .$xposition(630), .$yposition(250), .$vflip(-1), .$hflip(1)) V1(net_630_220, net_630_280);
 wire #(.$xposition(630), .$yposition(90), .$vflip(1), .$hflip(1)) noname(net_630_90, net_630_140);
 wire #(.$xposition(590), .$yposition(140), .$vflip(1), .$hflip(1)) noname(net_590_140, net_630_140);
 wire #(.$xposition(590), .$yposition(200), .$vflip(1), .$hflip(1)) noname(net_590_200, net_630_200);
@@ -29,7 +29,7 @@ wire #(.$xposition(100), .$yposition(90), .$vflip(1), .$hflip(1)) noname(net_100
 wire #(.$xposition(100), .$yposition(90), .$vflip(1), .$hflip(1)) noname(net_100_90, net_100_120);
 wire #(.$xposition(100), .$yposition(180), .$vflip(1), .$hflip(1)) noname(net_100_180, net_100_220);
 wire #(.$xposition(630), .$yposition(280), .$vflip(1), .$hflip(1)) noname(net_630_280, net_630_290);
-wire #(.$xposition(800), .$yposition(90), .$vflip(1), .$hflip(1), .netname(out), .$ty(-30), .$tx(30)) noname(net_800_90, net_800_90);
+wire #(.$tx(30), .$ty(-30), .netname(out), .$xposition(800), .$yposition(90), .$vflip(1), .$hflip(1)) noname(net_800_90, net_800_90);
 place #(.$xposition(800), .$yposition(220)) net_800_220(net_800_220);
 place #(.$xposition(800), .$yposition(140)) net_800_140(net_800_140);
 place #(.$xposition(800), .$yposition(200)) net_800_200(net_800_200);

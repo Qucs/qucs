@@ -21,6 +21,7 @@
 #include "paramlist.h"
 /*--------------------------------------------------------------------------*/
 const std::string defsym(":EDD_"); // use a parameter?
+const index_t np = 2;
 /*--------------------------------------------------------------------------*/
 namespace {
 /*--------------------------------------------------------------------------*/
@@ -82,7 +83,7 @@ private: // Symbol
 		auto pl = dynamic_cast<CommonParamlist const*>(m->common());
 		assert(pl);
 		trace2("edd prep", short_label(), pl->_params.size());
-		int n=pl->_params.size();
+		index_t n = pl->_params.size();
 		assert(n==pl->_params.size()); // yuck
 
 		if(m){
@@ -156,30 +157,33 @@ private: // Symbol
 	  return 2 + FactorySymbol::param_count();
 	}
 	void set_param_by_index(index_t i, std::string const& v) override{
+		trace2("EDD::spbi", i, v);
 		bool changed = false;
-		auto s = FactorySymbol::param_count() - common()->param_count();
-		auto e = EDD::param_count() - common()->param_count();
-		trace3("edd spbi", i, v, s);
-		if(i==s){ untested();
-			_tx = atoi(v.c_str());
-		}else if(i==s+1){ untested();
-			_ty = atoi(v.c_str());
-		}else if(i<s){ untested();
-			FactorySymbol::set_param_by_index(i, v);
-		}else{
+		index_t s = EDD::param_count() - i - 1;
 
-			if(i==s+3){
-				index_t n = atoi(v.c_str());
-				assert(n);
-				_ports.resize(2*n);
-				changed = true;
-			}else{
-			}
+		if(s==0){ untested();
+			_tx = atoi(v.c_str());
+		}else if(s==1){ untested();
+			_ty = atoi(v.c_str());
+		}else if(s==2){
+			// type?
+			std::string Name = param_name(i);
+			Component::set_param_by_name(Name, v);
+			changed = true;
+		}else if(s==3){
+			index_t n = atoi(v.c_str());
+			assert(n);
+			_ports.resize(2*n);
+			changed = true;
 
 			std::string Name = param_name(i);
-			trace3("spbi fwd", i, Name, v);
+			trace3("spbi fwd1", i, Name, v);
 
 			assert(has_common());
+			Component::set_param_by_name(Name, v);
+		}else{
+			std::string Name = param_name(i);
+			trace3("spbi fwd2", i, Name, v);
 			Component::set_param_by_name(Name, v);
 		}
 
@@ -188,65 +192,51 @@ private: // Symbol
 		}else{
 		}
 	}
-	std::string param_name_(index_t i) const{
-		trace1("param_name_", i);
-		if(i==0){
+	std::string param_name(index_t i) const override{
+		index_t s = EDD::param_count() - i - 1;
+		if(s==0){
+			return "$ty";
+		}else if(s==1){
+			return "$tx";
+		}else if(s==2){
 			return "Type";
-		}else if(i==1){
+		}else if(s==3){
 			return "Branches";
 		}else{
 			std::string p;
-			if(i%2){ itested();
+			if(s%2){ itested();
 				p = "Q";
 			}else{ itested();
 				p = "I";
 			}
-			return p + std::to_string(i/2);
-		}
-	}
-	std::string param_name(index_t i) const override{
-		assert(common());
-		auto s = FactorySymbol::param_count() - common()->param_count();
-		auto e = EDD::param_count() - common()->param_count();
-		if(i==s){
-			return "$ty";
-		}else if(i==s+1){
-			return "$tx";
-		}else if(i<e){
-			auto f = FactorySymbol::param_name(i);
-			trace3("paramname", i, s, f);
-			return f;
-		}else{ itested();
-			return param_name_(i-e);
+			return p + std::to_string(s/2-1);
 		}
 	}
 	bool param_is_printable(index_t i) const {
-		trace2("param_is_printable", i, _ports.size());
-		assert(common());
-		auto e = EDD::param_count() - common()->param_count();
-		if(i<e){
-			return false;
-		}else if(i < e + _ports.size() + 2){
+		index_t s = EDD::param_count() - i - 1;
+		if(s < 4 + _ports.size()){
 			return true;
 		}else{
 			return false;
 		}
 	}
 	std::string param_value(index_t i) const override{
-		assert(common());
-		auto s = FactorySymbol::param_count() - common()->param_count();
-		auto e = EDD::param_count() - common()->param_count();
-		if(i==s){ untested();
+		trace1("EDD::param_value", i);
+		index_t s = EDD::param_count() - i - 1;
+		switch(s){
+		case 0:
 			return std::to_string(_ty);
-		}else if(i==s+1){ untested();
+		case 1:
 			return std::to_string(_tx);
-		}else if(i<e){ untested();
-			return FactorySymbol::param_value(i);
+		default:
+			break;
+		}
+
+		if(s-np < 4 + _ports.size()){
+			auto n = param_name(i);
+			return FactorySymbol::param_value_by_name(n);
 		}else{
-			trace6("EDD::param_value, component", short_label(), i, s, common()->param_count(), i-s, param_name(i));
-			assert(has_common());
-			assert(i-e<common()->param_count());
-			return Component::param_value_by_name(param_name(i));
+			return FactorySymbol::param_value(i);
 		}
 	}
 	std::string param_value_by_name(std::string const& name) const override{
@@ -321,7 +311,7 @@ void EDD::refreshSymbol()
 		std::string defpaint = defsym + std::to_string(branches);
 //		auto e = find_looking_out(defpaint);
 		auto e = qucs::symbol_dispatcher[defpaint];
-		if(!e){ untested();
+		if(!e){
 			message(qucs::MsgWarning, "no symbol for EDD: " + defpaint);
 		}else if(auto p=dynamic_cast<Painting const*>(e)){
 			_painting = p;

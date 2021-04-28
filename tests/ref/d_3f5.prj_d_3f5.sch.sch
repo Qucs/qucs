@@ -37,7 +37,7 @@
 	<"xyce/I(XAMMETER1_VPROBE)" #0000ff 2 3 0 0 0>
   </Rect>
   <Rect 730 743 351 243 0 #c0c0c0 1 01 1 0.3 0.2 1.2 1 1e-09 1 10 1 -1 1 1 0 0 0 "" "" "" "0">
-	<"xyce/I(XAMMETER1_VPROBE)" #0000ff 2    >
+	<"xyce/I(XAMMETER1_VPROBE)"     0 0>
 	<"xyce/I(XAMMETER1_VPROBE)" #0000ff 2 3 0 0 0>
   </Rect>
 </Diagrams>

@@ -40,11 +40,11 @@ void Place::set_param_by_name(std::string const& name, std::string const& value)
 /*--------------------------------------------------------------------------*/
 bool Place::param_is_printable(index_t i) const
 {
-	if(i==2){
-		return false; // hflip
-	}else if(i==3){
-		return false; // vflip
-	}else{
+	switch(Place::param_count() - 1 - i){
+	case 2:
+	case 3:
+		return false; // h/vflip
+	default:
 		return true;
 	}
 }

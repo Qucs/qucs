@@ -363,9 +363,9 @@ void LegacySchematicLanguage::printElement(Element const* c, ostream_t& s) const
 	}
 }
 /*--------------------------------------------------------------------------*/
-static void print_params(ostream_t& s, Data const* x)
+static void print_args(ostream_t& s, Data const* x)
 {
-	for(index_t i=0; i<x->param_count(); ++i){
+	for(index_t i=x->param_count(); i--;){
 		s << " " << x->param_value(i);
 	}
 }
@@ -373,7 +373,7 @@ static void print_params(ostream_t& s, Data const* x)
 void LegacySchematicLanguage::printData(Data const* x, ostream_t& s) const
 {
 	s << "\t<\"" << x->label() << "\"";
-	print_params(s, x);
+	print_args(s, x);
 	s << ">\n";
 }
 /*--------------------------------------------------------------------------*/
@@ -473,7 +473,7 @@ static void printArgs(qucs::Component const* sym, ostream_t& s)
 	}
 
 	int show = atoi(sym->param_value_by_name("$param_display").c_str());
-	for(index_t i=0; i<sym->param_count(); ++i){
+	for(index_t i=sym->param_count(); i--;){
 		trace3("display", i, show, sym->param_name(i));
 		// if(sym->paramIsPrintabl(i))
 		std::string n = sym->param_name(i);
@@ -767,8 +767,10 @@ Element* LegacySchematicLanguage::parseElement(istream_t& cmd, Element* x) const
 
 	x->set_label(s);
 
-	for(index_t i=0; i<x->param_count(); ++i){
+	for(index_t i=x->param_count(); i--;){
 		s = cmd.ctos(">", "=", ">");
+		trace2("LegacySchematicLanguage::parseElement", i, s);
+
 		x->set_param_by_index(i, s);
 	}
 	return x;
@@ -804,6 +806,7 @@ Symbol* LegacySchematicLanguage::parseSymbol(istream_t& cs, Symbol* sym) const
 	bool use_obsolete_callback = dynamic_cast<::Component*>(sym);
 
 	if(sym->dev_type()=="EDD"){
+		trace0("EDD disable callback");
 		use_obsolete_callback = false;
 	}else{
 	}
@@ -893,25 +896,26 @@ Symbol* LegacySchematicLanguage::parseSymbol(istream_t& cs, Symbol* sym) const
 		}
 
 		// set parameters.
-		unsigned position = 0;
+		// skip the first 4. x y (tx ty) mirror rotate
+		index_t position = 0;
+		index_t z = 0;
 
-		// skip the first 6. x y tx ty mirror rotate
-		unsigned offset = 6; // Symbol::paramCountBase()
-		unsigned int z=0;
 		int counts = s.count('"');
 		trace2("set?", s, counts);
-		for(; int(position)<counts/2; ++ position){
+		for(; int(position)<counts/2; ++position){
 			z++;
 			n = s.section('"',z,z);    // property value. gaah parse over and over again?
 			z++;
 
 			try{
-				trace2("legacy:set", position + offset, n);
-				sym->set_param_by_index(position + offset, n.toStdString());
+				index_t i = sym->param_count() - 1 - 2 - position;
+				trace4("legacy:set", sym->param_count(), position, n, i);
+				sym->set_param_by_index(sym->param_count() - 1 - 2 - position, n.toStdString());
 			}catch(qucs::ExceptionCantFind const*){ untested();
+				trace1("wrong position", position);
 				incomplete(); // CS has error messages...
 				cs.warn(MsgFatal, "cannot parse Symbol param " +
-						std::to_string(position + offset) + " in " + sym->label());
+						std::to_string(position) + " in " + sym->label());
 				throw; // BUG
 			}
 
@@ -988,15 +992,24 @@ static ::Component* parseComponentObsoleteCallback(const QString& _s, ::Componen
 	int cy=n.toInt(&ok);
 	sym->set_param_by_name("$yposition", std::to_string(cy));
 //	sym->setParameter(4, std::to_string(cy));
-	if(!ok) return NULL;
+	if(!ok){
+		return NULL;
+	}else{
+	}
 
 	n  = s.section(' ',5,5);    // tx
 	ttx = n.toInt(&ok);
-	if(!ok) return NULL;
+	if(!ok){
+		return NULL;
+	}else{
+	}
 
 	n  = s.section(' ',6,6);    // ty
 	tty = n.toInt(&ok);
-	if(!ok) return NULL;
+	if(!ok){
+		return NULL;
+	}else{
+	}
 
 	assert(c);
 //	assert(c->obsolete_model_hack().at(0) != '.');
@@ -1163,11 +1176,15 @@ static ::Component* parseComponentObsoleteCallback(const QString& _s, ::Componen
 		p1->Value = n; // TODO: remove
 
 		Symbol* sym = c;
-		sym->set_param_by_index(position++, n.toStdString()); // BUG: also do for non-Components.
+		index_t i = sym->param_count() - position - 1;
+		trace5("callback spbi", c->label(), sym->param_count(), position, i, n);
+		// sym->set_param_by_index(i, n.toStdString()); // BUG: also do for non-Components.
+		sym->set_param_by_index(position, n.toStdString()); // BUG: also do for non-Components.
+		position++;
 
 		n  = s.section('"',z,z);    // display
 		p1->display = (n.at(1) == '1');
-	}
+	} // props loop
 
 	trace3("done legacy load", c->label(), s, z);
 	return c;

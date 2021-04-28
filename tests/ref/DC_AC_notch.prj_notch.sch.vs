@@ -1,19 +1,19 @@
 // VS::printSubckt main
 module main();
-GND #(.$xposition(130), .$yposition(370), .$vflip(1), .$hflip(1), .$tx(0), .$ty(0)) anonymous_gnd_hack_0(net_130_370);
-C #(.$xposition(210), .$yposition(170), .$vflip(1), .$hflip(1), .$tx(-26), .$ty(-26), .C(1.01u), .V(), .Symbol(neutral)) C1(net_180_170, net_240_170);
-R #(.$xposition(310), .$yposition(120), .$vflip(1), .$hflip(1), .$tx(-26), .$ty(-26), .R(10k), .Temp(26.85), .Tc1(0.0), .Tc2(0.0), .Tnom(26.85), .Symbol(european)) R5(net_280_120, net_340_120);
-R #(.$xposition(390), .$yposition(200), .$vflip(1), .$hflip(1), .$tx(-26), .$ty(-26), .R(1k), .Temp(26.85), .Tc1(0.0), .Tc2(0.0), .Tnom(26.85), .Symbol(european)) R3(net_360_200, net_420_200);
-R #(.$xposition(470), .$yposition(280), .$vflip(1), .$hflip(1), .$tx(-26), .$ty(-26), .R(1k), .Temp(26.85), .Tc1(0.0), .Tc2(0.0), .Tnom(26.85), .Symbol(european)) R4(net_500_280, net_440_280);
-R #(.$xposition(300), .$yposition(260), .$vflip(1), .$hflip(1), .$tx(-26), .$ty(-26), .R(1k), .Temp(26.85), .Tc1(0.0), .Tc2(0.0), .Tnom(26.85), .Symbol(european)) R2(net_270_260, net_330_260);
-C #(.$xposition(500), .$yposition(170), .$vflip(1), .$hflip(1), .$tx(17), .$ty(17), .C(1u), .V(), .Symbol(neutral)) C2(net_500_200, net_500_140);
+GND #(.$xposition(130), .$yposition(370), .$vflip(1), .$hflip(1)) anonymous_gnd_hack_0(net_130_370);
+C #(.C(1.01u), .V(), .Symbol(neutral), .$ty(-26), .$tx(-26), .$xposition(210), .$yposition(170), .$vflip(1), .$hflip(1)) C1(net_180_170, net_240_170);
+R #(.R(10k), .Temp(26.85), .Tc1(0.0), .Tc2(0.0), .Tnom(26.85), .Symbol(european), .$ty(-26), .$tx(-26), .$xposition(310), .$yposition(120), .$vflip(1), .$hflip(1)) R5(net_280_120, net_340_120);
+R #(.R(1k), .Temp(26.85), .Tc1(0.0), .Tc2(0.0), .Tnom(26.85), .Symbol(european), .$ty(-26), .$tx(-26), .$xposition(390), .$yposition(200), .$vflip(1), .$hflip(1)) R3(net_360_200, net_420_200);
+R #(.R(1k), .Temp(26.85), .Tc1(0.0), .Tc2(0.0), .Tnom(26.85), .Symbol(european), .$ty(-26), .$tx(-26), .$xposition(470), .$yposition(280), .$vflip(1), .$hflip(1)) R4(net_500_280, net_440_280);
+R #(.R(1k), .Temp(26.85), .Tc1(0.0), .Tc2(0.0), .Tnom(26.85), .Symbol(european), .$ty(-26), .$tx(-26), .$xposition(300), .$yposition(260), .$vflip(1), .$hflip(1)) R2(net_270_260, net_330_260);
+C #(.C(1u), .V(), .Symbol(neutral), .$ty(17), .$tx(17), .$xposition(500), .$yposition(170), .$vflip(1), .$hflip(1)) C2(net_500_200, net_500_140);
 //DC1
-OpAmp #(.$xposition(210), .$yposition(260), .$vflip(1), .$hflip(1), .$tx(-26), .$ty(-26), .G(1e6), .Umax(15 V)) OP1(net_180_280, net_180_240, net_250_260);
-OpAmp #(.$xposition(380), .$yposition(280), .$vflip(1), .$hflip(1), .$tx(-26), .$ty(-26), .G(1e6), .Umax(15 V)) OP2(net_350_300, net_350_260, net_420_280);
-Eqn #(.$xposition(340), .$yposition(40), .$vflip(1), .$hflip(1), .$tx(-23), .$ty(-23), .Gain(dB(Out.v/In.v)), .Export(yes)) Eqn1();
-R #(.$xposition(130), .$yposition(340), .$vflip(-1), .$hflip(1), .$tx(-50), .$ty(-50), .R(10k), .Temp(26.85), .Tc1(0.0), .Tc2(0.0), .Tnom(26.85), .Symbol(european)) R1(net_130_370, net_130_310);
-GND #(.$xposition(40), .$yposition(250), .$vflip(1), .$hflip(1), .$tx(0), .$ty(0)) anonymous_gnd_hack_1(net_40_250);
-Vac #(.$xposition(40), .$yposition(220), .$vflip(1), .$hflip(1), .$tx(18), .$ty(18), .U(1uV), .f(1 GHz), .Phase(0), .Theta(0)) V1(net_40_190, net_40_250);
+OpAmp #(.G(1e6), .Umax(15 V), .$ty(-26), .$tx(-26), .$xposition(210), .$yposition(260), .$vflip(1), .$hflip(1)) OP1(net_180_280, net_180_240, net_250_260);
+OpAmp #(.G(1e6), .Umax(15 V), .$ty(-26), .$tx(-26), .$xposition(380), .$yposition(280), .$vflip(1), .$hflip(1)) OP2(net_350_300, net_350_260, net_420_280);
+Eqn #(.Gain(dB(Out.v/In.v)), .Export(yes), .$ty(-23), .$tx(-23), .$xposition(340), .$yposition(40), .$vflip(1), .$hflip(1)) Eqn1();
+R #(.R(10k), .Temp(26.85), .Tc1(0.0), .Tc2(0.0), .Tnom(26.85), .Symbol(european), .$ty(-50), .$tx(-50), .$xposition(130), .$yposition(340), .$vflip(-1), .$hflip(1)) R1(net_130_370, net_130_310);
+GND #(.$xposition(40), .$yposition(250), .$vflip(1), .$hflip(1)) anonymous_gnd_hack_1(net_40_250);
+Vac #(.U(1uV), .f(1 GHz), .Phase(0), .Theta(0), .$ty(18), .$tx(18), .$xposition(40), .$yposition(220), .$vflip(1), .$hflip(1)) V1(net_40_190, net_40_250);
 //AC1
 wire #(.$xposition(420), .$yposition(280), .$vflip(1), .$hflip(1)) noname(net_420_280, net_430_280);
 wire #(.$xposition(420), .$yposition(200), .$vflip(1), .$hflip(1)) noname(net_420_200, net_430_200);
@@ -32,7 +32,7 @@ wire #(.$xposition(500), .$yposition(200), .$vflip(1), .$hflip(1)) noname(net_50
 wire #(.$xposition(340), .$yposition(260), .$vflip(1), .$hflip(1)) noname(net_340_260, net_350_260);
 wire #(.$xposition(340), .$yposition(200), .$vflip(1), .$hflip(1)) noname(net_340_200, net_340_260);
 wire #(.$xposition(340), .$yposition(200), .$vflip(1), .$hflip(1)) noname(net_340_200, net_360_200);
-wire #(.$xposition(340), .$yposition(120), .$vflip(1), .$hflip(1), .netname(Out), .$ty(-30), .$tx(110)) noname(net_340_120, net_500_120);
+wire #(.$tx(110), .$ty(-30), .netname(Out), .$xposition(340), .$yposition(120), .$vflip(1), .$hflip(1)) noname(net_340_120, net_500_120);
 wire #(.$xposition(500), .$yposition(120), .$vflip(1), .$hflip(1)) noname(net_500_120, net_500_140);
 wire #(.$xposition(160), .$yposition(280), .$vflip(1), .$hflip(1)) noname(net_160_280, net_180_280);
 wire #(.$xposition(160), .$yposition(280), .$vflip(1), .$hflip(1)) noname(net_160_280, net_160_320);
@@ -42,7 +42,7 @@ wire #(.$xposition(340), .$yposition(320), .$vflip(1), .$hflip(1)) noname(net_34
 wire #(.$xposition(340), .$yposition(300), .$vflip(1), .$hflip(1)) noname(net_340_300, net_340_320);
 wire #(.$xposition(500), .$yposition(280), .$vflip(1), .$hflip(1)) noname(net_500_280, net_500_320);
 wire #(.$xposition(40), .$yposition(120), .$vflip(1), .$hflip(1)) noname(net_40_120, net_40_190);
-wire #(.$xposition(40), .$yposition(120), .$vflip(1), .$hflip(1), .netname(In), .$ty(-30), .$tx(50)) noname(net_40_120, net_280_120);
+wire #(.$tx(50), .$ty(-30), .netname(In), .$xposition(40), .$yposition(120), .$vflip(1), .$hflip(1)) noname(net_40_120, net_280_120);
 place #(.$xposition(130), .$yposition(370)) net_130_370(net_130_370);
 place #(.$xposition(180), .$yposition(170)) net_180_170(net_180_170);
 place #(.$xposition(240), .$yposition(170)) net_240_170(net_240_170);

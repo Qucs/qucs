@@ -42,6 +42,15 @@ private:
 
 private: // Symbol
 	void set_port_by_index(index_t i, std::string const& value);
+	bool param_is_printable(index_t i) const override{
+		switch(Ground::param_count()-1-i){
+		case 0:
+		case 1:
+			return false;
+		default:
+			return true;
+		}
+	}
 
 private:
 	void connectNode(unsigned i);

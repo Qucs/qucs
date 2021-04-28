@@ -21,7 +21,7 @@
 <Symbol>
 </Symbol>
 <Components>
-    <Verilog BBBB 1 620 180 -20 44 0 0 "verilogmodel.v" 0>
+    <Verilog BBBB 1 620 180 -20 44 0 0 "verilogmodel.v" 0 "1" 0 "2" 0>
     <R R1 1 340 70 -26 15 0 0 "10 kOhm" 1 "26.85" 0 "0.0" 0 "0.0" 0 "26.85" 0 "european" 0>
     <R R3 1 280 280 15 -26 1 3 "1591 Ohm" 1 "26.85" 0 "0.0" 0 "0.0" 0 "26.85" 0 "european" 0>
     <R R6 1 400 150 -26 15 0 0 "1.59 Ohm" 1 "26.85" 0 "0.0" 0 "0.0" 0 "26.85" 0 "european" 0>

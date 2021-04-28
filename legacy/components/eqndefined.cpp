@@ -32,7 +32,6 @@ public:
 	EqnDefined(EqnDefined const&);
 	~EqnDefined() {};
 	Element* clone() const{ return new EqnDefined(*this); }
-	void set_param_by_index(index_t i, std::string const&) override;
 
 private:
 	std::string dev_type() const override{
@@ -41,6 +40,9 @@ private:
 	bool useObsoleteProps() const override{
 		return false;
 	}
+	std::string param_name(index_t i) const override;
+	std::string param_value(index_t i) const override;
+	void set_param_by_index(index_t i, std::string const&) override;
 
 protected:
 	void createSymbol();
@@ -61,7 +63,7 @@ EqnDefined::EqnDefined()
   Model = "EDD";
   Name  = "D";
 
-  // first properties !!!
+  // first properties
   Props.append(new Property("Type", "explicit", false,
 		QObject::tr("type of equations")+" [explicit, implicit]"));
   Props.append(new Property("Branches", "1", false,
@@ -84,10 +86,35 @@ EqnDefined::EqnDefined(EqnDefined const& p)
 //  recreate(0); // what?
 }
 /*--------------------------------------------------------------------------*/
+std::string EqnDefined::param_value(index_t i) const
+{
+	return Component::param_value(i);
+}
+/*--------------------------------------------------------------------------*/
+std::string EqnDefined::param_name(index_t i) const
+{
+	std::string name = Component::param_name(i);
+	return name;
+}
+/*--------------------------------------------------------------------------*/
 void EqnDefined::set_param_by_index(index_t i, std::string const& v)
 {
-	trace2("EqnDefined::setParameter", i, v);
-	Component::set_param_by_index(i, v);
+	index_t s = EqnDefined::param_count()-1-i;
+	trace3("EqnDefined::set_param_by_index", i, v, s);
+	QString qq = QString_(v);
+	switch(s){
+	case 0:
+	case 1:
+		// tx/ty
+		break;
+	case 2:
+		Props.at(0)->Value=qq;
+	case 3:
+		Props.at(1)->Value=qq;
+	default:
+		Props.at(s-2)->Value=qq;
+		break;
+	}
 	prepare();
 }
 /*--------------------------------------------------------------------------*/

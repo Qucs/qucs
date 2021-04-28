@@ -551,6 +551,7 @@ void Component::rotate()
 void Component::set_param_by_index(index_t pos, std::string const& v)
 {
   int p = int(pos) - int(Symbol::param_count()) - num_component_params ;
+  int i = Component::param_count() - pos - 1;
 
   trace2("Component::setParameter", pos, v);
   if(pos==Symbol::param_count()){
@@ -559,12 +560,14 @@ void Component::set_param_by_index(index_t pos, std::string const& v)
     // ty
   }else if(pos<Symbol::param_count()){ untested();
     Symbol::set_param_by_index(pos, v);
-  }else if (p<int(Props.size())){
-    trace3("Component::setParameter props fallback", pos, p, v);
-    assert(Props.at(p));
+  }else if (i<int(Props.size())){
+    index_t idx = Props.size()-1-i;
+    trace5("Component::setParameter props fallback", pos, p, v, idx, short_label());
+    assert(Props.at(idx));
     //Props.at(p)->setValue(v);
-    Props.at(p)->Value = QString::fromStdString(v);
+    Props.at(idx)->Value = QString::fromStdString(v);
   }else{ untested();
+    trace2("Component::setParameter props miss", pos, short_label());
     incomplete();
   }
 }
@@ -630,7 +633,7 @@ template<class P>
 static int paramDisplay(P const& p, int offset)
 {
   int ret = 0;
-  int s = 1 << offset;
+  int s = 1 << (p.size() - offset);
 
   for(auto i : p){
     if(!i){
@@ -639,7 +642,7 @@ static int paramDisplay(P const& p, int offset)
       ret += s;
     }else{
     }
-    s *= 2;
+    s /= 2;
   }
   trace1("display", ret);
   return ret;
@@ -988,7 +991,7 @@ QString Component::get_VHDL_Code(int)
 // ***  from file. (e.g. subcircuit, library component)
 
 int Component::analyseLine(const QString& Row, int numProps)
-{
+{ untested();
   // incomplete(); // obsolete (later...)
   QPen Pen;
   QBrush Brush;
@@ -1539,7 +1542,7 @@ bool Component::param_is_printable(index_t i) const
     return true;
   }else if(i==s+1){
     return true;
-  }else if(j<Props.size()){
+  }else if(Component::param_count() - 1 - i < Props.size()){
     return true;
   }else{ untested();
     return false;
@@ -1558,7 +1561,7 @@ std::string Component::param_value(index_t i) const
     return std::to_string(tx);
   }else{
     assert(i>=s + num_component_params);
-    int j = i - (s + num_component_params);
+    int j = Component::param_count() - 1 - i;
 
     if(j >= Props.size()){
       return "toobig";
@@ -1575,6 +1578,7 @@ std::string Component::param_value(index_t i) const
 std::string Component::param_name(index_t i) const
 {
   index_t s = Symbol::param_count();
+  index_t k = Component::param_count() - 1 - i;
   if(i<Symbol::param_count()){
     return Symbol::param_name(i);
   }else if(i==s){
@@ -1584,8 +1588,8 @@ std::string Component::param_name(index_t i) const
   }else{
     i -= (s + num_component_params);
     trace4("Component::param_name Props", param_count(), short_label(), i, s);
-    if( i<Props.size()){
-      return Props.at(i)->name().toStdString();
+    if( k<Props.size()){
+      return Props.at(k)->name().toStdString();
     }else{
       unreachable();
       return "unreachable";

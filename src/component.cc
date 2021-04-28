@@ -44,9 +44,9 @@ void CommonComponent::set_param_by_index(index_t i, std::string const& Value) //
 std::string CommonComponent::param_name(index_t i)const
 {
   switch (i) {
-  case 0:untested();  return "tnom";
-  case 1:untested();  return "dtemp";
-  case 2:untested();  return "temp";
+  case 0:  return "tnom";
+  case 1:  return "dtemp";
+  case 2:  return "temp";
   case 3:  return "m";
   default:untested(); return "";
   }
@@ -94,8 +94,8 @@ std::string CommonComponent::param_value(index_t i)const
 std::string CommonComponent::param_value_by_name(std::string const& n)const
 {
 	incomplete();
+	return "ccincomplete_"+n;
 	throw qucs::ExceptionCantFind();
-	return "ccincomplete";
 }
 /*--------------------------------------------------------------------------*/
 bool CommonComponent::param_is_printable(index_t i)const

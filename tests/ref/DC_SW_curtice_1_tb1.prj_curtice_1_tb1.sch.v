@@ -43,9 +43,9 @@ painting incomplete
 painting incomplete
 painting incomplete
 painting incomplete
-// parameter RG 1m
-// parameter RD 1m
-// parameter RS 1m
+// parameter RG 0
+// parameter RD 0
+// parameter RS 0
 // parameter VBR 10e10
 // parameter LG 1e-15
 // parameter LD 1e-15

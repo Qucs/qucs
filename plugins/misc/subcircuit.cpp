@@ -29,6 +29,7 @@
 #include "paramlist.h"
 /*--------------------------------------------------------------------------*/
 const std::string defsym(":SYMBOL_"); // use a parameter?
+const index_t np = 3;
 /*--------------------------------------------------------------------------*/
 namespace qucs {
 	class ViewPainter;
@@ -41,6 +42,7 @@ const std::string typesep(":");
 /*--------------------------------------------------------------------------*/
 using qucs::CommonComponent;
 using qucs::CommonSubckt;
+using qucs::CommonParamlist;
 using qucs::Element;
 using qucs::Component;
 using qucs::Language;
@@ -147,66 +149,50 @@ private: // Symbol
 	void set_param_by_name(std::string const& name, std::string const& value) override;
 	void set_param_by_index(index_t i, std::string const& value) override;
 	index_t param_count() const override{
-		trace3("PC", FactorySymbol::param_count(), Component::param_count(), _param_names.size());
-	  return 3 + FactorySymbol::param_count();
+	  return np + FactorySymbol::param_count();
 	}
 
 	bool param_is_printable(index_t i) const override{
-		trace2("pip", short_label(), i);
+		trace3("pip", short_label(), i, param_name(i));
 		assert(i < Sub::param_count());
 
-		switch(i){
+		index_t s = Sub::param_count() - 1 - i;
+		switch (s) {
 		case 0:
-			return true;
 		case 1:
-			return true;
 		case 2:
 			return true;
 		default:
 			break;
 		}
-		if(i-3<_param_names.size()){
+		trace2("Sub::param_is_printable", _param_names.size(), common()->param_count());
+		if(s-np<_param_names.size()){
 			return true;
 		}else{
-			return FactorySymbol::param_is_printable(i);
+			return FactorySymbol::param_is_printable(i);// wrong?
 		}
 	}
-	std::string param_name(index_t i) const override {
-		switch (i){
-		case 0:
-			return "File";
-			// return "porttype"; // or so
-		case 1:
-			return "$tx";
-		case 2:
-			return "$ty";
-		default:
-			break;
-		}
-		if(i-3<_param_names.size()){
-			return _param_names[i-3];
-		}else{
-			return FactorySymbol::param_name(i);
-		}
-	}
+	std::string param_name(index_t i) const override;
 	std::string param_value(index_t i) const override{
-		switch (i){
+		index_t s = Sub::param_count() - 1 - i;
+		switch (s) {
 		case 0:
-			return _filename;
+			return std::to_string(_tx);
 		case 1:
 			return std::to_string(_ty);
 		case 2:
-			return std::to_string(_tx);
+			return _filename;
 		default:
 			break;
 		}
 	
-		if(i-3<_param_names.size()){
-			auto n = _param_names[i-3];
-			trace3("map param", i, n, short_label());
+		if(0 || s-np<_param_names.size()){
+			std::string n = param_name(i);
+			trace4("map param", i, n, short_label(), param_name(i));
 			return FactorySymbol::param_value_by_name(n);
 		}else{
-			return FactorySymbol::param_value(i);
+			trace2("Sub::param_value", i, param_name(i));
+			return FactorySymbol::param_value(i + _param_names.size());
 		}
 	}
 	std::string param_value_by_name(std::string const& name) const override{
@@ -246,7 +232,7 @@ class PROTO : public SubcktBase{
 public:
 	PROTO() : SubcktBase(){
 		new_subckt();
-		attach_common(new qucs::CommonParamlist());
+		attach_common(new CommonParamlist());
 	}
 	PROTO(PROTO const& x) : SubcktBase(x){
 		new_subckt(); // copy??
@@ -270,7 +256,7 @@ public:
 
 		_param_names[i] = v;
 	}
-	std::string param_name(index_t i) const override{
+	std::string param_name(index_t i) const override{ untested();
 		assert(i<_param_names.size());
 		return _param_names[i];
 	}
@@ -440,7 +426,7 @@ void Sub::build_sckt(istream_t& cs, SubcktBase* proto) const
 						proto->set_param_by_name(name, defv);
 						proto->set_param_by_index(ii, name);
 						++ii;
-					}catch(qucs::ExceptionCantFind const&){
+					}catch(qucs::ExceptionCantFind const&){ untested();
 						incomplete();
 					}
 					 // auto p = new PARAMETER<double>
@@ -472,26 +458,29 @@ void Sub::build_sckt(istream_t& cs, SubcktBase* proto) const
 /*--------------------------------------------------------------------------*/
 void Sub::set_param_by_index(index_t i, std::string const& v)
 {
-	switch (int(Sub::param_count()) - (1 + i)) {
+	trace6("Sub::spbi", short_label(), i, v, _param_names.size(), param_count(), param_name(i));
+	index_t s = Sub::param_count() - 1 - i;
+	switch (s) {
 	case 0:
+		_tx = atoi(v.c_str());
+	return;
+	case 1:
+		_ty = atoi(v.c_str());
+	return;
+	case 2:
 		_filename = v;
 		refreshSymbol(v);
-	break;
-	case 1:
-		_tx = atoi(v.c_str());
-	break;
-	case 2:
-		_ty = atoi(v.c_str());
+	return;
+	default:
 	break;
 	}
 
-	if(i==4){ untested();
-		// needed by legacy schematic parser...?
-		incomplete();
-		_filename = v;
-		trace1("Sub::setParameter", v);
-		refreshSymbol(v);
+	if(s-np<_param_names.size()){
+		auto n = param_name(i);
+		trace4("set param fwd", i, n, v, short_label());
+		return FactorySymbol::set_param_by_name(n, v);
 	}else{
+		trace3("set param no fwd", i, short_label(), _param_names.size());
 	}
 }
 /*--------------------------------------------------------------------------*/
@@ -579,8 +568,6 @@ void Sub::init(Component const* proto)
 					std::string defv;
 					cs >> name;
 					cs >> defv;
-					auto p = new PARAMETER<double>;
-					*p = defv;
 					_param_names.push_back(name);
 				}else{
 					// port HERE?
@@ -624,6 +611,27 @@ bool Sub::portExists(index_t i) const
 	return i<numPorts();
 }
 /*--------------------------------------------------------------------------*/
+std::string Sub::param_name(index_t i) const
+{
+	index_t s = Sub::param_count() - 1 - i;
+	switch (s) {
+	case 0:
+		return "$tx";
+	case 1:
+		return "$ty";
+	case 2:
+		return "File";
+		// return "porttype"; // or so
+	default:
+		break;
+	}
+	if(s-np<_param_names.size()){
+		return _param_names[s-np];
+	}else{
+		return FactorySymbol::param_name(i + _param_names.size());
+	}
+}
+/*--------------------------------------------------------------------------*/
 void Sub::set_param_by_name(std::string const& name, std::string const& v)
 { itested();
 	trace2("Sub::setParameter", name, v);
@@ -638,7 +646,7 @@ void Sub::set_param_by_name(std::string const& name, std::string const& v)
 		_filename = v;
 		refreshSymbol(v);
 	}else{ itested();
-		Symbol::set_param_by_name(name, v);
+		FactorySymbol::set_param_by_name(name, v);
 	}
 }
 /*--------------------------------------------------------------------------*/

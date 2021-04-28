@@ -229,10 +229,11 @@ std::string istream_t::ctos(const std::string& term,
 		     const std::string& end_quote,
 		     const std::string& trap)
 {
-#if 1 // later
+	trace2("hmmm", fullstring(), cursor());
 	assert(begin_quote.length() == end_quote.length());
 
-	// skipbl();
+	skipbl();
+	trace2("hmmm", fullstring(), cursor());
 	size_t begin_string = cursor();
 	size_t end_string = cursor();
 
@@ -283,18 +284,6 @@ std::string istream_t::ctos(const std::string& term,
 	skipcom();
 	_ok = end_string > begin_string;
 	return s;
-#else
-	(void)term;
-	(void)begin_quote;
-	(void)end_quote;
-	(void)trap;
-	std::string full = fullString();
-	size_t i = full.find(" ");
-	_cnt = i;
-	std::string s = full.substr(0, i);
-	trace2("ctos", fullString(), s);
-	return s;
-#endif
 }
 /*--------------------------------------------------------------------------*/
 // borrowed from ap_match
@@ -337,7 +326,7 @@ istream_t& istream_t::umatch(const std::string& s)
     }else{
       // mismatch
       const char* bar = strchr(str2, '|');
-      if (bar && (bar[-1] != '\\')) { untested();
+      if (bar && (bar[-1] != '\\')) {
 	str2 = bar+1;
 	reset(start);
       }else{

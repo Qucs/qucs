@@ -1,13 +1,13 @@
 // VS::printSubckt main
 module main(P1, P2, P3, P4, P6);
-R #(.$xposition(410), .$yposition(160), .$vflip(1), .$hflip(1), .$tx(-26), .$ty(-26), .R(4k), .Temp(26.85), .Tc1(0.0), .Tc2(0.0), .Tnom(26.85), .Symbol(european)) R1(net_380_160, net_440_160);
-C #(.$xposition(470), .$yposition(160), .$vflip(1), .$hflip(1), .$tx(-26), .$ty(-26), .C(4p), .V(), .Symbol(neutral)) C1(net_440_160, net_500_160);
-Port #(.$xposition(50), .$yposition(60), .$vflip(1), .$hflip(1), .$tx(-23), .$ty(-23), .Num(3), .Type()) P3(P3, net_50_60);
-Port #(.$xposition(50), .$yposition(400), .$vflip(1), .$hflip(1), .$tx(-23), .$ty(-23), .Num(4), .Type()) P4(P4, net_50_400);
-Port #(.$xposition(540), .$yposition(230), .$vflip(1), .$hflip(1), .$tx(4), .$ty(4), .Num(5), .Type()) P6(P6, net_540_230);
-Port #(.$xposition(50), .$yposition(230), .$vflip(1), .$hflip(1), .$tx(-23), .$ty(-23), .Num(1), .Type()) P1(P1, net_50_230);
-Port #(.$xposition(50), .$yposition(170), .$vflip(1), .$hflip(1), .$tx(-23), .$ty(-23), .Num(2), .Type()) P2(P2, net_50_170);
-Idc #(.$xposition(90), .$yposition(270), .$vflip(-1), .$hflip(1), .$tx(18), .$ty(18), .I(5 uA)) I1(net_90_300, net_90_240);
+R #(.R(4k), .Temp(26.85), .Tc1(0.0), .Tc2(0.0), .Tnom(26.85), .Symbol(european), .$ty(-26), .$tx(-26), .$xposition(410), .$yposition(160), .$vflip(1), .$hflip(1)) R1(net_380_160, net_440_160);
+C #(.C(4p), .V(), .Symbol(neutral), .$ty(-26), .$tx(-26), .$xposition(470), .$yposition(160), .$vflip(1), .$hflip(1)) C1(net_440_160, net_500_160);
+Port #(.Num(3), .Type(), .$ty(-23), .$tx(-23), .$xposition(50), .$yposition(60), .$vflip(1), .$hflip(1)) P3(P3, net_50_60);
+Port #(.Num(4), .Type(), .$ty(-23), .$tx(-23), .$xposition(50), .$yposition(400), .$vflip(1), .$hflip(1)) P4(P4, net_50_400);
+Port #(.Num(5), .Type(), .$ty(4), .$tx(4), .$xposition(540), .$yposition(230), .$vflip(1), .$hflip(1)) P6(P6, net_540_230);
+Port #(.Num(1), .Type(), .$ty(-23), .$tx(-23), .$xposition(50), .$yposition(230), .$vflip(1), .$hflip(1)) P1(P1, net_50_230);
+Port #(.Num(2), .Type(), .$ty(-23), .$tx(-23), .$xposition(50), .$yposition(170), .$vflip(1), .$hflip(1)) P2(P2, net_50_170);
+Idc #(.I(5 uA), .$ty(18), .$tx(18), .$xposition(90), .$yposition(270), .$vflip(-1), .$hflip(1)) I1(net_90_300, net_90_240);
 wire #(.$xposition(200), .$yposition(100), .$vflip(1), .$hflip(1)) noname(net_200_100, net_210_100);
 wire #(.$xposition(170), .$yposition(130), .$vflip(1), .$hflip(1)) noname(net_170_130, net_170_140);
 wire #(.$xposition(310), .$yposition(130), .$vflip(1), .$hflip(1)) noname(net_310_130, net_310_160);

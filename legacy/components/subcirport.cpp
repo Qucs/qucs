@@ -98,7 +98,7 @@ SubCirPort::SubCirPort() : Component(), _pos(1)
 // -------------------------------------------------------
 void SubCirPort::set_port_by_index(index_t i, std::string const& value)
 {
-	trace3("port::spbi", label(), i, value);
+	trace3("port::spbi1", label(), i, value);
 
    if(value==""){
 		incomplete();
@@ -112,10 +112,11 @@ void SubCirPort::set_port_by_index(index_t i, std::string const& value)
 
 	bool ok=true;
 	QString pp;
+#if 0
 	try{
 		// don't know why this is a parameter and not a local variable
 		// (does it make any sense?)
-		pp = QString::fromStdString(param_value(num_component_params + Symbol::param_count()));
+		pp = QString::fromStdString(param_value(6));
 	}catch(qucs::ExceptionCantFind const&){ untested();
 		ok = false;
 	}
@@ -125,6 +126,10 @@ void SubCirPort::set_port_by_index(index_t i, std::string const& value)
 		pos = pp.toInt(&ok);
 	}else{ untested();
 	}
+#else
+	index_t pos = _pos;
+	assert(pos);
+#endif
 
 	--pos; // QUCS numbers start at 1.
 
@@ -147,7 +152,7 @@ void SubCirPort::set_port_by_index(index_t i, std::string const& value)
 	}else if(so){
 		assert(scope());
 		assert(scope()==so->scope());
-		trace3("port::spbi", pos, label(), value);
+		trace3("port::spbi2", pos, label(), value);
 		so->set_port_by_index(pos, label());
 
 		Symbol::set_port_by_index(0, label());
@@ -204,40 +209,48 @@ void SubCirPort::createSymbol()
   Ports.append(new ComponentPort(  0,  0));
 }
 // -------------------------------------------------------
-std::string SubCirPort::param_name(index_t n) const
+std::string SubCirPort::param_name(index_t i) const
 {
-	if(n == num_component_params + Symbol::param_count()){
+	switch(Component::param_count()-i-1){
+	case 0:
 		return "Num";
-	}else if(n== num_component_params + Symbol::param_count() + 1){
+	case 1:
 		return "Type";
-	}else{
-		return Component::param_name(n);
+	default:
+		return Component::param_name(i);
 	}
 }
 /*--------------------------------------------------------------------------*/
-std::string SubCirPort::param_value(index_t n) const
+std::string SubCirPort::param_value(index_t i) const
 {
 //	this is not correct.
-	if(n == num_component_params + Symbol::param_count()){
-		trace1("SubCirPort::paramValue", _pos);
+	switch(Component::param_count()-i-1){
+	case 0:
 		return std::to_string(_pos);
-	}else if(n==num_component_params + Symbol::param_count() + 1){
+	case 1:
 		return _some_type;
-	}else{
-		return Component::param_value(n);
+	default:
+		return Component::param_value(i);
 	}
 }
 // -------------------------------------------------------
-void SubCirPort::set_param_by_index(index_t n, std::string const& vv)
+void SubCirPort::set_param_by_index(index_t i, std::string const& vv)
 {
-	trace3("SubCirPort::setParameter", label(), n, vv);
-	Component::set_param_by_index(n, vv); // noop?
+	trace1("SubCirPort::set_param_by_index1", Props.at(0)->value());
+	trace1("SubCirPort::set_param_by_index1", Props.at(1)->value());
+	Component::set_param_by_index(i, vv); // noop?
+	trace1("SubCirPort::set_param_by_index2", Props.at(0)->value());
+	trace1("SubCirPort::set_param_by_index2", Props.at(1)->value());
+
 	QString v = QString::fromStdString(vv);
 
-	if(n==num_component_params + Symbol::param_count()){
+	index_t n = SubCirPort::param_count()-i-1;
+	trace4("SubCirPort::set_param_by_index", label(), i, vv, n);
+
+	if(i==6){
 		bool ok;
 		int pos = v.toInt(&ok);
-		trace1("SubCirPort::setParameter portno", pos);
+		trace2("SubCirPort::set_param_by_index portno", pos, Props.at(0)->value());
 
 		--pos; // QUCS numbers start at 1.
 		if(!ok){
@@ -251,15 +264,16 @@ void SubCirPort::set_param_by_index(index_t n, std::string const& vv)
 			trace3("setting scope port", owner()->label(), pos, port(pos).value());
 			auto sb = prechecked_cast<SubcktBase*>(owner());
 			assert(sb);
-			sb->set_port_by_index(pos, port(pos).nodeLabel());
 			_pos = pos+1;
+			sb->set_port_by_index(pos, port(pos).nodeLabel());
 		}else{
 			_pos = pos+1;
 		}
-	}else if(n==1 + num_component_params + Symbol::param_count()){
+	}else if(i==7){
+		trace1("SubCirPort::set_param_by_index type", vv);
 		_some_type = vv;
 	}else{
-		incomplete();
+//		Component::set_param_by_index(i, vv); // noop?
 	}
 }
 // -------------------------------------------------------

@@ -163,11 +163,13 @@ index_t Symbol::param_count() const
 /*--------------------------------------------------------------------------*/
 bool Symbol::param_is_printable(index_t i) const
 {
-	switch(int(Symbol::param_count()) - 1 - i){
-	case 0:
-	case 1:
-	case 2:
-	case 3:
+	index_t n = Symbol::param_count() - 1 - i;
+	trace5("Symbol::param_is_printable", label(), Symbol::param_count(), i, Symbol::param_name(i), n);
+	switch(n){
+	case 0: // x
+	case 1: // y
+	case 2: // hflip
+	case 3: // vflip
 		return true;
 	default:
 		return Component::param_is_printable(i);
@@ -177,13 +179,13 @@ bool Symbol::param_is_printable(index_t i) const
 std::string Symbol::param_value(index_t i) const
 {
 	switch(int(Symbol::param_count()) - 1 - i){
-	case 3:
-		return std::to_string(cx());
-	case 2:
-		return std::to_string(cy());
-	case 1:
-		return std::to_string(_vflip);
 	case 0:
+		return std::to_string(cx());
+	case 1:
+		return std::to_string(cy());
+	case 2:
+		return std::to_string(_vflip);
+	case 3:
 		return std::to_string(_hflip);
 	default: untested();
 		trace2("fwd", Component::param_count(), i);
@@ -193,15 +195,15 @@ std::string Symbol::param_value(index_t i) const
 /*--------------------------------------------------------------------------*/
 std::string Symbol::param_name(index_t i) const
 {
-	trace2("Symbol::paramName", label(), i);
-	switch(int(Symbol::param_count()) - 1 - i){
-	case 3:
-		return "$xposition";
-	case 2:
-		return "$yposition";
-	case 1:
-		return "$vflip";
+	index_t n = Symbol::param_count() - 1 - i;
+	switch(n){
 	case 0:
+		return "$xposition";
+	case 1:
+		return "$yposition";
+	case 2:
+		return "$vflip";
+	case 3:
 		return "$hflip";
 	default:
 		return Component::param_name(i);
@@ -210,13 +212,15 @@ std::string Symbol::param_name(index_t i) const
 /*--------------------------------------------------------------------------*/
 void Symbol::set_param_by_index(index_t n, std::string const& v)
 {
-	if(n==0){ // xpos
+	if(n==0){ untested();
+		// xpos
 		setPosition(pos_t(atoi(v.c_str()), cy()));
-	}else if(n==1){ // ypos
+	}else if(n==1){ untested();
+		// ypos
 		setPosition(pos_t(cx(), atoi(v.c_str())));
-	}else if(n==2){ // vflip
+	}else if(n==2){ untested();
 		_vflip = atoi(v.c_str()); // TODO: parameters.
-	}else if(n==3){ // hflip
+	}else if(n==3){ untested();
 		_hflip = atoi(v.c_str()); // TODO: parameters.
 	}else if(n<Symbol::param_count()){
 		trace3("fail", n, v, Symbol::param_count());

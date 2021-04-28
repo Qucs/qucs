@@ -336,7 +336,7 @@ void VS::print_args(ostream_t& s, Component const* sym) const
 	std::string comma="";
 	s << "#(";
 
-	for(unsigned i=0; i<sym->param_count(); ++i) {
+	for(index_t i=sym->param_count(); i--;) {
 		auto name = sym->param_name(i);
 		if (name.size() == 0){
 			unreachable();
@@ -354,7 +354,7 @@ static void print_args(ostream_t& s, Component const* sym)
 	std::string comma="";
 	s << "#(";
 
-	for(unsigned i=0; i<sym->param_count(); ++i) {
+	for(index_t i=sym->param_count(); i--;) {
 		auto name = sym->param_name(i);
 		if(name.size() ==0){
 			unreachable();
@@ -688,9 +688,16 @@ SubcktBase* Verilog::parse_module(istream_t& cmd, SubcktBase* x) const
 	// body
 	for (;;) {
 		cmd.get_line("verilog-module>");
+		trace2("verilog body", cmd.fullstring(), cmd.cursor());
 
 		if (cmd >> "endmodule ") {
 			break;
+		}else if (cmd >> "parameter |param ") {
+			std::string name;
+			cmd >> name;
+			DEV_DOT* d = new DEV_DOT();
+			d->set(cmd.fullstring());
+			x->scope()->push_back(d);
 		}else{
 			trace1("new_instance", cmd.fullstring());
 			new__instance(cmd, x, x->scope());

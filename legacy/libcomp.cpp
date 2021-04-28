@@ -39,6 +39,8 @@ namespace{
 /*--------------------------------------------------------------------------*/
 using qucs::SubcktBase;
 /*--------------------------------------------------------------------------*/
+const index_t np = 4;
+/*--------------------------------------------------------------------------*/
 pos_t portPosition(SubcktBase const* sckt, index_t i)
 {
 	std::string n = sckt->portName(i);
@@ -319,7 +321,7 @@ private: // Symbol
 	}
 
 	index_t param_count() const override {
-		return Symbol::param_count() + 4 + _params.size();
+		return Symbol::param_count() + np + _params.size();
 	}
 	void set_param_by_index(index_t n, std::string const& v) override;
 	std::string param_value_by_name(std::string const& n) const override{
@@ -336,7 +338,8 @@ private: // Symbol
 		return m >= 0;
 	}
 	std::string param_value(index_t i) const override{
-		int m = i - Symbol::param_count();
+		index_t m = Lib::param_count() - 1 - i;
+		trace2("Lib::pv", i, m);
 		switch(m){
 		case 0:
 			return std::to_string(_tx);
@@ -347,11 +350,11 @@ private: // Symbol
 		case 3:
 			return _component.Value.toStdString();
 		default:
-			if(m - 4 < 0){
+			if(m - np < 0){
 				return Symbol::param_value(i);
-			}else if(m - 4 >= int(_param_names.size())){ untested();
+			}else if(m - np >= int(_param_names.size())){
 				return Symbol::param_value(i);
-			}else if(auto p = dynamic_cast<PARAMETER<double>* >(_params[m-4])){
+			}else if(auto p = dynamic_cast<PARAMETER<double>* >(_params[m-np])){
 			  	return p->string();
 			}else{
 				unreachable();
@@ -360,7 +363,7 @@ private: // Symbol
 		}
 	}
 	std::string param_name(index_t i) const override{
-		int m = i - Symbol::param_count();
+		index_t m = Lib::param_count() - 1 - i;
 		switch(m){
 		case 0:
 			return "$tx";
@@ -465,7 +468,7 @@ static Dispatcher<Symbol>::INSTALL p(&symbol_dispatcher, "Lib", &D);
 void Lib::set_param_by_index(index_t n, std::string const& v)
 {
 	bool redo = false;
-	int m = int(n) - int(Symbol::param_count());
+	index_t m = Lib::param_count() - 1 - n;
 	trace4("Lib:SP", n, v, m, _params.size());
 //		assert(n<Lib::param_count()); not necessarily.
 	switch(m){
@@ -499,6 +502,7 @@ void Lib::set_param_by_index(index_t n, std::string const& v)
 	if(_section.Value == ""){
 	}else if(_component.Value == ""){
 	}else if(redo){
+		trace1("redo", _section.Value);
 		// BUG: not here.
 		attachProto();	
 		assert(_parent); // for now.

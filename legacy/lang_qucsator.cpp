@@ -192,7 +192,7 @@ static void printSymbol_(Symbol const* c, ostream_t& s)
 		std::string s_ = " ";
 		std::string e = "\n";
 		std::string Name = c->short_label();
-		for(index_t k=0; k<c->param_count(); ++k) {
+		for(index_t k=c->param_count(); k--;) {
 			auto name = c->param_name(k);
 			if(name[0]=='$'){
 			}else if(name=="Type"){
@@ -223,7 +223,7 @@ static void printSymbol_(Symbol const* c, ostream_t& s)
 			s << " " << N;
 		}
 
-		for(index_t ii=0; ii<sym->param_count(); ++ii) {
+		for(index_t ii=sym->param_count(); ii--;) {
 			trace3("param", c->label(), ii, sym->param_count());
 			std::string name = sym->param_name(ii);
 			//trace2("param", name, value);
@@ -554,7 +554,7 @@ void QucsatorLang::printComponent(::Component const* c, ostream_t& s) const
 		trace3("print", c->label(), sym->numPorts(), sym->label());
 		print_ports(sym, s);
 
-		for(unsigned ii=0; ii<sym->param_count(); ++ii) {
+		for(index_t ii=sym->param_count(); ii--;) {
 			trace3("param", c->label(), ii, sym->param_count());
 			std::string name = sym->param_name(ii);
 			//trace2("param", name, value);
