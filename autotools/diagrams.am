@@ -32,7 +32,9 @@ MOCFILES = $(MOCHEADERS:.h=.moc.cpp)
 
 diagrams_la_CXXFLAGS = ${AM_CXXFLAGS} -fPIC
 diagrams_la_LDFLAGS = -module -avoid-version
-diagrams_la_SOURCES = ${RAW_SRCS}
+
+# suspend widget-based diagrams. build manually if needed.
+diagrams_la_SOURCES = ${RAW_SRCS_}
 
 nodist_diagrams_la_SOURCES = $(MOCFILES)
 
