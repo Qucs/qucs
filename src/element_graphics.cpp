@@ -220,15 +220,31 @@ static void redo_children(ElementGraphics* g)
 	}else{itested();
 	}
 
-	if(auto sym = dynamic_cast<SubcktBase const*>(element(g))){ untested();
+	if(!element(g)){
+		unreachable();
+	}else if(element(g)->makes_own_scope()){ itested();
+		auto s = element(g)->scope();
+		assert(s);
+		for(auto o : *s){itested();
+			if(auto i=dynamic_cast<QWidget*>(o)){ untested();
+				incomplete(); // good idea?
+			}else if(auto i=dynamic_cast<QGraphicsItem*>(o)){ untested();
+				i->setParentItem(g); // memory?
+			}else if(auto i=dynamic_cast<Element*>(o)){
+				QGraphicsItem* cg = new ElementGraphics(i->clone());
+				cg->setParentItem(g);
+			}else{
+			}
+		}
+	}else if(auto sym = dynamic_cast<SubcktBase const*>(element(g))){ untested();
+		// possibly unneeded.
 		auto s = sym->subckt();
 		assert(s);
 		for(auto o : *s){itested();
 			if(auto i=dynamic_cast<QWidget*>(o)){ untested();
 				incomplete(); // good idea?
 			}else if(auto i=dynamic_cast<QGraphicsItem*>(o)){ untested();
-				// just display it?
-				incomplete();
+				i->setParentItem(g); // memory?
 			}else if(auto i=dynamic_cast<Element*>(o)){
 				QGraphicsItem* cg = new ElementGraphics(i->clone());
 				cg->setParentItem(g);

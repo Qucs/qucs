@@ -11,13 +11,8 @@
  *                                                                         *
  ***************************************************************************/
 /*--------------------------------------------------------------------------*/
-// Ideally, some painting will be shared across diagrams. Not yet sure how to
-// do excactly.
-//
 // This represents a variable in a plot, similar to "Graph" in around 0.0.20.
-// Not sure if it should do any painting, or better leave it to the Diagram.
-//
-// The diagram could clip, but perhaps Qt should take care of it anyway.
+// Qt should take care of painting...
 /*--------------------------------------------------------------------------*/
 #include "data.h"
 #include "diagram.h"
@@ -29,7 +24,8 @@
 #include "sckt_base.h"
 #include "viewpainter.h"
 #include "painting.h"
-#include <QPainterPath> // BUG.
+#include <QGraphicsItem>
+#include <QPainterPath>
 /*--------------------------------------------------------------------------*/
 namespace{
 /*--------------------------------------------------------------------------*/
@@ -44,15 +40,15 @@ using qucs::SimOutputDir;
 using qucs::data_dispatcher;
 using qucs::SimOutputData;
 /*--------------------------------------------------------------------------*/
-class DiagramVariable : public Data, public Painting {
+class DiagramVariable : public Data, public QGraphicsItem {
 public:
-	DiagramVariable() : Data() {}
+	DiagramVariable() : Data(), QGraphicsItem() {}
 	DiagramVariable(DiagramVariable const& e)
-	  : Data(e), _color(e._color), _thick(e._thick) {untested();}
+	  : Data(e), QGraphicsItem(/*e*/), _color(e._color), _thick(e._thick) {untested();}
 
-public: // Painting
-	virtual rect_t bounding_rect() const;
-	void paint(ViewPainter*) const override;
+private: // QGraphicsItem
+	QRectF boundingRect() const override;
+	void paint(QPainter *painter, const QStyleOptionGraphicsItem*, QWidget*) override;
 
 public: // Element
 	Element* clone() const override{untested();
@@ -172,7 +168,7 @@ private:
 		}
 	}
 private:
-	void paint_graph_data(CommonData const* cd, ViewPainter* p) const;
+	void paint_graph_data(CommonData const* cd, QPainter* p) const;
 
 private:
 	std::string _color;
@@ -181,6 +177,12 @@ private:
 	std::string _num_mode;
 	std::string _style;
 	std::string _xaxisno;
+}; // DiagramVariable
+/*--------------------------------------------------------------------------*/
+class RDV_factory : public Data{
+	Data* clone() const override{
+		return new DiagramVariable();
+	}
 }v0;
 Dispatcher<Data>::INSTALL p0(&data_dispatcher, "rectdiagramvariable", &v0);
 /*--------------------------------------------------------------------------*/
@@ -231,24 +233,17 @@ std::string DiagramVariable::param_value(index_t i) const
 	}
 }
 /*--------------------------------------------------------------------------*/
-rect_t DiagramVariable::bounding_rect() const
+QRectF DiagramVariable::boundingRect() const
 { untested();
-	if(auto p=dynamic_cast<Painting const*>(owner())){ untested();
-		return p->bounding_rect();
-	}else{ untested();
-		unreachable(); //?
-		return rect_t();
-	}
+	return QRectF();
 }
 /*--------------------------------------------------------------------------*/
 /*--------------------------------------------------------------------------*/
-void DiagramVariable::paint(ViewPainter* v) const
+void DiagramVariable::paint(QPainter *painter, const QStyleOptionGraphicsItem*,
+		QWidget*)
 { untested();
-	// is this a bug? can paint and prepare run concurrently?
-
-	// Diagram::paint??
 	if(common()){ untested();
-		paint_graph_data(common(), v);
+		paint_graph_data(common(), painter);
 	}else{ untested();
 	}
 }
@@ -261,7 +256,7 @@ void DiagramVariable::paint(ViewPainter* v) const
 // }
 /*--------------------------------------------------------------------------*/
 // under construction
-void DiagramVariable::paint_graph_data(CommonData const* cd, ViewPainter* p) const
+void DiagramVariable::paint_graph_data(CommonData const* cd, QPainter* p) const
 { untested();
 	auto pp = prechecked_cast<SimOutputData const*>(cd);
 	assert(pp);
@@ -278,7 +273,7 @@ void DiagramVariable::paint_graph_data(CommonData const* cd, ViewPainter* p) con
 		int ii = 0;
 
 		QPainterPath path;
-		for (auto xx : *pp){ untested();
+		for (auto xx : *pp){ itested();
 			++ii;
 			auto x = xx.first;
 			auto y = xx.second.real();

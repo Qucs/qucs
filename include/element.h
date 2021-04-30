@@ -121,6 +121,7 @@ public:
 	virtual Symbol const* proto(ElementList const*) const{return nullptr;}
 	ElementList const* scope() const;
 	virtual ElementList* scope();
+	virtual bool makes_own_scope()const  {return false;}
 
 public: // friend ElementGraphics?
 	//  void attachToModel();

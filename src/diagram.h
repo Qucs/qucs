@@ -129,7 +129,10 @@ public: // Parameters
 	virtual std::string param_name(index_t n) const;
 
 public:
-	ElementList* scope(){ return _subckt; }
+	ElementList* scope() override{ return _subckt; }
+
+private:
+	bool makes_own_scope() const override{ untested(); return true;}
 
 public: // ??!
 	// void paint(ViewPainter* p) override;

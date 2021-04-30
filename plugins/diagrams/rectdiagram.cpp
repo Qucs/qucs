@@ -57,6 +57,7 @@ class RDV : public Element{
 	}
 };
 
+// it's a painting, because the canvas is painted here.
 class RectDiagram : public Diagram, public Painting{
 	RectDiagram(RectDiagram const& c) : Diagram(c) {
 		assert(subckt());
@@ -540,13 +541,6 @@ void RectDiagram::paint(ViewPainter* v) const
 
 	// v->translate(0, _height);
 	v->scale(1.0, -1.0);
-
-	for(auto x : *subckt()){
-		if(auto p=dynamic_cast<Painting const*>(x)) {
-			p->paint(v);
-		}else{
-		}
-	}
 
 	//		Element::paint(p);
 }
