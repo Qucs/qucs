@@ -3,7 +3,6 @@ TARGET = diagrams
 
 RAW_SRCS = \
 	rectdiagram.cpp \
-	rectdiagram_var.cc \
 	tabdiagram.cpp
 
 LIBS = -lqcustomplot
@@ -20,5 +19,4 @@ NOTYET = \
 	truthdiagram.cpp \
 	waveac.cpp
 
-EXTRA_DIST = \
-	obsolete_stuff.h
+EXTRA_DIST =

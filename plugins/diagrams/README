@@ -1,10 +1,6 @@
-These are the "new style" diagrams introduced during Qt5 refactoring.
+These are legacy diagrams ported to QGraphicsItem (Qt5).
 
-currently, they will be used, if you start qucs with
+They will be used, if you start qucs with
 $ qucs -a plugins/diagrams
 
-A diagram is a QtWidget with a reference to a Diagram (Element) in the
-schematic model.
-
-Diagrams don't know about each other, so you may use legacy diagrams instead
-(default), if you can make them work with Qt5. They are in ../../legacy.
+(work in progress)
