@@ -144,12 +144,12 @@ public:
 		setWhatsThis(tr("Select\n\nActivates select mode"));
 		setCheckable(true);
 	}
-	bool event(QEvent *e) override{ untested();
+	bool event(QEvent *e) override{itested();
 		if(auto k=dynamic_cast<QShortcutEvent const*>(e)){ itested();
 			trace1("select escape key?", e->type());
 			setChecked(true);
 			return true;
-		}else{ untested();
+		}else{itested();
 			trace1("evt", e->type());
 			return false;
 		}

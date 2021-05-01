@@ -70,7 +70,7 @@ bool App::gotoPage(const QString& Name)
 	}
 
 	// TODO. open schematic associated with document?
-	if(is_schematic) {untested();
+	if(is_schematic) {itested();
 		d = DocumentTab->createEmptySchematic(Name);
 	}else if(Info.suffix() == "sym") { untested();
 		incomplete();
@@ -78,7 +78,7 @@ bool App::gotoPage(const QString& Name)
 		d = DocumentTab->createEmptyTextDoc(Name);
 	}
 
-	try{ untested();
+	try{itested();
 		d->load();
 	}catch(qucs::Exception const&){ untested();
 		delete d;

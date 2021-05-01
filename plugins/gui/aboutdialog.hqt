@@ -88,7 +88,7 @@ public slots:
 };
 
 class AboutDialog_ : public Widget{
-  Widget* clone() const{ untested(); return new AboutDialog(); }
+  Widget* clone() const{itested(); return new AboutDialog(); }
 }d0;
 static Dispatcher<Widget>::INSTALL p1(&qucs::widget_dispatcher, "AboutDialog", &d0);
 

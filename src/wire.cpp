@@ -486,9 +486,9 @@ std::string Wire::param_value_by_name(std::string const& n) const
 {
 	if(n=="symbol_scale"){ untested();
 		return std::to_string(_scale);
-	}else if(n=="$tx"){ untested();
+	}else if(n=="$tx"){itested();
 		return std::to_string(_tx);
-	}else if(n=="$ty"){ untested();
+	}else if(n=="$ty"){itested();
 		return std::to_string(_ty);
 	}else if(n=="deltax"){ untested();
 		auto p = portPosition(1);
@@ -496,9 +496,9 @@ std::string Wire::param_value_by_name(std::string const& n) const
 	}else if(n=="deltay"){ untested();
 		auto p = portPosition(1);
 		return std::to_string(getY(p));
-	}else if(n=="$param_display"){ untested();
+	}else if(n=="$param_display"){itested();
 		return std::to_string(31*_has_netname);
-	}else if(n=="$param_hidename"){ untested();
+	}else if(n=="$param_hidename"){itested();
 		return std::to_string(31);
 	}else if(n=="netname"){ untested();
 		return _netname;

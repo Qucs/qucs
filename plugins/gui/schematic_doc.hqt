@@ -946,7 +946,7 @@ bool SchematicDoc::load()
   new_root();
   _root->set_param_by_name("$filename", docName().toStdString());
 
-  try{ untested();
+  try{itested();
 	  loadDocument();
   }catch(qucs::Exception const&){ untested();
 	  incomplete();
@@ -1001,7 +1001,7 @@ bool SchematicDoc::load()
 }
 /*--------------------------------------------------------------------------*/
 void SchematicDoc::parse(istream_t& s, Language const* L)
-{ untested();
+{itested();
 	incomplete(); // but still used in qucs -i $file
 //	if(!L){itested();
 //		auto D = language_dispatcher["leg_sch"]; // use command instead.
@@ -1013,7 +1013,7 @@ void SchematicDoc::parse(istream_t& s, Language const* L)
 	assert(_model);
 
 	try{
-		while(true){untested();
+		while(true){itested();
 			s.read_line();
 			assert(_root->subckt());
 			trace2("SchematicDoc::parse", s.fullstring(), _root->label());

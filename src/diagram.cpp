@@ -56,6 +56,9 @@ namespace qucs {
 
 Diagram::Diagram(Diagram const& p)
   : Element(p),
+	 xAxis(p.xAxis),
+	 yAxis(p.yAxis),
+	 zAxis(p.zAxis),
     _width(p._width),
     _height(p._height),
     Name(p.Name) // yikes.
@@ -75,7 +78,12 @@ Diagram::Diagram(Diagram const& p)
 	 new_subckt();
 	 for (auto i : *p._subckt){
 		 assert(i);
-		 _subckt->push_back(i->clone());
+		 auto cl = i->clone();
+		 _subckt->push_back(cl);
+		 if(i->owner() == &p){
+			 cl->set_owner(this);
+		 }else{
+		 }
 	 }
 }
 
@@ -156,7 +164,7 @@ std::string Diagram::param_name(index_t n) const
 }
 
 void Diagram::set_param_by_index(index_t i, std::string const& v)
-{ untested();
+{itested();
 
 	pos_t p = position();
 	int cx = getX(p);
@@ -166,16 +174,16 @@ void Diagram::set_param_by_index(index_t i, std::string const& v)
 	QColor co;
 	char c;
 	switch(i){
-	case 0: untested();
+	case 0:itested();
 		cx = n.toInt(&ok);
 		break;
-	case 1: untested();
+	case 1:itested();
 		cy = n.toInt(&ok);
 		break;
-	case 2: untested();
+	case 2:itested();
 		_width = n.toInt(&ok);
 		break;
-	case 3: untested();
+	case 3:itested();
 		_height = n.toInt(&ok);
 		break;
 	case 4:

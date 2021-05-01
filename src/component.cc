@@ -162,7 +162,7 @@ std::string Component::param_value_by_name(std::string const& n) const
 {
   if (has_common()) {
     return common()->param_value_by_name(n);
-  }else{ untested();
+  }else{itested();
 	throw qucs::ExceptionCantFind(label(), n, "params");
   }
 }

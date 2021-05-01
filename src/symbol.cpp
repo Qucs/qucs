@@ -73,7 +73,7 @@ std::string Symbol::param_value_by_name(std::string const& n) const
 		return "1"; // isActive in Component.
 	}else if(n=="$param_display"){
 		return std::to_string(_param_display);
-	}else if(n=="$param_hidename"){ untested();
+	}else if(n=="$param_hidename"){itested();
 		return "0";
 	}else if(n=="$hflip"){
 		return std::to_string(_hflip);

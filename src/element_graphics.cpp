@@ -228,7 +228,7 @@ static void redo_children(ElementGraphics* g)
 		for(auto o : *s){itested();
 			if(auto i=dynamic_cast<QWidget*>(o)){ untested();
 				incomplete(); // good idea?
-			}else if(auto i=dynamic_cast<QGraphicsItem*>(o)){ untested();
+			}else if(auto i=dynamic_cast<QGraphicsItem*>(o)){itested();
 				i->setParentItem(g); // memory?
 			}else if(auto i=dynamic_cast<Element*>(o)){
 				QGraphicsItem* cg = new ElementGraphics(i->clone());
@@ -273,7 +273,7 @@ void ElementGraphics::attachElement(Element* e)
 		// something else.
 		// "ghost", freely moving but not interacting
 	}
-	if(QGraphicsItem::isVisible()){ untested();
+	if(QGraphicsItem::isVisible()){itested();
 	}else{
 		unreachable(); // really?
 	}

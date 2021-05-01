@@ -107,7 +107,7 @@ private:
 	SimOutputData const* refresh() override{incomplete(); return nullptr;}
 	virtual const_iterator begin() const {
 		trace1("DatVar", numAxes());
-		incomplete();
+		// incomplete();
 		auto a = axis(0);
 		if(a){
 			return const_iterator(a->Points, _CPointsY.data());
@@ -116,7 +116,7 @@ private:
 		}
 	}
 	virtual const_iterator end() const {
-		incomplete();
+		// incomplete();
 		auto a = axis(0);
 		if(a){
 			return const_iterator(a->Points + a->count, nullptr);
@@ -322,7 +322,7 @@ SimOutputData const* SimOutputDatVar::refresh(QByteArray FileContent)
 
 	// *****************************************************************
 	char *FileString = FileContent.data();
-	trace1("FileString", FileString);
+// trace1("FileString", FileString);
 	if(!FileString){ untested();
 		return 0;
 	}else{

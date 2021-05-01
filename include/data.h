@@ -73,6 +73,7 @@ private:
 class Data : public Element{
 protected:
 	explicit Data() : Element(), _common(nullptr){}
+	Data(Data const&);
 public:
 	~Data();
 	CommonData const* common()const{ return _common; }

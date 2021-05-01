@@ -74,11 +74,11 @@ public:
 		return new Sub(*this);
 	}
 
-	virtual rect_t bounding_rect() const{ untested();
+	virtual rect_t bounding_rect() const{itested();
 		// if(auto p=dynamic_cast<CommonSymbol const*>(common())){ untested();
 		//   return p->bouning_rect();
 		// }else
-		if(_painting){ untested();
+		if(_painting){itested();
 			return _painting->bounding_rect();
 		}else{ untested();
 			// assert...
@@ -86,11 +86,11 @@ public:
 			return rect_t();
 		}
 	}
-	virtual void paint(ViewPainter* v) const{ untested();
+	virtual void paint(ViewPainter* v) const{itested();
 		// if(auto p=dynamic_cast<CommonSymbol const*>(common())){ untested();
 		//   return p->paint(v);
 		// }else
-		if(_painting){ untested();
+		if(_painting){itested();
 			_painting->paint(v);
 		}else{ untested();
 			// assert...

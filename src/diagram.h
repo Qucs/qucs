@@ -132,7 +132,7 @@ public:
 	ElementList* scope() override{ return _subckt; }
 
 private:
-	bool makes_own_scope() const override{ untested(); return true;}
+	bool makes_own_scope() const override{itested(); return true;}
 
 public: // ??!
 	// void paint(ViewPainter* p) override;
@@ -149,16 +149,6 @@ public: // ??!
 	// Marker* setMarker(int x, int y);
 
 private: // internals
-public: // BUG/incomplete
-  QPen    GridPen;
-
-//  QString sfreq;
-//  double *freq=nullptr;
-  int nfreqt,nfreqa;
-  int x3, y3, sc;
-  Axis  xAxis, yAxis, zAxis;   // axes (x, y left, y right)
-
-  int State;  // to remember which resize area was touched
 
 
 protected:
@@ -191,6 +181,16 @@ public: // from mouseactions.cpp
 
   // returns drawn, for now.
 //  bool pressElement(SchematicDoc* Doc, Element*& selElem, QMouseEvent* Event);
+public: // BUG/incomplete
+  QPen    GridPen;
+
+//  QString sfreq;
+//  double *freq=nullptr;
+  int nfreqt,nfreqa;
+  int x3, y3, sc;
+  Axis  xAxis, yAxis, zAxis;   // axes (x, y left, y right)
+
+  int State;  // to remember which resize area was touched
 
 protected: // FIXME
   int _width;

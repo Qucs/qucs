@@ -44,14 +44,22 @@ class DiagramVariable : public Data, public QGraphicsItem {
 public:
 	DiagramVariable() : Data(), QGraphicsItem() {}
 	DiagramVariable(DiagramVariable const& e)
-	  : Data(e), QGraphicsItem(/*e*/), _color(e._color), _thick(e._thick) {untested();}
+	  : Data(e), QGraphicsItem(/*e*/),
+	    _color(e._color),
+	    _thick(e._thick),
+	    _precision(e._precision),
+	    _num_mode(e._num_mode),
+	    _style(e._style),
+	    _xaxisno(e._xaxisno)
+	{itested();
+	}
 
 private: // QGraphicsItem
 	QRectF boundingRect() const override;
 	void paint(QPainter *painter, const QStyleOptionGraphicsItem*, QWidget*) override;
 
 public: // Element
-	Element* clone() const override{untested();
+	Element* clone() const override{itested();
 		return new DiagramVariable(*this);
 	}
 	index_t param_count() const{return 6;}
@@ -78,39 +86,39 @@ public: // Element
 		}
 	}
 private:
-	void prepare(){untested();
+	void prepare(){itested();
 		if(common()){ untested();
 			// TODO: debug check
-		}else{untested();
+		}else{itested();
 			Element* o = this;
-			while(o->owner()){untested();
+			while(o->owner()){itested();
 				o = o->owner();
 				trace1("var top?", o->label());
 			}
 			CommonData const* d = find_in_scope(o->scope(), label());
-			if(d){untested();
+			if(d){itested();
 				trace1("var found it", label());
 				attach(d);
-			}else{untested();
+			}else{itested();
 				trace1("var miss", label());
 			}
 		}
 	}
 	CommonData const* find_in_scope(ElementList const* scope, std::string const& what)
-	{ untested();
+	{itested();
 		trace0("var sckt");
-		if(scope) { untested();
+		if(scope) {itested();
 			CommonData const* f=nullptr;
-			for(auto x : *scope){untested();
+			for(auto x : *scope){itested();
 				trace1("var Element", x->label());
 				f = find_it(x, what);
-				if(f){untested();
+				if(f){itested();
 					break;
-				}else{untested();
+				}else{itested();
 				}
 			}
 			return f;
-		}else{untested();
+		}else{itested();
 			return nullptr;
 		}
 	}
@@ -118,10 +126,10 @@ private:
 	// don't know where the data is. do DFS.
 	// could use Properties/data_set_name?
 	CommonData const* find_it(Object const* where, std::string const& what)
-	{ untested();
+	{itested();
 		if(!where){ untested();
 			return nullptr;
-		}else if(dynamic_cast<SubcktBase const*>(where)) { untested();
+		}else if(dynamic_cast<SubcktBase const*>(where)) {itested();
 		//}else if(auto d = dynamic_cast<SubcktBase const*>(where)) { untested();
 #if 0
 			trace1("var sckt", d->label());
@@ -140,28 +148,28 @@ private:
 			}
 #endif
 			return nullptr;
-		}else if(auto d = dynamic_cast<SimOutputDir const*>(where)){untested();
+		}else if(auto d = dynamic_cast<SimOutputDir const*>(where)){itested();
 			trace1("found dir", d->short_label());
 			CommonData const* f=nullptr;
-			for(auto x : *d){untested();
+			for(auto x : *d){itested();
 				f = find_it(x, what);
-				if(f){untested();
+				if(f){itested();
 					break;
-				}else{untested();
+				}else{itested();
 				}
 			}
 			return f;
-		}else if(auto d = dynamic_cast<Data const*>(where)){untested();
+		}else if(auto d = dynamic_cast<Data const*>(where)){itested();
 			d->refresh(); // prepare?
 			trace2("var found data", d->label(), d->common());
-			if(d->common()){untested();
+			if(d->common()){itested();
 				return find_it(d->common(), what);
 			}else{ untested();
 				return nullptr;
 			}
-		}else if(where->short_label() != what){untested();
+		}else if(where->short_label() != what){itested();
 			return nullptr;
-		}else if(auto x=dynamic_cast<CommonData const*>(where)){untested();
+		}else if(auto x=dynamic_cast<CommonData const*>(where)){itested();
 			return x;
 		}else{ untested();
 			return nullptr;
@@ -187,7 +195,7 @@ class RDV_factory : public Data{
 Dispatcher<Data>::INSTALL p0(&data_dispatcher, "rectdiagramvariable", &v0);
 /*--------------------------------------------------------------------------*/
 void DiagramVariable::set_param_by_index(index_t i, std::string const& value)
-{untested();
+{itested();
 	switch(i){
 	case 0:
 		_color = value;
@@ -234,8 +242,9 @@ std::string DiagramVariable::param_value(index_t i) const
 }
 /*--------------------------------------------------------------------------*/
 QRectF DiagramVariable::boundingRect() const
-{ untested();
-	return QRectF();
+{ itested();
+	assert(parentItem());
+	return parentItem()->boundingRect();
 }
 /*--------------------------------------------------------------------------*/
 /*--------------------------------------------------------------------------*/

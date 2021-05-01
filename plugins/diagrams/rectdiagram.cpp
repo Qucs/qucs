@@ -42,28 +42,30 @@
 #include "some_font_stuff.h"
 #include "command.h"
 #include "language.h"
-
-#include <QLineEdit>
-
+/*--------------------------------------------------------------------------*/
 namespace {
-
+/*--------------------------------------------------------------------------*/
 using namespace qucs;
-
-class RDV : public Element{
-	Element* clone() const override{ untested();
-		auto v = data_dispatcher.clone("rectdiagramvariable");
-		assert(v);
-		return (v);
-	}
-};
-
+/*--------------------------------------------------------------------------*/
 // it's a painting, because the canvas is painted here.
 class RectDiagram : public Diagram, public Painting{
 	RectDiagram(RectDiagram const& c) : Diagram(c) {
 		assert(subckt());
-		auto v = new RDV();
-		v->set_label("diagramvariable");
-		subckt()->push_back(v);
+		assert(c.subckt());
+		assert(c.subckt()->size() == subckt()->size());
+		if(c.subckt()->size()){ untested();
+		}else{
+			auto v = data_dispatcher.clone("rectdiagramvariable");
+			v->set_label("diagramvariable");
+			subckt()->push_back(v);
+		}
+
+		for(auto i : c.Lines){
+			Lines.append(new Line(*i));
+		}
+		for(auto i : c.Arcs){
+			Arcs.append(new Arc(*i));
+		}
 	}
 public:
 	explicit RectDiagram();
@@ -122,9 +124,6 @@ public: // legacy stuff. rearrange later.
   QList<Arc *>    Arcs;
   QList<Line *>   Lines;
   QList<Text *>   Texts;
-
-protected:
-  void clip(Graph::iterator &) const;
 }D;
 Dispatcher<Diagram>::INSTALL p(&diagram_dispatcher, "Rect", &D);
 Module::INSTALL pp("diagrams", &D);
@@ -495,10 +494,6 @@ bool RectDiagram::insideDiagram(float x, float y) const
 }
 
 // ------------------------------------------------------------
-void RectDiagram::clip(Graph::iterator &p) const
-{ untested();
-  rectClip(p);
-}
 #endif
 
 // ------------------------------------------------------------
