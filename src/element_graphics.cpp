@@ -263,6 +263,10 @@ static void redo_children(ElementGraphics* g)
 /*--------------------------------------------------------------------------*/
 void ElementGraphics::attachElement(Element* e)
 {itested();
+#if 0 // TODO, one of these?
+	setCacheMode(ItemCoordinateCache);
+	// setCacheMode(DeviceCoordinateCache);
+#endif
 	assert(e);
 	trace1("attach", e->label());
 	assert(!_e);

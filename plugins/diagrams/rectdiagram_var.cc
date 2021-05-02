@@ -52,6 +52,9 @@ public:
 	    _style(e._style),
 	    _xaxisno(e._xaxisno)
 	{itested();
+		// avoid (expensive) paint calls, one way or another
+		setCacheMode(ItemCoordinateCache);
+		// setCacheMode(DeviceCoordinateCache);
 	}
 
 private: // QGraphicsItem
