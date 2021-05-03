@@ -83,8 +83,8 @@ Element* ElementList::detach(Element* what)
 	std::string l = what->label();
 
 	if(_map.find(l) == _map.end()){ untested();
-		unreachable();
-		trace1("gone", l);
+		std::cerr << "BUG, gone: " << l << "\n";
+		unreachable(); // nets??
 	}else{
 		auto pos = _map.lower_bound(l);
 		assert(pos!=_map.end());

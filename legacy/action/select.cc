@@ -220,6 +220,9 @@ QUndoCommand* MouseActionSelect::dblclk(QEvent* evt)
 		trace0("got editElement");
 		assert(gfx);
 		w = ew;
+	}else if(elt->dev_type() == ""){
+		trace1("no type?", elt->label());
+		unreachable();
 	}else if(auto wp = qucs::widget_dispatcher[elt->dev_type() + "Dialog"]) { untested();
 		w = wp->clone();
 	}else{

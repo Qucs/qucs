@@ -31,14 +31,13 @@ namespace{
 /*--------------------------------------------------------------------------*/
 using qucs::Data;
 using qucs::Diagram;
-using qucs::Painting;
+using qucs::Element;
 using qucs::CommonData;
-using qucs::ViewPainter;
 using qucs::ElementList;
 using qucs::SubcktBase;
 using qucs::SimOutputDir;
-using qucs::data_dispatcher;
 using qucs::SimOutputData;
+using qucs::element_dispatcher;
 /*--------------------------------------------------------------------------*/
 class DiagramVariable : public Data, public QGraphicsItem {
 public:
@@ -190,12 +189,15 @@ private:
 	std::string _xaxisno;
 }; // DiagramVariable
 /*--------------------------------------------------------------------------*/
-class RDV_factory : public Data{
-	Data* clone() const override{
+class RDV_factory : public qucs::Element{
+	Element* clone() const override{
+		return new RDV_factory(*this);
+	}
+	Element* clone_instance() const override{ untested();
 		return new DiagramVariable();
 	}
 }v0;
-Dispatcher<Data>::INSTALL p0(&data_dispatcher, "rectdiagramvariable", &v0);
+Dispatcher<Element>::INSTALL p0(&element_dispatcher, "rectdiagramvariable", &v0);
 /*--------------------------------------------------------------------------*/
 void DiagramVariable::set_param_by_index(index_t i, std::string const& value)
 {itested();
@@ -246,8 +248,12 @@ std::string DiagramVariable::param_value(index_t i) const
 /*--------------------------------------------------------------------------*/
 QRectF DiagramVariable::boundingRect() const
 { itested();
-	assert(parentItem());
-	return parentItem()->boundingRect();
+	if(parentItem()){
+		return parentItem()->boundingRect();
+	}else{
+		unreachable(); //???
+		return QRectF();
+	}
 }
 /*--------------------------------------------------------------------------*/
 /*--------------------------------------------------------------------------*/
@@ -277,7 +283,7 @@ void DiagramVariable::paint_graph_data(CommonData const* cd, QPainter* p) const
 	auto diag = dynamic_cast<Diagram const*>(o);
 	if(!diag){ untested();
 		incomplete();
-	}else if(pp->numDeps()==1){ untested();
+	}else if(pp->numDeps()==1){ itested();
 		auto dd = dynamic_cast<SimOutputData const*>(pp->dep(0));
 		assert(dd);
 		int num = pp->size();

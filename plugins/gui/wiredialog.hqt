@@ -32,6 +32,9 @@
 #include <QPluginLoader>
 /*--------------------------------------------------------------------------*/
 namespace {
+/*--------------------------------------------------------------------------*/
+using qucs::SwapGfxCommand;
+/*--------------------------------------------------------------------------*/
 using namespace qucs;
 /*--------------------------------------------------------------------------*/
 class WireDialog : public QDialog, public SchematicDialog {
@@ -50,6 +53,12 @@ private:
 		SchematicDialog* wd = new WireDialog();
 		return wd;
 	}
+	Symbol* wire(){
+		assert(_gfx);
+		auto dd = prechecked_cast<Symbol*>(element(_gfx));
+		assert(dd);
+		return dd;
+	}
 
 protected slots:
     void reject();
@@ -63,8 +72,8 @@ private:
   QVBoxLayout* _all;
   QLineEdit *CompNameEdit;
 //  QLineEdit   *edit, *NameEdit;
-  ElementGraphics* _gfx;
-  Symbol* _comp; // const? gfx?
+  ElementGraphics* _gfx{nullptr}; // const?
+  ElementGraphics* _clone{nullptr};
   bool _changed;
 };
 // this does not work
@@ -84,14 +93,8 @@ WireDialog::WireDialog()
 void WireDialog::attach(ElementGraphics* gfx)
 {
   trace0("WireDialog::attach");
-  auto Comp = prechecked_cast<Symbol*>(element(gfx));
-  assert(Comp);
-  if(_comp){
-    incomplete();
-  }else{
-  }
-  _comp = Comp;
   _gfx = gfx;
+  _clone = _gfx->clone();
   QString s;
 
   _all = new QVBoxLayout; // to provide neccessary size
@@ -139,14 +142,14 @@ void WireDialog::attach(ElementGraphics* gfx)
   _all->addWidget(hbox2);
 
  	std::string some_text =
-		"$xposition" + Comp->param_value_by_name("$xposition") + "\n"
-		"$yposition" + Comp->param_value_by_name("$yposition") + "\n"
-		"tx" + Comp->param_value_by_name("$tx") + "\n"
-		"ty" + Comp->param_value_by_name("$ty") + "\n"
-		"$vflip" + Comp->param_value_by_name("$vflip") + "\n"
-		"$hflip" + Comp->param_value_by_name("$hflip") + "\n"
-		"$angle" + Comp->param_value_by_name("$angle") + "\n"
-		"ports" + Comp->port_value(0) + " " + Comp->port_value(1) + "\n"
+		"$xposition" + wire()->param_value_by_name("$xposition") + "\n"
+		"$yposition" + wire()->param_value_by_name("$yposition") + "\n"
+		"tx" + wire()->param_value_by_name("$tx") + "\n"
+		"ty" + wire()->param_value_by_name("$ty") + "\n"
+		"$vflip" + wire()->param_value_by_name("$vflip") + "\n"
+		"$hflip" + wire()->param_value_by_name("$hflip") + "\n"
+		"$angle" + wire()->param_value_by_name("$angle") + "\n"
+		"ports" + wire()->port_value(0) + " " + wire()->port_value(1) + "\n"
 		"net TODO" + "\n";
 
   _all->addWidget(new QLabel(QString::fromStdString(some_text)));
@@ -162,9 +165,9 @@ void WireDialog::attach(ElementGraphics* gfx)
   connect(cancel, SIGNAL(clicked()), SLOT(slotButtCancel()));
 
   // ------------------------------------------------------------
-  std::string netname = Comp->param_value_by_name("netname");
+  std::string netname = wire()->param_value_by_name("netname");
   CompNameEdit->setText(QString::fromStdString(netname));
-  // showName->setChecked(Comp->showName);
+  // showName->setChecked(wire()->showName);
   _changed = false;
 
 }
@@ -227,11 +230,6 @@ void WireDialog::reject()
 // Is called, if the "Apply"-button is pressed.
 void WireDialog::slotApplyInput()
 {
-  assert(_comp);
-  auto C = _comp->clone();
-  C->set_owner(_comp->owner());
-  auto Comp = prechecked_cast<Symbol*>(C);
-  assert(Comp);
 
 ///  if(Comp->showName != showName->isChecked()) {
 ///    Comp->showName = showName->isChecked();
@@ -240,10 +238,10 @@ void WireDialog::slotApplyInput()
 ///  }
 ///
   QString tmp;
-  if(CompNameEdit->text().toStdString() != Comp->label()) {
-    trace2("Apply", Comp->label(), CompNameEdit->text());
+  if(CompNameEdit->text().toStdString() != wire()->label()) {
+    trace2("Apply", wire()->label(), CompNameEdit->text());
 
-	 Comp->set_param_by_name("netname", CompNameEdit->text().toStdString());
+	 wire()->set_param_by_name("netname", CompNameEdit->text().toStdString());
 	 _changed = true;
   }else{
   }
@@ -251,17 +249,12 @@ void WireDialog::slotApplyInput()
   if(_changed) {
     auto pos = _gfx->pos();
 
-    auto cmd = new SwapSymbolCommand(_gfx, Comp);
+    auto cmd = new SwapGfxCommand(_gfx, _clone);
     execute(cmd);
 
+	 _clone = _gfx->clone(); // call attach?
+
     assert(_gfx->pos() == pos); // for now.
-
-    _comp = Comp; //  = component(_gfx);
-
-	 // cmd takes care of this
-    // auto V=schematic()->viewport();
-    // assert(V);
-    // V->repaint();
   }else{
   }
 }

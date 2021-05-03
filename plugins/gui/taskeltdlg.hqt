@@ -64,7 +64,7 @@ using qucs::SchematicDialog;
 using qucs::ElementGraphics;
 using qucs::Element;
 using qucs::TaskElement;
-using qucs::SwapSymbolCommand;
+using qucs::SwapGfxCommand;
 
 class TaskElementDialog : public QDialog, public SchematicDialog {
     Q_OBJECT
@@ -145,9 +145,16 @@ private:
 
   void updateCompPropsList(void);
 
+private:
+  TaskElement* task(){
+	  auto p = prechecked_cast<TaskElement*>(element(_clone));
+	  assert(p);
+	  return p;
+  }
+
 private: // todo
   ElementGraphics* _gfx; // orig?
-  TaskElement* _comp; // clone?
+  ElementGraphics* _clone;
 };
 
 #if 0
@@ -183,12 +190,9 @@ void TaskElementDialog::attach(ElementGraphics* gfx)
   trace0("TaskElementDialog::attach");
   auto Comp = prechecked_cast<TaskElement*>(element(gfx));
   assert(Comp);
-  if(_comp){
-    incomplete();
-  }else{
-  }
-  _comp = Comp;
   _gfx = gfx;
+  _clone = _gfx->clone(); // edit this one.
+
   QString s;
   setAllVisible = true; // state when toggling properties visibility
 
@@ -998,9 +1002,9 @@ void TaskElementDialog::reject()
 // Is called, if the "Apply"-button is pressed.
 void TaskElementDialog::slotApplyInput()
 {
-  assert(_comp);
-  Element* C = _comp->clone();
-  C->set_owner(_comp->owner());
+  assert(task());
+  Element* C = task()->clone();
+  C->set_owner(task()->owner());
   auto Comp = prechecked_cast<TaskElement*>(C);
   assert(Comp);
 
@@ -1260,14 +1264,9 @@ void TaskElementDialog::slotApplyInput()
 #endif
 
 
-    auto cmd = new SwapSymbolCommand(_gfx, Comp);
+    auto cmd = new SwapGfxCommand(_gfx, _clone);
     execute(cmd);
-
-//    assert(_gfx->pos() == pos); // for now.
-
-	 assert(Comp == prechecked_cast<TaskElement*>(element(_gfx)));
-
-    _comp = Comp;
+	 _clone = _gfx->clone(); // call attach again?
 
     // BUG: cannot modify while shown.
     // maybe do in ElementGraohics::attach?

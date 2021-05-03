@@ -45,8 +45,12 @@ public:
 	bool operator!=(Element const* e) const{
 		return _e!=e;
 	}
+
+private:
 	void attachElement(Element* e);
 	Element* detachElement();
+
+public:
 	Element* cloneElement() const;
 	ElementGraphics* newUnion(ElementGraphics const*) const;
 

@@ -70,6 +70,9 @@ private:
 	pos_t center() const override{itested();
 		return Element::center();
 	}
+	std::string dev_type() const override{
+		return "Rect";
+	}
 
 private: // Diagram
 	virtual diag_coordinate_t calcCoordinate(double const& x, double const& y) const;

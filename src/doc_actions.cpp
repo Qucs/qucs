@@ -1627,7 +1627,6 @@ bool MouseActions::handle(QEvent*e)
 {itested();
   QUndoCommand* c = nullptr;
   if(_maCurrent){itested();
-	  trace0("got handler");
     c = _maCurrent->handle(e);
   }else{ untested();
 	  trace0("no handler...");

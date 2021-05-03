@@ -13,44 +13,46 @@
 
 #include <QUndoCommand>
 #include "element_graphics.h"
-
+/*--------------------------------------------------------------------------*/
 namespace qucs {
-// BUG? SchematicEdit
-class SwapSymbolCommand : public QUndoCommand {
-  SwapSymbolCommand() = delete;
-  SwapSymbolCommand(SwapSymbolCommand const&) = delete;
+/*--------------------------------------------------------------------------*/
+class SwapGfxCommand : public QUndoCommand {
+	SwapGfxCommand() = delete;
+	SwapGfxCommand(SwapGfxCommand const&) = delete;
 public:
-  ~SwapSymbolCommand(){
-    delete _elt;
-  }
-  SwapSymbolCommand(ElementGraphics* g, Element* e)
-    : _gfx(g), _elt(e)
-  {
-    assert(e);
-    setText("Swap Element " + QString::fromStdString(e->label()));
-  }
+	~SwapGfxCommand(){
+		delete _ng;
+	}
+	SwapGfxCommand(ElementGraphics* g, ElementGraphics* e, bool skip=false)
+		: _gfx(g), _ng(e), _skip(skip)
+	{
+		assert(e);
+		setText("Swap Element " + QString::fromStdString(element(e)->short_label()));
+	}
 private:
-  void undo(){
-    redo();
-  }
-  void redo(){
-    assert(_gfx);
-//	  _elt = _gfx->swap(_elt);
+	void undo(){
+		redo();
+	}
+	void redo(){
+		if(_skip){
+		}else{ untested();
+			assert(_gfx);
+			//	  _elt = _gfx->swap(_elt);
 
-	 bool sel = _gfx->isSelected();
-    _gfx->hide();
-    {
-      Element* tmp = _gfx->detachElement();
-      _gfx->attachElement(_elt);
-      _elt = tmp;
-    }
-    // _gfx->update();
-    _gfx->show();
-	 _gfx->setSelected(sel);
-  }
+			bool sel = _gfx->isSelected();
+			_gfx->hide();
+			_ng->show_();
+			_ng->setSelected(sel);
+			std::swap(_gfx, _ng);
+		}
+		_skip = false;
+	}
 private:
-  ElementGraphics* _gfx;
-  Element* _elt;
+	ElementGraphics* _gfx;
+	ElementGraphics* _ng;
+	bool _skip{false};
 };
-
+/*--------------------------------------------------------------------------*/
 } // qucs
+/*--------------------------------------------------------------------------*/
+/*--------------------------------------------------------------------------*/

@@ -445,10 +445,12 @@ ElementList* SchematicScene::scope()
 	return doc()->model(); // yikes.
 }
 /*--------------------------------------------------------------------------*/
+// detachFromMain?
 Element* SchematicScene::detachFromModel(Element* e)
 {
 #if 1
-	e->scope()->detach(e);
+	assert(scope());
+	scope()->detach(e);
 	Element const* ce = e;
 	assert(ce->owner()==nullptr);
 	return e;

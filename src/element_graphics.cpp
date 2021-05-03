@@ -41,7 +41,7 @@ namespace qucs {
 /* remove. later. */
 // scene()->selectedItems gives QGraphicsItems
 Element* element(ElementGraphics* g)
-{
+{ untested();
 	if(!g){ untested();
 		return nullptr;
 	}else{itested();
@@ -81,6 +81,7 @@ ElementGraphics* ElementGraphics::clone() const
 /*--------------------------------------------------------------------------*/
 ElementGraphics::~ElementGraphics()
 {itested();
+	//detachElement?
 	if(isVisible()){itested();
 		// assert(_e->owner()); ??
 		// element is owned by ElementList.
@@ -100,7 +101,7 @@ private:
 	ElementText(ElementText const&) = delete;
 public:
 	explicit ElementText(ElementGraphics* parent)
-	  : QGraphicsItem(parent), _labeltext(nullptr) {
+	  : QGraphicsItem(parent), _labeltext(nullptr) { untested();
 		Element const* e = element(parent);
 
 		setFlags(ItemIgnoresTransformations);
@@ -108,50 +109,50 @@ public:
 		int tx = 0;
 		int ty = 0;
 		if(auto s=dynamic_cast<Symbol const*>(e)){itested();
-			try{
+			try{ untested();
 				tx = atoi(s->param_value_by_name("$tx").c_str());
 				ty = atoi(s->param_value_by_name("$ty").c_str());
-			}catch(qucs::ExceptionCantFind const&){
+			}catch(qucs::ExceptionCantFind const&){ untested();
 			}
-		}else{
+		}else{ untested();
 		}
 
 		int k = 0;
-		if(e->showLabel()){
+		if(e->showLabel()){ untested();
 			_labeltext = new QGraphicsTextItem(this);
 			_labeltext->setPos(tx, ty+k/2);
 			_labeltext->setPlainText(QString::fromStdString(e->label()));
 			k += _labeltext->boundingRect().height();
-		}else{
+		}else{ untested();
 		}
 
 
 		if(auto s=dynamic_cast<Component const*>(e)){itested();
 			int show = 0;
 			int hide = 0;
-			try{
+			try{ untested();
 				show = atoi(s->param_value_by_name("$param_display").c_str());
 				hide = atoi(s->param_value_by_name("$param_hidename").c_str());
-			}catch(qucs::ExceptionCantFind const&){
+			}catch(qucs::ExceptionCantFind const&){ untested();
 			}
 			trace2("param_display", show, s->param_count());
-			for(unsigned i=0; i<s->param_count(); ++i){
+			for(unsigned i=0; i<s->param_count(); ++i){ untested();
 				auto n = QString_(s->param_name(i));
-				if(n.size() == 0){
+				if(n.size() == 0){ untested();
 					incomplete();
-				}else if(n.at(0)=='$'){
-				}else if(show % 2){
+				}else if(n.at(0)=='$'){ untested();
+				}else if(show % 2){ untested();
 					auto t=new QGraphicsTextItem(this);
 					t->setFlags(ItemIgnoresTransformations);
 					auto v = QString::fromStdString(s->param_value(i));
-					if(hide%2){
+					if(hide%2){ untested();
 						t->setPlainText(v);
-					}else{
+					}else{ untested();
 						t->setPlainText(n+"="+v);
 					}
 					t->setPos(tx, ty+k/2);
 					k += t->boundingRect().height();
-				}else{
+				}else{ untested();
 				}
 				show/=2;
 				hide/=2;
@@ -164,7 +165,7 @@ public:
 		delete _labeltext;
 	}
 private:
-	virtual QRectF boundingRect() const override{
+	virtual QRectF boundingRect() const override{ untested();
 		return QRectF();
 	}
 	void paint(QPainter *, const QStyleOptionGraphicsItem *, QWidget *) override{}
@@ -178,7 +179,7 @@ private:
 class TextGraphics : public QGraphicsTextItem{
 public:
 	explicit TextGraphics(Text& t, QGraphicsItem* parent)
-	  : QGraphicsTextItem(parent), _t(t){
+	  : QGraphicsTextItem(parent), _t(t){ untested();
 		setPlainText(t.s);
 		trace1("TextGraphics", t.s);
 	}
@@ -189,21 +190,37 @@ private:
 #endif
 /*--------------------------------------------------------------------------*/
 inline std::ostream& operator<<(std::ostream& o, QRectF const& r)
-{
+{ untested();
 	o << r.topLeft() << ":" << r.bottomRight();
 	return o;
 }
 /*--------------------------------------------------------------------------*/
 // really?
 Element* ElementGraphics::detachElement()
-{
+{ untested();
+	hide();
 	Element* tmp = _e;
+
+	if(_e->makes_own_scope()){ itested();
+		auto s = _e->scope();
+		assert(s);
+		for(auto o : *s){itested();
+			if(auto i=dynamic_cast<QWidget*>(o)){ untested();
+				incomplete(); // good idea?
+			}else if(auto i=dynamic_cast<QGraphicsItem*>(o)){itested();
+				i->hide();
+				i->setParentItem(nullptr);
+			}else{
+			}
+		}
+	}else{
+	}
 	_e = nullptr;
 	return tmp;
 }
 /*--------------------------------------------------------------------------*/
 Element* ElementGraphics::cloneElement() const
-{
+{ untested();
 	if(_e){itested();
 		return _e->clone();
 	}else{ untested();
@@ -212,15 +229,15 @@ Element* ElementGraphics::cloneElement() const
 }
 /*--------------------------------------------------------------------------*/
 static void redo_children(ElementGraphics* g)
-{
+{ untested();
 	if(dynamic_cast<Component const*>(element(g))){itested();
-		for(auto c : g->childItems()){
+		for(auto c : g->childItems()){ untested();
 			delete c;
 		}
 	}else{itested();
 	}
 
-	if(!element(g)){
+	if(!element(g)){ untested();
 		unreachable();
 	}else if(element(g)->makes_own_scope()){ itested();
 		auto s = element(g)->scope();
@@ -229,11 +246,11 @@ static void redo_children(ElementGraphics* g)
 			if(auto i=dynamic_cast<QWidget*>(o)){ untested();
 				incomplete(); // good idea?
 			}else if(auto i=dynamic_cast<QGraphicsItem*>(o)){itested();
-				i->setParentItem(g); // memory?
-			}else if(auto i=dynamic_cast<Element*>(o)){
+				i->setParentItem(g); // also sets i->scene()
+			}else if(auto i=dynamic_cast<Element*>(o)){ untested();
 				QGraphicsItem* cg = new ElementGraphics(i->clone());
 				cg->setParentItem(g);
-			}else{
+			}else{ untested();
 			}
 		}
 	}else if(auto sym = dynamic_cast<SubcktBase const*>(element(g))){ untested();
@@ -245,10 +262,10 @@ static void redo_children(ElementGraphics* g)
 				incomplete(); // good idea?
 			}else if(auto i=dynamic_cast<QGraphicsItem*>(o)){ untested();
 				i->setParentItem(g); // memory?
-			}else if(auto i=dynamic_cast<Element*>(o)){
+			}else if(auto i=dynamic_cast<Element*>(o)){ untested();
 				QGraphicsItem* cg = new ElementGraphics(i->clone());
 				cg->setParentItem(g);
-			}else{
+			}else{ untested();
 			}
 		}
 	}else{itested();
@@ -278,7 +295,7 @@ void ElementGraphics::attachElement(Element* e)
 		// "ghost", freely moving but not interacting
 	}
 	if(QGraphicsItem::isVisible()){itested();
-	}else{
+	}else{ untested();
 		unreachable(); // really?
 	}
 	QGraphicsItem::hide();
@@ -287,8 +304,8 @@ void ElementGraphics::attachElement(Element* e)
 	_e = e;
 
 	auto flags = ItemSendsGeometryChanges|ItemSendsGeometryChanges;
-	if(dynamic_cast<Place const*>(_e)){
-	}else{
+	if(dynamic_cast<Place const*>(_e)){ untested();
+	}else{ untested();
 		flags |= ItemIsSelectable;
 		flags |= ItemIsMovable;
 	}
@@ -325,7 +342,7 @@ void ElementGraphics::attachElement(Element* e)
 
 		if(e->owner()){ untested();
 			p->setWidget(w);
-		}else{
+		}else{ untested();
 			// dont expose if there is no link. this is a bit of a hack,
 			// need to disentangle show/show_/hide/attach.
 		}
@@ -333,7 +350,7 @@ void ElementGraphics::attachElement(Element* e)
 	}else if(sym){itested();
 		assert(sym->subckt());
 		trace1("got children", sym->subckt()->size());
-	}else{
+	}else{ untested();
 	}
 	redo_children(this);
 	trace1("ElementGraphics unpacked", childItems().size());
@@ -366,7 +383,7 @@ void ElementGraphics::paint(QPainter *p, const QStyleOptionGraphicsItem *o,
 	ViewPainter v(p); // TODO
 	assert(v.Scale==1);
 
-	if(auto pp=dynamic_cast<Painting const*>(_e)){
+	if(auto pp=dynamic_cast<Painting const*>(_e)){ untested();
 		pp->paint(&v);
 
 		auto br = boundingRect();
@@ -382,7 +399,7 @@ void ElementGraphics::paint(QPainter *p, const QStyleOptionGraphicsItem *o,
 			p->drawEllipse(-3, -3, 6, 6);
 #endif
 		}
-	}else{
+	}else{ untested();
 		unreachable();
 	}
 
@@ -392,19 +409,19 @@ void ElementGraphics::paint(QPainter *p, const QStyleOptionGraphicsItem *o,
 }
 /*--------------------------------------------------------------------------*/
 Symbol const* symbol(ElementGraphics const* e)
-{
-	if(!e){
+{ untested();
+	if(!e){ untested();
 		return nullptr;
-	}else{
+	}else{ untested();
 		return dynamic_cast<Symbol const*>(&**e);
 	}
 }
 /*--------------------------------------------------------------------------*/
 Element const* element(ElementGraphics const* e)
-{
-	if(!e){
+{ untested();
+	if(!e){ untested();
 		return nullptr;
-	}else{
+	}else{ untested();
 		return &**e;
 	}
 }
@@ -412,20 +429,20 @@ Element const* element(ElementGraphics const* e)
 // add new port into ElementGraphics, build new
 #if 0
 ElementGraphics* ElementGraphics::newPort(pos_t where) const
-{
+{ untested();
 	ElementGraphics* ng = nullptr;
 	if(auto* c=dynamic_cast<Conductor const*>(_e)){ untested();
 		auto place = new Place(where);
 		Symbol* u = c->newUnion(place);
 
-		if(u){
+		if(u){ untested();
 			ng = new ElementGraphics(u);
 			assert(scene());
 			scene()->addItem(ng);
 			((QGraphicsItem*)ng)->hide(); // yikes.
 			assert(_e->owner());
 			u->set_owner(_e->owner());
-		}else{
+		}else{ untested();
 		}
 
 		if(!ng){ untested();
@@ -441,7 +458,7 @@ ElementGraphics* ElementGraphics::newPort(pos_t where) const
 				cg->setParentItem(ng);
 				assert(cg->scene());
 			}
-		}else{
+		}else{ untested();
 			incomplete();
 		}
 	}
@@ -452,9 +469,9 @@ ElementGraphics* ElementGraphics::newPort(pos_t where) const
 // build the union of two ElementGraphics
 // BUG: only Conductors, for now, Element?
 ElementGraphics* ElementGraphics::newUnion(ElementGraphics const* s) const
-{
+{ untested();
 	ElementGraphics* ng = nullptr;
-	if(!symbol(s)){
+	if(!symbol(s)){ untested();
 		// diagram? no union
 	}else if(auto c=dynamic_cast<Conductor const*>(_e)){itested();
 		assert(symbol(s));
@@ -477,7 +494,7 @@ ElementGraphics* ElementGraphics::newUnion(ElementGraphics const* s) const
 		}else{itested();
 			trace1("no new union", symbol(s)->dev_type());
 		}
-	}else{
+	}else{ untested();
 	}
 
 	return ng;
@@ -565,7 +582,7 @@ void ElementGraphics::transform(qucsSymbolTransform a, std::pair<int, int> pivot
 } // transform
 /*--------------------------------------------------------------------------*/
 SchematicScene* ElementGraphics::scene() const
-{
+{ untested();
 	auto s = prechecked_cast<SchematicScene*>(QGraphicsItem::scene());
 	if(s){itested();
 	}else{itested();
@@ -575,7 +592,7 @@ SchematicScene* ElementGraphics::scene() const
 /*--------------------------------------------------------------------------*/
 QRectF ElementGraphics::boundingRect() const
 {itested();
-	if(auto pp=dynamic_cast<Painting const*>(_e)){
+	if(auto pp=dynamic_cast<Painting const*>(_e)){ untested();
 		auto rr = pp->bounding_rect().toRectF();
 //		trace2("br", rr, _e->label());
 		return rr;
@@ -585,10 +602,10 @@ QRectF ElementGraphics::boundingRect() const
 }
 /*--------------------------------------------------------------------------*/
 QRectF ElementGraphics::absoluteBoundingRect() const
-{
+{ untested();
 #ifdef DO_TRACE
-	if(auto sym=dynamic_cast<Symbol const*>(_e)){
-		for(unsigned i=0; i<sym->numPorts(); ++i){
+	if(auto sym=dynamic_cast<Symbol const*>(_e)){ untested();
+		for(unsigned i=0; i<sym->numPorts(); ++i){ untested();
 			trace4("abr", pos(), sym->label(), i, sym->nodePosition(i));
 		}
 	}
@@ -646,23 +663,23 @@ bool ElementGraphics::sceneEvent(QEvent* e)
 }
 /*--------------------------------------------------------------------------*/
 void ElementGraphics::restore_ports()
-{
+{ untested();
 	auto s = dynamic_cast<Symbol*>(_e);
 	assert(s);
-	for(unsigned i=0; i<s->numPorts(); ++i) {
+	for(unsigned i=0; i<s->numPorts(); ++i) { untested();
 		assert(i < _port_values.size());
 		s->set_port_by_index(i, _port_values[i]);
 	}
 }
 /*--------------------------------------------------------------------------*/
 void ElementGraphics::init_ports()
-{
+{ untested();
 	auto s = dynamic_cast<Symbol*>(_e);
 	assert(!dynamic_cast<Place*>(_e)); // for now.
 	assert(s);
 	auto scn = scene();
 	assert(scn);
-	for(unsigned i=0; i<s->numPorts(); ++i){
+	for(unsigned i=0; i<s->numPorts(); ++i){ untested();
 		auto pp = s->nodePosition(i);
 		ElementGraphics* pg = scn->find_place(pp);
 		Place const* place = prechecked_cast<Place const*>(element(pg));
@@ -677,7 +694,7 @@ void ElementGraphics::init_ports()
 /*--------------------------------------------------------------------------*/
 // show? restore? init?
 void ElementGraphics::show_()
-{
+{ untested();
 	trace1("show", _e->label());
 	redo_children(this);
 	assert(!isVisible());
@@ -690,26 +707,26 @@ void ElementGraphics::show_()
 	QGraphicsItem::show();
 	if (auto w=_e->newWidget()){ untested();
 		assert(childItems().size()==1);
-		for(auto i: childItems()){
-			if(auto p = dynamic_cast<QGraphicsProxyWidget*>(i)){
+		for(auto i: childItems()){ untested();
+			if(auto p = dynamic_cast<QGraphicsProxyWidget*>(i)){ untested();
 				trace2("show_ it's a proxy", p, this);
 				p->setWidget(w);
 				p->show();
 				w->show();
 				trace2("show_ proxy 2", p, this);
 				break; // only one proxy..
-			}else{
+			}else{ untested();
 			}
 		}
-	}else if(dynamic_cast<Symbol*>(_e)){
+	}else if(dynamic_cast<Symbol*>(_e)){ untested();
 		trace1("set_ports restore", _e->label());
-		if(!_port_values.size()){
+		if(!_port_values.size()){ untested();
 			trace1("set_ports init", _e->label());
 			init_ports();
-		}else{
+		}else{ untested();
 			restore_ports();
 		}
-	}else{
+	}else{ untested();
 	}
 
 	// if(was_selected) ...
@@ -726,18 +743,18 @@ void ElementGraphics::show()
 //	assert(_e->owner());
 
 #ifdef DO_TRACE
-	if(auto sym=dynamic_cast<Symbol const*>(_e)){
-		if(sym->numPorts() == 1){
+	if(auto sym=dynamic_cast<Symbol const*>(_e)){ untested();
+		if(sym->numPorts() == 1){ untested();
 			trace2("show", sym->label(), sym->nodePosition(0));
-		}else if(sym->numPorts() == 2){
+		}else if(sym->numPorts() == 2){ untested();
 			trace3("show", sym->label(), sym->nodePosition(0), sym->nodePosition(1));
-		}else{
+		}else{ untested();
 		}
 	}
 #endif
 
 	QGraphicsItem::show();
-//	for(auto x : childItems()){
+//	for(auto x : childItems()){ untested();
 //		x->show();
 //	}
 
@@ -747,55 +764,55 @@ void ElementGraphics::show()
 	subckt()->push_back(_e);
 #endif
 	// TODO
-	// if (_selected__){
+	// if (_selected__){ untested();
 	// 	setSeleted();
-	// }else{
+	// }else{ untested();
 	// }
 }
 /*--------------------------------------------------------------------------*/
 void ElementGraphics::hide()
-{itested();
+{untested();
 	assert(_e);
 	_selected = QGraphicsItem::isSelected();
 	assert(isVisible());
 	auto cis = childItems();
 	trace1("ElementGraphics hide", cis.size());
-	for(auto i: cis){
-		if(auto p = dynamic_cast<QGraphicsProxyWidget*>(i)){
+	for(auto i: cis){ untested();
+		if(auto p = dynamic_cast<QGraphicsProxyWidget*>(i)){ untested();
 			trace2("hide it's a proxy", p, this);
 			p->setWidget(nullptr); // the Element has a reference to it.
-		}else{
+		}else{ untested();
 		}
 	}
 	QGraphicsItem::hide();
-//	for(auto x : childItems()){
+//	for(auto x : childItems()){ untested();
 //		x->hide();
 //	}
 
 #ifdef DO_TRACE
-	if(auto sym=dynamic_cast<Symbol const*>(_e)){
-		if(sym->numPorts() == 1){
+	if(auto sym=dynamic_cast<Symbol const*>(_e)){ untested();
+		if(sym->numPorts() == 1){ untested();
 			trace2("hide", sym->label(), sym->nodePosition(0));
-		}else if(sym->numPorts() == 2){
+		}else if(sym->numPorts() == 2){ untested();
 			trace3("hide", sym->label(), sym->nodePosition(0), sym->nodePosition(1));
-		}else{
+		}else{ untested();
 		}
 	}
 #endif
 
 	if(!_e->owner()){itested();
-	}else if(auto sym=dynamic_cast<Symbol*>(_e)){
+	}else if(auto sym=dynamic_cast<Symbol*>(_e)){ untested();
 		// store_ports?
 		_port_values.clear();
-		for(unsigned i=0; i<sym->numPorts(); ++i){
+		for(unsigned i=0; i<sym->numPorts(); ++i){ untested();
 			trace2("unset port", sym->label(), i);
 			_port_values.push_back(sym->port_value(i));
 			sym->set_port_by_index(i, "");
 		}
-	}else{
+	}else{ untested();
 	}
 
-	if(_e->owner()){itested();
+	if(_e->owner()){ untested();
 		// detach(_e, model());
 		_e = scene()->detachFromModel(_e);
 	}else{itested();
@@ -804,14 +821,14 @@ void ElementGraphics::hide()
 }
 /*--------------------------------------------------------------------------*/
 void ElementGraphics::setPos(QPoint const& p)
-{
+{ untested();
 	setPos(getX(p), getY(p), false);
 }
 /*--------------------------------------------------------------------------*/
 void ElementGraphics::update()
 {itested();
 	QGraphicsItem::update();
-	for(auto x : childItems()){
+	for(auto x : childItems()){ untested();
 		x->update();
 	}
 }
@@ -830,7 +847,7 @@ ItemEvent::ItemEvent(QEvent const& a, ElementGraphics& b)
 }
 /*--------------------------------------------------------------------------*/
 QVariant ElementGraphics::itemChange(GraphicsItemChange c, const QVariant &v)
-{
+{ untested();
     if (!scene()){itested();
 	 }else if(c == ItemPositionChange){ itested();
         QPointF tmp = v.toPointF();

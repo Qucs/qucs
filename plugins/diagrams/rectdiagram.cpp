@@ -45,7 +45,12 @@
 /*--------------------------------------------------------------------------*/
 namespace {
 /*--------------------------------------------------------------------------*/
-using namespace qucs;
+using qucs::Element;
+using qucs::Diagram;
+using qucs::Painting;
+using qucs::element_dispatcher;
+/*--------------------------------------------------------------------------*/
+using namespace qucs; //TODO
 /*--------------------------------------------------------------------------*/
 // it's a painting, because the canvas is painted here.
 class RectDiagram : public Diagram, public Painting{
@@ -55,7 +60,7 @@ class RectDiagram : public Diagram, public Painting{
 		assert(c.subckt()->size() == subckt()->size());
 		if(c.subckt()->size()){ untested();
 		}else{
-			auto v = data_dispatcher.clone("rectdiagramvariable");
+			auto v = element_dispatcher.clone("rectdiagramvariable");
 			v->set_label("diagramvariable");
 			subckt()->push_back(v);
 		}
@@ -72,6 +77,9 @@ public:
 	~RectDiagram();
 
 	Element* clone() const override {itested(); return new RectDiagram(*this);}
+	std::string dev_type() const override{
+		return "Rect";
+	}
 
 private:
 	static Element* info(QString&, char* &, bool getNewOne=false);
@@ -241,7 +249,6 @@ RectDiagram::RectDiagram() : Diagram()
   _height = 160;
   x3 = 247;    // with some distance for right axes text
 
-  set_dev_type("Rect");
   Name = "Rect"; // BUG in lang_sch?
 }
 
@@ -910,6 +917,7 @@ class RectDiagramCmd : public Command  {
 		trace1("<Rect cmd" , cs.fullstring());
 		auto e = prechecked_cast<RectDiagram*>(D.clone());
 		assert(e);
+		assert(e->dev_type()=="Rect");
 
 #if 1
 		parseDiagram(e, cs);
