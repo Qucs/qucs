@@ -458,8 +458,8 @@ void Sub::build_sckt(istream_t& cs, SubcktBase* proto) const
 /*--------------------------------------------------------------------------*/
 void Sub::set_param_by_index(index_t i, std::string const& v)
 {
-	trace6("Sub::spbi", short_label(), i, v, _param_names.size(), param_count(), param_name(i));
 	index_t s = Sub::param_count() - 1 - i;
+	trace7("Sub::spbi", short_label(), i, v, _param_names.size(), param_count(), param_name(i), s);
 	switch (s) {
 	case 0:
 		_tx = atoi(v.c_str());

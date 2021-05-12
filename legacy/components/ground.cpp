@@ -48,7 +48,7 @@ private: // Symbol
 		case 1:
 			return false;
 		default:
-			return true;
+			return Component::param_is_printable(i);
 		}
 	}
 

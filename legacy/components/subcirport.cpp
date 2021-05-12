@@ -236,18 +236,14 @@ std::string SubCirPort::param_value(index_t i) const
 // -------------------------------------------------------
 void SubCirPort::set_param_by_index(index_t i, std::string const& vv)
 {
-	trace1("SubCirPort::set_param_by_index1", Props.at(0)->value());
-	trace1("SubCirPort::set_param_by_index1", Props.at(1)->value());
+	index_t n = SubCirPort::param_count() - i - 1;
+	trace5("SubCirPort::set_param_by_index", label(), i, vv, n, Symbol::param_count());
+	trace5("SubCirPort::set_param_by_index", label(), i, vv, n, Component::param_count());
 	Component::set_param_by_index(i, vv); // noop?
-	trace1("SubCirPort::set_param_by_index2", Props.at(0)->value());
-	trace1("SubCirPort::set_param_by_index2", Props.at(1)->value());
 
 	QString v = QString::fromStdString(vv);
 
-	index_t n = SubCirPort::param_count()-i-1;
-	trace4("SubCirPort::set_param_by_index", label(), i, vv, n);
-
-	if(i==6){
+	if(n==1){
 		bool ok;
 		int pos = v.toInt(&ok);
 		trace2("SubCirPort::set_param_by_index portno", pos, Props.at(0)->value());
@@ -269,7 +265,7 @@ void SubCirPort::set_param_by_index(index_t i, std::string const& vv)
 		}else{
 			_pos = pos+1;
 		}
-	}else if(i==7){
+	}else if(n==0){
 		trace1("SubCirPort::set_param_by_index type", vv);
 		_some_type = vv;
 	}else{

@@ -131,21 +131,25 @@ private: // Symbol
 	}
 	bool param_is_printable(index_t i) const override{
 		index_t s = Verilog::param_count() - 1 - i;
-		switch (s) {
-		case 0:
-		case 1:
-		case 2:
+		trace3("param_is_printable", i, s, param_name(i));
+		switch (s) { // BUG Symbol.
+		case 0: // tx
+		case 1: // ty
 			return true;
+		case 2: // filename
+			return true;
+//		case 3: // angle?
+			break;
 		default:
 			break;
 		}
 		assert(common());
-		if(s-np<_param_names.size()){
-			return true;
+		if(s-np<_param_names.size()){ untested();
+			return false;
 //		}else if(i<common()->param_count()){ untested();
 //			return true ;
-		}else{
-			return FactorySymbol::param_is_printable(i); // wrong?
+		}else{ untested();
+			return FactorySymbol::param_is_printable(i + _param_names.size());
 		}
 	}
 	std::string param_name(index_t i) const override {

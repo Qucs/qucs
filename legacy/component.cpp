@@ -330,7 +330,6 @@ bool Component::getSelected(int x_, int y_)
 // -------------------------------------------------------
 void Component::paint(ViewPainter *p) const
 {itested();
-  int x, y;
   int cx = 0; // cx_(); // "positionX"
   int cy = 0; // cy_(); // "positionY"
 //  int a, b, xb, yb;
@@ -550,7 +549,6 @@ void Component::rotate()
 
 void Component::set_param_by_index(index_t pos, std::string const& v)
 {
-  int p = int(pos) - int(Symbol::param_count()) - num_component_params ;
   int i = Component::param_count() - pos - 1;
 
   trace2("Component::setParameter", pos, v);
@@ -562,7 +560,7 @@ void Component::set_param_by_index(index_t pos, std::string const& v)
     Symbol::set_param_by_index(pos, v);
   }else if (i<int(Props.size())){
     index_t idx = Props.size()-1-i;
-    trace5("Component::setParameter props fallback", pos, p, v, idx, short_label());
+    trace4("Component::setParameter props fallback", pos, v, idx, short_label());
     assert(Props.at(idx));
     //Props.at(p)->setValue(v);
     Props.at(idx)->Value = QString::fromStdString(v);
@@ -633,7 +631,8 @@ template<class P>
 static int paramDisplay(P const& p, int offset)
 {
   int ret = 0;
-  int s = 1 << (p.size() - offset);
+  trace2("display", p.size(), offset);
+  int s = 1; //  << offset;
 
   for(auto i : p){
     if(!i){
@@ -642,9 +641,10 @@ static int paramDisplay(P const& p, int offset)
       ret += s;
     }else{
     }
-    s /= 2;
+    s *= 2;
   }
   trace1("display", ret);
+  assert(ret>=0);
   return ret;
 }
 
@@ -1535,7 +1535,7 @@ index_t Component::param_count() const
 bool Component::param_is_printable(index_t i) const
 {
   index_t s = Symbol::param_count();
-  int j = i - (s + num_component_params);
+//  int j = i - (s + num_component_params);
   if(i < s){
     return Symbol::param_is_printable(i);
   }else if(i==s){
@@ -1587,7 +1587,7 @@ std::string Component::param_name(index_t i) const
     return "$ty";
   }else{
     i -= (s + num_component_params);
-    trace4("Component::param_name Props", param_count(), short_label(), i, s);
+//    trace4("Component::param_name Props", param_count(), short_label(), i, s);
     if( k<Props.size()){
       return Props.at(k)->name().toStdString();
     }else{

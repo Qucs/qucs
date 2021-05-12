@@ -45,7 +45,7 @@ bool Place::param_is_printable(index_t i) const
 	case 3:
 		return false; // h/vflip
 	default:
-		return true;
+		return Symbol::param_is_printable(i);
 	}
 }
 /*--------------------------------------------------------------------------*/

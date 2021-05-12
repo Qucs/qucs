@@ -134,13 +134,13 @@ protected: // Symbol
 //  }
 
 	bool param_is_printable(index_t) const override;
-	index_t param_count() const override;
 	std::string param_value(index_t i) const override;
 	std::string param_name(index_t i) const override;
 	std::string param_value_by_name(std::string const& name) const override;
-public: // BUG
-	void set_param_by_name(std::string const& name, std::string const& value) override;
 
+public: // BUG
+	index_t param_count() const override;
+	void set_param_by_name(std::string const& name, std::string const& value) override;
 
 protected:
 	void set_param_by_index(index_t i, std::string const&) override;

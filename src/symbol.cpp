@@ -158,7 +158,7 @@ Symbol::~Symbol()
 /*--------------------------------------------------------------------------*/
 index_t Symbol::param_count() const
 {
-	return 4 + Component::param_count(); // xy position hv flip  TODO?  angle mfactor ...
+	return 5 + Component::param_count(); // xy position hv flip angle // TODO: mfactor?
 }
 /*--------------------------------------------------------------------------*/
 bool Symbol::param_is_printable(index_t i) const
@@ -171,6 +171,8 @@ bool Symbol::param_is_printable(index_t i) const
 	case 2: // hflip
 	case 3: // vflip
 		return true;
+	case 4: // angle
+		return false; // TODO
 	default:
 		return Component::param_is_printable(i);
 	}
@@ -187,6 +189,8 @@ std::string Symbol::param_value(index_t i) const
 		return std::to_string(_vflip);
 	case 3:
 		return std::to_string(_hflip);
+	case 4:
+		return std::to_string(_angle);
 	default: untested();
 		trace2("fwd", Component::param_count(), i);
 		return Component::param_value(i); // really??
@@ -205,6 +209,8 @@ std::string Symbol::param_name(index_t i) const
 		return "$vflip";
 	case 3:
 		return "$hflip";
+	case 4:
+		return "$angle";
 	default:
 		return Component::param_name(i);
 	}
@@ -212,6 +218,24 @@ std::string Symbol::param_name(index_t i) const
 /*--------------------------------------------------------------------------*/
 void Symbol::set_param_by_index(index_t n, std::string const& v)
 {
+	switch(Symbol::param_count()- n -1){
+	case 0: // xpos?
+		untested();
+		break;
+	case 1: // ypos?
+		untested();
+		break;
+	case 2: // vflip?
+		untested();
+		break;
+	case 3: // hflip?
+		untested();
+		break;
+	default:
+		untested();
+		break;
+	}
+
 	if(n==0){ untested();
 		// xpos
 		setPosition(pos_t(atoi(v.c_str()), cy()));

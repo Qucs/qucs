@@ -418,6 +418,7 @@ void LegacySchematicLanguage::printLegacyTaskElement(LegacyTaskElement const* c,
 	auto cc=const_cast<LegacyTaskElement*>(c); // BUGBUGBUGBUG
 	// cannot access Props without this hack
 #if 1
+	// used in .AC statement.
 	for(Property *p1 = cc->Props.first(); p1 != 0; p1 = cc->Props.next()) {
 		if(p1->Description.isEmpty()){ untested();
 			s << " \""+p1->Name+"="+p1->Value+"\"";   // e.g. for equations
@@ -474,7 +475,7 @@ static void printArgs(qucs::Component const* sym, ostream_t& s)
 
 	int show = atoi(sym->param_value_by_name("$param_display").c_str());
 	for(index_t i=sym->param_count(); i--;){
-		trace3("display", i, show, sym->param_name(i));
+		trace4("printArgs display", sym->short_label(), i, show, sym->param_name(i));
 		// if(sym->paramIsPrintabl(i))
 		std::string n = sym->param_name(i);
 		if(n.size() == 0){
@@ -769,7 +770,7 @@ Element* LegacySchematicLanguage::parseElement(istream_t& cmd, Element* x) const
 
 	for(index_t i=x->param_count(); i--;){
 		s = cmd.ctos(">", "=", ">");
-		trace2("LegacySchematicLanguage::parseElement", i, s);
+		trace3("LegacySchematicLanguage::parseElement", i, s, x->param_name(i));
 
 		x->set_param_by_index(i, s);
 	}
@@ -909,8 +910,8 @@ Symbol* LegacySchematicLanguage::parseSymbol(istream_t& cs, Symbol* sym) const
 
 			try{
 				index_t i = sym->param_count() - 1 - 2 - position;
-				trace4("legacy:set", sym->param_count(), position, n, i);
-				sym->set_param_by_index(sym->param_count() - 1 - 2 - position, n.toStdString());
+				trace5("legacy:set", sym->param_count(), position, n, i, sym->param_name(i));
+				sym->set_param_by_index(i, n.toStdString());
 			}catch(qucs::ExceptionCantFind const*){ untested();
 				trace1("wrong position", position);
 				incomplete(); // CS has error messages...
@@ -1084,7 +1085,8 @@ static ::Component* parseComponentObsoleteCallback(const QString& _s, ::Componen
 
 	// set parameters.
 	Property *p1;
-	unsigned position = 6; // what?
+	index_t position = c->Symbol::param_count() + 2 /*tx ty*/;
+	trace4("position hack", c->dev_type(), position, c->param_count(), c->Symbol::param_count());
 	for(p1 = c->Props.first(); p1 != 0; p1 = c->Props.next()) {
 		z++;
 		n = s.section('"',z,z);    // property value. gaah parse over and over again?
@@ -1176,9 +1178,8 @@ static ::Component* parseComponentObsoleteCallback(const QString& _s, ::Componen
 		p1->Value = n; // TODO: remove
 
 		Symbol* sym = c;
-		index_t i = sym->param_count() - position - 1;
-		trace5("callback spbi", c->label(), sym->param_count(), position, i, n);
-		// sym->set_param_by_index(i, n.toStdString()); // BUG: also do for non-Components.
+		trace6("callback spbi", c->dev_type(), c->label(), sym->param_count(), position, n, sym->param_name(position));
+
 		sym->set_param_by_index(position, n.toStdString()); // BUG: also do for non-Components.
 		position++;
 
