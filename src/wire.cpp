@@ -77,7 +77,7 @@ private:
 	bool isInterior(pos_t const&) const;
 
 private: // Symbol
-	index_t param_count() const override { return Symbol::param_count() + 3; }
+	index_t param_count() const override { return Symbol::param_count() + 4; }
 	void set_param_by_name(std::string const& name, std::string const& value) override;
 	std::string param_value_by_name(std::string const& name) const override;
 	std::string param_name(index_t i) const override;
@@ -451,6 +451,8 @@ std::string Wire::param_name(index_t i) const
 		return "$ty";
 	case 2:
 		return "netname";
+	case 3:
+		return "$vscale";
 	default:
 		return Symbol::param_name(i);
 	}
@@ -465,6 +467,11 @@ std::string Wire::param_value(index_t i) const
 		return std::to_string(_ty);
 	case 2:
 		return _netname;
+	case 3: untested();
+		{
+		auto p = portPosition(1);
+		return std::to_string(getX(p));
+		}
 	default:
 		return Symbol::param_value(i);
 	}
@@ -477,6 +484,8 @@ bool Wire::param_is_printable(index_t i) const
 	case 1:
 	case 2:
 		return _has_netname;
+	case 3:
+		return true;
 	default:
 		return Symbol::param_is_printable(i);
 	}
@@ -525,6 +534,8 @@ void Wire::set_param_by_name(std::string const& n, std::string const& v)
 		assert(tmp==1);
 	}else if(n=="delta"){itested();
 		delta = v;
+	}else if(n=="$vscale"){
+		_scale = atoi(v.c_str());
 	}else if(n=="deltax"){
 		int V = atoi(v.c_str());
 		auto p1 = pP1();

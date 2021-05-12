@@ -9,17 +9,17 @@ Vac #(.U(5 V), .f(10 MHz), .Phase(0), .Theta(0), .$ty(-72), .$tx(-72), .$xpositi
 Vac #(.U(-5 V), .f(10 MHz), .Phase(0), .Theta(0), .$ty(18), .$tx(18), .$xposition(330), .$yposition(270), .$vflip(1), .$hflip(1), .$angle(450)) V3(net_330_240, net_330_300);
 Vac #(.U(5 V), .f(10 MHz), .Phase(0), .Theta(0), .$ty(18), .$tx(18), .$xposition(350), .$yposition(80), .$vflip(1), .$hflip(1), .$angle(450)) V2(net_350_50, net_350_110);
 //TR1
-wire #(.$xposition(350), .$yposition(190), .$vflip(1), .$hflip(1), .$angle(270)) noname(net_350_190, net_350_220);
-wire #(.$xposition(220), .$yposition(220), .$vflip(1), .$hflip(1), .$angle(0)) noname(net_220_220, net_350_220);
-wire #(.$xposition(350), .$yposition(110), .$vflip(1), .$hflip(1), .$angle(270)) noname(net_350_110, net_350_130);
-wire #(.$xposition(110), .$yposition(190), .$vflip(1), .$hflip(1), .$angle(270)) noname(net_110_190, net_110_200);
-wire #(.$tx(0), .$ty(-30), .netname(Gate), .$xposition(110), .$yposition(190), .$vflip(1), .$hflip(1), .$angle(0)) noname(net_110_190, net_190_190);
-wire #(.$xposition(330), .$yposition(190), .$vflip(1), .$hflip(1), .$angle(270)) noname(net_330_190, net_330_240);
-wire #(.$xposition(240), .$yposition(190), .$vflip(1), .$hflip(1), .$angle(0)) noname(net_240_190, net_330_190);
-wire #(.$xposition(220), .$yposition(40), .$vflip(1), .$hflip(1), .$angle(0)) noname(net_220_40, net_350_40);
-wire #(.$xposition(350), .$yposition(40), .$vflip(1), .$hflip(1), .$angle(270)) noname(net_350_40, net_350_50);
-wire #(.$tx(30), .$ty(30), .netname(Drain), .$xposition(220), .$yposition(40), .$vflip(1), .$hflip(1), .$angle(270)) noname(net_220_40, net_220_160);
-wire #(.$tx(-80), .$ty(20), .netname(Source), .$xposition(220), .$yposition(220), .$vflip(1), .$hflip(1), .$angle(0)) noname(net_220_220, net_220_220);
+wire #(.$vscale(30), .$xposition(350), .$yposition(190), .$vflip(1), .$hflip(1), .$angle(270)) noname(net_350_190, net_350_220);
+wire #(.$vscale(130), .$xposition(220), .$yposition(220), .$vflip(1), .$hflip(1), .$angle(0)) noname(net_220_220, net_350_220);
+wire #(.$vscale(20), .$xposition(350), .$yposition(110), .$vflip(1), .$hflip(1), .$angle(270)) noname(net_350_110, net_350_130);
+wire #(.$vscale(10), .$xposition(110), .$yposition(190), .$vflip(1), .$hflip(1), .$angle(270)) noname(net_110_190, net_110_200);
+wire #(.$tx(0), .$ty(-30), .netname(Gate), .$vscale(80), .$xposition(110), .$yposition(190), .$vflip(1), .$hflip(1), .$angle(0)) noname(net_110_190, net_190_190);
+wire #(.$vscale(50), .$xposition(330), .$yposition(190), .$vflip(1), .$hflip(1), .$angle(270)) noname(net_330_190, net_330_240);
+wire #(.$vscale(90), .$xposition(240), .$yposition(190), .$vflip(1), .$hflip(1), .$angle(0)) noname(net_240_190, net_330_190);
+wire #(.$vscale(130), .$xposition(220), .$yposition(40), .$vflip(1), .$hflip(1), .$angle(0)) noname(net_220_40, net_350_40);
+wire #(.$vscale(10), .$xposition(350), .$yposition(40), .$vflip(1), .$hflip(1), .$angle(270)) noname(net_350_40, net_350_50);
+wire #(.$tx(30), .$ty(30), .netname(Drain), .$vscale(120), .$xposition(220), .$yposition(40), .$vflip(1), .$hflip(1), .$angle(270)) noname(net_220_40, net_220_160);
+wire #(.$tx(-80), .$ty(20), .netname(Source), .$vscale(0), .$xposition(220), .$yposition(220), .$vflip(1), .$hflip(1), .$angle(0)) noname(net_220_220, net_220_220);
 place #(.$xposition(110), .$yposition(260)) net_110_260(net_110_260);
 place #(.$xposition(330), .$yposition(300)) net_330_300(net_330_300);
 place #(.$xposition(220), .$yposition(280)) net_220_280(net_220_280);
