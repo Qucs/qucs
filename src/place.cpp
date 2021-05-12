@@ -44,6 +44,8 @@ bool Place::param_is_printable(index_t i) const
 	case 2:
 	case 3:
 		return false; // h/vflip
+	case 4:
+		return false; // angle
 	default:
 		return Symbol::param_is_printable(i);
 	}

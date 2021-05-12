@@ -170,9 +170,8 @@ bool Symbol::param_is_printable(index_t i) const
 	case 1: // y
 	case 2: // hflip
 	case 3: // vflip
-		return true;
 	case 4: // angle
-		return false; // TODO
+		return true;
 	default:
 		return Component::param_is_printable(i);
 	}
