@@ -48,10 +48,10 @@ public:
 	virtual ~MouseAction(){}
 
 public:
-	cmd* handle(QEvent*);
+	cmd* handle(QEvent*) override;
+	cmd* activate(QObject* sender) override;
+	cmd* deactivate() override;
 
-	virtual cmd* activate(QObject* sender);
-	virtual cmd* deactivate();
 // private: TODO
 	// TODO: only use POS in those
 	virtual cmd* move(QEvent*) { return nullptr; }

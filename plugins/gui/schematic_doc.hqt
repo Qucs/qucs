@@ -16,6 +16,7 @@
 #define QUCS_SCHEMATIC_DOC_H
 
 #include "actions.h"
+#include "mouseaction.h"
 #include "node.h"
 #include "qucsdoc.h"
 #include "viewpainter.h"

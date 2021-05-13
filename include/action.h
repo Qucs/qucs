@@ -18,6 +18,8 @@
 
 class QAction;
 class QObject;
+class QUndoCommand; // BUG? command?
+class QEvent; // really?
 
 namespace qucs {
 
@@ -25,6 +27,12 @@ class Action : public Object /* Command? */ {
 public:
 	virtual Action* clone() const = 0;
 	virtual QAction* createAction(QObject*) const = 0;
+
+public:
+	virtual void uncheck(){ unreachable(); }
+   virtual QUndoCommand* handle(QEvent*) { unreachable(); return nullptr;}
+   virtual QUndoCommand* activate(QObject*) {unreachable(); return nullptr;}
+   virtual QUndoCommand* deactivate() {unreachable(); return nullptr;} // BUG?
 };
 
 }

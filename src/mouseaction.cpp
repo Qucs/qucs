@@ -248,6 +248,52 @@ MouseActions* MouseAction::ctx() const
 	return p;
 }
 /*--------------------------------------------------------------------------*/
+QList<ElementGraphics*> MouseAction::selectedItems()
+{ untested();
+   // BUG. copies.
+  unreachable();
+#if 0
+  return doc()->selectedItems();
+#else
+	auto v = dynamic_cast<QGraphicsView*>(doc());
+	if(v){ untested();
+	}else if(auto s=dynamic_cast<SchematicScene*>(v->scene())){ untested();
+		return s->selectedItems();
+	}else{ untested();
+		unreachable();
+	}
+	return QList<ElementGraphics*>();
+#endif
+}
+/*--------------------------------------------------------------------------*/
+void MouseAction::sceneAddItem(ElementGraphics* x)
+{ untested();
+#if 0
+  doc()->sceneAddItem(x);
+#else
+  auto v = dynamic_cast<QGraphicsView*>(doc());
+
+  if(v){ untested();
+    incomplete();
+    assert(v->scene());
+    v->scene()->addItem(x);
+    QGraphicsItem* g = x;
+    g->show();
+  }else{ untested();
+  }
+#endif
+}
+/*--------------------------------------------------------------------------*/
+void MouseAction::sceneRemoveItem(ElementGraphics* x)
+{ untested();
+	auto v = dynamic_cast<QGraphicsView*>(doc());
+	if(v){ untested();
+		assert(v->scene());
+		v->scene()->removeItem(x);
+	}else{ untested();
+	}
+}
+/*--------------------------------------------------------------------------*/
 } // qucs
 /*--------------------------------------------------------------------------*/
 /*--------------------------------------------------------------------------*/

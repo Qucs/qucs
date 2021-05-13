@@ -15,11 +15,11 @@
 #include "node.h"
 #include "misc.h"
 #include "doc_actions.h"
-#include "mouseaction.h"
 #include "module.h"
 #include "io_trace.h"
 #include "schematic_scene.h"
 #include "qucsdoc.h"
+#include "action.h"
 
 #include <QTextStream>
 #include "qt_compat.h"
@@ -39,34 +39,6 @@
 #include <stdlib.h>
 
 namespace qucs {
-
-void MouseAction::sceneAddItem(ElementGraphics* x)
-{ untested();
-#if 0
-  doc()->sceneAddItem(x);
-#else
-  auto v = dynamic_cast<QGraphicsView*>(doc());
-
-  if(v){ untested();
-    incomplete();
-    assert(v->scene());
-    v->scene()->addItem(x);
-    QGraphicsItem* g = x;
-    g->show();
-  }else{ untested();
-  }
-#endif
-}
-
-void MouseAction::sceneRemoveItem(ElementGraphics* x)
-{ untested();
-	auto v = dynamic_cast<QGraphicsView*>(doc());
-	if(v){ untested();
-		assert(v->scene());
-		v->scene()->removeItem(x);
-	}else{ untested();
-	}
-}
 
 
 QAction *formerAction;   // remember action before drag n'drop etc.
@@ -98,7 +70,7 @@ MouseActions::~MouseActions()
 //  delete ComponentMenu;
 //  delete focusMEvent;
 }
-void MouseActions::setCurrentMode(MouseAction* a)
+void MouseActions::setCurrentMode(Action* a)
 {itested();
   if(_maCurrent){itested();
     _maCurrent->uncheck();
@@ -1249,23 +1221,6 @@ void MouseActions::MReleaseSelect(SchematicDoc *, QMouseEvent *)
 #endif
 
 // -----------------------------------------------------------
-QList<ElementGraphics*> MouseAction::selectedItems()
-{ untested();
-   // BUG. copies.
-  unreachable();
-#if 0
-  return doc()->selectedItems();
-#else
-	auto v = dynamic_cast<QGraphicsView*>(doc());
-	if(v){ untested();
-	}else if(auto s=dynamic_cast<SchematicScene*>(v->scene())){ untested();
-		return s->selectedItems();
-	}else{ untested();
-		unreachable();
-	}
-	return QList<ElementGraphics*>();
-#endif
-}
 
 // -----------------------------------------------------------
 #if 0
@@ -1655,7 +1610,7 @@ void MouseActions::executeCommand(QUndoCommand* c)
 // and deal with undoable commands.
 // https://www.walletfox.com/course/qundocommandexample.php?
 // https://stackoverflow.com/questions/32973326/qgraphicsscene-how-to-map-item-movements-into-qundocommand
-void MouseActions::possiblyToggleAction(MouseAction* a, QObject* s)
+void MouseActions::possiblyToggleAction(Action* a, QObject* s)
 {itested();
 	auto sender = dynamic_cast<QAction*>(s);
 	if(sender){

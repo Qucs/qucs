@@ -1,6 +1,5 @@
 
 EXTRA_DIST = \
-	action.am \
 	attenuator.am \
 	common.mk \
 	contrib.am \
@@ -11,6 +10,7 @@ EXTRA_DIST = \
 	main.am \
 	paintings.am \
 	plugins.am \
+	schematic.am \
 	transcalc.am \
 	vadim.am \
 	verilog.am \

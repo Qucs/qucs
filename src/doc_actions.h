@@ -27,7 +27,7 @@ class QMenu; // here?!
 namespace qucs {
 
 class ElementGraphics;
-class MouseAction;
+class Action;
 class Doc;
 
 // must be QObject so it can receive/filter events (needed??!)
@@ -73,9 +73,9 @@ public: // TODO. move into mouse actions
 	virtual void executeCommand(QUndoCommand* c);
 
 public: // modes
-	MouseAction* activeAction(){ untested(); return _maCurrent; }
-	MouseAction const* currentMode() const{ untested(); return _maCurrent; }
-	void setCurrentMode(MouseAction* a);
+	Action* activeAction(){ untested(); return _maCurrent; }
+	Action const* currentMode() const{ untested(); return _maCurrent; }
+	void setCurrentMode(Action* a);
 
 public slots:
   virtual void slotUndo() = 0;
@@ -84,10 +84,10 @@ public slots:
 public:
 	Doc* doc();
 	Doc const* doc() const;
-	void possiblyToggleAction(MouseAction* a, QObject* sender);
+	void possiblyToggleAction(Action* a, QObject* sender);
 
 private:
-	MouseAction* _maCurrent{nullptr};
+	Action* _maCurrent{nullptr};
 	bool _drawn;  // indicates whether the scheme element was drawn last time
 	bool isMoveEqual;
 }; // MouseActions
