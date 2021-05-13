@@ -341,8 +341,8 @@ void SchematicScene::selectAll(bool v)
 static QList<ElementGraphics*> filter(QList<QGraphicsItem*> L)
 {
 	trace1("items raw mutable", L.size());
-	for(auto l = L.begin(); l!=L.end(); ){ untested();
-		if(dynamic_cast<ElementGraphics*>(*l)){ untested();
+	for(auto l = L.begin(); l!=L.end(); ){itested();
+		if(dynamic_cast<ElementGraphics*>(*l)){itested();
 			++l;
 		}else{ untested();
 			// incomplete(); // actually
@@ -362,7 +362,7 @@ static QList<ElementGraphics const*> filter_const(QList<QGraphicsItem*> L)
 }
 /*--------------------------------------------------------------------------*/
 QList<ElementGraphics*> SchematicScene::selectedItems() const
-{ untested();
+{itested();
 	auto L = QGraphicsScene::selectedItems();
 	return filter(L);
 }
@@ -468,13 +468,13 @@ ElementGraphics const* SchematicScene::find_place(pos_t const& p) const
 }
 /*--------------------------------------------------------------------------*/
 ElementGraphics* SchematicScene::find_place(pos_t const& p)
-{ untested();
+{itested();
 	ElementGraphics* ret = nullptr;
 	auto list = items(getX(p), getY(p));
 	for(auto g : list){
 		auto c = dynamic_cast<Place const*>(element(g));
 		if(!c){ untested();
-		}else if(p == c->position()){ untested();
+		}else if(p == c->position()){itested();
 			assert(getX(g->pos()) == getX(c->position()));
 			assert(getY(g->pos()) == getY(c->position()));
 			ret = g;
@@ -552,7 +552,7 @@ void SchematicScene::connectPorts(Symbol* c)
 /*--------------------------------------------------------------------------*/
 // still used?
 void SchematicScene::attachToModel(Element* e)
-{ untested();
+{itested();
 	Element const* ce = e;
 	assert(!ce->owner());
 	

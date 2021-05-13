@@ -868,13 +868,14 @@ void SchematicActions::executeCommand(QUndoCommand /*??*/ * c)
 	if(u){itested();
 		u->push(c); // also calls redo
 
-		// train wreck. must be part of push. fix later.
+#if 0 // train wreck. must be part of push. fix later.
 		if(doc()->_app){ untested();
 			assert(doc()->_app->undo);
 			doc()->_app->undo->setEnabled(true); // base class??
 		}else{ untested();
 			incomplete();
 		}
+#endif
 	}else{ untested();
 		// forget about it.
 		delete c;

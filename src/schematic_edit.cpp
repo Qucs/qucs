@@ -178,7 +178,6 @@ void SchematicEdit::do_it_first()
 	std::vector<ElementGraphics*> done_del;
 
 	// footprint. keep track of places and nodes
-//	ElementList* m = scene()->scope();
 	Footprint f(scene());
 
 	trace1("============ edit delete...", _del.size());
@@ -232,21 +231,16 @@ void SchematicEdit::do_it_first()
 			trace1("collision during merge attempt", done_del.size());
 			// done with this one, others have been queued.
 		}else{
-			trace3("done insert, show", gfx, e->label(), e->owner());
+			trace4("done insert, show", gfx, e->dev_type(), e->label(), e->owner());
 			gfx->show_();
 			done_ins.push_back(gfx);
 		}
 	}
-	trace2("save", done_ins.size(), done_del.size());
 
 	save(done_ins, done_del);
 
-	trace2("saved", _del.size(), _ins.size());
-
-	trace2("saved", f.new_plg().size(), f.old_plg().size());
-
 	for(auto i : f.new_plg()){
-		trace3("FP", place(i)->node_degree(),
+		trace3("new_plg", place(i)->node_degree(),
 				          getX(place(i)->position()),
 				          getY(place(i)->position()));
 		if(place(i)->node_degree()){
@@ -257,7 +251,7 @@ void SchematicEdit::do_it_first()
 		}
 	}
 	for(auto i : f.old_plg()){
-		trace3("FPOLD", place(i)->node_degree(),
+		trace3("old_plg", place(i)->node_degree(),
 				          getX(place(i)->position()),
 				          getY(place(i)->position()));
 		if(place(i)->node_degree()){
@@ -279,7 +273,7 @@ QList<ElementGraphics*> SchematicEdit::items(
 }
 /*--------------------------------------------------------------------------*/
 QList<ElementGraphics*> SchematicEdit::items(QRectF const& r) const
-{ untested();
+{itested();
 	return _scn->items(r);
 }
 /*--------------------------------------------------------------------------*/
@@ -306,8 +300,8 @@ bool SchematicEdit::addmerge(ElementGraphics* new_elt, T& del_done)
 		if(dynamic_cast<Place const*>( element(gfxi))){
 			// a place.. revisit_later
 			_check_places.insert(gfxi);
-		}else if(auto n = gfxi->newUnion(new_elt)){
-			trace4("addmerge coll?", element(gfxi)->label(), gfxi, gfxi->pos(), n);
+		}else if(auto nu = gfxi->newUnion(new_elt)){
+			trace4("addmerge coll?", element(gfxi)->label(), gfxi, gfxi->pos(), nu);
 			// if gfxi is a place...
 
 			collision = true;
@@ -319,8 +313,8 @@ bool SchematicEdit::addmerge(ElementGraphics* new_elt, T& del_done)
 			assert(!element(gfxi)->owner());
 
 			del_done.push_back(gfxi);
-			auto nc = n->childItems();
-			trace1("got union", nc.size());
+			auto nc = nu->childItems();
+			trace2("got union", nc.size(), element(nu)->label());
 
 			size_t kk=0;
 
@@ -328,11 +322,12 @@ bool SchematicEdit::addmerge(ElementGraphics* new_elt, T& del_done)
 			for(auto c : nc){itested();
 				auto g = dynamic_cast<ElementGraphics*>(c);
 
-				if(!g){
+				if(!g){itested();
 					trace0("not useful");
 					// text, maybe
 					// unreachable();
-				}else if(dynamic_cast<Place const*>(element(g))){
+				}else if(dynamic_cast<Place const*>(element(g))){ untested();
+					unreachable();
 					// it's a place. why?
 				}else{
 					auto cc = g->clone();
@@ -350,13 +345,14 @@ bool SchematicEdit::addmerge(ElementGraphics* new_elt, T& del_done)
 			if(kk){
 				// found something useful
 				trace2("unpacked", kk, nc.size());
-				delete n; // does it delete them all?
+				delete nu; // does it delete them all?
 			}else{
-				_ins.push_front(n);
+				trace2("raw?", kk, nc.size());
+				_ins.push_front(nu);
 			}
 			break;
 		}else{
-			trace4("addmerge no coll", element(gfxi)->label(), gfxi, gfxi->pos(), n);
+			trace4("addmerge no coll", element(gfxi)->label(), gfxi, gfxi->pos(), nu);
 		}
 	}
 
@@ -437,7 +433,8 @@ void SchematicEdit::qInsert(ElementGraphics* gfx)
 
 #ifndef NDEBUG
 	if(auto sym=dynamic_cast<Symbol const*>(element(gfx))){
-		for(unsigned i=0; i<sym->numPorts(); ++i){
+		trace2("qInsert", sym->label(), sym->dev_type());
+		for(index_t i=0; i<sym->numPorts(); ++i){
 			trace3("qInsert", sym->label(), i, sym->port_value(i));
 		}
 	}

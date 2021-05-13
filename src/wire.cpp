@@ -41,8 +41,23 @@ using qucs::Symbol;
 using qucs::SubcktBase;
 /*--------------------------------------------------------------------------*/
 class Wires : public SubcktBase{
+public:
+	explicit Wires() : SubcktBase(){itested();
+		new_subckt();
+	}
 private:
 	Port& port(unsigned){ throw "unreachable";}
+private:
+	Element* clone() const override{
+		unreachable();
+		return nullptr;
+	}
+
+public:
+	bool makes_own_scope() const override{
+		return true;
+	}
+	ElementList* scope(){itested(); assert(subckt()); return subckt(); }
 };
 /*--------------------------------------------------------------------------*/
 class Wire : public Symbol, public Conductor {
@@ -224,17 +239,18 @@ SubcktBase* Wire::intersectPorts(Symbol const* s) const
 		}
 	}
 
-	if(split.size()){
+	if(split.size()){ untested();
 		trace2("intersectPorts", split.size(), split[0]);
 		split.push_back(nodePosition(0));
 		split.push_back(nodePosition(1));
 
 		std::sort(split.begin(), split.end());
-		Component *c = qucs::device_dispatcher.clone("subckt_proto");
+		Component *c = new Wires();
 		auto sckt = prechecked_cast<SubcktBase*>(c);
 		assert(sckt);
-		sckt->new_subckt();
-		ElementList* m = sckt->subckt();
+		assert(sckt->makes_own_scope());
+		sckt->set_label("intersectports");
+		ElementList* m = sckt->scope();
 
 		// TODO: ordering bug probably here as well.
 		m->push_back(s->clone());
@@ -291,13 +307,13 @@ SubcktBase* Wire::extendTowards(pos_t const& other) const
 	}else{
 	}
 
-	if(w){
-		Component *s = qucs::device_dispatcher.clone("subckt_proto");
+	if(w){itested();
+		Component *s = new Wires();
+		s->set_label("extend");
 		auto sckt = prechecked_cast<SubcktBase*>(s);
 		assert(sckt);
-		sckt->new_subckt();
 		assert(sckt->subckt());
-		sckt->subckt()->push_back(w);
+		sckt->scope()->push_back(w);
 		return sckt;
 	}else{
 		return nullptr;
@@ -317,7 +333,7 @@ SubcktBase* Wire::newTee(Wire const* o) const
 	if(isInterior(o->nodePosition(0))){
 		s = new Wires();
 		split = o->nodePosition(0);
-	}else if(isInterior(o->nodePosition(1))){ untested();
+	}else if(isInterior(o->nodePosition(1))){itested();
 		s = new Wires();
 		split = o->nodePosition(1);
 	}else if(o->isInterior(nodePosition(0))){
@@ -337,10 +353,11 @@ SubcktBase* Wire::newTee(Wire const* o) const
 	}else{
 	}
 
-	if(s){
+	if(s){itested();
 		trace1("building tee", split);
-		s->new_subckt();
-		ElementList* m = s->subckt();
+		assert(s->makes_own_scope());
+		assert(s->scope());
+		ElementList* m = s->scope();
 		assert(m);
 
 		// BUG BUG BUG. this depends on the order.
@@ -372,7 +389,7 @@ SubcktBase* Wire::newUnion(Symbol const* s) const
 			ret = newTee(o);
 		}else if(isNet(o->nodePosition(0))){
 			ret = extendTowards(o->nodePosition(1));
-		}else if(isNet(o->nodePosition(1))){ untested();
+		}else if(isNet(o->nodePosition(1))){itested();
 			ret = extendTowards(o->nodePosition(0));
 		}else{ untested();
 		}

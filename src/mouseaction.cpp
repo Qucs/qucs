@@ -126,11 +126,11 @@ void MouseAction::slotTrigger() // QAction* sender)
 }
 
 SchematicScene* MouseAction::scene()
-{untested();
+{itested();
 	auto cc = dynamic_cast<QGraphicsView*>(doc());
 	
 	if(!cc){ untested();
-	}else if(auto s = dynamic_cast<SchematicScene*>(cc->scene())){ untested();
+	}else if(auto s = dynamic_cast<SchematicScene*>(cc->scene())){itested();
 		return s;
 	}else{ untested();
 	}
