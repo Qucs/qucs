@@ -35,7 +35,6 @@ class MouseActions;
 
 // it is a mode. not an action...
 class MouseAction : public QObject, public Action {
-	Q_OBJECT
 public:
 	typedef QUndoCommand cmd;
 protected:
@@ -65,10 +64,6 @@ public:
 	virtual cmd* leave(QEvent*) {itested(); return nullptr; }
 
 	void uncheck();
-
-public slots:
-	void slotToggle(); // QAction* sender);
-	void slotTrigger(); // QAction* sender);
 
 protected:
 	MouseActions* ctx() const;

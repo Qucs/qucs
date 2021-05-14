@@ -37,7 +37,6 @@ CPP_SRC = \
 	misc.cpp \
 	mnemo.cpp \
 	module.cpp \
-	mouseaction.cpp \
 	netlist.cpp \
 	node.cpp \
 	nodelabel.cpp \
@@ -73,7 +72,6 @@ CPP_SRC = \
 QMOCHEADERS = \
 	component_widget.h \
 	doc_actions.h \
-	mouseaction.h \
 	project_view.h \
 	qucs_app.h \
 	qucs_tabs.h

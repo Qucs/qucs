@@ -20,7 +20,7 @@
 #include "sckt_base.h"
 #include "language.h"
 #include "qio.h"
-#include "mouseaction.h"
+#include "schematic_action.h"
 #include "schematic_edit.h"
 #include "qucs_globals.h"
 /*--------------------------------------------------------------------------*/
@@ -89,6 +89,7 @@ public:
 }; // PasteCommand
 /*--------------------------------------------------------------------------*/
 class MouseActionPaste : public MouseAction{
+	Q_OBJECT
 public:
 	explicit MouseActionPaste(Element const* proto=nullptr)
 		: MouseAction(), _gfx(nullptr), _proto(proto)

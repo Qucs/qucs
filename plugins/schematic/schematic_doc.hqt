@@ -16,7 +16,6 @@
 #define QUCS_SCHEMATIC_DOC_H
 
 #include "actions.h"
-#include "mouseaction.h"
 #include "node.h"
 #include "qucsdoc.h"
 #include "viewpainter.h"
@@ -27,6 +26,7 @@
 #include "element_list.h"
 #include "schematic_lang.h"
 #include "schematic_action.h"
+#include "schematic_actions.h"
 #include "qt_compat.h"
 
 #include <QGraphicsView>

@@ -1,0 +1,383 @@
+/***************************************************************************
+    copyright            : (C) 2020, 2021 Felix Salfelder
+ ***************************************************************************/
+
+/***************************************************************************
+ *                                                                         *
+ *   This program is free software; you can redistribute it and/or modify  *
+ *   it under the terms of the GNU General Public License as published by  *
+ *   the Free Software Foundation; either version 3 of the License, or     *
+ *   (at your option) any later version.                                   *
+ *                                                                         *
+ ***************************************************************************/
+
+#ifndef QUCS_SELECT_H
+#define QUCS_SELECT_H
+#include "schematic_action.h"
+#include "schematic_actions.h"
+#include "schematic_dialog.h"
+#include "schematic_edit.h"
+#include "qucs_globals.h"
+#include "qucsdoc.h"
+#include "node.h"
+
+#include <QAction>
+#include <QGraphicsView>
+/*--------------------------------------------------------------------------*/
+namespace{
+/*--------------------------------------------------------------------------*/
+class ActionDelete : public QAction{
+public:
+	explicit ActionDelete(QObject* parent) : QAction(parent) { untested();
+		setIcon(QIcon(":/bitmaps/editdelete.png"));
+		setText(tr("&Delete"));
+		setShortcut(Qt::Key_Delete);
+		setStatusTip(tr("Delete the selected components"));
+		setWhatsThis(tr("Delete\n\nDeletes the selected components"));
+		setCheckable(true);
+	}
+};
+/*--------------------------------------------------------------------------*/
+class ActionRotate : public QAction{
+public:
+	explicit ActionRotate(QObject* parent) : QAction(parent) {itested();
+		setIcon(QIcon(":/bitmaps/rotate_ccw.png"));
+		setText(tr("Rotate"));
+		setShortcut(Qt::CTRL+Qt::Key_R);
+		setStatusTip(tr("Rotates the selected component by 90\x00B0"));
+		setWhatsThis(tr("Rotate\n\nRotates the section by 90\x00B0 counter-clockwise"));
+		setCheckable(true);
+	}
+};
+/*--------------------------------------------------------------------------*/
+class ActionMirrorY : public QAction{
+public:
+	explicit ActionMirrorY(QObject* parent) : QAction(parent) {itested();
+  		setIcon(QIcon(":/bitmaps/mirror.png"));
+		setText(tr("Mirror Y"));
+		setShortcut(Qt::CTRL+Qt::Key_J);
+		setStatusTip(tr("Mirror the selected item vertically"));
+		setWhatsThis(tr("Mirror Y\n\nMirror the selected item vertically"));
+		setCheckable(true);
+	}
+};
+/*--------------------------------------------------------------------------*/
+class ActionMirrorX : public QAction{
+public:
+	explicit ActionMirrorX(QObject* parent) : QAction(parent) {itested();
+		setIcon(QIcon(":/bitmaps/mirrory.png"));
+		setText(tr("Mirror X"));
+		setShortcut(Qt::CTRL+Qt::Key_M);
+		setStatusTip(tr("Mirror selected items horizontally"));
+		setWhatsThis(tr("Mirror X\n\nMirrors selected items horizontally"));
+		setCheckable(true);
+	}
+};
+/*--------------------------------------------------------------------------*/
+/*--------------------------------------------------------------------------*/
+class MouseActionSelCmd : public MouseAction{
+	Q_OBJECT
+public:
+	explicit MouseActionSelCmd(QObject* p=nullptr) : MouseAction(p){}
+protected:
+	MouseActionSelCmd(MouseActionSelCmd const& s)
+		: MouseAction(){ untested(); }
+private:
+#if 0
+	QAction* createAction(QObject* parent) const override{itested();
+		QAction* x=nullptr;
+		if(_cmd->short_label() == "delete"){
+			x = new ActionDelete(parent);
+		}else if(_cmd->short_label() == "rotate"){
+			x = new ActionRotate(parent);
+		}else if(_cmd->short_label() == "mirrorX"){
+			x = new ActionMirrorX(parent);
+		}else if(_cmd->short_label() == "mirrorY"){
+			x = new ActionMirrorY(parent);
+		}else{
+			assert(false);
+//			x = new ActionSelect(parent);
+		}
+		connect(x, &QAction::toggled, this, &MouseActionSelCmd::slotToggle);
+		return x;
+	}
+#endif
+public slots:
+	void slotToggle() {untested();
+		assert(ctx());
+		ctx()->possiblyToggleAction(this, sender());
+	}
+
+private:
+	cmd* activate(QObject* sender) override;
+	cmd* deactivate() override;
+//	cmd* move(QEvent*) override;
+	cmd* press(QEvent*) override;
+	cmd* release(QEvent*) override;
+//	cmd* generic(QEvent*) override;
+protected:
+	virtual QUndoCommand* mkcommand(SchematicScene* ctx,
+			QList<qucs::ElementGraphics*> deletelist) = 0;
+private:
+	QCursor _oldcursor;
+};
+/*--------------------------------------------------------------------------*/
+/*--------------------------------------------------------------------------*/
+QUndoCommand* MouseActionSelCmd::deactivate()
+{itested();
+	setCursor(_oldcursor);
+	return MouseAction::deactivate();
+}
+/*--------------------------------------------------------------------------*/
+QUndoCommand* MouseActionSelCmd::activate(QObject* sender)
+{itested();
+	MouseAction::activate(sender); // ...
+
+	_oldcursor = view()->cursor();
+	setCursor(Qt::CrossCursor);
+
+	auto s = scene()->selectedItems();
+	bool selected = !s.empty();
+
+	if(selected){itested();
+		auto cmd = mkcommand(scene(), s);
+		return cmd;
+	}else{ untested();
+		return nullptr;
+	}
+}
+/*--------------------------------------------------------------------------*/
+QUndoCommand* MouseActionSelCmd::press(QEvent* e)
+{ untested();
+	if(!e){ untested();
+		return nullptr;
+	}else if(auto i = dynamic_cast<ItemEvent*>(e)){ untested();
+		QList<ElementGraphics*> l;
+		l.push_back(&i->item());
+		return mkcommand(scene(), l);
+	}else{ untested();
+		trace1("delete::scene unknown sender", e->type());
+		return nullptr;
+	}
+} // select::press
+/*--------------------------------------------------------------------------*/
+QUndoCommand* MouseActionSelCmd::release(QEvent*)
+{ untested();
+	incomplete(); // why?
+	return nullptr;
+} // select::release
+/*--------------------------------------------------------------------------*/
+/*--------------------------------------------------------------------------*/
+class MouseActionSelDelete : public MouseActionSelCmd{
+private:
+	Action* clone() const{
+		return new MouseActionSelDelete(*this);
+	}
+	QAction* createAction(QObject* parent) const override{untested();
+		auto x = new ActionDelete(parent);
+		connect(x, &QAction::toggled, this, &MouseActionSelCmd::slotToggle);
+		return x;
+	}
+	QUndoCommand* mkcommand(SchematicScene* ctx, QList<qucs::ElementGraphics*> deletelist) override{
+		auto e = new SchematicEdit(ctx);
+		e->qDelete(deletelist);
+		e->setText("delete " + QString::number(deletelist.size()) + " items");
+		return e;
+	}
+}a1;
+Dispatcher<Widget>::INSTALL p1(&qucs::action_dispatcher, "SchematicDeleteSelection", &a1);
+Dispatcher<Widget>::INSTALL p1_TODO(&qucs::action_dispatcher, "SchematicActivate", &a1);
+/*--------------------------------------------------------------------------*/
+void transformElement(Element* e, qucsSymbolTransform a, pos_t pivot)
+{itested();
+	trace1("..", a.degrees_int());
+	assert(!(a.degrees_int()%90));
+	assert(e);
+	if(auto* s=dynamic_cast<Symbol*>(e)){ untested();
+		int angle = 0;
+		int vflip = 0;
+		int hflip = 0;
+		int mx = 0;
+		int my = 0;
+		unsigned r = 0;
+		try {itested();
+			std::string mxs = s->param_value_by_name("$hflip");
+			hflip = atoi(mxs.c_str()); // \pm 1
+			//assert(hflip == 1); // for now.
+			// 1  |-> 0
+			// -1 |-> 1
+			mx = (1 - hflip) / 2;
+		}catch(qucs::ExceptionCantFind const&){ untested();
+			incomplete();
+		}
+		try {itested();
+			// this is what legacy used ("mirrorX", vertical flip);
+			std::string mys = s->param_value_by_name("$vflip");
+			vflip = atoi(mys.c_str());
+			// 1  |-> 0
+			// -1 |-> 1
+			my = (1 - vflip) / 2;
+		}catch(qucs::ExceptionCantFind const&){ untested();
+			unreachable();
+		}
+		try {itested();
+			std::string rs = s->param_value_by_name("$angle");
+			angle = atoi(rs.c_str());
+			assert(!(angle%90));
+			assert(angle<360);
+			r = angle/90;
+		}catch(qucs::ExceptionCantFind const&){ untested();
+			unreachable();
+		}
+
+		trace3("pretransform", hflip, vflip, angle);
+
+		assert(mx==0 || mx==1);
+		assert(my==0 || my==1);
+		assert(r < 4); // yikes //
+
+		//assert(hflip==1);
+
+		rotate_after_mirror current(int(r*90), bool(mx), bool(my));
+		assert(!(current.degrees_int()%90));
+		rotate_after_mirror1_t new_mr = a * current;
+		assert(!(new_mr.degrees_int()%90));
+
+		vflip = -2 * int(new_mr.mirror()) + 1;
+
+		s->set_param_by_name(std::string("$hflip"), std::string("1"));
+		s->set_param_by_name(std::string("$vflip"), std::to_string(vflip));
+		s->set_param_by_name(std::string("$angle"), std::to_string(new_mr.degrees_int()));
+
+		trace3("posttransform", hflip, vflip, new_mr.degrees_int());
+
+		auto p = e->center();
+		trace1("posttransform setpos0", p);
+		int x = getX(p);
+		int y = getY(p);
+
+		x -= pivot.first;
+		y -= pivot.second;
+
+		pos_t new_xy(x,y);
+		new_xy = a.apply(new_xy);
+
+		x = pivot.first + new_xy.first;
+		y = pivot.second + new_xy.second;
+
+		// todo: rounding errors.
+
+		p = pos_t(x, y);
+		trace1("posttransform setpos1", p);
+		e->setPosition(p);
+	// prepareGeometryChange(); // needed??
+	}else{ untested();
+	}
+}
+/*--------------------------------------------------------------------------*/
+template<class T>
+class TransformSelection : public SchematicEdit {
+public:
+	template<class IT>
+	TransformSelection(SchematicScene* ctx, IT selection, T const& t)
+	: SchematicEdit(ctx){itested();
+		size_t k = 0;
+		// TODO: bounding box center?
+		QRectF bb;
+		std::vector<std::pair<ElementGraphics*,Element*>> buf;
+		for(auto i : selection){itested();
+			++k;
+			QGraphicsItem const* g = i;//huh?
+			if(auto eg=dynamic_cast<ElementGraphics*>(i)){itested();
+				auto br = g->boundingRect();
+				bb |= i->mapToScene(br).boundingRect(); // translate(eg->pos());
+				Element* e = eg->cloneElement();
+				buf.push_back(std::make_pair(eg, e));
+				// qSwap(eg, e);
+			}else{ untested();
+				unreachable(); // really? use prechecked_cast then.
+			}
+		}
+
+		auto center = bb.center();
+		pos_t pivot(getX(center), getY(center));
+		trace1("transform", pivot);
+
+		for(auto i : buf){
+			transformElement(i.second, t, pivot);
+			qSwap(i.first, i.second);
+		}
+
+		setText("transform " + QString::number(k) + " items");
+	}
+	static std::string label(){ return T::label(); }
+};
+/*--------------------------------------------------------------------------*/
+class MirrorXaxisSelection : public MouseActionSelCmd{
+	typedef TransformSelection<qucsSymbolTransform> base;
+private:
+	Action* clone() const{
+		return new MirrorXaxisSelection(*this);
+	}
+	QAction* createAction(QObject* parent) const override{untested();
+		auto x = new ActionMirrorX(parent);
+		connect(x, &QAction::toggled, this, &MouseActionSelCmd::slotToggle);
+		return x;
+	}
+	QUndoCommand* mkcommand(SchematicScene* ctx, QList<qucs::ElementGraphics*> deletelist) override{
+		auto e = new base(ctx, deletelist, transformFlipHorizontally);
+		return e;
+	}
+}a2;
+Dispatcher<Widget>::INSTALL p2(&qucs::action_dispatcher, "SchematicMirrorX", &a2);
+/*--------------------------------------------------------------------------*/
+class MirrorYaxisSelection : public MouseActionSelCmd{
+	typedef TransformSelection<qucsSymbolTransform> base;
+private:
+	Action* clone() const{
+		return new MirrorYaxisSelection(*this);
+	}
+	QAction* createAction(QObject* parent) const override{untested();
+		auto x = new ActionMirrorY(parent);
+		connect(x, &QAction::toggled, this, &MouseActionSelCmd::slotToggle);
+		return x;
+	}
+	QUndoCommand* mkcommand(SchematicScene* ctx, QList<qucs::ElementGraphics*> deletelist) override{
+		auto e = new base(ctx, deletelist, transformFlipVertically);
+		return e;
+	}
+}a3;
+Dispatcher<Widget>::INSTALL p3(&qucs::action_dispatcher, "SchematicMirrorY", &a3);
+/*--------------------------------------------------------------------------*/
+static const rotate_after_mirror1_t ninety_degree_transform(90, false);
+class RotateSelection : public MouseActionSelCmd{
+	typedef TransformSelection<qucsSymbolTransform> base;
+private:
+	Action* clone() const{
+		return new RotateSelection(*this);
+	}
+	QAction* createAction(QObject* parent) const override{untested();
+		auto x = new ActionRotate(parent);
+		connect(x, &QAction::toggled, this, &MouseActionSelCmd::slotToggle);
+		return x;
+	}
+	QUndoCommand* mkcommand(SchematicScene* ctx, QList<qucs::ElementGraphics*> deletelist) override{
+		auto e = new base(ctx, deletelist, ninety_degree_transform);
+		return e;
+	}
+}a4;
+Dispatcher<Widget>::INSTALL p4(&qucs::action_dispatcher, "SchematicRotate", &a4);
+/*--------------------------------------------------------------------------*/
+//typedef MouseActionSelCmd<RotateSelectionTransform> MouseActionRotate;
+//typedef MouseActionSelCmd<MirrorXaxisSelection> HandleMirrorX;
+//typedef MouseActionSelCmd<MirrorYaxisSelection> HandleMirrorY;
+/*--------------------------------------------------------------------------*/
+/*--------------------------------------------------------------------------*/
+/*--------------------------------------------------------------------------*/
+/*--------------------------------------------------------------------------*/
+/*--------------------------------------------------------------------------*/
+/*--------------------------------------------------------------------------*/
+} // namespace
+/*--------------------------------------------------------------------------*/
+/*--------------------------------------------------------------------------*/
+#endif

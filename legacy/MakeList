@@ -1,7 +1,6 @@
 TARGET = legacy
 
 SUBDIRS = \
-	action \
 	dialogs \
 	components \
 	paintings \

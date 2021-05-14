@@ -1,0 +1,335 @@
+/***************************************************************************
+    copyright            : 2018, 2020, 2021 Felix Salfelder
+ ***************************************************************************/
+
+/***************************************************************************
+ *                                                                         *
+ *   This program is free software; you can redistribute it and/or modify  *
+ *   it under the terms of the GNU General Public License as published by  *
+ *   the Free Software Foundation; either version 3 of the License, or     *
+ *   (at your option) any later version.                                   *
+ *                                                                         *
+ ***************************************************************************/
+
+#ifndef QUCS_QT_PLUGIN
+#define QUCS_QT_PLUGIN
+/*--------------------------------------------------------------------------*/
+#include "qucs_globals.h"
+#include "symbol.h"
+#include "viewpainter.h"
+#include "element_list.h"
+#include "schematic_scene.h"
+#include "schematic_edit.h"
+#include "schematic_action.h"
+#include "schematic_actions.h"
+#include "qucsdoc.h"
+
+#include <QAction>
+#include <QGraphicsView>
+#include <QGraphicsSceneMouseEvent>
+#include <QMouseEvent>
+
+#include <component_widget.h> // not here.
+/*--------------------------------------------------------------------------*/
+namespace{
+/*--------------------------------------------------------------------------*/
+class ActionInsEqn : public QAction{
+public:
+	explicit ActionInsEqn(QObject* parent) : QAction(parent) {itested();
+		setIcon(QIcon(":/bitmaps/equation.png"));
+		setText(tr("Insert Equation"));
+		setShortcut(Qt::CTRL+Qt::Key_Less);
+		setStatusTip(tr("Inserts an equation"));
+		setWhatsThis(tr("Insert Equation\n\nInserts a user defined equation"));
+		setCheckable(true);
+	}
+};
+/*--------------------------------------------------------------------------*/
+class ActionInsertPort : public QAction{
+public:
+	explicit ActionInsertPort(QObject* parent) : QAction(parent) {itested();
+		setIcon(QIcon(":/bitmaps/port.png"));
+		setText(tr("Insert Port"));
+		setStatusTip(tr("Insert a port symbol"));
+		setWhatsThis(tr("Insert Port\n\nInsert a port symbol"));
+		setCheckable(true);
+	}
+};
+/*--------------------------------------------------------------------------*/
+class ActionInsertGround : public QAction{
+public:
+	explicit ActionInsertGround(QObject* parent) : QAction(parent) {itested();
+		setIcon(QIcon(":/bitmaps/ground.png"));
+		setText(tr("Insert Ground"));
+		setShortcut(Qt::CTRL+Qt::Key_G);
+		setStatusTip(tr("Insert a ground symbol"));
+		setWhatsThis(tr("Insert Ground\n\nInsert a ground symbol"));
+		setCheckable(true);
+	}
+};
+/*--------------------------------------------------------------------------*/
+class MouseActionNewElement : public MouseAction{
+	Q_OBJECT
+public:
+	explicit MouseActionNewElement(Element const* proto=nullptr)
+		: MouseAction(), _gfx(nullptr), _proto(proto)
+  	{}
+
+	Action* clone() const{
+		return new MouseActionNewElement(); // this?
+	}
+	QAction* createAction(QObject* parent) const override{itested();
+		QAction* x = nullptr;
+		assert(_proto);
+		trace2("createAction", _proto->dev_type(), _proto->label());
+		if(_proto->dev_type() == "GND"){
+			x = new ActionInsertGround(parent);
+		}else if(_proto->dev_type() == "Port"){
+			x = new ActionInsertPort(parent);
+		}else if(_proto->dev_type() == "Eqn"){
+			x = new ActionInsEqn(parent);
+		}else{
+			incomplete();
+			x = new ActionInsertPort(parent);
+		}
+		connect(x, &QAction::toggled, this, &MouseActionNewElement::slotToggle);
+		return x;
+	}
+public slots:
+	void slotToggle() {untested();
+		assert(ctx());
+		ctx()->possiblyToggleAction(this, sender());
+	}
+private:
+	void set_param_by_name(std::string const& n, std::string const& v) override{
+		if(n=="dev_type"){
+			_proto = qucs::symbol_dispatcher.clone(v);
+			assert(_proto);
+		}else{
+		}
+	}
+private:
+	cmd* activate(QObject* sender) override;
+	cmd* deactivate() override;
+	cmd* move(QEvent*) override;
+	cmd* press(QEvent*) override;
+	cmd* enter(QEvent*) override;
+	cmd* leave(QEvent*) override;
+	cmd* release(QEvent*) override;
+
+private:
+	cmd* makeNew(QEvent*);
+	cmd* rotate(QEvent*);
+
+private:
+	ElementGraphics* _gfx{nullptr};
+	Element const* _proto{nullptr};
+}a;
+static Dispatcher<Widget>::INSTALL p1(&qucs::action_dispatcher, "actionNew", &a);
+/*--------------------------------------------------------------------------*/
+/*--------------------------------------------------------------------------*/
+class NewElementCommand : public SchematicEdit {
+public:
+	NewElementCommand(SchematicScene* ctx, ElementGraphics* gfx)
+	: SchematicEdit(ctx) { untested();
+		assert(gfx->scene());
+		assert(gfx->scene() == ctx); // why pass scene then??
+		assert(!element(gfx)->owner());
+		gfx->hide();
+		setText("NewElement" /*element(gfx)->label()*/); // tr?
+		trace0("NewElementCommand::NewElementCommand");
+		qInsert(gfx);
+	}
+	~NewElementCommand(){ untested();
+		// _gfx owns element(_gfx)
+		// ctx owns _gfx
+	}
+}; // NewElementCommand
+/*--------------------------------------------------------------------------*/
+QUndoCommand* MouseActionNewElement::activate(QObject* sender)
+{
+	if(auto s=dynamic_cast<ComponentListWidgetItem*>(sender)){ untested();
+		_proto = s->proto(); // better clone?
+	}else{ untested();
+	}
+	return MouseAction::activate(sender);
+}
+/*--------------------------------------------------------------------------*/
+QUndoCommand* MouseActionNewElement::release(QEvent* ev)
+{ untested();
+	QUndoCommand* cmd = nullptr;
+	auto m = dynamic_cast<QMouseEvent*>(ev);
+	if(!m){ untested();
+	}else if(m->button() == Qt::LeftButton){ itested();
+		cmd = makeNew(ev);
+	}else if(m->button() == Qt::RightButton){ untested();
+	}
+	return cmd;
+}
+/*--------------------------------------------------------------------------*/
+QUndoCommand* MouseActionNewElement::makeNew(QEvent* ev)
+{ untested();
+	// assert(ev->widget=doc->scene()) // or so.
+	trace1("RELEASE", ev->type());
+	if(ev->type() == QEvent::MouseButtonRelease){ itested();
+	}else{ untested();
+		unreachable();
+	}
+
+	assert(element(_gfx));
+	auto elt = element(_gfx);
+	assert(elt);
+	trace1("got new", elt->label());
+
+	if(auto se=dynamic_cast<QGraphicsSceneMouseEvent*>(ev)){ untested();
+		QPointF pos = se->scenePos();
+		QPoint xx = scene()->snapToGrid(pos);
+		_gfx->setPos(xx);
+	}else{
+	}
+
+	assert(scene() == _gfx->scene()); // why both?
+	cmd* c = new NewElementCommand(scene(), _gfx);
+	// _gfx = nullptr;
+
+	{ untested();
+		_gfx = _gfx->clone(); // new ElementGraphics(elt);
+		scene()->addItem(_gfx); // does not attach.
+		assert(!element(_gfx)->scope());
+	}
+
+	if(_gfx->isVisible()){ untested();
+		// BUG? should addItem make visible?
+	}else{ untested();
+		_gfx->show();
+	}
+
+	ev->accept();
+	return c;
+}
+/*--------------------------------------------------------------------------*/
+QUndoCommand* MouseActionNewElement::deactivate()
+{ untested();
+	// assert(!attached);
+	scene()->removeItem(_gfx);
+	delete _gfx; // CHECK: who owns _elt?
+	_gfx = nullptr;
+	incomplete();
+	return MouseAction::deactivate();
+}
+/*--------------------------------------------------------------------------*/
+QUndoCommand* MouseActionNewElement::move(QEvent* ev)
+{ itested();
+	QPointF sp;
+	if(auto ee=dynamic_cast<QMouseEvent*>(ev)){ untested();
+		unreachable();
+		QPointF wp;
+		wp = ee->localPos(); // use oldPos?
+		sp = mapToScene(wp.toPoint());
+	}else if(auto ee=dynamic_cast<QGraphicsSceneMouseEvent*>(ev)){ untested();
+		sp = ee->scenePos();
+
+		QPoint xx = scene()->snapToGrid(sp);
+		sp = xx;
+	}else{ untested();
+		unreachable();
+	}
+	trace2("MouseActionNewElement::move", ev->type(), sp);
+
+	if(_gfx){ itested();
+		_gfx->setPos(sp.x(), sp.y());
+	}else{ untested();
+		unreachable();
+	}
+
+	ev->accept();
+	return nullptr;
+}
+/*--------------------------------------------------------------------------*/
+QUndoCommand* MouseActionNewElement::enter(QEvent* ev)
+{ untested();
+	auto ee = prechecked_cast<QEnterEvent*>(ev);
+	assert(ee);
+	
+	auto wp = ee->localPos();
+
+	auto d = dynamic_cast<QGraphicsView const*>(doc());
+	assert(d);
+	auto sp = d->mapToScene(wp.toPoint());
+	trace2("MouseActionNewElement::enter", ev->type(), sp);
+
+	Element* elt;
+	if(!_gfx){ untested();
+		assert(_proto);
+		elt = _proto->clone_instance();
+		if(auto sym=dynamic_cast<Symbol const*>(elt)){
+			elt->set_label(sym->dev_type());
+		}else{
+		}
+		elt->setPosition(pos_t(sp.x(), sp.y()));
+		_gfx = new ElementGraphics(elt); // BUG
+	}else{ untested();
+		_gfx->setPos(sp.x(), sp.y());
+	}
+
+	assert(scene());
+	scene()->addItem(_gfx);
+
+	if(_gfx->isVisible()){ untested();
+		// BUG?
+	}else{ untested();
+		_gfx->show(); // ??
+	}
+	
+//	doc().sceneAddItem(_gfx);
+
+	ev->accept();
+	return nullptr;
+}
+/*--------------------------------------------------------------------------*/
+QUndoCommand* MouseActionNewElement::leave(QEvent* ev)
+{ untested();
+	sceneRemoveItem(_gfx);
+	ev->accept();
+	return nullptr;
+}
+/*--------------------------------------------------------------------------*/
+static const rotate_after_mirror1_t ninety_degree_transform(90, false);
+QUndoCommand* MouseActionNewElement::rotate(QEvent*)
+{ untested();
+	if(!_gfx){ untested();
+		unreachable();
+	}else if(dynamic_cast<Symbol*>(element(_gfx))){ untested();
+		// always do this?
+		_gfx->transform(ninety_degree_transform);
+	}else{ untested();
+		unreachable();
+	}
+	return nullptr;
+}
+/*--------------------------------------------------------------------------*/
+QUndoCommand* MouseActionNewElement::press(QEvent* ev)
+{ untested();
+	auto a = dynamic_cast<QMouseEvent*>(ev);
+	auto m = dynamic_cast<QGraphicsSceneMouseEvent*>(ev);
+	QUndoCommand* cmd = nullptr;
+	if(a){ untested();
+		unreachable();
+		// somehow it is a scene event??
+	}else if(!m){ untested();
+		trace1("MouseActionNewElement::press", ev->type());
+		unreachable();
+	}else if(m->button() == Qt::LeftButton){ untested();
+	}else if(m->button() == Qt::RightButton){ untested();
+		cmd = MouseActionNewElement::rotate(ev);
+		ev->accept(); // really?
+	}else{ untested();
+		unreachable();
+	}
+	return cmd;
+}
+/*--------------------------------------------------------------------------*/
+}// namespace
+/*--------------------------------------------------------------------------*/
+/*--------------------------------------------------------------------------*/
+#endif

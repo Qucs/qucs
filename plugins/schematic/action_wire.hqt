@@ -20,7 +20,8 @@
 #include "element_list.h"
 #include "schematic_scene.h"
 #include "schematic_edit.h"
-#include "mouseaction.h"
+#include "schematic_action.h"
+#include "schematic_actions.h"
 #include "qucsdoc.h"
 
 #include <QAction>
@@ -258,6 +259,7 @@ private:
 }; // MakeWire
 /*--------------------------------------------------------------------------*/
 class MouseActionWire : public MouseAction {
+	Q_OBJECT
 public:
 	explicit MouseActionWire()
 		: MouseAction(), _mode(0), _phase(0) {itested();
@@ -300,8 +302,14 @@ private:
 	}
 	QAction* createAction(QObject* parent) const override{itested();
 		auto x = new ActionInsertWire(parent);
-		connect(x, &QAction::toggled, this, &MouseAction::slotToggle);
+		connect(x, &QAction::toggled, this, &MouseActionWire::slotToggle);
 		return x;
+	}
+
+public slots:
+	void slotToggle() {untested();
+		assert(ctx());
+		ctx()->possiblyToggleAction(this, sender());
 	}
 
 private:
@@ -312,7 +320,7 @@ private:
 	std::vector<ElementGraphics*> _gfx;
 	Element* _proto;
 }a0;
-static Dispatcher<Widget>::INSTALL p1(&qucs::action_dispatcher, "AddWire", &a0);
+static Dispatcher<Widget>::INSTALL p1(&qucs::action_dispatcher, "SchematicAddWire", &a0);
 /*--------------------------------------------------------------------------*/
 QUndoCommand* MouseActionWire::activate(QObject* sender)
 {itested();

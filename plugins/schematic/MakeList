@@ -1,0 +1,18 @@
+
+TARGET = schematic
+
+PLUGIN_SRC = \
+	mouseaction.cpp \
+	action_move.hqt \
+	action_new.hqt \
+	action_paste.hqt \
+	action_select.hqt \
+	action_selcmd.hqt \
+	action_wire.hqt \
+	action_zoom.hqt \
+	schematic_action.cpp \
+	schematic_doc.hqt
+
+EXTRA_DIST = \
+	schematic_action.h \
+	schematic_actions.h

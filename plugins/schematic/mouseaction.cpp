@@ -11,7 +11,7 @@
  *                                                                         *
  ***************************************************************************/
 
-#include "mouseaction.h"
+#include "schematic_action.h"
 #include "io_trace.h"
 #include "qucsdoc.h"
 #include "doc_actions.h"
@@ -29,7 +29,7 @@ namespace qucs {
 QUndoCommand* MouseAction::handle(QEvent* e)
 {itested();
 
-  {
+  { untested();
     // pass to other places unless accepted somewhere else.
     // assert(is_ignored) instead!
     e->ignore();
@@ -63,7 +63,7 @@ QUndoCommand* MouseAction::handle(QEvent* e)
     trace1("dragmove", de->mimeData()->formats()[0]);
   }else if(auto de = dynamic_cast<QDropEvent*>(e)){ untested();
     trace1("dragdrop", de->mimeData()->formats()[0]);
-  }else{
+  }else{ untested();
   }
 
   // why??
@@ -111,19 +111,6 @@ Doc const* MouseAction::doc() const
   return cc->doc();
 }
 
-void MouseAction::slotToggle() // QAction* sender)
-{itested();
-	assert(ctx());
-	ctx()->possiblyToggleAction(this, sender());
-}
-
-void MouseAction::slotTrigger() // QAction* sender)
-{ untested();
-	incomplete();
-	assert(ctx());
-	assert(false);
-//	ctx()->possiblyToggleAction(this, sender());
-}
 
 SchematicScene* MouseAction::scene()
 {itested();
@@ -140,9 +127,9 @@ SchematicScene* MouseAction::scene()
 QGraphicsView* MouseAction::view()
 {itested();
   auto cc = dynamic_cast<QGraphicsView*>(doc());
-  if(cc){
+  if(cc){ untested();
 	  return cc;
-  }else{
+  }else{ untested();
 	  return nullptr;
   }
 }
@@ -160,10 +147,10 @@ Doc* MouseAction::doc()
 
 #include <QGraphicsView>
 QPointF MouseAction::mapToScene(QPoint const& p) const
-{
+{ untested();
 	if(auto s=dynamic_cast<QGraphicsView const*>(doc())){ untested();
 		return s->mapToScene(p);
-	}else{
+	}else{ untested();
 		assert(false); // for now.
 	}
 }
@@ -179,16 +166,6 @@ void MouseAction::updateViewport()
 	ctx()->updateViewport(); // use a signal?
 }
 
-// what does it do??
-void MouseActions::updateViewport()
-{itested();
-  auto s = dynamic_cast<QGraphicsView*>(doc());
-  if(!s){ untested();
-  }else if(s->viewport()){itested();
-    s->viewport()->update(); // use a signal?
-  }else{ untested();
-  }
-}
 
 QUndoCommand* MouseAction::activate(QObject* sender)
 {itested();
@@ -202,7 +179,7 @@ QUndoCommand* MouseAction::deactivate()
 }
 
 void MouseAction::uncheck()
-{
+{ untested();
   if(_sender){itested();
     _sender->blockSignals(true); // do not call toggle slot
     _sender->setChecked(false);       // set last toolbar button off
@@ -214,19 +191,19 @@ void MouseAction::uncheck()
 }
 /*--------------------------------------------------------------------------*/
 SchematicScene const* MouseAction::scene() const
-{
+{ untested();
 	auto s = dynamic_cast<QGraphicsView const*>(doc());
-	if(!s){
-	}else if(auto ss=dynamic_cast<SchematicScene const*>(s->scene())){
+	if(!s){ untested();
+	}else if(auto ss=dynamic_cast<SchematicScene const*>(s->scene())){ untested();
 		return ss;
-	}else{
+	}else{ untested();
 	}
 	return nullptr;
 }
 /*--------------------------------------------------------------------------*/
 // isPlace?
 bool MouseAction::isNode(pos_t const& p) const
-{
+{ untested();
 	assert(scene());
 	return scene()->isNode(p);
 	return false; // doc().isNode(p);
@@ -240,7 +217,7 @@ bool MouseAction::isConductor(pos_t const&p) const
 /*--------------------------------------------------------------------------*/
 /*--------------------------------------------------------------------------*/
 MouseActions* MouseAction::ctx() const
-{
+{ untested();
 	auto q = dynamic_cast<QObject const*>(this);
 	assert(q);
 	auto p = dynamic_cast<MouseActions*>(q->parent());

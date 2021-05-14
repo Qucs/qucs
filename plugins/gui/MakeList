@@ -3,13 +3,11 @@ TARGET = gui
 
 PLUGIN_SRC = \
 	syntax.cpp \
-	schematic_action.cpp \
 	aboutdialog.hqt \
 	diagramdialog.hqt \
 	textdoc.hqt \
 	taskeltdlg.hqt \
 	symboldialog.hqt \
-	schematic_doc.hqt \
 	wiredialog.hqt
 
 MORE_LATER = \
@@ -20,7 +18,6 @@ MORE_LATER = \
 	sweepdialog.h
 
 EXTRA_DIST = \
-	schematic_action.h \
 	swap.h \
 	swap_gfx.h \
 	syntax.h

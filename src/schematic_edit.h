@@ -17,12 +17,13 @@
 #include <QUndoCommand> // really?
 #include "element_graphics.h"
 #include "place.h"
+#include "command.h"
 #include <set>
 
 namespace qucs {
 
 // edit a schematic add/delete/alter
-class SchematicEdit : public QUndoCommand {
+class SchematicEdit : public QUndoCommand, public Command {
 public:
 	typedef std::list<ElementGraphics*> list_t;
 	struct swap_t{
@@ -35,9 +36,10 @@ public:
 		}
 	};
 protected:
+	SchematicEdit(SchematicEdit const&) = delete;
+public:
 	explicit SchematicEdit(SchematicScene* s)
 	  : QUndoCommand(), _first(true), _scn(s) {}
-	SchematicEdit(SchematicEdit const&) = delete;
 
 	template<class IT>
 	void qDelete(IT const& deletelist) {
@@ -65,6 +67,10 @@ protected:
 	void qInsert(ElementGraphics* eg);
 	void qSwap(ElementGraphics* eg, Element* e); // BUG?
 
+private: // Command
+  void do_it(istream_t&, ElementList*) override{
+	  incomplete();
+  }
 private: // QUndoCommand
 	void undo() override {itested();
 		redo();

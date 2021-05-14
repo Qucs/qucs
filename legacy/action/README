@@ -1,5 +1,0 @@
-User actions and interaction modes ("event handlers")
-
-This is the stuff behind buttons in the Toolbar. Partly hardwired in "QucsApp"
-and "QucsDoc" -- Adding new ones requires minor modifications still. There
-will be a way to customise.

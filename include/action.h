@@ -27,6 +27,7 @@ class Action : public Object /* Command? */ {
 public:
 	virtual Action* clone() const = 0;
 	virtual QAction* createAction(QObject*) const = 0;
+	virtual void set_param_by_name(std::string const&, std::string const&){unreachable();}
 
 public:
 	virtual void uncheck(){ unreachable(); }

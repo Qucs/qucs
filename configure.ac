@@ -833,7 +833,6 @@ AC_CONFIG_FILES([
     legacy/Makefile:autotools/legacy.in
     legacy/components/Makefile:autotools/components.in
     legacy/dialogs/Makefile:autotools/dialogs.in
-    legacy/action/Makefile:autotools/action.in
     legacy/qucsator/Makefile:autotools/qucsator.in
     legacy/paintings/Makefile:autotools/paintings.in
     main/Makefile:autotools/main.in
@@ -846,6 +845,7 @@ AC_CONFIG_FILES([
     plugins/Makefile:autotools/plugins.in
     plugins/diagrams/Makefile:autotools/diagrams.in
     plugins/gui/Makefile:autotools/gui.in
+    plugins/schematic/Makefile:autotools/schematic.in
     plugins/misc/Makefile:autotools/misc.in
     plugins/verilog/Makefile:autotools/verilog.in
     plugins/spice/Makefile:autotools/spice.in

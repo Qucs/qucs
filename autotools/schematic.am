@@ -22,14 +22,13 @@
 
 include ../../autotools/common.mk
 
-inst_LTLIBRARIES = action.la
+inst_LTLIBRARIES = schematic.la
 
 AM_CPPFLAGS += $(X11_INCLUDES) $(QT_CFLAGS)
 
-action_la_LDFLAGS = -module -avoid-version
-action_la_CPPFLAGS = $(AM_CPPFLAGS)
-action_la_CPPFLAGS += $(QT_INCLUDES)
-
-action_la_SOURCES = ${PLUGIN_SRC}
+schematic_la_LDFLAGS = -module -avoid-version
+schematic_la_CPPFLAGS = $(AM_CPPFLAGS)
+schematic_la_CPPFLAGS += $(QT_INCLUDES)
+schematic_la_SOURCES = ${PLUGIN_SRC}
 
 noinst_HEADERS = $(HDR)

@@ -24,7 +24,7 @@
 #include "qucsdoc.h"
 #include "qucs_globals.h"
 #include "platform.h"
-#include "mouseaction.h"
+#include "schematic_action.h"
 /*--------------------------------------------------------------------------*/
 namespace {
 /*--------------------------------------------------------------------------*/
@@ -48,6 +48,7 @@ public:
  // connect(magPlus, &QAction:: triggered??, this, &QucsApp::slotZoomIn);
 /*--------------------------------------------------------------------------*/
 class MouseActionZoomIn : public MouseAction{
+	Q_OBJECT
 public:
 	explicit MouseActionZoomIn(QObject* parent=nullptr)
 	    : MouseAction(parent){ itested(); }
@@ -58,8 +59,16 @@ private: // Action
 	}
 	QAction* createAction(QObject* parent) const override{ untested();
 		auto x = new ActionZoomIn(parent);
-		connect(x, &QAction::triggered, this, &MouseAction::slotTrigger);
+		connect(x, &QAction::triggered, this, &MouseActionZoomIn::slotTrigger);
 		return x;
+	}
+
+public slots:
+	void slotTrigger(){ untested();
+		incomplete();
+		assert(ctx());
+		assert(false);
+		//     ctx()->possiblyToggleAction(this, sender());
 	}
 
 private: // MouseAction

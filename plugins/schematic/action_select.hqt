@@ -13,7 +13,8 @@
 
 #ifndef QUCS_SELECT_H
 #define QUCS_SELECT_H
-#include "mouseaction.h"
+#include "schematic_action.h"
+#include "schematic_actions.h"
 #include "schematic_dialog.h"
 #include "schematic_edit.h"
 #include "qucs_globals.h"
@@ -157,6 +158,7 @@ public:
 };
 /*--------------------------------------------------------------------------*/
 class MouseActionSelect : public MouseAction{
+	Q_OBJECT
 public:
 #if 0
 	explicit MouseActionSelect() {}
@@ -172,8 +174,16 @@ private:
 	}
 	QAction* createAction(QObject* parent) const override{itested();
 		auto x = new ActionSelect(parent);
-		connect(x, &QAction::toggled, this, &MouseAction::slotToggle);
+
+		// connect to ctx?
+		connect(x, &QAction::toggled, this, &MouseActionSelect::slotToggle);
 		return x;
+	}
+
+public slots:
+	void slotToggle() {untested();
+		assert(ctx());
+		ctx()->possiblyToggleAction(this, sender());
 	}
 
 private: // MouseAction
@@ -193,7 +203,7 @@ private: // more decoupling
 	//ElementMouseAction focusElement;
 	bool isMoveEqual; //?
 }a0; // MouseActionSelect
-static Dispatcher<Widget>::INSTALL p1(&qucs::action_dispatcher, "ActionSelect", &a0);
+static Dispatcher<Widget>::INSTALL p1(&qucs::action_dispatcher, "SchematicActionSelect", &a0);
 /*--------------------------------------------------------------------------*/
 QUndoCommand* MouseActionSelect::dblclk(QEvent* evt)
 { untested();

@@ -61,7 +61,7 @@ private:
 public:
   // Component* selectCompText(SchematicDoc*, int, int, int&, int&);
 //  void     deselectElements(ElementMouseAction);
-  void updateViewport(); // why?
+  virtual void updateViewport(){incomplete();} // why?
 
 public: // TODO. move into mouse actions
 	//  void rightPressMenu(QMouseEvent*);

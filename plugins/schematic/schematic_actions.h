@@ -17,6 +17,7 @@
 #include "doc_actions.h"
 #include "schematic_edit.h"
 /*--------------------------------------------------------------------------*/
+class QToolBar;
 using namespace qucs;
 // merge into scene altogether?
 class SchematicActions : public MouseActions{
@@ -34,7 +35,17 @@ private: // MouseActions
 protected: // Doc stuff
 //	qucs::Doc* doc();
 	SchematicScene const* scene()const;
-	void updateViewport();
+	void updateViewport() override;
+#if 0
+  	{untested();
+		auto s = dynamic_cast<QGraphicsView*>(doc());
+		if(!s){ untested();
+		}else if(s->viewport()){itested();
+			s->viewport()->update(); // use a signal?
+		}else{ untested();
+		}
+	}
+#endif
 	QPoint snapToGrid(QPointF const&p) const;
 	QUndoStack* undoStack(){ return _undoStack; }
 
