@@ -31,6 +31,7 @@ class Action;
 class Doc;
 
 // must be QObject so it can receive/filter events (needed??!)
+// rename to DocEventHandler?
 class MouseActions : public QObject {
 	Q_OBJECT
 public:

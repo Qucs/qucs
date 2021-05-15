@@ -11,8 +11,8 @@
  *                                                                         *
  ***************************************************************************/
 
-#ifndef QUCS_SCHEMATIC_ACTION
-#define QUCS_SCHEMATIC_ACTION
+#ifndef QUCS_SCHEMATIC_ACTIONS
+#define QUCS_SCHEMATIC_ACTIONS
 /*--------------------------------------------------------------------------*/
 #include "doc_actions.h"
 #include "schematic_edit.h"
@@ -20,6 +20,7 @@
 class QToolBar;
 using namespace qucs;
 // merge into scene altogether?
+// MouseActions is DocEventHandler?
 class SchematicActions : public MouseActions{
 public:
 	explicit SchematicActions(qucs::Doc*);
@@ -56,8 +57,7 @@ private:
 private:
 	QUndoStack* _undoStack{nullptr};
 
-public: // actions... private?
-	     // not yet. still toggled from outside
+private: // actions... remove?
 	MouseAction* maDelete;
 	MouseAction* maSelect;
 	MouseAction* maWire{nullptr};
@@ -75,6 +75,7 @@ public: // actions... private?
 	MouseAction* maZoomIn;
 	// MouseAction* maZoomOut; // not a mouseaction
 	
+public: // ?
 	void actionSelectElement(QObject*e);
 private:
 	QToolBar* _toolbar{nullptr};

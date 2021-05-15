@@ -465,11 +465,11 @@ public slots:
   void actionEditRotate(QAction*) override;
 #endif
 
-	void slotSelect();  // select mode
-	void slotEditRotate();  // rotate the selected items
-	void slotEditMirrorX(); // mirror the selected items about X axis
-	void slotEditMirrorY(); // mirror the selected items about Y axis
-	void slotEditPaste();
+//	void slotSelect();  // select mode
+//	void slotEditRotate();  // rotate the selected items
+//	void slotEditMirrorX(); // mirror the selected items about X axis
+//	void slotEditMirrorY(); // mirror the selected items about Y axis
+//	void slotEditPaste();
 	void slotInsertLabel();
 	void slotSetMarker();
 	void slotChangeProps(); // ?
@@ -478,18 +478,18 @@ public slots:
   void actionZoomIn(QAction*) override;
   void actionInsertEquation(QAction*) override;
   void actionInsertPort(QAction*) override;
-#endif
 	void slotInsertEquation();
 	void slotInsertPort();
 	void slotInsertGround();
 	void slotInsertWire();
+#endif
 
 private: // Doc overrides.
 	      // actions that are not specific to SchematicDoc..
 			//
 			// move to mouseActions (DocActions?)
-	void slotEditDelete(QAction*) override;
-	void slotEditActivate(QAction*) override;
+	void slotEditDelete(QAction*) override{ unreachable(); }
+	void slotEditActivate(QAction*) override { unreachable(); }
 	void slotEditUndo(QAction*) override;
 	void slotEditRedo(QAction*) override;
 
@@ -1598,6 +1598,7 @@ ElementGraphics* SchematicDoc::itemAt(float x, float y)
 // 	return _model->nodeAt(p);
 // }
 /*--------------------------------------------------------------------------*/
+#if 0 // obsolete
 void SchematicDoc::slotSelect()
 { untested();
 	eventHandler()->possiblyToggleAction(schematicActions()->maSelect, sender());
@@ -1619,6 +1620,7 @@ void SchematicDoc::slotEditMirrorY()
 	eventHandler()->possiblyToggleAction(schematicActions()->maMirrorXaxis, sender());
 }
 /*--------------------------------------------------------------------------*/
+#endif
 void SchematicDoc::slotSimulate()
 { untested();
   auto w = prechecked_cast<QWidget*>(this);
@@ -1851,6 +1853,7 @@ void SchematicDoc::slotEditRedo(QAction*)
 	incomplete();
 }
 /*--------------------------------------------------------------------------*/
+#if 0 // obsolete
 void SchematicDoc::slotInsertGround()
 { untested();
 	eventHandler()->possiblyToggleAction(schematicActions()->maInsertGround, sender());
@@ -1865,6 +1868,7 @@ void SchematicDoc::slotInsertPort()
 { untested();
 	eventHandler()->possiblyToggleAction(schematicActions()->maInsertPort, sender());
 }
+#endif
 /*--------------------------------------------------------------------------*/
 #if 0 // later turn into slots...
 void SchematicDoc::actionOnGrid(QAction* sender)
@@ -1884,7 +1888,6 @@ void SchematicDoc::actionEditRotate(QAction* sender)
 // void SchematicDoc::actionEditMirrorY(QAction* sender)
 // { untested();
 // }
-#endif
 
 /*--------------------------------------------------------------------------*/
 void SchematicDoc::slotEditActivate(QAction* sender)
@@ -1900,6 +1903,7 @@ void SchematicDoc::slotEditDelete(QAction* sender)
 //  assert(mouseActions());
 //  mouseActions()->setDrawn(false);
 }
+#endif
 /*--------------------------------------------------------------------------*/
 
 // void QucsApp::slotOnGrid()
@@ -1907,13 +1911,6 @@ void SchematicDoc::slotEditDelete(QAction* sender)
 //   ASSIGN_STUFF
 //   qd->actionOnGrid(s);
 // }
-void SchematicDoc::slotInsertWire()
-{itested();
-//	auto s = prechecked_cast
-	assert(false);
-
-	// possiblyToggleAction(schematicActions()->maWire, sender());
-}
 
 void SchematicDoc::slotInsertLabel()
 { untested();
@@ -1942,12 +1939,10 @@ void SchematicDoc::slotZoomIn()
 { untested();
 	possiblyToggleAction(schematicActions()->maZoomIn, sender());
 }
-#endif
 
 void SchematicDoc::slotEditPaste()
 { untested();
 	eventHandler()->possiblyToggleAction(schematicActions()->maEditPaste, sender());
-#if 0
 	// if it's not a text doc, prevent the user from editing
 	// while we perform the paste operation
 	App->hideEdit();
@@ -2069,8 +2064,8 @@ void QucsApp::slotSelectAll()
   qd->actionSelectAll(s);
 }
 
-#endif
 }
+#endif
 
 // void actionSelectElement(QObject*) override;
 void SchematicDoc::actionSelectElement(QObject*e)
