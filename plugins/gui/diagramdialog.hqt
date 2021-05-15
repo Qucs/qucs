@@ -276,8 +276,8 @@ protected:
 	QPushButton *ColorButt, *GridColorButt;
 	QSlider     *SliderRotX, *SliderRotY, *SliderRotZ;
 	Cross3D     *DiagCross;
-	bool changed, transfer, toTake;
-	//Q3PtrList<Graph>  Graphs;
+	bool _changed; // push undo action
+	bool transfer, toTake; // needed?
 
 private:
 	ElementGraphics* _gfx;
@@ -303,10 +303,11 @@ DiagramDialog::DiagramDialog()
 void DiagramDialog::attach(ElementGraphics* g)
 { untested();
 	// edit a copy of the element,
-	// display the copy in the schematic while the dialog is open.
+	// display the copy in the scene while the dialog is open.
 	{ untested();
 		assert(g->isVisible());
 		g->hide(); // take it out of the model.
+		assert(!g->isVisible());
 
 		_gfx = g->clone();
 		_bak = g;
@@ -325,9 +326,9 @@ void DiagramDialog::attach(ElementGraphics* g)
 	}
 
 	setWindowTitle(tr("Edit Diagram Properties"));
-	changed = false;
-	transfer = false;  // have changes be applied ? (used by "Cancel")
-	toTake = false;   // double-clicked variable be inserted into graph list ?
+	_changed = false;
+	transfer = false; // needed??
+	toTake = false; // needed??
 
 	Expr.setPattern("[^\"]+");
 	Validator  = new QRegExpValidator(Expr, this);
@@ -1081,7 +1082,7 @@ void DiagramDialog::slotTakeVar(QTableWidgetItem* Item)
 	g->set_owner(diag());
 	scope()->push_back(g);
 
-	changed = true;
+	_changed = true;
 	toTake  = true;
 	//}
 
@@ -1202,8 +1203,8 @@ void DiagramDialog::slotDeleteGraph()
 		//  }  else{
 		//	  Property2->setText("3");
 		//  }
-		changed = true;
-		toTake  = false;
+		_changed = true;
+		toTake  = false; //?
 
 		if(Property2) { untested();
 			PropertyBox->setCurrentIndex(0);
@@ -1266,11 +1267,34 @@ void DiagramDialog::slotButtOK()
 //  todo: tabdiagram/truthtable override
 void DiagramDialog::slotButtApply()
 {
-	// put _clone in, and stash _orig.
-	auto cmd = new SwapGfxCommand(_gfx, _bak, true);
-	execute(cmd);
-	_bak = _gfx;
-	_gfx = _gfx->clone();
+	if(_changed){ untested();
+		assert(_gfx->isVisible());
+		assert(!_bak->isVisible());
+		// put _clone in, and stash _orig.
+		auto cmd = new SwapGfxCommand(_gfx, _bak, true);
+		execute(cmd);
+
+		assert(_gfx->isVisible());
+		assert(!_bak->isVisible());
+		ElementGraphics* g = _gfx;
+
+		{ untested();
+			// BUG: duplicate
+			assert(g->isVisible());
+			g->hide(); // take it out of the model.
+			assert(!g->isVisible());
+
+			_gfx = g->clone();
+			_bak = g;
+
+			assert(g->scene());
+			g->scene()->addItem(_gfx);
+			_gfx->show_();
+
+			_changed = false;
+		}
+	}else{ untested();
+	}
 
 #if 0
 	// obsolete
@@ -1282,32 +1306,32 @@ void DiagramDialog::slotButtApply()
 		if(xLabel->text().isEmpty()) xLabel->setText("");
 		if(Diag->xAxis.Label != xLabel->text()) { untested();
 			Diag->xAxis.Label = xLabel->text();
-			changed = true;
+			_changed = true;
 		}
 		if(Diag->yAxis.Label.isEmpty())
 			Diag->yAxis.Label = ""; // can be not 0 and empty!
 		if(ylLabel->text().isEmpty()) ylLabel->setText("");
 		if(Diag->yAxis.Label != ylLabel->text()) { untested();
 			Diag->yAxis.Label = ylLabel->text();
-			changed = true;
+			_changed = true;
 		}
 
 		if(GridOn) if(Diag->xAxis.GridOn != GridOn->isChecked()) { untested();
 			Diag->xAxis.GridOn = GridOn->isChecked();
 			Diag->yAxis.GridOn = GridOn->isChecked();
-			changed = true;
+			_changed = true;
 		}
 		if(GridColorButt) { untested();
 			QColor gridColBut = misc::getWidgetBackgroundColor(GridColorButt);
 			if(Diag->GridPen.color() != gridColBut) { untested();
 				Diag->GridPen.setColor(gridColBut);
-				changed = true;
+				_changed = true;
 			}
 		}
 		if(GridStyleBox)
 			if(Diag->GridPen.style()!=(Qt::PenStyle)(GridStyleBox->currentIndex()+1)) { untested();
 				Diag->GridPen.setStyle((Qt::PenStyle)(GridStyleBox->currentIndex()+1));
-				changed = true;
+				_changed = true;
 			}
 		//if((Diag->name() != "Smith") && (Diag->name() != "Polar"))
 		{
@@ -1316,22 +1340,22 @@ void DiagramDialog::slotButtApply()
 			if(yrLabel->text().isEmpty()) yrLabel->setText("");
 			if(Diag->zAxis.Label != yrLabel->text()) { untested();
 				Diag->zAxis.Label = yrLabel->text();
-				changed = true;
+				_changed = true;
 			}
 		}
 
 		//    if(Diag->name().left(4) == "Rect") {
 		if(Diag->xAxis.log != GridLogX->isChecked()) {
 			Diag->xAxis.log = GridLogX->isChecked();
-			changed = true;
+			_changed = true;
 		}
 		if(Diag->yAxis.log != GridLogY->isChecked()) { untested();
 			Diag->yAxis.log = GridLogY->isChecked();
-			changed = true;
+			_changed = true;
 		}
 		if(Diag->zAxis.log != GridLogZ->isChecked()) { untested();
 			Diag->zAxis.log = GridLogZ->isChecked();
-			changed = true;
+			_changed = true;
 		}
 		//    }
 
@@ -1346,79 +1370,79 @@ void DiagramDialog::slotButtApply()
 
 		if(Diag->xAxis.autoScale == manualX->isChecked()) { untested();
 			Diag->xAxis.autoScale = !(manualX->isChecked());
-			changed = true;
+			_changed = true;
 		}
 
 		// Use string compares for all floating point numbers, in
 		// order to avoid rounding problems.
 		if(QString::number(Diag->xAxis.limit_min) != startX->text()) { untested();
 			Diag->xAxis.limit_min = startX->text().toDouble();
-			changed = true;
+			_changed = true;
 		}
 		if(QString::number(Diag->xAxis.step) != stepX->text()) { untested();
 			Diag->xAxis.step = stepX->text().toDouble();
-			changed = true;
+			_changed = true;
 		}
 		if(QString::number(Diag->xAxis.limit_max) != stopX->text()) { untested();
 			Diag->xAxis.limit_max = stopX->text().toDouble();
-			changed = true;
+			_changed = true;
 		}
 		if(Diag->yAxis.autoScale == manualY->isChecked()) { untested();
 			Diag->yAxis.autoScale = !(manualY->isChecked());
-			changed = true;
+			_changed = true;
 		}
 		if(QString::number(Diag->yAxis.limit_min) != startY->text()) { untested();
 			Diag->yAxis.limit_min = startY->text().toDouble();
-			changed = true;
+			_changed = true;
 		}
 		if(QString::number(Diag->yAxis.step) != stepY->text()) { untested();
 			Diag->yAxis.step = stepY->text().toDouble();
-			changed = true;
+			_changed = true;
 		}
 		if(QString::number(Diag->yAxis.limit_max) != stopY->text()) { untested();
 			Diag->yAxis.limit_max = stopY->text().toDouble();
-			changed = true;
+			_changed = true;
 		}
 		if(Diag->zAxis.autoScale == manualZ->isChecked()) { untested();
 			Diag->zAxis.autoScale = !(manualZ->isChecked());
-			changed = true;
+			_changed = true;
 		}
 		if(QString::number(Diag->zAxis.limit_min) != startZ->text()) { untested();
 			Diag->zAxis.limit_min = startZ->text().toDouble();
-			changed = true;
+			_changed = true;
 		}
 		if(QString::number(Diag->zAxis.step) != stepZ->text()) { untested();
 			Diag->zAxis.step = stepZ->text().toDouble();
-			changed = true;
+			_changed = true;
 		}
 		if(QString::number(Diag->zAxis.limit_max) != stopZ->text()) { untested();
 			Diag->zAxis.limit_max = stopZ->text().toDouble();
-			changed = true;
+			_changed = true;
 		}
 
 #if 0 //BUG
 		if(hideInvisible)
 			if(((Rect3DDiagram*)Diag)->hideLines != hideInvisible->isChecked()) { untested();
 				((Rect3DDiagram*)Diag)->hideLines = hideInvisible->isChecked();
-				changed = true;
+				_changed = true;
 			}
 
 		if(rotationX)
 			if(((Rect3DDiagram*)Diag)->rotX != rotationX->text().toInt()) { untested();
 				((Rect3DDiagram*)Diag)->rotX = rotationX->text().toInt();
-				changed = true;
+				_changed = true;
 			}
 
 		if(rotationY)
 			if(((Rect3DDiagram*)Diag)->rotY != rotationY->text().toInt()) { untested();
 				((Rect3DDiagram*)Diag)->rotY = rotationY->text().toInt();
-				changed = true;
+				_changed = true;
 			}
 
 		if(rotationZ)
 			if(((Rect3DDiagram*)Diag)->rotZ != rotationZ->text().toInt()) { untested();
 				((Rect3DDiagram*)Diag)->rotZ = rotationZ->text().toInt();
-				changed = true;
+				_changed = true;
 			}
 #endif
 
@@ -1437,18 +1461,20 @@ void DiagramDialog::slotButtApply()
 	// copyDiagramGraphs();
 
 	// what?
-	if(changed){ untested();
+	if(_changed){ untested();
 		transfer = true;
 	}else{ untested();
 	}
 #endif
-}
+} // apply
 // --------------------------------------------------------------------------
 // Is called if "Cancel" button is pressed.
 void DiagramDialog::slotButtCancel()
 { untested();
 
+	assert(!_bak->isVisible());
 	_bak->show_();
+	_gfx->hide();
 	delete(_gfx);
 	_gfx = nullptr;
 
@@ -1480,7 +1506,7 @@ void DiagramDialog::slotSetColor()
 	incomplete();
 //	Graph *g = Graphs.at(i);
 //	g->Color = c;
-//	changed = true;
+	_changed = true;
 //	toTake  = false;
 }
 
@@ -1491,7 +1517,7 @@ void DiagramDialog::slotSetGridColor()
 			misc::getWidgetBackgroundColor(GridColorButt),this);
 	if(!c.isValid()) return;
 	misc::setPickerColor(GridColorButt, c);
-	changed = true;
+	_changed = true;
 }
 
 /*!
@@ -1506,7 +1532,7 @@ void DiagramDialog::slotResetToTake(const QString& s)
 //	Graph *g = Graphs.at(i);
 //	g->Var = s;
 //	// \todo _variableList->changeItem(s, i);   // must done after the graph settings !!!
-//	changed = true;
+//	_changed = true;
 //	toTake  = false;
 }
 /*--------------------------------------------------------------------------*/
@@ -1525,7 +1551,7 @@ void DiagramDialog::slotSetProp2(const QString& s)
 //		//  } else {
 //		g->Thick = s.toInt();
 //		//	}
-//		changed = true;
+//		_changed = true;
 //		toTake  = false;
 	}
 }
@@ -1539,7 +1565,7 @@ void DiagramDialog::slotSetNumMode(int Mode)
 	incomplete();
 //	Graph *g = Graphs.at(i);
 //	g->numMode = Mode;
-//	changed = true;
+	_changed = true;
 //	toTake  = false;
 }
 /*--------------------------------------------------------------------------*/
@@ -1571,7 +1597,7 @@ void DiagramDialog::slotSetGraphStyle(int style)
 //		Graph *g = Graphs.at(i);
 //		g->Style = toGraphStyle(style);
 //		assert(g->Style!=GRAPHSTYLE_INVALID);
-//		changed = true;
+		_changed = true;
 //		toTake  = false;
 	}
 }
@@ -1585,7 +1611,7 @@ void DiagramDialog::slotSetYAxis(int axis)
 	incomplete();
 //	Graph *g = Graphs.at(i);
 //	g->yAxisNo = axis;
-//	changed = true;
+	_changed = true;
 //	toTake  = false;
 }
 /*--------------------------------------------------------------------------*/

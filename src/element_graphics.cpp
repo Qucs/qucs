@@ -699,6 +699,7 @@ void ElementGraphics::init_ports()
 }
 /*--------------------------------------------------------------------------*/
 // show? restore? init?
+// hook into QGraphicsItem::ItemVisibleChange?
 void ElementGraphics::show_()
 {itested();
 	trace1("show", _e->label());
@@ -776,6 +777,7 @@ void ElementGraphics::show()
 	// }
 }
 /*--------------------------------------------------------------------------*/
+// hook into QGraphicsItem::ItemVisibleChange?
 void ElementGraphics::hide()
 {itested();
 	assert(_e);
