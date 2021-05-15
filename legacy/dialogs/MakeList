@@ -7,6 +7,8 @@ PLUGIN_SRC = \
 	matchdialog.hqt
 
 DOES_NOT_COMPILE_YET = \
+	newprojdialog.h \
+	newprojdialog.cpp \
 	packagedialog.h \
 	spicedialog.cc
 

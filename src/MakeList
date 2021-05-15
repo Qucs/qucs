@@ -81,7 +81,6 @@ DIALG_MOCHEADERS = \
 	importdialog.h \
 	librarydialog.h \
 	loaddialog.h \
-	newprojdialog.h \
 	qucssettingsdialog.h \
 	savedialog.h \
 	searchdialog.h \
@@ -126,7 +125,6 @@ DIALOG_SRC = \
 	importdialog.cpp \
 	librarydialog.cpp \
 	loaddialog.cpp \
-	newprojdialog.cpp \
 	qucssettingsdialog.cpp \
 	savedialog.cpp \
 	searchdialog.cpp \

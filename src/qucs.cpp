@@ -50,7 +50,6 @@
 
 // TODO dialogs are plugins.
 #include "savedialog.h"
-#include "newprojdialog.h"
 #include "qucssettingsdialog.h"
 #include "searchdialog.h"
 #include "simmessage.h"
@@ -804,6 +803,7 @@ void App::readProjects()
 // Is called, when "Create New Project" button is pressed.
 void App::slotButtonProjNew()
 { untested();
+#if 0 // TODO
   slotHideEdit(); // disable text edit of component property
 
   NewProjDialog *d = new NewProjDialog(this);
@@ -824,6 +824,7 @@ void App::slotButtonProjNew()
   if(open) { untested();
     openProject(QDir_(QucsSettings.projsDir).filePath(name));
   }
+#endif
 }
 
 // ----------------------------------------------------------

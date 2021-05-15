@@ -448,41 +448,9 @@ private: // Doc overrides, schematic_action.cpp
 //  void actionEditMirrorX(QAction*) override;
 //  void actionEditMirrorY(QAction*) override;
 public slots:
-//  void slotToolbar(){ incomplete(); } // really?
-#if 0
-  void actionEditUndo(QAction*) override;
-  void actionEditRedo(QAction*) override;
-  void actionAlign(int what) override;
-  void actionDistrib(int dir) override; // 0=horiz, 1=vert
-
-  void actionApplyCompText() override;
-  void actionSelectMarker() override;
-  void actionSelectAll(QAction*) override;
-  void actionChangeProps(QAction*) override;
-  void actionCursor(arrow_dir_t) override;
-
-  void actionOnGrid(QAction*) override;
-  void actionEditRotate(QAction*) override;
-#endif
-
-//	void slotSelect();  // select mode
-//	void slotEditRotate();  // rotate the selected items
-//	void slotEditMirrorX(); // mirror the selected items about X axis
-//	void slotEditMirrorY(); // mirror the selected items about Y axis
-//	void slotEditPaste();
 	void slotInsertLabel();
 	void slotSetMarker();
 	void slotChangeProps(); // ?
-#if 0
-  void actionMoveText(QAction*) override;
-  void actionZoomIn(QAction*) override;
-  void actionInsertEquation(QAction*) override;
-  void actionInsertPort(QAction*) override;
-	void slotInsertEquation();
-	void slotInsertPort();
-	void slotInsertGround();
-	void slotInsertWire();
-#endif
 
 private: // Doc overrides.
 	      // actions that are not specific to SchematicDoc..
@@ -679,15 +647,6 @@ void SchematicDoc::expand()
 	auto h = new SchematicActions(this); // needs scene (bug?)
 	setEventHandler(h); // ActionHandler?
 	return;
-
-	// TODO: deduplicate??
-//	connect(h->_actionSelect, &QAction::toggled, this, &SchematicDoc::slotSelect);
-//	connect(h->_actionRotate, &QAction::toggled, this, &SchematicDoc::slotEditRotate);
-//	connect(h->_actionMX, &QAction::toggled, this, &SchematicDoc::slotEditMirrorX);
-//	connect(h->_actionMY, &QAction::toggled, this, &SchematicDoc::slotEditMirrorY);
-//	connect(h->_actionInsertGround, &QAction::toggled, this, &SchematicDoc::slotInsertGround);
-//	connect(h->_actionInsertWire, &QAction::toggled, this, &SchematicDoc::slotInsertWire);
-//	connect(h->_actionInsertPort, &QAction::toggled, this, &SchematicDoc::slotInsertPort);
 
   // cursor left/right/up/down to move marker on a graph
   // BUG: why can't we move Elements?!
@@ -1853,42 +1812,11 @@ void SchematicDoc::slotEditRedo(QAction*)
 	incomplete();
 }
 /*--------------------------------------------------------------------------*/
-#if 0 // obsolete
-void SchematicDoc::slotInsertGround()
-{ untested();
-	eventHandler()->possiblyToggleAction(schematicActions()->maInsertGround, sender());
-}
-/*--------------------------------------------------------------------------*/
-void SchematicDoc::slotInsertEquation()
-{ untested();
-	eventHandler()->possiblyToggleAction(schematicActions()->maInsertEqn, sender());
-}
-/*--------------------------------------------------------------------------*/
-void SchematicDoc::slotInsertPort()
-{ untested();
-	eventHandler()->possiblyToggleAction(schematicActions()->maInsertPort, sender());
-}
-#endif
-/*--------------------------------------------------------------------------*/
 #if 0 // later turn into slots...
 void SchematicDoc::actionOnGrid(QAction* sender)
 { untested();
 	possiblyToggleAction(schematicActions()->maOnGrid, sender);
 }
-/*--------------------------------------------------------------------------*/
-void SchematicDoc::actionEditRotate(QAction* sender)
-{ untested();
-	possiblyToggleAction(schematicActions()->maRotate, sender);
-}
-/*--------------------------------------------------------------------------*/
-// void SchematicDoc::actionEditMirrorX(QAction* sender)
-// { untested();
-// }
-// /*--------------------------------------------------------------------------*/
-// void SchematicDoc::actionEditMirrorY(QAction* sender)
-// { untested();
-// }
-
 /*--------------------------------------------------------------------------*/
 void SchematicDoc::slotEditActivate(QAction* sender)
 {
@@ -1905,19 +1833,12 @@ void SchematicDoc::slotEditDelete(QAction* sender)
 }
 #endif
 /*--------------------------------------------------------------------------*/
-
-// void QucsApp::slotOnGrid()
-// {
-//   ASSIGN_STUFF
-//   qd->actionOnGrid(s);
-// }
-
 void SchematicDoc::slotInsertLabel()
 { untested();
 //  possiblyToggleAction(schematicActions()->maInsertLabel, sender);
   incomplete();
 }
-
+/*--------------------------------------------------------------------------*/
 void SchematicDoc::slotSetMarker()
 { untested();
   incomplete();
@@ -2079,32 +2000,6 @@ void SchematicDoc::actionSelectElement(QObject*e)
 //  schematicActions()->maInsertElement->activate(e);
 //  possiblyToggleAction(schematicActions()->maInsertElement, nullptr);
 //}
-#if 0
-
-// is this still in use?
-void SchematicDoc::actionEditUndo(QAction*)
-{itested();
-  // really?
-	assert(_app);
-  _app->hideEdit(); // disable text edit of component property
-
-  undo();
-  updateViewport();
-  assert(mouseActions());
-  setDrawn(false);
-}
-
-// is this still in use?
-void SchematicDoc::actionEditRedo(QAction*)
-{ untested();
-	assert(_app);
-  _app->hideEdit(); // disable text edit of component property
-
-  redo();
-  updateViewport();
-  setDrawn(false);
-}
-#endif
 
 #if 0
 void SchematicDoc::slotAlign(int what)
@@ -2398,65 +2293,6 @@ void SchematicDoc::actionApplyCompText()
 // 	QPointF mp = mapToScene(p);
 // 	Doc::printCursorPosition(mp.x(),mp.y());
 // }
-
-// ---------------------------------------------------
-// why/what?
-#if 0
-bool SchematicDoc::createSubcircuitSymbol()
-{ untested();
-  incomplete();
-  // If the number of ports is not equal, remove or add some.
-  unsigned int countPort = adjustPortNumbers();
-
-  // If a symbol does not yet exist, create one.
-  if(symbolPaintings().count() != countPort)
-    return false;
-
-  int h = 30*((countPort-1)/2) + 10;
-
-  Painting* txt=painting_dispatcher.clone("ID_Text");
-  assert(txt);
-  txt->setArgs2Int(-20, h+4); // fix later.
-  symbolPaintings().prepend(txt);
-
-  Painting* pp;
-
-  pp = painting_dispatcher.clone("GraphicsLine");
-  assert(pp);
-  pp->setSomeStuff(-20, -h, 40,  0, QPen(Qt::darkBlue,2));
-  symbolPaintings().append(pp);
-
-  pp = painting_dispatcher.clone("GraphicsLine");
-  pp->setSomeStuff( 20, -h,  0,2*h, QPen(Qt::darkBlue,2));
-  symbolPaintings().append(pp);
-
-  pp = painting_dispatcher.clone("GraphicsLine");
-  pp->setSomeStuff(-20,  h, 40,  0, QPen(Qt::darkBlue,2));
-  symbolPaintings().append(pp);
-
-  pp = painting_dispatcher.clone("GraphicsLine");
-  pp->setSomeStuff(-20, -h,  0,2*h, QPen(Qt::darkBlue,2));
-  symbolPaintings().append(pp);
-
-  unsigned int i=0, y = 10-h;
-  while(i<countPort) { untested();
-    i++;
-    pp = painting_dispatcher.clone("GraphicsLine");
-    pp->setSomeStuff(-30, y, 10, 0, QPen(Qt::darkBlue,2));
-    symbolPaintings().append(pp);
-    symbolPaintings().at(i)->setCenter(-30,  y);
-
-    if(i == countPort)  break;
-    i++;
-    pp = painting_dispatcher.clone("GraphicsLine");
-    pp->setSomeStuff( 20, y, 10, 0, QPen(Qt::darkBlue,2));
-    symbolPaintings().append(pp);
-    symbolPaintings().at(i)->setCenter(30,  y);
-    y += 60;
-  }
-  return true;
-}
-#endif
 /*--------------------------------------------------------------------------*/
 // needed?
 void SchematicDoc::cleanup()
