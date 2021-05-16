@@ -139,7 +139,7 @@ private:
 	void printElement(Element const*, ostream_t&) const override;
 	void printPainting(Painting const*, ostream_t&) const override;
 	void print_module(ostream_t&, SubcktBase const*) const override;
-   void printDiagram(Diagram const*, ostream_t&) const override;
+   void print_diagram(ostream_t&, Diagram const*) const override;
 	bool _lib_mod; // HACK HACK
 }leg_sch;
 static Dispatcher<Language>::INSTALL
@@ -333,7 +333,7 @@ static std::string mangle(std::string t)
 	return t.substr(0, pos);
 }
 /*--------------------------------------------------------------------------*/
-void LegacySchematicLanguage::printDiagram(Diagram const* x, ostream_t& cs) const
+void LegacySchematicLanguage::print_diagram(ostream_t& cs, Diagram const* x) const
 {
 	cs << "  " << x->save(); // BUG
 	Element const* e = x;

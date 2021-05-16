@@ -33,7 +33,7 @@ private: // Language
   void printElement(Element const*, ostream_t&) const override {incomplete();}
   void printPainting(Painting const*, ostream_t&) const override {incomplete();}
   void print_paramset(ostream_t&, Model const*) const{incomplete();}
-  void printDiagram(Diagram const*, ostream_t&) const override {incomplete();}
+  void print_diagram(ostream_t&, Diagram const*) const override {incomplete();}
   void print_instance(ostream_t&, Component const*) const override {incomplete();}
   void print_module(ostream_t&, SubcktBase const*) const override {incomplete();}
   void printItem(ostream_t&, Element const*) const override;

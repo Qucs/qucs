@@ -12,6 +12,10 @@ Diode #(.Is(1e-12 A), .N(1), .Cj0(10 fF), .M(0.5), .Vj(0.7 V), .Fc(0.5), .Cp(0.0
 R #(.R(10), .Temp(26.85), .Tc1(0.0), .Tc2(0.0), .Tnom(26.85), .Symbol(european)) R1(gnd, out);
 Eqn #(.Tmax(Bperiod*20), .Tstep(Bperiod/1000), .Export(yes)) Eqn2();
 Eqn #(.Bfreq(40k), .Bperiod(1/Bfreq), .Bduty(30), .Ton(Bperiod*Bduty/100), .Toff(Bperiod-Ton), .Export(yes)) Eqn1();
+// `ifdef QUCS_DIAGRAMS
+// Rect
+// Rect
+// `endif
 endmodule // main
 
 module Symbol();

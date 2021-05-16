@@ -30,6 +30,10 @@ wire #(.$vscale(110), .$xposition(420), .$yposition(80), .$vflip(1), .$hflip(1),
 wire #(.$vscale(110), .$xposition(530), .$yposition(80), .$vflip(1), .$hflip(1), .$angle(0)) noname(net_530_80, net_640_80);
 wire #(.$vscale(20), .$xposition(530), .$yposition(80), .$vflip(1), .$hflip(1), .$angle(270)) noname(net_530_80, net_530_100);
 wire #(.$vscale(30), .$xposition(640), .$yposition(160), .$vflip(1), .$hflip(1), .$angle(270)) noname(net_640_160, net_640_190);
+// `ifdef QUCS_DIAGRAMS
+// Smith
+// Smith
+// `endif
 place #(.$xposition(260), .$yposition(280)) net_260_280(net_260_280);
 place #(.$xposition(180), .$yposition(150)) net_180_150(net_180_150);
 place #(.$xposition(240), .$yposition(150)) net_240_150(net_240_150);

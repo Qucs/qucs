@@ -58,6 +58,10 @@ public:
     return diag_coordinate_t();
   }
   QString extraMarkerText(Marker const*) const;
+
+	std::string dev_type() const override{
+		return "Smith";
+	}
 public: // legacy cruft.
   QList<Graph *>  Graphs;
   QList<Arc *>    Arcs;

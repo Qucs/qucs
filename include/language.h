@@ -61,7 +61,7 @@ public:
   virtual void printItem(ostream_t&, Element const*) const;
 private: //called by printItem
   virtual void printPainting(Painting const*, ostream_t&) const = 0;
-  virtual void printDiagram(Diagram const*, ostream_t&) const = 0;
+  virtual void print_diagram(ostream_t&, Diagram const*) const = 0;
   virtual void print_instance(ostream_t&, Component const*) const = 0;
   virtual void print_paramset(ostream_t&, Model const*) const = 0;
   virtual void print_module(ostream_t&, SubcktBase const*) const = 0;

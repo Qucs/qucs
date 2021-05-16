@@ -39,7 +39,7 @@ private: // local
   void print_paramset(ostream_t&, Model const*) const override;
   void print_module(ostream_t&, SubcktBase const*) const {untested(); }
   void printPainting(Painting const*, ostream_t&) const override { untested(); }
-  void printDiagram(Diagram const*, ostream_t&) const override { untested();}
+  void print_diagram(ostream_t&, Diagram const*) const override { untested();}
 }d0;
 static Dispatcher<Language>::INSTALL p(&language_dispatcher, "spice", &d0);
 /*--------------------------------------------------------------------------*/

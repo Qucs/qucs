@@ -84,7 +84,7 @@ void Language::printItem(ostream_t& s, Element const* c) const
 	}else if (auto C=dynamic_cast<const DEV_DOT*>(c)) {
 		print_command(s, C);
 	}else if (auto d=dynamic_cast<const Diagram*>(c)) {
-		printDiagram(d, s);
+		print_diagram(s, d);
 	}else if (auto d=dynamic_cast<const Data*>(c)) {
 		printElement(d, s);
 	}else if (auto p=dynamic_cast<const Painting*>(c)) {

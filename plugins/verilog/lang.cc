@@ -13,6 +13,7 @@
 
 // verilog languages with bits from lang_verilog.cc
 
+#include "diagram.h"
 #include "docfmt.h"
 #include "dot.h"
 #include "element_list.h"
@@ -87,7 +88,7 @@ private:
 	void print_module(ostream_t&, SubcktBase const*) const override;
 	void printPainting(Painting const*, ostream_t&) const override;
 	void print_command(ostream_t&, DEV_DOT const*) const override;
-	void printDiagram(Diagram const*, ostream_t&) const override {incomplete();}
+	void print_diagram(ostream_t&, Diagram const*) const override;
 
 private: // local
 	void printTaskElement(TaskElement const*, ostream_t&) const;
@@ -386,6 +387,14 @@ void VS::print_ports_short(ostream_t& o, Component const* x) const
 		sep = ",";
 	}
 #endif
+}
+/*--------------------------------------------------------------------------*/
+void Verilog::print_diagram(ostream_t& o, Diagram const* d) const
+{
+	o << "// `ifdef QUCS_DIAGRAMS\n"
+	  << "// " << d->dev_type() << "\n"
+	  << "// " << d->short_label() << "\n"
+	  << "// `endif\n";
 }
 /*--------------------------------------------------------------------------*/
 void Verilog::print_command(ostream_t& o, DEV_DOT const* d) const

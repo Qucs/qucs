@@ -12,6 +12,10 @@ Diode #(.Is(1e-12 A), .N(1), .Cj0(10 fF), .M(0.5), .Vj(0.7 V), .Fc(0.5), .Cp(0.0
 GND #() *(gnd);
 C #(.C(100u), .V(0), .Symbol(neutral)) C1(out, gnd);
 R #(.R(5), .Temp(26.85), .Tc1(0.0), .Tc2(0.0), .Tnom(26.85), .Symbol(european)) R1(gnd, out);
+// `ifdef QUCS_DIAGRAMS
+// Rect
+// Rect
+// `endif
 endmodule // main
 
 module Symbol();

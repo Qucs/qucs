@@ -50,6 +50,9 @@ public: // it's not actually a diagram. so what?
   virtual diag_coordinate_t calcCoordinate(double const&, double const&) const override{
 	  return diag_coordinate_t();
   }
+	std::string dev_type() const override{
+		return "Tab";
+	}
 
 public: // legacy cruft.
   QList<Graph *>  Graphs;

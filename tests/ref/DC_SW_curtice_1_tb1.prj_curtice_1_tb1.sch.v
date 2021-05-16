@@ -8,6 +8,10 @@ Vdc #(.U(Vds)) V1(_net2, gnd);
 GND #() *(gnd);
 IProbe #() Pr1(_net2, _net3);
 Sub$curtice_1 #(.File(curtice_1.sch), .RG(1m), .RD(1m), .RS(1m), .VBR(10e10), .LG(1e-15), .LD(1e-15), .LS(1e-15), .IS(10f), .N(1), .XTI(0), .EG(1.11), .Beta(3m), .Lambda(40m), .VT0(-6), .Temp(27), .Alpha(0.8), .CDS(300f), .TAU(10p), .RIN(1m), .CGS(300f), .CGD(300f), .Tnom(27)) Curtice1(gnd, _net7, _net3);
+// `ifdef QUCS_DIAGRAMS
+// Rect
+// Rect
+// `endif
 endmodule // main
 
 module Symbol();

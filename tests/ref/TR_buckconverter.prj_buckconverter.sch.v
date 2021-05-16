@@ -12,6 +12,10 @@ R #(.R(5), .Temp(26.85), .Tc1(0.0), .Tc2(0.0), .Tnom(26.85), .Symbol(european)) 
 Eqn #(.Tmax(Bperiod*20), .Tstep(Bperiod/1000), .Export(yes)) Eqn2();
 //TR1
 Eqn #(.Bfreq(40k), .Bperiod(1/Bfreq), .Bduty(50), .Ton(Bperiod*Bduty/100), .Toff(Bperiod-Ton), .Export(yes)) Eqn1();
+// `ifdef QUCS_DIAGRAMS
+// Rect
+// Rect
+// `endif
 endmodule // main
 
 module Symbol();

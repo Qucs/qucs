@@ -156,7 +156,7 @@ private: // Language
   void print_module(ostream_t&, SubcktBase const*) const;
   void printComponent(::Component const*, ostream_t&) const;
   void printPainting(Painting const*, ostream_t&) const override {incomplete();}
-  void printDiagram(Diagram const*, ostream_t&) const override {incomplete();}
+  void print_diagram(ostream_t&, Diagram const*) const override {incomplete();}
 }qucslang;
 static Dispatcher<DocumentFormat>::INSTALL p(&language_dispatcher, "qucsator", &qucslang);
 /* -------------------------------------------------------------------------------- */

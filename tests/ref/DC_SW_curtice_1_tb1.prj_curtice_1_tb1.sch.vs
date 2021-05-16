@@ -16,6 +16,10 @@ wire #(.$vscale(10), .$xposition(80), .$yposition(120), .$vflip(1), .$hflip(1), 
 wire #(.$vscale(100), .$xposition(80), .$yposition(120), .$vflip(1), .$hflip(1), .$angle(0)) noname(net_80_120, net_180_120);
 wire #(.$vscale(20), .$xposition(210), .$yposition(60), .$vflip(1), .$hflip(1), .$angle(270)) noname(net_210_60, net_210_80);
 wire #(.$vscale(30), .$xposition(350), .$yposition(60), .$vflip(1), .$hflip(1), .$angle(0)) noname(net_350_60, net_380_60);
+// `ifdef QUCS_DIAGRAMS
+// Rect
+// Rect
+// `endif
 place #(.$xposition(80), .$yposition(130)) net_80_130(net_80_130);
 place #(.$xposition(80), .$yposition(190)) net_80_190(net_80_190);
 place #(.$xposition(380), .$yposition(160)) net_380_160(net_380_160);
