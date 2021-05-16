@@ -61,7 +61,7 @@ private: // QGraphicsItem
 	void paint(QPainter *painter, const QStyleOptionGraphicsItem*, QWidget*) override;
 
 public: // Element
-	Element* clone() const override{itested();
+	Element* clone() const override{untested();
 		return new DiagramVariable(*this);
 	}
 	index_t param_count() const{return 6;}

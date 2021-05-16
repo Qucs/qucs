@@ -300,6 +300,7 @@ DiagramDialog::DiagramDialog()
 	}
 }
 /*--------------------------------------------------------------------------*/
+// attach and build GUI. good idea?
 void DiagramDialog::attach(ElementGraphics* g)
 { untested();
 	// edit a copy of the element,
@@ -794,12 +795,21 @@ void DiagramDialog::attach(ElementGraphics* g)
 
 		// ...........................................................
 		// transfer the diagram properties to the dialog
-		if(diag()->xAxis.autoScale)  slotManualX(0);
-		else  manualX->setChecked(true);
-		if(diag()->yAxis.autoScale)  slotManualY(0);
-		else  manualY->setChecked(true);
-		if(diag()->zAxis.autoScale)  slotManualZ(0);
-		else  manualZ->setChecked(true);
+		if(diag()->xAxis.autoScale){
+		 	slotManualX(0);
+		}else{
+		 	manualX->setChecked(true);
+		}
+
+		if(diag()->yAxis.autoScale){
+			slotManualY(0);
+		}else{  manualY->setChecked(true);
+		}
+
+		if(diag()->zAxis.autoScale){
+		 	slotManualZ(0);
+		}else{  manualZ->setChecked(true);
+		}
 
 		diag()->calcLimits();    // inserts auto-scale values if not manual
 
@@ -935,6 +945,7 @@ public:
 private:
 	CommonData const* _data{nullptr};
 };
+/*--------------------------------------------------------------------------*/
 // fill variables into table.
 // TODO: move to ChooseVars?
 void DiagramDialog::slotReadVars(int)
@@ -996,8 +1007,6 @@ void DiagramDialog::slotReadVars(int)
 	ChooseVars->setSortingEnabled(true);
 }
 /*--------------------------------------------------------------------------*/
-
-// ------------------------------------------------------------------------
 // Add the double-clicked variable to the Diagram. Refresh the list.
 //
 // What does this mean?
@@ -1019,6 +1028,7 @@ void DiagramDialog::slotTakeVar(QTableWidgetItem* Item)
 	auto xr = prechecked_cast<DataRef*>(x);
 	assert(xr);
 	auto s1 = QString_(xr->short_label());
+	trace1("slotTake", s1);
 
 	QFileInfo Info(defaultDataSet);
 	if(ChooseData->currentText() != Info.completeBaseName()){
@@ -1036,7 +1046,13 @@ void DiagramDialog::slotTakeVar(QTableWidgetItem* Item)
 	Graph *g = new Graph(diag, GraphInput->text());   // create a new graph
 #else
 	// TODO: ask diagram. use suitable type.
-	Data* g = data_dispatcher.clone("diagramvariable");
+	// Data* g = data_dispatcher.clone("diagramvariable");
+	Element const* ed = diag()->find_looking_out("diagramvariable");
+	assert(ed);
+	Data* g = prechecked_cast<Data*>(ed->clone_instance());
+	assert(g);
+	g->set_label(xr->short_label());
+
 #endif
 
 	//    if(Diag->name() != "Tab") {
@@ -1062,12 +1078,11 @@ void DiagramDialog::slotTakeVar(QTableWidgetItem* Item)
 		g->set_param_by_name("yaxisno", std::to_string(yAxisBox->currentIndex()));
 		yAxisBox->setEnabled(true);
 		Label4->setEnabled(true);
-	}
-	// TODO axes could be objects instead. needed for 3d plot?
-	//        else if(Diag->name() == "Rect3D"){
-	//			  g->yAxisNo = 1;
-	//		  }
-	else{ untested();
+	}else{ untested();
+		// TODO axes could be objects instead. needed for 3d plot?
+		//        else if(Diag->name() == "Rect3D"){
+		//			  g->yAxisNo = 1;
+		//		  }
 	}
 
 	Label3->setEnabled(true);
@@ -1077,10 +1092,12 @@ void DiagramDialog::slotTakeVar(QTableWidgetItem* Item)
 	if(0){
 		g->set_param_by_name("precision", Property2->text().toStdString());
 		g->set_param_by_name("nummode", std::to_string(PropertyBox->currentIndex()));
+	}else{
 	}
 
 	g->set_owner(diag());
 	scope()->push_back(g);
+	g->prepare();
 
 	_changed = true;
 	toTake  = true;
@@ -1096,7 +1113,7 @@ void DiagramDialog::slotTakeVar(QTableWidgetItem* Item)
 	}else{
 	}
 }
-
+/*--------------------------------------------------------------------------*/
 // a graph text is clicked in the ListBox.
 void DiagramDialog::slotSelectGraph(QListWidgetItem *item)
 { untested();
@@ -1112,10 +1129,8 @@ void DiagramDialog::slotSelectGraph(QListWidgetItem *item)
 		SelectGraph(g);
 	}
 }
-
-/*!
-  Puts the text of the selected graph into the line edit.
-  */
+/*--------------------------------------------------------------------------*/
+// Put the text of the selected graph into the line edit
 void DiagramDialog::SelectGraph(Data *g)
 { untested();
 	assert(GraphInput);
@@ -1216,8 +1231,7 @@ void DiagramDialog::slotDeleteGraph()
 		}
 	}
 }
-
-// --------------------------------------------------------------------------
+/*--------------------------------------------------------------------------*/
 // why not pick data from listing?!
 // add later. maybe.
 void DiagramDialog::slotNewGraph()
@@ -1254,9 +1268,7 @@ void DiagramDialog::slotNewGraph()
 #endif
 }
 
-/*!
-  Is called if "Ok" button is pressed.
-  */
+// "Ok" button pressed
 void DiagramDialog::slotButtOK()
 { untested();
 	slotButtApply();
@@ -1298,7 +1310,7 @@ void DiagramDialog::slotButtApply()
 
 #if 0
 	// obsolete
-	// TODO: remove. or move.
+	// TODO: edit diagram, not shadow variables.
 
 	{
 		if(Diag->xAxis.Label.isEmpty())
@@ -1623,8 +1635,11 @@ void DiagramDialog::slotManualX(int state)
 		// }else{
 		// }
 		stopX->setEnabled(true);
-		if(GridLogX) if(GridLogX->isChecked())  return;
-		stepX->setEnabled(true);
+		if(!GridLogX){ untested();
+		}else if(GridLogX->isChecked()){ untested();
+		}else{ untested();
+			stepX->setEnabled(true);
+		}
 	} else {
 		startX->setEnabled(false);
 		stepX->setEnabled(false);
@@ -1640,8 +1655,11 @@ void DiagramDialog::slotManualY(int state)
 		startY->setEnabled(true);
 		//  }
 		stopY->setEnabled(true);
-		if(GridLogY) if(GridLogY->isChecked())  return;
-		stepY->setEnabled(true);
+		if(!GridLogY){ untested();
+		}else if(GridLogY->isChecked()){ untested();
+		}else{ untested();
+			stepY->setEnabled(true);
+		}
 	}
 	else { untested();
 		startY->setEnabled(false);
