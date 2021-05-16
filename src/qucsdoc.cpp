@@ -250,14 +250,14 @@ ElementList* Doc::model()
 }
 /* -------------------------------------------------------------------------------- */
 void Doc::executeCommand(QUndoCommand* c)
-{ untested();
+{itested();
 	// TODO: what if there are multiple views to a scene?
 	// is mouseActions == scene?
 
 	if(eventHandler()){itested();
 		eventHandler()->executeCommand(c); // really?
 		// setChanged();
-		if(!DocChanged){ untested();
+		if(!DocChanged){itested();
 			emit signalFileChanged(true);
 		}else{ untested();
 			// TODO: unset Changed in undo.

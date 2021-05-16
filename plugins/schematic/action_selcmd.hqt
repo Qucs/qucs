@@ -81,7 +81,7 @@ public:
 	explicit MouseActionSelCmd(QObject* p=nullptr) : MouseAction(p){}
 protected:
 	MouseActionSelCmd(MouseActionSelCmd const& s)
-		: MouseAction(){ untested(); }
+		: MouseAction(){itested(); }
 private:
 #if 0
 	QAction* createAction(QObject* parent) const override{itested();
@@ -319,7 +319,7 @@ private:
 	Action* clone() const{
 		return new MirrorXaxisSelection(*this);
 	}
-	QAction* createAction(QObject* parent) const override{untested();
+	QAction* createAction(QObject* parent) const override{itested();
 		auto x = new ActionMirrorX(parent);
 		connect(x, &QAction::toggled, this, &MouseActionSelCmd::slotToggle);
 		return x;
@@ -337,7 +337,7 @@ private:
 	Action* clone() const{
 		return new MirrorYaxisSelection(*this);
 	}
-	QAction* createAction(QObject* parent) const override{untested();
+	QAction* createAction(QObject* parent) const override{itested();
 		auto x = new ActionMirrorY(parent);
 		connect(x, &QAction::toggled, this, &MouseActionSelCmd::slotToggle);
 		return x;
@@ -356,7 +356,7 @@ private:
 	Action* clone() const{
 		return new RotateSelection(*this);
 	}
-	QAction* createAction(QObject* parent) const override{untested();
+	QAction* createAction(QObject* parent) const override{itested();
 		auto x = new ActionRotate(parent);
 		connect(x, &QAction::toggled, this, &MouseActionSelCmd::slotToggle);
 		return x;

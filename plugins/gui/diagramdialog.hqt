@@ -115,23 +115,23 @@ private:
 /*--------------------------------------------------------------------------*/
 class DataChooser : public QComboBox{
 public:
-	explicit DataChooser() { untested();
+	explicit DataChooser() {itested();
 		setMinimumWidth(300);
 	}
 
 public:
 	void setScope(ElementList const* s){ _scope = s; }
 
-	void refresh(){ untested();
-		for(Element const* elt : *_scope){ untested();
+	void refresh(){itested();
+		for(Element const* elt : *_scope){itested();
 			trace1("refresh chooser", elt->short_label());
 			CommonData const* cd = nullptr;;
-			if(auto dd=dynamic_cast<Data const*>(elt)){ untested();
+			if(auto dd=dynamic_cast<Data const*>(elt)){itested();
 				dd->refresh();
 				CommonData::attach(dd->common(), &cd);
 				add_data(cd, elt->short_label());
 				CommonData::detach(&cd);
-			}else{ untested();
+			}else{itested();
 			}
 		}
 #if 0
@@ -147,24 +147,24 @@ public:
 
 private:
 	// this is completely ad-hoc, but uses the legacy diagramdialog widgets
-	void add_data(CommonData const* cd, std::string prefix=""){ untested();
+	void add_data(CommonData const* cd, std::string prefix=""){itested();
 		if(auto dd=dynamic_cast<SimOutputData const*>(cd)){ untested();
-		}else if(auto dir=dynamic_cast<SimOutputDir const*>(cd)){ untested();
+		}else if(auto dir=dynamic_cast<SimOutputDir const*>(cd)){itested();
 			bool nonempty = false;
-			for(auto n : *dir){ untested();
-				if(dynamic_cast<SimOutputData const*>(n)){ untested();
+			for(auto n : *dir){itested();
+				if(dynamic_cast<SimOutputData const*>(n)){itested();
 					nonempty = true;
-				}else{ untested();
+				}else{itested();
 					add_data(n, prefix+"."+n->short_label());
 				}
 			}
-			if(nonempty){ untested();
+			if(nonempty){itested();
 				std::string label = dir->short_label();
 				QVariant shared = QVariant::fromValue<CommonData const*>(dir); // BUG: *tach.
 
 				addItem(QString_(prefix), shared);
 				//				addItem(QString_(prefix));
-			}else{ untested();
+			}else{itested();
 			}
 		}else{ untested();
 		}
@@ -293,7 +293,7 @@ static const int NumDefaultColors = 8;
 
 DiagramDialog::DiagramDialog()
 	: SchematicDialog()
-{ untested();
+{itested();
 	if(auto w=dynamic_cast<QDialog*>(this)){
 		w->setAttribute(Qt::WA_DeleteOnClose);
 	}else{
@@ -302,10 +302,10 @@ DiagramDialog::DiagramDialog()
 /*--------------------------------------------------------------------------*/
 // attach and build GUI. good idea?
 void DiagramDialog::attach(ElementGraphics* g)
-{ untested();
+{itested();
 	// edit a copy of the element,
 	// display the copy in the scene while the dialog is open.
-	{ untested();
+	{itested();
 		assert(g->isVisible());
 		g->hide(); // take it out of the model.
 		assert(!g->isVisible());
@@ -319,7 +319,7 @@ void DiagramDialog::attach(ElementGraphics* g)
 	}
 
 	// what?
-	if(doc()){ untested();
+	if(doc()){itested();
 		QFileInfo Info(QString_(doc()->short_label()));
 		defaultDataSet = Info.path() + QDir::separator() + doc()->DataSet;
 	}else{ untested();
@@ -472,7 +472,7 @@ void DiagramDialog::attach(ElementGraphics* g)
 	}
 #endif // init_stuff
 
-	if(Property2) { untested();
+	if(Property2) {itested();
 		connect(Property2, SIGNAL(textChanged(const QString&)),
 				SLOT(slotSetProp2(const QString&)));
 
@@ -886,7 +886,7 @@ void DiagramDialog::attach(ElementGraphics* g)
 		Data* currentGraph = nullptr;
 		index_t Row = 0;
 		if(scope()){
-			for(auto pg : *scope()) { untested();
+			for(auto pg : *scope()) {itested();
 				if(auto dd=dynamic_cast<Data*>(pg)){
 					trace1("refreshList", pg->short_label());
 					auto qv = QVariant::fromValue<Data*>(dd);
@@ -905,8 +905,8 @@ void DiagramDialog::attach(ElementGraphics* g)
 		}else{
 		}
 
-		if(ColorButt) { untested();
-			if(!currentGraph) { untested();
+		if(ColorButt) {itested();
+			if(!currentGraph) {itested();
 				QColor selectedColor(DefaultColors[_variableList->count()%NumDefaultColors]);
 				misc::setPickerColor(ColorButt, selectedColor);
 			}
@@ -916,7 +916,7 @@ void DiagramDialog::attach(ElementGraphics* g)
 }
 
 DiagramDialog::~DiagramDialog()
-{ untested();
+{itested();
 	delete all;   // what?
 	delete ValInteger;
 	delete ValDouble;
@@ -929,14 +929,14 @@ class DataRef : public QTableWidgetItem{
 	DataRef(DataRef const& x) = delete;
 public:
 	DataRef(CommonData const* x) :
-		QTableWidgetItem(QString_(x->short_label())){ untested();
+		QTableWidgetItem(QString_(x->short_label())){itested();
 			CommonData::attach(x, &_data);
 		}
-	~DataRef(){ untested();
+	~DataRef(){itested();
 		CommonData::detach(&_data);
 	}
-	std::string short_label() const{ untested();
-		if(_data){ untested();
+	std::string short_label() const{itested();
+		if(_data){itested();
 			return _data->short_label();
 		}else{ untested();
 			return "null";
@@ -949,7 +949,7 @@ private:
 // fill variables into table.
 // TODO: move to ChooseVars?
 void DiagramDialog::slotReadVars(int)
-{ untested();
+{itested();
 #if 0 // ?
 	auto ChooseData = prechecked_cast<QComboBox*>(sender());
 	assert(ChooseData);
@@ -967,15 +967,15 @@ void DiagramDialog::slotReadVars(int)
 	ChooseVars->setSortingEnabled(false);
 	ChooseVars->clearContents();
 
-	if(auto d = dynamic_cast< SimOutputDir const*> (common)){ untested();
+	if(auto d = dynamic_cast< SimOutputDir const*> (common)){itested();
 
-		for(auto v : *d){ untested();
+		for(auto v : *d){itested();
 			auto vd = dynamic_cast<SimOutputData const*>(v);
 
 			if(!vd){ untested();
 				trace1("slotReadVars not data", v->short_label());
 				// message(Object::QucsMsgLog, "unknown data");
-			}else{ untested();
+			}else{itested();
 				auto Var = QString_(v->short_label());
 				QTableWidgetItem *vcell = new DataRef(v);
 				//new Q3ListViewItem(ChooseVars, Var, "dep", tmp.remove('>'));
@@ -985,10 +985,10 @@ void DiagramDialog::slotReadVars(int)
 				ChooseVars->setItem(varNumber, 0, vcell);
 
 				QTableWidgetItem *cell = nullptr;
-				if((vd->numDeps())){ untested();
+				if((vd->numDeps())){itested();
 					tmp = Line.section(' ', 2);
 					cell = new QTableWidgetItem("dep");
-				}else{ untested();
+				}else{itested();
 					tmp = Line.section(' ', 2, 2);
 					cell = new QTableWidgetItem("indep");
 				}
@@ -1013,7 +1013,7 @@ void DiagramDialog::slotReadVars(int)
 // If the Graph Input is empty, then the variable is
 // also inserted as graph.
 void DiagramDialog::slotTakeVar(QTableWidgetItem* Item)
-{ untested();
+{itested();
 	GraphInput->blockSignals(true);
 	if(toTake){
 		GraphInput->setText("");
@@ -1041,19 +1041,17 @@ void DiagramDialog::slotTakeVar(QTableWidgetItem* Item)
 	_variableList->addItem(GraphInput->text());////insertItem(i, GraphInput->text());
 	_variableList->setCurrentRow(_variableList->count()-1);
 
-#if 0
-	// what?
-	Graph *g = new Graph(diag, GraphInput->text());   // create a new graph
-#else
-	// TODO: ask diagram. use suitable type.
-	// Data* g = data_dispatcher.clone("diagramvariable");
-	Element const* ed = diag()->find_looking_out("diagramvariable");
+	Element const* ed = nullptr;
+
+	try{itested();
+		ed = diag()->find_looking_out("diagramvariable");
+	}catch(ExceptionCantFind){itested();
+		ed = data_dispatcher["diagramvariable"];
+	}
 	assert(ed);
 	Data* g = prechecked_cast<Data*>(ed->clone_instance());
 	assert(g);
 	g->set_label(xr->short_label());
-
-#endif
 
 	//    if(Diag->name() != "Tab") {
 	//      if(Diag->name() != "Truth") {
@@ -1073,7 +1071,7 @@ void DiagramDialog::slotTakeVar(QTableWidgetItem* Item)
 
 	g->set_param_by_name("style", std::to_string(PropertyBox->currentIndex())); // see graphstyle enum.
 	//        assert(g->Style!=GRAPHSTYLE_INVALID); // why?
-	if(yAxisBox) { untested();
+	if(yAxisBox) {itested();
 		// TODO axes could be objects instead.
 		g->set_param_by_name("yaxisno", std::to_string(yAxisBox->currentIndex()));
 		yAxisBox->setEnabled(true);
@@ -1105,7 +1103,7 @@ void DiagramDialog::slotTakeVar(QTableWidgetItem* Item)
 
 	GraphInput->blockSignals(false);
 
-	if(Property2) { untested();
+	if(Property2) {itested();
 		Label1->setEnabled(true);
 		PropertyBox->setEnabled(true);
 		Label2->setEnabled(true);
@@ -1270,7 +1268,7 @@ void DiagramDialog::slotNewGraph()
 
 // "Ok" button pressed
 void DiagramDialog::slotButtOK()
-{ untested();
+{itested();
 	slotButtApply();
 	slotButtCancel();
 }
@@ -1279,7 +1277,7 @@ void DiagramDialog::slotButtOK()
 //  todo: tabdiagram/truthtable override
 void DiagramDialog::slotButtApply()
 {
-	if(_changed){ untested();
+	if(_changed){itested();
 		assert(_gfx->isVisible());
 		assert(!_bak->isVisible());
 		// put _clone in, and stash _orig.
@@ -1290,7 +1288,7 @@ void DiagramDialog::slotButtApply()
 		assert(!_bak->isVisible());
 		ElementGraphics* g = _gfx;
 
-		{ untested();
+		{itested();
 			// BUG: duplicate
 			assert(g->isVisible());
 			g->hide(); // take it out of the model.
@@ -1482,7 +1480,7 @@ void DiagramDialog::slotButtApply()
 // --------------------------------------------------------------------------
 // Is called if "Cancel" button is pressed.
 void DiagramDialog::slotButtCancel()
-{ untested();
+{itested();
 
 	assert(!_bak->isVisible());
 	_bak->show_();
@@ -1494,7 +1492,7 @@ void DiagramDialog::slotButtCancel()
 	//  ((QucsView*)parent())->viewport()->repaint();
 	if(transfer){ untested();
 		done(QDialog::Accepted);
-	}else{ untested();
+	}else{itested();
 		done(QDialog::Rejected);
 	}
 }
@@ -1661,7 +1659,7 @@ void DiagramDialog::slotManualY(int state)
 			stepY->setEnabled(true);
 		}
 	}
-	else { untested();
+	else {itested();
 		startY->setEnabled(false);
 		stepY->setEnabled(false);
 		stopY->setEnabled(false);
@@ -1683,7 +1681,7 @@ void DiagramDialog::slotManualZ(int state)
 			}
 		}
 		stepZ->setEnabled(true);
-	} else { untested();
+	} else {itested();
 		startZ->setEnabled(false);
 		stepZ->setEnabled(false);
 		stopZ->setEnabled(false);

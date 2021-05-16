@@ -60,12 +60,12 @@ public: // Element
 	}
 	index_t param_count() const{return 6;}
 	void set_param_by_index(index_t i, std::string const& value) override;
-	void set_param_by_name(std::string const& name, std::string const& value) override{ untested();
+	void set_param_by_name(std::string const& name, std::string const& value) override{itested();
 		if(name=="color"){ untested();
 			_color = value;
-		}else if(name=="thick"){ untested();
+		}else if(name=="thick"){itested();
 			_thick = value;
-		}else{ untested();
+		}else{itested();
 			trace2("var" , name, value);
 			incomplete();
 		}
@@ -232,7 +232,7 @@ std::string DiagramVariable::param_value(index_t i) const
 }
 /*--------------------------------------------------------------------------*/
 rect_t DiagramVariable::bounding_rect() const
-{ untested();
+{itested();
 	if(auto p=dynamic_cast<Painting const*>(owner())){
 		return p->bounding_rect();
 	}else{

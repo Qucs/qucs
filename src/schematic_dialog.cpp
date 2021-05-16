@@ -32,7 +32,7 @@ void SchematicDialog::execute(QUndoCommand* c)
 }
 /*--------------------------------------------------------------------------*/
 Doc* SchematicDialog::doc()
-{ untested();
+{itested();
 	auto t = dynamic_cast<QWidget*>(this); // prech?
 	assert(t);
 	auto p = dynamic_cast<Doc*>(t->parentWidget()); // prech?

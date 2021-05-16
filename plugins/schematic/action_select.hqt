@@ -42,7 +42,7 @@ static Symbol* symbol(ElementGraphics* e)
 {
 	if(!e){ untested();
 		return nullptr;
-	}else{ untested();
+	}else{itested();
 		return symbol(&**e);
 	}
 }
@@ -181,7 +181,7 @@ private:
 	}
 
 public slots:
-	void slotToggle() {untested();
+	void slotToggle() {itested();
 		assert(ctx());
 		ctx()->possiblyToggleAction(this, sender());
 	}
@@ -206,7 +206,7 @@ private: // more decoupling
 static Dispatcher<Widget>::INSTALL p1(&qucs::action_dispatcher, "SchematicActionSelect", &a0);
 /*--------------------------------------------------------------------------*/
 QUndoCommand* MouseActionSelect::dblclk(QEvent* evt)
-{ untested();
+{itested();
 	incomplete();
 	//  Doc->releaseKeyboard();  // allow keyboard inputs again
 	//  QucsMain->editText->setHidden(true);
@@ -214,17 +214,17 @@ QUndoCommand* MouseActionSelect::dblclk(QEvent* evt)
 	Element* elt = nullptr;
 	ElementGraphics* gfx = nullptr;
 	//
-	if(auto i = dynamic_cast<qucs::ItemEvent*>(evt)){ untested();
+	if(auto i = dynamic_cast<qucs::ItemEvent*>(evt)){itested();
 		// QList<ElementGraphics*> l;
 		gfx = &i->item();
 		elt = element(gfx);
 		// l.push_back(&i->item());
-	}else{ untested();
+	}else{itested();
 	}
 
 	Widget* w = nullptr;
 
-	if(!elt){ untested();
+	if(!elt){itested();
 	}else if(auto ew = elt->schematicWidget(nullptr)){ untested();
 		// BUG? remove?
 		trace0("got editElement");
@@ -233,7 +233,7 @@ QUndoCommand* MouseActionSelect::dblclk(QEvent* evt)
 	}else if(elt->dev_type() == ""){
 		trace1("no type?", elt->label());
 		unreachable();
-	}else if(auto wp = qucs::widget_dispatcher[elt->dev_type() + "Dialog"]) { untested();
+	}else if(auto wp = qucs::widget_dispatcher[elt->dev_type() + "Dialog"]) {itested();
 		w = wp->clone();
 	}else{
 		trace1("no editElement", elt->dev_type());
@@ -252,18 +252,18 @@ QUndoCommand* MouseActionSelect::dblclk(QEvent* evt)
 void MouseActionSelect::showSchematicWidget(Widget* ew, ElementGraphics* gfx)
 {
 
-	if(auto eew=dynamic_cast<QDialog*>(ew)){ untested();
+	if(auto eew=dynamic_cast<QDialog*>(ew)){itested();
 		eew->setParent(view(), Qt::Dialog);
 	}else{
 	}
-	if(auto eew=dynamic_cast<SchematicDialog*>(ew)){ untested();
+	if(auto eew=dynamic_cast<SchematicDialog*>(ew)){itested();
 		assert(gfx);
 		eew->attach(gfx);
 	}else{
 	}
 
-	if(auto eew=dynamic_cast<QDialog*>(ew)){ untested();
-		if(eew->exec() != 1){ untested();
+	if(auto eew=dynamic_cast<QDialog*>(ew)){itested();
+		if(eew->exec() != 1){itested();
 			// done=true;   // dialog is WDestructiveClose
 		}else{ untested();
 			incomplete();

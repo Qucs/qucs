@@ -889,7 +889,7 @@ void Diagram::prepare()
 }
 /*--------------------------------------------------------------------------*/
 Widget* Diagram::schematicWidget(Doc*) const
-{ untested();
+{itested();
   trace0("Component::editElement");
   incomplete();
   return nullptr;

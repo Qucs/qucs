@@ -298,12 +298,12 @@ void RectDiagram::finishMarkerCoordinates(float& fCX, float& fCY) const
 
 // --------------------------------------------------------------
 void RectDiagram::calcLimits()
-{ untested();
+{itested();
   int i;
   double a, b, c;
 
   if(xAxis.autoScale) {// check before, to preserve limit exchange (max < min)
-    if(xAxis.log) { untested();
+    if(xAxis.log) {itested();
       calcAxisLogScale(&xAxis, i, a, b, c, _width);
       xAxis.step = 1.0;
     }else{

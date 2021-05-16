@@ -336,7 +336,7 @@ SchematicScene const* SchematicActions::scene() const
 }
 /*--------------------------------------------------------------------------*/
 void SchematicActions::updateViewport()
-{ untested();
+{itested();
 	doc()->updateViewport();	
 }
 /*--------------------------------------------------------------------------*/

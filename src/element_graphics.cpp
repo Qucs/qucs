@@ -141,13 +141,13 @@ public:
 				if(n.size() == 0){ untested();
 					incomplete();
 				}else if(n.at(0)=='$'){itested();
-				}else if(show % 2){ untested();
+				}else if(show % 2){itested();
 					auto t=new QGraphicsTextItem(this);
 					t->setFlags(ItemIgnoresTransformations);
 					auto v = QString::fromStdString(s->param_value(i));
-					if(hide%2){ untested();
+					if(hide%2){itested();
 						t->setPlainText(v);
-					}else{ untested();
+					}else{itested();
 						t->setPlainText(n+"="+v);
 					}
 					t->setPos(tx, ty+k/2);
@@ -733,7 +733,7 @@ void ElementGraphics::show_()
 		}else{itested();
 			restore_ports();
 		}
-	}else{ untested();
+	}else{itested();
 	}
 
 	// if(was_selected) ...
@@ -817,7 +817,7 @@ void ElementGraphics::hide()
 			_port_values.push_back(sym->port_value(i));
 			sym->set_port_by_index(i, "");
 		}
-	}else{ untested();
+	}else{itested();
 	}
 
 	if(_e->owner()){itested();

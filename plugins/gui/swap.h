@@ -35,7 +35,7 @@ private:
 	}
 	void redo(){
 		if(_skip){
-		}else{ untested();
+		}else{itested();
 			assert(_gfx);
 			//	  _elt = _gfx->swap(_elt);
 

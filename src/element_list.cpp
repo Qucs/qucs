@@ -96,7 +96,7 @@ Element* ElementList::detach(Element* what)
 		trace1("erased", l);
 	}
 
-	if(auto d=dynamic_cast<Diagram*>(what)){ untested();
+	if(auto d=dynamic_cast<Diagram*>(what)){itested();
 		_cl.erase(std::find(begin(), end(), d));
 	}else if(auto c=dynamic_cast<Symbol*>(what)){
 		disconnect(c);

@@ -29,7 +29,7 @@ namespace qucs {
 QUndoCommand* MouseAction::handle(QEvent* e)
 {itested();
 
-  { untested();
+  {itested();
     // pass to other places unless accepted somewhere else.
     // assert(is_ignored) instead!
     e->ignore();
@@ -63,7 +63,7 @@ QUndoCommand* MouseAction::handle(QEvent* e)
     trace1("dragmove", de->mimeData()->formats()[0]);
   }else if(auto de = dynamic_cast<QDropEvent*>(e)){ untested();
     trace1("dragdrop", de->mimeData()->formats()[0]);
-  }else{ untested();
+  }else{itested();
   }
 
   // why??
@@ -127,7 +127,7 @@ SchematicScene* MouseAction::scene()
 QGraphicsView* MouseAction::view()
 {itested();
   auto cc = dynamic_cast<QGraphicsView*>(doc());
-  if(cc){ untested();
+  if(cc){itested();
 	  return cc;
   }else{ untested();
 	  return nullptr;
@@ -217,7 +217,7 @@ bool MouseAction::isConductor(pos_t const&p) const
 /*--------------------------------------------------------------------------*/
 /*--------------------------------------------------------------------------*/
 MouseActions* MouseAction::ctx() const
-{ untested();
+{itested();
 	auto q = dynamic_cast<QObject const*>(this);
 	assert(q);
 	auto p = dynamic_cast<MouseActions*>(q->parent());
