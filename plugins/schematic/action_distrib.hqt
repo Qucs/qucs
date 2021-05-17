@@ -1,0 +1,233 @@
+TODO: refactor
+
+bool SchematicDoc::distributeHorizontal()
+{
+    int x1, y1, x2, y2;
+    int bx1, by1, bx2, by2;
+    QList<Element *> ElementCache;
+    int count = copyElements(x1, y1, x2, y2, &ElementCache);
+    if(count < 1) return false;
+
+    Element *pe;
+    WireLabel *pl;
+    // Node labels are not counted for, so put them to the end.
+    /*  for(pe = ElementCache.last(); pe != 0; pe = ElementCache.prev())
+        if(pe->Type == isNodeLabel) {
+          ElementCache.append(pe);
+          ElementCache.removeRef(pe);
+        }*/
+
+    // using bubble sort to get elements x ordered
+    QListIterator<Element *> elementCacheIter(ElementCache);
+    if(count > 1)
+        for(int i = count-1; i>0; i--)
+        {
+            pe = ElementCache.first();
+            for(int j=0; j<i; j++)
+            {
+                pe->getCenter(bx1, by1);
+                pe=elementCacheIter.peekNext();
+                pe->getCenter(bx2, by2);
+                if(bx1 > bx2)    // change two elements ?
+                {
+                    ElementCache.replace(j+1, elementCacheIter.peekPrevious());
+                    ElementCache.replace(j, pe);
+                    pe = elementCacheIter.next();
+                }
+            }
+        }
+
+    ElementCache.last()->getCenter(x2, y2);
+    ElementCache.first()->getCenter(x1, y1);
+    int x = x2;
+    int dx=0;
+    if(count > 1) dx = (x2-x1)/(count-1);
+    // re-insert elements and put them at right position
+    // Go backwards in order to insert node labels before its component.
+    elementCacheIter.toBack();
+
+    while (elementCacheIter.hasPrevious())
+    {
+        pe = elementCacheIter.previous();
+	auto C=dynamic_cast<Component*>(pe);
+	auto pw=dynamic_cast<Wire*>(pe);
+	auto pd=dynamic_cast<Diagram*>(pe);
+
+        switch(pe->Type) {
+        case isComponent:
+        case isAnalogComponent:
+        case isDigitalComponent:
+            assert(C);
+
+            C->setCenter(x, C->cy());
+            insertRawComponent(C);
+            break;
+
+        case isWire:
+	    assert(pw);
+	    incomplete();
+//            if(pw->isHorizontal()) {
+//                x1 = pw->x2_() - pw->x1_();
+//                pw->x1__() = x - (x1 >> 1);
+//                pw->x2__() = pw->x1_() + x1;
+//            }else{
+//	      pw->x1__() = pw->x2__() = x;
+//	    }
+//        if(pw->Label) {	}
+            insertWire(pw);
+            break;
+
+        case isDiagram:
+            pd->cx__() = x - (pe->x2_() >> 1);
+            break;
+
+        case isPainting:
+            pe->getCenter(bx1, by1);
+            pe->setCenter(x, by1, false);
+            break;
+
+        case isNodeLabel:
+            pl = (WireLabel*)pe;
+            if(auto oc=dynamic_cast<Component*>(pl->pOwner)){
+		//pe->cx += x - ((Component*)(pl->pOwner))->cx;
+		pl->setCenter(x - oc->cx(), 0, true);
+	
+	    }else if((pw=dynamic_cast<Wire*>(pl->pOwner))){
+                if(pw->isHorizontal()) {
+                    x1 = pw->x2_() - pw->x1_();
+                    pl->cx__() += x - (x1 >> 1) - pw->x1_();
+                } else {
+		  pl->cx__() += x - pw->x1_();
+		}
+            }else{
+	      // unreachable();
+	    }
+            insertNodeLabel(pl);
+            x += dx;
+            break;
+
+        default:
+            ;
+        }
+        x -= dx;
+    }
+
+    ElementCache.clear();
+    if(count < 2) return false;
+
+    setChanged(true, true);
+    return true;
+}
+
+/*!
+ * \brief SchematicDoc::distributeVertical sort selection vertically.
+ * \return True if sorted
+ */
+bool SchematicDoc::distributeVertical()
+{
+    int x1, y1, x2, y2;
+    int bx1, by1, bx2, by2;
+    QList<Element *> ElementCache;
+    int count = copyElements(x1, y1, x2, y2, &ElementCache);
+    if(count < 1) return false;
+
+    // using bubble sort to get elements y ordered
+    QListIterator<Element *> elementCacheIter(ElementCache);
+    Element *pe;
+    if(count > 1)
+        for(int i = count-1; i>0; i--)
+        {
+            pe = ElementCache.first();
+            for(int j=0; j<i; j++)
+            {
+                pe->getCenter(bx1, by1);
+                pe = elementCacheIter.peekNext();
+                pe->getCenter(bx2, by2);
+                if(by1 > by2)    // change two elements ?
+                {
+                    ElementCache.replace(j+1, elementCacheIter.peekPrevious());
+                    ElementCache.replace(j, pe);
+                    pe = elementCacheIter.next();
+                }
+            }
+        }
+
+    ElementCache.last()->getCenter(x2, y2);
+    ElementCache.first()->getCenter(x1, y1);
+    int y  = y2;
+    int dy=0;
+    if(count > 1) dy = (y2-y1)/(count-1);
+    // re-insert elements and put them at right position
+    // Go backwards in order to insert node labels before its component.
+    elementCacheIter.toBack();
+    while (elementCacheIter.hasPrevious())
+    {
+        pe = elementCacheIter.previous();
+        auto C=dynamic_cast<Component*>(pe);
+        auto pw=dynamic_cast<Wire*>(pe);
+        auto pd=dynamic_cast<Diagram*>(pe);
+	auto pl=dynamic_cast<WireLabel*>(pe);
+
+        switch(pe->Type) { // FIXME.
+        case isComponent:
+        case isAnalogComponent:
+        case isDigitalComponent:
+            assert(C);
+            C->setCenter(C->cx(), y);
+            insertRawComponent(C);
+            break;
+
+        case isWire:
+	    incomplete();
+//            if(pw->isHorizontal())  pw->y1__() = pw->y2__() = y;
+//            else
+//            {
+//                y1 = pw->y2_() - pw->y1_();
+//                pw->y1__() = y - (y1 >> 1);
+//                pw->y2__() = pe->y1_() + y1;
+//            }
+//        if(pw->Label) {	}
+            insertWire(pw);
+            break;
+
+        case isDiagram:
+	    assert(pd);
+            pd->cx__() = y + (pe->y2_() >> 1);
+            break;
+
+        case isPainting:
+            pe->getCenter(bx1, by1);
+            pe->setCenter(bx1, y, false);
+            break;
+
+        case isNodeLabel:
+            // if(((Element*)(((WireLabel*)pe)->pOwner))->Type & isComponent)
+            if(auto oc=dynamic_cast<Component*>(pl->pOwner)){
+	        oc->setCenter(y - oc->cx(), 0, true);
+	    }else if((pw=dynamic_cast<Wire*>(pl->pOwner))){
+                if(!pw->isHorizontal())
+                {
+                    y1 = pw->y2_() - pw->y1_();
+                    pl->cx__() += y - (y1 >> 1) - pw->y1_();
+                }else{
+                    pl->cx__() += y - pw->y1_();
+		}
+            }else{
+	      // unreachable
+	    }
+            insertNodeLabel((WireLabel*)pe);
+            y += dy;
+            break;
+
+        default:
+            ;
+        }
+        y -= dy;
+    }
+
+    ElementCache.clear();
+    if(count < 2) return false;
+
+    setChanged(true, true);
+    return true;
+}

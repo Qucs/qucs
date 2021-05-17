@@ -1,0 +1,141 @@
+TODO: refactor
+
+// ---------------------------------------------------
+/*!
+ * \brief SchematicDoc::aligning align selected elements.
+ * \param Mode: top, bottom, left, right, center vertical, center horizontal
+ * \return True if aligned
+ */
+bool SchematicDoc::aligning(int Mode)
+{
+    int x1, y1, x2, y2;
+    int bx1, by1, bx2, by2, *bx=0, *by=0, *ax=0, *ay=0;
+    QList<Element *> ElementCache;
+    int count = copyElements(x1, y1, x2, y2, &ElementCache);
+    if(count < 1) return false;
+
+
+    ax = ay = &x2;  // = 0
+    switch(Mode) {
+    case 0:  // align top
+        bx = &x1;
+        by = &by1;
+        y2 = 1;
+        break;
+    case 1:  // align bottom
+        bx = &x1;
+        y1 = y2;
+        by = &by2;
+        y2 = 1;
+        break;
+    case 2:  // align left
+        by = &y1;
+        bx = &bx1;
+        y2 = 1;
+        break;
+    case 3:  // align right
+        by = &y1;
+        x1 = x2;
+        bx = &bx2;
+        y2 = 1;
+        break;
+    case 4:  // center horizontally
+        x1 = (x2+x1) / 2;
+        by = &x2;  // = 0
+        ax = &bx1;
+        bx = &bx2;
+        y1 = 0;
+        y2 = 2;
+        break;
+    case 5:  // center vertically
+        y1 = (y2+y1) / 2;
+        bx = &x2;  // = 0
+        ay = &by1;
+        by = &by2;
+        x1 = 0;
+        y2 = 2;
+        break;
+    }
+    x2 = 0;
+
+    Wire      *pw;
+    Component *pc;
+    Element   *pe;
+    // re-insert elements
+    // Go backwards in order to insert node labels before its component.
+    QListIterator<Element *> elementCacheIter(ElementCache);
+    elementCacheIter.toBack();
+    while (elementCacheIter.hasPrevious()) {
+        pe = elementCacheIter.previous();
+	auto W=dynamic_cast<WireLabel*>(pe);
+
+        switch(pe->Type) {
+        case isComponent:
+        case isAnalogComponent:
+        case isDigitalComponent:
+            pc = (Component*)pe;
+            pc->Bounding(bx1, by1, bx2, by2);
+            pc->setCenter(x1-((*bx)+(*ax))/y2, y1-((*by)+(*ay))/y2, true);
+            insertRawComponent(pc);
+            break;
+
+        case isWire:
+            pw = (Wire*)pe;
+            bx1 = pw->x1_();
+            by1 = pw->y1_();
+            bx2 = pw->x2_();
+            by2 = pw->y2_();
+            pw->setCenter(x1-((*bx)+(*ax))/y2, y1-((*by)+(*ay))/y2, true);
+//        if(pw->Label) {  }
+            insertWire(pw);
+            break;
+
+        case isDiagram:
+            // Should the axis label be counted for ? I guess everyone
+            // has a different opinion.
+//        ((Diagram*)pe)->Bounding(bx1, by1, bx2, by2);
+
+            // Take size without axis label.
+            bx1 = ((Diagram*)pe)->cx();
+            by2 = ((Diagram*)pe)->cy();
+            bx2 = bx1 + ((Diagram*)pe)->x2_();
+            by1 = by2 - ((Diagram*)pe)->y2_();
+            ((Diagram*)pe)->setCenter(x1-((*bx)+(*ax))/y2, y1-((*by)+(*ay))/y2, true);
+            break;
+
+        case isPainting:
+            ((Painting*)pe)->Bounding(bx1, by1, bx2, by2);
+            ((Painting*)pe)->setCenter(x1-((*bx)+(*ax))/y2, y1-((*by)+(*ay))/y2, true);
+            break;
+
+        case isNodeLabel:
+            if(((Element*)(((WireLabel*)pe)->pOwner))->Type & isComponent)
+            {
+                pc = (Component*)(((WireLabel*)pe)->pOwner);
+                pc->Bounding(bx1, by1, bx2, by2);
+            }
+            else
+            {
+                pw = (Wire*)(((WireLabel*)pe)->pOwner);
+                bx1 = pw->x1_();
+                by1 = pw->y1_();
+                bx2 = pw->x2_();
+                by2 = pw->y2_();
+            }
+	    assert(W);
+            W->cx__() += x1-((*bx)+(*ax))/y2;
+            W->cx__() += y1-((*by)+(*ay))/y2;
+            insertNodeLabel(W);
+            break;
+
+        default:
+            ;
+        }
+    }
+
+    ElementCache.clear();
+    if(count < 2) return false;
+
+    setChanged(true, true);
+    return true;
+}

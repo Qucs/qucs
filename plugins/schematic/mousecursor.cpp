@@ -151,3 +151,4 @@ void MouseCursor::paint(QPainter *painter, const QStyleOptionGraphicsItem *item,
       break;
     }
 }
+
