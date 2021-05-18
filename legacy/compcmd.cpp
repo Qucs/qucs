@@ -41,7 +41,7 @@ class CompCommand : public Command{
 			sym = dynamic_cast<SubcktBase*>(sc);
 			assert(sym);
 			sym->set_label("main");
-			s->pushBack(sym);
+			s->push_back(sym);
 			//sym->setOwner(..);
 		}
 

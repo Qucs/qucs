@@ -534,7 +534,7 @@ void SchematicScene::connectPorts(Symbol* c)
 { untested();
 	assert(c->owner());
 
-	for(unsigned i=0; c->portExists(i); ++i){
+	for(index_t i=0; c->port_exists(i); ++i){ untested();
 //		assert(portValue()==""); // ?
 		try{
 			pos_t p = c->nodePosition(i);

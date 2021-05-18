@@ -88,9 +88,9 @@ std::string Symbol::param_value_by_name(std::string const& n) const
 /*--------------------------------------------------------------------------*/
 rect_t Symbol::bounding_rect() const
 { untested();
-//	if(auto p=dynamic_cast<CommonSymbol const*>(common())){
+//	if(auto p=dynamic_cast<CommonSymbol const*>(common())){ untested();
 //	   return p->bouning_rect();
-//	}else{
+//	}else{ untested();
 		return rect_t();
 //	}
 }
@@ -99,15 +99,19 @@ void Symbol::paint(ViewPainter* p) const
 {itested();
 
 	 // does not make a lot of sense right now
-	for(unsigned i=0; i<numPorts(); ++i){itested();
+	for(index_t i=0; i<numPorts(); ++i){itested();
 //		auto pp = common()->portPosition(i);
-		auto pp = portPosition(i);
+		pos_t pp(0, 0);
+		try{ untested();
+		  	pp = portPosition(i);
+		}catch(qucs::Exception const&){ untested();
+			continue;
+		}
 		int x = getX(pp);
 		int y = getY(pp);
 
-		if(!port(i).isConnected()){itested();
-			trace4("BUG port not connected", short_label(), i, getX(nodePosition(i)), getY(nodePosition(i)));
-			unreachable();
+		if(!port(i).isConnected()){untested();
+			trace4("possible internal port", short_label(), i, getX(nodePosition(i)), getY(nodePosition(i)));
 			p->setPen(QPen(Qt::green,2));
 			p->drawEllipse(x-1, y-1, 2, 2);
 		}else if(port(i)->numPorts()==0){ untested();
@@ -136,12 +140,22 @@ void Symbol::paint(ViewPainter* p) const
 	}
 }
 /*--------------------------------------------------------------------------*/
+#if 0 // something like this...
+pos_t Symbol::port_position(index_t i) const
+{ untested();
+	n = port_name(n);
+	auto f=subckt()->find_(n);
+	return f->position();
+}
+#endif
+/*--------------------------------------------------------------------------*/
 // global/external position
-pos_t Symbol::nodePosition(unsigned i) const
+pos_t Symbol::nodePosition(index_t i) const
 {
+	trace2("Symbol::nodePosition", i, short_label());
 	pos_t pp = portPosition(i);
 
-	if(legacyTransformHack()){
+	if(legacyTransformHack()){ untested();
 		// ports use external coordinates...
 	}else{
 		rotate_after_mirror a(_angle, (1-_hflip)/2, (1-_vflip)/2);
@@ -216,7 +230,7 @@ std::string Symbol::param_name(index_t i) const
 }
 /*--------------------------------------------------------------------------*/
 void Symbol::set_param_by_index(index_t n, std::string const& v)
-{
+{ untested();
 	switch(Symbol::param_count()- n -1){
 	case 0: // xpos?
 		untested();
@@ -245,11 +259,11 @@ void Symbol::set_param_by_index(index_t n, std::string const& v)
 		_vflip = atoi(v.c_str()); // TODO: parameters.
 	}else if(n==3){ untested();
 		_hflip = atoi(v.c_str()); // TODO: parameters.
-	}else if(n<Symbol::param_count()){
+	}else if(n<Symbol::param_count()){ untested();
 		trace3("fail", n, v, Symbol::param_count());
 		assert(false);
 		unreachable();
-	}else{
+	}else{ untested();
 		return Component::set_param_by_index(n, v);
 	}
 }
@@ -263,7 +277,7 @@ void Symbol::set_param_by_name(std::string const& name, std::string const& v)
 	}else if(name == "$angle"){
 		trace1("angle", v);
 		_angle = atoi(v.c_str());
-	}else if(name == "$param_display"){
+	}else if(name == "$param_display"){ untested();
 		_param_display = atoi(v.c_str());
 	}else if(name == "$hflip"){
 		_hflip = atoi(v.c_str());
@@ -277,14 +291,14 @@ void Symbol::set_param_by_name(std::string const& name, std::string const& v)
 }
 /*--------------------------------------------------------------------------*/
 // void Symbol::setParameter(QString const& name, QString const& b)
-// {
+// { untested();
 // 	std::string n = name.toStdString();
 // 	std::string v = b.toStdString();
 // 	setParameter(n, v);
 // }
 // /*--------------------------------------------------------------------------*/
 // void Symbol::setParameter(unsigned pos, QString const& b)
-// {
+// { untested();
 // 	auto v = b.toStdString();
 // 	setParameter(pos, v);
 // }
@@ -378,7 +392,7 @@ void CommonComponent::detach_common(CommonComponent** from)
 /*--------------------------------------------------------------------------*/
 /*--------------------------------------------------------------------------*/
 ElementList const* Symbol::symbolPaintings() const
-{
+{ untested();
 	unreachable(); // obsolete
 	return nullptr;
 }

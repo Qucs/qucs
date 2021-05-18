@@ -104,8 +104,12 @@ public:
 public:
 	void prepare(Symbol const* s) {
 		assert(s);
-		for(unsigned i=0; i<s->numPorts(); ++i){
-			do_place(s->nodePosition(i));
+		for(index_t i=0; i<s->numPorts(); ++i){
+			try{
+				do_place(s->nodePosition(i));
+			}catch(ExceptionCantFind const&){
+				// not a schematic port
+			}
 		}
 	}
 private:
@@ -148,10 +152,15 @@ void Footprint::collectPlaces(ElementGraphics const* e)
 
 	if(auto s=dynamic_cast<Symbol const*>(element(e))){
 		trace2("Footprint", s->short_label(), s->numPorts());
-		for(unsigned i=0; i<s->numPorts(); ++i){
-			trace2("Footprint", i, s->port_value(i));
+		for(index_t i=0; s->port_exists(i); ++i){
+			trace3("Footprint", s->label(), i, s->port_value(i));
 			// if s->isConnected(i) ...
-			auto pp = s->nodePosition(i);
+			pos_t pp(0,0);
+		  	try{
+				pp = s->nodePosition(i);
+			}catch(ExceptionCantFind const&){
+				continue;
+			}
 			ElementGraphics* pg = scn->find_place(pp);
 			Place const* place = prechecked_cast<Place const*>(element(pg));
 			if(s->port_value(i)=="(null)"){
@@ -161,8 +170,8 @@ void Footprint::collectPlaces(ElementGraphics const* e)
 			}else if(s->port_value(i) == place->port_value(0)){
 				p.insert(pg);
 			}else{
-				assert(false);
-				// not here.
+				trace1("no place", place->port_value(0));
+				// assert(false); // happens in subcirport
 			}
 		}
 	}else{

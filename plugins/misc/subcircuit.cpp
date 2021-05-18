@@ -144,7 +144,7 @@ private:
 	void refreshSymbol(std::string const&);
 
 private: // Symbol
-	bool portExists(index_t) const override;
+	bool port_exists(index_t) const override;
 
 	void set_param_by_name(std::string const& name, std::string const& value) override;
 	void set_param_by_index(index_t i, std::string const& value) override;
@@ -256,7 +256,7 @@ public:
 
 		_param_names[i] = v;
 	}
-	std::string param_name(index_t i) const override{ untested();
+	std::string param_name(index_t i) const override{
 		assert(i<_param_names.size());
 		return _param_names[i];
 	}
@@ -606,7 +606,7 @@ void Sub::init(Component const* proto)
 #endif
 }
 /*--------------------------------------------------------------------------*/
-bool Sub::portExists(index_t i) const
+bool Sub::port_exists(index_t i) const
 {
 	return i<numPorts();
 }

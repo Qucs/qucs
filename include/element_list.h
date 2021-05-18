@@ -115,7 +115,6 @@ public: // container
 	ElementList& insert(ElementList::iterator i, Element* c) { untested();
 		_cl.insert(i, c);  return *this;
 	}
-	void pushBack(Element* what);
 	void erase(Element* what);
 	bool is_empty() const { return !_cl.size(); }
 	size_t size() const{ return _cl.size(); }

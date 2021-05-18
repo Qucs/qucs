@@ -163,7 +163,7 @@ static Dispatcher<DocumentFormat>::INSTALL p(&language_dispatcher, "qucsator", &
 /* -------------------------------------------------------------------------------- */
 static void print_ports(ostream_t& o, const qucs::Component* x)
 {
-	for(index_t i=0; x->portExists(i); ++i){
+	for(index_t i=0; x->port_exists(i); ++i){
 		std::string N = netLabel(x, i);
 		o << " " << N;
 	}

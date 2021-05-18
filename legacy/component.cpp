@@ -411,7 +411,7 @@ void Component::paint(ViewPainter *p) const
 ///  }
   // write all properties
 #if 0
-  for(Property *p4 = Props.first(); p4 != 0; p4 = Props.next()){
+  for(Property *p4 = Props.first(); p4 != 0; p4 = Props.next()){ untested();
     if(p4->display) {itested();
       p->drawText(x, y, 0, 0, Qt::TextDontClip, p4->Name+"="+p4->Value);
       y += p->LineSpacing;
@@ -420,17 +420,17 @@ void Component::paint(ViewPainter *p) const
 #endif
 
   // not here.
-  if(isActive == COMP_IS_OPEN){
+  if(isActive == COMP_IS_OPEN){ untested();
     p->setPen(QPen(Qt::red,0));
-  }else if(isActive & COMP_IS_SHORTEN){
+  }else if(isActive & COMP_IS_SHORTEN){ untested();
     p->setPen(QPen(Qt::darkGreen,0));
-  }else{
+  }else{ untested();
   }
   if(isActive != COMP_IS_ACTIVE) { untested();
     p->drawRect(cx+x1, cy+y1, x2-x1+1, y2-y1+1);
     p->drawLine(cx+x1, cy+y1, cx+x2, cy+y2);
     p->drawLine(cx+x1, cy+y2, cx+x2, cy+y1);
-  }else{
+  }else{ untested();
   }
 
   Symbol::paint(p);
@@ -458,7 +458,7 @@ void Component::rotate()
   int tmp, dx, dy;
 
   // rotate all lines
-  foreach(Line *p1, Lines) {
+  foreach(Line *p1, Lines) { untested();
     tmp = -p1->x1;
     p1->x1 = p1->y1;
     p1->y1 = tmp;
@@ -468,14 +468,14 @@ void Component::rotate()
   }
 
   // rotate all ports
-  for(ComponentPort* p2 : Ports) {
+  for(ComponentPort* p2 : Ports) { untested();
     // p2->rotate();
     tmp = -p2->x_();
     p2->setPosition(p2->y_(), tmp);
   }
 
   // rotate all arcs
-  foreach(Arc *p3, Arcs) {
+  foreach(Arc *p3, Arcs) { untested();
     tmp = -p3->x;
     p3->x = p3->y;
     p3->y = tmp - p3->w;
@@ -529,12 +529,12 @@ void Component::rotate()
   FontMetrics metrics;
 
   dx = dy = 0;
-  if(showName) {
+  if(showName) { untested();
     dx = metrics.width(Name);
     dy = metrics.lineSpacing();
   }
   for(Property *pp = Props.first(); pp != 0; pp = Props.next())
-    if(pp->display) {
+    if(pp->display) { untested();
       // get width of text
       tmp = metrics.width(pp->Name+"="+pp->Value);
       if(tmp > dx) dx = tmp;
@@ -552,9 +552,9 @@ void Component::set_param_by_index(index_t pos, std::string const& v)
   int i = Component::param_count() - pos - 1;
 
   trace2("Component::setParameter", pos, v);
-  if(pos==Symbol::param_count()){
+  if(pos==Symbol::param_count()){ untested();
     // tx
-  }else if(pos < Symbol::param_count()+num_component_params){
+  }else if(pos < Symbol::param_count()+num_component_params){ untested();
     // ty
   }else if(pos<Symbol::param_count()){ untested();
     Symbol::set_param_by_index(pos, v);
@@ -573,20 +573,20 @@ void Component::set_param_by_index(index_t pos, std::string const& v)
 // -------------------------------------------------------
 void Component::set_param_by_name(std::string const& name, std::string const& v)
 {
-  if(name=="$angle" && legacyTransformHack()){
+  if(name=="$angle" && legacyTransformHack()){ untested();
     int r = atoi(v.c_str());
     trace3("Component::setParameter", name, v, label());
     assert(!(r % 90)); // for now.
     r /= 90;
     r %= 4;
     set_rotated(r);
-  }else if(name=="$vflip" && legacyTransformHack()){
+  }else if(name=="$vflip" && legacyTransformHack()){ untested();
     int r = atoi(v.c_str());
     assert(r==1 || r==-1);
     r -= 1;
     r /= -2;
     set_mirror_yaxis(r);
-  }else if(name=="$hflip" && legacyTransformHack()){
+  }else if(name=="$hflip" && legacyTransformHack()){ untested();
     int r = atoi(v.c_str());
     assert(r==1 || r==-1);
     r -= 1;
@@ -635,7 +635,7 @@ static int paramDisplay(P const& p, int offset)
   int s = 1; //  << offset;
 
   for(auto i : p){
-    if(!i){
+    if(!i){ untested();
     }else if(i->display){
       trace2("display", i->Name, i->Value);
       ret += s;
@@ -651,7 +651,7 @@ static int paramDisplay(P const& p, int offset)
 // -------------------------------------------------------
 std::string Component::param_value_by_name(std::string const& name) const
 {
-  if(name=="$angle" && legacyTransformHack()){
+  if(name=="$angle" && legacyTransformHack()){ untested();
     trace1("Component::paramValue", _rotated);
     return std::to_string(_rotated*90);
   }else if(name=="$tx"){
@@ -662,12 +662,12 @@ std::string Component::param_value_by_name(std::string const& name) const
     return std::to_string(center().first);
   }else if(name=="$yposition"){
     return std::to_string(center().second);
-  }else if(name=="$vflip" && legacyTransformHack()){
+  }else if(name=="$vflip" && legacyTransformHack()){ untested();
     // 0 |-> 1
     // 1 |-> -1
     int m = 1 - mirroredX * 2;
     return std::to_string(m);
-  }else if(name=="$hflip" && legacyTransformHack()){
+  }else if(name=="$hflip" && legacyTransformHack()){ untested();
     int m = 1 - mirroredY * 2;
     return std::to_string(m);
   }else if(name=="$param_display"){
@@ -685,9 +685,9 @@ void Component::set_rotated(unsigned r)
   if(!legacyTransformHack()){
     _rotated = 4;
     return;
-  }else{
+  }else{ untested();
     assert(r<4);
-    while(r != unsigned(_rotated)){
+    while(r != unsigned(_rotated)){ untested();
       rotate();
 
       // keep track of what's done
@@ -700,17 +700,17 @@ void Component::set_rotated(unsigned r)
 
 // -------------------------------------------------------
 void Component::set_mirror_yaxis(unsigned x)
-{
-  if(!legacyTransformHack()){
+{ untested();
+  if(!legacyTransformHack()){ untested();
     mirroredX = x;
     assert(false);
     // _vflip = 1 - mirroredX * 2;
     return;
-  }else{
+  }else{ untested();
     auto rot_bak = rotated();
-    if(x != mirroredX){
+    if(x != mirroredX){ untested();
       mirrorX(); // sic.
-    }else{
+    }else{ untested();
       assert(x==0);
     }
 
@@ -719,17 +719,17 @@ void Component::set_mirror_yaxis(unsigned x)
 }
 // -------------------------------------------------------
 void Component::set_mirror_xaxis(unsigned x)
-{
-  if(!legacyTransformHack()){
+{ untested();
+  if(!legacyTransformHack()){ untested();
     mirroredY = x;
     assert(false);
     // _hflip = 1 - mirroredY * 2;
     return;
-  }else{
+  }else{ untested();
     auto rot_bak = rotated();
-    if(x != mirroredX){
+    if(x != mirroredX){ untested();
       mirrorY(); // sic.
-    }else{
+    }else{ untested();
       assert(x==0);
     }
 
@@ -740,24 +740,24 @@ void Component::set_mirror_xaxis(unsigned x)
 // Mirrors the component about the x-axis.
 // BUG? mirrors the Y axis.
 void Component::mirrorX()
-{
+{ untested();
   // Port count only available after recreate, createSymbol
   if ((Model != "Sub") && (Model !="VHDL") && (Model != "Verilog")) // skip port count
     if(Ports.count() < 1) return;  // do not rotate components without ports
 
   // mirror all lines
-  foreach(Line *p1, Lines) {
+  foreach(Line *p1, Lines) { untested();
     p1->y1 = -p1->y1;
     p1->y2 = -p1->y2;
   }
 
   // mirror all ports
-  foreach(ComponentPort *p2, Ports){
+  foreach(ComponentPort *p2, Ports){ untested();
     p2->setPosition(p2->x_(), -p2->y_());
   }
 
   // mirror all arcs
-  foreach(Arc *p3, Arcs) {
+  foreach(Arc *p3, Arcs) { untested();
     p3->y = -p3->y - p3->h;
     if(p3->angle > 16*180) p3->angle -= 16*360;
     p3->angle  = -p3->angle;    // mirror
@@ -810,25 +810,25 @@ void Component::mirrorX()
 // -------------------------------------------------------
 // Mirrors the component x axis
 void Component::mirrorY()
-{
+{ untested();
   // Port count only available after recreate, createSymbol
   // BUG.
   if ((Model != "Sub") && (Model !="VHDL") && (Model != "Verilog")) // skip port count
     if(Ports.count() < 1) return;  // do not rotate components without ports
 
   // mirror all lines
-  foreach(Line *p1, Lines) {
+  foreach(Line *p1, Lines) { untested();
     p1->x1 = -p1->x1;
     p1->x2 = -p1->x2;
   }
 
   // mirror all ports
-  foreach(ComponentPort *p2, Ports){
+  foreach(ComponentPort *p2, Ports){ untested();
     p2->setPosition(-p2->x_(), p2->y_());
   }
 
   // mirror all arcs
-  foreach(Arc *p3, Arcs) {
+  foreach(Arc *p3, Arcs) { untested();
     p3->x = -p3->x - p3->w;
     p3->angle = 16*180 - p3->angle - p3->arclen;  // mirror
     if(p3->angle < 0) p3->angle += 16*360;   // angle has to be > 0
@@ -863,7 +863,7 @@ void Component::mirrorY()
   if(showName)
     dx = metrics.width(Name);
   for(Property *pp = Props.first(); pp != 0; pp = Props.next())
-    if(pp->display) {
+    if(pp->display) { untested();
       // get width of text
       tmp = metrics.width(pp->Name+"="+pp->Value);
       if(tmp > dx)  dx = tmp;
@@ -1015,7 +1015,7 @@ int Component::analyseLine(const QString& Row, int numProps)
     if(i2 < y1)  y1 = i2;
     if(i2 > y2)  y2 = i2;
     return 0;   // do not count Ports
-  }else if(s == "Line") {
+  }else if(s == "Line") { untested();
     if(!getIntegers(Row, &i1, &i2, &i3, &i4))  return -1;
     if(!getPen(Row, Pen, 5))  return -1;
     i3 += i1;
@@ -1042,7 +1042,7 @@ int Component::analyseLine(const QString& Row, int numProps)
     if(i2 < y1)  y1 = i2;
     if(i2+i4 > y2)  y2 = i2+i4;
     return 1;
-  }else if(s == ".ID") {
+  }else if(s == ".ID") { untested();
     if(!getIntegers(Row, &i1, &i2))  return -1;
     tx = i1;
     ty = i2;
@@ -1051,7 +1051,7 @@ int Component::analyseLine(const QString& Row, int numProps)
 
     i1 = 1;
     Property *pp = Props.at(numProps-1);
-    for(;;) {
+    for(;;) { untested();
       s = Row.section('"', i1,i1);
       if(s.isEmpty())  break;
 
@@ -1179,7 +1179,7 @@ int Component::analyseLine(const QString& Row, int numProps)
     if(i3 > x2)  x2 = i3;
     if(i4 > y2)  y2 = i4;
     return 1;
-  }else{
+  }else{ untested();
   }
 
   return 0;
@@ -1188,7 +1188,7 @@ int Component::analyseLine(const QString& Row, int numProps)
 // ---------------------------------------------------------------------
 bool Component::getIntegers(const QString& s, int *i1, int *i2, int *i3,
 			     int *i4, int *i5, int *i6)
-{
+{ untested();
   bool ok;
   QString n;
 
@@ -1207,7 +1207,7 @@ bool Component::getIntegers(const QString& s, int *i1, int *i2, int *i3,
   *i3 = n.toInt(&ok);
   if(!ok) return false;
 
-  if(i4) {
+  if(i4) { untested();
     n  = s.section(' ',4,4);
     *i4 = n.toInt(&ok);
     if(!ok) return false;
@@ -1228,7 +1228,7 @@ bool Component::getIntegers(const QString& s, int *i1, int *i2, int *i3,
 
 // ---------------------------------------------------------------------
 bool Component::getPen(const QString& s, QPen& Pen, int i)
-{
+{ untested();
   bool ok;
   QString n;
 
@@ -1292,7 +1292,7 @@ Property * Component::getProperty(const QString& name)
 // ********                                                       ********
 // ***********************************************************************
 void MultiViewComponent::recreate()
-{
+{ untested();
   incomplete();
   Ellips.clear();
   Texts.clear();
@@ -1315,13 +1315,13 @@ void MultiViewComponent::recreate()
 
   if (mirroredX && rrot==2){ // mirrorX and rotate 180 = mirrorY
     mirrorY();
-  } else  {
-    if(mmir){
+  } else  { untested();
+    if(mmir){ untested();
       mirrorX();
     }
-    if (rrot){
+    if (rrot){ untested();
       set_rotated( rrot%4 );
-    }else{
+    }else{ untested();
     }
   }
 
@@ -1523,7 +1523,7 @@ void Component::dialgButtStuff(ComponentDialog&)const
 
 /*--------------------------------------------------------------------------*/
 rect_t Component::bounding_rect() const
-{
+{ untested();
   return rect_t(x1, y1, x2-x1, y2-y1);
 }
 /*--------------------------------------------------------------------------*/
@@ -1563,13 +1563,13 @@ std::string Component::param_value(index_t i) const
     assert(i>=s + num_component_params);
     int j = Component::param_count() - 1 - i;
 
-    if(j >= Props.size()){
+    if(j >= Props.size()){ untested();
       return "toobig";
     }else if(Props.at(j)){
       auto ret = Props.at(j)->value().toStdString();
       trace3("Component::param_value Props", short_label(), j, ret);
       return ret;
-    }else{
+    }else{ untested();
       return "null";
     }
   }
@@ -1590,7 +1590,7 @@ std::string Component::param_name(index_t i) const
 //    trace4("Component::param_name Props", param_count(), short_label(), i, s);
     if( k<Props.size()){
       return Props.at(k)->name().toStdString();
-    }else{
+    }else{ untested();
       unreachable();
       return "unreachable";
     }

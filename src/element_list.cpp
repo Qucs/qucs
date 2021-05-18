@@ -126,6 +126,7 @@ ElementList& ElementList::erase(const_iterator what)
 }
 /*--------------------------------------------------------------------------*/
 // BUG: connect and push_back in one go. don't use.
+#if 0
 void ElementList::pushBack(Element* what)
 {
 	incomplete();
@@ -146,6 +147,7 @@ void ElementList::pushBack(Element* what)
 		incomplete();
 	}
 }
+#endif
 /*--------------------------------------------------------------------------*/
 // QFileInfo const& ElementList::getFileInfo ()const
 // {
@@ -211,8 +213,8 @@ void ElementList::disconnect(Symbol* c)
 	trace1("disconnect", c->label());
 	incomplete();
 	// drop port connections
-	for(unsigned i=0; i<c->numPorts(); ++i) {
-		trace3("sm:ds", i, c->label(), c->portPosition(i));
+	for(index_t i=0; i<c->numPorts(); ++i) {
+		// trace3("sm:ds", i, c->label(), c->portPosition(i));
 		c->set_port_by_index(i, "");
 
 		// find and cleanup associated places here?
@@ -269,13 +271,18 @@ void ElementList::connect(Symbol* sym)
 	}
 #endif
 
-	for(unsigned i=0; i<sym->numPorts(); ++i){
+	for(index_t i=0; i<sym->numPorts(); ++i){
 		incomplete(); // free?
-		pos_t p = sym->nodePosition(i);
-		auto q = place_at(p, sym);
-		
-		std::string const& l = q->label();
-		sym->set_port_by_index(i, l);
+
+		try{
+			pos_t p = sym->nodePosition(i);
+			auto q = place_at(p, sym);
+			
+			std::string const& l = q->label();
+			sym->set_port_by_index(i, l);
+		}catch(ExceptionCantFind const&){ untested();
+			/// non-schematic node?
+		}
 	}
 }
 #endif

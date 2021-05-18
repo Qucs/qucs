@@ -120,7 +120,7 @@ private:
 	void build_sckt(istream_t& cs, SubcktBase* proto) const;
 
 private: // Symbol
-	bool portExists(index_t) const override;
+	bool port_exists(index_t) const override;
 	std::string const portName(index_t) const override;
 
 	void set_param_by_name(std::string const& name, std::string const& value) override;
@@ -617,7 +617,7 @@ void Verilog::init(Component const* proto)
 	trace5("Verilog::init", dev_type(), label(), numPorts(), param_count(), _param_names.size());
 }
 /*--------------------------------------------------------------------------*/
-bool Verilog::portExists(index_t i) const
+bool Verilog::port_exists(index_t i) const
 {
 	return i<numPorts();
 }

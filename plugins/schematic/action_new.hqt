@@ -302,6 +302,7 @@ QUndoCommand* MouseActionNewElement::rotate(QEvent*)
 	}else if(dynamic_cast<Symbol*>(element(_gfx))){ untested();
 		// always do this?
 		_gfx->transform(ninety_degree_transform);
+		_gfx->update(); // does not work
 	}else{ untested();
 		unreachable();
 	}

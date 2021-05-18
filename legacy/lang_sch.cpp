@@ -928,12 +928,17 @@ Symbol* LegacySchematicLanguage::parseSymbol(istream_t& cs, Symbol* sym) const
 	assert(Scope);
 	trace2("lang_sch connect ports", sym->label(), sym->numPorts());
 	for(index_t i=0; i<sym->numPorts(); ++i){
-		pos_t p = sym->nodePosition(i);
-		auto q = place_at(p, sym);
-		
-		std::string const& l = q->label();
-		sym->set_port_by_index(i, l);
-		trace4("portplace", sym->label(), i, p, l);
+		pos_t p(0, 0);
+	  	try{
+			p = sym->nodePosition(i);
+			auto q = place_at(p, sym);
+
+			std::string const& l = q->label();
+			sym->set_port_by_index(i, l);
+			trace4("portplace", sym->label(), i, p, l);
+		}catch(ExceptionCantFind const&){
+			//
+		}
 	}
 
 	return sym;
@@ -1476,7 +1481,7 @@ class DiagramCommand : public Command{
 			assert(sym);
 			sym->set_label("main");
 			//sym->set_owner(..);
-			s->pushBack(sym);
+			s->push_back(sym);
 			assert(s);
 		}
 
@@ -1522,7 +1527,8 @@ class WireCommand : public Command{
 			assert(sym);
 			sym->set_label("main");
 			//sym->set_owner(..);
-			s->pushBack(sym);
+			s->push_back(sym);
+
 			assert(s);
 		}
 

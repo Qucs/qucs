@@ -42,7 +42,14 @@ public:
 
 private: // Symbol
   void set_port_by_index(index_t, std::string const&) override;
-//  unsigned numPorts() const override{
+  pos_t portPosition(index_t i) const override{
+	  if(i){
+		  return pos_t(0, 0);
+	  }else{
+		  throw qucs::ExceptionCantFind("only one schematic port in Port");
+	  }
+  }
+//  unsigned numPorts() const override{ untested();
 //	  return 1;
 //  }
 
@@ -100,20 +107,20 @@ void SubCirPort::set_port_by_index(index_t i, std::string const& value)
 {
 	trace3("port::spbi1", label(), i, value);
 
-   if(value==""){
+   if(value==""){ untested();
 		incomplete();
 	}else{
 	}
 	
 	if(i){
 		incomplete(); // ?
-	}else{
+	}else{ untested();
 	}
 
 	bool ok=true;
 	QString pp;
 #if 0
-	try{
+	try{ untested();
 		// don't know why this is a parameter and not a local variable
 		// (does it make any sense?)
 		pp = QString::fromStdString(param_value(6));
@@ -122,7 +129,7 @@ void SubCirPort::set_port_by_index(index_t i, std::string const& value)
 	}
 
 	int pos;
-	if(ok){
+	if(ok){ untested();
 		pos = pp.toInt(&ok);
 	}else{ untested();
 	}
@@ -139,14 +146,14 @@ void SubCirPort::set_port_by_index(index_t i, std::string const& value)
 	assert(scope()->nodes());
 	auto& nm = *scope()->nodes();
 
-   if(value == ""){
+   if(value == ""){ untested();
 		Node* n = port(0).value();
 		Node* m = port(1).value();
-		if( n && m){
+		if( n && m){ untested();
 			nm.removeEdge(m, n);
 			Symbol::set_port_by_index(0, "");
 			Symbol::set_port_by_index(1, "");
-		}else{
+		}else{ untested();
 			unreachable();
 		}
 	}else if(so){
@@ -155,9 +162,9 @@ void SubCirPort::set_port_by_index(index_t i, std::string const& value)
 		trace3("port::spbi2", pos, label(), value);
 		so->set_port_by_index(pos, label());
 
+		// other way round?
 		Symbol::set_port_by_index(0, label());
 		Symbol::set_port_by_index(1, value);
-
 
 		Node* n = port(0).value();
 		Node* m = port(1).value();
@@ -249,11 +256,11 @@ void SubCirPort::set_param_by_index(index_t i, std::string const& vv)
 		trace2("SubCirPort::set_param_by_index portno", pos, Props.at(0)->value());
 
 		--pos; // QUCS numbers start at 1.
-		if(!ok){
+		if(!ok){ untested();
 			incomplete();
 			throw qucs::Exception("can't parse " + vv);
 			// throw approriate error
-		}else if(portExists(pos)){
+		}else if(port_exists(pos)){
 			// possibly missing more error handling
 			assert(scope());
 			assert(owner());
@@ -268,7 +275,7 @@ void SubCirPort::set_param_by_index(index_t i, std::string const& vv)
 	}else if(n==0){
 		trace1("SubCirPort::set_param_by_index type", vv);
 		_some_type = vv;
-	}else{
+	}else{ untested();
 //		Component::set_param_by_index(i, vv); // noop?
 	}
 }

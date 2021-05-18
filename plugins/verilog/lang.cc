@@ -422,7 +422,7 @@ void Verilog::print_ports_short(ostream_t& o, Component const* x) const
   }
   auto n = s->nodes();
   assert(n);
-  for (int ii = 0;  x->portExists(ii);  ++ii) {
+  for (int ii = 0;  x->port_exists(ii);  ++ii) {
 	  std::string p = x->port_value(ii);
 
 	 if(1){

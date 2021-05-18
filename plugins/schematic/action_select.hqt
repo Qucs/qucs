@@ -70,7 +70,7 @@ static void selectWireLine(ElementGraphics *g)
 	auto scn = g->scene();
 	assert(scn);
 	
-	for(unsigned i=0; i<s->numPorts(); ++i){
+	for(index_t i=0; i<s->numPorts(); ++i){ untested();
 		auto pos = makeQPointF(s->nodePosition(i));
 		auto items = scn->items(pos);
 		if(items.size()==2){

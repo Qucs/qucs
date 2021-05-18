@@ -608,11 +608,11 @@ QRectF ElementGraphics::boundingRect() const
 }
 /*--------------------------------------------------------------------------*/
 QRectF ElementGraphics::absoluteBoundingRect() const
-{itested();
+{untested();
 #ifdef DO_TRACE
 	if(auto sym=dynamic_cast<Symbol const*>(_e)){itested();
 		for(unsigned i=0; i<sym->numPorts(); ++i){itested();
-			trace4("abr", pos(), sym->label(), i, sym->nodePosition(i));
+//			trace4("abr", pos(), sym->label(), i, sym->nodePosition(i));
 		}
 	}
 #endif
@@ -672,9 +672,13 @@ void ElementGraphics::restore_ports()
 {itested();
 	auto s = dynamic_cast<Symbol*>(_e);
 	assert(s);
-	for(unsigned i=0; i<s->numPorts(); ++i) {itested();
+	for(index_t i=0; i<s->numPorts(); ++i) {itested();
 		assert(i < _port_values.size());
-		s->set_port_by_index(i, _port_values[i]);
+		try{ untested();
+			s->set_port_by_index(i, _port_values[i]);
+		}catch(qucs::ExceptionCantFind const&){ untested();
+			trace2("skip port", s->short_label(), _port_values[i]);
+		}
 	}
 }
 /*--------------------------------------------------------------------------*/
@@ -685,16 +689,21 @@ void ElementGraphics::init_ports()
 	assert(s);
 	auto scn = scene();
 	assert(scn);
-	for(unsigned i=0; i<s->numPorts(); ++i){itested();
-		auto pp = s->nodePosition(i);
-		ElementGraphics* pg = scn->find_place(pp);
-		Place const* place = prechecked_cast<Place const*>(element(pg));
-		assert(place);
+	for(index_t i=0; i<s->numPorts(); ++i){itested();
 
-		std::string pv = place->port_value(0);
-		trace4("init_ports", s->label(), i, s->port_value(i), pv);
+		try{ untested();
+			auto pp = s->nodePosition(i);
+			ElementGraphics* pg = scn->find_place(pp);
+			Place const* place = prechecked_cast<Place const*>(element(pg));
+			assert(place);
 
-		s->set_port_by_index(i, pv);
+			std::string pv = place->port_value(0);
+			trace4("init_ports", s->label(), i, s->port_value(i), pv);
+
+			s->set_port_by_index(i, pv);
+		}catch(qucs::ExceptionCantFind const&){ untested();
+			// not a schematic port.
+		}
 	}
 }
 /*--------------------------------------------------------------------------*/
@@ -751,10 +760,10 @@ void ElementGraphics::show()
 
 #ifdef DO_TRACE
 	if(auto sym=dynamic_cast<Symbol const*>(_e)){itested();
-		if(sym->numPorts() == 1){itested();
+		if(sym->numPorts() == 1){untested();
 			trace2("show", sym->label(), sym->nodePosition(0));
-		}else if(sym->numPorts() == 2){itested();
-			trace3("show", sym->label(), sym->nodePosition(0), sym->nodePosition(1));
+		}else if(sym->numPorts() == 2){untested();
+		//	trace3("show", sym->label(), sym->nodePosition(0), sym->nodePosition(1));
 		}else{itested();
 		}
 	}
@@ -799,10 +808,10 @@ void ElementGraphics::hide()
 
 #ifdef DO_TRACE
 	if(auto sym=dynamic_cast<Symbol const*>(_e)){ itested();
-		if(sym->numPorts() == 1){ itested();
+		if(sym->numPorts() == 1){ untested();
 			trace2("hide", sym->label(), sym->nodePosition(0));
-		}else if(sym->numPorts() == 2){itested();
-			trace3("hide", sym->label(), sym->nodePosition(0), sym->nodePosition(1));
+		}else if(sym->numPorts() == 2){untested();
+			// trace3("hide", sym->label(), sym->nodePosition(0), sym->nodePosition(1));
 		}else{ untested();
 		}
 	}

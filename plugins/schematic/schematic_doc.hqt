@@ -868,7 +868,7 @@ bool SchematicDoc::loadDocument(QString& /*BUG*/ file)
 	_model->prepare();
 	assert(_main->scope() == _model);
 
-	for(auto i : *_model){itested();
+	for(auto i : *_model){untested();
 		trace1("postload addElement", i->label());
 		scene()->addElement(i);
 	}
@@ -973,7 +973,7 @@ void SchematicDoc::parse(istream_t& s, Language const* L)
 	assert(_model);
 
 	try{
-		while(true){itested();
+		while(true){untested();
 			s.read_line();
 			assert(_root->subckt());
 			trace2("SchematicDoc::parse", s.fullstring(), _root->label());
@@ -986,7 +986,11 @@ void SchematicDoc::parse(istream_t& s, Language const* L)
 			L->new__instance(s, nullptr, _root->subckt());
 #endif
 		}
-	}catch(qucs::Exception_End_Of_Input const&){
+	}catch(qucs::Exception_End_Of_Input const&){ untested();
+	}catch(qucs::Exception const&){ untested();
+		incomplete();
+		assert(false);
+		throw;
 	}
 
 #if 0

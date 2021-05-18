@@ -76,8 +76,8 @@ public: // Parameters
 	virtual pos_t portPosition(index_t) const = 0;
 
 public: // Port stuff
-	pos_t nodePosition(unsigned) const;
-	Node const* portNode(unsigned) const;
+	pos_t nodePosition(index_t) const;
+//	Node const* portNode(unsigned) const;
 
 public: // Painting
 	rect_t bounding_rect() const override;

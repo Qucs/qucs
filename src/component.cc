@@ -48,7 +48,7 @@ std::string CommonComponent::param_name(index_t i)const
   case 1:  return "dtemp";
   case 2:  return "temp";
   case 3:  return "m";
-  default:untested(); return "";
+  default: return "";
   }
 }
 /*--------------------------------------------------------------------------*/
