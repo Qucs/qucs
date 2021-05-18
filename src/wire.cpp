@@ -422,7 +422,7 @@ void Wire::paint(ViewPainter *p) const
 	//  int x1 = 0; // Wire::x1();
 	//  int y1 = 0; // Wire::y1();
 
-	{ itested();
+	{itested();
 		p->setPen(QPen(color, 2));
 		p->drawLine(0, 0, abs(_scale), 0);
 		//    p->drawEllipse(x1-2, y1-2, 4, 4);
@@ -604,7 +604,7 @@ void Wire::expand()
 }
 // ----------------------------------------------------------------
 rect_t Wire::bounding_rect() const
-{ itested();
+{itested();
   int N = 5;
   // assert(_scale>0); oops??
   //

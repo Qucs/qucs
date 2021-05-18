@@ -58,7 +58,7 @@ class RectDiagram : public Diagram, public Painting{
 		assert(subckt());
 		assert(c.subckt());
 		assert(c.subckt()->size() == subckt()->size());
-		if(c.subckt()->size()){ untested();
+		if(c.subckt()->size()){itested();
 		}else{
 			auto v = element_dispatcher.clone("rectdiagramvariable");
 			v->set_label("diagramvariable");
@@ -258,14 +258,14 @@ RectDiagram::~RectDiagram()
 /*--------------------------------------------------------------------------*/
 // map graph point to local scene coordinates
 Diagram::diag_coordinate_t RectDiagram::calcCoordinate(double const& x_, double const& y_) const
-{ itested();
+{itested();
 	double x = x_;
 	double y = y_;
 
 	float xret;
 	float yret;
 
-	if(xAxis.log) { itested();
+	if(xAxis.log) {itested();
 		x /= xAxis.low;
 		if(x <= 0.0) {
 			xret = -1e5;   // "negative infinity"
@@ -282,7 +282,7 @@ Diagram::diag_coordinate_t RectDiagram::calcCoordinate(double const& x_, double 
 		//
 		yret = float(log10(y/fabs(yAxis.low)) /
 				log10(yAxis.up/yAxis.low) * double(_height));
-	}else{ itested();
+	}else{itested();
 		//    if(fabs(yi) > 1e-250) {
 		//      // preserve negative values if not complex number
 		//      yr = sqrt(yr*yr + yi*yi);
@@ -293,11 +293,11 @@ Diagram::diag_coordinate_t RectDiagram::calcCoordinate(double const& x_, double 
 
 	if(!std::isfinite(xret)){ untested();
 		xret = 0.0;
-	}else{ itested();
+	}else{itested();
 	}
 	if(!std::isfinite(yret)){ untested();
 		yret = 0.0;
-	}else{ itested();
+	}else{itested();
 	}
 
 	// mirror up, because origin is in lower left corner.
@@ -318,12 +318,12 @@ void RectDiagram::finishMarkerCoordinates(float& fCX, float& fCY) const
 
 // --------------------------------------------------------------
 void RectDiagram::calcLimits()
-{ untested();
+{itested();
   int i;
   double a, b, c;
 
   if(xAxis.autoScale) {// check before, to preserve limit exchange (max < min)
-    if(xAxis.log) { untested();
+    if(xAxis.log) {itested();
       calcAxisLogScale(&xAxis, i, a, b, c, _width);
       xAxis.step = 1.0;
     }else{

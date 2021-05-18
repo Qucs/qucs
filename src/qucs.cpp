@@ -2515,7 +2515,7 @@ bool saveApplSettings()
 
 // not sure what this is.
 QVariant QucsFileSystemModel::data( const QModelIndex& index, int role ) const
-{ itested();
+{itested();
   if (role == Qt::DecorationRole) { // it's an icon
     QString dName = fileName(index);
     if (dName.endsWith("_prj")) {

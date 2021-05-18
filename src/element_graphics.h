@@ -92,7 +92,7 @@ public:
 	Element const& operator*() const{ itested();
 		assert(_e); return *_e;
 	}
-	Element& operator*(){ itested();
+	Element& operator*(){itested();
 		assert(_e); return *_e;
 	}
 	//  QPointF pos() const; // QGraphicsItem

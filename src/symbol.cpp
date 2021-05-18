@@ -99,7 +99,7 @@ void Symbol::paint(ViewPainter* p) const
 {itested();
 
 	 // does not make a lot of sense right now
-	for(unsigned i=0; i<numPorts(); ++i){ itested();
+	for(unsigned i=0; i<numPorts(); ++i){itested();
 //		auto pp = common()->portPosition(i);
 		auto pp = portPosition(i);
 		int x = getX(pp);

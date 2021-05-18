@@ -52,7 +52,7 @@ private: // BUG? a SubcktBase is a Painting...
 	rect_t bounding_rect() const override {
 		assert(subckt());
 		rect_t br; // cache??
-		for(auto p : *subckt()){ itested();
+		for(auto p : *subckt()){itested();
 			assert(p);
 			Element const* e = p;
 			//			trace2("br", e->boundingRect().topLeft(), e->boundingRect().bottomRight());
@@ -67,7 +67,7 @@ private: // BUG? a SubcktBase is a Painting...
 	}
 	void paint(ViewPainter* v) const override{itested();
 		assert(subckt());
-		for(auto e : *subckt()){ itested();
+		for(auto e : *subckt()){itested();
 			incomplete(); // BUG. honour p->legacyTransformhack
 			if(auto p = dynamic_cast<Painting const*>(e)){
 				v->save();

@@ -188,7 +188,7 @@ void SchematicScene::dropEvent(QGraphicsSceneDragDropEvent*)
 }
 
 bool SchematicScene::itemEvent(QEvent* e)
-{ itested();
+{itested();
 	if(!e){ untested();
 		unreachable();
 		return false;
@@ -209,12 +209,12 @@ bool SchematicScene::itemEvent(QEvent* e)
 // this is called before SchematicDoc::event
 // (bound to some condition??)
 bool SchematicScene::event(QEvent* e)
-{ itested();
+{itested();
 	// 155 for move.
 	trace2("SchematicScene::event", e->isAccepted(), e->type());
 
-	if(dynamic_cast<QGraphicsSceneEvent*>(e)){ itested();
-	}else{ itested();
+	if(dynamic_cast<QGraphicsSceneEvent*>(e)){itested();
+	}else{itested();
 	}
 
 	doc()->handleMouseActions(e);
@@ -227,8 +227,8 @@ bool SchematicScene::event(QEvent* e)
 
 	trace3("SchematicScene::event post", e->isAccepted(), e->type(), r);
 
-	if(e->isAccepted()){ itested();
-		if(r){ itested();
+	if(e->isAccepted()){itested();
+		if(r){itested();
 			// move objects is here.
 		}else{itested();
 		}
@@ -301,7 +301,7 @@ bool SchematicScene::event(QEvent* e)
 		trace1("GSM", e->type());
 	}else if(dynamic_cast<QGraphicsSceneEvent*>(e)){
 		trace1("GSE", e->type());
-		if(e->type()==155){ itested();
+		if(e->type()==155){itested();
 			// getting here when moving around elements.
 		}else{
 		}

@@ -41,7 +41,7 @@ namespace qucs {
 /* remove. later. */
 // scene()->selectedItems gives QGraphicsItems
 Element* element(ElementGraphics* g)
-{ itested();
+{itested();
 	if(!g){ untested();
 		return nullptr;
 	}else{itested();
@@ -165,7 +165,7 @@ public:
 		delete _labeltext;
 	}
 private:
-	virtual QRectF boundingRect() const override{ itested();
+	virtual QRectF boundingRect() const override{itested();
 		return QRectF();
 	}
 	void paint(QPainter *, const QStyleOptionGraphicsItem *, QWidget *) override{}
@@ -239,7 +239,7 @@ static void redo_children(ElementGraphics* g)
 
 	if(!element(g)){ untested();
 		unreachable();
-	}else if(element(g)->makes_own_scope()){ itested();
+	}else if(element(g)->makes_own_scope()){itested();
 		auto s = element(g)->scope();
 		assert(s);
 		for(auto o : *s){itested();
@@ -330,7 +330,7 @@ void ElementGraphics::attachElement(Element* e)
 	// this is probably not needed. test later.
 	if(dynamic_cast<Conductor*>(e)){itested();
 		setZValue(-1.);
-	}else{ itested();
+	}else{itested();
 	}
 
 	auto sym = dynamic_cast<SubcktBase const*>(_e);
@@ -385,7 +385,7 @@ void ElementGraphics::paint(QPainter *p, const QStyleOptionGraphicsItem *o,
 
 	auto br = boundingRect();
 
-	if(auto pp=dynamic_cast<Painting const*>(_e)){ itested();
+	if(auto pp=dynamic_cast<Painting const*>(_e)){itested();
 		pp->paint(&v);
 
 
@@ -588,7 +588,7 @@ void ElementGraphics::transform(qucsSymbolTransform a, std::pair<int, int> pivot
 } // transform
 /*--------------------------------------------------------------------------*/
 SchematicScene* ElementGraphics::scene() const
-{ itested();
+{itested();
 	auto s = prechecked_cast<SchematicScene*>(QGraphicsItem::scene());
 	if(s){itested();
 	}else{itested();
@@ -598,7 +598,7 @@ SchematicScene* ElementGraphics::scene() const
 /*--------------------------------------------------------------------------*/
 QRectF ElementGraphics::boundingRect() const
 {itested();
-	if(auto pp=dynamic_cast<Painting const*>(_e)){ itested();
+	if(auto pp=dynamic_cast<Painting const*>(_e)){itested();
 		auto rr = pp->bounding_rect().toRectF();
 //		trace2("br", rr, _e->label());
 		return rr;
@@ -755,7 +755,7 @@ void ElementGraphics::show()
 			trace2("show", sym->label(), sym->nodePosition(0));
 		}else if(sym->numPorts() == 2){itested();
 			trace3("show", sym->label(), sym->nodePosition(0), sym->nodePosition(1));
-		}else{ untested();
+		}else{itested();
 		}
 	}
 #endif
@@ -785,11 +785,11 @@ void ElementGraphics::hide()
 	assert(isVisible());
 	auto cis = childItems();
 	trace1("ElementGraphics hide", cis.size());
-	for(auto i: cis){ itested();
+	for(auto i: cis){itested();
 		if(auto p = dynamic_cast<QGraphicsProxyWidget*>(i)){ untested();
 			trace2("hide it's a proxy", p, this);
 			p->setWidget(nullptr); // the Element has a reference to it.
-		}else{ itested();
+		}else{itested();
 		}
 	}
 	QGraphicsItem::hide();
@@ -855,7 +855,7 @@ ItemEvent::ItemEvent(QEvent const& a, ElementGraphics& b)
 }
 /*--------------------------------------------------------------------------*/
 QVariant ElementGraphics::itemChange(GraphicsItemChange c, const QVariant &v)
-{ itested();
+{itested();
     if (!scene()){itested();
 	 }else if(c == ItemPositionChange){ itested();
         QPointF tmp = v.toPointF();
@@ -868,7 +868,7 @@ QVariant ElementGraphics::itemChange(GraphicsItemChange c, const QVariant &v)
         }else{ untested();
             return tmp;
 		  }
-    }else{ itested();
+    }else{itested();
 	 }
 	 return QGraphicsItem::itemChange(c, v);
 }

@@ -118,10 +118,10 @@ public:
 	bool sizeOfFrame(int&, int&);
 
 	// BUG: wrong place.
-	void setVisible(bool x) override { itested();
-		if(!x){ itested();
+	void setVisible(bool x) override {itested();
+		if(!x){itested();
 			cleanup();
-		}else{ itested();
+		}else{itested();
 		}
 		QWidget::setVisible(x);
 	}
@@ -1245,8 +1245,8 @@ bool SchematicDoc::event(QEvent* e)
 }
 
 bool SchematicDoc::handleMouseActions(QEvent* e)
-{ itested();
-	if(mouseActions()){ itested();
+{itested();
+	if(mouseActions()){itested();
 		return mouseActions()->handle(e);
 	}else{itested();
 		// race?

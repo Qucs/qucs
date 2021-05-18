@@ -61,7 +61,7 @@ private: // QGraphicsItem
 	void paint(QPainter *painter, const QStyleOptionGraphicsItem*, QWidget*) override;
 
 public: // Element
-	Element* clone() const override{untested();
+	Element* clone() const override{itested();
 		return new DiagramVariable(*this);
 	}
 	index_t param_count() const{return 6;}
@@ -193,7 +193,7 @@ class RDV_factory : public qucs::Element{
 	Element* clone() const override{
 		return new RDV_factory(*this);
 	}
-	Element* clone_instance() const override{ untested();
+	Element* clone_instance() const override{itested();
 		return new DiagramVariable();
 	}
 }v0;
@@ -247,7 +247,7 @@ std::string DiagramVariable::param_value(index_t i) const
 }
 /*--------------------------------------------------------------------------*/
 QRectF DiagramVariable::boundingRect() const
-{ itested();
+{itested();
 	if(parentItem()){
 		return parentItem()->boundingRect();
 	}else{
@@ -259,8 +259,8 @@ QRectF DiagramVariable::boundingRect() const
 /*--------------------------------------------------------------------------*/
 void DiagramVariable::paint(QPainter *painter, const QStyleOptionGraphicsItem*,
 		QWidget*)
-{ untested();
-	if(common()){ untested();
+{itested();
+	if(common()){itested();
 		paint_graph_data(common(), painter);
 	}else{ untested();
 	}
@@ -275,7 +275,7 @@ void DiagramVariable::paint(QPainter *painter, const QStyleOptionGraphicsItem*,
 /*--------------------------------------------------------------------------*/
 // under construction
 void DiagramVariable::paint_graph_data(CommonData const* cd, QPainter* p) const
-{ untested();
+{itested();
 	auto pp = prechecked_cast<SimOutputData const*>(cd);
 	assert(pp);
 
@@ -283,7 +283,7 @@ void DiagramVariable::paint_graph_data(CommonData const* cd, QPainter* p) const
 	auto diag = dynamic_cast<Diagram const*>(o);
 	if(!diag){ untested();
 		incomplete();
-	}else if(pp->numDeps()==1){ itested();
+	}else if(pp->numDeps()==1){itested();
 		auto dd = dynamic_cast<SimOutputData const*>(pp->dep(0));
 		assert(dd);
 		int num = pp->size();
@@ -291,7 +291,7 @@ void DiagramVariable::paint_graph_data(CommonData const* cd, QPainter* p) const
 		int ii = 0;
 
 		QPainterPath path;
-		for (auto xx : *pp){ itested();
+		for (auto xx : *pp){itested();
 			++ii;
 			auto x = xx.first;
 			auto y = xx.second.real();
