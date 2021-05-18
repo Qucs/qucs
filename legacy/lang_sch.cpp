@@ -195,7 +195,7 @@ static bool obsolete_wireload(Symbol* w, const QString& sc)
 
 	if(x1<=x2){
 		// possibly the case in all legacy files..
-	}else{ itested();
+	}else{
 		// but not really necessary
 	}
 	sym->set_param_by_name("deltax", std::to_string(x2 - x1));
@@ -682,7 +682,7 @@ static TaskElement* loadLegacyTaskElement(const QString& _s, LegacyTaskElement* 
 
 		tmp=c->Props.size(); // ???
 		/// BUG FIXME. dont use Component parameter dictionary.
-		for(; tmp<=(int)counts/2; tmp++){itested();
+		for(; tmp<=(int)counts/2; tmp++){
 			trace2("taskhack append", tmp, c->Props.size());
 			c->Props.append(new Property("p", "", true, " "));
 		}
@@ -975,7 +975,7 @@ static ::Component* parseComponentObsoleteCallback(const QString& _s, ::Componen
 	c->isActive = tmp & 3;
 	// sym->setParameter("is_active", std::to_string(tmp & 3));
 
-	if(tmp & 4){itested();
+	if(tmp & 4){
 	// sym->setParameter("hide_label", std::to_string(tmp & 4));
 		c->showName = false;
 	}else{
@@ -1193,7 +1193,7 @@ static ::Component* parseComponentObsoleteCallback(const QString& _s, ::Componen
 /*--------------------------------------------------------------------------*/
 static TaskElement* loadTaskElement(const QString& _s, TaskElement* c)
 {
-	if(auto t=dynamic_cast<LegacyTaskElement*>(c)){itested();
+	if(auto t=dynamic_cast<LegacyTaskElement*>(c)){
 		loadLegacyTaskElement(_s, t);
 	}else{ untested();
 		incomplete();

@@ -261,7 +261,7 @@ void Diagram::paintMarkers(ViewPainter *, bool)
    Put axis labels into the text list.
 */
 void Diagram::createAxisLabels()
-{itested();
+{
   int   x, y, w, wmax = 0;
   QString Str;
   // get size of text using the screen-compatible metric
@@ -271,7 +271,7 @@ void Diagram::createAxisLabels()
   nfreqa=0;
   x = _width / 2;
   y = -y1;
-  if(xAxis.Label.isEmpty()) {itested();
+  if(xAxis.Label.isEmpty()) {
     // write all x labels ----------------------------------------
 #if 0
     foreach(Graph *pg, Graphs) {itested();
@@ -292,7 +292,7 @@ void Diagram::createAxisLabels()
 	  }
     }
 #endif
-  } else {itested();
+  } else {
     y -= LineSpacing;
     encode_String(xAxis.Label, Str);
     w = metrics.width(Str) >> 1;
@@ -309,7 +309,7 @@ void Diagram::createAxisLabels()
   wmax = 0;
   x = -x1;
   y = _height / 2;
-  if(yAxis.Label.isEmpty()) {itested();
+  if(yAxis.Label.isEmpty()) {
     // draw left y-label for all graphs ------------------------------
 #if 0
     foreach(Graph *pg, Graphs) {itested();
@@ -346,7 +346,7 @@ void Diagram::createAxisLabels()
 
   x = x3;
   y = _height / 2;
-  if(zAxis.Label.isEmpty()) {itested();
+  if(zAxis.Label.isEmpty()) {
     // draw right y-label for all graphs ------------------------------
 #if 0
     foreach(Graph *pg, Graphs) {itested();

@@ -25,7 +25,7 @@ using namespace qucs;
 /* -------------------------------------------------------------------------------- */
 class DatFiles : public Data{
 public:
-	explicit DatFiles() : Data(){itested();
+	explicit DatFiles() : Data(){
 		set_label("datfile");
 	}
 	DatFiles(DatFiles const&d) : Data(d){ }

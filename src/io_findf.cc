@@ -42,7 +42,7 @@
 
 #define OS QOS //for now.
 namespace OS{
-inline bool access_ok(const std::string& file, int mode) {itested();
+inline bool access_ok(const std::string& file, int mode) {
   return (::access(file.c_str(), mode) == 0/*file_ok*/);
 }
 }

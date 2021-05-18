@@ -32,5 +32,5 @@ load plugins/misc
 </Wires>
 
 simulate
-list l=verilog
+list l=verilog main
 list lang=dat qucsator

@@ -1,6 +1,10 @@
 
 EXTRA_DIST = 
 
+# need qucsator (skipped otherwise)
+QUCSATOR_TESTS = \
+	qucsator.0.qx
+
 QX_TESTS = \
 	command.0.qx \
 	edd.0.qx \

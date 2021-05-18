@@ -212,7 +212,7 @@ private: // overrides
 	index_t numPorts() const override{
 		return _ports.size();
 	}
-	Port& port(index_t i) override{itested();
+	Port& port(index_t i) override{
 		assert(i < _ports.size());
 		return _ports[i];
 	}
@@ -387,7 +387,7 @@ void Sub::build_sckt(istream_t& cs, SubcktBase* proto) const
 	auto L = dynamic_cast<Language const*>(LL);
 	assert(L);
 	try{
-		while(true){itested();
+		while(true){
 			cs.read_line();
 			trace1("SubFactory::build_sckt", cs.fullstring());
 			Element* e = proto;
@@ -633,7 +633,7 @@ std::string Sub::param_name(index_t i) const
 }
 /*--------------------------------------------------------------------------*/
 void Sub::set_param_by_name(std::string const& name, std::string const& v)
-{ itested();
+{
 	trace2("Sub::setParameter", name, v);
 //	if(name=="$SUB_PATH"){ untested();
 //		_subPath = v;
@@ -645,7 +645,7 @@ void Sub::set_param_by_name(std::string const& name, std::string const& v)
 	}else if(name=="File"){
 		_filename = v;
 		refreshSymbol(v);
-	}else{ itested();
+	}else{
 		FactorySymbol::set_param_by_name(name, v);
 	}
 }

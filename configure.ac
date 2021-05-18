@@ -31,6 +31,9 @@ LT_INIT([win32-dll])
 
 PKG_CONFIG=pkg-config
 
+AC_PATH_PROGS([QUCSATOR], [qucsator], [no])
+AM_CONDITIONAL([USE_QUCSATOR], [test $QUCSATOR != "no"])
+
 AC_ARG_WITH(qt_name,
     AS_HELP_STRING([--with-qt-name],
         [Use a specific Qt for building. @<:@default=Qt5@:>@ \

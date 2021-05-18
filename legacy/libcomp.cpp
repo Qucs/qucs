@@ -261,7 +261,7 @@ private: // Element
 
 private: // Symbol
 	index_t numPorts() const override{
-		if(_parent){itested();
+		if(_parent){
 //			trace2("Lib::numPorts", label(), _parent->numPorts());
 			return _parent->numPorts();
 		}else{itested();
@@ -290,7 +290,7 @@ private: // Symbol
 			return pos_t(0, 0);
 		}
 	}
-	Port& port(index_t i) override{itested();
+	Port& port(index_t i) override{
 		assert(i < _ports.size());
 		return _ports[i];
 	}
@@ -306,7 +306,7 @@ private: // Symbol
 			_tx = atoi(v.c_str());
 		}else if(n=="$ty"){
 			_ty = atoi(v.c_str());
-		}else{itested();
+		}else{
 			Symbol::set_param_by_name(n, v);
 		}
 
@@ -329,7 +329,7 @@ private: // Symbol
 			return std::to_string(_tx);
 		}else if (n=="$ty"){
 			return std::to_string(_ty);
-		}else{itested();
+		}else{
 			return Symbol::param_value_by_name(n);
 		}
 	}
@@ -373,7 +373,7 @@ private: // Symbol
 			return "Lib";
 		case 3:
 			return "Component";
-		default:itested();
+		default:
 			if(m - 4 < 0){
 				return Symbol::param_name(i);
 			}else if(m - 4 < int(_param_names.size())){
@@ -484,11 +484,11 @@ void Lib::set_param_by_index(index_t n, std::string const& v)
 		_component.Value = QString::fromStdString(v);
 		redo = true;
 		break;
-	default:itested();
+	default:
 		trace3("fwd", n, m, v);
 		if(m - 4 < 0){
 			Symbol::set_param_by_index(n, v);
-		}else if(m - 4 >= int(_params.size())){itested();
+		}else if(m - 4 >= int(_params.size())){
 			incomplete();
 		// 	Symbol::setParameter(n, v);
 		}else if(auto p = dynamic_cast<PARAMETER<double>* >(_params[m-4])){ untested();
@@ -506,7 +506,7 @@ void Lib::set_param_by_index(index_t n, std::string const& v)
 		// BUG: not here.
 		attachProto();	
 		assert(_parent); // for now.
-	}else{itested();
+	}else{
 	}
 }
 /*--------------------------------------------------------------------------*/

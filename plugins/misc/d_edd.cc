@@ -153,7 +153,7 @@ private: // Symbol
 		}
 	}
 
-	index_t param_count() const override{ itested();
+	index_t param_count() const override{
 	  return 2 + FactorySymbol::param_count();
 	}
 	void set_param_by_index(index_t i, std::string const& v) override{
@@ -204,9 +204,9 @@ private: // Symbol
 			return "Branches";
 		}else{
 			std::string p;
-			if(s%2){ itested();
+			if(s%2){
 				p = "Q";
-			}else{ itested();
+			}else{
 				p = "I";
 			}
 			return p + std::to_string(s/2-1);
@@ -256,11 +256,11 @@ private: // internal
 	Component const* new_proto();
 
 private: // TODO: use Component?
-	index_t numPorts() const override{ itested();
+	index_t numPorts() const override{
 		trace1("EDD::numPorts", _ports.size()); // max_nodes?
 		return _ports.size();
 	}
-	Port& port(index_t i) override{itested();
+	Port& port(index_t i) override{
 		assert(i < _ports.size());
 		return _ports[i];
 	}

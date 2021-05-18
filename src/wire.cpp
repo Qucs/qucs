@@ -42,7 +42,7 @@ using qucs::SubcktBase;
 /*--------------------------------------------------------------------------*/
 class Wires : public SubcktBase{
 public:
-	explicit Wires() : SubcktBase(){itested();
+	explicit Wires() : SubcktBase(){
 		new_subckt();
 	}
 private:
@@ -57,7 +57,7 @@ public:
 	bool makes_own_scope() const override{
 		return true;
 	}
-	ElementList* scope(){itested(); assert(subckt()); return subckt(); }
+	ElementList* scope(){ assert(subckt()); return subckt(); }
 };
 /*--------------------------------------------------------------------------*/
 class Wire : public Symbol, public Conductor {
@@ -239,7 +239,7 @@ SubcktBase* Wire::intersectPorts(Symbol const* s) const
 		}
 	}
 
-	if(split.size()){ untested();
+	if(split.size()){
 		trace2("intersectPorts", split.size(), split[0]);
 		split.push_back(nodePosition(0));
 		split.push_back(nodePosition(1));
@@ -307,7 +307,7 @@ SubcktBase* Wire::extendTowards(pos_t const& other) const
 	}else{
 	}
 
-	if(w){itested();
+	if(w){
 		Component *s = new Wires();
 		s->set_label("extend");
 		auto sckt = prechecked_cast<SubcktBase*>(s);
@@ -353,7 +353,7 @@ SubcktBase* Wire::newTee(Wire const* o) const
 	}else{
 	}
 
-	if(s){itested();
+	if(s){
 		trace1("building tee", split);
 		assert(s->makes_own_scope());
 		assert(s->scope());
@@ -484,7 +484,7 @@ std::string Wire::param_value(index_t i) const
 		return std::to_string(_ty);
 	case 2:
 		return _netname;
-	case 3: untested();
+	case 3:
 		{
 		auto p = portPosition(1);
 		return std::to_string(getX(p));
@@ -535,21 +535,21 @@ std::string Wire::param_value_by_name(std::string const& n) const
 // ----------------------------------------------------------------
 void Wire::set_param_by_name(std::string const& n, std::string const& v)
 {
-	if(n=="$tx"){itested();
+	if(n=="$tx"){
 		_tx = atoi(v.c_str());
-	}else if(n=="$ty"){itested();
+	}else if(n=="$ty"){
 		_ty = atoi(v.c_str());
-	}else if(n=="$vflip"){ untested();
+	}else if(n=="$vflip"){
 		Symbol::set_param_by_name(n, v);
 		_scale = abs(_scale) * atoi(v.c_str());
-	}else if(n=="$angle"){ untested();
+	}else if(n=="$angle"){
 		Symbol::set_param_by_name(n, v);
 		trace4("new angle", angle(), cx(), cy(), _scale);
-	}else if(n=="$hflip"){ untested();
+	}else if(n=="$hflip"){
 		Symbol::set_param_by_name(n, v);
 		int tmp = atoi(v.c_str());
 		assert(tmp==1);
-	}else if(n=="delta"){itested();
+	}else if(n=="delta"){
 		delta = v;
 	}else if(n=="$vscale"){
 		_scale = atoi(v.c_str());
@@ -571,7 +571,7 @@ void Wire::set_param_by_name(std::string const& n, std::string const& v)
 		}else{
 		}
 		findScaleAndAngle(p1);
-	}else if(n=="netname"){itested();
+	}else if(n=="netname"){
 		_has_netname = (v != "");
 		_netname = v;
 	}else{
@@ -585,10 +585,10 @@ unsigned Wire::numPorts() const
 }
 // ----------------------------------------------------------------
 void Wire::expand()
-{itested();
+{
   // stash NodeLabels as subdevices.
   // just not sure where exactly.
-  if (_netname != ""){itested();
+  if (_netname != ""){
     new_subckt();
     Symbol* n = qucs::symbol_dispatcher.clone("NodeLabel");
     n->set_label(_netname);
@@ -651,7 +651,7 @@ void Wire::connectNode(index_t i)
 		// resolve conflicts more carefully...
 		if(!n->hasNetLabel()){
 			n->setNetLabel(n2->netLabel());
-		}else if(!n2->hasNetLabel()){itested();
+		}else if(!n2->hasNetLabel()){
 			n2->setNetLabel(n->netLabel());
 		}else if(n->netLabel() == n2->netLabel()){
 			// nothing to do
@@ -666,7 +666,7 @@ void Wire::connectNode(index_t i)
 	nm.addEdge(this, n);
 	trace3("Wire::connect added edge", i, n->degree(), degree());
 
-	if(_has_netname){itested();
+	if(_has_netname){
 		trace2("wire override netlabel", n->netLabel(), _netname);
 		n->setNetLabel(_netname);
 	}else{

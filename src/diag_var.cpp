@@ -55,7 +55,7 @@ public: // Painting
 	void paint(ViewPainter*) const override;
 
 public: // Element
-	Element* clone() const override{itested();
+	Element* clone() const override{
 		return new DiagramVariable(*this);
 	}
 	index_t param_count() const{return 6;}
@@ -82,12 +82,12 @@ public: // Element
 		}
 	}
 private:
-	void prepare(){itested();
+	void prepare(){
 		if(common()){ untested();
 			// TODO: debug check
-		}else{itested();
+		}else{
 			Element* o = this;
-			while(o->owner()){itested();
+			while(o->owner()){
 				o = o->owner();
 				trace1("var top?", o->label());
 			}
@@ -95,7 +95,7 @@ private:
 			if(d){itested();
 				trace1("var found it", label());
 				attach(d);
-			}else{itested();
+			}else{
 				trace1("var miss", label());
 			}
 		}
@@ -105,12 +105,12 @@ private:
 		trace0("var sckt");
 		if(scope) {
 			CommonData const* f=nullptr;
-			for(auto x : *scope){itested();
+			for(auto x : *scope){
 				trace1("var Element", x->label());
 				f = find_it(x, what);
 				if(f){itested();
 					break;
-				}else{itested();
+				}else{
 				}
 			}
 			return f;
@@ -144,7 +144,7 @@ private:
 			}
 #endif
 			return nullptr;
-		}else if(auto d = dynamic_cast<SimOutputDir const*>(where)){itested();
+		}else if(auto d = dynamic_cast<SimOutputDir const*>(where)){
 			trace1("found dir", d->short_label());
 			CommonData const* f=nullptr;
 			for(auto x : *d){itested();
@@ -155,15 +155,15 @@ private:
 				}
 			}
 			return f;
-		}else if(auto d = dynamic_cast<Data const*>(where)){itested();
+		}else if(auto d = dynamic_cast<Data const*>(where)){
 			d->refresh(); // prepare?
 			trace2("var found data", d->label(), d->common());
-			if(d->common()){itested();
+			if(d->common()){
 				return find_it(d->common(), what);
 			}else{ untested();
 				return nullptr;
 			}
-		}else if(where->short_label() != what){itested();
+		}else if(where->short_label() != what){
 			return nullptr;
 		}else if(auto x=dynamic_cast<CommonData const*>(where)){itested();
 			return x;
@@ -185,7 +185,7 @@ private:
 Dispatcher<Data>::INSTALL p0(&data_dispatcher, "diagramvariable", &v0);
 /*--------------------------------------------------------------------------*/
 void DiagramVariable::set_param_by_index(index_t i, std::string const& value)
-{itested();
+{
 	switch(i){
 	case 0:
 		_color = value;

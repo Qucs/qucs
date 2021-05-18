@@ -60,7 +60,7 @@ public:
 
 private:
 	Verilog(Verilog const&x);
-	std::string dev_type()const override { itested();
+	std::string dev_type()const override {
 		return "Verilog";
 	}
 
@@ -97,9 +97,9 @@ public:
 	}
 
 public:
-	pos_t portPosition(index_t i) const override{ itested();
+	pos_t portPosition(index_t i) const override{
 		trace2("Verilog::portPosition", i, common());
-		if(auto s=dynamic_cast<Symbol const*>(_painting)){ itested();
+		if(auto s=dynamic_cast<Symbol const*>(_painting)){
 			// BUG. ask CommonSubckt?
 			assert(i < s->numPorts());
 			auto p = s->portPosition(i);
@@ -144,11 +144,11 @@ private: // Symbol
 			break;
 		}
 		assert(common());
-		if(s-np<_param_names.size()){ untested();
+		if(s-np<_param_names.size()){
 			return false;
 //		}else if(i<common()->param_count()){ untested();
 //			return true ;
-		}else{ untested();
+		}else{
 			return FactorySymbol::param_is_printable(i + _param_names.size());
 		}
 	}
@@ -210,7 +210,7 @@ private: // overrides
 	index_t numPorts() const override{
 		return _ports.size();
 	}
-	Port& port(index_t i) override{itested();
+	Port& port(index_t i) override{
 		trace1("Verilog::port", i);
 		assert(i < _ports.size());
 		return _ports[i];
@@ -416,7 +416,7 @@ void Verilog::build_sckt(istream_t& cmd, SubcktBase* proto) const
 	assert(ps);
 	auto p_ = ps->find_("Symbol");
 	Component const* last;
-	if(p_==ps->end()){itested();
+	if(p_==ps->end()){
 		for(auto i: *proto->scope()){
 			trace1("Verilog found", i->short_label()); // , i->num_ports());
 			if(auto c = dynamic_cast<Component*>(i)){
@@ -544,7 +544,7 @@ void Verilog::init(Component const* proto)
 	SubcktBase const* symsect = nullptr;
 	p_ = ps->find_("Symbol");
 	Component* last = nullptr;
-	if(p_==ps->end()){itested();
+	if(p_==ps->end()){
 		trace1("Verilog::init no symbol", short_label());
 		for(auto i: *proto->scope()){
 			trace1("Verilog found", i->short_label()); // , i->num_ports());
@@ -659,7 +659,7 @@ void Verilog::set_param_by_index(index_t i, std::string const& v)
 }
 /*--------------------------------------------------------------------------*/
 void Verilog::set_param_by_name(std::string const& name, std::string const& v)
-{ itested();
+{
 	trace2("Verilog::set_param_by_name", name, v);
 	if(name=="$tx"){
 		_tx = atoi(v.c_str());
@@ -668,7 +668,7 @@ void Verilog::set_param_by_name(std::string const& name, std::string const& v)
 	}else if(name=="File"){ untested();
 		_filename = v;
 		refreshSymbol(v);
-	}else{ itested();
+	}else{
 		FactorySymbol::set_param_by_name(name, v);
 	}
 }

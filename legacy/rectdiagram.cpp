@@ -54,7 +54,7 @@ public:
 	~RectDiagram();
 
 private:
-	Element* clone() const override {itested(); return new RectDiagram(*this);}
+	Element* clone() const override { return new RectDiagram(*this);}
 	static Element* info(QString&, char* &, bool getNewOne=false);
 	int calcDiagram();
 	void calcLimits();
@@ -90,7 +90,7 @@ private: // Painting
 	}
 /*--------------------------------------------------------------------------*/
 
-	void prepare() override{itested();
+	void prepare() override{
 		Diagram::prepare();
 		// calcData /// not sure what it did. some drawing cache, and all the rest of it?!
 		// loadGraphData(); // dats were parsed here.
@@ -221,7 +221,7 @@ bool RectDiagram::calcAxisLogScale(Axis *Axis, int& z, double& zD,
 }
 
 RectDiagram::RectDiagram() : Diagram()
-{itested();
+{
   x1 = 10;      // position of label text
   y1 = y3 = 33;
   _width = 240;    // initial size of diagram
@@ -233,7 +233,7 @@ RectDiagram::RectDiagram() : Diagram()
 }
 
 RectDiagram::~RectDiagram()
-{itested();
+{
 }
 /*--------------------------------------------------------------------------*/
 // map graph point to local scene coordinates
@@ -330,7 +330,7 @@ void RectDiagram::calcLimits()
 
                     // axes, ticks.// --------------------------------------------------------------
 int RectDiagram::calcDiagram()
-{itested();
+{
 	assert(scope());
 
 
@@ -363,9 +363,9 @@ int RectDiagram::calcDiagram()
 	}
 
 	// ====  x grid  =======================================================
-	if(xAxis.log) {itested();
-		if(xAxis.autoScale) {itested();
-			if(xAxis.max*xAxis.min < 1e-200){itested();
+	if(xAxis.log) {
+		if(xAxis.autoScale) {
+			if(xAxis.max*xAxis.min < 1e-200){
 				trace2("RectDiagram::calcDiagram", xAxis.max, xAxis.min);
 				goto Frame;  // invalid
 			}else{itested();
@@ -566,7 +566,7 @@ bool RectDiagram::calcAxisScale(Axis *Axis, double& GridNum, double& zD,
 				Axis->up  = Axis->max + fabs(Axis->max);
 				Axis->low = Axis->min - fabs(Axis->min);
 			}
-		}else if((Axis != &xAxis)) {itested();
+		}else if((Axis != &xAxis)) {
 			// keep a small bounding between graph and  diagram limit
 			Axis->up  = Axis->max + 0.1*(Axis->max-Axis->min);
 			Axis->low = Axis->min - 0.1*(Axis->max-Axis->min);
@@ -588,7 +588,7 @@ bool RectDiagram::calcAxisScale(Axis *Axis, double& GridNum, double& zD,
 				Base = 1.0;
 			} else { Base = 2.0;
 			}
-		} else {itested();
+		} else {
 			if(Base < 7.5){
 				Base = 5.0;
 			} else {
@@ -673,7 +673,7 @@ bool RectDiagram::calcAxisScale(Axis *Axis, double& GridNum, double& zD,
 }
 /*--------------------------------------------------------------------------*/
 bool RectDiagram::calcYAxis(Axis *Axis, int x0)
-{itested();
+{
   int z, w;
   double GridStep, corr, zD, zDstep, GridNum;
 
@@ -763,7 +763,7 @@ else {  // not logarithmical
 /*--------------------------------------------------------------------------*/
 // Calculate diagram again without reading dataset from file.
 void RectDiagram::recalcGraphData()
-{itested();
+{
   yAxis.min = zAxis.min = xAxis.min =  DBL_MAX;
   yAxis.max = zAxis.max = xAxis.max = -DBL_MAX;
   yAxis.numGraphs = zAxis.numGraphs = 0;
@@ -789,17 +789,17 @@ void RectDiagram::recalcGraphData()
 	}
 #endif
 
-  if(xAxis.min > xAxis.max) {itested();
+  if(xAxis.min > xAxis.max) {
     xAxis.min = 0.0;
     xAxis.max = 1.0;
   }else{
   }
-  if(yAxis.min > yAxis.max) {itested();
+  if(yAxis.min > yAxis.max) {
     yAxis.min = 0.0;
     yAxis.max = 1.0;
   }else{
   }
-  if(zAxis.min > zAxis.max) {itested();
+  if(zAxis.min > zAxis.max) {
     zAxis.min = 0.0;
     zAxis.max = 1.0;
   }else{
@@ -810,7 +810,7 @@ void RectDiagram::recalcGraphData()
 /*--------------------------------------------------------------------------*/
 // set axis limits
 void RectDiagram::getAxisLimits(CommonData const* g)
-{itested();
+{
 	trace0("RectDiagram::getAxisLimits");
 //	int z = 0;
 //	double x, y, *p;
@@ -820,7 +820,7 @@ void RectDiagram::getAxisLimits(CommonData const* g)
 	if(pg){
 		trace2("RectDiagram::getAxisLimits y", pg->min(), pg->max());
 		yAxis.fit_in_data(pg->min(), pg->max());
-	}else{itested();
+	}else{
 	}
 
 	if(!pg){
@@ -840,7 +840,7 @@ void RectDiagram::getAxisLimits(CommonData const* g)
 }
 /*--------------------------------------------------------------------------*/
 void RectDiagram::updateGraphData()
-{itested();
+{
 	// int valid =
 	calcDiagram();
 

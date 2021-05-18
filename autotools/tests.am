@@ -68,10 +68,15 @@ check_PROGRAMS = \
 	wire0 \
 	wire1
 
+if USE_QUCSATOR
+QUCSATOR_TESTS_ = QUCSATOR_TESTS
+endif
+
 TESTS = \
 	${check_PROGRAMS} \
 	${SH_TESTS} \
 	${PRJ_TESTS} \
+	${QUCSATOR_TESTS_} \
 	${QX_TESTS}
 
 # something wrong. fix later.
@@ -143,6 +148,7 @@ CLEANFILES += \
 	*.out *core
 
 .PHONY: .P
+${QUCSATOR_TESTS:%.qx=%.log} : .P
 ${PRJ_TESTS:%.prj=%.log} : .P
 ${SH_TESTS:%.sh=%.log} : .P
 ${QX_TESTS:%.qx=%.log} : .P

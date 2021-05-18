@@ -190,7 +190,7 @@ std::string Symbol::param_value(index_t i) const
 		return std::to_string(_hflip);
 	case 4:
 		return std::to_string(_angle);
-	default: untested();
+	default:
 		trace2("fwd", Component::param_count(), i);
 		return Component::param_value(i); // really??
 	}

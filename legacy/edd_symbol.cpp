@@ -258,12 +258,12 @@ public:
 			_stash.push_back(d);
 		}
 	}
-	~DefaultSymbols(){ itested();
-		for(auto& i : _stash){ itested();
+	~DefaultSymbols(){
+		for(auto& i : _stash){
 			delete i;
 			i = nullptr;
 		}
-		for(auto i : _sstash){ itested();
+		for(auto i : _sstash){
 			delete i;
 			i = nullptr;
 		}

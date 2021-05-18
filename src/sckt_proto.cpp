@@ -250,7 +250,7 @@ SubcktProto::SubcktProto(Element const*)
 }
 /*--------------------------------------------------------------------------*/
 ElementList* SubcktProto::scope()
-{itested();
+{
 	CommonComponent* cc = mutable_common();
 	assert(cc);
 	auto cs = prechecked_cast<CommonSubckt*>(cc);

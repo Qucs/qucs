@@ -246,7 +246,7 @@ std::string istream_t::ctos(const std::string& term,
 		char the_begin_quote = begin_quote[which_quote];
 		char the_end_quote = end_quote[which_quote];
 		for (;;) {
-			if (!ns_more()) {itested();
+			if (!ns_more()) {
 				end_string = cursor();
 				warn(bDANGER, std::string("need ") + the_end_quote);
 				break;
@@ -259,7 +259,7 @@ std::string istream_t::ctos(const std::string& term,
 			}else if (skip1(the_begin_quote)) {
 				++quotes;
 				skip();
-			}else if (skip1('\\')) {itested();
+			}else if (skip1('\\')) {
 				end_string = cursor() - 1;
 				s += _cmd.substr(begin_string, end_string-begin_string);
 				begin_string = cursor();
@@ -303,13 +303,13 @@ istream_t& istream_t::umatch(const std::string& s)
     }else if ((str2[0] == '\\') && (peek() == str2[1])) { untested();
       skip();
       str2 += 2;
-    }else if ((!optional) && (*str2 == '{')) {itested();
+    }else if ((!optional) && (*str2 == '{')) {
       ++str2;
       optional = true;
-    }else if ((optional) && (*str2 == '}')) {itested();
+    }else if ((optional) && (*str2 == '}')) {
       ++str2;
       optional = false;
-    }else if ((*str2 == ' ') && is_term()) {itested();
+    }else if ((*str2 == ' ') && is_term()) {
       // blank in ref string matches anything that delimits tokens
       skipbl();
       ++str2;
@@ -531,11 +531,11 @@ CS& istream_t::get_line(std::string const& prompt)
 {
   ++_line_number;
 
-  if(_stream){ itested();
+  if(_stream){
     // yikes.
-	   if(_stream->atEnd()){ itested();
+	   if(_stream->atEnd()){
 			throw qucs::Exception_End_Of_Input("");
-		}else{ itested();
+		}else{
 		}
       _cmd = _stream->readLine().toStdString();
       _cnt = 0;

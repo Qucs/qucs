@@ -58,7 +58,7 @@ public:
 	~WireUC() { }
 
 private: // Element
-	Element* clone() const override{itested();
+	Element* clone() const override{
 		return new WireUC(*this);
 	}
 	void paint(ViewPainter *p) const override;
@@ -262,7 +262,7 @@ class MouseActionWire : public MouseAction {
 	Q_OBJECT
 public:
 	explicit MouseActionWire()
-		: MouseAction(), _mode(0), _phase(0) {itested();
+		: MouseAction(), _mode(0), _phase(0) {
 		_proto = qucs::symbol_dispatcher.clone("__ma_ghostwire"); // BUG. not in constructor.
 		assert(_proto);
 	}

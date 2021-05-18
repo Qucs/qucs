@@ -190,7 +190,7 @@ private:
 	SubcktBase* open(std::string what, ElementList* scope){
 		auto p_ = scope->find_(what);
 		Element* a = nullptr;
-		if(p_!=scope->end()){itested();
+		if(p_!=scope->end()){
 			a = *p_;
 		}else{
 			a = qucs::device_dispatcher.clone("subckt_proto");

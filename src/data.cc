@@ -17,7 +17,7 @@
 namespace qucs {
 /* -------------------------------------------------------------------------------- */
 Data::Data(Data const& d) : Element(d), _common(nullptr)
-{itested();
+{
 	CommonData::attach(d.common(), &_common);
 }
 /* -------------------------------------------------------------------------------- */
@@ -53,7 +53,7 @@ void CommonData::attach(CommonData const* d, CommonData const** to)
 		trace1("++1", d->_attach_count);
 		*to = d;
 #if 1
-	}else if (*d != **to) {itested();
+	}else if (*d != **to) {
 		incomplete();
 		// They are different, usually by edit.
 		detach(to);

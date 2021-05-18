@@ -44,7 +44,7 @@
  * parse, and act on, a command string
  */
 void CMD::cmdproc(CS& cmd, CARD_LIST* scope)
-{itested();
+{
   trace2("qucs cmdproc", cmd.fullstring(), cmd.cursor());
 
 #if 0
@@ -102,9 +102,9 @@ void CMD::cmdproc(CS& cmd, CARD_LIST* scope)
 
   if (s == "xxxxcomment") { untested();
     // nothing
-  }else if (s != "") {itested();
+  }else if (s != "") {
     CMD* c = qucs::command_dispatcher[s];
-    if (c) {itested();
+    if (c) {
       // assert(scope);
       c->do_it(cmd, scope);
       didsomething = true;
@@ -136,14 +136,14 @@ void CMD::cmdproc(CS& cmd, CARD_LIST* scope)
 }
 /*--------------------------------------------------------------------------*/
 void CMD::command(const std::string& cs, CARD_LIST* scope)
-{itested();
+{
   CS cmd(CS::_STRING, cs); // from string, full command
   std::string s;
   cmd >> s;
   trace1("CMD::command", s);
 
   CMD* c = qucs::command_dispatcher[s];
-  if (c) {itested();
+  if (c) {
     c->do_it(cmd, scope);
   }else{ untested();
     error(bDEBUG, "bad internal command: " + s + '\n');

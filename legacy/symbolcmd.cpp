@@ -160,11 +160,11 @@ class SymbolCommand : public Command{
 	  auto lang = qucs::language_dispatcher["legacy_lib"];
 	  assert(lang);
 
-	  while(true){ itested();
+	  while(true){
 		  cs.read_line();
 		  if(cs.umatch("</Symbol>")){
 			  break;
-		  }else{ itested();
+		  }else{
 			  cs.skipbl();
 			  lang->new__instance(cs, sym, sym->subckt());
 			  trace2("symbolpaint", cs.fullstring(), sym->subckt()->size());
@@ -175,11 +175,11 @@ class SymbolCommand : public Command{
 	  // assert(!sym->numPorts()); // BUG not yet
 
 	  trace1("find DOT", sym->label());
-	  for(auto i : *sym->subckt()){ itested();
+	  for(auto i : *sym->subckt()){
 		  if(auto d = dynamic_cast<DEV_DOT*>(i)){
 			  istream_t cs(istream_t::_STRING, d->s());
 			  parse_dot(cs, sym);
-		  }else{ itested();
+		  }else{
 		  }
 	  }
 

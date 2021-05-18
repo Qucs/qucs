@@ -51,7 +51,7 @@ class MouseActionZoomIn : public MouseAction{
 	Q_OBJECT
 public:
 	explicit MouseActionZoomIn(QObject* parent=nullptr)
-	    : MouseAction(parent){ itested(); }
+	    : MouseAction(parent){ }
 
 private: // Action
 	Action* clone() const{
