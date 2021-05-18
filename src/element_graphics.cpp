@@ -278,6 +278,28 @@ static void redo_children(ElementGraphics* g)
 
 }
 /*--------------------------------------------------------------------------*/
+static void update_transform(Symbol const* s, QGraphicsItem* gfx)
+{
+	if(s->legacyTransformHack()){ untested();
+		return;
+	}else{
+
+		// could be made accessible through Symbol interface.
+		int hflip = atoi(s->param_value_by_name("$hflip").c_str());
+		int vflip = atoi(s->param_value_by_name("$vflip").c_str());
+		int angle = atoi(s->param_value_by_name("$angle").c_str());
+		assert(hflip==1 || hflip==-1);
+		assert(vflip==1 || vflip==-1);
+
+		trace4("update_transform", s->short_label(), angle, hflip, vflip);
+
+		QTransform transform;
+		transform.rotate(-angle); // chirality...
+		transform.scale(hflip, vflip);
+		gfx->setTransform(transform);
+	}
+}
+/*--------------------------------------------------------------------------*/
 void ElementGraphics::attachElement(Element* e)
 {itested();
 #if 0 // TODO, one of these?
@@ -359,26 +381,15 @@ void ElementGraphics::attachElement(Element* e)
 	}else if(_e->legacyTransformHack()){ untested();
 		// throw that in the bin some day..
 	}else if(auto s=dynamic_cast<Symbol const*>(_e)){itested();
-		// could be made accessible through Symbol interface.
-		int hflip = atoi(s->param_value_by_name("$hflip").c_str());
-		int vflip = atoi(s->param_value_by_name("$vflip").c_str());
-		int angle = atoi(s->param_value_by_name("$angle").c_str());
-		assert(hflip==1 || hflip==-1);
-		assert(vflip==1 || vflip==-1);
 
-		trace4("attach::transform", _e->label(), angle, hflip, vflip);
-
-		QTransform transform;
-		transform.rotate(-angle); // chirality...
-		transform.scale(hflip, vflip);
-		setTransform(transform);
+		update_transform(s, this);
 	}else{itested();
 	}
 }
 /*--------------------------------------------------------------------------*/
 void ElementGraphics::paint(QPainter *p, const QStyleOptionGraphicsItem *o,
 		QWidget* w)
-{itested();
+{untested();
 	assert(p);
 	ViewPainter v(p); // TODO
 	assert(v.Scale==1);
@@ -563,7 +574,8 @@ void ElementGraphics::transform(qucsSymbolTransform a, std::pair<int, int> pivot
 
 		s->set_param_by_name(std::string("$hflip"), std::string("1"));
 		s->set_param_by_name(std::string("$vflip"), std::to_string(vflip));
-		s->set_param_by_name(std::string("$angle"), std::to_string(new_mr.degrees_int()));
+		int degrees = new_mr.degrees_int();
+		s->set_param_by_name(std::string("$angle"), std::to_string(degrees));
 
 		auto p = pos();
 		int x = getX(p.toPoint());
@@ -578,9 +590,12 @@ void ElementGraphics::transform(qucsSymbolTransform a, std::pair<int, int> pivot
 		x = pivot.first + new_xy.first;
 		y = pivot.second + new_xy.second;
 
-		trace2("posttransform setpos", x ,y);
+		trace4("posttransform setpos", x ,y, vflip, degrees);
 		setPos(x, y);
-	// prepareGeometryChange(); // needed??
+
+		update_transform(s, this);
+
+	 // prepareGeometryChange(); // needed??
 		show();
 	}else{ untested();
 	}

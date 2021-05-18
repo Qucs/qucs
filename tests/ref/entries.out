@@ -1,7 +1,7 @@
 ==============
-  < my_ 1 0 0 1 9 0 0 "y=1" 1 "yes" 0>
- #(.y(1), .Export(yes)) my_();
-:my_ y="1" Export="yes"
+  <Eqn my_Eqn 1 0 0 1 9 0 0 "y=1" 1 "yes" 0>
+Eqn #(.y(1), .Export(yes)) my_Eqn();
+Eqn:my_Eqn y="1" Export="yes"
 ==============
   < my_ 1 0 0 -29 78 0 0 "1" 1 "1" 1>
  #(.T1(1), .T2(1)) my_();

@@ -28,6 +28,10 @@ public:
   Component* newOne() {return new Equation(*this);}
   static Element* info(QString&, char* &, bool getNewOne=false);
 
+  std::string dev_type() const override{
+	  return "Eqn";
+  }
+
 protected:
   QString vhdlCode(int);
   QString verilogCode(int);

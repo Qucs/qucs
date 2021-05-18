@@ -170,7 +170,7 @@ QUndoCommand* MouseActionNewElement::release(QEvent* ev)
 QUndoCommand* MouseActionNewElement::makeNew(QEvent* ev)
 { untested();
 	// assert(ev->widget=doc->scene()) // or so.
-	trace1("RELEASE", ev->type());
+	trace1("makeNew", ev->type());
 	if(ev->type() == QEvent::MouseButtonRelease){ itested();
 	}else{ untested();
 		unreachable();
@@ -299,10 +299,10 @@ QUndoCommand* MouseActionNewElement::rotate(QEvent*)
 { untested();
 	if(!_gfx){ untested();
 		unreachable();
-	}else if(dynamic_cast<Symbol*>(element(_gfx))){ untested();
+	}else if(auto s=dynamic_cast<Symbol*>(element(_gfx))){ untested();
 		// always do this?
-		_gfx->transform(ninety_degree_transform);
-		_gfx->update(); // does not work
+		pos_t pp = s->position();
+		_gfx->transform(ninety_degree_transform, pp);
 	}else{ untested();
 		unreachable();
 	}
