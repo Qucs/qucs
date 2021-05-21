@@ -26,6 +26,7 @@
 #include "qucs_globals.h"
 #include "sckt_base.h"
 #include "common_sckt.h"
+#include "model.h"
 /*--------------------------------------------------------------------------*/
 const std::string defsym(":SYMBOL_"); // use a parameter?
 /*--------------------------------------------------------------------------*/
@@ -46,6 +47,7 @@ using qucs::Element;
 using qucs::Component;
 using qucs::Language;
 using qucs::Module;
+using qucs::Model;
 using qucs::SubcktBase;
 using qucs::Symbol;
 using qucs::FactorySymbol;
@@ -226,6 +228,78 @@ private:
 }p1; // Verilog
 static Dispatcher<Element>::INSTALL d1(&symbol_dispatcher, "Verilog", &p1);
 /*--------------------------------------------------------------------------*/
+class ref : public Model {
+public:
+	explicit ref() : Model(nullptr){}
+private:
+	ref(ref const& p) : Model(p), _filename(p._filename), _dev_type(p._dev_type){}
+private:
+	Model* clone() const{return new ref(*this);}
+	Model* clone_instance() const{unreachable(); return nullptr; }
+
+	std::string dev_type() const override{return "VerilogRef";}
+
+public:
+	index_t param_count() const override{ return Model::param_count() + 2; }
+	void set_param_by_index(index_t i, std::string const& v) override{
+		switch (ref::param_count() - 1 - i){
+		case 0:
+			_filename = v;
+			return;
+		case 1:
+			_dev_type = v;
+			return;
+		default:
+			break;
+		}
+	}
+	std::string param_name(index_t i) const override{
+		index_t s = ref::param_count() - 1 - i;
+		switch (s) {
+		case 0: // fn
+			return "filename";
+		case 1: // dt
+			return "dev_type";
+		default:
+			return Model::param_name(i);
+		}
+	}
+	std::string param_value(index_t i) const override{
+		switch (ref::param_count() - 1 - i){
+		case 0: // fn
+			return _filename;
+		case 1: // dt
+			return _dev_type;
+		default:
+			return Model::param_value(i);
+		}
+	}
+	bool param_is_printable(index_t i) const override{
+		switch (ref::param_count() - 1 - i){
+		case 0: // fn
+		case 1: // dt
+			return true;
+		default:
+			return Model::param_is_printable(i);
+		}
+	}
+	void set_param_by_name(std::string const& name, std::string const& v) {
+		if(name=="filename"){
+			_filename = v;
+		}else if(name=="dev_type"){
+			_dev_type = v;
+		}else if(name=="File"){ untested();
+			_filename = v;
+		}else{
+			Model::set_param_by_name(name, v);
+		}
+	}
+
+private:
+	std::string _filename;
+	std::string _dev_type;
+};
+/*--------------------------------------------------------------------------*/
 class PROTO : public SubcktBase{
 public:
 	PROTO() : SubcktBase(){
@@ -298,6 +372,7 @@ Component const* Verilog::new_model(std::string const& fn) // const
 	trace4("VerilogFactory::newCommon", label(), fn, subPath, file_found);
 
 	if(auto sym = dynamic_cast<Component const*>(cached)){
+		assert(file_found != "");
 		return sym; // ->common();
 	}else if(file_found != "" ){
 		assert(owner());
@@ -308,6 +383,7 @@ Component const* Verilog::new_model(std::string const& fn) // const
 		Component* ss = proto_.clone();
 		auto s = prechecked_cast<SubcktBase*>(ss);
 		assert(s);
+		assert(s->subckt());
 
 		assert(owner());
 		// s->set_owner(owner());
@@ -327,20 +403,31 @@ Component const* Verilog::new_model(std::string const& fn) // const
 			}else{ untested();
 			}
 		}
-		auto a = qucs::device_dispatcher.clone("subckt_proto");
+		// auto a = qucs::device_dispatcher.clone("subckt_proto");
+		// auto a = new verilogProto;
 		if(last){
-			// change label??
-			// s->scope()->push_back(last);
-			s->set_dev_type(type_name);
-			s->set_label(type_name);
-			trace4("Verilog stash", dev_type(), type_name, a->common()->modelname(), last->numPorts());
+			Model* r = new ref;
+			// r->set_label("VerilogRef");
+			r->set_label(type_name);
+			r->set_param_by_name("filename", file_found);
+			r->set_param_by_name("dev_type", last->short_label());
+
+			s->subckt()->push_back(r);
+
+			{ // really?
+				s->set_dev_type(type_name);
+				s->set_label(type_name);
+			}
+			trace4("Verilog stash", dev_type(), type_name, s->common()->modelname(), last->numPorts());
 			// trace2("Verilog stash", type_name, common()->modelname());
 
 			// parse params here?
 			for(index_t i=0; i<last->numPorts(); ++i){
-				ss->set_port_by_index(i, last->port_value(i));
+				s->set_port_by_index(i, last->port_value(i));
 			}
-			stash_proto(ss);
+
+
+			stash_proto(s);
 		}else{ untested();
 			assert(false);
 		}
@@ -368,7 +455,7 @@ Component const* Verilog::new_model(std::string const& fn) // const
 		incomplete();
 		return nullptr;
 	}
-}
+} // new_model
 /*--------------------------------------------------------------------------*/
 static void parse_portcmd(istream_t& cs, SubcktBase* s)
 { untested();

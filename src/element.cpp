@@ -67,6 +67,16 @@ ElementList* Element::scope()
 	}
 }
 /*--------------------------------------------------------------------------*/
+std::string Element::param_value(index_t) const
+{
+	return "not_reached_elt_pv";
+}
+/*--------------------------------------------------------------------------*/
+std::string Element::param_name(index_t) const
+{
+	return "not_reached_elt_pn";
+}
+/*--------------------------------------------------------------------------*/
 void Element::set_param_by_index(index_t i, std::string const&)
 {
 	throw qucs::ExceptionCantFind(label(), "parameter " + std::to_string(i), label());

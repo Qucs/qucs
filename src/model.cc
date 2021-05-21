@@ -58,7 +58,7 @@ void Model::set_param_by_index(index_t i, std::string const& value) // (, int of
 bool Model::param_is_printable(index_t i)const
 {
   switch (Model::param_count() - 1 - i) {
-  case 0: return true;
+  case 0: return false;
   default: return Element::param_is_printable(i);
   }
 }

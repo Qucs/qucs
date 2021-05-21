@@ -104,8 +104,8 @@ public: // params
 	virtual void set_param_by_index(index_t, std::string const&);
 	virtual void set_param_by_name(std::string const& name, std::string const& v);
 	virtual std::string param_value_by_name(std::string const& n) const;
-	virtual std::string param_value(index_t) const{return "incomplete";}
-	virtual std::string param_name(index_t) const{return "incomplete";}
+	virtual std::string param_value(index_t) const;
+	virtual std::string param_name(index_t) const;
 	virtual bool param_is_printable(index_t)const{return true;}
 
 public: // compatibility

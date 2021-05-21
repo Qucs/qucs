@@ -14,9 +14,15 @@ EDD_3 #(.Type(explicit), .Branches(2), .I1(0), .Q1(V1), .I2(1), .Q2(YY)) D4(_net
 EDD_3 #(.Type(explicit), .Branches(2), .I1(0), .Q1(V1), .I2(1), .Q2(YY)) D5(_net8, _net4, _net9, _net6);
 endmodule // main
 
-// paramset EDD_1
-// paramset EDD_2
-// paramset EDD_3
+paramset EDD_1 ;
+endparmset //EDD_1
+
+paramset EDD_2 ;
+endparmset //EDD_2
+
+paramset EDD_3 ;
+endparmset //EDD_3
+
 # sckt main
 
 

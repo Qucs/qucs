@@ -93,6 +93,8 @@ private:
 private: // local
 	void printTaskElement(TaskElement const*, ostream_t&) const;
 	void print_ports_short(ostream_t& o, Component const* x) const;
+	void print_args(ostream_t&, Component const* sym) const;
+	void print_args(ostream_t&, Model const* sym) const;
 
 private: //DocumentLanguage
 	std::string find_type_in_string(istream_t&) const override;
@@ -350,23 +352,36 @@ void VS::print_args(ostream_t& s, Component const* sym) const
 	s << ") ";
 }
 /*--------------------------------------------------------------------------*/
-static void print_args(ostream_t& s, Component const* sym)
+// same as VS::, but skip '$.*'
+void Verilog::print_args(ostream_t& s, Component const* x) const
 {
 	std::string comma="";
 	s << "#(";
 
-	for(index_t i=sym->param_count(); i--;) {
-		auto name = sym->param_name(i);
+	for(index_t i=x->param_count(); i--;) {
+		auto name = x->param_name(i);
 		if(name.size() ==0){
 			unreachable();
 		}else if (name.at(0) == '$'){
-		}else if (sym->param_is_printable(i)) {
-			s << comma << "." << sym->param_name(i) << "(" << sym->param_value(i) << ")";
+		}else if (x->param_is_printable(i)) {
+			s << comma << "." << x->param_name(i) << "(" << x->param_value(i) << ")";
 			comma = ", ";
 		}else{
 		}
 	}
 	s << ") ";
+}
+/*--------------------------------------------------------------------------*/
+void Verilog::print_args(ostream_t& o, const Model* x) const
+{
+	assert(x);
+	for (int ii = x->param_count();  ii--;) {
+		if (x->param_is_printable(ii)) {
+			std::string arg = " ." + x->param_name(ii) + "=" + x->param_value(ii) + ";\n";
+			o << arg;
+		}else{
+		}
+	}
 }
 /*--------------------------------------------------------------------------*/
 void VS::print_ports_short(ostream_t& o, Component const* x) const
@@ -445,28 +460,38 @@ void Verilog::print_module(ostream_t& o, SubcktBase const* x) const
 {
 	ElementList const* scope = nullptr;
 
-	scope = x->scope();
+	if(x->makes_own_scope()){ untested();
+		scope = x->scope();
+	}else{ untested();
+		scope = x->subckt();
+	}
 
 	if(scope){
-		assert(x);
 		auto label = x->short_label();
-      std::replace( label.begin(), label.end(), ':', '$');
+		auto v = scope->find_(label);
+	  	if(v == scope->end()){
+			// BUG check type and if valid.
+			assert(x);
+			std::replace( label.begin(), label.end(), ':', '$');
 
-		o << "module " << label << "(";
-		print_ports_short(o, x);
-		o << ");\n";
+			o << "module " << label << "(";
+			print_ports_short(o, x);
+			o << ");\n";
 
-		for (auto ci : *scope) {
-//			o << "  "; later.
-			if(dynamic_cast<Conductor const*>(ci)){
-			}else if(dynamic_cast<Place const*>(ci)){
-			}else{
-				printItem(o, ci);
+			for (auto ci : *scope) {
+	//			o << "  "; later.
+				if(dynamic_cast<Conductor const*>(ci)){
+				}else if(dynamic_cast<Place const*>(ci)){
+				}else{
+					printItem(o, ci);
+				}
 			}
-		}
 
-		o << "endmodule // " << x->short_label() << "\n\n";
-	}else{ untested();
+			o << "endmodule // " << x->short_label() << "\n\n";
+		}else if(auto m=dynamic_cast<Model const*>(*v)){ untested();
+			print_paramset(o, m);
+		}
+	}else{
 		o << "// missing sckt in " << x->label() << "\n";
 	}
 }
@@ -486,16 +511,16 @@ void Verilog::printTaskElement(TaskElement const* c, ostream_t& s) const
 	s << "//" << c->label() << "\n";
 }
 /*--------------------------------------------------------------------------*/
-void Verilog::print_paramset(ostream_t& s, Model const* x) const
+void Verilog::print_paramset(ostream_t& o, Model const* x) const
 {
 	incomplete();
-	s<<"// paramset " << x->short_label() << "\n";
-  // assert(x);
+	assert(x);
   // _mode = mPARAMSET;
-  // o << "paramset " << x->short_label() << ' ' << x->dev_type() << ";\\\n";
-  // print_args(o, x);
-  // o << "\\\n"
-  //   "endparmset\n\n";
+	std::string label = x->short_label();
+	std::replace( label.begin(), label.end(), ':', '$');
+	o << "paramset " << label << ' ' << x->dev_type() << ";\n";
+	print_args(o, x);
+   o << "endparmset //"<< x->short_label() <<"\n\n";
   // _mode = mDEFAULT;
 }
 /*--------------------------------------------------------------------------*/
@@ -534,21 +559,6 @@ void Verilog::print_instance(ostream_t& s, Component const* sym) const
 		s << QString::fromStdString(type) << " ";
 
 		print_args(s, sym);
-#if 0
-		QString comma="";
-		s << "#(";
-			if(!c){ untested();
-				incomplete();
-			}else{ untested();
-				for(auto p2 : c->params()) { untested();
-					if(p2->name().at(0) == '$'){ untested();
-					}else{ untested();
-						s << comma << "." << p2->name() << "(" << p2->Value << ")";
-						comma = ", ";
-					}
-				}
-			}
-#endif
 		s << label << "(";
 		print_ports_short(s, sym);
 		s << ");\n";

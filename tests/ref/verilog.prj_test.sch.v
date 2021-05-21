@@ -11,11 +11,8 @@ endmodule // main
 module Symbol();
 endmodule // Symbol
 
-module Verilog$verilogmodel(_net0, _net1, _net2);
-module something(_net0, _net1, _net2);
-// 	parameter A;
-// 	parameter B;
-endmodule // something
-
-endmodule // Verilog:verilogmodel
+paramset Verilog$verilogmodel VerilogRef;
+ .filename=../../tests/verilog.prj/verilogmodel.v;
+ .dev_type=something;
+endparmset //Verilog:verilogmodel
 
