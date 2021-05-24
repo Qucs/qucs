@@ -69,14 +69,14 @@ check_PROGRAMS = \
 	wire1
 
 if USE_QUCSATOR
-QUCSATOR_TESTS_ = QUCSATOR_TESTS
+QUCSATOR_TESTS_ = $(QUCSATOR_TESTS)
 endif
 
 TESTS = \
+	${QUCSATOR_TESTS_} \
 	${check_PROGRAMS} \
 	${SH_TESTS} \
 	${PRJ_TESTS} \
-	${QUCSATOR_TESTS_} \
 	${QX_TESTS}
 
 # something wrong. fix later.
@@ -141,7 +141,8 @@ EXTRA_DIST += \
 	prj_log_compiler \
 	qx_log_compiler \
 	$(SH_TESTS) \
-	$(QX_TESTS)
+	$(QX_TESTS) \
+	$(QUCSATOR_TESTS)
 
 CLEANFILES += \
 	*.sch.net \
@@ -149,6 +150,7 @@ CLEANFILES += \
 
 .PHONY: .P
 ${QUCSATOR_TESTS:%.qx=%.log} : .P
+${QUCSATOR_TESTS:%.qx=out/%.qx.out} : .P
 ${PRJ_TESTS:%.prj=%.log} : .P
 ${SH_TESTS:%.sh=%.log} : .P
 ${QX_TESTS:%.qx=%.log} : .P

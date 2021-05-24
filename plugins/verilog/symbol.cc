@@ -313,7 +313,7 @@ public:
 	bool is_device() const override{
 		return false;
 	}
-	bool makes_own_scope() const override{ untested();
+	bool makes_own_scope() const override{
 		return true;
 	}
 	ElementList* scope() override{return subckt();}
@@ -409,7 +409,7 @@ Component const* Verilog::new_model(std::string const& fn) // const
 			Model* r = new ref;
 			// r->set_label("VerilogRef");
 			r->set_label(type_name);
-			r->set_param_by_name("filename", file_found);
+			r->set_param_by_name("filename", fn);
 			r->set_param_by_name("dev_type", last->short_label());
 
 			s->subckt()->push_back(r);
@@ -637,7 +637,7 @@ void Verilog::init(Component const* proto)
 			trace1("Verilog found", i->short_label()); // , i->num_ports());
 			if(auto c = dynamic_cast<Component*>(i)){
 				last = c;
-			}else{ untested();
+			}else{
 			}
 		}
 	}else{ untested();

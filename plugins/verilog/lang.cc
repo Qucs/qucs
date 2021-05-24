@@ -460,7 +460,7 @@ void Verilog::print_module(ostream_t& o, SubcktBase const* x) const
 {
 	ElementList const* scope = nullptr;
 
-	if(x->makes_own_scope()){ untested();
+	if(x->makes_own_scope()){
 		scope = x->scope();
 	}else{ untested();
 		scope = x->subckt();
@@ -488,7 +488,7 @@ void Verilog::print_module(ostream_t& o, SubcktBase const* x) const
 			}
 
 			o << "endmodule // " << x->short_label() << "\n\n";
-		}else if(auto m=dynamic_cast<Model const*>(*v)){ untested();
+		}else if(auto m=dynamic_cast<Model const*>(*v)){
 			print_paramset(o, m);
 		}
 	}else{

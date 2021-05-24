@@ -6,44 +6,6 @@ the GNU General Public License, version 3 or later.
 See the file "COPYING" for details.
 misc plugins: wip
 legacy plugins: wip
-1 writing [PATH]/netlist.txt...
-1 qucsator -b -g -i [PATH]/netlist.txt -o [TMPFILE]
-1 project location: 
-modules to load: 0
-factorycreate.size() is 0
-factorycreate has registered:
-parsing netlist...
-
-1 checking netlist...
-
-1 netlist content
-      1 C instances
-      1 VProbe instances
-      1 R instances
-      1 Vrect instances
-      1 TR instances
-creating netlist...
-
-1 	00	04
-1 	09	14
-1 	19
-1 	23	28
-1 	33
-1 	38	42
-1 	47
-1 	52
-1 	57
-1 	61
-1 	66
-1 	71
-1 	76
-1 	80
-1 	85
-1 	90
-1 	95
-1 NOTIFY: TR1: average time-step 5.49451e-06, 36 rejections
-NOTIFY: TR1: average NR-iterations 2.1978, 0 non-convergences
-
 module main();
 R #(.R(50 Ohm), .Temp(26.85), .Tc1(0.0), .Tc2(0.0), .Tnom(26.85), .Symbol(european)) R1(_net2, _net1);
 VProbe #() Pr1(_net1, gnd);

@@ -97,7 +97,7 @@ ImportDialog::ImportDialog(QWidget *parent)
 }
 
 ImportDialog::~ImportDialog()
-{
+{ untested();
   if(Process.state() == QProcess::Running) {
 	  Process.kill();
   }else{
@@ -288,7 +288,7 @@ void ImportDialog::slotType(int index)
 
 // ------------------------------------------------------------------------
 void ImportDialog::slotAbort()
-{
+{ untested();
   if(Process.state() == QProcess::Running){
 	  Process.kill();
   }else{

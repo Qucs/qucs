@@ -738,7 +738,7 @@ void SimMessage::slotDisplayButton()
 }
 /*--------------------------------------------------------------------------*/
 void SimMessage::AbortSim()
-{
+{ untested();
   ErrText->appendPlainText(tr("Simulation aborted by the user"));
   simKilled = true;
   assert(_simulator);

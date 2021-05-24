@@ -31,6 +31,6 @@ load plugins/misc
   <330 190 370 190 "" 0 0 0 "">
 </Wires>
 
-simulate
+simulate nolog
 list l=verilog main
 list lang=dat qucsator

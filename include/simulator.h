@@ -34,11 +34,10 @@ class Component;
 class CommonData;
 /*--------------------------------------------------------------------------*/
 // simulator controller
-struct SimCtrl{
+class SimCtrl{
+public:
   virtual void stateChange() = 0;
-  virtual void message(int level, std::string msg){
-    trace2("received message", level, msg);
-  }
+  virtual void message(int level, std::string msg) = 0;
 };
 /*--------------------------------------------------------------------------*/
 // must be Element, so it fits into a cl

@@ -52,7 +52,7 @@ ElementList::~ElementList()
 void ElementList::clear()
 {
 	for(auto& pc : _cl){
-		if(auto s=prechecked_cast<Symbol*>(pc)){
+		if(auto s=dynamic_cast<Symbol*>(pc)){
 			disconnect(s);
 		}else{
 		}

@@ -1591,11 +1591,14 @@ void App::slotFileQuit()
       tr("Quit..."), tr("Do you really want to quit?"),
       tr("Yes"), tr("No"));
 
-  if(exit == 0)
-    if(closeAllFiles()) {itested();
+  if(exit == 0) { untested();
+    if(closeAllFiles()) {untested();
       emit signalKillEmAll();   // kill all subprocesses
       qApp->quit();
+    }else{ untested();
     }
+  }else{ untested();
+  }
 
   statusBar()->showMessage(tr("Ready."));
 }

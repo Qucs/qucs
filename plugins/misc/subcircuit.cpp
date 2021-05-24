@@ -241,7 +241,7 @@ public:
 	bool is_device() const override{
 		return false;
 	}
-	bool makes_own_scope() const override{ untested();
+	bool makes_own_scope() const override{
 		return true;
 	}
 	ElementList* scope() override{return subckt();}

@@ -12,7 +12,7 @@ module Symbol();
 endmodule // Symbol
 
 paramset Verilog$verilogmodel VerilogRef;
- .filename=../../tests/verilog.prj/verilogmodel.v;
+ .filename=verilogmodel.v;
  .dev_type=something;
 endparmset //Verilog:verilogmodel
 

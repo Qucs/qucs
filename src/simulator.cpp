@@ -42,8 +42,8 @@ void Simulator::attachCtrl(SimCtrl* ctrl)
 }
 /* -------------------------------------------------------------------------------- */
 void Simulator::detachCtrl(SimCtrl const* ctrl)
-{itested();
-  if(_ctrl == ctrl){itested();
+{
+  if(_ctrl == ctrl){
 	 join();
     _ctrl = nullptr;
   }else{ untested();
@@ -54,8 +54,8 @@ void Simulator::detachCtrl(SimCtrl const* ctrl)
 }
 /* -------------------------------------------------------------------------------- */
 void Simulator::message(MsgType lvl, std::string const& msg)
-{itested();
-	if(_ctrl){itested();
+{
+	if(_ctrl){
 		_ctrl->message(lvl, msg);
 	}else{ untested();
 		Element::message(lvl, msg.c_str());
@@ -65,7 +65,7 @@ void Simulator::message(MsgType lvl, std::string const& msg)
 void Simulator::notifyState(Simulator::state_t st)
 {
 	setState(st);
-	if(_ctrl){itested();
+	if(_ctrl){
 		_ctrl->stateChange();
 	}else{ untested();
 	}
