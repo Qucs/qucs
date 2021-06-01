@@ -314,6 +314,38 @@ void SchematicActions::setControls(qucs::Doc* ctx)
 	assert(p);
 }
 /*--------------------------------------------------------------------------*/
+#if 0
+// (how to?) connect directly?
+void SchematicActions::slotEditCopy(QObject* sender)
+{ untested();
+	if(auto s=dynamic_cast<QAction*>(sender)){ untested();
+		possiblyToggleAction(maCopy, sender);
+	}else{ untested();
+		unreachable();
+	}
+}
+/*--------------------------------------------------------------------------*/
+// (how to?) connect directly?
+void SchematicActions::slotEditPaste(QObject* sender)
+{ untested();
+	if(auto s=dynamic_cast<QAction*>(sender)){ untested();
+		possiblyToggleAction(maPaste, sender);
+	}else{ untested();
+		unreachable();
+	}
+}
+#endif
+/*--------------------------------------------------------------------------*/
+// (how to?) connect directly?
+void SchematicActions::slotEditDelete(QObject* sender)
+{ untested();
+	if(auto s=dynamic_cast<QAction*>(sender)){ untested();
+		possiblyToggleAction(maDelete, sender);
+	}else{ untested();
+		unreachable();
+	}
+}
+/*--------------------------------------------------------------------------*/
 SchematicActions::~SchematicActions()
 {itested();
 //	delete maActivate;

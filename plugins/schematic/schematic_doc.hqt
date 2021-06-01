@@ -456,7 +456,7 @@ private: // Doc overrides.
 	      // actions that are not specific to SchematicDoc..
 			//
 			// move to mouseActions (DocActions?)
-	void slotEditDelete(QAction*) override{ unreachable(); }
+	void slotEditDelete(QAction*) override;
 	void slotEditActivate(QAction*) override { unreachable(); }
 	void slotEditUndo(QAction*) override;
 	void slotEditRedo(QAction*) override;
@@ -1827,15 +1827,17 @@ void SchematicDoc::slotEditActivate(QAction* sender)
 	eventHandler()->possiblyToggleAction(schematicActions()->maActivate, sender);
 }
 /*--------------------------------------------------------------------------*/
+#endif
 void SchematicDoc::slotEditDelete(QAction* sender)
 { untested();
-	eventHandler()->possiblyToggleAction(schematicActions()->maDelete, sender);
+	assert(schematicActions());
+	schematicActions()->slotEditDelete(sender);
+//	eventHandler()->possiblyToggleAction(schematicActions()->maDelete, sender);
 
 //	updateViewport();??
 //  assert(mouseActions());
 //  mouseActions()->setDrawn(false);
 }
-#endif
 /*--------------------------------------------------------------------------*/
 void SchematicDoc::slotInsertLabel()
 { untested();

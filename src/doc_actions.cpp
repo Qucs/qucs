@@ -39,9 +39,6 @@
 
 namespace qucs {
 
-
-QAction *formerAction;   // remember action before drag n'drop etc.
-
 // only mouse actions? how about undoable keyboard actions?
 MouseActions::MouseActions(Doc* d)
   : QObject() // , _doc(d)

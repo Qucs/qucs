@@ -61,9 +61,7 @@ void ElementList::clear()
 	}
 	_cl.clear();
 	nodes()->clear();
-	// paintings().clear();
 	_map.clear();
-	//SymbolPaints.clear(); ??
 }
 /*--------------------------------------------------------------------------*/
 // called from schematic::erase only

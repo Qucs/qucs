@@ -54,6 +54,9 @@ private:
 	void slotRedo() override;
 	void slotUndo() override;
 
+public:
+	void slotEditDelete(QObject* sender);
+
 private:
 	QUndoStack* _undoStack{nullptr};
 
