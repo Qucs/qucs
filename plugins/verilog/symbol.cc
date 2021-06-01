@@ -569,8 +569,9 @@ void Verilog::build_sckt(istream_t& cmd, SubcktBase* proto) const
 /*--------------------------------------------------------------------------*/
 Verilog::Verilog(Verilog const&x)
   : FactorySymbol(x),
-	 _tx(x._tx),
-	 _ty(x._ty),
+    _tx(x._tx),
+    _ty(x._ty),
+    _filename(x._filename),
     _painting(x._painting)
 {
 	_ports.resize(x._ports.size());
