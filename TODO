@@ -19,8 +19,8 @@
 
 ===== 0.1.* TODO =====
 
-- run simulations in tests, add more simulators
-- resurrect diagrams (as QWidgets?)
+- more simulations in tests, add more simulators
+- finish rectdiagram (QGraphics version)
 - hide text during symbols drag (why?)
 - movable (tx, ty) and editable text
 - connect error message handling (Object?)
@@ -28,9 +28,9 @@
 - replace Module::INSTALL
 - proper "Label" symbol/component
 - implement symbol editor (standalone, not as "mode")
-- symbol text position / move text
 - refactor VHDLcode
 - drag&drop elements from left menu (remove?)
+- symbolfactory is a model manager
 
 stuff that broke along the way
 - copy and paste
@@ -38,16 +38,13 @@ stuff that broke along the way
 - some bugs in "wire optimisation"
 
 wishlist/optional
-- parse verilog schematic and round trip
 - make code more (human) readable where possible
 - could add CMake at some point
 
 done or almost done
 - adjust selection bits after "wire optimisation" (almost)
 - fix parameters in "Lib" style components
-- untangle tAC and other callbacks
 - parameters in root circuit
-- move interface to qucs namespace
 
 ===== old stuff, mostly obsolete, implement plugins instead =====
 
