@@ -8,7 +8,8 @@ PLUGIN_SRC = \
 	textdoc.hqt \
 	taskeltdlg.hqt \
 	symboldialog.hqt \
-	wiredialog.hqt
+	wiredialog.hqt \
+	simmessage.hqt
 
 MORE_LATER = \
 	changedialog.cpp \

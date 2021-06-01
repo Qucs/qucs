@@ -101,6 +101,7 @@ private:
 	}
 	QAction* createAction(QObject* parent) const override{ untested();
 		incomplete();
+		(void)parent;
 //		auto x = new ActionEditPaste(parent);
 //		connect(x, &QAction::toggled, this, &MouseAction::slotToggle);
 //		return x;

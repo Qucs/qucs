@@ -746,8 +746,7 @@ void SymbolDialog::enableButtons()
 /*--------------------------------------------------------------------------*/
 class DialogFactory : public Widget /*?*/ {
 	Widget* clone() const override{
-		SchematicDialog* wd = new SymbolDialog();
-		return wd;
+		return new SymbolDialog();
 	}
 }F;
 static Dispatcher<Widget>::INSTALL p1(&qucs::widget_dispatcher, "SymbolDialog", &F);

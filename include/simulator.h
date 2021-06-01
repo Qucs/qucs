@@ -32,6 +32,7 @@ namespace qucs {
 /*--------------------------------------------------------------------------*/
 class Component;
 class CommonData;
+class Simulator;
 /*--------------------------------------------------------------------------*/
 // simulator controller
 class SimCtrl{
@@ -59,7 +60,7 @@ public:
   virtual DocumentFormat const* netLister() const{return nullptr;} // really?
 
 public:
-  void attachDoc(Doc*);
+//  void attachDoc(Doc*);
   Doc const* doc() const {return _doc;}
   virtual void run(istream_t& cs, SimCtrl* ctx) = 0; // really??
   virtual void join() = 0;

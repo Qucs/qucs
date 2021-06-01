@@ -83,8 +83,7 @@ DIALG_MOCHEADERS = \
 	loaddialog.h \
 	qucssettingsdialog.h \
 	savedialog.h \
-	searchdialog.h \
-	simmessage.h
+	searchdialog.h
 
 HDR1 = \
 	actions.h \
@@ -127,8 +126,7 @@ DIALOG_SRC = \
 	loaddialog.cpp \
 	qucssettingsdialog.cpp \
 	savedialog.cpp \
-	searchdialog.cpp \
-	simmessage.cpp
+	searchdialog.cpp
 
 UI_FILES = searchdialog.ui
 

@@ -28,7 +28,6 @@
 #include "qucsdoc.h"
 #include "element_list.h"
 #include "sckt_base.h"
-#include "simmessage.h"
 #include "simulator.h"
 /* -------------------------------------------------------------------------------- */
 /* -------------------------------------------------------------------------------- */
@@ -394,47 +393,12 @@ bool Doc::saveAs()
 #include "qucs_globals.h"
 #include "simulator.h"
 /* -------------------------------------------------------------------------------- */
-void Simulator::attachDoc(Doc /* const?? */ * d)
-{ untested();
-	incomplete();
-	_doc = d;
-}
+//void Simulator::attachDoc(Doc /* const?? */ * d)
+//{ untested();
+//	incomplete();
+//	_doc = d;
+//}
 /* -------------------------------------------------------------------------------- */
-#if 1
-// FIXME.
-Simulator* Doc::simulatorInstance(std::string const& which)
-{ untested();
-	if (!scope()){ untested();
-		return nullptr;
-	}else{ untested();
-	}
-	auto i = scope()->find_(which);
-	Simulator* sim=nullptr;
-
-	if(i==scope()->end()){ untested();
-
-		Simulator const* proto = QucsSettings.simulator();
-		if(which!=""){ untested();
-			Data* d = data_dispatcher[which];
-			proto = dynamic_cast<Simulator*>(d);
-		}else{ untested();
-		}
-
-		if(proto){ untested();
-			sim = proto->clone();
-			sim->set_owner(root());
-			scope()->push_back(sim);
-		}else{ untested();
-			incomplete();
-		}
-	}else if(auto s=dynamic_cast<Simulator*>(*i)){ untested();
-		sim = s;
-	}else{ untested();
-	}
-
-	return sim;
-}
-#endif
 /* -------------------------------------------------------------------------------- */
 void setParameter(std::string const&, std::string const&)
 { untested();

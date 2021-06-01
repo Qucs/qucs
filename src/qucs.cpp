@@ -52,9 +52,7 @@
 #include "savedialog.h"
 #include "qucssettingsdialog.h"
 #include "searchdialog.h"
-#include "simmessage.h"
 #include "exportdialog.h"
-//#include "octave_window.h"
 #include "printerwriter.h"
 
 #include "widget.h"
@@ -363,11 +361,11 @@ void App::slotSetCompView (int index)
   // make sure the right index is selected
   //  (might have been called by a cleared search and not by user action)
   CompChoose->setCurrentIndex(index);
-  int compIdx;
-  iconCompInfoStruct iconCompInfo;
+//  int compIdx;
+//  iconCompInfoStruct iconCompInfo;
   QVariant v;
   QString item = CompChoose->itemText (index);
-  int catIdx = Category::getModulesNr(item);
+//  int catIdx = Category::getModulesNr(item);
   //int catIdx = Category::categories.getModulesNr(item);
 
   Comps = Category::getModules(item);
@@ -2058,7 +2056,7 @@ void App::slotSelectLibComponent(QTreeWidgetItem *item)
 // ---------------------------------------------------------
 // This function is called if the document type changes, i.e.
 // from schematic to text document or vice versa.
-void App::switchSchematicDoc (bool SchematicMode)
+void App::switchSchematicDoc (bool)
 {itested();
 #if 0 // needed? just don't switch maybe.
 
@@ -2128,7 +2126,7 @@ void App::switchSchematicDoc (bool SchematicMode)
 }
 
 // ---------------------------------------------------------
-void App::switchEditMode(bool SchematicMode)
+void App::switchEditMode(bool)
 {itested();
 # if 0 // use plugin.
   fillComboBox(SchematicMode);

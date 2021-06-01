@@ -45,7 +45,6 @@
 #include "qucs_globals.h"
 #include "qucs_app.h" // BUG. QucsSettings?
 #include <QUndoStack>
-#include "simmessage.h"
 #include "docfmt.h" // copy&paste
 #include "sckt_base.h"
 #include <QMessageBox> // really??
@@ -1623,28 +1622,25 @@ void SchematicDoc::slotSimulate()
 
   // qucsapp->slotResetWarnings(); // what does it do?
 
-  Simulator *sim = Doc->simulatorInstance();
-  assert(sim);
-  SimMessage *ctrl = new SimMessage(sim, Doc);
+	Widget* cw = widget_dispatcher.clone("SimMessage");
+	assert(cw);
+	auto c = dynamic_cast<Command*>(cw);
+	assert(c);
+
+//	c->do_it("set simulator=...", scope()); ?
+	std::string command = "run what=all docname=" + docName().toStdString();
+	istream_t cs(istream_t::_STRING, command);
+
+	c->do_it(cs, scope());
+
+	auto ctrl = dynamic_cast<QDialog*>(cw);
+	// SimMessage *ctrl = new SimMessage(sim, Doc);
   // disconnect is automatically performed, if one of the involved objects
   // is destroyed !
   
 
-//  connect(ctrl, &SimMessage::SimulationEnded,
-//          this, &SchematicDoc::slotRefreshData);
-//  connect(sim, SIGNAL(displayDataPage(QString&, QString&)),
-//		this, SLOT(slotChangePage(QString&, QString&)));
-
 //  ctrl->show();
   ctrl->open(); // does not work
-
-  istream_t cs(istream_t::_STRING, "run all");
-
-  try{ untested();
-	  ctrl->startProcess(cs);
-  }catch(qucs::Exception& e){ untested();
-	  incomplete();
-  }
 
   // to kill it before qucs ends
   connect(this, SIGNAL(signalKillEmAll()), ctrl, SLOT(slotClose()));
@@ -1685,38 +1681,44 @@ void SchematicDoc::slotDCbias()
 #endif
 
   //app.slotResetWarnings(); // ?
-  Simulator *sim = simulatorInstance();
-  SimMessage *ctrl = new SimMessage(sim, this);
-
   // QWidget* w = this;
   // ctrl->setParent(w); embeds into scene...
 //  sim->setMode("dcop");
-  assert(sim);
   // disconnect is automatically performed, if one of the involved objects
   // is destroyed
   //
-  connect(ctrl, &SimMessage::signalData, this, &SchematicDoc::slotRefreshData);
-//  connect(sim, SIGNAL(displayDataPage(QString&, QString&)),
-//		this, SLOT(slotChangePage(QString&, QString&)));
-//
+  // connect(ctrl, &SimMessage::signalData, this, &SchematicDoc::slotRefreshData);
+
+	auto Doc = this;
+	//Simulator *sim = Doc->simulatorInstance(); // BUG
+	//assert(sim);
+	Widget* cw = widget_dispatcher.clone("SimMessage");
+	auto c = dynamic_cast<Command*>(cw);
+	assert(c);
+//	c->do_it("set simulator=...", scope()); ?
+	std::string command = "run what=dcop docname=" + docName().toStdString();
+	istream_t cs(istream_t::_STRING, command);
+
+	c->do_it(cs, scope());
+	auto ctrl = dynamic_cast<QDialog*>(cw);
+	// SimMessage *ctrl = new SimMessage(sim, Doc);
+  // disconnect is automatically performed, if one of the involved objects
+  // is destroyed !
+  
+
 //  ctrl->show();
   ctrl->open(); // does not work
 
-  istream_t cs(istream_t::_STRING, "run dcop");
-
-  try{ untested();
-	  ctrl->startProcess(cs);
-  }catch(qucs::Exception& e){ untested();
-	  incomplete();
-  }
-
-  connect(this, SIGNAL(signalKillEmAll()), this, SLOT(killSimulator()));
+  // to kill it before qucs ends
+  connect(this, SIGNAL(signalKillEmAll()), ctrl, SLOT(slotClose()));
 } // slotDCbias
 /*--------------------------------------------------------------------------*/
+#if 0 // not yet
 void SchematicDoc::slotRefreshData(std::string const&)
 { untested();
 	incomplete();
 }
+#endif
 /*--------------------------------------------------------------------------*/
 void SchematicDoc::copy()
 {itested();

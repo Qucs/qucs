@@ -43,6 +43,7 @@ struct mySimCtrl : SimCtrl{
 	}
 	Simulate* _r;
 	int _lvl{qucs::MsgLog};
+   void setSimulator(qucs::Simulator* sim){incomplete();} // BUG
 };
 /*--------------------------------------------------------------------------*/
 void Simulate::do_it(istream_t& cmd, ElementList* sckt)

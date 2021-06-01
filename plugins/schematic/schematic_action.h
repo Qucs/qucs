@@ -39,8 +39,8 @@ public:
 	typedef QUndoCommand cmd;
 protected:
 public:
-	explicit MouseAction(QObject* p=nullptr)
-		: Action(), _sender(nullptr){}
+	explicit MouseAction(QObject*p=nullptr)
+		: Action(), _sender(nullptr){(void)p;}
 	MouseAction(MouseAction const&) = delete;
 
 public:
