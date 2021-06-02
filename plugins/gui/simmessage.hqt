@@ -202,7 +202,7 @@ void SimMessage::do_it(istream_t& cmd, ElementList* scope)
 	size_t here = cmd.cursor();
 	std::string docname;
 	std::string what;
-	std::string simulator;
+	std::string simname;
 	do{
 		ONE_OF
       || Get(cmd, "docname",   &docname)
