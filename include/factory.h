@@ -18,18 +18,17 @@
 
 #include "platform.h"
 #include "symbol.h"
-#include "element.h"
+#include "model.h"
 #include <map>
 
 namespace qucs {
 /*--------------------------------------------------------------------------*/
 class ElementList;
 class Symbol;
-class Element;
 class Component;
 /*--------------------------------------------------------------------------*/
 // ModelFactory.
-class SymbolFactory : public Element{
+class SymbolFactory : public Model{
 public:
 	explicit SymbolFactory();
 	virtual ~SymbolFactory();
@@ -44,6 +43,9 @@ private:
 	ElementList* scope(){ return _scope; }
 
 private:
+	std::string dev_type() const override{
+		return "ModelFactory";
+	}
 	void set_dev_type(std::string const& name);
 	Element* clone_instance() const;
 
@@ -54,18 +56,21 @@ private:
 	friend class FactorySymbol; // (!)
 	void stash(Element* e);
 
-	std::string param_value_by_name(std::string const& name) const override
-	{
+	std::string param_value_by_name(std::string const& name) const override {
 		auto i = _params.find(name);
 		if(i != _params.end()){
 			return i->second;
 		}else{ untested();
-			return SymbolFactory::param_value_by_name(name);
+			return Model::param_value_by_name(name);
 		}
 	}
-	void set_param_by_name(std::string const& name, std::string const& v) override
-	{
-		_params[name] = v;
+	void set_param_by_name(std::string const& name, std::string const& v) override {
+		if(name=="dev_type"){
+			// abuse of paramset notation..
+			set_dev_type(v);
+		}else{
+			_params[name] = v;
+		}
 	}
 
 private:
@@ -84,8 +89,11 @@ private:
 
 protected:
 	std::string factory_param(std::string const& name) const{
-		assert(_factory);
-		return _factory->param_value_by_name(name);
+		if(_factory){
+			return _factory->param_value_by_name(name);
+		}else{
+			throw qucs::ExceptionCantFind(name, short_label());
+		}
 	}
 	Element const* find_proto(std::string const&);
 	void stash_proto(Element* e);

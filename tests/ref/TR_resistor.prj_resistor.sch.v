@@ -10,6 +10,12 @@ Vac #(.U(10 V), .f(1kHz), .Phase(0), .Theta(0)) V1(Vin, gnd);
 // `endif
 endmodule // main
 
+paramset Sub ModelFactory;
+endparmset //Sub
+
+paramset Verilog ModelFactory;
+endparmset //Verilog
+
 module Symbol();
 endmodule // Symbol
 

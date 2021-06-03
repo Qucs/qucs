@@ -23,6 +23,12 @@ VProbe #() Pr1(_net29, gnd);
 GND #() *(gnd);
 endmodule // main
 
+paramset Sub ModelFactory;
+endparmset //Sub
+
+paramset Verilog ModelFactory;
+endparmset //Verilog
+
 module Symbol();
 endmodule // Symbol
 

@@ -16,6 +16,12 @@ Sub$singleOPV #(.File(singleOPV.sch)) OPV1(_net12, Input, _net3, _net15, Output)
 R #(.R(1.7k), .Temp(26.85), .Tc1(0.0), .Tc2(0.0), .Tnom(26.85), .Symbol(european)) R3(_net12, gnd);
 endmodule // main
 
+paramset Sub ModelFactory;
+endparmset //Sub
+
+paramset Verilog ModelFactory;
+endparmset //Verilog
+
 module Symbol();
 endmodule // Symbol
 

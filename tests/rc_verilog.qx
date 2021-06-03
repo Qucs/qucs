@@ -1,0 +1,23 @@
+load legacy
+load legacy/components
+load legacy/qucsator
+load plugins/verilog
+load plugins/misc
+
+verilog
+paramset Verilog ModelFactory;
+  .dev_type = "Verilog";
+  .$SUB_PATH = "srcdir/";
+endparamset
+
+list main
+list Verilog
+
+get srcdir/rc_verilog.sch
+
+list Verilog*
+list main
+quit
+
+simulate
+list lang=dat qucsator

@@ -1,0 +1,23 @@
+/* Authors: Andreas Froese, Felix Salfelder
+ * Note: too trivial to state License/Copyright
+ *
+ * Capacitor
+ */
+
+`define P(x) (*x*)
+`include "discipline.h"
+
+module CAPACITOR(p,n);
+	inout p,n;
+	electrical p,n;
+
+	parameter real c=1e-6 from [0:inf)
+	     `P(info="Capaciance [Coulomb]");
+	real i1 `P(ask="yes");
+	analog begin
+		begin
+			i1 = 0; // BUG. see adms.implicit.xml l.156
+			I(p,n) <+ c*ddt(V(p,n));
+		end
+	end
+endmodule

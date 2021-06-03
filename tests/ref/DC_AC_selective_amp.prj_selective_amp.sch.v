@@ -19,6 +19,12 @@ Vdc #(.U(12 V)) V1(_net10, gnd);
 Eqn #(.Gain(dB(Output.v/Input.v)), .Export(yes)) Eqn1();
 endmodule // main
 
+paramset Sub ModelFactory;
+endparmset //Sub
+
+paramset Verilog ModelFactory;
+endparmset //Verilog
+
 module Symbol();
 endmodule // Symbol
 

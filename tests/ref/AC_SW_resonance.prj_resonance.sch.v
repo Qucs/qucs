@@ -8,6 +8,12 @@ L #(.L(13 nH), .I()) L1(Voltage, _net4);
 //AC1
 endmodule // main
 
+paramset Sub ModelFactory;
+endparmset //Sub
+
+paramset Verilog ModelFactory;
+endparmset //Verilog
+
 module Symbol();
 endmodule // Symbol
 

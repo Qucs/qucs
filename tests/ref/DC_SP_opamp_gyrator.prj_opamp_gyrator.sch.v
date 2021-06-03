@@ -20,6 +20,12 @@ L #(.L(5 H), .I()) L1(gnd, _net15);
 // `endif
 endmodule // main
 
+paramset Sub ModelFactory;
+endparmset //Sub
+
+paramset Verilog ModelFactory;
+endparmset //Verilog
+
 module Symbol();
 endmodule // Symbol
 

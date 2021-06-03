@@ -10,6 +10,12 @@ Port #(.Num(2), .Type(analog)) P2(P2, P2);
 GND #() *(gnd);
 endmodule // main
 
+paramset Sub ModelFactory;
+endparmset //Sub
+
+paramset Verilog ModelFactory;
+endparmset //Verilog
+
 module Symbol(_net2, _net1, _net0);
 painting incomplete
 painting incomplete

@@ -8,11 +8,17 @@ C #(.C(0.1 uF), .V(), .Symbol(neutral)) C2(_net11, _net2);
 R #(.R(10 kOhm), .Temp(26.85), .Tc1(0.0), .Tc2(0.0), .Tnom(26.85), .Symbol(european)) R4(_net12, _net0);
 endmodule // main
 
+paramset Sub ModelFactory;
+endparmset //Sub
+
+paramset Verilog ModelFactory;
+endparmset //Verilog
+
 module Symbol();
 endmodule // Symbol
 
 paramset Verilog$verilogmodel VerilogRef;
  .filename=verilogmodel.v;
  .dev_type=something;
-endparmset //Verilog:verilogmodel
+endparmset //Verilog$verilogmodel
 

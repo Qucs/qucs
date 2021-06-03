@@ -10,6 +10,12 @@ Sub$short_circuit #(.File(short_circuit.sch)) SC1(out, in);
 // `endif
 endmodule // main
 
+paramset Sub ModelFactory;
+endparmset //Sub
+
+paramset Verilog ModelFactory;
+endparmset //Verilog
+
 module Symbol();
 endmodule // Symbol
 

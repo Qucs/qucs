@@ -7,6 +7,12 @@ Port #(.Num(2), .Type(analog)) P2(P2, P2);
 Port #(.Num(1), .Type(analog)) P1(P1, P1);
 endmodule // main
 
+paramset Sub ModelFactory;
+endparmset //Sub
+
+paramset Verilog ModelFactory;
+endparmset //Verilog
+
 module Symbol();
 endmodule // Symbol
 

@@ -79,6 +79,7 @@ protected: // in
 public:
 	SubcktBase* parse_module(istream_t& cmd, SubcktBase* x) const;
 	SubcktBase* parse_model(istream_t&, SubcktBase*) const override;
+	Model* parse_paramset(istream_t&, Model*) const; //  override;
 	Symbol* parseSymbol(istream_t& cs, Symbol* sym) const;
 
 private:
@@ -315,6 +316,51 @@ Symbol* Verilog::parseSymbol(istream_t& cmd, Symbol* x) const
 	}
 }
 /*--------------------------------------------------------------------------*/
+static void parse_args_paramset(istream_t& cmd, Model* x)
+{
+	assert(x);
+
+	while (cmd >> '.') {
+		size_t here = cmd.cursor();
+		std::string name, value;
+		try{
+			cmd >> name >> '=' >> value >> ';';
+			x->set_param_by_name(name, value);
+		}catch (qucs::ExceptionNoMatch&) {untested();
+			cmd.warn(bDANGER, here, x->long_label() + ": bad parameter " + name + " ignored");
+		}
+	}
+}
+/*--------------------------------------------------------------------------*/
+/* "paramset" <my_name> <base_name> ";"
+ *    <paramset_item_declaration>*
+ *    <paramset_statement>*
+ *  "endparamset"
+ */
+//BUG// no paramset_item_declaration, falls back to spice mode
+
+Model* Verilog::parse_paramset(istream_t& cmd, Model* x) const
+{
+  assert(x);
+  cmd.reset();
+  cmd >> "paramset ";
+  parse_label(cmd, x);
+  parse_type(cmd, x);
+  cmd >> ';';
+
+  for (;;) {
+    parse_args_paramset(cmd, x);
+    if (cmd >> "endparamset ") {
+      break;
+    }else if (!cmd.more()) {
+      cmd.get_line("verilog-paramset>");
+    }else{untested();
+      cmd.check(bWARNING, "what's this?");
+      break;
+    }
+  }
+  return x;
+}
 SubcktBase* Verilog::parse_model(istream_t&, SubcktBase*) const
 { untested();
 	incomplete();
@@ -520,7 +566,7 @@ void Verilog::print_paramset(ostream_t& o, Model const* x) const
 	std::replace( label.begin(), label.end(), ':', '$');
 	o << "paramset " << label << ' ' << x->dev_type() << ";\n";
 	print_args(o, x);
-   o << "endparmset //"<< x->short_label() <<"\n\n";
+   o << "endparmset //"<< label <<"\n\n";
   // _mode = mDEFAULT;
 }
 /*--------------------------------------------------------------------------*/
@@ -712,6 +758,7 @@ SubcktBase* Verilog::parse_module(istream_t& cmd, SubcktBase* x) const
 		if (cmd >> "endmodule ") {
 			break;
 		}else if (cmd >> "parameter |param ") {
+			cmd >> "real";
 			std::string name;
 			cmd >> name;
 			DEV_DOT* d = new DEV_DOT();
@@ -759,11 +806,40 @@ Dispatcher<Command>::INSTALL d2(&command_dispatcher, "module|macromodule", &p2);
 class CMD_VERILOG : public Command {
 public:
   void do_it(CS&, CARD_LIST* Scope)
-  { untested();
+  {
     command("options lang=verilog", Scope);
   }
 } p8;
 DISPATCHER<Command>::INSTALL d8(&command_dispatcher, "verilog", &p8);
+/*--------------------------------------------------------------------------*/
+/*--------------------------------------------------------------------------*/
+class CMD_PARAMSET : public Command {
+  void do_it(CS& cmd, ElementList* Scope) {
+	  // already got "paramset"
+	  std::string my_name, base_name;
+	  cmd >> my_name;
+	  size_t here = cmd.cursor();
+	  cmd >> base_name;
+
+	  //const MODEL_CARD* p = model_dispatcher[base_name];
+	  const Element* p = lang_verilog.find_proto(base_name, NULL);
+	  if (p) {
+		  Element* cl = p->clone();
+		  auto new_card = dynamic_cast<Model*>(cl);
+		  if (new_card) {
+			  assert(!new_card->owner());
+			  lang_verilog.parse_paramset(cmd, new_card);
+			  Scope->push_back(new_card);
+		  }else{
+			  delete(cl);
+			  cmd.warn(bDANGER, here, "paramset: base has incorrect type");
+		  }
+	  }else{untested();
+		  cmd.warn(bDANGER, here, "paramset: no match");
+	  }
+  }
+}p3;
+Dispatcher<Command>::INSTALL d3(&command_dispatcher, "paramset", &p3);
 /*--------------------------------------------------------------------------*/
 } // namespace
 /*--------------------------------------------------------------------------*/

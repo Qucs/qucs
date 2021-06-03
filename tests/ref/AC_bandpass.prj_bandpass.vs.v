@@ -1,3 +1,9 @@
+paramset Sub ModelFactory;
+endparmset //Sub
+
+paramset Verilog ModelFactory;
+endparmset //Verilog
+
 module Sub$opa227(_net2, _net1, _net0);
 module main(P1, P2, P3);
 VCVS #(.G(1), .T(0)) SRC2(_net6, P3, gnd, gnd);

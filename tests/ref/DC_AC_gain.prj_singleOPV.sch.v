@@ -9,6 +9,12 @@ Port #(.Num(2), .Type()) P2(P2, P2);
 Idc #(.I(5 uA)) I1(_net17, P3);
 endmodule // main
 
+paramset Sub ModelFactory;
+endparmset //Sub
+
+paramset Verilog ModelFactory;
+endparmset //Verilog
+
 module Symbol(_net0, _net1, _net4, _net3, _net2);
 painting incomplete
 painting incomplete

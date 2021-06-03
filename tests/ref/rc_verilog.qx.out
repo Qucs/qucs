@@ -1,0 +1,32 @@
+Qacs : Qucs alternative command shell
+used for testing only
+This is free software, and you are welcome
+to redistribute it under the terms of 
+the GNU General Public License, version 3 or later.
+See the file "COPYING" for details.
+misc plugins: wip
+legacy plugins: wip
+paramset Verilog ModelFactory;
+endparmset //Verilog
+
+paramset Verilog$resistor VerilogRef;
+ .filename=resistor.va;
+ .dev_type=RESISTOR;
+endparmset //Verilog$resistor
+
+paramset Verilog$capacitor VerilogRef;
+ .filename=capacitor.va;
+ .dev_type=CAPACITOR;
+endparmset //Verilog$capacitor
+
+module main();
+Vrect #(.U(1 V), .TH(1 ms), .TL(1 ms), .Tr(1 ns), .Tf(1 ns), .Td(0 ns)) V1(_net13, gnd);
+GND #() GND2(gnd);
+C #(.C(0.1 uF), .V(), .Symbol(neutral)) C2(gnd, _net4);
+GND #() GND1(gnd);
+GND #() GND3(gnd);
+Verilog$resistor #(.File(resistor.va), .R(5k)) res2(_net13, _net4);
+Verilog$resistor #(.File(resistor.va), .R(1k)) res1(_net13, _net10);
+Verilog$capacitor #(.File(capacitor.va), .c(1u)) c1(_net10, gnd);
+endmodule // main
+

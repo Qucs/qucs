@@ -1,5 +1,8 @@
 
-EXTRA_DIST = 
+EXTRA_DIST = \
+	rc_verilog.sch \
+	resistor.va \
+	capacitor.va
 
 # need qucsator (skipped otherwise)
 QUCSATOR_TESTS = \
@@ -10,6 +13,7 @@ QX_TESTS = \
 	edd.0.qx \
 	list.0.qx \
 	list.1.qx \
+	rc_verilog.qx \
 	spice.0.qx
 
 SH_TESTS = \

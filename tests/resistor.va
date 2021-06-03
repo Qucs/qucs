@@ -1,0 +1,16 @@
+`include "discipline.h"
+
+module RESISTOR(p,n);
+	inout p,n;
+	electrical p,n;
+
+	parameter real R = 100;
+
+	real i (*ask="yes"*);
+	real v (*ask="yes"*);
+	analog begin
+		i = I(p,n);
+		v = V(p,n);
+		V(p,n) <+ i * R;
+	end
+endmodule

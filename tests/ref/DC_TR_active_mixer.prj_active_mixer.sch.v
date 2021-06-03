@@ -22,6 +22,12 @@ Idc #(.I(2 uA)) I2(_net29, gnd);
 Iac #(.I(1 uA), .f(1 kHz), .Phase(0), .Theta(0)) RF(_net29, gnd);
 endmodule // main
 
+paramset Sub ModelFactory;
+endparmset //Sub
+
+paramset Verilog ModelFactory;
+endparmset //Verilog
+
 module Symbol();
 endmodule // Symbol
 

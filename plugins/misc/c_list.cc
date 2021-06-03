@@ -103,7 +103,7 @@ void list_save(CS& cmd, ostream_t& out, CARD_LIST* scope)
     CARD_LIST::fat_iterator ci = (cmd.match1('-')) 
       ? CARD_LIST::fat_iterator(scope, scope->begin())
       : findbranch(cmd, scope);
-    if (ci.is_end()) {untested();
+    if (ci.is_end()) {
       trace2("cantfind", cmd.fullstring(), cmd.tail());
       throw qucs::Exception_CS("can't find", cmd);
     }else{

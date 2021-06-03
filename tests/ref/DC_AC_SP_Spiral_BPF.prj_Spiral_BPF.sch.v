@@ -18,6 +18,12 @@ Vdc #(.U(1.1 V)) V1(_net17, gnd);
 GND #() *(gnd);
 endmodule // main
 
+paramset Sub ModelFactory;
+endparmset //Sub
+
+paramset Verilog ModelFactory;
+endparmset //Verilog
+
 module Symbol();
 endmodule // Symbol
 

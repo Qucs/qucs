@@ -1,3 +1,9 @@
+paramset Sub ModelFactory;
+endparmset //Sub
+
+paramset Verilog ModelFactory;
+endparmset //Verilog
+
 module main();
 C #(.C(39.01pF), .V(), .Symbol(neutral)) C1(gnd, _net1);
 GND #() anonymous_gnd_hack_0(gnd);

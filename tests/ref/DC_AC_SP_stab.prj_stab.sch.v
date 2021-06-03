@@ -30,6 +30,12 @@ C #(.C(0.1 uF), .V(), .Symbol(neutral)) C1(_net21, gnd);
 C #(.C(5 uF), .V(), .Symbol(neutral)) C2(_net12, gnd);
 endmodule // main
 
+paramset Sub ModelFactory;
+endparmset //Sub
+
+paramset Verilog ModelFactory;
+endparmset //Verilog
+
 module Symbol();
 endmodule // Symbol
 

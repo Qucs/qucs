@@ -51,7 +51,7 @@ public:
 				_sub->set_owner(this);
 				_sub->set_dev_type("Sub");
 				subckt()->push_back(_sub);
-			}else{
+			}else{ untested();
 			}
 
 			// paramset ModelFactory Verilog;

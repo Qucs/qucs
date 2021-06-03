@@ -1,3 +1,9 @@
+paramset Sub ModelFactory;
+endparmset //Sub
+
+paramset Verilog ModelFactory;
+endparmset //Verilog
+
 module main();
 Vac #(.U(1 V), .f(1 GHz), .Phase(0), .Theta(0)) V1(_net0, _net1);
 GND #() anonymous_gnd_hack_0(gnd);

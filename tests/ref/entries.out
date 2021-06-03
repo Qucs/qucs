@@ -4,120 +4,120 @@ Eqn #(.y(1), .Export(yes)) my_Eqn();
 Eqn:my_Eqn y="1" Export="yes"
 ==============
   < my_ 1 0 0 -29 78 0 0 "1" 1 "1" 1>
- #(.T1(1), .T2(1)) my_();
-:my_ netlabel_BUG netlabel_BUG netlabel_BUG netlabel_BUG netlabel_BUG netlabel_BUG T1="1" T2="1"
+ #(.T1(1), .T2(1)) my_(unknown_net, unknown_net, unknown_net, unknown_net, unknown_net, unknown_net);
+:my_ unknown_net unknown_net unknown_net unknown_net unknown_net unknown_net T1="1" T2="1"
 ==============
   < my_ 1 0 0 -29 38 0 0 "1" 1>
- #(.T(1)) my_();
-:my_ netlabel_BUG netlabel_BUG netlabel_BUG netlabel_BUG T="1"
+ #(.T(1)) my_(unknown_net, unknown_net, unknown_net, unknown_net);
+:my_ unknown_net unknown_net unknown_net unknown_net T="1"
 ==============
   < my_ 1 0 0 -26 17 0 0 "1 pF" 1 "" 0 "neutral" 0>
- #(.C(1 pF), .V(), .Symbol(neutral)) my_();
-:my_ netlabel_BUG netlabel_BUG C="1 pF" V=""
+ #(.C(1 pF), .V(), .Symbol(neutral)) my_(unknown_net, unknown_net);
+:my_ unknown_net unknown_net C="1 pF" V=""
 ==============
   < my_ 1 0 0 -26 10 0 0 "1 nH" 1 "" 0>
- #(.L(1 nH), .I()) my_();
-:my_ netlabel_BUG netlabel_BUG L="1 nH" I=""
+ #(.L(1 nH), .I()) my_(unknown_net, unknown_net);
+:my_ unknown_net unknown_net L="1 nH" I=""
 ==============
   < my_ 1 0 0 -26 42 0 0 "1e6" 1 "15 V" 0>
- #(.G(1e6), .Umax(15 V)) my_();
-:my_ netlabel_BUG netlabel_BUG netlabel_BUG G="1e6" Umax="15 V"
+ #(.G(1e6), .Umax(15 V)) my_(unknown_net, unknown_net, unknown_net);
+:my_ unknown_net unknown_net unknown_net G="1e6" Umax="15 V"
 ==============
   < my_ 1 0 0 -26 15 0 0 "50 Ohm" 1 "26.85" 0 "0.0" 0 "0.0" 0 "26.85" 0 "european" 0>
- #(.R(50 Ohm), .Temp(26.85), .Tc1(0.0), .Tc2(0.0), .Tnom(26.85), .Symbol(european)) my_();
-:my_ netlabel_BUG netlabel_BUG R="50 Ohm" Temp="26.85" Tc1="0.0" Tc2="0.0" Tnom="26.85"
+ #(.R(50 Ohm), .Temp(26.85), .Tc1(0.0), .Tc2(0.0), .Tnom(26.85), .Symbol(european)) my_(unknown_net, unknown_net);
+:my_ unknown_net unknown_net R="50 Ohm" Temp="26.85" Tc1="0.0" Tc2="0.0" Tnom="26.85"
 =====scktport=========
   <Port my_Port 1 0 0 -23 12 0 0 "1" 1 "analog" 0>
-Port #(.Num(1), .Type()) my_Port();
-Port:my_Port netlabel_BUG netlabel_BUG Num="1" Type=""
+Port #(.Num(1), .Type()) my_Port(unknown_net, unknown_net);
+Port:my_Port unknown_net unknown_net Num="1" Type=""
 =====ideal transmission line=========
   < my_ 1 0 0 -26 20 0 0 "50 Ohm" 1 "1 mm" 1 "0 dB" 0 "26.85" 0>
- #(.Z(50 Ohm), .L(1 mm), .Alpha(0 dB), .Temp(26.85)) my_();
-:my_ netlabel_BUG netlabel_BUG Z="50 Ohm" L="1 mm" Alpha="0 dB" Temp="26.85"
+ #(.Z(50 Ohm), .L(1 mm), .Alpha(0 dB), .Temp(26.85)) my_(unknown_net, unknown_net);
+:my_ unknown_net unknown_net Z="50 Ohm" L="1 mm" Alpha="0 dB" Temp="26.85"
 ==============
   <GND my_GND 5 0 0 0 0 0 0>
-GND #() my_GND();
-GND:my_GND netlabel_BUG
+GND #() my_GND(unknown_net);
+GND:my_GND unknown_net
 ==============
   <Verilog my_Verilog 1 0 0 -26 51 0 0 "sub.v" 0>
-Verilog #(.File(sub.v)) my_Verilog();
-Verilog:my_Verilog netlabel_BUG netlabel_BUG netlabel_BUG netlabel_BUG
+Verilog #(.File(sub.v)) my_Verilog(unknown_net, unknown_net, unknown_net, unknown_net);
+Verilog:my_Verilog unknown_net unknown_net unknown_net unknown_net
 =====ideal dc current source=========
   < my_ 1 0 0 -26 18 0 0 "1 mA" 1>
- #(.I(1 mA)) my_();
-:my_ netlabel_BUG netlabel_BUG I="1 mA"
+ #(.I(1 mA)) my_(unknown_net, unknown_net);
+:my_ unknown_net unknown_net I="1 mA"
 ==============
   < my_ 1 0 0 -26 18 0 0 "1 V" 1 "1 GHz" 0 "0" 0 "0" 0>
- #(.U(1 V), .f(1 GHz), .Phase(0), .Theta(0)) my_();
-:my_ netlabel_BUG netlabel_BUG U="1 V" f="1 GHz" Phase="0" Theta="0"
+ #(.U(1 V), .f(1 GHz), .Phase(0), .Theta(0)) my_(unknown_net, unknown_net);
+:my_ unknown_net unknown_net U="1 V" f="1 GHz" Phase="0" Theta="0"
 ==============
   < my_ 1 0 0 -26 18 0 0 "1 V" 1>
- #(.U(1 V)) my_();
-:my_ netlabel_BUG netlabel_BUG U="1 V"
+ #(.U(1 V)) my_(unknown_net, unknown_net);
+:my_ unknown_net unknown_net U="1 V"
 ==============
   <VProbe my_VProbe 1 0 0 28 -31 0 0>
-VProbe #() my_VProbe();
-VProbe:my_VProbe netlabel_BUG netlabel_BUG
+VProbe #() my_VProbe(unknown_net, unknown_net);
+VProbe:my_VProbe unknown_net unknown_net
 ==============
   < my_ 1 0 0 -26 20 0 0 "1 mA" 1 "1 GHz" 0 "0" 0 "0" 0>
- #(.I(1 mA), .f(1 GHz), .Phase(0), .Theta(0)) my_();
-:my_ netlabel_BUG netlabel_BUG I="1 mA" f="1 GHz" Phase="0" Theta="0"
+ #(.I(1 mA), .f(1 GHz), .Phase(0), .Theta(0)) my_(unknown_net, unknown_net);
+:my_ unknown_net unknown_net I="1 mA" f="1 GHz" Phase="0" Theta="0"
 =====current probe=========
   < my_ 1 0 0 -26 16 0 0>
- #() my_();
-:my_ netlabel_BUG netlabel_BUG
+ #() my_(unknown_net, unknown_net);
+:my_ unknown_net unknown_net
 ==============
   <VCCS my_VCCS 1 0 0 -26 34 0 0 "1 S" 1 "0" 0>
-VCCS #(.G(1 S), .T(0)) my_VCCS();
-VCCS:my_VCCS netlabel_BUG netlabel_BUG netlabel_BUG netlabel_BUG G="1 S" T="0"
+VCCS #(.G(1 S), .T(0)) my_VCCS(unknown_net, unknown_net, unknown_net, unknown_net);
+VCCS:my_VCCS unknown_net unknown_net unknown_net unknown_net G="1 S" T="0"
 ==============
   < my_ 1 0 0 -26 34 0 0 "1" 1 "0" 0>
- #(.G(1), .T(0)) my_();
-:my_ netlabel_BUG netlabel_BUG netlabel_BUG netlabel_BUG G="1" T="0"
+ #(.G(1), .T(0)) my_(unknown_net, unknown_net, unknown_net, unknown_net);
+:my_ unknown_net unknown_net unknown_net unknown_net G="1" T="0"
 ==============
   < my_ 1 0 0 -26 18 0 0 "1 V" 1 "1 ms" 1 "1 ms" 1 "1 ns" 0 "1 ns" 0 "0 ns" 0>
- #(.U(1 V), .TH(1 ms), .TL(1 ms), .Tr(1 ns), .Tf(1 ns), .Td(0 ns)) my_();
-:my_ netlabel_BUG netlabel_BUG U="1 V" TH="1 ms" TL="1 ms" Tr="1 ns" Tf="1 ns" Td="0 ns"
+ #(.U(1 V), .TH(1 ms), .TL(1 ms), .Tr(1 ns), .Tf(1 ns), .Td(0 ns)) my_(unknown_net, unknown_net);
+:my_ unknown_net unknown_net U="1 V" TH="1 ms" TL="1 ms" Tr="1 ns" Tf="1 ns" Td="0 ns"
 =====coupled microstrip line=========
   < my_ 1 0 0 -26 37 0 0 "Subst1" 1 "1 mm" 1 "10 mm" 1 "1 mm" 1 "Kirschning" 0 "Kirschning" 0 "26.85" 0>
- #(.Subst(Subst1), .W(1 mm), .L(10 mm), .S(1 mm), .Model(Kirschning), .DispModel(Kirschning), .Temp(26.85)) my_();
-:my_ netlabel_BUG netlabel_BUG netlabel_BUG netlabel_BUG Subst="Subst1" W="1 mm" L="10 mm" S="1 mm" Model="Kirschning" DispModel="Kirschning" Temp="26.85"
+ #(.Subst(Subst1), .W(1 mm), .L(10 mm), .S(1 mm), .Model(Kirschning), .DispModel(Kirschning), .Temp(26.85)) my_(unknown_net, unknown_net, unknown_net, unknown_net);
+:my_ unknown_net unknown_net unknown_net unknown_net Subst="Subst1" W="1 mm" L="10 mm" S="1 mm" Model="Kirschning" DispModel="Kirschning" Temp="26.85"
 =====substrate definition=========
   < my_ 1 0 0 -30 24 0 0 "9.8" 1 "1 mm" 1 "35 um" 1 "2e-4" 1 "0.022e-6" 1 "0.15e-6" 1>
  #(.er(9.8), .h(1 mm), .t(35 um), .tand(2e-4), .rho(0.022e-6), .D(0.15e-6)) my_();
 :my_ er="9.8" h="1 mm" t="35 um" tand="2e-4" rho="0.022e-6" D="0.15e-6"
 =====microstrip corner=========
   < my_ 1 0 0 15 -7 0 0 "Subst1" 1 "1 mm" 1>
- #(.Subst(Subst1), .W(1 mm)) my_();
-:my_ netlabel_BUG netlabel_BUG Subst="Subst1" W="1 mm"
+ #(.Subst(Subst1), .W(1 mm)) my_(unknown_net, unknown_net);
+:my_ unknown_net unknown_net Subst="Subst1" W="1 mm"
 =====microstrip cross=========
   < my_ 1 0 0 -26 34 0 0 "Subst1" 1 "1 mm" 1 "2 mm" 1 "1 mm" 1 "2 mm" 1 "Hammerstad" 0 "Kirschning" 0 "showNumbers" 0>
- #(.Subst(Subst1), .W1(1 mm), .W2(2 mm), .W3(1 mm), .W4(2 mm), .MSModel(Hammerstad), .MSDispModel(Kirschning), .Symbol(showNumbers)) my_();
-:my_ netlabel_BUG netlabel_BUG netlabel_BUG netlabel_BUG Subst="Subst1" W1="1 mm" W2="2 mm" W3="1 mm" W4="2 mm" MSModel="Hammerstad" MSDispModel="Kirschning"
+ #(.Subst(Subst1), .W1(1 mm), .W2(2 mm), .W3(1 mm), .W4(2 mm), .MSModel(Hammerstad), .MSDispModel(Kirschning), .Symbol(showNumbers)) my_(unknown_net, unknown_net, unknown_net, unknown_net);
+:my_ unknown_net unknown_net unknown_net unknown_net Subst="Subst1" W1="1 mm" W2="2 mm" W3="1 mm" W4="2 mm" MSModel="Hammerstad" MSDispModel="Kirschning"
 =====microstrip lange coupler=========
   < my_ 1 0 0 -26 37 0 0 "Subst1" 1 "1 mm" 1 "10 mm" 1 "1 mm" 1 "Kirschning" 0 "Kirschning" 0 "26.85" 0>
- #(.Subst(Subst1), .W(1 mm), .L(10 mm), .S(1 mm), .Model(Kirschning), .DispModel(Kirschning), .Temp(26.85)) my_();
-:my_ netlabel_BUG netlabel_BUG netlabel_BUG netlabel_BUG Subst="Subst1" W="1 mm" L="10 mm" S="1 mm" Model="Kirschning" DispModel="Kirschning" Temp="26.85"
+ #(.Subst(Subst1), .W(1 mm), .L(10 mm), .S(1 mm), .Model(Kirschning), .DispModel(Kirschning), .Temp(26.85)) my_(unknown_net, unknown_net, unknown_net, unknown_net);
+:my_ unknown_net unknown_net unknown_net unknown_net Subst="Subst1" W="1 mm" L="10 mm" S="1 mm" Model="Kirschning" DispModel="Kirschning" Temp="26.85"
 =====microstrip line=========
   < my_ 1 0 0 -26 15 0 0 "Subst1" 1 "1 mm" 1 "10 mm" 1 "Hammerstad" 0 "Kirschning" 0 "26.85" 0>
- #(.Subst(Subst1), .W(1 mm), .L(10 mm), .Model(Hammerstad), .DispModel(Kirschning), .Temp(26.85)) my_();
-:my_ netlabel_BUG netlabel_BUG Subst="Subst1" W="1 mm" L="10 mm" Model="Hammerstad" DispModel="Kirschning" Temp="26.85"
+ #(.Subst(Subst1), .W(1 mm), .L(10 mm), .Model(Hammerstad), .DispModel(Kirschning), .Temp(26.85)) my_(unknown_net, unknown_net);
+:my_ unknown_net unknown_net Subst="Subst1" W="1 mm" L="10 mm" Model="Hammerstad" DispModel="Kirschning" Temp="26.85"
 =====microstrip impedance step=========
   < my_ 1 0 0 -26 17 0 0 "Subst1" 1 "2 mm" 1 "1 mm" 1 "Hammerstad" 0 "Kirschning" 0>
- #(.Subst(Subst1), .W1(2 mm), .W2(1 mm), .MSModel(Hammerstad), .MSDispModel(Kirschning)) my_();
-:my_ netlabel_BUG netlabel_BUG Subst="Subst1" W1="2 mm" W2="1 mm" MSModel="Hammerstad" MSDispModel="Kirschning"
+ #(.Subst(Subst1), .W1(2 mm), .W2(1 mm), .MSModel(Hammerstad), .MSDispModel(Kirschning)) my_(unknown_net, unknown_net);
+:my_ unknown_net unknown_net Subst="Subst1" W1="2 mm" W2="1 mm" MSModel="Hammerstad" MSDispModel="Kirschning"
 =====microstrip tee=========
   <MTEE my_MTEE 1 0 0 -26 -25 0 0 "Subst1" 1 "1 mm" 1 "1 mm" 1 "2 mm" 1 "Hammerstad" 0 "Kirschning" 0 "26.85" 0 "showNumbers" 0>
-MTEE #(.Subst(Subst1), .W1(1 mm), .W2(1 mm), .W3(2 mm), .MSModel(Hammerstad), .MSDispModel(Kirschning), .Temp(26.85), .Symbol(showNumbers)) my_MTEE();
-MTEE:my_MTEE netlabel_BUG netlabel_BUG netlabel_BUG Subst="Subst1" W1="1 mm" W2="1 mm" W3="2 mm" MSModel="Hammerstad" MSDispModel="Kirschning" Temp="26.85"
+MTEE #(.Subst(Subst1), .W1(1 mm), .W2(1 mm), .W3(2 mm), .MSModel(Hammerstad), .MSDispModel(Kirschning), .Temp(26.85), .Symbol(showNumbers)) my_MTEE(unknown_net, unknown_net, unknown_net);
+MTEE:my_MTEE unknown_net unknown_net unknown_net Subst="Subst1" W1="1 mm" W2="1 mm" W3="2 mm" MSModel="Hammerstad" MSDispModel="Kirschning" Temp="26.85"
 ==============
   < my_ 1 0 0 49 -26 0 0 "0.5 V" 0 "0.1 V" 0 "0" 0 "1e12" 0 "26.85" 0>
- #(.Vt(0.5 V), .Vh(0.1 V), .Ron(0), .Roff(1e12), .Temp(26.85)) my_();
-:my_ netlabel_BUG netlabel_BUG netlabel_BUG netlabel_BUG Vt="0.5 V" Vh="0.1 V" Ron="0" Roff="1e12" Temp="26.85"
+ #(.Vt(0.5 V), .Vh(0.1 V), .Ron(0), .Roff(1e12), .Temp(26.85)) my_(unknown_net, unknown_net, unknown_net, unknown_net);
+:my_ unknown_net unknown_net unknown_net unknown_net Vt="0.5 V" Vh="0.1 V" Ron="0" Roff="1e12" Temp="26.85"
 ==============
   < my_ 1 0 0 -26 18 0 0 "1" 1 "50 Ohm" 1 "0 dBm" 0 "1 GHz" 0 "26.85" 0>
- #(.Num(1), .Z(50 Ohm), .P(0 dBm), .f(1 GHz), .Temp(26.85)) my_();
-:my_ netlabel_BUG netlabel_BUG Num="1" Z="50 Ohm" P="0 dBm" f="1 GHz" Temp="26.85"
+ #(.Num(1), .Z(50 Ohm), .P(0 dBm), .f(1 GHz), .Temp(26.85)) my_(unknown_net, unknown_net);
+:my_ unknown_net unknown_net Num="1" Z="50 Ohm" P="0 dBm" f="1 GHz" Temp="26.85"
 ==============
   <.AC my_AC 1 0 0 0 33  0 0 "lin" 1 "1 GHz" 1 "10 GHz" 1 "19" 1 "no" 0>
 //my_AC
@@ -132,8 +132,8 @@ MTEE:my_MTEE netlabel_BUG netlabel_BUG netlabel_BUG Subst="Subst1" W1="1 mm" W2=
 .:my_ Type="lin" Start="0" Stop="1 ms" Points="11" IntegrationMethod="Trapezoidal" Order="2" InitialStep="1 ns" MinStep="1e-16" MaxIter="150" reltol="0.001" abstol="1 pA" vntol="1 uV" Temp="26.85" LTEreltol="1e-3" LTEabstol="1e-6" LTEfactor="1" Solver="CroutLU" relaxTSR="no" initialDC="yes" MaxStep="0"
 ==============
   < my_ 1 0 0 -26 15 0 0 "1e-15 A" 1 "1" 1 "10 fF" 1 "0.5" 0 "0.7 V" 0 "0.5" 0 "0.0 fF" 0 "0.0" 0 "2.0" 0 "0.0 Ohm" 0 "0.0 ps" 0 "0" 0 "0.0" 0 "1.0" 0 "1.0" 0 "0" 0 "1 mA" 0 "26.85" 0 "3.0" 0 "1.11" 0 "0.0" 0 "0.0" 0 "0.0" 0 "0.0" 0 "0.0" 0 "0.0" 0 "26.85" 0 "1.0" 0 "normal" 0>
- #(.Is(1e-15 A), .N(1), .Cj0(10 fF), .M(0.5), .Vj(0.7 V), .Fc(0.5), .Cp(0.0 fF), .Isr(0.0), .Nr(2.0), .Rs(0.0 Ohm), .Tt(0.0 ps), .Ikf(0), .Kf(0.0), .Af(1.0), .Ffe(1.0), .Bv(0), .Ibv(1 mA), .Temp(26.85), .Xti(3.0), .Eg(1.11), .Tbv(0.0), .Trs(0.0), .Ttt1(0.0), .Ttt2(0.0), .Tm1(0.0), .Tm2(0.0), .Tnom(26.85), .Area(1.0), .Symbol(normal)) my_();
-:my_ netlabel_BUG netlabel_BUG Is="1e-15 A" N="1" Cj0="10 fF" M="0.5" Vj="0.7 V" Fc="0.5" Cp="0.0 fF" Isr="0.0" Nr="2.0" Rs="0.0 Ohm" Tt="0.0 ps" Ikf="0" Kf="0.0" Af="1.0" Ffe="1.0" Bv="0" Ibv="1 mA" Temp="26.85" Xti="3.0" Eg="1.11" Tbv="0.0" Trs="0.0" Ttt1="0.0" Ttt2="0.0" Tm1="0.0" Tm2="0.0" Tnom="26.85" Area="1.0"
+ #(.Is(1e-15 A), .N(1), .Cj0(10 fF), .M(0.5), .Vj(0.7 V), .Fc(0.5), .Cp(0.0 fF), .Isr(0.0), .Nr(2.0), .Rs(0.0 Ohm), .Tt(0.0 ps), .Ikf(0), .Kf(0.0), .Af(1.0), .Ffe(1.0), .Bv(0), .Ibv(1 mA), .Temp(26.85), .Xti(3.0), .Eg(1.11), .Tbv(0.0), .Trs(0.0), .Ttt1(0.0), .Ttt2(0.0), .Tm1(0.0), .Tm2(0.0), .Tnom(26.85), .Area(1.0), .Symbol(normal)) my_(unknown_net, unknown_net);
+:my_ unknown_net unknown_net Is="1e-15 A" N="1" Cj0="10 fF" M="0.5" Vj="0.7 V" Fc="0.5" Cp="0.0 fF" Isr="0.0" Nr="2.0" Rs="0.0 Ohm" Tt="0.0 ps" Ikf="0" Kf="0.0" Af="1.0" Ffe="1.0" Bv="0" Ibv="1 mA" Temp="26.85" Xti="3.0" Eg="1.11" Tbv="0.0" Trs="0.0" Ttt1="0.0" Ttt2="0.0" Tm1="0.0" Tm2="0.0" Tnom="26.85" Area="1.0"
 ==============
   <EArc 0 0 0 0 0 0 #000000 1 1>
 painting incomplete

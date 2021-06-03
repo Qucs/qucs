@@ -18,6 +18,12 @@ Eqn #(.Bfreq(40k), .Bperiod(1/Bfreq), .Bduty(30), .Ton(Bperiod*Bduty/100), .Toff
 // `endif
 endmodule // main
 
+paramset Sub ModelFactory;
+endparmset //Sub
+
+paramset Verilog ModelFactory;
+endparmset //Verilog
+
 module Symbol();
 endmodule // Symbol
 

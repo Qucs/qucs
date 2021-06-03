@@ -24,6 +24,12 @@ Eqn #(.Ampl(dB(Output.v)), .Phase(phase(Output.v)), .Export(yes)) Eqn1();
 //DC1
 endmodule // main
 
+paramset Sub ModelFactory;
+endparmset //Sub
+
+paramset Verilog ModelFactory;
+endparmset //Verilog
+
 module Symbol();
 endmodule // Symbol
 

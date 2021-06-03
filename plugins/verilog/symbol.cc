@@ -524,6 +524,9 @@ void Verilog::build_sckt(istream_t& cmd, SubcktBase* proto) const
 			if(auto a=dynamic_cast<DEV_DOT*>(i)){
 				istream_t cs(istream_t::_STRING, a->s());
 				if(cs >> "parameter"){ // portparameter?
+					if(cs >> "real"){
+					}else{ untested();
+					}
 					std::string name;
 					std::string defv;
 					cs >> name;
@@ -659,6 +662,9 @@ void Verilog::init(Component const* proto)
 			if(auto a=dynamic_cast<DEV_DOT*>(i)){
 				istream_t cs(istream_t::_STRING, a->s());
 				if(cs.umatch("parameter")){ // portparameter?
+					if(cs >> "real"){
+					}else{ untested();
+					}
 					trace1("LibComp DOT", a->s());
 					std::string name;
 					std::string defv;

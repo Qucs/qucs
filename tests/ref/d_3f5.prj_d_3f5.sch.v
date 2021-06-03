@@ -14,6 +14,12 @@ Lib$Xyce$v_dc #(.Lib(Xyce), .Component(v_dc)) v_dc1();
 // `endif
 endmodule // main
 
+paramset Sub ModelFactory;
+endparmset //Sub
+
+paramset Verilog ModelFactory;
+endparmset //Verilog
+
 module Symbol();
 endmodule // Symbol
 

@@ -6,6 +6,12 @@ GND #() *(gnd);
 C #(.C(1 pF), .V(), .Symbol(neutral)) C1(gnd, P1);
 endmodule // main
 
+paramset Sub ModelFactory;
+endparmset //Sub
+
+paramset Verilog ModelFactory;
+endparmset //Verilog
+
 module Symbol(_net1, _net0);
 painting incomplete
 // .port_ x=-30 y=0 n=1 label=:port2

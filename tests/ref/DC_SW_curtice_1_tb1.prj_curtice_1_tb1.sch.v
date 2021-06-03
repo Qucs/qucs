@@ -14,6 +14,12 @@ Sub$curtice_1 #(.File(curtice_1.sch), .RG(1m), .RD(1m), .RS(1m), .VBR(10e10), .L
 // `endif
 endmodule // main
 
+paramset Sub ModelFactory;
+endparmset //Sub
+
+paramset Verilog ModelFactory;
+endparmset //Verilog
+
 module Symbol();
 painting incomplete
 painting incomplete

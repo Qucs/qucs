@@ -25,7 +25,7 @@
 /*--------------------------------------------------------------------------*/
 namespace qucs{
 /*--------------------------------------------------------------------------*/
-// ModelFactory
+// ModelManager
 Element* SymbolFactory::clone_instance() const
 {
 	assert(_proto);
@@ -33,12 +33,12 @@ Element* SymbolFactory::clone_instance() const
 }
 /*--------------------------------------------------------------------------*/
 SymbolFactory::SymbolFactory()
-    : Element()
+    : Model(nullptr)
 {
 }
 /*--------------------------------------------------------------------------*/
 SymbolFactory::SymbolFactory(SymbolFactory const& s)
-    : Element(s)
+    : Model(s)
 {
 }
 /*--------------------------------------------------------------------------*/
@@ -58,6 +58,11 @@ void SymbolFactory::stash(Element* e)
 void SymbolFactory::set_dev_type(std::string const& name)
 {
 	trace1("ModelFactory::set_dev_type", name);
+	if(name == "ModelFactory"){
+		// abuse of paramset notation...
+		return;
+	}else{
+	}
 	Element* e = nullptr;
 	try{
 		e = find_looking_out(name)->clone();
@@ -68,7 +73,11 @@ void SymbolFactory::set_dev_type(std::string const& name)
 
 	if(auto ps = prechecked_cast<Symbol*>(e)){
 		_proto = ps;
-		_scope = owner()->scope();
+		if(owner()){
+			_scope = owner()->scope();
+		}else{
+			_scope = &ElementList::card_list;
+		}
 		set_label(name);
 	}else{ untested();
 		throw qucs::ExceptionCantFind(name, short_label());
@@ -80,12 +89,23 @@ static Element* find_recursive(Element* where, std::string const& name)
 	Element* f=nullptr;
 	while(where){
 		try{
+			trace3("find...", where->short_label(), name, where->scope());
 			f = where->find_in_my_scope(name);
 			break;
 		}catch(qucs::ExceptionCantFind const&){
-			trace1("owner?", where->short_label());
+			trace2("owner?", where->short_label(), where->owner());
 			where = where->owner();
 		}
+	}
+
+	if(!where){
+		// hack
+		auto i = ElementList::card_list.find_(name);
+		if (i == ElementList::card_list.end()) {
+		}else{
+			f = *i;
+		}
+	}else{
 	}
 
 	return f;
@@ -132,7 +152,7 @@ Element const* FactorySymbol::find_proto(std::string const& n)
 			}else{
 				trace2("invalid", m->short_label(), n);
 			}
-		}else{
+		}else{ untested();
 		}
 
 		istream_t cmd(istream_t::_STRING, n);
@@ -145,6 +165,7 @@ void FactorySymbol::set_dev_type(std::string const& name)
 {
 	trace1("FactorySymbol::set_dev_type", name);
 	if(owner()){
+		trace1("FactorySymbol::set_dev_type", owner()->short_label());
 		Element* ee = find_recursive(this, name);
 		SymbolFactory* f = dynamic_cast<SymbolFactory*>(ee);
 		if(!f){
@@ -152,7 +173,7 @@ void FactorySymbol::set_dev_type(std::string const& name)
 		}else{
 		}
 		_factory = f;
-	}else{
+	}else{ untested();
 	}
 	Symbol::set_dev_type(name);
 }

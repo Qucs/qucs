@@ -54,7 +54,9 @@ void Element::detachFromModel()
 /*--------------------------------------------------------------------------*/
 ElementList* Element::scope()
 {
-	if(auto o=dynamic_cast<Component*>(owner())){
+	if(!owner()){
+		return &ElementList::card_list;
+	}else if(auto o=dynamic_cast<Component*>(owner())){
 		if(o->subckt()){
 			return o->subckt();
 //		}else if(o->makes_own_scope()){ untested();

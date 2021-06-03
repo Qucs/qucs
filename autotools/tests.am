@@ -148,11 +148,14 @@ CLEANFILES += \
 	*.sch.net \
 	*.out *core
 
+srcdir:
+	$(LN_S) $(srcdir) $@
+
 .PHONY: .P
 ${QUCSATOR_TESTS:%.qx=%.log} : .P
 ${QUCSATOR_TESTS:%.qx=out/%.qx.out} : .P
 ${PRJ_TESTS:%.prj=%.log} : .P
 ${SH_TESTS:%.sh=%.log} : .P
 ${QX_TESTS:%.qx=%.log} : .P
-${QX_TESTS:%.qx=out/%.qx.out} : .P
+${QX_TESTS:%.qx=out/%.qx.out} : .P | srcdir
 ${check_PROGRAMS:%=%.log} : .P

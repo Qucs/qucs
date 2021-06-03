@@ -7,6 +7,12 @@ Sub$nest2 #(.File(nest2.sch)) SC2(P2, _net9);
 R #(.R(0 Ohm), .Temp(26.85), .Tc1(0.0), .Tc2(0.0), .Tnom(26.85), .Symbol(US)) R1(P1, _net9);
 endmodule // main
 
+paramset Sub ModelFactory;
+endparmset //Sub
+
+paramset Verilog ModelFactory;
+endparmset //Verilog
+
 module Symbol(_net0, _net1);
 painting incomplete
 // .port_ x=-30 y=0 n=0 label=:port1

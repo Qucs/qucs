@@ -10,6 +10,12 @@ Vac #(.U(5 V), .f(10 MHz), .Phase(0), .Theta(0)) V2(Drain, _net9);
 //TR1
 endmodule // main
 
+paramset Sub ModelFactory;
+endparmset //Sub
+
+paramset Verilog ModelFactory;
+endparmset //Verilog
+
 module Symbol();
 endmodule // Symbol
 
