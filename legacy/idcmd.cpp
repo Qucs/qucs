@@ -69,7 +69,7 @@ class IdCommand : public Command{
 			i += 2;
 		}
 
-		auto ps = qucs::element_dispatcher.clone(".ID");
+		auto ps = qucs::element_dispatcher.clone(".ID"); // it's a legacy painting...
 		assert(ps);
 		trace3("ID push", label, cx, cy);
 		ps->setPosition(pos_t(cx,cy));

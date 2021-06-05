@@ -17,6 +17,7 @@
 /*--------------------------------------------------------------------------*/
 #include <string>
 #include <assert.h>
+#include "io_trace.h"
 /*--------------------------------------------------------------------------*/
 class pos_t;
 /*--------------------------------------------------------------------------*/
@@ -35,6 +36,7 @@ public:
   virtual ~Port();
 
 public: // This makes Port behave like a pointer (and that's what it is).
+  Port& operator=(Port const& p){untested(); _node = p._node; return *this;}
   Node const* operator->() const {return _node;}
 
 public:

@@ -38,6 +38,14 @@ namespace qucs {
 /*--------------------------------------------------------------------------*/
 namespace {
 /*--------------------------------------------------------------------------*/
+template <class InputIter, class Size, class OutputIter>
+void copy_n(InputIter first, Size count, OutputIter result)
+{
+  for ( ; count > 0; --count) {
+    *result++ = *first++;
+  }
+}
+/*--------------------------------------------------------------------------*/
 const std::string typesep(":");
 /*--------------------------------------------------------------------------*/
 using qucs::CommonComponent;
@@ -213,7 +221,15 @@ private: // overrides
 		return _ports.size();
 	}
 	Port& port(index_t i) override{
-		assert(i < _ports.size());
+		if(i < _ports.size()){
+			return _ports[i];
+		}else if(i<max_nodes()){
+			std::vector<Port> p(i+1);
+			::copy_n(_ports.begin(), _ports.size(), p.begin());
+			std::swap(_ports, p);
+		}else{
+			assert(false);
+		}
 		return _ports[i];
 	}
 

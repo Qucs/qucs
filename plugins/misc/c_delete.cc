@@ -32,18 +32,19 @@
 #include "qucs_globals.h"
 #include "element_list.h"
 #include "command.h"
+#include "component.h"
 #define CARD_LIST ElementList
 #define CMD Command
 #define CS istream_t
+/*--------------------------------------------------------------------------*/
+bool wmatch(const std::string& s1,const std::string& s2);
 /*--------------------------------------------------------------------------*/
 namespace {
 /*--------------------------------------------------------------------------*/
 class CMD_DELETE : public CMD {
 private:
-  bool delete_one_name(const std::string& name, CARD_LIST* Scope)const
-  {
-    incomplete();
-#if 0
+  bool delete_one_name(const std::string& name, CARD_LIST* Scope)const { untested();
+#if 1
     assert(Scope);
     
     std::string::size_type dotplace = name.find_first_of(".");
@@ -69,12 +70,18 @@ private:
       if (i == Scope->end()) {
 	// can't find "container" (probably .subckt) - no match
 	return false;
-      }else if ((**i).is_device()) {
-	// found a match, but it isn't a container (subckt)
-	return false;
+      }else if(auto c=dynamic_cast<qucs::Component*>(*i)){
+	if (c->is_device()) {
+	  // found a match, but it isn't a container (subckt)
+	  return false;
+	}else if(c->makes_own_scope()){
+	  return delete_one_name(dev_name, c->scope());
+	}else{
+	  // found the container, look inside
+	  return delete_one_name(dev_name, c->subckt());
+	}
       }else{
-	// found the container, look inside
-	return delete_one_name(dev_name, (**i).subckt());
+	  return false;
       }
       unreachable();
     }else{
