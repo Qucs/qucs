@@ -106,7 +106,7 @@ public: // not sure. leaves unconnected objects in the main container...
 	void connect(Symbol* c);
 	void disconnect(Symbol* c);
 
-public:
+public: // BUG
 	Element* detach(Element* c);
 
 public: // container

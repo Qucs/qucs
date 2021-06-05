@@ -123,10 +123,6 @@ public:
 	virtual ElementList* scope();
 	virtual bool makes_own_scope()const  {return false;}
 
-public: // friend ElementGraphics?
-	//  void attachToModel();
-	void detachFromModel();
-
 public:
 	Element const* owner() const{return _owner;}
 	Element* owner(){return _owner;}

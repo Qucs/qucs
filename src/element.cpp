@@ -15,16 +15,16 @@
 #include "element.h"
 #include "component.h" // BUG
 #include "element_list.h"
-
+/*--------------------------------------------------------------------------*/
 namespace qucs {
-
+/*--------------------------------------------------------------------------*/
 Element::Element() : _position(0, 0), _owner(nullptr)
 {
   // Type = isDummyElement; // BUG
   x1 = y1 = 0; // x2 = y2 = 0; // really?
 //  set_label(name());
 }
-
+/*--------------------------------------------------------------------------*/
 Element::Element(Element const& e)
  : Object(e),
    _position(e._position),
@@ -42,14 +42,9 @@ void Element::set_dev_type(const std::string& New_Type)
     // it matches -- ok.
   }
 }
+/*--------------------------------------------------------------------------*/
 Element::~Element()
 {
-}
-/*--------------------------------------------------------------------------*/
-void Element::detachFromModel()
-{
-	assert(scope());
-	scope()->detach(this);
 }
 /*--------------------------------------------------------------------------*/
 ElementList* Element::scope()
@@ -64,43 +59,45 @@ ElementList* Element::scope()
 			return o->scope();
 			return nullptr;
 		}
-	}else{
+	}else{ untested();
 		return nullptr;
 	}
 }
 /*--------------------------------------------------------------------------*/
 std::string Element::param_value(index_t) const
-{
+{ untested();
+	unreachable();
 	return "not_reached_elt_pv";
 }
 /*--------------------------------------------------------------------------*/
 std::string Element::param_name(index_t) const
-{
+{ untested();
+	unreachable();
 	return "not_reached_elt_pn";
 }
 /*--------------------------------------------------------------------------*/
 void Element::set_param_by_index(index_t i, std::string const&)
-{
+{ untested();
 	throw qucs::ExceptionCantFind(label(), "parameter " + std::to_string(i), label());
 }
 /*--------------------------------------------------------------------------*/
 void Element::set_param_by_name(std::string const& name, std::string const&)
-{
+{ untested();
 	throw qucs::ExceptionCantFind("parameter " + name, label());
 }
 /*--------------------------------------------------------------------------*/
 std::string Element::param_value_by_name(std::string const& name) const
-{
+{ untested();
 	throw qucs::ExceptionCantFind("parameter " + name, label());
 }
 /*--------------------------------------------------------------------------*/
-pos_t /* const & */ Element::center()const
+pos_t Element::center() const
 {
 	return pos_t(cx(), cy());
 }
-
+/*--------------------------------------------------------------------------*/
 // borrowed/modified from e_card.h
-const Element* Element::find_looking_out(const std::string& name)const
+const Element* Element::find_looking_out(const std::string& name) const
 {
 	trace3("Element::find_looking_out", name, label(), owner());
 	try {
@@ -109,12 +106,12 @@ const Element* Element::find_looking_out(const std::string& name)const
 		if (auto o=dynamic_cast<Element const*>(owner())) {
 			trace3("find_looking_out2", name, label(), o->label());
 			return o->find_looking_out(name);
-		// }else if (makes_own_scope()) {
+		// }else if (makes_own_scope()) { untested();
 		// 	// probably a subckt or "module"
 		// 	CARD_LIST::const_iterator i = CARD_LIST::card_list.find_(name);
-		// 	if (i != CARD_LIST::card_list.end()) {
+		// 	if (i != CARD_LIST::card_list.end()) { untested();
 		// 		return *i;
-		// 	}else{
+		// 	}else{ untested();
 		// 		throw;
 		// 	}
 		}else{
@@ -166,4 +163,4 @@ Element* Element::find_in_my_scope(std::string const& name)
 /*--------------------------------------------------------------------------*/
 } // qucs
 /*--------------------------------------------------------------------------*/
-
+/*--------------------------------------------------------------------------*/
