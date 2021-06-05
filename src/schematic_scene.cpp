@@ -446,19 +446,14 @@ ElementList* SchematicScene::scope()
 }
 /*--------------------------------------------------------------------------*/
 // detachFromMain?
+// duplicate in schematic_doc. needed?
 Element* SchematicScene::detachFromModel(Element* e)
-{
-#if 1
+{ untested();
 	assert(scope());
-	scope()->detach(e);
-	Element const* ce = e;
+	Element* ce = e->clone();
 	assert(ce->owner()==nullptr);
-	return e;
-#else
-	auto c = e->clone();
-	e->scope()->erase(e);
-	return c;
-#endif
+	scope()->erase(e);
+	return ce;
 }
 /*--------------------------------------------------------------------------*/
 ElementGraphics const* SchematicScene::find_place(pos_t const& p) const

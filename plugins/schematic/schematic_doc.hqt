@@ -192,11 +192,16 @@ private:
 public:
   SchematicScene *sceneHACK() {itested(); return scene(); }
 
+#if 0
   // TODO: take iterator?
+  // duplicate in schematic_scene? needed?
   Element* detachFromModel(Element* e){ untested();
 	  assert(_model);
-	  return _model->detach(e);
+	  auto cl = e->clone();
+	  _model->erase(e);
+	  return cl;
   }
+#endif
 
   void deselectElements();
 
