@@ -25,7 +25,6 @@
 /*--------------------------------------------------------------------------*/
 namespace qucs{
 /*--------------------------------------------------------------------------*/
-// ModelManager
 Element* SymbolFactory::clone_instance() const
 {
 	assert(_proto);
@@ -42,22 +41,68 @@ SymbolFactory::SymbolFactory(SymbolFactory const& s)
 {
 }
 /*--------------------------------------------------------------------------*/
+FactorySymbol::FactorySymbol() : Symbol()
+{
+}
+/*--------------------------------------------------------------------------*/
+FactorySymbol::FactorySymbol(FactorySymbol const& p)
+	: Symbol(p), _factory(p._factory)
+{
+}
+/*--------------------------------------------------------------------------*/
+FactorySymbol::~FactorySymbol()
+{
+	if(!_factory){
+	}else if(_proto){
+		_factory->decref(_proto);
+	}else{
+	}
+}
+/*--------------------------------------------------------------------------*/
 SymbolFactory::~SymbolFactory()
 {
 	delete _proto;
 	_proto = nullptr;
+	for(auto i : _counts){
+		if(i.second){
+			// some clear call is missing.
+			// or the factory is deleted early?
+			incomplete();
+			unreachable();
+		}else{
+		}
+	}
 }
 /*--------------------------------------------------------------------------*/
-void SymbolFactory::stash(Element* e)
+void SymbolFactory::decref(Element const* model)
 {
-	// TODO: keep track.
+	assert(model);
+	trace1("decref", model->short_label());
+	unsigned& u = _counts[intptr_t(model)];
+	assert(u);
+	--u;
+	if(!u){
+		auto mh = const_cast<Element*>(model);
+		_scope->erase(mh);
+	}else{
+	}
+}
+/*--------------------------------------------------------------------------*/
+void SymbolFactory::incref(Element const* model)
+{
+	trace1("incref", model->short_label());
+	++_counts[intptr_t(model)];
+}
+/*--------------------------------------------------------------------------*/
+void SymbolFactory::stash(Element* model)
+{
 	assert(_scope);
-	_scope->push_back(e);
+	_scope->push_back(model);
 }
 /*--------------------------------------------------------------------------*/
 void SymbolFactory::set_dev_type(std::string const& name)
 {
-	trace1("ModelFactory::set_dev_type", name);
+	trace1("SymbolFactory::set_dev_type", name);
 	if(name == "ModelFactory"){
 		// abuse of paramset notation...
 		return;
@@ -101,7 +146,7 @@ static Element* find_recursive(Element* where, std::string const& name)
 	if(!where){
 		// hack
 		auto i = ElementList::card_list.find_(name);
-		if (i == ElementList::card_list.end()) {
+		if (i == ElementList::card_list.end()) { untested();
 		}else{
 			f = *i;
 		}
@@ -111,23 +156,25 @@ static Element* find_recursive(Element* where, std::string const& name)
 	return f;
 }
 /*--------------------------------------------------------------------------*/
-void FactorySymbol::stash_proto(Element* e)
+void FactorySymbol::stash_proto(Element* proto)
 {
 	if(_factory){
-		_factory->stash(e);
-	}else{
-		ElementList::card_list.push_back(e);
+		_factory->stash(proto);
+	}else{ untested();
+		incomplete();
 	}
 }
 /*--------------------------------------------------------------------------*/
-Element const* FactorySymbol::find_proto(std::string const& n)
+Element const* FactorySymbol::find_proto() /*const?*/
 {
-	trace1("find_proto try", n);
+	assert(common());
+	std::string n = common()->modelname();
+	trace2("find_proto try", n, common()->modelname());
 	SymbolFactory* f = _factory;
 	ElementList* scope = &ElementList::card_list;
 	if(f){
 		scope = f->scope();
-	}else{
+	}else{ untested();
 	}
 
 	istream_t cmd(istream_t::_STRING, n);
@@ -135,20 +182,24 @@ Element const* FactorySymbol::find_proto(std::string const& n)
 	assert(scope);
 	auto ci = findbranch(cmd, scope);
 
+	Element const* ret = nullptr;
+
 	auto k=0;
 	while(true){
 		if (ci.is_end()) {
-			return nullptr;
+			break;
 		}else{
 			trace2("find_proto try", k, (*ci)->short_label());
 			++k;
 		}
 		if(auto p=dynamic_cast<SubcktBase*>(*ci)){
-			return p;
+			ret = p;
+			break;
 		}else if(auto m=dynamic_cast<Model*>(*ci)){
 			if(m->is_valid(this)){
 				trace2("find_proto gotit", m->short_label(), n);
-				return m->component_proto();
+				ret = m; // ->component_proto();
+				break;
 			}else{
 				trace2("invalid", m->short_label(), n);
 			}
@@ -158,7 +209,26 @@ Element const* FactorySymbol::find_proto(std::string const& n)
 		istream_t cmd(istream_t::_STRING, n);
 		ci = findbranch(cmd, ++ci);
 	}
-	return nullptr;
+
+	if(!ret){
+		trace1("find_proto:, new_model", n);
+
+		auto m = new_model();
+		assert(m);
+		stash_proto(m);
+		ret = m;
+	}else{
+	}
+
+	if(_proto == ret){
+		// already there... (bug?)
+	}else if(_factory){
+		_factory->incref(ret);
+	}else{ untested();
+	}
+
+	_proto = ret;
+	return ret;
 }
 /*--------------------------------------------------------------------------*/
 void FactorySymbol::set_dev_type(std::string const& name)
@@ -168,7 +238,7 @@ void FactorySymbol::set_dev_type(std::string const& name)
 		trace1("FactorySymbol::set_dev_type", owner()->short_label());
 		Element* ee = find_recursive(this, name);
 		SymbolFactory* f = dynamic_cast<SymbolFactory*>(ee);
-		if(!f){
+		if(!f){ untested();
 			message(qucs::MsgFatal, "cannot find " + name);
 		}else{
 		}

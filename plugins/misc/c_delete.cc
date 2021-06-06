@@ -43,7 +43,7 @@ namespace {
 /*--------------------------------------------------------------------------*/
 class CMD_DELETE : public CMD {
 private:
-  bool delete_one_name(const std::string& name, CARD_LIST* Scope)const { untested();
+  bool delete_one_name(const std::string& name, CARD_LIST* Scope)const {
 #if 1
     assert(Scope);
     

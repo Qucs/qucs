@@ -15,6 +15,7 @@
   <Text -10 20 12 #000000 0 "+\n">
 </Symbol>
 <Components>
+  <VCVS sub0src 1 530 190 -26 34 0 0 "1" 1 "0" 0>
   <Port P1 1 160 160 -23 12 0 0 "1" 1 "analog" 0>
   <Port P3 1 610 160 4 12 1 2 "3" 1 "analog" 0>
   <Port P2 1 160 220 -23 12 0 0 "2" 1 "analog" 0>

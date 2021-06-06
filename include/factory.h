@@ -27,7 +27,6 @@ class ElementList;
 class Symbol;
 class Component;
 /*--------------------------------------------------------------------------*/
-// ModelFactory.
 class SymbolFactory : public Model{
 public:
 	explicit SymbolFactory();
@@ -53,8 +52,10 @@ public:
 	Element* clone()const{return new SymbolFactory(*this);}
 
 private:
-	friend class FactorySymbol; // (!)
+	friend class FactorySymbol; // still?
 	void stash(Element* e);
+	void incref(Element const* e);
+	void decref(Element const* e);
 
 	std::string param_value_by_name(std::string const& name) const override {
 		auto i = _params.find(name);
@@ -77,15 +78,19 @@ private:
 	Symbol* _proto{nullptr};
 	ElementList* _scope{nullptr};
 	std::map<std::string, std::string> _params;
-};
+	std::map<intptr_t, unsigned> _counts;
+}; // SymbolFactory
 /*--------------------------------------------------------------------------*/
 class FactorySymbol : public Symbol {
 public:
-	explicit FactorySymbol() : Symbol() {}
-	FactorySymbol(FactorySymbol const& p) : Symbol(p) {}
+	explicit FactorySymbol();
+	FactorySymbol(FactorySymbol const& p);
+	~FactorySymbol();
 
 private:
 	void set_dev_type(std::string const& name) override;
+	void stash_proto(Element* e);
+	virtual Element* new_model() = 0;
 
 protected:
 	std::string factory_param(std::string const& name) const{
@@ -95,8 +100,7 @@ protected:
 			throw qucs::ExceptionCantFind(name, short_label());
 		}
 	}
-	Element const* find_proto(std::string const&);
-	void stash_proto(Element* e);
+	Element const* find_proto();
 
 	index_t numPorts() const override{
 		incomplete();
@@ -113,7 +117,8 @@ protected:
 
 private:
 	mutable SymbolFactory* _factory{nullptr};
-};
+	Element const* _proto{nullptr};
+}; // FactorySymbol
 /*--------------------------------------------------------------------------*/
 } // qucs
 /*--------------------------------------------------------------------------*/

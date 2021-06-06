@@ -43,6 +43,7 @@ const index_t np = 3;
 using qucs::CommonComponent;
 using qucs::CommonSubckt;
 //using qucs::CommonSubckt;
+using qucs::CommonParamlist;
 using qucs::Element;
 using qucs::Component;
 using qucs::Language;
@@ -117,8 +118,8 @@ public:
 	}
 
 private:
-	void refreshSymbol(std::string const&);
-	Component const* new_model(std::string const& fn);
+	void refreshSymbol();
+	Element* new_model() override;
 	void build_sckt(istream_t& cs, SubcktBase* proto) const;
 
 private: // Symbol
@@ -304,7 +305,7 @@ class PROTO : public SubcktBase{
 public:
 	PROTO() : SubcktBase(){
 		new_subckt();
-		attach_common(new qucs::CommonParamlist());
+		attach_common(new CommonParamlist());
 	}
 	PROTO(PROTO const& x) : SubcktBase(x){
 		new_subckt(); // copy??
@@ -342,14 +343,10 @@ private: // legacy schematic needs ordered params...
 }proto_;
 /*--------------------------------------------------------------------------*/
 // create a subdevice from a file.
-// if its already there, use it.
-// TODO: factory needs a refresh hook.
-Component const* Verilog::new_model(std::string const& fn) // const
+Element* Verilog::new_model()
 {
-	auto subPath = factory_param("$SUB_PATH");
-	trace2("VerilogFactory::new_model", subPath, fn);
 //	QString FileName(Props.getFirst()->Value);
-	auto dotplace = fn.find_last_of(".");
+	auto dotplace = _filename.find_last_of(".");
 	std::string type_name;
 
 	if (dotplace == std::string::npos) { untested();
@@ -357,24 +354,15 @@ Component const* Verilog::new_model(std::string const& fn) // const
 		// throw?? or try and recover??
 		type_name = "Verilog" + typesep + "invalid_filename";
 	}else{
-		type_name = "Verilog" + typesep + fn.substr(0, dotplace);
+		type_name = "Verilog" + typesep + _filename.substr(0, dotplace);
 	}
 
-	auto cached_ = find_proto(type_name);
-	Element const* cached = nullptr;
-	if(cached_){
-		// TODO: find_again.
-		cached = cached_;
-	}else{
-	}
+	auto subPath = factory_param("$SUB_PATH");
+	trace2("VerilogFactory::new_model", subPath, _filename);
+	std::string file_found = findFile(_filename, subPath, R_OK);
+	trace4("VerilogFactory::newCommon", label(), _filename, subPath, file_found);
 
-	std::string file_found = findFile(fn, subPath, R_OK);
-	trace4("VerilogFactory::newCommon", label(), fn, subPath, file_found);
-
-	if(auto sym = dynamic_cast<Component const*>(cached)){
-		assert(file_found != "");
-		return sym; // ->common();
-	}else if(file_found != "" ){
+	if(file_found != "" ){
 		assert(owner());
 		auto os = prechecked_cast<Element const*>(owner());
 		assert(os);
@@ -409,7 +397,7 @@ Component const* Verilog::new_model(std::string const& fn) // const
 			Model* r = new ref;
 			// r->set_label("VerilogRef");
 			r->set_label(type_name);
-			r->set_param_by_name("filename", fn);
+			r->set_param_by_name("filename", _filename);
 			r->set_param_by_name("dev_type", last->short_label());
 
 			s->subckt()->push_back(r);
@@ -427,7 +415,7 @@ Component const* Verilog::new_model(std::string const& fn) // const
 			}
 
 
-			stash_proto(s);
+			// stash_proto(s);
 		}else{ untested();
 			assert(false);
 		}
@@ -580,19 +568,40 @@ Verilog::Verilog(Verilog const&x)
 	_ports.resize(x._ports.size());
 }
 /*--------------------------------------------------------------------------*/
-void Verilog::refreshSymbol(std::string const& fn)
+void Verilog::refreshSymbol()
 {
+	auto fn = _filename;
 	trace1("refreshSymbol", fn);
-	Component const* new_parent = nullptr;
+	Element const* e = nullptr;
+
+	std::string type_name;
+
+	auto dotplace = _filename.find_last_of(".");
+	if (dotplace == std::string::npos) { untested();
+		incomplete();
+		// throw?? or try and recover??
+		type_name = "Verilog" + typesep + "invalid_filename";
+	}else{
+		type_name = "Verilog" + typesep + _filename.substr(0, dotplace);
+	}
+
+	if(!common()){
+		auto c = new CommonParamlist();
+		c->set_modelname(type_name);
+		attach_common(c);
+	}else{
+		incomplete();
+	}
 
 	if(fn!=""){
-		new_parent = new_model(fn);
+		assert(common());
+		e = find_proto();
 	}else{ untested();
 		incomplete();
 	}
 
 	trace1("refreshSymbol", fn);
-	if(new_parent){
+	if(auto new_parent=dynamic_cast<Component const*>(e)){
 		// _proto == new_parent; // ?
 		assert(new_parent);
 		assert(new_parent->common());
@@ -737,7 +746,7 @@ void Verilog::set_param_by_index(index_t i, std::string const& v)
 		return;
 	case 2:
 		_filename = v;
-		refreshSymbol(v);
+		refreshSymbol();
 		return;
 	default:
 		break;
@@ -761,7 +770,7 @@ void Verilog::set_param_by_name(std::string const& name, std::string const& v)
 		_ty = atoi(v.c_str());
 	}else if(name=="File"){ untested();
 		_filename = v;
-		refreshSymbol(v);
+		refreshSymbol();
 	}else{
 		FactorySymbol::set_param_by_name(name, v);
 	}

@@ -67,14 +67,14 @@ void ElementList::clear()
 // called from schematic::erase only
 // // possibly not needed. all actions must be undoable anyway
 // -> use detach, store reference in UndoAction.
-void ElementList::erase(Element* what)
+void ElementList::erase(Element /*const*/ * what)
 {
 	Element* e = detach(what);
 	delete(e);
 }
 /*--------------------------------------------------------------------------*/
 // supposedly equivalent to clone and erase.
-Element* ElementList::detach(Element* what)
+Element* ElementList::detach(Element /*const*/ * what)
 {
 	assert(what);
 	assert(what->owner());

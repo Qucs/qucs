@@ -1,0 +1,54 @@
+Qacs : Qucs alternative command shell
+used for testing only
+This is free software, and you are welcome
+to redistribute it under the terms of 
+the GNU General Public License, version 3 or later.
+See the file "COPYING" for details.
+misc plugins: wip
+legacy plugins: wip
+module main();
+Sub$sub0 #(.File(sub0.sch)) SUB0a(_net0, _net1, _net2);
+Sub$sub0 #(.File(sub0.sch)) SUB0b(_net3, _net4, _net5);
+Sub$sub1 #(.File(sub1.sch)) SUB1a(_net3, _net4, _net5);
+endmodule // main
+
+# sckt protos
+
+
+# 3
+# paramset Sub
+# sckt Sub:sub0
+
+.Def:sub0 P1 P2 P3
+# 32
+VCVS:sub0src _net9 P3 gnd _net10 G="1" T="0"
+.Def:End
+# sckt Sub:sub1
+
+.Def:sub1 P1 P2 P3
+# 31
+VCVS:subsrc _net5 P3 _net2 _net9 G="1" T="0"
+.Def:End
+# sckt main
+
+
+# 3
+Sub:SUB0a _net0 _net1 _net2 Type="sub0"
+Sub:SUB0b _net3 _net4 _net5 Type="sub0"
+Sub:SUB1a _net3 _net4 _net5 Type="sub1"
+# sckt protos
+
+
+# 3
+# paramset Sub
+# sckt Sub:sub0
+
+.Def:sub0 P1 P2 P3
+# 32
+VCVS:sub0src _net9 P3 gnd _net10 G="1" T="0"
+.Def:End
+# sckt main
+
+
+# 1
+Sub:SUB0b _net3 _net4 _net5 Type="sub0"

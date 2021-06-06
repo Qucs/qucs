@@ -4,6 +4,11 @@ load legacy/qucsator
 load plugins/misc
 load plugins/verilog
 
+verilog
+paramset EDD_ ModelFactory;
+  .dev_type = "EDD_";
+endparamset
+
 options lang=leg_sch
 
 <Components>

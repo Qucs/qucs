@@ -40,8 +40,8 @@ namespace {
 /*--------------------------------------------------------------------------*/
 template <class InputIter, class Size, class OutputIter>
 void copy_n(InputIter first, Size count, OutputIter result)
-{
-  for ( ; count > 0; --count) {
+{ untested();
+  for ( ; count > 0; --count) { untested();
     *result++ = *first++;
   }
 }
@@ -74,7 +74,7 @@ private:
 		return "Sub";
 	}
 
-	Component const* new_model(std::string const& fn);
+	Element* new_model() override;
 	void build_sckt(istream_t&, SubcktBase* proto) const;
 public:
 	Element* clone() const override{
@@ -149,7 +149,7 @@ public:
 	}
 
 private:
-	void refreshSymbol(std::string const&);
+	void refreshSymbol();
 
 private: // Symbol
 	bool port_exists(index_t) const override;
@@ -223,11 +223,11 @@ private: // overrides
 	Port& port(index_t i) override{
 		if(i < _ports.size()){
 			return _ports[i];
-		}else if(i<max_nodes()){
+		}else if(i<max_nodes()){ untested();
 			std::vector<Port> p(i+1);
 			::copy_n(_ports.begin(), _ports.size(), p.begin());
 			std::swap(_ports, p);
-		}else{
+		}else{ untested();
 			assert(false);
 		}
 		return _ports[i];
@@ -272,7 +272,7 @@ public:
 
 		_param_names[i] = v;
 	}
-	std::string param_name(index_t i) const override{
+	std::string param_name(index_t i) const override{ untested();
 		assert(i<_param_names.size());
 		return _param_names[i];
 	}
@@ -288,36 +288,18 @@ private: // legacy schematic needs ordered params...
 // create a subdevice from a file.
 // if its already there, use it.
 // TODO: factory needs a refresh hook.
-Component const* Sub::new_model(std::string const& fn) // const
+Element* Sub::new_model()
 {
 	auto subPath = factory_param("$SUB_PATH");
-	trace2("SubFactory::newSymbol", fn, subPath);
-//	QString FileName(Props.getFirst()->Value);
-	auto dotplace = fn.find_last_of(".");
-	std::string type_name;
 
-	if (dotplace == std::string::npos) { untested();
-		incomplete();
-		// throw?? or try and recover??
-		type_name = "Sub" + typesep + "invalid_filename";
-	}else{
-		type_name = "Sub" + typesep + fn.substr(0, dotplace);
-	}
+	assert(common());
+	std::string type_name = common()->modelname();
+	trace3("SubFactory::new_model", _filename, subPath, type_name);
 
-	auto cached_ = find_proto(type_name);
-	Element const* cached = nullptr;
-	if(cached_){
-		// TODO: find_again.
-		cached = cached_;
-	}else{
-	}
+	std::string file_found = findFile(_filename, subPath, R_OK);
+	trace4("Sub::new_model", label(), _filename, subPath, file_found);
 
-	std::string file_found = findFile(fn, subPath, R_OK);
-	trace4("SubFactory::newCommon", label(), fn, subPath, file_found);
-
-	if(auto sym = dynamic_cast<Component const*>(cached)){
-		return sym; // ->common();
-	}else if(file_found != "" ){
+	{
 		assert(owner());
 		auto os = prechecked_cast<Element const*>(owner());
 		assert(os);
@@ -348,7 +330,7 @@ Component const* Sub::new_model(std::string const& fn) // const
 
 		// submit.
 		assert(s->label()==type_name);
-		stash_proto(s);
+		// stash_proto(s);
 
 #if 0
 		if(loadSymbol(FileName) > 0) { untested();
@@ -367,10 +349,10 @@ Component const* Sub::new_model(std::string const& fn) // const
 		}
 #endif
 		return s;
-	}else{ untested();
-		message(qucs::MsgFatal,"cannot find " + fn + " in " + subPath);
-		incomplete();
-		return nullptr;
+	// }else{ untested();
+	// 	message(qucs::MsgFatal,"cannot find " + _filename + " in " + subPath);
+	// 	incomplete();
+	// 	return nullptr;
 	}
 }
 /*--------------------------------------------------------------------------*/
@@ -485,7 +467,7 @@ void Sub::set_param_by_index(index_t i, std::string const& v)
 	return;
 	case 2:
 		_filename = v;
-		refreshSymbol(v);
+		refreshSymbol();
 	return;
 	default:
 	break;
@@ -515,12 +497,30 @@ Sub::~Sub()
 	_param_names.clear();
 }
 /*--------------------------------------------------------------------------*/
-void Sub::refreshSymbol(std::string const& fn)
+void Sub::refreshSymbol()
 {
-	Component const* new_parent = nullptr;
-	new_parent = new_model(fn);
+	Element const* e = nullptr;
+	auto dotplace = _filename.find_last_of(".");
 
-	if(new_parent){
+	std::string type_name;
+	if (dotplace == std::string::npos) { untested();
+		incomplete();
+		// throw?? or try and recover??
+		type_name = "Sub" + typesep + "invalid_filename";
+	}else{
+		type_name = "Sub" + typesep + _filename.substr(0, dotplace);
+	}
+	if(!common()){
+		auto c = new CommonParamlist();
+		c->set_modelname(type_name);
+		attach_common(c);
+	}else{ untested();
+		incomplete();
+	}
+
+	e = find_proto();
+
+	if(auto new_parent=dynamic_cast<Component const*>(e)){
 		assert(new_parent);
 		assert(new_parent->common());
 #if 0 // wrong
@@ -660,7 +660,7 @@ void Sub::set_param_by_name(std::string const& name, std::string const& v)
 		_ty = atoi(v.c_str());
 	}else if(name=="File"){
 		_filename = v;
-		refreshSymbol(v);
+		refreshSymbol();
 	}else{
 		FactorySymbol::set_param_by_name(name, v);
 	}

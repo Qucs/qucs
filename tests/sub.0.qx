@@ -1,0 +1,29 @@
+load legacy
+load legacy/components
+load legacy/paintings
+load legacy/qucsator
+load plugins/verilog
+load plugins/misc
+
+verilog
+paramset Sub ModelFactory;
+  .dev_type = "Sub";
+  .$SUB_PATH = "srcdir";
+endparamset
+
+module main();
+Sub #(.$tx(0), .$ty(0), .File(sub0.sch), .$xposition(340), .$yposition(180)) SUB0a(net_310_210, net_310_150, net_370_180);
+Sub #(.$tx(0), .$ty(100), .File(sub0.sch), .$xposition(340), .$yposition(180)) SUB0b(A, B, C);
+Sub #(.$tx(0), .$ty(200), .File(sub1.sch), .$xposition(340), .$yposition(180)) SUB1a(A, B, C);
+endmodule
+
+list main
+
+// list two protos
+list lang=qucsator
+
+delete main.SUB0a
+delete main.SUB1a
+
+// list only one proto
+list lang=qucsator

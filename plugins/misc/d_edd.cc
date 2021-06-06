@@ -78,18 +78,27 @@ private: // Symbol
 		}
 	}
 	void prepare() override{
-		incomplete();
-		Component const* m = new_proto();
-		auto pl = dynamic_cast<CommonParamlist const*>(m->common());
+		assert(common());
+		trace1("edd prep", common()->modelname());
+		mutable_common()->set_modelname("EDD_*");
+		Element const* e = find_proto();
+		assert(e);
+		auto m = prechecked_cast<Model const*>(e);
+		assert(m);
+		assert(m->component_proto());
+		auto cp = prechecked_cast<Component const*>(m->component_proto());
+		assert(cp);
+
+		auto pl = dynamic_cast<CommonParamlist const*>(cp->common());
 		assert(pl);
 		trace2("edd prep", short_label(), pl->_params.size());
 		index_t n = pl->_params.size();
 		assert(n==pl->_params.size()); // yuck
 
-		if(m){
-			Element* elt = m->clone_instance();
+		if(cp){
+			Element* elt = cp->clone_instance();
 			auto cl = dynamic_cast<Component*>(elt);
-			assert(m->common()==cl->common());
+			assert(cp->common()==cl->common());
 
 			auto pl = dynamic_cast<CommonParamlist const*>(cl->common());
 			assert(pl);
@@ -102,7 +111,7 @@ private: // Symbol
 			pl = dynamic_cast<CommonParamlist const*>(common());
 			assert(n==pl->_params.size()); // yuck
 
-			init(m);
+			init(cp);
 		}else{ untested();
 			incomplete();
 		}
@@ -253,11 +262,10 @@ private: // Symbol
 
 private: // internal
 	void init(Element const* proto);
-	Component const* new_proto();
+	Element* new_model() override;
 
 private: // TODO: use Component?
 	index_t numPorts() const override{
-		trace1("EDD::numPorts", _ports.size()); // max_nodes?
 		return _ports.size();
 	}
 	Port& port(index_t i) override{
@@ -417,21 +425,20 @@ private:
 EDDModel m0(&d);
 Dispatcher<Model>::INSTALL d1(&qucs::model_dispatcher, "EDDModel", &m0);
 /*--------------------------------------------------------------------------*/
-// set_modelname?
-Component const* EDD::new_proto()
+Element* EDD::new_model()
 {
 	std::string type_name;
 
 	// add hash(params) to the name to speed up things.
 	auto pl = dynamic_cast<CommonParamlist const*>(common());
-	assert(pl->_params.size()); // yuck
+//	assert(pl->_params.size()); // yuck
+//
+	incomplete();
+//	auto cached = find_proto("EDD_*");
 
-	auto cached = find_proto("EDD_*");
+	Element* cached = nullptr;
 
-	if(auto sym = dynamic_cast<Component const*>(cached)){
-		trace2("found a proto?", short_label(), cached->short_label());
-		return sym; // ->common();
-	}else{
+	{
 		incomplete();
 		assert(owner());
 		auto os = prechecked_cast<Element const*>(owner());
@@ -444,7 +451,6 @@ Component const* EDD::new_proto()
 
 		std::string new_type = "EDD_" + std::to_string(++_modelcounter);
 		s->set_label(new_type);
-		trace2("edd::new_proto", common()->modelname(), new_type);
 		Component::set_dev_type(new_type);
 
 		// fresh instance, use mutable.
@@ -454,7 +460,9 @@ Component const* EDD::new_proto()
 		assert(m->is_valid(this));
 		mc->set_modelname(new_type);
 		m->set_label(new_type);
-		stash_proto(m);
+
+		incomplete();
+//		stash_proto(m);
 		auto cp = prechecked_cast<Component const*>(m->component_proto());
 		assert(cp);
 		assert(m->is_valid(cp));
@@ -475,7 +483,8 @@ Component const* EDD::new_proto()
 			}
 		}
 #endif
-		return dynamic_cast<Component const*>(m->component_proto());
+		trace2("edd::new_proto", common()->modelname(), new_type);
+		return m; // dynamic_cast<Component*>(m->component_proto());
 	}
 }
 } // namespace

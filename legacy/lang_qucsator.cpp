@@ -436,7 +436,11 @@ void QucsatorLang::print_module(ostream_t& s, SubcktBase const* p) const
 		}
 	}
 
-	s << ".Def:End\n"; //  << p->label() << "\n";
+	if(label.c_str()[3] == _typesep){
+		s << ".Def:End\n"; //  << p->label() << "\n";
+	}else{
+		incomplete();
+	}
 }
 /* -------------------------------------------------------------------------------- */
 static void printLegacyTaskElement(LegacyTaskElement const* c, ostream_t& s)

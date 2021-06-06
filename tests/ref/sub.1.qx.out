@@ -6,15 +6,24 @@ the GNU General Public License, version 3 or later.
 See the file "COPYING" for details.
 misc plugins: wip
 legacy plugins: wip
+module main();
+endmodule // main
+
 # sckt protos
 
 
 # 3
+# paramset Sub
 # sckt main
 
 
-# 40
-R:R1 _net2 _net1 R="50 Ohm" Temp="26.85" Tc1="0.0" Tc2="0.0" Tnom="26.85"
-VProbe:Pr1 _net1 gnd
-Vrect:V1 _net2 gnd U="1 V" TH="1 ms" TL="1 ms" Tr="1 ns" Tf="1 ns" Td="0 ns"
-C:C1 _net1 gnd C="1u" V=""
+# 0
+# sckt protos
+
+
+# 3
+# paramset Sub
+# sckt main
+
+
+# 0

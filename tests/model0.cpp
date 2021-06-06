@@ -89,7 +89,7 @@ void test1()
 //	assert(w1->net() == w2->net());
 
 	std::cout << "=== try detach\n";
-	delete(M.detach(w1));
+	M.erase(w1);
 	std::cout << "=== detached\n";
 	assert(numWires(M)==2);
 //	trace2("different", w0->net(), w2->net());
@@ -209,8 +209,8 @@ void test0()
 
 	{
 		std::cout << "== detach\n";
-		M.detach(w0);
-		M.detach(w1);
+		M.erase(w0);
+		M.erase(w1);
 	}
 }
 

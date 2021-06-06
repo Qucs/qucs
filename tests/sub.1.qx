@@ -1,0 +1,24 @@
+load legacy
+load legacy/components
+load legacy/paintings
+load legacy/qucsator
+load plugins/verilog
+load plugins/misc
+
+verilog
+paramset Sub ModelFactory;
+  .dev_type = "Sub";
+  .$SUB_PATH = "srcdir";
+endparamset
+
+module main();
+Sub #(.$tx(0), .$ty(100), .File(nonexisting.sch), .$xposition(340), .$yposition(180)) SUB0b(A, B, C);
+endmodule
+
+list main
+
+list lang=qucsator
+
+delete main.SUB*
+
+list lang=qucsator
