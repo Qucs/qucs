@@ -284,7 +284,18 @@ public:
 			return Model::param_is_printable(i);
 		}
 	}
-	void set_param_by_name(std::string const& name, std::string const& v) {
+	std::string param_value_by_name(std::string const& name) const override { untested();
+		if(name=="filename"){ untested();
+			return _filename;
+		}else if(name=="dev_type"){ untested();
+			return _dev_type;
+		}else if(name=="File"){ untested();
+			return _filename;
+		}else{
+			return Model::param_value_by_name(name);
+		}
+	}
+	void set_param_by_name(std::string const& name, std::string const& v) override {
 		if(name=="filename"){
 			_filename = v;
 		}else if(name=="dev_type"){
@@ -299,7 +310,7 @@ public:
 private:
 	std::string _filename;
 	std::string _dev_type;
-};
+}; // ref
 /*--------------------------------------------------------------------------*/
 class PROTO : public SubcktBase{
 public:
