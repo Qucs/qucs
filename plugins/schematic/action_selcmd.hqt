@@ -224,7 +224,12 @@ void transformElement(Element* e, qucsSymbolTransform a, pos_t pivot)
 			std::string rs = s->param_value_by_name("$angle");
 			angle = atoi(rs.c_str());
 			assert(!(angle%90));
-			assert(angle<360);
+			if(angle>=360){ untested();
+				angle %= 360;
+			}else if(angle<0){ untested();
+				angle %= 360;
+			}else{ untested();
+			}
 			r = angle/90;
 		}catch(qucs::ExceptionCantFind const&){ untested();
 			unreachable();
