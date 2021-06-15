@@ -1,0 +1,14 @@
+# Qucs
+## declarations 1
+## wire
+## declarations end
+
+R:RD _net15 _net1 R="200m" Temp="26.85" Tc1="0.0" Tc2="0.0" Tnom="26.85"
+Vdc:VDC _net18 gnd U="13.5V"
+Vdc:VGEN _net7 _net18 U="200V"
+C:CS _net18 _net17 C="40nF" V=""
+R:RE _net18 _net15 R="400m" Temp="26.85" Tc1="0.0" Tc2="0.0" Tnom="26.85"
+C:CL _net18 _net1 C="40nF" V=""
+R:RI _net1 Puls3b R="50" Temp="26.85" Tc1="0.0" Tc2="0.0" Tnom="26.85"
+Switch:S2 _net17 _net15 init="off" time="10ns" Ron="0" Roff="1e9" Temp="26.85" MaxDuration="1e-6" Transition="spline"
+Switch:S1 _net7 _net17 init="on" time="9ns" Ron="0" Roff="1e9" Temp="26.85" MaxDuration="1e-6" Transition="spline"

@@ -1,9 +1,7 @@
 /***************************************************************************
-                                switch.cpp
-                               ------------
     begin                : Sat Feb 25 2006
     copyright            : (C) 2006 by Michael Margraf
-    email                : michael.margraf@alumni.tu-berlin.de
+                               2021 by Felix Salfelder Margraf
  ***************************************************************************/
 
 /***************************************************************************
@@ -14,12 +12,32 @@
  *   (at your option) any later version.                                   *
  *                                                                         *
  ***************************************************************************/
-#include "switch.h"
-#include "node.h"
-//#include "schematic_doc.h"
+#include "component.h"
+#include "module.h"
+#include "qucs_globals.h"
 
+namespace {
 
-Switch::Switch()
+class Switch : public Component {
+public:
+  explicit Switch();
+  Switch(Switch const& s) : Component(s) {}
+  ~Switch() {};
+  Component* newOne();
+  Component* clone() const override{
+	  return new Switch(*this);
+  }
+  static Element* info(QString&, char* &, bool getNewOne=false);
+  std::string dev_type(){ return "switch"; }
+
+protected:
+  QString netlist() const;
+  void createSymbol();
+}D;
+static Dispatcher<Symbol>::INSTALL p(&qucs::symbol_dispatcher, "Switch", &D);
+static Module::INSTALL pp("nonlinear", &D);
+
+Switch::Switch() : Component()
 {
   Description = QObject::tr("switch (time controlled)");
 
@@ -43,6 +61,7 @@ Switch::Switch()
   ty = y2+4;
   Model = "Switch";
   Name  = "S";
+  set_label("Switch");
 }
 
 // -------------------------------------------------------
@@ -55,6 +74,7 @@ Component* Switch::newOne()
 }
 
 // -------------------------------------------------------
+#if 0
 Element* Switch::info(QString& Name, char* &BitmapFile, bool getNewOne)
 {
   Name = QObject::tr("Switch");
@@ -63,6 +83,7 @@ Element* Switch::info(QString& Name, char* &BitmapFile, bool getNewOne)
   if(getNewOne)  return new Switch();
   return 0;
 }
+#endif
 
 // -------------------------------------------------------
 QString Switch::netlist() const
@@ -90,11 +111,11 @@ QString Switch::netlist() const
 // -------------------------------------------------------
 void Switch::createSymbol()
 {
+	incomplete(); // depends on parameters.
   if(Props.getFirst()->Value != "on") {
     Lines.append(new Line(-15,  0, 15,-15,QPen(Qt::darkBlue,2)));
     y1 = -17;
-  }
-  else {
+  }else{
     Lines.append(new Line(-15,  0, 16,-5,QPen(Qt::darkBlue,2)));
     y1 = -7;
   }
@@ -111,3 +132,5 @@ void Switch::createSymbol()
   x1 = -30;
   x2 =  30; y2 =   7;
 }
+
+} // namespace

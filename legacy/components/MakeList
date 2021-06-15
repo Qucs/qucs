@@ -273,7 +273,6 @@ HEADERS_ = \
     spdeembed.h \
 	spicefile.h \
     spiralinductor.h \
-    switch.h \
     taperedline.h \
     tff_SR.h \
     thyristor.h \
