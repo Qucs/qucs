@@ -344,7 +344,11 @@ bool SchematicEdit::addmerge(ElementGraphics* new_elt, T& del_done)
 					assert(!cc->isVisible());
 					_scn->addItem(cc);
 					assert(!cc->isVisible());
-					assert(!element(cc)->scope());
+					if(element(cc)->scope()==&ElementList::card_list){ untested();
+					}else if(element(cc)->scope()){ untested();
+						assert(element(cc)->makes_own_scope());
+					}else{ untested();
+					}
 					c->setParentItem(nullptr);
 					trace2("queueing", element(g)->label(), g);
 					_ins.push_front(cc); // BUG // need a different q for derived objects

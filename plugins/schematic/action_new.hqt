@@ -192,10 +192,13 @@ QUndoCommand* MouseActionNewElement::makeNew(QEvent* ev)
 	cmd* c = new NewElementCommand(scene(), _gfx);
 	// _gfx = nullptr;
 
-	{ untested();
-		_gfx = _gfx->clone(); // new ElementGraphics(elt);
-		scene()->addItem(_gfx); // does not attach.
-		assert(!element(_gfx)->scope());
+	_gfx = _gfx->clone(); // new ElementGraphics(elt);
+	scene()->addItem(_gfx); // does not attach.
+
+	if(element(_gfx)->scope()==&ElementList::card_list){ untested();
+	}else if(element(_gfx)->scope()){ untested();
+		assert(element(_gfx)->makes_own_scope());
+	}else{ untested();
 	}
 
 	if(_gfx->isVisible()){ untested();
