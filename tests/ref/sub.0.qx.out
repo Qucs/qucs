@@ -15,7 +15,7 @@ endmodule // main
 # sckt protos
 
 
-# 3
+# 4
 # paramset Sub
 # sckt Sub:sub0
 
@@ -39,7 +39,7 @@ Sub:SUB1a _net3 _net4 _net5 Type="sub1"
 # sckt protos
 
 
-# 3
+# 4
 # paramset Sub
 # sckt Sub:sub0
 

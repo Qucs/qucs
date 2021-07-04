@@ -23,6 +23,10 @@ MSTEP #(.Subst(Subst1), .W1(2 mm), .W2(1 mm), .MSModel(Hammerstad), .MSDispModel
 MTEE #(.Subst(Subst1), .W1(1 mm), .W2(1 mm), .W3(2 mm), .MSModel(Hammerstad), .MSDispModel(Kirschning), .Temp(26.85), .Symbol(showNumbers)) microstrip tee(unknown_net, unknown_net, unknown_net);
 endmodule // RF
 
+module nonlinear();
+Switch #(.init(off), .time(1 ms), .Ron(0), .Roff(1e12), .Temp(26.85), .MaxDuration(1e-6), .Transition(spline)) Switch(unknown_net, unknown_net);
+endmodule // nonlinear
+
 module lumped();
 Port #(.Num(1), .Type()) scktport(unknown_net, unknown_net);
 TLIN #(.Z(50 Ohm), .L(1 mm), .Alpha(0 dB), .Temp(26.85)) ideal transmission line(unknown_net, unknown_net);
@@ -46,6 +50,10 @@ MLIN #(.Subst(Subst1), .W(1 mm), .L(10 mm), .Model(Hammerstad), .DispModel(Kirsc
 MSTEP #(.Subst(Subst1), .W1(2 mm), .W2(1 mm), .MSModel(Hammerstad), .MSDispModel(Kirschning)) microstrip impedance step(unknown_net, unknown_net);
 MTEE #(.Subst(Subst1), .W1(1 mm), .W2(1 mm), .W3(2 mm), .MSModel(Hammerstad), .MSDispModel(Kirschning), .Temp(26.85), .Symbol(showNumbers)) microstrip tee(unknown_net, unknown_net, unknown_net);
 endmodule // RF
+
+module nonlinear();
+Switch #(.init(off), .time(1 ms), .Ron(0), .Roff(1e12), .Temp(26.85), .MaxDuration(1e-6), .Transition(spline)) Switch(unknown_net, unknown_net);
+endmodule // nonlinear
 
 module lumped();
 Port #(.Num(1), .Type()) scktport(unknown_net, unknown_net);

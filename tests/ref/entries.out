@@ -118,6 +118,14 @@ MTEE:my_MTEE unknown_net unknown_net unknown_net Subst="Subst1" W1="1 mm" W2="1 
   < my_ 1 0 0 -26 18 0 0 "1" 1 "50 Ohm" 1 "0 dBm" 0 "1 GHz" 0 "26.85" 0>
  #(.Num(1), .Z(50 Ohm), .P(0 dBm), .f(1 GHz), .Temp(26.85)) my_(unknown_net, unknown_net);
 :my_ unknown_net unknown_net Num="1" Z="50 Ohm" P="0 dBm" f="1 GHz" Temp="26.85"
+=====Switch=========
+  < my_ 1 0 0 -26 11 0 0 "off" 0 "1 ms" 0 "0" 0 "1e12" 0 "26.85" 0 "1e-6" 0 "spline" 0>
+ #(.init(off), .time(1 ms), .Ron(0), .Roff(1e12), .Temp(26.85), .MaxDuration(1e-6), .Transition(spline)) my_(unknown_net, unknown_net);
+:my_ unknown_net unknown_net init="off" time="1 ms" Ron="0" Roff="1e12" Temp="26.85" MaxDuration="1e-6" Transition="spline"
+==============
+  < my_ 1 0 0 -26 15 0 0 "1e-15 A" 1 "1" 1 "10 fF" 1 "0.5" 0 "0.7 V" 0 "0.5" 0 "0.0 fF" 0 "0.0" 0 "2.0" 0 "0.0 Ohm" 0 "0.0 ps" 0 "0" 0 "0.0" 0 "1.0" 0 "1.0" 0 "0" 0 "1 mA" 0 "26.85" 0 "3.0" 0 "1.11" 0 "0.0" 0 "0.0" 0 "0.0" 0 "0.0" 0 "0.0" 0 "0.0" 0 "26.85" 0 "1.0" 0 "normal" 0>
+ #(.Is(1e-15 A), .N(1), .Cj0(10 fF), .M(0.5), .Vj(0.7 V), .Fc(0.5), .Cp(0.0 fF), .Isr(0.0), .Nr(2.0), .Rs(0.0 Ohm), .Tt(0.0 ps), .Ikf(0), .Kf(0.0), .Af(1.0), .Ffe(1.0), .Bv(0), .Ibv(1 mA), .Temp(26.85), .Xti(3.0), .Eg(1.11), .Tbv(0.0), .Trs(0.0), .Ttt1(0.0), .Ttt2(0.0), .Tm1(0.0), .Tm2(0.0), .Tnom(26.85), .Area(1.0), .Symbol(normal)) my_(unknown_net, unknown_net);
+:my_ unknown_net unknown_net Is="1e-15 A" N="1" Cj0="10 fF" M="0.5" Vj="0.7 V" Fc="0.5" Cp="0.0 fF" Isr="0.0" Nr="2.0" Rs="0.0 Ohm" Tt="0.0 ps" Ikf="0" Kf="0.0" Af="1.0" Ffe="1.0" Bv="0" Ibv="1 mA" Temp="26.85" Xti="3.0" Eg="1.11" Tbv="0.0" Trs="0.0" Ttt1="0.0" Ttt2="0.0" Tm1="0.0" Tm2="0.0" Tnom="26.85" Area="1.0"
 ==============
   <.AC my_AC 1 0 0 0 33  0 0 "lin" 1 "1 GHz" 1 "10 GHz" 1 "19" 1 "no" 0>
 //my_AC
@@ -130,10 +138,6 @@ MTEE:my_MTEE unknown_net unknown_net unknown_net Subst="Subst1" W1="1 mm" W2="1 
   <. my_ 1 0 0 0 51  0 0 "lin" 1 "0" 1 "1 ms" 1 "11" 0 "Trapezoidal" 0 "2" 0 "1 ns" 0 "1e-16" 0 "150" 0 "0.001" 0 "1 pA" 0 "1 uV" 0 "26.85" 0 "1e-3" 0 "1e-6" 0 "1" 0 "CroutLU" 0 "no" 0 "yes" 0 "0" 0>
 //my_
 .:my_ Type="lin" Start="0" Stop="1 ms" Points="11" IntegrationMethod="Trapezoidal" Order="2" InitialStep="1 ns" MinStep="1e-16" MaxIter="150" reltol="0.001" abstol="1 pA" vntol="1 uV" Temp="26.85" LTEreltol="1e-3" LTEabstol="1e-6" LTEfactor="1" Solver="CroutLU" relaxTSR="no" initialDC="yes" MaxStep="0"
-==============
-  < my_ 1 0 0 -26 15 0 0 "1e-15 A" 1 "1" 1 "10 fF" 1 "0.5" 0 "0.7 V" 0 "0.5" 0 "0.0 fF" 0 "0.0" 0 "2.0" 0 "0.0 Ohm" 0 "0.0 ps" 0 "0" 0 "0.0" 0 "1.0" 0 "1.0" 0 "0" 0 "1 mA" 0 "26.85" 0 "3.0" 0 "1.11" 0 "0.0" 0 "0.0" 0 "0.0" 0 "0.0" 0 "0.0" 0 "0.0" 0 "26.85" 0 "1.0" 0 "normal" 0>
- #(.Is(1e-15 A), .N(1), .Cj0(10 fF), .M(0.5), .Vj(0.7 V), .Fc(0.5), .Cp(0.0 fF), .Isr(0.0), .Nr(2.0), .Rs(0.0 Ohm), .Tt(0.0 ps), .Ikf(0), .Kf(0.0), .Af(1.0), .Ffe(1.0), .Bv(0), .Ibv(1 mA), .Temp(26.85), .Xti(3.0), .Eg(1.11), .Tbv(0.0), .Trs(0.0), .Ttt1(0.0), .Ttt2(0.0), .Tm1(0.0), .Tm2(0.0), .Tnom(26.85), .Area(1.0), .Symbol(normal)) my_(unknown_net, unknown_net);
-:my_ unknown_net unknown_net Is="1e-15 A" N="1" Cj0="10 fF" M="0.5" Vj="0.7 V" Fc="0.5" Cp="0.0 fF" Isr="0.0" Nr="2.0" Rs="0.0 Ohm" Tt="0.0 ps" Ikf="0" Kf="0.0" Af="1.0" Ffe="1.0" Bv="0" Ibv="1 mA" Temp="26.85" Xti="3.0" Eg="1.11" Tbv="0.0" Trs="0.0" Ttt1="0.0" Ttt2="0.0" Tm1="0.0" Tm2="0.0" Tnom="26.85" Area="1.0"
 ==============
   <EArc 0 0 0 0 0 0 #000000 1 1>
 painting incomplete
