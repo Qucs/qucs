@@ -338,10 +338,6 @@ private:
    ******************************************************************** */
 
 public: // mostly not here
-  Node* insertNode(int x, int y, Element* e){ untested();
-	  assert(_model);
-	  return _model->insertNode(x, y, e);
-  }
   Node* selectedNode(int, int);
   Marker* setMarker(int, int);
 

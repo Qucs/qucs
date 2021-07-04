@@ -125,9 +125,6 @@ public: // compat? test? debug?
 	size_t numNodes() const;
 	size_t numNets() const;
 
-public: // obsolete?
-	Node* insertNode(int x, int y, Element* owner);
-
 public:
 	NodeMap* nodes() const;
 //	NodeMap const* nodes() const;
