@@ -35,6 +35,7 @@ public:
   static Element* info(QString&, char* &, bool getNewOne=false);
   static Element* info_us(QString&, char* &, bool getNewOne=false);
 
+  std::string dev_type() const override{ return "R"; } // BUG
 //  void set_dev_type(){ incomplete(); }
 //  QString name() const // use Component::name
 

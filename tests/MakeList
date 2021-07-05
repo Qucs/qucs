@@ -1,4 +1,13 @@
 
+check_PROGRAMS = \
+	geometry0 \
+	model0 \
+	model1 \
+	next_idx \
+	place0 \
+	wire0 \
+	wire1
+
 EXTRA_DIST = \
 	rc_verilog.sch \
 	resistor.va \

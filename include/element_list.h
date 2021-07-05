@@ -83,25 +83,6 @@ public: // stuff saved from Schematic
 private:
 	void detachFromNode(Element* what, Node* from);
 
-public:
-	ElementList& erase(const_iterator what);
-	//ElementList& erase(Element* c);
-	//ElementList& erase_all();
-
-public:
-	void collectDigitalSignals(void);
-	void print(QPrinter*, QPainter*, bool, bool);
-//	void setDevType(QString const& type); // BUG. move to parent.
-//	QString const& devType() const;
-
-public:
-	void prepare(); // precalc_first?
-	void set_owner(Element* s);
-//	int  prepareNetlist(ostream_t&, QStringList&, QPlainTextEdit*,
-//			bool creatingLib, NetLang const&);
-//	TaskElement* loadtaskElement(const QString& _s, TaskElement* c) const;
-//	bool loadProperties(QTextStream*);
-
 public: // not sure. leaves unconnected objects in the main container...
 	void connect(Symbol* c);
 	void disconnect(Symbol* c);
@@ -115,7 +96,20 @@ public: // container
 	ElementList& insert(ElementList::iterator i, Element* c) { untested();
 		_cl.insert(i, c);  return *this;
 	}
+
 	void erase(Element /*const??*/ * what);
+	ElementList& erase(const_iterator what);
+	//ElementList& erase(Element* c);
+	//ElementList& erase_all();
+	//
+public:
+	void set_owner(Element* s);
+	void prepare(); // precalc_first?
+//	int  prepareNetlist(ostream_t&, QStringList&, QPlainTextEdit*,
+//			bool creatingLib, NetLang const&);
+//	TaskElement* loadtaskElement(const QString& _s, TaskElement* c) const;
+//	bool loadProperties(QTextStream*);
+
 	bool is_empty() const { return !_cl.size(); }
 	size_t size() const{ return _cl.size(); }
 
@@ -128,6 +122,8 @@ public: // compat? test? debug?
 public:
 	NodeMap* nodes() const;
 //	NodeMap const* nodes() const;
+	ParamList* params();
+	ParamList const* params() const;
 
 	// mutable
 	iterator find_(const std::string& short_name)
@@ -148,12 +144,9 @@ private:
 	container_type _cl;
 	NetList* Nets;
 	NodeMap* _nm;
-//	QFileInfo FileInfo;
 
-public: // HACK
-	unsigned nextIdx(std::string const& s) const;
-	ParamList* params();
-	ParamList const* params() const;
+public: // HACK, need ElementMap?
+	unsigned obsolete_nextIdx(std::string const& s) const;
 
 private:
 	const ElementList* _parent;

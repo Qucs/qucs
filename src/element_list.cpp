@@ -365,37 +365,6 @@ ElementList::const_iterator ElementList::find_again(const std::string& short_nam
 	return it;
 }
 /*--------------------------------------------------------------------------*/
-// HACK
-unsigned ElementList::nextIdx(std::string const& s) const
-{
-	unsigned r=0;
-	if(s==""){
-		return 0;
-	}else{
-		auto j = _map.lower_bound(s);
-		auto n = s.size();
-
-		while (j!=_map.end()){
-			if(j->second->label().substr(0, n) == s){
-				auto str = j->second->label().substr(n);
-				trace3("nextIdx", j->second->label().substr(0, n), n, str);
-				unsigned z;
-				if(sscanf(str.c_str(), "%d", &z) == 1){ itested();
-					r = std::max(z, r);
-				}else{ itested();
-				}
-
-				++j;
-			}else{
-				break;
-			}
-		}
-	}
-
-	trace2("nextId", s, r);
-	return r+1;
-}
-/*--------------------------------------------------------------------------*/
 PARAM_LIST* ElementList::params()
 {
   if (!_params) {

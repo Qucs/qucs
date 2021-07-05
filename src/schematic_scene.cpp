@@ -19,6 +19,7 @@
 #include "element_list.h"
 #include "conductor.h"
 #include "element_graphics.h"
+#include "next_idx.h"
 
 #include <math.h> // fmod
 #include <QFileInfo>
@@ -563,7 +564,7 @@ void SchematicScene::possiblyRename(Element* e) const
 	if(!z){
 	}else if(std::isdigit(label[z-1])){
 	}else{
-		unsigned i = scope()->nextIdx(label);
+		unsigned i = next_idx(scope(), label);
 		e->set_label(label + std::to_string(i));
 		// gfx->update();
 	}

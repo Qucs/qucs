@@ -60,14 +60,6 @@ QX_LOG_COMPILER = $(srcdir)/qx_log_compiler
 SH_LOG_FLAGS =
 TEST_EXTENSIONS = .sh .prj .qx
 
-check_PROGRAMS = \
-	geometry0 \
-	model0 \
-	model1 \
-	place0 \
-	wire0 \
-	wire1
-
 if USE_QUCSATOR
 QUCSATOR_TESTS_ = $(QUCSATOR_TESTS)
 endif
@@ -95,6 +87,9 @@ model0_LDADD += $(X11_LIBS) $(QT_LIBS) # yikes
 model1_CPPFLAGS = ${AM_CPPFLAGS} $(QT_CFLAGS) # yikes.
 model1_LDADD = ${LIBQUCS}
 model1_LDADD += $(X11_LIBS) $(QT_LIBS) # yikes
+
+next_idx_LDADD = ${LIBQUCS}
+next_idx_LDADD += $(X11_LIBS) $(QT_LIBS) # yikes
 
 place0_CPPFLAGS = ${AM_CPPFLAGS} $(QT_CFLAGS) # yikes.
 place0_LDADD = ${LIBQUCS}
