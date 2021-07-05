@@ -82,9 +82,6 @@ public: // stuff saved from Schematic
 
 private:
 	void detachFromNode(Element* what, Node* from);
-
-public: // not sure. leaves unconnected objects in the main container...
-	void connect(Symbol* c);
 	void disconnect(Symbol* c);
 
 private:

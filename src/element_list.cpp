@@ -37,6 +37,7 @@ ElementList::ElementList()
 /*--------------------------------------------------------------------------*/
 ElementList::~ElementList()
 {
+	//erase_all();
 	for(auto i : *this){
 	  	if(auto c=dynamic_cast<Symbol*>(i)){
 			if(c->is_device()){
@@ -256,7 +257,7 @@ static Place const* place_at(pos_t p, Symbol* m)
 	return ret;
 
 }
-#if 1 // obsolete. free?
+#if 0 // obsolete. free?
 void ElementList::connect(Symbol* sym)
 {
 
