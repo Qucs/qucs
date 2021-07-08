@@ -46,6 +46,9 @@ public: // stub
 	typedef std::list<Element*> container_type;
 	typedef container_type::iterator iterator;
 	typedef container_type::const_iterator const_iterator;
+	class map_iterator {
+		// TODO.
+	};
 	class fat_iterator {
 	private:
 		ElementList* _list;
@@ -91,6 +94,7 @@ public: // container
 	void clear();
 	void push_back(Element* what);
 	ElementList& insert(ElementList::iterator i, Element* c) { untested();
+		incomplete(); // map?
 		_cl.insert(i, c);  return *this;
 	}
 
@@ -168,4 +172,6 @@ inline ElementList::fat_iterator findbranch(istream_t& cmd, ElementList* cl)
 size_t numWires(ElementList const& m);
 /*--------------------------------------------------------------------------*/
 } // namespace
+/*--------------------------------------------------------------------------*/
+/*--------------------------------------------------------------------------*/
 #endif

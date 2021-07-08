@@ -41,6 +41,7 @@ void test1()
 	assert(dynamic_cast<Symbol const*>(w0)->portValue(1));
 //	trace1("w0", w0->net());
 
+#if 0
 	{
 		std::cout << "disconnect\n";
 		M.disconnect(w0);
@@ -52,6 +53,7 @@ void test1()
 		M.connect(w0);
 //		assert(w0->hasNet());
 	}
+#endif
 
 	std::cout << "...\n";
 	// new Wire(1,0,1,1);
@@ -64,11 +66,11 @@ void test1()
 //	trace1("w1", w1->net());
 
 	std::cout << "disconnect\n";
-	M.disconnect(w1);
+//	M.disconnect(w1);
 	assert(numWires(M)==2);
 //	assert(!w1->hasNet());
 	std::cout << "reconnect\n";
-	M.connect(w1);
+//	M.connect(w1);
 //	assert(w1->hasNet());
 
 //	auto w2 = new Wire(0,1,1,1);

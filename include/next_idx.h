@@ -43,15 +43,15 @@ unsigned next_idx(qucs::ElementList const* l, std::string const& name)
 				++j; // kludge: linear search.
 				findbranch(cs, j);
 			}else{
-				break;
+				++j; // kludge: linear search.
 			}
 		}
 
 	}
 
 	auto oldidx = l->obsolete_nextIdx(name);
-	assert(oldidx==r+1);
 
+	assert(oldidx==r+1);
 	return r+1;
 }
 

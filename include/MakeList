@@ -25,6 +25,7 @@ HDR = \
 	library.h \
 	model.h \
 	message.h \
+	next_idx.h \
 	node.h \
 	object.h \
 	output.h \

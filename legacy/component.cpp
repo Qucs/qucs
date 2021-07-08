@@ -157,7 +157,7 @@ Component::Component(Component const& p)
   trace3("Component::Component", p.Name, p.Model, _rotated);
   trace3("Component::Component", dev_type(), p.dev_type(), p.Ports.size());
 
-//  set_dev_type(p.Model.toStdString()); // BUG/FEATURE?
+  set_dev_type(p.dev_type()); // normally stored in common. not here.
 
   assert(!Props.count());
   for(auto i : p.Props){
