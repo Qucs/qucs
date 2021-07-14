@@ -23,7 +23,16 @@ if test "x$1" = xhere; then
 fi
 
 for i in $MODULES; do
-	( cd $i;
+	if [ ! -d $i ]; then
+		echo $i is missing. need to clone?
+		exit 1;
+	fi
+	if [ ! -f $i/configure.ac ]; then
+		echo $i incomplete. need to clone?;
+		exit 1;
+	fi
+	(
+	  cd $i;
 	  echo bootstrapping $( pwd )
 	  ./bootstrap || ( echo trouble in $i/bootstrap; exit 1 )
 	) || exit 1

@@ -56,8 +56,9 @@ All versions of the code may be accessed by cloning one of the Git repositories 
     git clone git://github.com/Qucs/qucs.git
     git clone git://git.code.sf.net/p/qucs/git
 
-Both, qucsator (simulator) and qucs-test (test suite) are provided as Git
-submodules. To retrieve the submodules you may
+Packages such as, qucsator (simulator) and qucs-test (test suite) are provided
+as Git submodules. Some are needed for bootstrapping. To retrieve the
+submodules, you may either
 
    * clone submodules recursively:
      * `git clone --recursive [repository]`
