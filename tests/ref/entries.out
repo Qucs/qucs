@@ -75,6 +75,10 @@ VCCS:my_VCCS unknown_net unknown_net unknown_net unknown_net G="1 S" T="0"
 VCVS #(.G(1), .T(0)) my_VCVS(unknown_net, unknown_net, unknown_net, unknown_net);
 VCVS:my_VCVS unknown_net unknown_net unknown_net unknown_net G="1" T="0"
 ==============
+  <Vnoise my_Vnoise 1 0 0 -26 19 0 0 "1e-6" 1 "0" 0 "1" 0 "0" 0>
+Vnoise #(.u(1e-6), .e(0), .c(1), .a(0)) my_Vnoise(unknown_net, unknown_net);
+Vnoise:my_Vnoise unknown_net unknown_net u="1e-6" e="0" c="1" a="0"
+==============
   <Vrect my_Vrect 1 0 0 -26 18 0 0 "1 V" 1 "1 ms" 1 "1 ms" 1 "1 ns" 0 "1 ns" 0 "0 ns" 0>
 Vrect #(.U(1 V), .TH(1 ms), .TL(1 ms), .Tr(1 ns), .Tf(1 ns), .Td(0 ns)) my_Vrect(unknown_net, unknown_net);
 Vrect:my_Vrect unknown_net unknown_net U="1 V" TH="1 ms" TL="1 ms" Tr="1 ns" Tf="1 ns" Td="0 ns"

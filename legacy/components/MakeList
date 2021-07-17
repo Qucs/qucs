@@ -286,7 +286,6 @@ HEADERS_ = \
     vexp.h \
     vfile.h \
     vhdlfile.h \
-    volt_noise.h \
     vpulse.h \
     vrect.h \
     wprobe.h
