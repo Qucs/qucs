@@ -950,7 +950,7 @@
   </Description>
   <Model>
     .Def:Z_Diodes_1N5342B _net0 _net1
-      Diode:D1 _net0 _net1 Is="7.56E-18" N="1.27" Rs="0.859" Cj0="6.15E-10" Vj="0.75" Vj="0.75" M="0.33" Fc="0.5" Tt="5.01E-8" Bv="6.645" Ibv="0.183" Af="1" Kf="0"
+      Diode:D1 _net0 _net1 Is="7.56E-18" N="1.27" Rs="0.859" Cj0="6.15E-10" Vj="0.75" M="0.33" Fc="0.5" Tt="5.01E-8" Bv="6.645" Ibv="0.183" Af="1" Kf="0"
     .Def:End
   </Model>
 </Component>
@@ -963,7 +963,7 @@
   </Description>
   <Model>
     .Def:Z_Diodes_1N5344B _net0 _net1
-      Diode:D1 _net0 _net1 Is="4.65E-17" N="1.27" Rs="1.33" Cj0="4.64E-10" Vj="0.75" Vj="0.75" M="0.33" Fc="0.5" Tt="5.01E-8" Bv="8.001" Ibv="0.152" Af="1" Kf="0"
+      Diode:D1 _net0 _net1 Is="4.65E-17" N="1.27" Rs="1.33" Cj0="4.64E-10" Vj="0.75" M="0.33" Fc="0.5" Tt="5.01E-8" Bv="8.001" Ibv="0.152" Af="1" Kf="0"
     .Def:End
   </Model>
 </Component>
@@ -976,7 +976,7 @@
   </Description>
   <Model>
     .Def:Z_Diodes_1N5346B _net0 _net1
-      Diode:D1 _net0 _net1 Is="3.17E-16" N="1.27" Rs="1.82" Cj0="3.97E-10" Vj="0.75" Vj="0.75" M="0.33" Fc="0.5" Tt="5.01E-8" Bv="8.83" Ibv="0.15" Af="1" Kf="0"
+      Diode:D1 _net0 _net1 Is="3.17E-16" N="1.27" Rs="1.82" Cj0="3.97E-10" Vj="0.75" M="0.33" Fc="0.5" Tt="5.01E-8" Bv="8.83" Ibv="0.15" Af="1" Kf="0"
     .Def:End
   </Model>
 </Component>
@@ -1183,7 +1183,7 @@
     added by Leandro D'Archivio <morti667@hotmail.com>
   </Description>
   <Model>
-    .Def:Z-Diodes_1N5377B _net0 _net1
+    .Def:Z_Diodes_1N5377B _net0 _net1
       Diode:D1 _net0 _net1 Is="1.65E-10" N="1.27" Rs="73.3" Cj0="6.72E-11" Vj="0.75" M="0.33" Fc="0.5" Tt="5.01E-8" Bv="89.94" Ibv="0.015" Af="1" Kf="0"
     .Def:End
   </Model>
