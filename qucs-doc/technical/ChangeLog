@@ -277,7 +277,7 @@
 	Fixed some typos.
 
 	* grammar-qucs.tex (chapter{Qucs netlist grammar}): Fixed
-	comments on each grammer item as required.  Fixed some typos.
+	comments on each grammar item as required.  Fixed some typos.
 
 	* acnoise.tex (section{The Algorithm}): Added a note about the
 	transposed LU decomposed matrix during AC noise analysis.
@@ -453,7 +453,7 @@
 
 	* technical.tex (subsubsection{Kirschning and Jansen}):
 	Documented dispersion of characteristic impedance of single
-	microstrip line acording to Kirschning.
+	microstrip line according to Kirschning.
 	(subsubsection{Kirschning and Jansen}): Filled the missing
 	paper references for coupled microstrips.
 

@@ -5,7 +5,7 @@ Qucs 0.0.20 Release Notes
 Qucs
 ----
 
-* [NEW] Maching Circuit dialog. Add impedance matching techniques: Single matching,
+* [NEW] Matching Circuit dialog. Add impedance matching techniques: Single matching,
   double stub matching, real to real broadband transformers, cascaded L-sections
   and lambda/8 + lambda/4 matching ([PR#666])
 
@@ -329,7 +329,7 @@ Port
 
 * Ported Diagram classes from Qt3PtrList to QList
 
-* Port Qt3PtrList to QVector on Diagrans, amonst other improvements
+* Port Qt3PtrList to QVector on Diagrans, amongst other improvements
 
 * Ported Component member variables Lines, Arcs, Rects, Ellips, Texts from Qt3PtrList to QList
 

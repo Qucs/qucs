@@ -14,7 +14,7 @@
 #
 # TODO:
 # - add contrib/ to `make dist`
-# - craete target like  `make portable`
+# - create target like  `make portable`
 
 # run this script from the root of the working tree, ex. ~/git/qucs/
 

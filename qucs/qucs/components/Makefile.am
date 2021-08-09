@@ -5,7 +5,7 @@
 # Automake input file.
 #
 # Copyright (C) 2004-2011 Stefan Jahn <stefan@lkcc.org>
-# New models 2013 addded Mike Brinson  mbrin72043@yahoo.co.uk
+# New models 2013 added Mike Brinson  mbrin72043@yahoo.co.uk
 #
 # This is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by

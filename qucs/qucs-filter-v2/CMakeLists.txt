@@ -4,7 +4,7 @@ cmake_policy(VERSION 2.6)
 
 set(CMAKE_BUILD_TYPE Debug)
 
-# The incomplete filter-v2 only builds withs -stdlib=libstc++ OSX defaults to
+# The incomplete filter-v2 only builds with -stdlib=libstc++ OSX defaults to
 # libstc++. \fixme
 if(APPLE)
   set(CMAKE_CXX_FLAGS "-stdlib=libstdc++")

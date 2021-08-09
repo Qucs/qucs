@@ -18,7 +18,7 @@ simulation.  The voltage and current sources create discrete
 frequencies resulting in a spectrum of discrete frequencies at every
 node in the circuit. Linear circuit components are solely modeled in
 frequency domain. Non-linear components are modeled in time domain and
-Fourier-transformed before each solving step.  The informations in
+Fourier-transformed before each solving step.  The information in
 this chapter are taken from \cite{Maas1} (chapter 3) which is a very
 nice and well-written publication on this topic.
 
@@ -103,7 +103,7 @@ be precise the described method is called Kirchhoff's current
 law harmonic balance (KCL-HB). Theoretically, it would also be
 possible to use an algorithm that tries to balance the voltages
 at the subcircuit interconnections. But then the Z matrix (linear
-subcircuit) and current-dependend voltage laws (non-linear
+subcircuit) and current-dependent voltage laws (non-linear
 subcircuit) have to be used. That doesn't fit the need (see other
 simulation types).
 
@@ -178,7 +178,7 @@ Note: The MNA matrix of the linear subcircuit has $L$ nodes.
 Every node, that is connected to the non-linear subcircuit or/and is
 connected to a voltage source, is called "port" in the following text.
 So, there are $M+N$ ports. All these ports need to be differential
-ones, i.e. without ground reference. Otherwise problemes may occur
+ones, i.e. without ground reference. Otherwise problems may occur
 due to singular matrices when calculating $[\tilde{Y}]$ or $[\hat{Y}]$.
 
 \addvspace{12pt}

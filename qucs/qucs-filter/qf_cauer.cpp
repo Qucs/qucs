@@ -297,7 +297,7 @@ void qf_cauer::normalize (qf_double_t amin, qf_double_t amax,
   a = new qf_double_t[ord + 1];
 }
 
-// A Cauer (or elliptic) filter has a symetric D(O)
+// A Cauer (or elliptic) filter has a symmetric D(O)
 // D(O) = F (O) / P (O) = K * O * Prod {(O^2 + a^2(i)) / (a^2(i) * O^2 + 1)}
 // So that it is Chebichev in the passband and in the stopband
 void qf_cauer::xfer (void) {
@@ -629,7 +629,7 @@ int main (void) {
     std::cin >> fs;
     std::cout << "Enter minimal attenuation in stopband (dB): ";
     std::cin >> amax;
-    std::cout << "Enter bandwith (0 for high- or low-pass) (Hz): ";
+    std::cout << "Enter bandwidth (0 for high- or low-pass) (Hz): ";
     std::cin >> bw;
     std::cout << "Enter reference impedance (Ohm): ";
     std::cin >> r;

@@ -31,7 +31,7 @@ A resume of these transistors can be found in the figure \ref{design:pa:toTable}
 \end{center}
 \end{figure}
 
-I will not discuss herein, the reason \footnote{regarding current, $F_t$ , $V_{ce}$ , power dissipation, etc \ldots} why of the final choice, but the $BFG425w$ is the candidate. It offers high gain, with low figure noise ( if LNA consideration )  high transistion frequency ( 25 GHz ), its emitter is thermal lead, low feedback capacitance. This device could be used in RF front end, analog or digital cellular, radar detectors, pagers, SATV, oscillators. It is in a SOT343R package suitable for small integration.
+I will not discuss herein, the reason \footnote{regarding current, $F_t$ , $V_{ce}$ , power dissipation, etc \ldots} why of the final choice, but the $BFG425w$ is the candidate. It offers high gain, with low figure noise ( if LNA consideration )  high transition frequency ( 25 GHz ), its emitter is thermal lead, low feedback capacitance. This device could be used in RF front end, analog or digital cellular, radar detectors, pagers, SATV, oscillators. It is in a SOT343R package suitable for small integration.
 
 The maximum acheivable gain is 20 dB with 25 mA, $V_{ce} = 2$ V at 2 GHz and $25^\circ C$. The third order intercept point in these conditions is typically $22 dBm$.
 
@@ -60,7 +60,7 @@ The data sheet could be found on the philips web site.
 
 \tutsection{library creation}
 
-Remember that when creating a device, it is almost always mandatory to read of have a look at on how the model is done is the technical documentation. It is very to understand the limitation, and how we can correct some data if needed. The mian pity is that a lot of commercial software are quite obscure on the real model they use and their limitation ; QUCS is quite exceptionnal  on this point this the complete modeling is explain theoretically in a special technical paper.
+Remember that when creating a device, it is almost always mandatory to read of have a look at on how the model is done is the technical documentation. It is very to understand the limitation, and how we can correct some data if needed. The mian pity is that a lot of commercial software are quite obscure on the real model they use and their limitation ; QUCS is quite exceptional  on this point this the complete modeling is explain theoretically in a special technical paper.
 
 \bigskip
 
@@ -103,7 +103,7 @@ You can replace the $1$ by $0$, this will remove the visible checkbox, the fact 
 A trick to provide all the required syntax is to fill a NPN into the schematics, perform a copy on the device, you should then have the model in the clipboard, just paste into to file and add the description and the markup language boundaries. The syntaxe is explained in the help at the topic \textit{description of the qucs file formats}.
 
 
-Then the device is visible in the \texttt{Component Library Tool} as mentionned in figure \ref{design:pa:componentTool}.
+Then the device is visible in the \texttt{Component Library Tool} as mentioned in figure \ref{design:pa:componentTool}.
 
 \begin{figure}[htbp]
 \begin{center}
@@ -151,7 +151,7 @@ For the validation we will need to use a specific bias of the device : $I_c$ sho
 
 \tutsection{parasitic description of the package}
 
-In order to simulate properly the device, you need to used the correct package, that is to say the $SOT343R$ in our case, as mentionned on the philips web site ( see fig. \ref{design:pa:model:sotDesc}).
+In order to simulate properly the device, you need to used the correct package, that is to say the $SOT343R$ in our case, as mentioned on the philips web site ( see fig. \ref{design:pa:model:sotDesc}).
 
 \begin{figure}[htbp]
 \begin{center}
@@ -161,9 +161,9 @@ In order to simulate properly the device, you need to used the correct package, 
 \end{center}
 \end{figure}
 
-Eventhough the device has two emitter, the model used has only one emitter. The parasitic of this model are shoyn in the spice netlist described in the choice of the transistor and reproduced in a schematic (see fig. \ref{design:pa:model:parasitSch}). These parameter are always critical to extract, either you have the knowledge to do it or then you should rely on the piece of information given by the device manucfacturer. It is also very difficult to figure out what have to be changed in such description of the device. Some fitting have been performed using 3D electromagnetic software in the time domain based on MOM methods to verify these parameters.
+Even though the device has two emitter, the model used has only one emitter. The parasitic of this model are shoyn in the spice netlist described in the choice of the transistor and reproduced in a schematic (see fig. \ref{design:pa:model:parasitSch}). These parameter are always critical to extract, either you have the knowledge to do it or then you should rely on the piece of information given by the device manucfacturer. It is also very difficult to figure out what have to be changed in such description of the device. Some fitting have been performed using 3D electromagnetic software in the time domain based on MOM methods to verify these parameters.
 
-PhilipsÕ  fifth  generation double poly silicon wideband technology uses a steep emitter doped profile resulting in transition frequencies over 20 GHz, and with poly base contacts a low base resistance is obtained. Via the buried layer, the collector contact is brought out at the top of the die. The substrate is connected directly to the emitter package lead, resulting in improved thermal performance ( see fig \ref{design:pa:model:fifthGen}).
+Philipsï¿½  fifth  generation double poly silicon wideband technology uses a steep emitter doped profile resulting in transition frequencies over 20 GHz, and with poly base contacts a low base resistance is obtained. Via the buried layer, the collector contact is brought out at the top of the die. The substrate is connected directly to the emitter package lead, resulting in improved thermal performance ( see fig \ref{design:pa:model:fifthGen}).
 
 \begin{figure}[htbp]
 \begin{center}
@@ -189,7 +189,7 @@ From this schematics you can edit the symbol that could be used in the next simu
 
 In this section we will need to redraw a new schematics using the model we have created, plus some extra components to place the measurements ports \footnote{We will another method when we will use the device in a real project}.
 
-You should have a schematics like the one mentionned in fig\ref{design:pa:model:spSch}.
+You should have a schematics like the one mentioned in fig\ref{design:pa:model:spSch}.
 
 \begin{figure}[htbp]
 \begin{center}

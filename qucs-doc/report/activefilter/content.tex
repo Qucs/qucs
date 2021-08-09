@@ -478,7 +478,7 @@ evaluation according equation (\ref{butt-poles}). For sources see
 \verb|filter.cpp|.
 
 
-\subsection{Minimun order estimation}
+\subsection{Minimum order estimation}
 
 We need to know maximum passband attenuation $A_p$ and minimum stopband
 attenuation $A_s$ to estimate minimum Butterworth order. These attenuations
@@ -589,7 +589,7 @@ bandpass ripple $R_p$ to find filter poles. \verb|Filter::calcChebyshev|
 function evaluates Chebyshev filter poles using equations (\ref{pol-cheb1}) and
 (\ref{pol-cheb2}) (see \verb|filter.cpp|).
 
-\subsection{Minimun order estimation}
+\subsection{Minimum order estimation}
 
 The minimum order $N$ of the Chebyshev filter can be estimated using following
 equation. We assume $A_p=R_p$.
@@ -682,7 +682,7 @@ Type-II filters are known as inverse Chebyshev filters.
 \cosh\left[\frac{1}{N}\sinh^{-1}\left(\frac{1}{\varepsilon}\right)\right]
 \end{equation}
 
-\subsection{Minimun order estimation}
+\subsection{Minimum order estimation}
 
 The minimum order $N$ of the Chebyshev filter can be estimated using following
 equation. We assume $A_s=R_s$.
@@ -740,14 +740,14 @@ Typical magnitude response is shown in the Figure \ref{fig:cauer}.
 You can see from this figure that Cauer filter has the most sharpest magnitude
 response. But this filter has both bandpass ripple and bandstop ripple. 
 
-\subsection{Minimun order estimation}
+\subsection{Minimum order estimation}
 
 We need to know cutoff frequency $\omega_c$, stopband frequency $\omega_s$,
 passband ripple $R_p$, stopband attenuation $A_s$. We assume $A_p=R_p$ and
 $R_s=A_s$. Minimum order estimation method follows Handbook
 \cite{dfd_handbook}, page 95.
 
-Minimun filter order could be estimated using following steps:
+Minimum filter order could be estimated using following steps:
 
 \begin{enumerate}
  \item Determine selectivity factor $k$
@@ -991,7 +991,7 @@ source code.
 
 % \subsection{Transfer function}
 
-% \subsection{Minimun order estimation}
+% \subsection{Minimum order estimation}
 
 \chapter{Other filter types}
 \label{sec:other-filt}

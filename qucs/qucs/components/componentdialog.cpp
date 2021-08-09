@@ -47,7 +47,7 @@ ComponentDialog::ComponentDialog(Component *c, Schematic *d)
   QString s;
   setAllVisible = true; // state when toggling properties visibility
 
-  all = new QVBoxLayout; // to provide neccessary size
+  all = new QVBoxLayout; // to provide necessary size
   this->setLayout(all);
   all->setContentsMargins(1,1,1,1);
   QGridLayout *gp1;
@@ -468,7 +468,7 @@ ComponentDialog::ComponentDialog(Component *c, Schematic *d)
     }
 
 
-  /// \todo add key up/down brose and select prop
+  /// \todo add key up/down browse and select prop
   connect(prop, SIGNAL(itemClicked(QTableWidgetItem*)),
                 SLOT(slotSelectProperty(QTableWidgetItem*)));
 }
@@ -597,7 +597,7 @@ void ComponentDialog::slotSelectProperty(QTableWidgetItem *item)
   }
 
   /// \todo enable edit of description anyway...
-  /// empy or "-" (no comment from verilog-a)
+  /// empty or "-" (no comment from verilog-a)
   if(desc.isEmpty()) {
     // show two line edit fields (name and value)
     ButtAdd->setEnabled(true);
@@ -1129,7 +1129,7 @@ void ComponentDialog::slotEditFile()
   Add description if missing.
   Is called if the add button is pressed. This is only possible for some
  properties.
- If desc is empy, ButtAdd is enabled, this slot handles if it is clicked.
+ If desc is empty, ButtAdd is enabled, this slot handles if it is clicked.
  Used with: Equation, ?
 
  Original behavior for an Equation block
@@ -1193,7 +1193,7 @@ void ComponentDialog::slotButtAdd()
 /*!
  Is called if the remove button is pressed. This is only possible for
  some properties.
- If desc is empy, ButtRem is enabled, this slot handles if it is clicked.
+ If desc is empty, ButtRem is enabled, this slot handles if it is clicked.
  Used with: Equations, ?
 */
 void ComponentDialog::slotButtRem()

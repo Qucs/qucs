@@ -68,7 +68,7 @@ Rarray qf_matrix::bHVtV (Rarray& V, gslice& gs) {
   if (V[0] == 0)
     return Rarray (0.0, r * s);
 
-  // Form submatix into independant matrix
+  // Form submatrix into independent matrix
   Rarray M (r * s), R (r * s);
   M = (*H)[gs];
 
@@ -104,7 +104,7 @@ Rarray qf_matrix::bVtVH (Rarray& V, gslice& gs) {
   if (V[0] == 0)
     return Rarray (0.0, r * s);
 
-  // Form submatix into independant matrix
+  // Form submatrix into independent matrix
   Rarray M (r * s), R (r * s);
   M = (*H)[gs];
 

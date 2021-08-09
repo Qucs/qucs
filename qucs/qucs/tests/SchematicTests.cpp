@@ -17,7 +17,7 @@ void SchematicTests::testConstructor()
     name = QString("");
     sch = new Schematic(app, name);
     QCOMPARE(sch->symbolMode, false);
-    // go up to QucsDoc, empy name
+    // go up to QucsDoc, empty name
     QCOMPARE(sch->DocName, name);
 
     name = QString("DocumentName");

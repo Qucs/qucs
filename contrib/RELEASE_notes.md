@@ -5,7 +5,7 @@ Recommended sequence:
 
 * bump version
 
-* review commiters, acknowledgements, translators
+* review committers, acknowledgements, translators
 
 * git tag
 
@@ -23,7 +23,7 @@ Recommended sequence:
   * [optional] rebuild/repackage FreeHDL: `freehdl-build-win32.sh`
     * [manual step] build GNU regex, deploy regex.h libregex.a into mingw tree
     * `freehdl-installer.sh`
-    * upload instaler to SF
+    * upload installer to SF
 
 * package Win32 build: `qucs_installer_win32.sh`
   * upload installer to SF

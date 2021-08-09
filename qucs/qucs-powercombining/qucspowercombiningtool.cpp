@@ -128,7 +128,7 @@ QucsPowerCombiningTool::QucsPowerCombiningTool()
   NStagesLabel->hide();
   NStagesCombo->hide();
 
-  //Ideal transmission line attenuation coeffient
+  //Ideal transmission line attenuation coefficient
   QHBoxLayout *hboxImplAlpha = new QHBoxLayout();
   AlphaLabel = new QLabel("Attenuation coefficient");
   AlphalineEdit=new QLineEdit("0");
@@ -163,7 +163,7 @@ QucsPowerCombiningTool::QucsPowerCombiningTool()
   hboxImpl6->addWidget(AddSparcheckBox);
   VboxImplementation->addLayout(hboxImpl6);
 
-  //Implementation. Mutually exclusive radiobuttons for selecting ideal transmission lines, microstrip tech, o CLC pi aproximations of quarter-wave lines
+  //Implementation. Mutually exclusive radiobuttons for selecting ideal transmission lines, microstrip tech, o CLC pi approximations of quarter-wave lines
   ImplementationgroupBox = new QGroupBox("Implementation");
   QHBoxLayout *hboxImpl7 = new QHBoxLayout();//Layout for the groupbox
   QVBoxLayout *vboxImpl = new QVBoxLayout();//Layout for allocating the radiobuttons
@@ -202,7 +202,7 @@ QucsPowerCombiningTool::QucsPowerCombiningTool()
 
   //Substrate height
   QHBoxLayout *hboxMicr2 = new QHBoxLayout();
-  SubstrateHeightlabel = new QLabel("Substrate heigth");
+  SubstrateHeightlabel = new QLabel("Substrate height");
   SubstrateHeightlineEdit = new QLineEdit("1.0");
   SubstrateMMlabel = new QLabel("mm");
   hboxMicr2->addWidget(SubstrateHeightlabel);
@@ -777,7 +777,7 @@ QString QucsPowerCombiningTool::calcChebyLines(double RL, double Z0, double gamm
 
     double w[N];
 
-    switch(N)//The weights are calculated by equating the reflection coeffient formula to the N-th Chebyshev polinomial
+    switch(N)//The weights are calculated by equating the reflection coefficient formula to the N-th Chebyshev polinomial
     {
     case 1:
         w[0] = sec_theta_m;
@@ -1980,7 +1980,7 @@ QString QucsPowerCombiningTool::ConvertLengthFromM(double len)
           conv *= 1e6;
           if (conv > 999.99)
           {
-            index = 0;//milimeters
+            index = 0;//millimeters
             break;
           }
           if(conv < 1) 
@@ -2001,7 +2001,7 @@ QString QucsPowerCombiningTool::ConvertLengthFromM(double len)
           conv *= 39.3701;
           if (conv > 999.99)
           {
-            index = 5;//feets
+            index = 5;//feet
             break;
           }
           if(conv < 1) 
@@ -2030,7 +2030,7 @@ QString QucsPowerCombiningTool::ConvertLengthFromM(double len)
             break;
           }
           return QString("%1").arg(RoundVariablePrecision(len));
-    default: //milimeters
+    default: //millimeters
           conv *=1e3;
           if (conv > 999.99)
           {

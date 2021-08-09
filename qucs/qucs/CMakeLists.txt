@@ -111,7 +111,7 @@ if(WIN32)
 endif(WIN32)
 
 #
-# Set position independed code PIC
+# Set position independent code PIC
 #
 if(UNIX AND NOT APPLE)
   if(CMAKE_SYSTEM_PROCESSOR STREQUAL "x86_64")

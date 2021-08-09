@@ -348,7 +348,7 @@ QucsTranscalc::QucsTranscalc() {
   menuBar()->addMenu(helpMenu);
 
   // === left
-  // seletion combo and figure
+  // selection combo and figure
   QVBoxLayout *vl = new QVBoxLayout();
 
   // transmission line type choice

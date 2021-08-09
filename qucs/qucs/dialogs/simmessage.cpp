@@ -212,7 +212,7 @@ void SimMessage::nextSPICE()
       return;
     }
 // FIXME #warning SPICE section below not being covered?
-    qDebug() << "goin thru SPICE branch on simmmessage.cpp";
+    qDebug() << "going through SPICE branch on simmmessage.cpp";
     if(Line.left(5) == "SPICE") {
       if(Line.at(5) != 'o') insertSim = true;
       else insertSim = false;
@@ -478,9 +478,9 @@ void SimMessage::startSimulator()
            * the schematic,it might be the case that the user loaded the icons,
            * but did not compiled the module. Qucsator will not find the library.
            *
-           * Check if used symbols have corresponing lib before running
+           * Check if used symbols have corresponding lib before running
            * Qucsator? Need to search on the netlis.txt? Is there other data
-           * structure containig the netlist?
+           * structure containing the netlist?
            *
           */
           QStringList usedComponents;
@@ -502,7 +502,7 @@ void SimMessage::startSimulator()
           if (! usedComponents.isEmpty()) {
 
 
-            /// \todo remvoe the command line arguments? use only netlist annotation?
+            /// \todo remove the command line arguments? use only netlist annotation?
             //Arguments << "-p" << QucsSettings.QucsWorkDir.absolutePath()
             //          << "-m" << usedComponents;
             //qDebug() << "Command :" << Program << Arguments.join(" ");

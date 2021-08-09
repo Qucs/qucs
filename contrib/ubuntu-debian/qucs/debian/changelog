@@ -42,7 +42,7 @@ qucs (0.0.18-2) utopic; urgency=medium
   * Included packages
   *     ASCO 0.4.9 (patched)
   *     ADMS 2.3.4
-  * Miscelaneous
+  * Miscellaneous
   *     Project website is now under version control.
   *     Source code is now under Travis continuous integration service.
   *     Source code documentation (Doxygen) available on the website.
@@ -96,7 +96,7 @@ qucs (0.0.18-1) trusty; urgency=medium
   * Included packages
   *     ASCO 0.4.9 (patched)
   *     ADMS 2.3.4
-  * Miscelaneous
+  * Miscellaneous
   *     Project website is now under version control.
   *     Source code is now under Travis continuous integration service.
   *     Source code documentation (Doxygen) available on the website.

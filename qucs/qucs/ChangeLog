@@ -3,7 +3,7 @@
 	* qucs.cpp (slotOpenContent): Allowing double click on .vhd files.
 
 	* schematic_file.cpp (saveSymbolCpp): Including terminal centers
-	into computation of the boundig box when exporting the C++ code
+	into computation of the bounding box when exporting the C++ code
 	for the symbol.
 
 	* qucsdigilib.bat, qucsdigi.bat: Fixing digital simulation
@@ -121,7 +121,7 @@
 
 	* schematic_file.cpp (saveSymbolCpp): Added code to save C++
 	symbol drawing code into the dataset of a schematic.
-	(saveDocument): Usin above function to save C++ code of a symbol
+	(saveDocument): Using above function to save C++ code of a symbol
 	drawing document associated with a Verilog-A file.
 
 	* schematic.cpp (adjustPortNumbers): Creating/updating Verilog-A
@@ -316,7 +316,7 @@
 
 2008-08-06  Stefan Jahn  <stefan@lkcc.org>
 
-	* dialogs/digisettingsdialog.cpp (slotOk): Transfering digital
+	* dialogs/digisettingsdialog.cpp (slotOk): Transferring digital
 	setting into the appropriate textdoc.
 
 	* textdoc.cpp (saveSettings, loadSettings): Implemented load/save
@@ -342,7 +342,7 @@
 
 2008-03-08  Stefan Jahn  <stefan@lkcc.org>
 
-	* schematic_file.cpp (prepareNetlist): Fixed bug occuring with
+	* schematic_file.cpp (prepareNetlist): Fixed bug occurring with
 	verilog-hdl subcircuits including delays (timescale must be set
 	previously).
 
@@ -658,7 +658,7 @@
 
 2007-02-24  Michael Margraf   <michael.margraf@alumni.tu-berlin.de>
 
-	* marker pointer with precize graph position at zoom >1
+	* marker pointer with precise graph position at zoom >1
 	* fixed bug setting marker on 2D graph in 3D diagram
 	* fixed bug with nan values in diagrams
 	* enter wire mode when clicking on circuit node
@@ -878,7 +878,7 @@
 	* reload diagram graphes only if dataset is newer
 	* fixed bug scrolling with cursor down key
 	* fixed small bug setting wrong changed status
-	* fixed bug loosing some mouse actions
+	* fixed bug losing some mouse actions
 	* new feature: creating user library from subcircuits
 
 2006-05-31  Stefan Jahn  <stefan@lkcc.org>
@@ -928,7 +928,7 @@
 2006-05-18  Stefan Jahn  <stefan@lkcc.org>
 
 	* diagrams/graph.cpp (paintLines): Fixed a segfault bug
-	occuring when last line is hidden (3d diagram).
+	occurring when last line is hidden (3d diagram).
 
 2006-05-17  Michael Margraf   <michael.margraf@alumni.tu-berlin.de>
 
@@ -1064,7 +1064,7 @@
 	* diagram dialog of tabular: default number representation mag/deg
 	* change dialog fixed
 	* correct VDHL time for gates
-	* s-parmeter file component with chooseable port number
+	* s-parameter file component with chooseable port number
 	* inout attribute for subcircuit port
 	* fixed bug to allow more than 1 subcircuit in VHDL
 
@@ -1101,7 +1101,7 @@
 	* timing diagram shows change of state at begin and end
 	* new digital components: RS, D and JK flip flop
 	* fixed bug that removed labels after subcircuit update
-	* set subcircuit port attribut "analog" to "inout" (VHDL)
+	* set subcircuit port attribute "analog" to "inout" (VHDL)
 
 2006-01-04  Stefan Jahn  <stefan@lkcc.org>
 
@@ -1161,7 +1161,7 @@
 	* hidden line algorithm for 3D diagram
 	* changed symbol for mutual inductors
 	* fixed seg fault after "change dialog" with no components
-	* fixed bug of disapearing wire labels
+	* fixed bug of disappearing wire labels
 	* fixed bug for calling wire double-click action
 
 2005-09-30  Michael Margraf   <michael.margraf@alumni.tu-berlin.de>
@@ -1325,7 +1325,7 @@
 	* new property in coplanar line: Approx
 	* fixed small bug that always set changed-flag if "Set on Grid"
 	* right mouse button menu is now context sensitive
-	* added validators for all neccessary line edits
+	* added validators for all necessary line edits
 
 2005-04-11  Stefan Jahn  <stefan@lkcc.org>
 
@@ -1350,7 +1350,7 @@
 	* fixed seg fault if indep data not found
 	* fixed seg fault caused by wrong y-axis
 	* fixed some graph and diagram painting faults
-	* dependend variables can now replace independent ones
+	* dependent variables can now replace independent ones
 	(if suitable)
 
 2005-03-19  Michael Margraf   <michael.margraf@alumni.tu-berlin.de>
@@ -1404,7 +1404,7 @@
 
 2004-12-27  Michael Margraf   <michael.margraf@alumni.tu-berlin.de>
 
-	* component edit dialog extented to show special page for
+	* component edit dialog extended to show special page for
 	simulations
 	* fixed small bug that placed text of subcircuits to wrong
 	position after undo/load
@@ -1440,7 +1440,7 @@
 2004-11-21  Michael Margraf   <michael.margraf@alumni.tu-berlin.de>
 
 	* new pictures for smith and polar diagrams
-	* some small improvments
+	* some small improvements
 	* manual limits for diagrams
 
 2004-11-07  Michael Margraf   <michael.margraf@alumni.tu-berlin.de>
@@ -1799,7 +1799,7 @@
 
 	* diagrams/tabdiagram.cpp (calcDiagram): Yet another bug fix
 	causing segfaulting the tabdiagram when an graph input has
-	disappered after a new simulation.
+	disappeared after a new simulation.
 
 2004-05-19  Stefan Jahn  <jahn@mwt.ee.tu-berlin.de>
 

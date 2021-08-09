@@ -598,7 +598,7 @@ numnames
 % item.
 % 
 % "output" does check for the presence of a previous empty item and will
-% remove an empty item rather than outputing it.
+% remove an empty item rather than outputting it.
 % 
 % "output.warn" is like "output", but will issue a warning if it detects
 % an empty item.

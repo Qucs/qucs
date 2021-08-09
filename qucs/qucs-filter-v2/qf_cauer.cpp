@@ -272,8 +272,8 @@ bool qf_cauer::iorder (void) {
     qf_double_t p;
 
     // Now finds the new suitable angle th
-    // between thp and the prevoius th, by dichotomy
-    // The relative error is controled by the PL_ERR constant
+    // between thp and the previous th, by dichotomy
+    // The relative error is controlled by the PL_ERR constant
 
     do {
       theta = 0.5 * (th1 + th2);

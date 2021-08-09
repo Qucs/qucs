@@ -197,7 +197,7 @@ def fig_stabgears(show=False):
 
 def fib_stabgearex(show=False):
     '''Stability regions of explicit Gear formulae.
-    Not yet icluded in the technical manual
+    Not yet included in the technical manual
     '''
     fig = plt.figure()
     ax = fig.add_subplot(111,aspect='equal')
@@ -442,7 +442,7 @@ def fig_mszl(show=False):
 
 def fig_mscomparezl(show=False):
     '''Chapter 11
-    Comparizon of impedance formulas
+    Comparison of impedance formulas
     '''
     u = np.linspace(0.01, 5.01, 101)
     er = 9.8
@@ -477,7 +477,7 @@ def fig_mscomparezl(show=False):
 
 def Kapprox(x):
     '''The function computes the K/K' approximation in the argument
-    interval [0;1].  The interval is splitted at 1/sqrt(2).
+    interval [0;1].  The interval is split at 1/sqrt(2).
     '''
     k = np.zeros(len(x))
     for n in range(len(x)):

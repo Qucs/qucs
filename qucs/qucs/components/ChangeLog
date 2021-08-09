@@ -452,7 +452,7 @@
 
 2006-09-03  Stefan Jahn  <stefan@lkcc.org>
 
-	* opt_sim.cpp (createASCOFiles): Fixed a bug occuring when
+	* opt_sim.cpp (createASCOFiles): Fixed a bug occurring when
 	trying to use ASCO on Win32.
 
 2006-08-30  Stefan Jahn  <stefan@lkcc.org>

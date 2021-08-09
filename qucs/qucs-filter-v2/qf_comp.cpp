@@ -99,7 +99,7 @@ void qf_cmp1::dump (unsigned n1, unsigned n2,
     // position
     com << " 1 " << x+70 << " " << y-80;
     com << " -26 10 0 0";
-    // value of commponent
+    // value of component
     com << " \"" << valstr (val) << unit;
     com << "\" 1>\n";
     x += 140;
@@ -158,7 +158,7 @@ void qf_cmplc::dump (unsigned n1, unsigned n2,
       // position
       com << " 1 " << x+70 << " " << y-80;
       com << " -26 10 0 0";
-      // value of commponent
+      // value of component
       com << " \"" << valstr (vL) << "H";
       com << "\" 1>\n";
 
@@ -172,7 +172,7 @@ void qf_cmplc::dump (unsigned n1, unsigned n2,
       // position
       com << " 1 " << x+70 << " " << y-120;
       com << " -26 -48 0 0";
-      // value of commponent
+      // value of component
       com << " \"" << valstr (vC) << "F";
       com << "\" 1>\n";
 
@@ -219,7 +219,7 @@ void qf_cmplc::dump (unsigned n1, unsigned n2,
       // position
       com << " 1 " << x+70 << " " << y-80;
       com << " -26 10 0 0";
-      // value of commponent
+      // value of component
       com << " \"" << valstr (vL) << "H";
       com << "\" 1>\n";
 
@@ -228,7 +228,7 @@ void qf_cmplc::dump (unsigned n1, unsigned n2,
       // position
       com << " 1 " << x+150 << " " << y-80;
       com << " -26 10 0 0";
-      // value of commponent
+      // value of component
       com << " \"" << valstr (vC) << "F";
       com << "\" 1>\n";
 

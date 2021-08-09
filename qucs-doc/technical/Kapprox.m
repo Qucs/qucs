@@ -20,7 +20,7 @@
 
 %
 % The function computes the K/K' approximation in the argument
-% interval [0;1].  The interval is splitted at 1/sqrt(2).
+% interval [0;1].  The interval is split at 1/sqrt(2).
 %
 
 function k = Kapprox (x)

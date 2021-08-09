@@ -569,7 +569,7 @@ void QucsLib::slotShowComponent(QListWidgetItem *Item)
     // change currently selected category, so the user will 
     //   learn where the component comes from
     Library->setCurrentIndex(i);
-    // remove 1 to find the actual index (when in Search Mode ther is one more
+    // remove 1 to find the actual index (when in Search Mode there is one more
     //   item  due to the added "Search Results" item)
     libCurIdx = i-1; // remember the category to select when exiting search
     //!! comment out the above two lines if you would like that the search

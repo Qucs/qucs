@@ -11,14 +11,14 @@
 
 \tutsection{Introduction}
 
-Qucs consists of two parts: The simulator backend and a frontend, provding a GUI for drawing schematics, controlling simulation, and displaying the simulation results. The operation of the simulation backend is controlled via a text file (called \emph{netlist} in the following) which describes the circuit to be simulated and the simulation(s) to perform in a textual manner. The simulation backend outputs simulation data. This document describes the syntax of netlist files, shows how the netlists are actually used to control Qucs, and finally demonstrates how the simulation data can be visualized via GNU Octave.
+Qucs consists of two parts: The simulator backend and a frontend, providing a GUI for drawing schematics, controlling simulation, and displaying the simulation results. The operation of the simulation backend is controlled via a text file (called \emph{netlist} in the following) which describes the circuit to be simulated and the simulation(s) to perform in a textual manner. The simulation backend outputs simulation data. This document describes the syntax of netlist files, shows how the netlists are actually used to control Qucs, and finally demonstrates how the simulation data can be visualized via GNU Octave.
 
 Controlling Qucs via netlists and using a separate program for visualizing simulation data may seem complex at first glance; this approach, however, poses the advantage of allowing more flexible usage scenarios: The potentially cpu-consuming circuit simulation could be executed on a powerful (even remote) server, while the result visualization can be done locally on a different computer. By creating netlists via other programs / scripts, it is easy to setup batch simulations.
 
 
 \tutsection{Outline}
 
-After defining the prerequisites, Chaper \ref{chap:basics} presents a basic example netlist and shows how the simulation data can be visualized in Octave. Chapter \ref{chap:devices} describes the various devices and schematic elements provided by Qucs; Chapter \ref{chap:simulation} describes the simulation commands.
+After defining the prerequisites, Chapter \ref{chap:basics} presents a basic example netlist and shows how the simulation data can be visualized in Octave. Chapter \ref{chap:devices} describes the various devices and schematic elements provided by Qucs; Chapter \ref{chap:simulation} describes the simulation commands.
 
 
 \tutsection{Basics}
@@ -126,7 +126,7 @@ produces a log-log plot of the output voltage versus the frequency. A slightly m
 
 Similar to the octave scripts, Qucs provides a Python script which allows parsing of the generated simulation data file. The code example below shows how to load and parse the data file with Python. The plot using Matplotlib is shown in Fig. \ref{plot:rc_ac_python}.
 
-% BUG: cant execute this from here!
+% BUG: can't execute this from here!
 \begin{verbatim}
 
 import numpy as np
@@ -229,7 +229,7 @@ C:C1 out gnd C="100 nF"
 .TR:TR Type=lin Start="0" Stop="1.5 ms" Points="51"
 \end{verbatim}
 
-Here we have replaced the AC sourc with a voltage source generating pulses and told qucs to perform a transient analysis from $0$ to $1.5$ms. Storing the simulation results in a file and using octave to plot the results (analoguous to the previsou Subsection) yields the plot shown in Fig. \ref{plot:rc_ac_tr}-
+Here we have replaced the AC sourc with a voltage source generating pulses and told qucs to perform a transient analysis from $0$ to $1.5$ms. Storing the simulation results in a file and using octave to plot the results (analogous to the previous Subsection) yields the plot shown in Fig. \ref{plot:rc_ac_tr}-
 
 \begin{figure}[h]
 \begin{center}
