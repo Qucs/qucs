@@ -16,13 +16,13 @@ This chapter will describe an RF design issue using QUCS. The author assume that
 
 \tutsection{Field of interest}
 
-This power amplifier will be used in a more complex system taht I can not describe herein, but the application is inside the $868MHz$ ISM frequency band. This amplifier is considered as power amplifier since it is not a LNA, but its power is not very high as well as you can see in the following system specification. It is more a low input power amplifier driving relatively low current. An application note with really high power level such several watts will be an other chapter.
+This power amplifier will be used in a more complex system that I can not describe herein, but the application is inside the $868MHz$ ISM frequency band. This amplifier is considered as power amplifier since it is not a LNA, but its power is not very high as well as you can see in the following system specification. It is more a low input power amplifier driving relatively low current. An application note with really high power level such several watts will be an other chapter.
 
 %-------------------------------------------------------------------------
 
 \tutsection{System consideration}
 
-As a system point of view we need first to specify what kind of function we need. this function will be defined as mentionned in table \ref{design:pa:systemSpecification}.
+As a system point of view we need first to specify what kind of function we need. this function will be defined as mentioned in table \ref{design:pa:systemSpecification}.
 
 
 \begin{table}[htp]
@@ -46,9 +46,9 @@ Cost issue is very important, therefore only one active component is allowed, an
 
 \bigskip
 
-This design should work on a FR4 PCB used in a production line. The parameters of such substrate is quite uncontrolled but can be caracterized, as long as you keep the same supplier ( avoid strange suppliers who can change the FR4 composition without notice ).
+This design should work on a FR4 PCB used in a production line. The parameters of such substrate is quite uncontrolled but can be characterized, as long as you keep the same supplier ( avoid strange suppliers who can change the FR4 composition without notice ).
 
-As mentionned previously you can describe a substrate inside the library with the following lines :
+As mentioned previously you can describe a substrate inside the library with the following lines :
 
 \begin{verbatim}
 <SUBST FR4_ 1 0 0 -30 24 0 0 
@@ -61,7 +61,7 @@ The height of the substrate is $0.7$mm but this describe only one RF layer of th
 
 \tutsection{Biasing consideration}
 
-In this section we will see how the biasing is made, especially using a emitter feed back technic. If you remember well the data sheet of the transistor, there is a huge dispersion on the $h_{FE}$, and some other dispersion have to be taken into account : resistance, supply voltage, \ldots.
+In this section we will see how the biasing is made, especially using a emitter feedback technique. If you remember well the data sheet of the transistor, there is a huge dispersion on the $h_{FE}$, and some other dispersion have to be taken into account : resistance, supply voltage, \ldots.
 
 \begin{figure}[htbp]
 \begin{center}
@@ -145,7 +145,7 @@ From this table we can extract some stability factor :
 \frac{\Delta I_{cc}}{\Delta T}\vert _{\beta = see note, V_{cc} = 2.5 } = \ldots \mu A / C
 \end{equation}
 
-\textbf{Note} : For the temperature dependance, we need to take the minimum $\beta$ for the minimum temperature, and the maximum $\beta$ for the maximum temperature.
+\textbf{Note} : For the temperature dependence, we need to take the minimum $\beta$ for the minimum temperature, and the maximum $\beta$ for the maximum temperature.
 
 
 
@@ -219,7 +219,7 @@ $\Delta T_{e\infty}$ can also be solved independently for a sealed
 enclosure, but are inter--dependent for a vented or forced air
 cooled enclosure.
 
-\paragraph{approching the problem}
+\paragraph{approaching the problem}
 
 During the definition stage of a product, the choice of enclosure is
 sometimes dictated by a competitor, the customer, or marketing.
@@ -227,22 +227,22 @@ Frequently the choice is "as small as possible", thus unwittingly
 passing judgment on a particular choice, it is possible to make a
 thermal analysis of the proposed enclosure. If the environment
 created for the component is unsuitable, then additional cooling
-mechanisms must be developped.
+mechanisms must be developed.
 
-One approch is to simplify the problem to one dimensionnal analysis.
+One approach is to simplify the problem to one dimensionnal analysis.
 Heat energy sources azre assumed to be evenly distributed throughout
 the volume. The enclosure surface is assumed to be isothermal. The
 enclosure is assuemd to made of a perfect thermal conductor. (
 unfortunately, enclosures are more and more being made of plastic, a
-thermal insulator, which complicates this sample approch).
+thermal insulator, which complicates this sample approach).
 
 The external environment is considered to be the walls of a large
 room of surface emissivity , $\epsilon$ , of 1.0 at the same
 temperature, $T_\infty$, as the surrounding air, and is capable of
 absorbing an infinite amount of heat energy.
 
-Heat transfert by conduction, radiation, free convection, venting,
-and forced convection are basically representated by the equation :
+Heat transferred by conduction, radiation, free convection, venting,
+and forced convection are basically represented by the equation :
 
 \begin{equation}
 Q_t = Q_k + Q_r + Q_c + Q_v + Q_f
@@ -293,7 +293,7 @@ An important issue in power amplifier design is the power dissipation. Even if i
 
 \bigskip
 
-As a student you always learn that you can apply kirchoff law on temperature. This only thing you have to know is the correspondance : 
+As a student you always learn that you can apply kirchoff law on temperature. This only thing you have to know is the correspondence : 
 
 \begin{description}
 \item[The temperature : ] is equivalent to the voltage
@@ -316,7 +316,7 @@ Here are the input parameters :
 \end{itemize}
 
 
-The schematics used for this simulation is shown is figure \ref{design:pa:bias:DCpower}\footnote{Note the possiblity to place the results of the simulation directly on the schematics, and some comments on the schematics such as document name, revision, and so on.}.
+The schematics used for this simulation is shown is figure \ref{design:pa:bias:DCpower}\footnote{Note the possibility to place the results of the simulation directly on the schematics, and some comments on the schematics such as document name, revision, and so on.}.
 
 \begin{figure}[htbp]
 \begin{center}

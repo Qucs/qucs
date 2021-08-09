@@ -162,7 +162,7 @@ void microstrip::microstrip_Z0()
   delta_u_1 = delta_u_thickness(u, t_h, 1.0);
   /* compute homogeneous stripline impedance */
   Z0_h_1 = Z0_homogeneous(u + delta_u_1);
-  /* compute normalized width corection */
+  /* compute normalized width correction */
   delta_u_r = delta_u_thickness(u, t_h, e_r);
   u += delta_u_r;
   /* compute homogeneous stripline impedance */

@@ -151,7 +151,7 @@ chmod u+x /tmp/mingw
 
 
 # Hack #2: Patch Makefile.am to run executables via wine.
-# In qucs-core it is needed to run executables (gperfappgen, qucsator) thru wine, on the targed system.
+# In qucs-core it is needed to run executables (gperfappgen, qucsator) thru wine, on the target system.
 patch -p1 < ${REPO}/contrib/windows/0001-Cross-compile-hack-run-executables-via-wine.patch
 
 

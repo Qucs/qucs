@@ -75,9 +75,9 @@ repository.
 
     $ git clone http://git.code.sf.net/p/qucs/git qucs
 
-The documetation can be found in qucs/qucs-doc
+The documentation can be found in qucs/qucs-doc
 
-Package maintainance
+Package maintenance
 ====================
 
 Some checks are missing in configure.ac.

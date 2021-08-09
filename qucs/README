@@ -83,5 +83,5 @@ version might not even compile.
     $ git clone http://git.code.sf.net/p/qucs/git qucs-git
 
 Press 'Enter' when asked for a password.  Run `sh bootstrap' and `configure'
-(see above) with the appropriate options.  Maintainance currently requires
+(see above) with the appropriate options.  Maintenance currently requires
 Autoconf version 2.57 and GNU automake 1.7.0.

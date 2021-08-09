@@ -54,5 +54,5 @@
 <Diagrams>
 </Diagrams>
 <Paintings>
-  <Text 140 -90 14 #000000 0 "Small Signal Simulation for Transistor with \nMatching Networks.\n(try out resistors to observe stability bahaviour)">
+  <Text 140 -90 14 #000000 0 "Small Signal Simulation for Transistor with \nMatching Networks.\n(try out resistors to observe stability behaviour)">
 </Paintings>

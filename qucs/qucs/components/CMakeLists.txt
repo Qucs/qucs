@@ -1,4 +1,4 @@
-# qucs/componenets library
+# qucs/components library
 
 include_directories(${CMAKE_SOURCE_DIR} ${CMAKE_CURRENT_SOURCE_DIR})
 

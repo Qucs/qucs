@@ -1411,7 +1411,7 @@ QString MatchDialog::calcChebyLines(double r_real, double r_imag, double Z0,
   QString laddercode;
   double RL = r_real, XL = r_imag;
   r2z(RL, XL,
-      Z0); // Calculation of the load impedance given the reflection coeffient
+      Z0); // Calculation of the load impedance given the reflection coefficient
   double sec_theta_m; // =
                       // cosh((1/(1.*N))*acosh((1/gamma)*fabs((RL-Z0)/(Z0+RL)))
                       // );
@@ -1423,7 +1423,7 @@ QString MatchDialog::calcChebyLines(double r_real, double r_imag, double Z0,
 
   double w[N];
 
-  switch (N) // The weights are calculated by equating the reflection coeffient
+  switch (N) // The weights are calculated by equating the reflection coefficient
              // formula to the N-th Chebyshev polinomial
   {
   case 1:

@@ -4,7 +4,7 @@
 # Copy all freehdl installed binaries to the 'payload_freehdl' directory
 #
 # It should from the final prefix '/usr/local',
-# that is to avoid problems with harcode paths (created during configure).
+# that is to avoid problems with hardcode paths (created during configure).
 #
 # I got this list by installing freehdl into an exclusive prefix '~/myFreeHDL'
 # and running 'find .'
@@ -160,6 +160,6 @@ for file in "${files[@]}"; do
 done
 
 # strip extended attributes
-# otherwise a bunch of empy files starting with '._'
+# otherwise a bunch of empty files starting with '._'
 # are added to the list of files
 xattr -c `find ${payload}`

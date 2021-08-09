@@ -624,7 +624,7 @@ void QucsApp::slotSetCompView (int index)
   QString Name;
   pInfoFunc Infos = 0;
 
-  // if something was registered dynamicaly, get and draw icons into dock
+  // if something was registered dynamically, get and draw icons into dock
   if (item == QObject::tr("verilog-a user devices")) {
 
     compIdx = 0;
@@ -632,7 +632,7 @@ void QucsApp::slotSetCompView (int index)
     while (i.hasNext()) {
       i.next();
 
-      // default icon initally matches the module name
+      // default icon initially matches the module name
       //Name = i.key();
 
       // Just need path to bitmap, do not create an object
@@ -1698,7 +1698,7 @@ void QucsApp::closeFile(int index)
  * @brief close all open documents - except a specified one, optionally
  * @param exceptTab tab to leave open, none if not specified
  *
- * @return true if all files were succesfully closed
+ * @return true if all files were successfully closed
  */
 bool QucsApp::closeAllFiles(int exceptTab)
 {
@@ -1714,7 +1714,7 @@ bool QucsApp::closeAllFiles(int exceptTab)
  * @param stoptTab last tab to be closed
  * @param exceptTab tab to leave open, none if not specified
  *
- * @return true if all requested tabs were succesfully closed
+ * @return true if all requested tabs were successfully closed
  */
 bool QucsApp::closeTabsRange(int startTab, int stopTab, int exceptTab)
 {
@@ -1820,7 +1820,7 @@ void QucsApp::slotChangeView(QWidget *w)
   if (isTextDocument (w)) {
     TextDoc *d = (TextDoc*)w;
     Doc = (QucsDoc*)d;
-    // update menu entries, etc. if neccesary
+    // update menu entries, etc. if necessary
     magAll->setDisabled(true);
     if(cursorLeft->isEnabled())
       switchSchematicDoc (false);
@@ -2143,7 +2143,7 @@ void QucsApp::slotSimulate()
 // Is called after the simulation process terminates.
 void QucsApp::slotAfterSimulation(int Status, SimMessage *sim)
 {
-  if(Status != 0) return;  // errors ocurred ?
+  if(Status != 0) return;  // errors occurred ?
 
   if(sim->ErrText->document()->lineCount() > 1)   // were there warnings ?
     slotShowWarnings();
@@ -2430,7 +2430,7 @@ void QucsApp::slotSelectLibComponent(QTreeWidgetItem *item)
     // if the current document is a schematic activate the paste
     if(!isTextDocument(Doc))
     {
-        // if theres not a higher level item, this is a top level item,
+        // if there's not a higher level item, this is a top level item,
         // not a component item so return
         if(item->parent() == 0) return;
         if(item->text(1).isEmpty()) return;   // return, if not a subcircuit
@@ -2750,7 +2750,7 @@ void QucsApp::updateSchNameHash(void)
     // now go through the paths creating a map to all the schematic files
     // found in the directories. Note that we go through the list of paths from
     // first index to last index. Since keys are unique it means schematic files
-    // in directories at the end of the list take precendence over those at the
+    // in directories at the end of the list take precedence over those at the
     // start of the list, we should warn about shadowing of schematic files in
     // this way in the future
     QStringList nameFilter;
@@ -2793,7 +2793,7 @@ void QucsApp::updateSpiceNameHash(void)
     // now go through the paths creating a map to all the spice files
     // found in the directories. Note that we go through the list of paths from
     // first index to last index. Since keys are unique it means spice files
-    // in directories at the end of the list take precendence over those at the
+    // in directories at the end of the list take precedence over those at the
     // start of the list, we should warn about shadowing of spice files in
     // this way in the future
 

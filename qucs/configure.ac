@@ -128,9 +128,9 @@ AC_ARG_WITH(macosx-sdk,
                           e. g.: --with-macosx-sdk=10.6
 
                           there are 3 options to control the MacOSX build:
-                          --with-macosx-sdk (refered as 'sdk' below)
-                          --with-macosx-version-min-required (refered as 'min' below)
-                          --with-macosx-version-max-allowed (refered as 'max' below)
+                          --with-macosx-sdk (referred to as 'sdk' below)
+                          --with-macosx-version-min-required (referred to as 'min' below)
+                          --with-macosx-version-max-allowed (referred to as 'max' below)
 
                           the connection between these value and the default they take is as follow:
                           ( ? means not specified on the command line, s means the SDK version found,
@@ -151,7 +151,7 @@ AC_ARG_WITH(macosx-sdk,
 
 
                           see: http://developer.apple.com/library/mac/#technotes/tn2064/_index.html
-                          for a detailled technical explanation of these variables
+                          for a detailed technical explanation of these variables
 
                           Note: MACOSX_DEPLOYMENT_TARGET will be set to the value of 'min'.
 
@@ -345,7 +345,7 @@ else
   LIBS="$save_LIBS"
   LDFLAGS="$save_LDFLAGS"
   CXXFLAGS="$save_CXXFLAGS"
-  # BUG: check for library availibility. use AC_CHECK_LIBS
+  # BUG: check for library availability. use AC_CHECK_LIBS
   # ( no check is better than a broken one! ) (?)
   if test "x$QT_LDFLAGS" != "x"; then
     AC_MSG_RESULT([found in $QT_LDFLAGS])
@@ -687,14 +687,14 @@ AS_IF([test $QT_MAJOR_VERSION -ge 5],
 
     AC_MSG_CHECKING([that macosx-version-min-required is coherent with macosx-version-max-allowed])
     if test $MAC_OS_X_VERSION_MIN_REQUIRED -gt $MAC_OS_X_VERSION_MAX_ALLOWED; then
-        AC_MSG_ERROR([the version minimumn required must be inferior or equal to the version maximum allowed])
+        AC_MSG_ERROR([the version minimum required must be inferior or equal to the version maximum allowed])
     else
         AC_MSG_RESULT([ok])
     fi
 
     AC_MSG_CHECKING([that macosx-version-max-allowed is coherent with macos-with-sdk])
     if test $MAC_OS_X_VERSION_MAX_ALLOWED -gt $MACOSX_SDK_VERSION; then
-        AC_MSG_ERROR([the version maximum allowed cannot be greater thatn the sdk level])
+        AC_MSG_ERROR([the version maximum allowed cannot be greater than the sdk level])
     else
         AC_MSG_RESULT([ok])
     fi

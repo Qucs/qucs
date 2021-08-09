@@ -996,7 +996,7 @@ QString Schematic::createSymbolUndoString(char Op)
 }
 
 // -------------------------------------------------------------
-// Is quite similiar to "loadDocument()" but with less error checking.
+// Is quite similar to "loadDocument()" but with less error checking.
 // Used for "undo" function.
 bool Schematic::rebuild(QString *s)
 {

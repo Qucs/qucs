@@ -12,17 +12,17 @@ This section will describe a two stage LNA. The main goal is to see how we can d
 
 \bigskip
 
-The main difference between as you should know, between PA and LNA, is that in the design of a LNA the noise factor is crucial, and therefore a trade off has to be made with the gain design. This design rule is well explained in all RF courses, so I will go straightforward to the solution by explaining the "pie" but not the "recipie" !
+The main difference between PA and LNA, is that in the design of a LNA the noise factor is crucial, and therefore a trade off has to be made with the gain design. This design rule is well explained in all RF courses, so I will go straightforward to the solution by explaining the "pie" but not the "recipe" !
 
 \bigskip 
 
-As mentionned earlier, a particular attention will be placed on the DC study, since the overall current consumtion is a crucial point, and the noise factor that we could have.
+As mentioned earlier, a particular attention will be placed on the DC study, since the overall current consumption is a crucial point, and the noise factor that we could have.
 
 %-----------------------------
 \tutsubsection{System consideration}
 %-----------------------------
 
-As a system point of view we need first to specify what kind of function we need. this function will be defined as mentionned in table \ref{design:lna:systemSpecification}.
+As a system point of view we need first to specify what kind of function we need. this function will be defined as mentioned in table \ref{design:lna:systemSpecification}.
 
 
 \begin{table}[htp]
@@ -41,7 +41,7 @@ $V_{cc}$   & DC supply voltage                &   $1.4$ & $1.5$ & $1.6$ & V \\ \
 \label{design:lna:systemSpecification}
 \end{table}
 
-\textbf{note :} for the DC supply voltage, we will have to find the correct ripple that is acceptable on this design in order to be able to specify the voltage regulator and its PSRR regarding the other voltage in the design. To proceed, due to the fact that some functionnalities are still missing on QUCS\footnote{normal it is still in development \ldots} we will use some workaround for the DC study.
+\textbf{note :} for the DC supply voltage, we will have to find the correct ripple that is acceptable on this design in order to be able to specify the voltage regulator and its PSRR regarding the other voltage in the design. To proceed, due to the fact that some functionalities are still missing on QUCS\footnote{normal it is still in development \ldots} we will use some workaround for the DC study.
 
 
 %-----------------------------
@@ -58,7 +58,7 @@ The parameter are the following :
 
 \input{lna/bfg403}
 
-In order to perform some simulation we should input this component in the device library as mentionned in the chapter on the BJT modeling, and create the schematics thst uses this device. The parasitic element are the same since the package used is the same as the $BFG425W$.
+In order to perform some simulation we should input this component in the device library as mentioned in the chapter on the BJT modeling, and create the schematics that uses this device. The parasitic element are the same since the package used is the same as the $BFG425W$.
 
 %-----------------------------
 \tutsubsection{library creation}

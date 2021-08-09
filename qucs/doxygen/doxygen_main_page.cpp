@@ -18,7 +18,7 @@ To edit the doxygen configuration, you can use (from the qucs-doc top directory)
 
 The default doxygen configuration only produces documentation for modules and data structures
 that have been explicitly tagged in the source code.
-More detailed documentation may be obtained by modifing the doxygen configuration file (<kbd>.../doxygen/doxygen.cfg</kbd>).
+More detailed documentation may be obtained by modifying the doxygen configuration file (<kbd>.../doxygen/doxygen.cfg</kbd>).
 
 Options of particular interest include:<br>
 - <kbd>INPUT</kbd> which identifies the code to be scanned.

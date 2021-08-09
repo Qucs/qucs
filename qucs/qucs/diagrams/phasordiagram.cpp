@@ -239,7 +239,7 @@ void PhasorDiagram::calcData(Graph *g)
       }
 	 
       yp = g->gy;
-      calcCoordinatePh(yf, &f1, &f2, pa, pt);//coordinates of the begining of vector(0,0)
+      calcCoordinatePh(yf, &f1, &f2, pa, pt);//coordinates of the beginning of vector(0,0)
       p->setScr(f1, f2);
       if(!insideDiagramPh(p,&xn,&yn)) a=1;  // within diagram ?
 	      		

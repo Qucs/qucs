@@ -5,7 +5,7 @@
 # 0) extract the release tarball
 # 1) select the target configure for Qucs
 # 2) Make
-# 3) Install to DESTDIR, eg. `make instal DESTDIR=/tmp/installdir`
+# 3) Install to DESTDIR, eg. `make install DESTDIR=/tmp/installdir`
 # 4) This script will create a package out of the 'DESTDIR' directory
 #
 #
@@ -24,7 +24,7 @@
 # http://superuser.com/questions/36567/how-do-i-uninstall-any-apple-pkg-package-file
 
 # TODO
-# - pass tarball location and paramters to this script
+# - pass tarball location and parameters to this script
 # - change the package in such a way the user password is not needed.
 #
 
@@ -121,7 +121,7 @@ ${command}
 
 # check out which Distribution data we have so far
 # productbuild --synthesize --package qucs-0.0.19.pkg Distribution.xml
-# edit the Distrubution.xml file if necessary
+# edit the Distribution.xml file if necessary
 
 # finish package
 productbuild --distribution ./Distribution.xml ./qucs-${version}-OSX10.${VER}.pkg --resources ./resources --package-path ./qucs-${version}.pkg

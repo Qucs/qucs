@@ -25,7 +25,7 @@
 # cd ~/build/regex-0.12
 # CC=i686-w64-mingw32-gcc ./configure --prefix=/usr/local/i686-w64-mingw32
 # make
-## issues wit tex... ignore or $sudo apt-get install texlive-binaries
+## issues with tex... ignore or $sudo apt-get install texlive-binaries
 ## add regex to mingw-w64
 # i686-w64-mingw32-ar ru libregex.a regex.o
 # sudo cp regex.h /usr/i686-w64-mingw32/include/

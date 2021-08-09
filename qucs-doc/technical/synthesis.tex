@@ -192,7 +192,7 @@ n = \dfrac{\log{\left(\dfrac{10^{-0.1\cdot \alpha_{stop}} - 1}{10^{-0.1\cdot \al
 
 \subsubsection{Chebyshev I}
 
-The equations for a Chebyshev type I filter are defined recursivly.
+The equations for a Chebyshev type I filter are defined recursively.
 With $R_{dB}$ being the passband ripple in decibel, the $k$-th
 element of an $n$ order low-pass ladder filter is:
 \begin{alignat}{3}
@@ -227,7 +227,7 @@ Because of the nature of the derivation of the inverse Chebychev approximation f
 
 \subsection{Quarter wavelength filters}
 
-Quarter wavelength filters are based on the fact that short and open $\lambda/4$ stubs are equivalent to series and paralell resonant tanks, respectively. Once given the normalized $g_i$ coefficients of the filter prototype, it is quite straighforward to obtain the impedance of the short/open stubs, depending on the desired filter mask (bandpass/notch). Figure \ref{eq:QWfilter} illustrates the topology of a quarter wavelength filter.\\
+Quarter wavelength filters are based on the fact that short and open $\lambda/4$ stubs are equivalent to series and parallel resonant tanks, respectively. Once given the normalized $g_i$ coefficients of the filter prototype, it is quite straightforward to obtain the impedance of the short/open stubs, depending on the desired filter mask (bandpass/notch). Figure \ref{eq:QWfilter} illustrates the topology of a quarter wavelength filter.\\
 
 \begin{figure}[h!]
 \centering
@@ -267,7 +267,7 @@ The series and the shunt reactances move $Z_L$ towards $Z_0$ through the impedan
 \begin{figure}[H]
 \centering
 \includegraphics[width=120mm]{SmithChart-Lsection}
-\caption{Impedance traslation produced by a series/shunt capacitor and inductor}
+\caption{Impedance translation produced by a series/shunt capacitor and inductor}
 \label{fig:LsectionSmith}
 \end{figure}
 
@@ -319,7 +319,7 @@ As \ref{fig:SmithTL} shows, a transmission line describes a circle around $Z_0$ 
 \begin{figure}[H]
 \centering
 \includegraphics[width=120mm]{SmithChartTL}
-\caption{Impedance traslation caused by a transmission line and an open/short circuited stub}
+\caption{Impedance translation caused by a transmission line and an open/short circuited stub}
 \label{fig:SmithTL}
 \end{figure}
 
@@ -365,7 +365,7 @@ R_L == Z_0 \;\;\;\;\;\;\;  t & = -X_L/(2\cdot Z_0)
 \text{Short circuited stub}\;\;\;\;\;\;\;  l_{short} & = \frac{\lambda}{2\pi} atan\left(\frac{1}{Z_0\cdot B(d)}\right)
 \end{align}
 
-\noindent Finally, if needed, the stubs may be splitted into balanced stubs as follows:
+\noindent Finally, if needed, the stubs may be split into balanced stubs as follows:
 
 \begin{table}[H]
   \centering
@@ -507,7 +507,7 @@ Typically, broadband matching between real impedances at microwave frequencies i
 \label{eq:CascadeReflection}
 \end{equation}
 
-\noindent where $\theta$ is the electrical length of a single transmission line (typically $\lambda/4$). The ${\Gamma_n}$ weigths define the shape of $\Gamma(\theta)$ and they are taylored so as to get a binomial or a Chebyshev overall response.
+\noindent where $\theta$ is the electrical length of a single transmission line (typically $\lambda/4$). The ${\Gamma_n}$ weights define the shape of $\Gamma(\theta)$ and they are tailored so as to get a binomial or a Chebyshev overall response.
 
 \noindent Once given $\Gamma_n \;\; \forall n \in [0, N]$, it is possible to calculate the impedance of each transmission line:
 
@@ -528,7 +528,7 @@ Z_{n+1} \sim Z_n \cdot e^{2\cdot\Gamma_n}
 
 \subsubsection{Chebyshev weighting}
 
-\noindent The overall reflection coeffient is set to:
+\noindent The overall reflection coefficient is set to:
 
 \begin{equation}
 \Gamma(\theta) = A \cdot e^{-jN\theta} \cdot T_{\theta}(sec(\theta_m)cos(\theta))

@@ -32,7 +32,7 @@ LabelDialog::LabelDialog(WireLabel *pl, QWidget *parent)
   pLabel = pl;
   gbox = new QGridLayout(this);
 
-  // valid expression for LineEdit: alpha-numeric, but must start with
+  // valid expression for LineEdit: alphanumeric, but must start with
   // letter and never two "_" together
   Expr1.setPattern("[a-zA-Z]([0-9a-zA-Z]|_(?!_))+\\!{0,1}");
   Validator1 = new QRegExpValidator(Expr1, this);

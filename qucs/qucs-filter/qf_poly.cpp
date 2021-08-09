@@ -46,7 +46,7 @@ qf_poly::qf_poly (qf_double_t a, qf_double_t b, qf_double_t c, unsigned deg) {
 
 #ifdef _QF_POLY_DEBUG
   std::cout << "qf_poly (ax^2+bx+c), a = " << a << ", b = " << b
-    << ", c = " << c << ", d° = " << deg << "\n";
+    << ", c = " << c << ", dï¿½ = " << deg << "\n";
 #endif
 
   // Pathological cases 
@@ -67,7 +67,7 @@ qf_poly::qf_poly (qf_double_t a, qf_double_t b, qf_double_t c, unsigned deg) {
     d = 0;
     p = new qf_double_t[1];
     p[0] = a;
-    rts = NULL;			// no root (or an infinite # of them)
+    rts = NULL;			// no root (or an infinite #ï¿½of them)
     krts = a;
     rep = BOTH;
     break;
@@ -84,7 +84,7 @@ qf_poly::qf_poly (qf_double_t a, qf_double_t b, qf_double_t c, unsigned deg) {
     rep = BOTH;
     break;
   default:
-    // Polynom of d° 2 (aX^2 + bX + c)
+    // Polynom of dï¿½ 2 (aX^2 + bX + c)
     if (deg > 2)
       std::cout << "Warning: qf_poly called with deg > 2.\n";
     d = 2;
@@ -214,7 +214,7 @@ qf_double_t & qf_poly::operator [] (int i) {
   return rts[i];
 }
 
-// Returns d° (order) of polynom
+// Returns dï¿½ (order) of polynom
 unsigned qf_poly::deg () {
   return d;
 }
@@ -1052,7 +1052,7 @@ qf_double_t qf_poly::evalX2 (qf_double_t c) {
 void qf_poly::disp (const char *name) {
 
   if (rep == NONE) {
-    std::cout << name << "(x) is not initalized.\n";
+    std::cout << name << "(x) is not initialized.\n";
     return;
   }
 

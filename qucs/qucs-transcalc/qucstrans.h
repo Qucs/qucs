@@ -42,7 +42,7 @@ class QStackedWidget;
 
 class transline;
 
-// Current limit defintions.
+// Current limit definitions.
 #define MAX_TRANS_BOXES   4
 #define MAX_TRANS_TYPES   7 //Number of transmission lines
 #define MAX_TRANS_RESULTS 7
@@ -81,7 +81,7 @@ struct TransValue {
   const char * name;     // label
   double value;          // value
   QString * tip;         // tool tip description
-  const char * units[8]; // unit choise
+  const char * units[8]; // unit choice
   int unit;              // unit index
   QLabel * label;        // Qt label widget
   QLineEdit * lineedit;  // Qt value widget

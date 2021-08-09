@@ -84,7 +84,7 @@ interface.
 \tutsection{A Modular Macromodel for an Operational Amplifier}
 
 An introduction to the technical specification and structure of a
-modular macromodel for a general purpose operational amplifer is given
+modular macromodel for a general purpose operational amplifier is given
 on page 7 of the Qucs operational amplifier tutorial. The
 characteristics of this operational amplifier macromodel are:
 
@@ -176,7 +176,7 @@ CSCALE & $CSCALE$ & Current limit scale factor &   & 50\\
  parameter real NSRT = 5e5 from [1 : inf]
   `attr(info="Negative slew rate (V/s)");
  parameter real VLIMP = 14 from [0.01 : inf]
-  `attr(info="Positve output voltage limit (V)");
+  `attr(info="Positive output voltage limit (V)");
  parameter real VLIMN = -14 from [-inf : 0]
   `attr(info="Negative output voltage limit (V)");
  parameter real ILMAX = 35e-3 from [1e-9 : inf]
@@ -733,7 +733,7 @@ in the Qucs release source tarballs at
 the Verilog-A code into C++ for compilation and linking with Qucs
 closely followed that described by Sefan Jahn and H\'{e}l\`{e}ne
 Parruitte.  Although it takes more work to construct models using ADMS
-the effort is worthwile because the finished models are very efficient
+the effort is worthwhile because the finished models are very efficient
 in terms of memory usage and have significantly reduced run times. One
 interesting observation which is worth recording here is the fact that
 Qucs equation defined device (EDD) models and ADMS Verilog-A models

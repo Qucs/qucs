@@ -92,7 +92,7 @@ public:
     DBL_PORT_SPAR_SIM
   };
   //-------------------------------------------------------------------------------------------------------
-  // These functions calculate the specified matching network and and generate
+  // These functions calculate the specified matching network and generate
   // the circuit description code
   QString calcMatchingLC(double, double, double, double);
   QString calcMatchingCascadedLCSections(double, double, double, double, int);

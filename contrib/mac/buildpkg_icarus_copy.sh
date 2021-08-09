@@ -4,7 +4,7 @@
 # Copy all icarus installed binaries to the 'payload_icarus' directory
 #
 # It should from the final prefix '/usr/local',
-# that is to avoid problems with harcode paths (created during configure).
+# that is to avoid problems with hardcode paths (created during configure).
 # ex. vvp cannot fint its libraries.
 #     It coupld be provided as $vv[ -M /path/to/lib (not nice)
 #

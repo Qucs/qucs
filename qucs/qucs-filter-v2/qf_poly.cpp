@@ -119,7 +119,7 @@ qf_poly::qf_poly (const qf_poly& P) : dg (P.dg), k (P.k), cf (NULL) {
   return;
 }
 
-// Assignement operator
+// Assignment operator
 // We do copy the contents
 
 qf_poly& qf_poly::operator = (const qf_poly& P) {

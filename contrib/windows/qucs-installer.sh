@@ -26,7 +26,7 @@ export QTDIR=/c/msys64/$MINGW
 export PREFIX_QUCS=/c/qucs-$PLATFORM-bin
 
 # Expect tarball in the current directory
-echo Build and install Qucs from tarbal...
+echo Build and install Qucs from tarball...
 version="0.0.19"
 tar xvfz qucs-${version}.tar.gz
 cd qucs-${version}
@@ -34,7 +34,7 @@ cd qucs-${version}
 make install
 cd ..
 
-# Neet do setup the dependencies for qucs-doc, I (guitorri) have neve done in Windows.
+# Need to setup the dependencies for qucs-doc, I (guitorri) have never done in Windows.
 # Build qucs-doc on Linux/Mac, copy directories [tutorial, technical, report] into $PREFIX_QUCS/share/qucs/docs/
 # Expect qucs-doc PDF files in the current directory
 echo Copy qucs-doc PDFs...
@@ -58,7 +58,7 @@ cp $PREFIX_MSYS/bin/libstdc++-6.dll     $PREFIX_QUCS/bin/
 cp $PREFIX_MSYS/bin/libwinpthread-1.dll $PREFIX_QUCS/bin/
 cp $PREFIX_MSYS/bin/libpng16-16.dll     $PREFIX_QUCS/bin/
 cp $PREFIX_MSYS/bin/zlib1.dll           $PREFIX_QUCS/bin/
-# Platform dependet gcc runtime libs
+# Platform dependent gcc runtime libs
 if   [[ $MSYSTEM == 'MINGW64' ]]; then
     cp $PREFIX_MSYS/bin/libgcc_s_seh-1.dll  $PREFIX_QUCS/bin/
 elif [[ $MSYSTEM == 'MINGW32' ]]; then

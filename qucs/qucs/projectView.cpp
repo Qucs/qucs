@@ -61,7 +61,7 @@ ProjectView::setProjPath(const QString &path)
 
   if (m_valid) {
     if (!m_projPath.isEmpty()) {
-      watcher->removePath(m_projPath); // stop watching the previous directry
+      watcher->removePath(m_projPath); // stop watching the previous directory
     }
     m_projPath = path; // full path
     watcher->addPath(path); // start watching the current directory

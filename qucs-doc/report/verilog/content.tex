@@ -75,7 +75,7 @@ describing the model -- relate to the API.
 \addvspace{12pt}
 
 The command lines for transforming a Verilog-AMS source file into the
-appropiate Qucs C++ source files are
+appropriate Qucs C++ source files are
 \begin{Verbatim}[fontsize=\small]
   $ admsXml <device.va> -e qucsVersion.xml -e qucsMODULEcore.xml
   $ admsXml <device.va> -e qucsVersion.xml -e qucsMODULEgui.xml
@@ -274,7 +274,7 @@ J^{(m)} = \left.\dfrac{\partial f\left(V\right)}{\partial V}\right|_{V^{(m)}}
 \end{equation}
 
 There are basically two types of contributions supported by ADMS:
-currents and charges.  The appropiate Jacobian matrices are
+currents and charges.  The appropriate Jacobian matrices are
 \begin{equation}
 J^{(m)}
 = J_I^{(m)} + J_Q^{(m)}
@@ -287,7 +287,7 @@ consisting of two real valued matrices $G$
 
 \addvspace{12pt}
 
-In the Verilog-AMS desciptions only the current and charge
+In the Verilog-AMS descriptions only the current and charge
 contributions are mentioned.  The appropriate derivatives are meant to
 be automatically formed by the language translator ADMS.
 \begin{lstlisting}[
@@ -628,7 +628,7 @@ modified as follows.
 \end{Verbatim}
 \item \Verb+src/qucsdefs.h+\\
 Finally the properties including their range definitions must be added
-to this file.  The appropiate file can be obtained using the following
+to this file.  The appropriate file can be obtained using the following
 command line.
 \begin{Verbatim}[fontsize=\small]
   $ admsXml diode.va -e qucsVersion.xml -e qucsMODULEdefs.xml
