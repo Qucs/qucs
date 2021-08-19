@@ -57,6 +57,7 @@ install:
   - set "CC=/c/msys64/mingw%MBITS%/bin/gcc.exe"
   - set "CXX=/c/msys64/mingw%MBITS%/bin/g++.exe"
 
+  - bash -lc "$CC -v"
   - bash -lc "awk --version | head -n1"
 
 build_script:
@@ -72,7 +73,7 @@ build_script:
 
   ## Build Qucs-GUI applications and install
   - bash -lc "exec 0</dev/null && cd $APPVEYOR_BUILD_FOLDER/qucs && ./bootstrap"
-  - bash -lc "exec 0</dev/null && cd $APPVEYOR_BUILD_FOLDER/qucs && export QTDIR=/c/msys64/mingw$MBITS && ./configure --prefix=/c/qucs-win$MBITS --disable-dependency-tracking"
+  - bash -lc "exec 0</dev/null && cd $APPVEYOR_BUILD_FOLDER/qucs && export QTDIR=/c/msys64/mingw$MBITS && ./configure CXXFLAGS=-Wno-deprecated-copy --prefix=/c/qucs-win$MBITS --disable-dependency-tracking --enable-debug"
   - bash -lc "exec 0</dev/null && cd $APPVEYOR_BUILD_FOLDER/qucs && make -j2 install"
   - bash -lc "exec 0</dev/null && cd /c/qucs-win$MBITS/bin && ./qucs -v"
 
