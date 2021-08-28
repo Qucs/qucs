@@ -157,6 +157,7 @@ class QucsApp : public QMainWindow {
 public:
   QucsApp();
  ~QucsApp();
+  void initProjectSchematics(const QString argvPprojectPath, const QStringList argvFileList);
   bool closeTabsRange(int startTab, int stopTab, int exceptTab = -1);
   bool closeAllFiles(int exceptTab = -1);
   bool closeAllLeft(int);
@@ -305,6 +306,7 @@ private:
 
 // ********** Methods ***************************************************
   void initView();
+  void initProjects(const QString projs_Dir);
   void initCursorMenu();
 
   void printCurrentDocument(bool);
