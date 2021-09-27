@@ -15,6 +15,10 @@
  *                                                                         *
  ***************************************************************************/
 
+#ifdef HAVE_CONFIG_H
+# include <config.h>
+#endif
+
 #include "componentdialog.h"
 #include "qucs.h"
 #include "schematic.h"
@@ -33,6 +37,8 @@
 #include <QComboBox>
 #include <QGroupBox>
 #include <QPushButton>
+#include <QUrl>
+#include <QDesktopServices>
 #include <QEvent>
 #include <QKeyEvent>
 #include <QDebug>
@@ -405,12 +411,17 @@ ComponentDialog::ComponentDialog(Component *c, Schematic *d)
   hbox2->setLayout(h2);
   h2->setSpacing(5);
   all->addWidget(hbox2);
+  QPushButton *help = new QPushButton(tr("Help"));
   QPushButton *ok = new QPushButton(tr("OK"));
   QPushButton *apply = new QPushButton(tr("Apply"));
   QPushButton *cancel = new QPushButton(tr("Cancel"));
-  h2->addWidget(ok);
-  h2->addWidget(apply);
-  h2->addWidget(cancel);
+  // set stretch factors to limit the space taken by the added stretch
+  h2->addWidget(help, 1);
+  h2->addStretch(1);
+  h2->addWidget(ok, 1);
+  h2->addWidget(apply, 1);
+  h2->addWidget(cancel, 1);
+  connect(help,   SIGNAL(clicked()), SLOT(slotButtHelp()));
   connect(ok,     SIGNAL(clicked()), SLOT(slotButtOK()));
   connect(apply,  SIGNAL(clicked()), SLOT(slotApplyInput()));
   connect(cancel, SIGNAL(clicked()), SLOT(slotButtCancel()));
@@ -1056,6 +1067,19 @@ void ComponentDialog::slotApplyInput()
     }
   }
 
+}
+
+// -------------------------------------------------------------------------
+// Is called if the "Help"-button is pressed.
+void ComponentDialog::slotButtHelp()
+{
+  QString linkName = QString(Comp->Model);
+
+  qDebug() << "HELP : model = " << linkName;
+  // for local testing use something like
+  // QDesktopServices::openUrl(QUrl::fromLocalFile("<base dir>/qucs-manual/build/html/component_reference.html").toString() + "#" + linkName.toLower());
+
+  QDesktopServices::openUrl(QUrl("http://qucs.github.io/qucs-manual/" PACKAGE_VERSION "/html-en/component_reference.html#" + linkName.toLower(), QUrl::TolerantMode));
 }
 
 // -------------------------------------------------------------------------
