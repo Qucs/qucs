@@ -2349,7 +2349,9 @@ void QucsApp::slotOpenContent(const QModelIndex &idx)
   }
 
   // If no appropriate program was found, open as text file.
-  editFile(Info.absoluteFilePath());  // open datasets with text editor
+  bool ok = QDesktopServices::openUrl(QUrl::fromLocalFile(Info.absoluteFilePath()));
+  if (not ok)
+    editFile(Info.absoluteFilePath());  // open datasets with text editor
 }
 
 // ---------------------------------------------------------
