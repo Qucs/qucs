@@ -450,7 +450,8 @@ bool SpiceDialog::loadSpiceNetList(const QString& s)
 
   QucsConv->start(Program, Arguments);
 
-  if(QucsConv->state() != QProcess::Running)
+  if((QucsConv->state() != QProcess::Starting) &&
+     (QucsConv->state() != QProcess::Running))
   {
     QMessageBox::critical(this, tr("Error"),
                           tr("Cannot execute \"%1\".").arg(QucsSettings.Qucsconv));
