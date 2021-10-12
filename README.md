@@ -93,9 +93,9 @@ Please check the `qucs-doc/README` file.  See below the `--disable-doc` to skip
 building the documentation from source.  To build the documentation from source
 the following packages are needed (package names on non-Debian may vary).
 
-	 doxygen latex2html octave octave-epstk ps2eps pgf python-tk
+	 doxygen latex2html octave ps2eps python-tk
     texlive-publishers texlive-science texlive texlive-font-utils
-    texlive-math-extra transfig gnuplot graphviz
+    transfig gnuplot graphviz
 
 Bootstrap, build, install everything (after cloning):
 

@@ -37,7 +37,6 @@ addons:
       - octave
       - doxygen # add packages for  Doxygen and qucs-doc PDF build
       - texlive
-      - texlive-math-extra
       - texlive-science
       - transfig
       - gnuplot
@@ -45,7 +44,6 @@ addons:
       - graphviz
       - texlive-font-utils
       - ps2eps
-      - pgf
       - python-tk
 
 matrix:
