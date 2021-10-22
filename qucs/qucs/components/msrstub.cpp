@@ -40,12 +40,20 @@ MSrstub::MSrstub()
 
   Props.append(new Property("Subst", "Subst1", true,
 	QObject::tr("name of substrate definition")));
-  Props.append(new Property("ri", "1 mm", false,
+  Props.append(new Property("ri", "1 mm", true,
 	QObject::tr("inner radius")));
   Props.append(new Property("ro", "10 mm", true,
 	QObject::tr("outer radius")));
   Props.append(new Property("alpha", "90", true,
 	QObject::tr("stub angle")+" ("+QObject::tr ("degrees")+")"));
+  Props.append(new Property("Wf", "1 mm", true,
+	QObject::tr("width of feed line")));
+  Props.append(new Property("EffDimens", "OldQucsNoCorrection", false,
+	QObject::tr("Effective dimensions model")+
+		    " [Chew_Kong, Giannini, OldQucsNoCorrection]"));
+  Props.append(new Property("Model", "OldQucsModel", false,
+	QObject::tr("Effective dimensions model")+
+		    " [March, OldQucsModel]"));
 }
 
 MSrstub::~MSrstub()
