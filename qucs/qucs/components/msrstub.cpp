@@ -52,8 +52,8 @@ MSrstub::MSrstub()
 	QObject::tr("Effective dimensions model")+
 		    " [Chew_Kong, Giannini, OldQucsNoCorrection]"));
   Props.append(new Property("Model", "OldQucsModel", false,
-	QObject::tr("Effective dimensions model")+
-		    " [March, OldQucsModel]"));
+	QObject::tr("Radial stub model")+
+		    " [March, Giannini, OldQucsModel]"));
 }
 
 MSrstub::~MSrstub()
