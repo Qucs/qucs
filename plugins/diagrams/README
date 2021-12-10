@@ -1,6 +1,6 @@
-These are legacy diagrams ported to QGraphicsItem (Qt5).
+Experimental QWidget/qcustomplot based diagrams.
 
 They will be used, if you start qucs with
 $ qucs -a plugins/diagrams
 
-(work in progress)
+NB: See legacy/*diagram.cpp for legacy diagrams ported to GraphicsScene (Qt5).

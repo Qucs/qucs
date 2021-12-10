@@ -3,12 +3,19 @@
 # GPLV3+
 
 SUBDIRS = \
-	diagrams \
 	gui \
 	schematic \
 	misc \
 	verilog \
 	spice
+
+DIST_SUBDIRS = \
+	gui \
+	schematic \
+	misc \
+	verilog \
+	spice \
+	diagrams
 
 RAW_SRCS =
 
