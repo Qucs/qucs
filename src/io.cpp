@@ -286,6 +286,31 @@ std::string istream_t::ctos(const std::string& term,
 	return s;
 }
 /*--------------------------------------------------------------------------*/
+bool istream_t::ctob()
+{
+#if 1
+	unreachable(); // not used anywhere (is it?)
+	return false;
+#else
+  skipbl();
+  size_t here = cursor();
+  bool val = true;
+  ONE_OF
+    || Set(*this, "1",       &val, true)
+    || Set(*this, "0",       &val, false)
+    || Set(*this, "t{rue}",  &val, true)
+    || Set(*this, "f{alse}", &val, false)
+    || Set(*this, "y{es}",   &val, true)
+    || Set(*this, "n{o}",    &val, false)
+    || Set(*this, "#t{rue}", &val, true)
+    || Set(*this, "#f{alse}",&val, false)
+    ;
+  skipcom();
+  _ok = cursor() > here;
+  return val;
+#endif
+}
+/*--------------------------------------------------------------------------*/
 // borrowed from ap_match
 istream_t& istream_t::umatch(const std::string& s)
 {
