@@ -53,7 +53,7 @@ public:
   QLineEdit *Input_Frame1, *Input_Frame2, *Input_Frame3;
   QLineEdit *Input_DataSet, *Input_DataDisplay, *Input_Script;
   QLineEdit *Input_GridX, *Input_GridY;
-  QCheckBox *Check_OpenDpl, *Check_GridOn, *Check_RunScript;
+  QCheckBox *Check_OpenDpl, *Check_GridOn, *Check_RunScript, *Check_SimInhibitWindow;
 
   QVBoxLayout *all;
   QRegExpValidator *valExpr;

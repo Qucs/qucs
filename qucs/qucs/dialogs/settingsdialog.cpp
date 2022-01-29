@@ -88,6 +88,9 @@ SettingsDialog::SettingsDialog(Schematic *Doc_)
                                     Tab1);
     gp->addWidget(Check_RunScript,4,0,1,2);
 
+    Check_SimInhibitWindow = new QCheckBox(tr("inhibit sim window"), Tab1);
+    gp->addWidget(Check_SimInhibitWindow,5,0,1,2);
+
     t->addTab(Tab1, tr("Simulation"));
 
     // ...........................................................
@@ -168,6 +171,7 @@ SettingsDialog::SettingsDialog(Schematic *Doc_)
     Input_Script->setText(Doc->Script);
     Check_OpenDpl->setChecked(Doc->SimOpenDpl);
     Check_RunScript->setChecked(Doc->SimRunScript);
+    Check_SimInhibitWindow->setChecked(Doc->SimInhibitWindow);
     Check_GridOn->setChecked(Doc->GridOn);
     Input_GridX->setText(QString::number(Doc->GridX));
     Input_GridY->setText(QString::number(Doc->GridY));
@@ -254,6 +258,12 @@ void SettingsDialog::slotApply()
     if(Doc->SimRunScript != Check_RunScript->isChecked())
     {
         Doc->SimRunScript = Check_RunScript->isChecked();
+        changed = true;
+    }
+
+    if(Doc->SimInhibitWindow != Check_SimInhibitWindow->isChecked())
+    {
+        Doc->SimInhibitWindow = Check_SimInhibitWindow->isChecked();
         changed = true;
     }
 

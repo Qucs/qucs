@@ -2132,8 +2132,8 @@ void QucsApp::slotSimulate()
   connect(sim, SIGNAL(displayDataPage(QString&, QString&)),
 		this, SLOT(slotChangePage(QString&, QString&)));
 
-  sim->show();
-  if(!sim->startProcess()) return;
+  if(!Doc->SimInhibitWindow) sim->show();
+  if(!sim->startProcess()) return;  
 
   // to kill it before qucs ends
   connect(this, SIGNAL(signalKillEmAll()), sim, SLOT(slotClose()));
