@@ -14,6 +14,7 @@
  *   (at your option) any later version.                                   *
  *                                                                         *
  ***************************************************************************/
+#include <stdint.h>
 #include <stdlib.h>
 #include <limits.h>
 
