@@ -46,6 +46,7 @@
 #include <QDebug>
 
 #include <limits.h>
+#include <stdint.h>
 #include <stdlib.h>
 
 
