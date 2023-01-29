@@ -98,15 +98,15 @@ vector<string> MyColorBox:: enteredValue()
 	string str;
 
 	for (i=0;i<3;i++)
-		colors.push_back(string((colorCode[i]->currentText()).toAscii()));
+		colors.push_back(string((colorCode[i]->currentText()).toLatin1()));
 	if((colorCode[3])->currentIndex())
 	{
-		colors.push_back(string((colorCode[3]->currentText()).toAscii()));
+		colors.push_back(string((colorCode[3]->currentText()).toLatin1()));
 
 	}
 		return colors;
 }
 string MyColorBox:: enteredTolerance()
 {
-	return string((colorCode[4]->currentText()).toAscii());
+	return string((colorCode[4]->currentText()).toLatin1());
 }

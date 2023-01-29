@@ -292,7 +292,7 @@ DiagramDialog::DiagramDialog(Diagram *d, QWidget *parent, Graph *currentGraph)
     ChooseVars = new QTableWidget(1, 3);
     ChooseVars->verticalHeader()->setVisible(false);
     ChooseVars->horizontalHeader()->setStretchLastSection(true);
-    ChooseVars->horizontalHeader()->setResizeMode(QHeaderView::ResizeToContents);
+    ChooseVars->horizontalHeader()->setSectionResizeMode(QHeaderView::ResizeToContents);
     // make sure sorting is disabled before inserting items
     ChooseVars->setSortingEnabled(false);
     ChooseVars->horizontalHeader()->setSortIndicatorShown(true);

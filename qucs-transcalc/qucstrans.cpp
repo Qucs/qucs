@@ -1076,7 +1076,7 @@ bool QucsTranscalc::loadFile(QString fname, int * _mode) {
       Value = Line.section(' ',1,1).toDouble();
       Unit = Line.section(' ',2,2);
       setProperty (Name, Value);
-      setUnit (Name, Unit.toAscii());
+      setUnit (Name, Unit.toLatin1());
     }
     break;
       }

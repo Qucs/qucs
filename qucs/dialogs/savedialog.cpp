@@ -31,7 +31,7 @@
 #include <QGroupBox>
 #include <QListWidgetItem>
 
-SaveDialog::SaveDialog( QWidget* parent, const char* name, bool modal, Qt::WFlags fl )
+SaveDialog::SaveDialog( QWidget* parent, const char* name, bool modal, Qt::WindowFlags fl )
    : QDialog( parent, fl ),unsavedDocs()
 {
    if ( !name )
@@ -51,7 +51,7 @@ void SaveDialog::setApp(QucsApp *a)
 
 void SaveDialog::initDialog()
 {
-   setSizeGripEnabled( FALSE );
+   setSizeGripEnabled( false );
    SaveDialogLayout = new QVBoxLayout(this);
 
    label = new QLabel( tr( "Select files to be saved" ) );
@@ -79,7 +79,7 @@ void SaveDialog::initDialog()
    saveSelectedButton->setDefault(true);
    buttonsLayout->addWidget( saveSelectedButton );
    SaveDialogLayout->addLayout( buttonsLayout );
-   languageChange();
+   // languageChange();
    resize( QSize(500, 300).expandedTo(minimumSizeHint()) );
    //clearWState( Qt::WA_WState_Polished );
    setAttribute(Qt::WA_WState_Polished, false);

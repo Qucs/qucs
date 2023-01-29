@@ -55,6 +55,8 @@
 #include <Windows.h>  //for OutputDebugString
 #endif
 
+#define toAscii toLatin1
+
 // void attach(const char*); not yet.
 
 /*!
@@ -69,9 +71,13 @@
  * <http://qt-project.org/doc/qt-4.8/debug.html#warning-and-debugging-messages>
  * <http://qt-project.org/doc/qt-4.8/qtglobal.html#qInstallMsgHandler>
  */
-void qucsMessageOutput(QtMsgType type, const char *msg)
+void qucsMessageOutput(QtMsgType type, const QMessageLogContext &, const QString &str)
 {
+  const char *msg = str.toUtf8().data();
   switch (type) {
+  case QtInfoMsg:
+    fprintf(stderr,"Info %s\n", msg);
+    break;
   case QtDebugMsg:
     fprintf(stderr, "Debug: %s\n", msg);
     break;
@@ -324,7 +330,7 @@ void createIcons() {
 
         image.save("./bitmaps_generated/" + QString(File) + ".png");
 
-        fprintf(stdout, "[%s] %s\n", category.toAscii().data(), File);
+        fprintf(stdout, "[%s] %s\n", category.toLatin1().data(), File);
       }
       nComps++;
     } // module
@@ -416,7 +422,7 @@ void createDocData() {
         QTextStream out(&file);
         out << compData.join("\n");
         file.close();
-        fprintf(stdout, "[%s] %s %s \n", category.toAscii().data(), c->obsolete_model_hack().toAscii().data(), file.fileName().toAscii().data());
+        fprintf(stdout, "[%s] %s %s \n", category.toLatin1().data(), c->obsolete_model_hack().toLatin1().data(), file.fileName().toLatin1().data());
 
         QStringList compProps;
         compProps << "# Note: auto-generated file (changes will be lost on update)";
@@ -506,7 +512,7 @@ void createListComponentEntry(){
 // #########################################################################
 int main(int argc, char *argv[])
 {
-  qInstallMsgHandler(qucsMessageOutput);
+  qInstallMessageHandler(qucsMessageOutput);
   // set the Qucs version string
   QucsVersion = VersionTriplet(PACKAGE_VERSION);
 
@@ -660,7 +666,7 @@ int main(int argc, char *argv[])
 
   // set codecs
   QTextCodec::setCodecForLocale(QTextCodec::codecForName("UTF-8"));
-  QTextCodec::setCodecForTr(QTextCodec::codecForName("UTF-8"));
+  // QTextCodec::setCodecForTr(QTextCodec::codecForName("UTF-8"));
 
   QTranslator tor( 0 );
   QString lang = QucsSettings.Language;

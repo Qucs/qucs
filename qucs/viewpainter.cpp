@@ -19,6 +19,7 @@
 #include "viewpainter.h"
 #include "diagrams/graph.h"
 
+#include <QPainterPath>
 #include <QPainter>
 #include <QFont>
 #include <QDebug>

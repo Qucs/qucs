@@ -1523,7 +1523,7 @@ int NumPorts)
   if(creatingLib) {
     QString f = misc::properAbsFileName(DocName) + ".lst";
     ofile.setFileName(f);
-    if(!ofile.open(IO_WriteOnly)) {
+    if(!ofile.open(QIODevice::WriteOnly)) {
       ErrText->appendPlainText(tr("ERROR: Cannot create library file \"%s\".").arg(f));
       return;
     }

@@ -1,0 +1,5 @@
+
+AM_CPPFLAGS = $(X11_INCLUDES) $(QT_CFLAGS) -I$(top_srcdir)/qucs -I$(top_srcdir)/qt3_compat
+
+# BUG?
+AM_CPPFLAGS += -I$(top_srcdir)/qucs-lib

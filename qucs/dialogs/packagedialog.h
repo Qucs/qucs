@@ -26,6 +26,17 @@
 #include <QVBoxLayout>
 #include <QDir>
 
+// BUG: not here.
+#ifndef Q_UINT16
+#define Q_UINT16 uint16_t
+#endif
+#ifndef Q_UINT32
+#define Q_UINT32 uint32_t
+#endif
+#ifndef Q_ULONG
+#define Q_ULONG qulonglong
+#endif
+
 class QucsApp;
 class QString;
 class QLineEdit;

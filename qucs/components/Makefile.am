@@ -94,7 +94,7 @@ noinst_HEADERS = $(MOCHEADERS) resistor.h components.h capacitor.h vccs.h     \
   mutualx.h circline.h taperedline.h \
   capq.h indq.h spiralinductor.h circularloop.h spdeembed.h
 
-AM_CPPFLAGS = $(X11_INCLUDES) $(QT_CFLAGS) -I$(top_srcdir)/qucs
+include ../../Makefile.common
 
 SUFFIXES = .moc.cpp
 

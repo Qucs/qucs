@@ -37,7 +37,7 @@ nodist_libpaintings_la_SOURCES = $(MOCFILES)
 noinst_HEADERS = $(MOCHEADERS) arrow.h ellipse.h graphicline.h graphictext.h  \
   painting.h paintings.h rectangle.h portsymbol.h ellipsearc.h id_text.h
 
-AM_CPPFLAGS = $(X11_INCLUDES) $(QT_CFLAGS) -I$(top_srcdir)/qucs
+include ../../Makefile.common
 
 SUFFIXES = .moc.cpp
 

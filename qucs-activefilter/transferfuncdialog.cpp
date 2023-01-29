@@ -18,6 +18,8 @@
 
 #include "transferfuncdialog.h"
 
+#include <QPushButton>
+
 TransferFuncDialog::TransferFuncDialog(QVector<long double> &a, QVector<long double> &b, QWidget *parent) :
     QDialog(parent)
 {

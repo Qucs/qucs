@@ -1,12 +1,12 @@
 #                                               -*- Autoconf -*-
 # Process this file with autoconf to produce a configure script.
 
-AC_PREREQ(2.57)
+AC_PREREQ([2.71])
 
 dnl Read version from file
 m4_define([QUCS_VERSION], m4_esyscmd([tr -d '\n' < VERSION]))
 
-AC_INIT([qucs], [QUCS_VERSION], [qucs-bugs@lists.sourceforge.net], [], [https://sf.net/p/qucs])
+AC_INIT([qucs],[QUCS_VERSION],[qucs-bugs@lists.sourceforge.net],[],[https://sf.net/p/qucs])
 AC_CONFIG_SRCDIR([qucs/qucs.cpp])
 AC_CONFIG_HEADERS([config.h])
 AC_CONFIG_HEADERS([qt_version])
@@ -40,8 +40,7 @@ AS_IF( [ test -n "$with_qt_name" ],
 
 dnl Check for debugging option.
 AC_ARG_ENABLE([debug],
-  AC_HELP_STRING([--enable-debug],
-                 [include debug output @<:@default=no@:>@]),
+  AS_HELP_STRING([--enable-debug],[include debug output @<:@default=no@:>@]),
   [case "$enableval" in
    yes) enable_qucs_gui_debug="yes" ;;
    no)  enable_qucs_gui_debug="no"  ;;
@@ -251,7 +250,7 @@ if test "x$PKG_CONFIG" != "x"; then
 
       PKG_CHECK_MODULES([QTest], [${qt_name}Test])
 
-      PKG_CHECK_MODULES([QT], [${qt_name}Core ${qt_name}Gui ${qt_name}Script ${qt_name}Svg ${qt_name}Xml Qt3Support], [
+      PKG_CHECK_MODULES([QT], [${qt_name}Core ${qt_name}Gui ${qt_name}Script ${qt_name}Svg ${qt_name}Xml], [
         QT_CFLAGS="$QT_CFLAGS $QT_DEF -DQT_DEPRECATED_WARNINGS -D_REENTRANT"
         case $host_os in
           *freebsd*) QT_LIBS="$QT_LIBS -pthread" ;;
@@ -800,6 +799,7 @@ AC_CONFIG_FILES([Makefile
     contrib/Makefile
     man/Makefile
     examples/Makefile
+    qt3_compat/Makefile
     qucs-filter/Makefile
     qucs-activefilter/Makefile
     qucs-transcalc/Makefile

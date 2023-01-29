@@ -40,7 +40,7 @@ noinst_HEADERS = $(MOCHEADERS) diagram.h graph.h polardiagram.h rectdiagram.h \
   curvediagram.h timingdiagram.h truthdiagram.h 
 #phasordiagram.h waveac.h
 
-AM_CPPFLAGS = $(X11_INCLUDES) $(QT_CFLAGS) -I$(top_srcdir)/qucs
+include ../../Makefile.common
 
 SUFFIXES = .moc.cpp
 

@@ -41,7 +41,7 @@ QucsActiveFilter::QucsActiveFilter(QWidget *parent)
     setWindowIcon(QPixmap(":/images/bitmaps/big.qucs.xpm"));
     setWindowTitle("Qucs Active Filter " PACKAGE_VERSION);
 
-    QTextCodec::setCodecForTr(QTextCodec::codecForName("UTF-8"));
+    // QTextCodec::setCodecForTr(QTextCodec::codecForName("UTF-8"));
 
     // --------  create menubar  -------------------
     QMenu *fileMenu = new QMenu(tr("&File"));

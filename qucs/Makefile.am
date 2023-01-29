@@ -75,7 +75,7 @@ libqucsschematic_la_SOURCES= \
 
 nodist_libqucsschematic_la_SOURCES = $(MOCFILES)
 
-AM_CPPFLAGS = $(X11_INCLUDES) $(QT_CFLAGS) -I$(top_srcdir)/qucs-lib
+include ../Makefile.common
 libqucsschematic_la_LDFLAGS = $(X11_LDFLAGS) $(QT_LIBS)
 
 # TODO:
@@ -83,7 +83,8 @@ libqucsschematic_la_LDFLAGS = $(X11_LDFLAGS) $(QT_LIBS)
 # - other parts need to be loaded at run time
 libqucsschematic_la_LIBADD = \
  components/libcomponents.la diagrams/libdiagrams.la \
-  paintings/libpaintings.la dialogs/libdialogs.la
+  paintings/libpaintings.la dialogs/libdialogs.la \
+  ../qt3_compat/libqucsqt3compat.la
 
 # why this? qucs_real_LDADD does not seem to work on windows (yet?)
 libqucsschematic_la_LIBADD += \

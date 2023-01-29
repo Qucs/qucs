@@ -424,7 +424,7 @@ void SimMessage::startSimulator()
 			.arg(destFile.fileName()));
 	return;
       }
-      destFile.write(text.toAscii(), text.length());
+      destFile.write(text.toLatin1(), text.length());
       destFile.close();
       Program = pathName(QucsSettings.BinDir + QucsDigiLib);
       Arguments << QucsSettings.QucsHomeDir.filePath("netlist.txt")
