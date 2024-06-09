@@ -23,9 +23,14 @@ This file lists user visible changes that were made between releases.  For
 more verbose descriptions of these and internal changes see the ChangeLog
 files.
 
-Version 0.0.17
+Version 0.0.20
 --------------
+ * archived
+ * needs qt3/4 to build
 
+Version 0.0.17-19
+-----------------
+ * TODO
 
 Version 0.0.16
 --------------
