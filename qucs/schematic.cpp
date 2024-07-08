@@ -106,7 +106,7 @@ Schematic::Schematic(QucsApp *App_, const QString& Name_)
   connect(verticalScrollBar(), SIGNAL(sliderReleased()),
       viewport(), SLOT(update()));
   if (App_) {
-    connect(this, SIGNAL(signalCursorPosChanged(int, int)), 
+    connect(this, SIGNAL(signalCursorPosChanged(int, int)),
         App_, SLOT(printCursorPosition(int, int)));
     connect(horizontalScrollBar(), SIGNAL(sliderPressed()),
         App_, SLOT(slotHideEdit()));
@@ -1392,7 +1392,7 @@ void Schematic::reloadGraphs()
   }
 }
 
-// Copy function, 
+// Copy function,
 void Schematic::copy()
 {
   QString s = createClipboardFile();
@@ -1450,7 +1450,7 @@ bool Schematic::load()
 
   // The undo stack of the circuit symbol is initialized when first
   // entering its edit mode.
-  
+
   // have to call this to avoid crash at sizeOfAll
   becomeCurrent(false);
 
@@ -1814,7 +1814,7 @@ bool Schematic::redo()
       setChanged(false, false);
       return true;
     }
-    
+
   }
 
   setChanged(true, false);

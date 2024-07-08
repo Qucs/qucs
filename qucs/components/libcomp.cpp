@@ -41,12 +41,14 @@ LibComp::LibComp()
 		QObject::tr("name of qucs library file")));
   Props.push_back(Property("Comp", "", true,
 		QObject::tr("name of component in library")));
+
 }
 
 // ---------------------------------------------------------------------
 Component* LibComp::newOne()
 {
   LibComp *p = new LibComp();
+
   p->prop(0).Value = prop(0).Value;
   p->prop(1).Value = prop(1).Value;
   p->recreate(0);
@@ -84,6 +86,7 @@ void LibComp::createSymbol()
 int LibComp::loadSection(const QString& Name, QString& Section,
 			 QStringList *Includes)
 {
+
   QDir Directory(QucsSettings.LibDir);
   QFile file(Directory.absoluteFilePath(prop(0).Value + ".lib"));
   if(!file.open(QIODevice::ReadOnly))
@@ -99,10 +102,12 @@ int LibComp::loadSection(const QString& Name, QString& Section,
   if(Section.left(14) != "<Qucs Library ")  // wrong file type ?
     return -2;
 
+
   int Start, End = Section.indexOf(' ', 14);
   if(End < 15) return -3;
   QString Line = Section.mid(14, End-14); // extract version string
   VersionTriplet LibVersion = VersionTriplet(Line);
+
   if (LibVersion > QucsVersion) // wrong version number ?
     return -3;
 
@@ -127,7 +132,8 @@ int LibComp::loadSection(const QString& Name, QString& Section,
   End = Section.indexOf("\n</Component>", Start);
   if(End < 0)  return -6;  // file corrupt
   Section = Section.mid(Start, End-Start+1);
-  
+
+
   // search model includes
   if(Includes) {
     int StartI, EndI;
@@ -157,6 +163,7 @@ int LibComp::loadSection(const QString& Name, QString& Section,
       return -7;  // symbol not found
     }
   }
+
   Start = Section.indexOf('\n', Start);
   if(Start < 0)  return -8;  // file corrupt
   while(Section.at(++Start) == ' ') ;
@@ -165,6 +172,7 @@ int LibComp::loadSection(const QString& Name, QString& Section,
 
   // snip actual model
   Section = Section.mid(Start, End-Start);
+
   return 0;
 }
 
@@ -175,7 +183,9 @@ int LibComp::loadSymbol()
 {
   int z, Result;
   QString FileString, Line;
+
   z = loadSection("Symbol", FileString);
+
   if(z < 0) {
     if(z != -7)  return z;
 
@@ -183,7 +193,6 @@ int LibComp::loadSymbol()
     // new component and transfer data to this component.
     z = loadSection("Model", Line);
     if(z < 0)  return z;
-
     // Note: the component returned from getComponentFromName does not have an ownership yet.
     std::shared_ptr<Component> pc(getComponentFromName(Line));
     if(!pc)  return -20;
@@ -191,7 +200,6 @@ int LibComp::loadSymbol()
 
     return 1;
   }
-
 
   z  = 0;
   x1 = y1 = INT_MAX;
@@ -212,6 +220,7 @@ int LibComp::loadSymbol()
 
   x1 -= 4;  x2 += 4;   // enlarge component boundings a little
   y1 -= 4;  y2 += 4;
+
   return z;      // return number of ports
 }
 

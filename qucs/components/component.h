@@ -90,6 +90,7 @@ public:
   bool showName;
 
 public:
+    void showProps(QString caller);
   QString const& obsolete_model_hack() const{
 	  // BUG. do not use
 	  return Model;

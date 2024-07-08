@@ -1303,7 +1303,7 @@ void MouseActions::MPressElement(Schematic *Doc, QMouseEvent *Event, float, floa
       default: ;   // avoids compiler warnings
     }
 //    qDebug() << "   => selElem = Comp;" << Comp->Name;
-    // comp it geting empty
+    // comp it getting empty
     selElem = Comp;
     return;
 

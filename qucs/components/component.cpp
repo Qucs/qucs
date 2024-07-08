@@ -76,7 +76,6 @@ void Component::Bounding(int& _x1, int& _y1, int& _x2, int& _y2)
 }
 
 // -------------------------------------------------------
-
 Property &Component::prop(int n)
 {
   auto p = Props.begin();
@@ -840,6 +839,7 @@ bool Schematic::loadComponent(const QString& _s, const std::shared_ptr<Component
   QString n;
   n  = s.section(' ',2,2);      // isActive
   tmp = n.toInt(&ok);
+
   if(!ok){
     return false;
   }
@@ -1083,7 +1083,7 @@ int Component::analyseLine(const QString& Row, int numProps)
 
     i1 = 1;
     auto pp = Props.begin();
-    for(int i = 0; i < (numProps-1) && pp != Props.end(); ++i)
+    for(int i = 0; i < (numProps) && pp != Props.end(); ++i)
       ++pp;
     for(;;) {
       s = Row.section('"', i1,i1);
@@ -1697,7 +1697,6 @@ std::shared_ptr<Component> getComponentFromName(QString& Line, Schematic* p)
           qCritical()<<err_msg;
           return 0;
       }
-
   }
 
   // BUG: don't use schematic.
@@ -1708,6 +1707,7 @@ std::shared_ptr<Component> getComponentFromName(QString& Line, Schematic* p)
   }
 
   cstr = c->name();   // is perhaps changed in "recreate" (e.g. subcircuit)
+
   int x = c->tx, y = c->ty;
   c->setSchematic (p);
   c->recreate(0);

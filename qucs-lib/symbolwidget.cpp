@@ -30,6 +30,7 @@
 #include "qucslib.h"
 #include "qucslib_common.h"
 
+
 /*!
  * \file symbolwidget.cpp
  * \brief Implementation of the SymbolWidget class.
@@ -92,6 +93,7 @@ void SymbolWidget::mouseMoveEvent(QMouseEvent*)
 
   mimeData->setText("QucsComponent:"+theModel());
   drag->setMimeData(mimeData);
+  qWarning() << "About to drag: " << mimeData->text() << "\n";
   drag->setPixmap( QPixmap(empty_xpm));
   drag->setHotSpot(QPoint(drag->pixmap().width()/2,drag->pixmap().height()));
   drag->exec();
@@ -356,7 +358,7 @@ int SymbolWidget::createStandardSymbol(const QString& Lib_, const QString& Comp_
  * \param SymbolString
  * \param Lib_
  * \param Comp_
- * \return the number of painting elements or a negative nuber if error
+ * \return the number of painting elements or a negative number if error
  */
 int SymbolWidget::setSymbol( QString& SymbolString,
                             const QString& Lib_, const QString& Comp_)

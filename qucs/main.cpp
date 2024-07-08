@@ -799,7 +799,7 @@ int main(int argc, char *argv[])
   }
 
   QucsMain = new QucsApp();
-  
+
   QucsMain->show();
   int result = a.exec();
   //saveApplSettings(QucsMain);

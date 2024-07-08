@@ -199,7 +199,7 @@ void misc::str2num(const QString& s_, double& Number, QString& Unit, double& Fac
  * @param Num number to format
  * @param Precision number of significant digits in the output string
  * @param unit unit to add after the metric prefix
- * 
+ *
  * handles the special case "1 m" meaning "1 milli(meter)", so avoid adding the unit if this is "m"
  */
 QString misc::num2str(double Num, int Precision, QString unit)
@@ -440,8 +440,9 @@ bool misc::checkVersion(QString& Line)
 
 // a small class to handle the application version string
 //   loosely modeled after the standard Semantic Versioning...
-VersionTriplet::VersionTriplet(const QString& version) {
+VersionTriplet::VersionTriplet(const QString& raw_version) {
   // TODO should be likely made more robust...
+  QString version = raw_version.mid(0, raw_version.indexOf("-"));
   if (version.isEmpty()) {
     major = minor = patch = 0;
   } else {
