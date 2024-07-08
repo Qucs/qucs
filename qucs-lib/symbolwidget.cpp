@@ -93,7 +93,6 @@ void SymbolWidget::mouseMoveEvent(QMouseEvent*)
 
   mimeData->setText("QucsComponent:"+theModel());
   drag->setMimeData(mimeData);
-  qWarning() << "About to drag: " << mimeData->text() << "\n";
   drag->setPixmap( QPixmap(empty_xpm));
   drag->setHotSpot(QPoint(drag->pixmap().width()/2,drag->pixmap().height()));
   drag->exec();
