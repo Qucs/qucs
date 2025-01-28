@@ -243,7 +243,7 @@ fi # if pkg-config exists
       fi
 
       dnl Enable C++11 support
-      CXXFLAGS="$CXXFLAGS -std=c++0x"
+      CXXFLAGS="$CXXFLAGS -std=c++11"
 
 # use pkg-config, if it exists
 if test "x$PKG_CONFIG" != "x"; then
@@ -422,11 +422,11 @@ AS_IF([test $QT_MAJOR_VERSION -ge 5],
     QT_LIBS="${QT_LIBS} ${QT_LDFLAGS}"
 
     if test "$enable_qucs_gui_debug" = yes; then
-      CPPFLAGS="$CPPFLAGS -W -Wall"
+      CPPFLAGS="$CPPFLAGS -W -Wall -Wsuggest-override"
     fi
 
     dnl Enable C++11 support
-    CPPFLAGS="$CPPFLAGS -std=c++0x"
+    CPPFLAGS="$CPPFLAGS -std=c++11"
 
     dnl ===================================================================
     dnl Test if search for SDK was enabled
