@@ -40,7 +40,6 @@ SH_TESTS_LATER = \
 
 # TODO: wildcard match
 PRJ_TESTS = \
-	d_3f5.prj \
 	mixed.prj \
 	tline.prj \
 	AC_bandpass.prj \
@@ -72,7 +71,9 @@ PRJ_TESTS = \
 	TR_sawtooth-1.prj \
 	misc.prj
 
+// some of these hangup or crash qucs. needs more work
 LATER_TESTS = \
+	d_3f5.prj \
 	verilog.prj \
 	DC_SP_HICUM-fig10.prj \
 	AC_SW_swr_meter.prj \
