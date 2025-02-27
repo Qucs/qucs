@@ -110,6 +110,7 @@ void Schematic::dumpDeclaration(QTextStream& stream, Component const* c, QString
         .arg(++port_idx)
         .arg(pp->x())
         .arg(pp->y());
+    sep = ", ";
     nets.append(getWireName(&(*pp)));
   }
   //print_attributes(o, nets);
