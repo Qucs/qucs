@@ -101,6 +101,7 @@ static void print_args(QTextStream& o, Component const* x)
 // BUG: wrong compilation unit
 void Schematic::dumpDeclaration(QTextStream& stream, Component const* c, QString model, QString name, QList<QPoint> ports) const
 {
+  // assert(c); ??
   QStringList nets;
   int port_idx = 0;
   stream << "    (* ";
@@ -114,7 +115,17 @@ void Schematic::dumpDeclaration(QTextStream& stream, Component const* c, QString
     nets.append(getWireName(&(*pp)));
   }
   //print_attributes(o, nets);
-  stream << QString(" *) ");
+  std::string attr;
+  if(c){
+    attr = c->attr_get();
+  }else{
+    //what?
+  }
+  if(attr.size()){
+    stream << sep;
+  }else{
+  }
+  stream << QString::fromStdString(attr) << QString(" *) ");
   dumpIdentifier(stream, model);
   print_args(stream, c);
   dumpIdentifier(stream, name);
