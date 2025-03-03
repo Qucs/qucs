@@ -157,12 +157,15 @@ protected:
 };
 
 
+// BUG wrong place.
 class GateComponent : public MultiViewComponent {
 public:
   GateComponent();
   QString netlist();
   QString vhdlCode(int);
   QString verilogCode(int);
+
+  bool param_is_printable(int i)const override;
 
 protected:
   void createSymbol();
