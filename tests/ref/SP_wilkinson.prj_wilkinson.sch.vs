@@ -36,7 +36,7 @@ module wilkinson();
     (* S0_x1=410, S0_y1=140, S0_x2=410, S0_y2=200 *) Pac #(.Num(3),.Z(50 Ohm),.P(0 dBm),.f(1 GHz),.Temp(26.85)) P3 ( n_410_140, n_410_200 );
     (* S0_x1=410, S0_y1=200 *) GND #() \*  ( n_410_200 );
     (* S0_x1=410, S0_y1=100 *) GND #() \*  ( n_410_100 );
-    (* S0_x1=300, S0_y1=120, S0_x2=300, S0_y2=60 *) R #(.R(100 Ohm),.Temp(26.85),.Tc1(0.0),.Tc2(0.0),.Tnom(26.85),.Symbol(european)) R1 ( n_300_120, n_300_60 );
+    (* S0_x1=300, S0_y1=120, S0_x2=300, S0_y2=60 *) R #(.R(100 Ohm),.Temp(26.85),.Tc1(0.0),.Tc2(0.0),.Tnom(26.85)) R1 ( n_300_120, n_300_60 );
     (*  *) \.SP  #(.Type(lin),.Start(0.1 MHz),.Stop(2 GHz),.Points(100),.Noise(no),.NoiseIP(1),.NoiseOP(2),.saveCVs(no),.saveAll(no)) SP1 (  );
     (*  *) Eqn #(.Attenuation2(dB(S[2,1])),.Reflect(dB(S[1,1])),.Attenuation3(dB(S[3,1])),.Decoupling(dB(S[3,2])),.Export(yes)) Eqn1 (  );
     (* S0_x1=180, S0_y1=40, S0_x2=200, S0_y2=40 *) net #() net1 ( n_180_40, n_200_40 );
