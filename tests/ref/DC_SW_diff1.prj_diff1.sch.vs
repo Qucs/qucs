@@ -1,24 +1,4 @@
-(* qucs_ViewX1=-32 *)
-(* qucs_ViewY1=-20 *)
-(* qucs_ViewX2=580 *)
-(* qucs_ViewY2=480 *)
-(* qucs_Scale=1 *)
-(* qucs_tmpViewX1=0 *)
-(* qucs_tmpViewY1=0 *)
-(* qucs_GridX=10 *)
-(* qucs_GridY=10 *)
-(* qucs_GridOn=1 *)
-(* qucs_DataSet="diff1.dat" *)
-(* qucs_DataDisplay="diff1.dpl" *)
-(* qucs_SimOpenDpl=1 *)
-(* qucs_Script="diff1.m" *)
-(* qucs_SimRunScript=0 *)
-(* qucs_showFrame=0 *)
-(* qucs_FrameText0="Title" *)
-(* qucs_FrameText1="Drawn By:" *)
-(* qucs_FrameText2="Date:" *)
-(* qucs_FrameText3="Revision:" *)
-module diff1();
+(* qucs_ViewX1=-32, qucs_ViewY1=-20, qucs_ViewX2=580, qucs_ViewY2=480, qucs_Scale=1, qucs_tmpViewX1=0, qucs_tmpViewY1=0, qucs_GridX=10, qucs_GridY=10, qucs_GridOn=1, qucs_DataSet="diff1.dat", qucs_DataDisplay="diff1.dpl", qucs_SimOpenDpl=1, qucs_Script="diff1.m", qucs_SimRunScript=0, qucs_showFrame=0, qucs_FrameText0="Title", qucs_FrameText1="Drawn By:", qucs_FrameText2="Date:", qucs_FrameText3="Revision:" *) module diff1();
     wire n_50_320;
     wire n_60_110;
     wire n_60_140;

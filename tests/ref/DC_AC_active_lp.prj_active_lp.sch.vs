@@ -1,24 +1,4 @@
-(* qucs_ViewX1=0 *)
-(* qucs_ViewY1=0 *)
-(* qucs_ViewX2=800 *)
-(* qucs_ViewY2=800 *)
-(* qucs_Scale=1 *)
-(* qucs_tmpViewX1=0 *)
-(* qucs_tmpViewY1=0 *)
-(* qucs_GridX=10 *)
-(* qucs_GridY=10 *)
-(* qucs_GridOn=1 *)
-(* qucs_DataSet="active_lp.dat" *)
-(* qucs_DataDisplay="active_lp.dpl" *)
-(* qucs_SimOpenDpl=1 *)
-(* qucs_Script="active_lp.m" *)
-(* qucs_SimRunScript=0 *)
-(* qucs_showFrame=0 *)
-(* qucs_FrameText0="Title" *)
-(* qucs_FrameText1="Drawn By:" *)
-(* qucs_FrameText2="Date:" *)
-(* qucs_FrameText3="Revision:" *)
-module active_lp();
+(* qucs_ViewX1=0, qucs_ViewY1=0, qucs_ViewX2=800, qucs_ViewY2=800, qucs_Scale=1, qucs_tmpViewX1=0, qucs_tmpViewY1=0, qucs_GridX=10, qucs_GridY=10, qucs_GridOn=1, qucs_DataSet="active_lp.dat", qucs_DataDisplay="active_lp.dpl", qucs_SimOpenDpl=1, qucs_Script="active_lp.m", qucs_SimRunScript=0, qucs_showFrame=0, qucs_FrameText0="Title", qucs_FrameText1="Drawn By:", qucs_FrameText2="Date:", qucs_FrameText3="Revision:" *) module active_lp();
     wire n_40_210;
     wire n_40_280;
     wire n_40_310;

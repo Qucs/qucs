@@ -1,24 +1,4 @@
-(* qucs_ViewX1=-20 *)
-(* qucs_ViewY1=78 *)
-(* qucs_ViewX2=848 *)
-(* qucs_ViewY2=615 *)
-(* qucs_Scale=0.87788 *)
-(* qucs_tmpViewX1=0 *)
-(* qucs_tmpViewY1=0 *)
-(* qucs_GridX=10 *)
-(* qucs_GridY=10 *)
-(* qucs_GridOn=1 *)
-(* qucs_DataSet="opa227.dat" *)
-(* qucs_DataDisplay="opa227.dpl" *)
-(* qucs_SimOpenDpl=0 *)
-(* qucs_Script="opa227.m" *)
-(* qucs_SimRunScript=0 *)
-(* qucs_showFrame=0 *)
-(* qucs_FrameText0="Title" *)
-(* qucs_FrameText1="Drawn By:" *)
-(* qucs_FrameText2="Date:" *)
-(* qucs_FrameText3="Revision:" *)
-module opa227(.P1(n_160_160), .P3(n_610_160), .P2(n_160_220));
+(* qucs_ViewX1=-20, qucs_ViewY1=78, qucs_ViewX2=848, qucs_ViewY2=615, qucs_Scale=0.87788, qucs_tmpViewX1=0, qucs_tmpViewY1=0, qucs_GridX=10, qucs_GridY=10, qucs_GridOn=1, qucs_DataSet="opa227.dat", qucs_DataDisplay="opa227.dpl", qucs_SimOpenDpl=0, qucs_Script="opa227.m", qucs_SimRunScript=0, qucs_showFrame=0, qucs_FrameText0="Title", qucs_FrameText1="Drawn By:", qucs_FrameText2="Date:", qucs_FrameText3="Revision:" *) module opa227(.P1(n_160_160), .P3(n_610_160), .P2(n_160_220));
     inout n_160_160;
     inout n_610_160;
     inout n_160_220;

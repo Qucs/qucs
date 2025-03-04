@@ -1,24 +1,4 @@
-(* qucs_ViewX1=216 *)
-(* qucs_ViewY1=678 *)
-(* qucs_ViewX2=1288 *)
-(* qucs_ViewY2=1281 *)
-(* qucs_Scale=0.722015 *)
-(* qucs_tmpViewX1=0 *)
-(* qucs_tmpViewY1=0 *)
-(* qucs_GridX=10 *)
-(* qucs_GridY=10 *)
-(* qucs_GridOn=1 *)
-(* qucs_DataSet="bpf_10GHz.dat" *)
-(* qucs_DataDisplay="bpf_10GHz.dpl" *)
-(* qucs_SimOpenDpl=1 *)
-(* qucs_Script="bpf_10Ghz.m" *)
-(* qucs_SimRunScript=0 *)
-(* qucs_showFrame=0 *)
-(* qucs_FrameText0="Title" *)
-(* qucs_FrameText1="Drawn By:" *)
-(* qucs_FrameText2="Date:" *)
-(* qucs_FrameText3="Revision:" *)
-module bpf_10Ghz();
+(* qucs_ViewX1=216, qucs_ViewY1=678, qucs_ViewX2=1288, qucs_ViewY2=1281, qucs_Scale=0.722015, qucs_tmpViewX1=0, qucs_tmpViewY1=0, qucs_GridX=10, qucs_GridY=10, qucs_GridOn=1, qucs_DataSet="bpf_10GHz.dat", qucs_DataDisplay="bpf_10GHz.dpl", qucs_SimOpenDpl=1, qucs_Script="bpf_10Ghz.m", qucs_SimRunScript=0, qucs_showFrame=0, qucs_FrameText0="Title", qucs_FrameText1="Drawn By:", qucs_FrameText2="Date:", qucs_FrameText3="Revision:" *) module bpf_10Ghz();
     wire n_270_790;
     wire n_270_820;
     wire n_270_850;

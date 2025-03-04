@@ -1,24 +1,4 @@
-(* qucs_ViewX1=-14 *)
-(* qucs_ViewY1=-13 *)
-(* qucs_ViewX2=863 *)
-(* qucs_ViewY2=479 *)
-(* qucs_Scale=1 *)
-(* qucs_tmpViewX1=0 *)
-(* qucs_tmpViewY1=0 *)
-(* qucs_GridX=10 *)
-(* qucs_GridY=10 *)
-(* qucs_GridOn=1 *)
-(* qucs_DataSet="fet.dat" *)
-(* qucs_DataDisplay="fet.dpl" *)
-(* qucs_SimOpenDpl=1 *)
-(* qucs_Script="fet.m" *)
-(* qucs_SimRunScript=0 *)
-(* qucs_showFrame=0 *)
-(* qucs_FrameText0="Title" *)
-(* qucs_FrameText1="Drawn By:" *)
-(* qucs_FrameText2="Date:" *)
-(* qucs_FrameText3="Revision:" *)
-module fet(.P2(n_590_50), .P1(n_40_50), .P3(n_260_350));
+(* qucs_ViewX1=-14, qucs_ViewY1=-13, qucs_ViewX2=863, qucs_ViewY2=479, qucs_Scale=1, qucs_tmpViewX1=0, qucs_tmpViewY1=0, qucs_GridX=10, qucs_GridY=10, qucs_GridOn=1, qucs_DataSet="fet.dat", qucs_DataDisplay="fet.dpl", qucs_SimOpenDpl=1, qucs_Script="fet.m", qucs_SimRunScript=0, qucs_showFrame=0, qucs_FrameText0="Title", qucs_FrameText1="Drawn By:", qucs_FrameText2="Date:", qucs_FrameText3="Revision:" *) module fet(.P2(n_590_50), .P1(n_40_50), .P3(n_260_350));
     inout n_590_50;
     inout n_40_50;
     inout n_260_350;

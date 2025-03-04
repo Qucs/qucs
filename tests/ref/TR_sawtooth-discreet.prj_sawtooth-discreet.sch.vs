@@ -1,24 +1,4 @@
-(* qucs_ViewX1=-4 *)
-(* qucs_ViewY1=-29 *)
-(* qucs_ViewX2=786 *)
-(* qucs_ViewY2=547 *)
-(* qucs_Scale=1.15104 *)
-(* qucs_tmpViewX1=0 *)
-(* qucs_tmpViewY1=0 *)
-(* qucs_GridX=10 *)
-(* qucs_GridY=10 *)
-(* qucs_GridOn=1 *)
-(* qucs_DataSet="sawtooth-discreet.dat" *)
-(* qucs_DataDisplay="sawtooth-discreet.dpl" *)
-(* qucs_SimOpenDpl=0 *)
-(* qucs_Script="sawtooth-discreet.m" *)
-(* qucs_SimRunScript=0 *)
-(* qucs_showFrame=0 *)
-(* qucs_FrameText0="Title" *)
-(* qucs_FrameText1="Drawn By:" *)
-(* qucs_FrameText2="Date:" *)
-(* qucs_FrameText3="Revision:" *)
-module sawtooth-discreet();
+(* qucs_ViewX1=-4, qucs_ViewY1=-29, qucs_ViewX2=786, qucs_ViewY2=547, qucs_Scale=1.15104, qucs_tmpViewX1=0, qucs_tmpViewY1=0, qucs_GridX=10, qucs_GridY=10, qucs_GridOn=1, qucs_DataSet="sawtooth-discreet.dat", qucs_DataDisplay="sawtooth-discreet.dpl", qucs_SimOpenDpl=0, qucs_Script="sawtooth-discreet.m", qucs_SimRunScript=0, qucs_showFrame=0, qucs_FrameText0="Title", qucs_FrameText1="Drawn By:", qucs_FrameText2="Date:", qucs_FrameText3="Revision:" *) module sawtooth-discreet();
     wire n_50_30;
     wire n_50_50;
     wire n_50_80;

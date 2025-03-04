@@ -1,24 +1,4 @@
-(* qucs_ViewX1=0 *)
-(* qucs_ViewY1=0 *)
-(* qucs_ViewX2=800 *)
-(* qucs_ViewY2=868 *)
-(* qucs_Scale=1 *)
-(* qucs_tmpViewX1=0 *)
-(* qucs_tmpViewY1=0 *)
-(* qucs_GridX=10 *)
-(* qucs_GridY=10 *)
-(* qucs_GridOn=1 *)
-(* qucs_DataSet="boostconverter.dat" *)
-(* qucs_DataDisplay="boostconverter.dpl" *)
-(* qucs_SimOpenDpl=0 *)
-(* qucs_Script="boostconverter.m" *)
-(* qucs_SimRunScript=0 *)
-(* qucs_showFrame=0 *)
-(* qucs_FrameText0="Title" *)
-(* qucs_FrameText1="Drawn By:" *)
-(* qucs_FrameText2="Date:" *)
-(* qucs_FrameText3="Revision:" *)
-module boostconverter();
+(* qucs_ViewX1=0, qucs_ViewY1=0, qucs_ViewX2=800, qucs_ViewY2=868, qucs_Scale=1, qucs_tmpViewX1=0, qucs_tmpViewY1=0, qucs_GridX=10, qucs_GridY=10, qucs_GridOn=1, qucs_DataSet="boostconverter.dat", qucs_DataDisplay="boostconverter.dpl", qucs_SimOpenDpl=0, qucs_Script="boostconverter.m", qucs_SimRunScript=0, qucs_showFrame=0, qucs_FrameText0="Title", qucs_FrameText1="Drawn By:", qucs_FrameText2="Date:", qucs_FrameText3="Revision:" *) module boostconverter();
     wire n_70_150;
     wire n_70_170;
     wire n_70_200;

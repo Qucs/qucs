@@ -1,24 +1,4 @@
-(* qucs_ViewX1=-104 *)
-(* qucs_ViewY1=0 *)
-(* qucs_ViewX2=733 *)
-(* qucs_ViewY2=593 *)
-(* qucs_Scale=0.924731 *)
-(* qucs_tmpViewX1=0 *)
-(* qucs_tmpViewY1=0 *)
-(* qucs_GridX=10 *)
-(* qucs_GridY=10 *)
-(* qucs_GridOn=1 *)
-(* qucs_DataSet="bbv.dat" *)
-(* qucs_DataDisplay="bbv.dpl" *)
-(* qucs_SimOpenDpl=1 *)
-(* qucs_Script="bbv.m" *)
-(* qucs_SimRunScript=0 *)
-(* qucs_showFrame=0 *)
-(* qucs_FrameText0="Title" *)
-(* qucs_FrameText1="Drawn By:" *)
-(* qucs_FrameText2="Date:" *)
-(* qucs_FrameText3="Revision:" *)
-module bbv();
+(* qucs_ViewX1=-104, qucs_ViewY1=0, qucs_ViewX2=733, qucs_ViewY2=593, qucs_Scale=0.924731, qucs_tmpViewX1=0, qucs_tmpViewY1=0, qucs_GridX=10, qucs_GridY=10, qucs_GridOn=1, qucs_DataSet="bbv.dat", qucs_DataDisplay="bbv.dpl", qucs_SimOpenDpl=1, qucs_Script="bbv.m", qucs_SimRunScript=0, qucs_showFrame=0, qucs_FrameText0="Title", qucs_FrameText1="Drawn By:", qucs_FrameText2="Date:", qucs_FrameText3="Revision:" *) module bbv();
     wire n_m50_220;
     wire n_m50_260;
     wire n_m50_290;
