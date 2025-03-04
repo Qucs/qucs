@@ -1,3 +1,10 @@
+(* qucs_ViewX1=-17 *)
+(* qucs_ViewY1=0 *)
+(* qucs_ViewX2=817 *)
+(* qucs_ViewY2=800 *)
+(* qucs_Scale=1 *)
+(* qucs_tmpViewX1=0 *)
+(* qucs_tmpViewY1=0 *)
 module active_mixer();
     wire n_90_20;
     wire n_90_40;

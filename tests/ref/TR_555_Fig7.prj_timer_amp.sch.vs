@@ -1,3 +1,10 @@
+(* qucs_ViewX1=143 *)
+(* qucs_ViewY1=214 *)
+(* qucs_ViewX2=453 *)
+(* qucs_ViewY2=404 *)
+(* qucs_Scale=2.73871 *)
+(* qucs_tmpViewX1=0 *)
+(* qucs_tmpViewY1=0 *)
 module timer_amp(.P_vout(n_365_265), .Pamp_P(n_210_265), .Pamp_N(n_210_325));
     inout n_365_265;
     inout n_210_265;

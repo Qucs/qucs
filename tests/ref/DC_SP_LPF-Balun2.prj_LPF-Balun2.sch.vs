@@ -1,3 +1,10 @@
+(* qucs_ViewX1=-74 *)
+(* qucs_ViewY1=-4 *)
+(* qucs_ViewX2=1084 *)
+(* qucs_ViewY2=644 *)
+(* qucs_Scale=1 *)
+(* qucs_tmpViewX1=41 *)
+(* qucs_tmpViewY1=0 *)
 module LPF-Balun2();
     wire n_m20_90;
     wire n_m20_160;

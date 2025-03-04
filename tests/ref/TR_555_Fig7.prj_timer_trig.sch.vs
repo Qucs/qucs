@@ -1,3 +1,10 @@
+(* qucs_ViewX1=68 *)
+(* qucs_ViewY1=40 *)
+(* qucs_ViewX2=560 *)
+(* qucs_ViewY2=310 *)
+(* qucs_Scale=1.72561 *)
+(* qucs_tmpViewX1=0 *)
+(* qucs_tmpViewY1=0 *)
 module timer_trig(.Pcomp_vp1(n_140_140), .Pcomp_vn1(n_140_200), .comp_vout1(n_440_165));
     inout n_140_140;
     inout n_140_200;

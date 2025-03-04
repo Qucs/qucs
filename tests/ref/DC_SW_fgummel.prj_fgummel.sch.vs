@@ -1,3 +1,10 @@
+(* qucs_ViewX1=0 *)
+(* qucs_ViewY1=0 *)
+(* qucs_ViewX2=658 *)
+(* qucs_ViewY2=570 *)
+(* qucs_Scale=1 *)
+(* qucs_tmpViewX1=0 *)
+(* qucs_tmpViewY1=0 *)
 module fgummel();
     wire n_40_130;
     wire n_40_160;

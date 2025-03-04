@@ -1,3 +1,10 @@
+(* qucs_ViewX1=0 *)
+(* qucs_ViewY1=0 *)
+(* qucs_ViewX2=800 *)
+(* qucs_ViewY2=868 *)
+(* qucs_Scale=1 *)
+(* qucs_tmpViewX1=0 *)
+(* qucs_tmpViewY1=0 *)
 module boostconverter();
     wire n_70_150;
     wire n_70_170;

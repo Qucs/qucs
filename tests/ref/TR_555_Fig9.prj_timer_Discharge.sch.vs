@@ -1,3 +1,10 @@
+(* qucs_ViewX1=188 *)
+(* qucs_ViewY1=80 *)
+(* qucs_ViewX2=540 *)
+(* qucs_ViewY2=401 *)
+(* qucs_Scale=1.83178 *)
+(* qucs_tmpViewX1=0 *)
+(* qucs_tmpViewY1=0 *)
 module timer_Discharge(.P_control_in(n_255_150), .P_GND(n_260_260), .P_Discharge(n_260_320));
     inout n_255_150;
     inout n_260_260;

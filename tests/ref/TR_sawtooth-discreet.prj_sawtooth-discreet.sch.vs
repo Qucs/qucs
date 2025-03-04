@@ -1,3 +1,10 @@
+(* qucs_ViewX1=-4 *)
+(* qucs_ViewY1=-29 *)
+(* qucs_ViewX2=786 *)
+(* qucs_ViewY2=547 *)
+(* qucs_Scale=1.15104 *)
+(* qucs_tmpViewX1=0 *)
+(* qucs_tmpViewY1=0 *)
 module sawtooth-discreet();
     wire n_50_30;
     wire n_50_50;

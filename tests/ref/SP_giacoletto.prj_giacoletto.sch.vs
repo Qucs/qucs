@@ -1,3 +1,10 @@
+(* qucs_ViewX1=6 *)
+(* qucs_ViewY1=-33 *)
+(* qucs_ViewX2=783 *)
+(* qucs_ViewY2=422 *)
+(* qucs_Scale=1 *)
+(* qucs_tmpViewX1=0 *)
+(* qucs_tmpViewY1=0 *)
 module giacoletto();
     wire n_60_140;
     wire n_60_160;

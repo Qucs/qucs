@@ -1,3 +1,10 @@
+(* qucs_ViewX1=-20 *)
+(* qucs_ViewY1=-20 *)
+(* qucs_ViewX2=776 *)
+(* qucs_ViewY2=596 *)
+(* qucs_Scale=1 *)
+(* qucs_tmpViewX1=20 *)
+(* qucs_tmpViewY1=19 *)
 module stab();
     wire n_50_400;
     wire n_50_430;

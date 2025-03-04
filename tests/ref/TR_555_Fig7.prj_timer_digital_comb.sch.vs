@@ -1,3 +1,10 @@
+(* qucs_ViewX1=-2 *)
+(* qucs_ViewY1=52 *)
+(* qucs_ViewX2=929 *)
+(* qucs_ViewY2=455 *)
+(* qucs_Scale=1.16971 *)
+(* qucs_tmpViewX1=0 *)
+(* qucs_tmpViewY1=0 *)
 module timer_digital_comb(.P_trig(n_280_340), .P_tresh(n_115_270), .P_Q(n_630_120), .P_QB(n_835_190), .P_reset(n_65_170));
     inout n_280_340;
     inout n_115_270;

@@ -1,3 +1,10 @@
+(* qucs_ViewX1=0 *)
+(* qucs_ViewY1=-180 *)
+(* qucs_ViewX2=1524 *)
+(* qucs_ViewY2=908 *)
+(* qucs_Scale=0.909091 *)
+(* qucs_tmpViewX1=0 *)
+(* qucs_tmpViewY1=57 *)
 module wattmeter();
     wire n_56_187;
     wire n_56_217;

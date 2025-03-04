@@ -1,3 +1,10 @@
+(* qucs_ViewX1=0 *)
+(* qucs_ViewY1=16 *)
+(* qucs_ViewX2=774 *)
+(* qucs_ViewY2=592 *)
+(* qucs_Scale=1 *)
+(* qucs_tmpViewX1=0 *)
+(* qucs_tmpViewY1=0 *)
 module mixer();
     wire n_130_370;
     wire n_150_140;

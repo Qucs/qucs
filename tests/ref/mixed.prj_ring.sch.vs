@@ -1,3 +1,10 @@
+(* qucs_ViewX1=-3601 *)
+(* qucs_ViewY1=-1423 *)
+(* qucs_ViewX2=5513 *)
+(* qucs_ViewY2=4557 *)
+(* qucs_Scale=1.03315 *)
+(* qucs_tmpViewX1=0 *)
+(* qucs_tmpViewY1=0 *)
 module ring();
     wire n_m3230_m870;
     wire n_m2830_m920;

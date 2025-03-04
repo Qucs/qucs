@@ -1,3 +1,10 @@
+(* qucs_ViewX1=56 *)
+(* qucs_ViewY1=-10 *)
+(* qucs_ViewX2=840 *)
+(* qucs_ViewY2=509 *)
+(* qucs_Scale=1 *)
+(* qucs_tmpViewX1=0 *)
+(* qucs_tmpViewY1=0 *)
 module groupdelay_sp();
     wire n_110_100;
     wire n_110_150;

@@ -1,3 +1,10 @@
+(* qucs_ViewX1=-54 *)
+(* qucs_ViewY1=-10 *)
+(* qucs_ViewX2=655 *)
+(* qucs_ViewY2=448 *)
+(* qucs_Scale=1 *)
+(* qucs_tmpViewX1=0 *)
+(* qucs_tmpViewY1=0 *)
 module wilkinson();
     wire n_m10_210;
     wire n_60_80;

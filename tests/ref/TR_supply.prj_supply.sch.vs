@@ -1,3 +1,10 @@
+(* qucs_ViewX1=-4 *)
+(* qucs_ViewY1=-20 *)
+(* qucs_ViewX2=691 *)
+(* qucs_ViewY2=467 *)
+(* qucs_Scale=1 *)
+(* qucs_tmpViewX1=0 *)
+(* qucs_tmpViewY1=0 *)
 module supply();
     wire n_40_170;
     wire n_40_200;

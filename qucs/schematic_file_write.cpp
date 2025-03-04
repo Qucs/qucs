@@ -171,6 +171,18 @@ void Schematic::dumpVerilogWire(QTextStream& stream, Wire const* w) const
   dumpDeclaration(stream, NULL, "net", name, ports);
 }
 
+void Schematic::dumpVerilogQucsPreamble(QTextStream& stream) const
+{
+  QString preamble_string("(* qucs_%1=%2 *)\n");
+  stream << preamble_string.arg("ViewX1").arg(ViewX1);
+  stream << preamble_string.arg("ViewY1").arg(ViewY1);
+  stream << preamble_string.arg("ViewX2").arg(ViewX2);
+  stream << preamble_string.arg("ViewY2").arg(ViewY2);
+  stream << preamble_string.arg("Scale").arg(Scale);
+  stream << preamble_string.arg("tmpViewX1").arg(tmpViewX1);
+  stream << preamble_string.arg("tmpViewY1").arg(tmpViewY1);
+}
+
 // BUG: wrong compilation unit
 int Schematic::saveVerilogDocument(QFile *file)
 {
@@ -220,6 +232,8 @@ int Schematic::saveVerilogDocument(QFile *file)
     module_name.replace(".sch","");
     module_name.replace(".vs","");
   }
+
+  dumpVerilogQucsPreamble(stream);
 
   stream << "module " << module_name << "(" << ioPorts.join(", ") << ");\n";
 

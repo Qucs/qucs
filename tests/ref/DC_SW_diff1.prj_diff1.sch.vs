@@ -1,3 +1,10 @@
+(* qucs_ViewX1=-32 *)
+(* qucs_ViewY1=-20 *)
+(* qucs_ViewX2=580 *)
+(* qucs_ViewY2=480 *)
+(* qucs_Scale=1 *)
+(* qucs_tmpViewX1=0 *)
+(* qucs_tmpViewY1=0 *)
 module diff1();
     wire n_50_320;
     wire n_60_110;

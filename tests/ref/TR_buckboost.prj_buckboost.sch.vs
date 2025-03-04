@@ -1,3 +1,10 @@
+(* qucs_ViewX1=-3 *)
+(* qucs_ViewY1=10 *)
+(* qucs_ViewX2=1366 *)
+(* qucs_ViewY2=676 *)
+(* qucs_Scale=1 *)
+(* qucs_tmpViewX1=18 *)
+(* qucs_tmpViewY1=0 *)
 module buckboost();
     wire n_50_140;
     wire n_50_160;

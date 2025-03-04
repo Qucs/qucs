@@ -1,3 +1,10 @@
+(* qucs_ViewX1=86 *)
+(* qucs_ViewY1=0 *)
+(* qucs_ViewX2=820 *)
+(* qucs_ViewY2=483 *)
+(* qucs_Scale=1.23842 *)
+(* qucs_tmpViewX1=0 *)
+(* qucs_tmpViewY1=0 *)
 module test_circuit();
     wire n_140_200;
     wire n_140_220;

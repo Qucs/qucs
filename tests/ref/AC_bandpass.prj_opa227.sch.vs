@@ -1,3 +1,10 @@
+(* qucs_ViewX1=-20 *)
+(* qucs_ViewY1=78 *)
+(* qucs_ViewX2=848 *)
+(* qucs_ViewY2=615 *)
+(* qucs_Scale=0.87788 *)
+(* qucs_tmpViewX1=0 *)
+(* qucs_tmpViewY1=0 *)
 module opa227(.P1(n_160_160), .P3(n_610_160), .P2(n_160_220));
     inout n_160_160;
     inout n_610_160;

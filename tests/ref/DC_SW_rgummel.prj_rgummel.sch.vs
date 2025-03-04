@@ -1,3 +1,10 @@
+(* qucs_ViewX1=-41 *)
+(* qucs_ViewY1=0 *)
+(* qucs_ViewX2=634 *)
+(* qucs_ViewY2=560 *)
+(* qucs_Scale=1 *)
+(* qucs_tmpViewX1=60 *)
+(* qucs_tmpViewY1=0 *)
 module rgummel();
     wire n_60_120;
     wire n_60_150;

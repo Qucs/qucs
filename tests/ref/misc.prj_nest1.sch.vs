@@ -1,3 +1,10 @@
+(* qucs_ViewX1=0 *)
+(* qucs_ViewY1=0 *)
+(* qucs_ViewX2=800 *)
+(* qucs_ViewY2=800 *)
+(* qucs_Scale=1 *)
+(* qucs_tmpViewX1=-200 *)
+(* qucs_tmpViewY1=-200 *)
 module nest1(.P2(n_400_180), .P1(n_180_180));
     inout n_400_180;
     inout n_180_180;

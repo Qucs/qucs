@@ -1,3 +1,10 @@
+(* qucs_ViewX1=-653 *)
+(* qucs_ViewY1=-456 *)
+(* qucs_ViewX2=4238 *)
+(* qucs_ViewY2=2728 *)
+(* qucs_Scale=1.20071 *)
+(* qucs_tmpViewX1=297 *)
+(* qucs_tmpViewY1=334 *)
 module lpf0();
     wire n_40_90;
     wire n_40_120;

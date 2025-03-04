@@ -1,3 +1,10 @@
+(* qucs_ViewX1=-24 *)
+(* qucs_ViewY1=-54 *)
+(* qucs_ViewX2=864 *)
+(* qucs_ViewY2=790 *)
+(* qucs_Scale=1.00128 *)
+(* qucs_tmpViewX1=0 *)
+(* qucs_tmpViewY1=60 *)
 module Spiral_BPF();
     wire n_30_260;
     wire n_30_270;

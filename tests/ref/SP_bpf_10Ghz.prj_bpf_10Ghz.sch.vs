@@ -1,3 +1,10 @@
+(* qucs_ViewX1=216 *)
+(* qucs_ViewY1=678 *)
+(* qucs_ViewX2=1288 *)
+(* qucs_ViewY2=1281 *)
+(* qucs_Scale=0.722015 *)
+(* qucs_tmpViewX1=0 *)
+(* qucs_tmpViewY1=0 *)
 module bpf_10Ghz();
     wire n_270_790;
     wire n_270_820;

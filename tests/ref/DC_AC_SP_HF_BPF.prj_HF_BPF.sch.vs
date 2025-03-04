@@ -1,3 +1,10 @@
+(* qucs_ViewX1=-34 *)
+(* qucs_ViewY1=-74 *)
+(* qucs_ViewX2=1000 *)
+(* qucs_ViewY2=729 *)
+(* qucs_Scale=0.977584 *)
+(* qucs_tmpViewX1=0 *)
+(* qucs_tmpViewY1=0 *)
 module HF_BPF();
     wire n_20_310;
     wire n_20_410;

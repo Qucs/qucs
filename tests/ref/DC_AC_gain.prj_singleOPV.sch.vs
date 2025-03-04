@@ -1,3 +1,10 @@
+(* qucs_ViewX1=-67 *)
+(* qucs_ViewY1=12 *)
+(* qucs_ViewX2=623 *)
+(* qucs_ViewY2=540 *)
+(* qucs_Scale=1 *)
+(* qucs_tmpViewX1=0 *)
+(* qucs_tmpViewY1=0 *)
 module singleOPV(.P3(n_50_60), .P4(n_50_400), .P6(n_540_230), .P1(n_50_230), .P2(n_50_170));
     inout n_50_60;
     inout n_50_400;

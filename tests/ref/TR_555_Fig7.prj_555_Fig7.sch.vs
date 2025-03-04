@@ -1,3 +1,10 @@
+(* qucs_ViewX1=107 *)
+(* qucs_ViewY1=101 *)
+(* qucs_ViewX2=1037 *)
+(* qucs_ViewY2=654 *)
+(* qucs_Scale=1.04194 *)
+(* qucs_tmpViewX1=0 *)
+(* qucs_tmpViewY1=0 *)
 module 555_Fig7();
     wire n_160_160;
     wire n_160_200;

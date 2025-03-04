@@ -1,3 +1,10 @@
+(* qucs_ViewX1=-10 *)
+(* qucs_ViewY1=-14 *)
+(* qucs_ViewX2=1075 *)
+(* qucs_ViewY2=849 *)
+(* qucs_Scale=0.9631 *)
+(* qucs_tmpViewX1=0 *)
+(* qucs_tmpViewY1=0 *)
 module curtice_1_tb1();
     wire n_40_250;
     wire n_70_390;

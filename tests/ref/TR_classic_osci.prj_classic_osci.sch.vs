@@ -1,3 +1,10 @@
+(* qucs_ViewX1=0 *)
+(* qucs_ViewY1=0 *)
+(* qucs_ViewX2=800 *)
+(* qucs_ViewY2=800 *)
+(* qucs_Scale=1 *)
+(* qucs_tmpViewX1=0 *)
+(* qucs_tmpViewY1=59 *)
 module classic_osci();
     wire n_80_180;
     wire n_80_210;

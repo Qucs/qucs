@@ -1,3 +1,10 @@
+(* qucs_ViewX1=0 *)
+(* qucs_ViewY1=0 *)
+(* qucs_ViewX2=800 *)
+(* qucs_ViewY2=800 *)
+(* qucs_Scale=1 *)
+(* qucs_tmpViewX1=0 *)
+(* qucs_tmpViewY1=0 *)
 module microstrip();
     wire n_100_130;
     wire n_100_140;

@@ -1,3 +1,10 @@
+(* qucs_ViewX1=53 *)
+(* qucs_ViewY1=-37 *)
+(* qucs_ViewX2=964 *)
+(* qucs_ViewY2=547 *)
+(* qucs_Scale=1.19539 *)
+(* qucs_tmpViewX1=0 *)
+(* qucs_tmpViewY1=0 *)
 module timer_555(.P_GND(n_820_300), .P_OUTPUT(n_820_230), .P_RESET(n_150_40), .P_CONTROL(n_150_200), .P_DISCHARGE(n_820_360), .P_VCC(n_220_30), .P_TRIGGER(n_140_355), .P_THRESH(n_120_140));
     inout n_820_300;
     inout n_820_230;

@@ -1,3 +1,10 @@
+(* qucs_ViewX1=0 *)
+(* qucs_ViewY1=0 *)
+(* qucs_ViewX2=800 *)
+(* qucs_ViewY2=800 *)
+(* qucs_Scale=1 *)
+(* qucs_tmpViewX1=-200 *)
+(* qucs_tmpViewY1=-200 *)
 module libparam();
     wire n_140_200;
     wire n_140_220;

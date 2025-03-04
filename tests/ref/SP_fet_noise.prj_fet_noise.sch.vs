@@ -1,3 +1,10 @@
+(* qucs_ViewX1=-34 *)
+(* qucs_ViewY1=-194 *)
+(* qucs_ViewX2=740 *)
+(* qucs_ViewY2=559 *)
+(* qucs_Scale=1 *)
+(* qucs_tmpViewX1=0 *)
+(* qucs_tmpViewY1=177 *)
 module fet_noise();
     wire n_40_110;
     wire n_40_150;

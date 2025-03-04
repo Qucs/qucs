@@ -1,3 +1,10 @@
+(* qucs_ViewX1=0 *)
+(* qucs_ViewY1=10 *)
+(* qucs_ViewX2=647 *)
+(* qucs_ViewY2=437 *)
+(* qucs_Scale=0.995316 *)
+(* qucs_tmpViewX1=0 *)
+(* qucs_tmpViewY1=0 *)
 module colpitts_base();
     wire n_80_160;
     wire n_80_180;

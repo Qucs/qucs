@@ -1,3 +1,10 @@
+(* qucs_ViewX1=0 *)
+(* qucs_ViewY1=0 *)
+(* qucs_ViewX2=800 *)
+(* qucs_ViewY2=800 *)
+(* qucs_Scale=1 *)
+(* qucs_tmpViewX1=0 *)
+(* qucs_tmpViewY1=0 *)
 module IdealBalun(.P3(n_460_280), .P4(n_460_140), .P5(n_340_390), .P2(n_260_360), .P1(n_260_180));
     inout n_460_280;
     inout n_460_140;

@@ -1,3 +1,10 @@
+(* qucs_ViewX1=-7 *)
+(* qucs_ViewY1=-10 *)
+(* qucs_ViewX2=480 *)
+(* qucs_ViewY2=300 *)
+(* qucs_Scale=1.74333 *)
+(* qucs_tmpViewX1=0 *)
+(* qucs_tmpViewY1=0 *)
 module timer_thresh(.PinP(n_60_120), .PinN(n_60_180), .POUT(n_390_150));
     inout n_60_120;
     inout n_60_180;

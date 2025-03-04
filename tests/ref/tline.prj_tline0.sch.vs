@@ -1,3 +1,10 @@
+(* qucs_ViewX1=-2260 *)
+(* qucs_ViewY1=-1027 *)
+(* qucs_ViewX2=6793 *)
+(* qucs_ViewY2=5253 *)
+(* qucs_Scale=1.86552 *)
+(* qucs_tmpViewX1=4330 *)
+(* qucs_tmpViewY1=2336 *)
 module tline0();
     wire n_290_300;
     wire n_290_350;

@@ -1,3 +1,10 @@
+(* qucs_ViewX1=-92 *)
+(* qucs_ViewY1=0 *)
+(* qucs_ViewX2=955 *)
+(* qucs_ViewY2=800 *)
+(* qucs_Scale=1 *)
+(* qucs_tmpViewX1=20 *)
+(* qucs_tmpViewY1=0 *)
 module lc_osc();
     wire n_50_80;
     wire n_50_110;

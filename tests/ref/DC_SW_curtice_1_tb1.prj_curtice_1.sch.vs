@@ -1,3 +1,10 @@
+(* qucs_ViewX1=22 *)
+(* qucs_ViewY1=-52 *)
+(* qucs_ViewX2=861 *)
+(* qucs_ViewY2=656 *)
+(* qucs_Scale=1.10593 *)
+(* qucs_tmpViewX1=0 *)
+(* qucs_tmpViewY1=0 *)
 module curtice_1(.Source(n_90_410), .Drain(n_90_180), .Gate(n_360_30));
     inout n_90_410;
     inout n_90_180;
