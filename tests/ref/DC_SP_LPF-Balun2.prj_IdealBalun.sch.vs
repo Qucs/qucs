@@ -5,6 +5,19 @@
 (* qucs_Scale=1 *)
 (* qucs_tmpViewX1=0 *)
 (* qucs_tmpViewY1=0 *)
+(* qucs_GridX=10 *)
+(* qucs_GridY=10 *)
+(* qucs_GridOn=1 *)
+(* qucs_DataSet="IdealBalun.dat" *)
+(* qucs_DataDisplay="IdealBalun.dpl" *)
+(* qucs_SimOpenDpl=0 *)
+(* qucs_Script="IdealBalun.m" *)
+(* qucs_SimRunScript=0 *)
+(* qucs_showFrame=0 *)
+(* qucs_FrameText0="Title" *)
+(* qucs_FrameText1="Drawn By:" *)
+(* qucs_FrameText2="Date:" *)
+(* qucs_FrameText3="Revision:" *)
 module IdealBalun(.P3(n_460_280), .P4(n_460_140), .P5(n_340_390), .P2(n_260_360), .P1(n_260_180));
     inout n_460_280;
     inout n_460_140;

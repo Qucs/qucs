@@ -5,6 +5,19 @@
 (* qucs_Scale=1.87145 *)
 (* qucs_tmpViewX1=0 *)
 (* qucs_tmpViewY1=0 *)
+(* qucs_GridX=10 *)
+(* qucs_GridY=10 *)
+(* qucs_GridOn=1 *)
+(* qucs_DataSet="logic1.dat" *)
+(* qucs_DataDisplay="logic1.dpl" *)
+(* qucs_SimOpenDpl=1 *)
+(* qucs_Script="logic1.m" *)
+(* qucs_SimRunScript=0 *)
+(* qucs_showFrame=0 *)
+(* qucs_FrameText0="Title" *)
+(* qucs_FrameText1="Drawn By:" *)
+(* qucs_FrameText2="Date:" *)
+(* qucs_FrameText3="Revision:" *)
 module combinat();
     wire n_120_140;
     wire n_120_180;

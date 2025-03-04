@@ -5,6 +5,19 @@
 (* qucs_Scale=1 *)
 (* qucs_tmpViewX1=0 *)
 (* qucs_tmpViewY1=0 *)
+(* qucs_GridX=10 *)
+(* qucs_GridY=10 *)
+(* qucs_GridOn=1 *)
+(* qucs_DataSet="wilkinson.dat" *)
+(* qucs_DataDisplay="wilkinson.dpl" *)
+(* qucs_SimOpenDpl=1 *)
+(* qucs_Script="wilkinson.m" *)
+(* qucs_SimRunScript=0 *)
+(* qucs_showFrame=0 *)
+(* qucs_FrameText0="Title" *)
+(* qucs_FrameText1="Drawn By:" *)
+(* qucs_FrameText2="Date:" *)
+(* qucs_FrameText3="Revision:" *)
 module wilkinson();
     wire n_m10_210;
     wire n_60_80;

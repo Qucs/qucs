@@ -5,6 +5,19 @@
 (* qucs_Scale=1.16971 *)
 (* qucs_tmpViewX1=0 *)
 (* qucs_tmpViewY1=0 *)
+(* qucs_GridX=5 *)
+(* qucs_GridY=5 *)
+(* qucs_GridOn=0 *)
+(* qucs_DataSet="timer_digital_comb.dat" *)
+(* qucs_DataDisplay="timer_digital_comb.dpl" *)
+(* qucs_SimOpenDpl=1 *)
+(* qucs_Script="timer_digital_comb.m" *)
+(* qucs_SimRunScript=0 *)
+(* qucs_showFrame=0 *)
+(* qucs_FrameText0="Title" *)
+(* qucs_FrameText1="Drawn By:" *)
+(* qucs_FrameText2="Date:" *)
+(* qucs_FrameText3="Revision:" *)
 module timer_digital_comb(.P_trig(n_280_340), .P_tresh(n_115_270), .P_Q(n_630_120), .P_QB(n_835_190), .P_reset(n_65_170));
     inout n_280_340;
     inout n_115_270;

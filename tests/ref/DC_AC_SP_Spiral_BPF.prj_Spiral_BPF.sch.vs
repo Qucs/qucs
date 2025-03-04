@@ -5,6 +5,19 @@
 (* qucs_Scale=1.00128 *)
 (* qucs_tmpViewX1=0 *)
 (* qucs_tmpViewY1=60 *)
+(* qucs_GridX=10 *)
+(* qucs_GridY=10 *)
+(* qucs_GridOn=1 *)
+(* qucs_DataSet="Spiral_BPF.dat" *)
+(* qucs_DataDisplay="Spiral_BPF.dpl" *)
+(* qucs_SimOpenDpl=1 *)
+(* qucs_Script="Spiral_BPF.m" *)
+(* qucs_SimRunScript=0 *)
+(* qucs_showFrame=0 *)
+(* qucs_FrameText0="Title" *)
+(* qucs_FrameText1="Drawn By:" *)
+(* qucs_FrameText2="Date:" *)
+(* qucs_FrameText3="Revision:" *)
 module Spiral_BPF();
     wire n_30_260;
     wire n_30_270;

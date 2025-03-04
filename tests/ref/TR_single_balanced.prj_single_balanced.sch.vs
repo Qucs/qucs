@@ -5,6 +5,19 @@
 (* qucs_Scale=1 *)
 (* qucs_tmpViewX1=0 *)
 (* qucs_tmpViewY1=0 *)
+(* qucs_GridX=10 *)
+(* qucs_GridY=10 *)
+(* qucs_GridOn=1 *)
+(* qucs_DataSet="single_balanced.dat" *)
+(* qucs_DataDisplay="single_balanced.dpl" *)
+(* qucs_SimOpenDpl=1 *)
+(* qucs_Script="single_balanced.m" *)
+(* qucs_SimRunScript=0 *)
+(* qucs_showFrame=0 *)
+(* qucs_FrameText0="Titel" *)
+(* qucs_FrameText1="Gezeichnet von:" *)
+(* qucs_FrameText2="Datum:" *)
+(* qucs_FrameText3="Revision:" *)
 module single_balanced();
     wire n_180_170;
     wire n_180_180;

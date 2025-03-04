@@ -5,6 +5,19 @@
 (* qucs_Scale=1 *)
 (* qucs_tmpViewX1=18 *)
 (* qucs_tmpViewY1=0 *)
+(* qucs_GridX=10 *)
+(* qucs_GridY=10 *)
+(* qucs_GridOn=1 *)
+(* qucs_DataSet="buckboost.dat" *)
+(* qucs_DataDisplay="buckboost.dpl" *)
+(* qucs_SimOpenDpl=0 *)
+(* qucs_Script="buckboost.m" *)
+(* qucs_SimRunScript=0 *)
+(* qucs_showFrame=0 *)
+(* qucs_FrameText0="Title" *)
+(* qucs_FrameText1="Drawn By:" *)
+(* qucs_FrameText2="Date:" *)
+(* qucs_FrameText3="Revision:" *)
 module buckboost();
     wire n_50_140;
     wire n_50_160;

@@ -174,6 +174,8 @@ void Schematic::dumpVerilogWire(QTextStream& stream, Wire const* w) const
 void Schematic::dumpVerilogQucsPreamble(QTextStream& stream) const
 {
   QString preamble_string("(* qucs_%1=%2 *)\n");
+  QString preamble_text("(* qucs_%1=\"%2\" *)\n");
+  // View
   stream << preamble_string.arg("ViewX1").arg(ViewX1);
   stream << preamble_string.arg("ViewY1").arg(ViewY1);
   stream << preamble_string.arg("ViewX2").arg(ViewX2);
@@ -181,6 +183,24 @@ void Schematic::dumpVerilogQucsPreamble(QTextStream& stream) const
   stream << preamble_string.arg("Scale").arg(Scale);
   stream << preamble_string.arg("tmpViewX1").arg(tmpViewX1);
   stream << preamble_string.arg("tmpViewY1").arg(tmpViewY1);
+  // Grid
+  stream << preamble_string.arg("GridX").arg(GridX);
+  stream << preamble_string.arg("GridY").arg(GridY);
+  stream << preamble_string.arg("GridOn").arg(GridOn);
+  // Data
+  stream << preamble_text.arg("DataSet", DataSet);
+  stream << preamble_text.arg("DataDisplay", DataDisplay);
+  // DPL
+  stream << preamble_string.arg("SimOpenDpl").arg(SimOpenDpl);
+  // Scripts
+  stream << preamble_text.arg("Script", Script);
+  stream << preamble_string.arg("SimRunScript").arg(SimRunScript);
+  // Frame
+  stream << preamble_string.arg("showFrame").arg(showFrame);
+  stream << preamble_text.arg("FrameText0", Frame_Text0);
+  stream << preamble_text.arg("FrameText1", Frame_Text1);
+  stream << preamble_text.arg("FrameText2", Frame_Text2);
+  stream << preamble_text.arg("FrameText3", Frame_Text3);
 }
 
 // BUG: wrong compilation unit

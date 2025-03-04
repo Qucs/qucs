@@ -5,6 +5,19 @@
 (* qucs_Scale=1.86552 *)
 (* qucs_tmpViewX1=4330 *)
 (* qucs_tmpViewY1=2336 *)
+(* qucs_GridX=10 *)
+(* qucs_GridY=10 *)
+(* qucs_GridOn=1 *)
+(* qucs_DataSet="tline.dat" *)
+(* qucs_DataDisplay="tline.dpl" *)
+(* qucs_SimOpenDpl=1 *)
+(* qucs_Script="tline.m" *)
+(* qucs_SimRunScript=0 *)
+(* qucs_showFrame=0 *)
+(* qucs_FrameText0="Title" *)
+(* qucs_FrameText1="Drawn By:" *)
+(* qucs_FrameText2="Date:" *)
+(* qucs_FrameText3="Revision:" *)
 module tline0();
     wire n_290_300;
     wire n_290_350;

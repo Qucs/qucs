@@ -5,6 +5,19 @@
 (* qucs_Scale=1.10593 *)
 (* qucs_tmpViewX1=0 *)
 (* qucs_tmpViewY1=0 *)
+(* qucs_GridX=10 *)
+(* qucs_GridY=10 *)
+(* qucs_GridOn=1 *)
+(* qucs_DataSet="curtice_1.dat" *)
+(* qucs_DataDisplay="curtice_1.dpl" *)
+(* qucs_SimOpenDpl=1 *)
+(* qucs_Script="curtice_1.m" *)
+(* qucs_SimRunScript=0 *)
+(* qucs_showFrame=0 *)
+(* qucs_FrameText0="Title" *)
+(* qucs_FrameText1="Drawn By:" *)
+(* qucs_FrameText2="Date:" *)
+(* qucs_FrameText3="Revision:" *)
 module curtice_1(.Source(n_90_410), .Drain(n_90_180), .Gate(n_360_30));
     inout n_90_410;
     inout n_90_180;

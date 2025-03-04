@@ -5,6 +5,19 @@
 (* qucs_Scale=1 *)
 (* qucs_tmpViewX1=-200 *)
 (* qucs_tmpViewY1=-200 *)
+(* qucs_GridX=10 *)
+(* qucs_GridY=10 *)
+(* qucs_GridOn=1 *)
+(* qucs_DataSet="test_circuit.dat" *)
+(* qucs_DataDisplay="test_circuit.dpl" *)
+(* qucs_SimOpenDpl=0 *)
+(* qucs_Script="test_circuit.m" *)
+(* qucs_SimRunScript=0 *)
+(* qucs_showFrame=0 *)
+(* qucs_FrameText0="Title" *)
+(* qucs_FrameText1="Drawn By:" *)
+(* qucs_FrameText2="Date:" *)
+(* qucs_FrameText3="Revision:" *)
 module libparam();
     wire n_140_200;
     wire n_140_220;

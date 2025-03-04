@@ -5,6 +5,19 @@
 (* qucs_Scale=1 *)
 (* qucs_tmpViewX1=0 *)
 (* qucs_tmpViewY1=0 *)
+(* qucs_GridX=10 *)
+(* qucs_GridY=10 *)
+(* qucs_GridOn=1 *)
+(* qucs_DataSet="groupdelay_ac.dat" *)
+(* qucs_DataDisplay="groupdelay_ac.dpl" *)
+(* qucs_SimOpenDpl=1 *)
+(* qucs_Script="groupdelay_ac.m" *)
+(* qucs_SimRunScript=0 *)
+(* qucs_showFrame=0 *)
+(* qucs_FrameText0="Titel" *)
+(* qucs_FrameText1="Gezeichnet von:" *)
+(* qucs_FrameText2="Datum:" *)
+(* qucs_FrameText3="Revision:" *)
 module groupdelay_ac();
     wire n_50_330;
     wire n_60_140;
