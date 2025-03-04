@@ -173,34 +173,32 @@ void Schematic::dumpVerilogWire(QTextStream& stream, Wire const* w) const
 
 void Schematic::dumpVerilogQucsPreamble(QTextStream& stream) const
 {
-  QString preamble_string("qucs_%1=%2");
-  QString preamble_text("qucs_%1=\"%2\"");
   // View
-  stream << "qucs_ViewX1="    << ViewX1
-       << ", qucs_ViewY1="    << ViewY1
-       << ", qucs_ViewX2="    << ViewX2
-       << ", qucs_ViewY2="    << ViewY2
-       << ", qucs_Scale="     << Scale
-       << ", qucs_tmpViewX1=" << tmpViewX1
-       << ", qucs_tmpViewY1=" << tmpViewY1;
+  stream <<   "qucs_ViewX1="      << ViewX1
+         << ", qucs_ViewY1="      << ViewY1
+         << ", qucs_ViewX2="      << ViewX2
+         << ", qucs_ViewY2="      << ViewY2
+         << ", qucs_Scale="       << Scale
+         << ", qucs_tmpViewX1="   << tmpViewX1
+         << ", qucs_tmpViewY1="   << tmpViewY1;
   // Grid
-  stream << ", " << preamble_string.arg("GridX").arg(GridX);
-  stream << ", " << preamble_string.arg("GridY").arg(GridY);
-  stream << ", " << preamble_string.arg("GridOn").arg(GridOn);
+  stream << ", qucs_GridX="       << GridX
+         << ", qucs_GridY="       << GridY
+         << ", qucs_GridOn="      << GridOn;
   // Data
-  stream << ", " << preamble_text.arg("DataSet", DataSet);
-  stream << ", " << preamble_text.arg("DataDisplay", DataDisplay);
+  stream << ", qucs_DataSet="     << "\"" << DataSet << "\""
+         << ", qucs_DataDisplay=" << "\"" << DataDisplay << "\"";
   // DPL
-  stream << ", " << preamble_string.arg("SimOpenDpl").arg(SimOpenDpl);
+  stream << ", qucs_SimOpenDpl="  << SimOpenDpl;
   // Scripts
-  stream << ", " << preamble_text.arg("Script", Script);
-  stream << ", " << preamble_string.arg("SimRunScript").arg(SimRunScript);
+  stream << ", qucs_Script="      << "\"" << Script << "\""
+         << ", qucs_SimRunScript="<< SimRunScript;
   // Frame
-  stream << ", " << preamble_string.arg("showFrame").arg(showFrame);
-  stream << ", " << preamble_text.arg("FrameText0", Frame_Text0);
-  stream << ", " << preamble_text.arg("FrameText1", Frame_Text1);
-  stream << ", " << preamble_text.arg("FrameText2", Frame_Text2);
-  stream << ", " << preamble_text.arg("FrameText3", Frame_Text3);
+  stream << ", qucs_showFrame="   << showFrame
+         << ", qucs_FrameText0="  << "\"" << Frame_Text0 << "\""
+         << ", qucs_FrameText1="  << "\"" << Frame_Text1 << "\""
+         << ", qucs_FrameText2="  << "\"" << Frame_Text2 << "\""
+         << ", qucs_FrameText3="  << "\"" << Frame_Text3 << "\"";
 }
 
 // BUG: wrong compilation unit
