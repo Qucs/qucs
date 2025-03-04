@@ -47,7 +47,7 @@ module buckboost();
     (*  *) \.TR  #(.Type(lin),.Start(0),.Stop(Tmax),.Points(2001),.IntegrationMethod(Trapezoidal),.Order(2),.InitialStep(1 ns),.MinStep(Tstep),.MaxIter(150),.reltol(0.001),.abstol(1 pA),.vntol(1 uV),.Temp(26.85),.LTEreltol(1e-3),.LTEabstol(1e-6),.LTEfactor(1),.Solver(CroutLU),.relaxTSR(no),.initialDC(yes),.MaxStep(Tstep)) TR1 (  );
     (* S0_x1=330, S0_y1=220, S0_x2=330, S0_y2=160 *) L #(.L(47uH),.I(0)) L1 ( n_330_220, n_330_160 );
     (* S0_x1=380, S0_y1=140, S0_x2=440, S0_y2=140 *) Diode #(.Is(1e-12 A),.N(1),.Cj0(10 fF),.M(0.5),.Vj(0.7 V),.Fc(0.5),.Cp(0.0 fF),.Isr(0.0),.Nr(2.0),.Rs(0.0 Ohm),.Tt(0.0 ps),.Ikf(0),.Kf(0.0),.Af(1.0),.Ffe(1.0),.Bv(0),.Ibv(1 mA),.Temp(26.85),.Xti(3.0),.Eg(1.11),.Tbv(0.0),.Trs(0.0),.Ttt1(0.0),.Ttt2(0.0),.Tm1(0.0),.Tm2(0.0),.Tnom(26.85),.Area(1.0),.Symbol(normal)) D1 ( n_380_140, n_440_140 );
-    (* S0_x1=640, S0_y1=220, S0_x2=640, S0_y2=160 *) R #(.R(10),.Temp(26.85),.Tc1(0.0),.Tc2(0.0),.Tnom(26.85),.Symbol(european)) R1 ( n_640_220, n_640_160 );
+    (* S0_x1=640, S0_y1=220, S0_x2=640, S0_y2=160 *) R #(.R(10),.Temp(26.85),.Tc1(0.0),.Tc2(0.0),.Tnom(26.85)) R1 ( n_640_220, n_640_160 );
     (*  *) Eqn #(.Tmax(Bperiod*20),.Tstep(Bperiod/1000),.Export(yes)) Eqn2 (  );
     (*  *) Eqn #(.Bfreq(40k),.Bperiod(1/Bfreq),.Bduty(30),.Ton(Bperiod*Bduty/100),.Toff(Bperiod-Ton),.Export(yes)) Eqn1 (  );
     (* S0_x1=330, S0_y1=140, S0_x2=380, S0_y2=140 *) net #() dio ( n_330_140, n_380_140 );

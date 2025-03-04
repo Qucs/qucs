@@ -29,6 +29,15 @@ public:
   static Element* info(QString&, char* &, bool getNewOne=false);
   static Element* info_us(QString&, char* &, bool getNewOne=false);
 
+  bool param_is_printable(int i)const override {
+    QString pname = param_name(i);
+    if(pname=="Symbol") {
+      return false;
+    }else{
+      return Component::param_is_printable(i);
+    }
+  }
+
 protected:
   void createSymbol();
 };

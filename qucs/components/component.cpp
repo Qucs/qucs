@@ -1470,8 +1470,19 @@ void MultiViewComponent::recreate(Schematic *Doc)
 // ***********************************************************************
 // ********                                                       ********
 // ********            Functions of class GateComponent           ********
+// ********               BUG: wrong file.                        ********
 // ********                                                       ********
 // ***********************************************************************
+bool GateComponent::param_is_printable(int i) const
+{
+  QString pname = param_name(i);
+  if(pname=="Symbol") {
+    return false;
+  }else{
+    return Component::param_is_printable(i);
+  }
+}
+
 GateComponent::GateComponent()
 {
   Type = isComponent;   // both analog and digital

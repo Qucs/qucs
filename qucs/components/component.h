@@ -30,6 +30,7 @@ class QPen;
 class ComponentDialog;
 
 class Component : public Element {
+  std::string _attr;
 public:
   Component();
   virtual ~Component() {}
@@ -53,6 +54,10 @@ public:
   void    mirrorX();  // mirror about X axis
   void    mirrorY();  // mirror about Y axis
   bool    load(const QString&);
+
+public: // attributes
+  virtual std::string attr_get()const {return _attr;}
+  virtual void attr_add(std::string s) {_attr += ", " + s;}
 
 public: // parameter access
   virtual int param_count() const;
@@ -157,12 +162,15 @@ protected:
 };
 
 
+// BUG wrong place.
 class GateComponent : public MultiViewComponent {
 public:
   GateComponent();
   QString netlist();
   QString vhdlCode(int);
   QString verilogCode(int);
+
+  bool param_is_printable(int i)const override;
 
 protected:
   void createSymbol();

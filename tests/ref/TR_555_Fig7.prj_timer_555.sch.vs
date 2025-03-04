@@ -53,10 +53,10 @@ module timer_555(.P_GND(n_820_300), .P_OUTPUT(n_820_230), .P_RESET(n_150_40), .P
     wire n_760_480;
     (* S0_x1=820, S0_y1=300 *) Port #(.Num(1),.Type(analog)) P_GND ( n_820_300 );
     (* S0_x1=820, S0_y1=230 *) Port #(.Num(3),.Type(analog)) P_OUTPUT ( n_820_230 );
-    (* S0_x1=220, S0_y1=130, S0_x2=220, S0_y2=70 *) R #(.R(5k),.Temp(26.85),.Tc1(0.0),.Tc2(0.0),.Tnom(26.85),.Symbol(european)) R1 ( n_220_130, n_220_70 );
+    (* S0_x1=220, S0_y1=130, S0_x2=220, S0_y2=70 *) R #(.R(5k),.Temp(26.85),.Tc1(0.0),.Tc2(0.0),.Tnom(26.85)) R1 ( n_220_130, n_220_70 );
     (* S0_x1=150, S0_y1=40 *) Port #(.Num(4),.Type(analog)) P_RESET ( n_150_40 );
-    (* S0_x1=220, S0_y1=280, S0_x2=220, S0_y2=220 *) R #(.R(5k),.Temp(26.85),.Tc1(0.0),.Tc2(0.0),.Tnom(26.85),.Symbol(european)) R2 ( n_220_280, n_220_220 );
-    (* S0_x1=220, S0_y1=430, S0_x2=220, S0_y2=370 *) R #(.R(5k),.Temp(26.85),.Tc1(0.0),.Tc2(0.0),.Tnom(26.85),.Symbol(european)) R3 ( n_220_430, n_220_370 );
+    (* S0_x1=220, S0_y1=280, S0_x2=220, S0_y2=220 *) R #(.R(5k),.Temp(26.85),.Tc1(0.0),.Tc2(0.0),.Tnom(26.85)) R2 ( n_220_280, n_220_220 );
+    (* S0_x1=220, S0_y1=430, S0_x2=220, S0_y2=370 *) R #(.R(5k),.Temp(26.85),.Tc1(0.0),.Tc2(0.0),.Tnom(26.85)) R3 ( n_220_430, n_220_370 );
     (* S0_x1=150, S0_y1=200 *) Port #(.Num(5),.Type(analog)) P_CONTROL ( n_150_200 );
     (* S0_x1=820, S0_y1=360 *) Port #(.Num(7),.Type(analog)) P_DISCHARGE ( n_820_360 );
     (* S0_x1=220, S0_y1=30 *) Port #(.Num(8),.Type(analog)) P_VCC ( n_220_30 );

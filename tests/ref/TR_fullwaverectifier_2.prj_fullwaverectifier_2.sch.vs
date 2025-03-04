@@ -40,7 +40,7 @@ module fullwaverectifier_2();
     wire n_440_190;
     wire n_440_220;
     wire n_440_270;
-    (* S0_x1=50, S0_y1=220, S0_x2=50, S0_y2=160 *) R #(.R(1k),.Temp(26.85),.Tc1(0.0),.Tc2(0.0),.Tnom(26.85),.Symbol(european)) R1 ( n_50_220, n_50_160 );
+    (* S0_x1=50, S0_y1=220, S0_x2=50, S0_y2=160 *) R #(.R(1k),.Temp(26.85),.Tc1(0.0),.Tc2(0.0),.Tnom(26.85)) R1 ( n_50_220, n_50_160 );
     (*  *) Eqn #(.Veff(220),.Vamp(Veff*sqrt(2)),.Vfreq(50),.Tperiod(1/Vfreq),.Tmax(2*Tperiod),.Export(yes)) Eqn1 (  );
     (*  *) \.TR  #(.Type(lin),.Start(0),.Stop(Tmax),.Points(201),.IntegrationMethod(Trapezoidal),.Order(2),.InitialStep(1 ns),.MinStep(1e-16),.MaxIter(150),.reltol(0.001),.abstol(1 pA),.vntol(1 uV),.Temp(26.85),.LTEreltol(1e-3),.LTEabstol(1e-6),.LTEfactor(1),.Solver(CroutLU),.relaxTSR(no),.initialDC(yes),.MaxStep(0)) TR1 (  );
     (* S0_x1=50, S0_y1=270 *) GND #() \*  ( n_50_270 );
