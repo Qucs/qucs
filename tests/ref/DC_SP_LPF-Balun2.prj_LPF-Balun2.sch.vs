@@ -1,4 +1,4 @@
-module LPF-Balun2();
+(* qucs_ViewX1=-74, qucs_ViewY1=-4, qucs_ViewX2=1084, qucs_ViewY2=644, qucs_Scale=1, qucs_tmpViewX1=41, qucs_tmpViewY1=0, qucs_GridX=10, qucs_GridY=10, qucs_GridOn=1, qucs_DataSet="LPF-Balun2.dat", qucs_DataDisplay="LPF-Balun2.dpl", qucs_SimOpenDpl=1, qucs_Script="LPF-Balun2.m", qucs_SimRunScript=0, qucs_showFrame=0, qucs_FrameText0="Title", qucs_FrameText1="Drawn By:", qucs_FrameText2="Date:", qucs_FrameText3="Revision:" *) module LPF-Balun2();
     wire n_m20_90;
     wire n_m20_160;
     wire n_m20_190;

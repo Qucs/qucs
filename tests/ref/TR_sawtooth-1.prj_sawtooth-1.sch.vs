@@ -1,4 +1,4 @@
-module sawtooth-1();
+(* qucs_ViewX1=0, qucs_ViewY1=0, qucs_ViewX2=800, qucs_ViewY2=800, qucs_Scale=1, qucs_tmpViewX1=0, qucs_tmpViewY1=0, qucs_GridX=10, qucs_GridY=10, qucs_GridOn=1, qucs_DataSet="sawtooth-1.dat", qucs_DataDisplay="sawtooth-1.dpl", qucs_SimOpenDpl=1, qucs_Script="sawtooth-1.m", qucs_SimRunScript=0, qucs_showFrame=0, qucs_FrameText0="Titel", qucs_FrameText1="Gezeichnet von:", qucs_FrameText2="Datum:", qucs_FrameText3="Revision:" *) module sawtooth-1();
     wire n_80_80;
     wire n_80_100;
     wire n_80_130;

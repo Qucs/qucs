@@ -1,4 +1,4 @@
-module lpf0();
+(* qucs_ViewX1=-653, qucs_ViewY1=-456, qucs_ViewX2=4238, qucs_ViewY2=2728, qucs_Scale=1.20071, qucs_tmpViewX1=297, qucs_tmpViewY1=334, qucs_GridX=10, qucs_GridY=10, qucs_GridOn=1, qucs_DataSet="lpf0.dat", qucs_DataDisplay="lpf0.dpl", qucs_SimOpenDpl=0, qucs_Script="lpf0.m", qucs_SimRunScript=0, qucs_showFrame=0, qucs_FrameText0="Title", qucs_FrameText1="Drawn By:", qucs_FrameText2="Date:", qucs_FrameText3="Revision:" *) module lpf0();
     wire n_40_90;
     wire n_40_120;
     wire n_40_150;

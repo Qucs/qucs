@@ -1,4 +1,4 @@
-module supply();
+(* qucs_ViewX1=-4, qucs_ViewY1=-20, qucs_ViewX2=691, qucs_ViewY2=467, qucs_Scale=1, qucs_tmpViewX1=0, qucs_tmpViewY1=0, qucs_GridX=10, qucs_GridY=10, qucs_GridOn=1, qucs_DataSet="supply.dat", qucs_DataDisplay="supply.dpl", qucs_SimOpenDpl=1, qucs_Script="supply.m", qucs_SimRunScript=0, qucs_showFrame=0, qucs_FrameText0="Title", qucs_FrameText1="Drawn By:", qucs_FrameText2="Date:", qucs_FrameText3="Revision:" *) module supply();
     wire n_40_170;
     wire n_40_200;
     wire n_40_230;

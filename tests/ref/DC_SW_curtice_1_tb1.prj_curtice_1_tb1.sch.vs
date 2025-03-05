@@ -1,4 +1,4 @@
-module curtice_1_tb1();
+(* qucs_ViewX1=-10, qucs_ViewY1=-14, qucs_ViewX2=1075, qucs_ViewY2=849, qucs_Scale=0.9631, qucs_tmpViewX1=0, qucs_tmpViewY1=0, qucs_GridX=10, qucs_GridY=10, qucs_GridOn=1, qucs_DataSet="curtice_1_tb1.dat", qucs_DataDisplay="curtice_1_tb1.dpl", qucs_SimOpenDpl=0, qucs_Script="curtice_1_tb1.m", qucs_SimRunScript=0, qucs_showFrame=0, qucs_FrameText0="Title", qucs_FrameText1="Drawn By:", qucs_FrameText2="Date:", qucs_FrameText3="Revision:" *) module curtice_1_tb1();
     wire n_40_250;
     wire n_70_390;
     wire n_80_120;

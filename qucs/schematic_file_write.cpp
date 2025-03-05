@@ -171,6 +171,36 @@ void Schematic::dumpVerilogWire(QTextStream& stream, Wire const* w) const
   dumpDeclaration(stream, NULL, "net", name, ports);
 }
 
+void Schematic::dumpVerilogQucsPreamble(QTextStream& stream) const
+{
+  // View
+  stream <<   "qucs_ViewX1="      << ViewX1
+         << ", qucs_ViewY1="      << ViewY1
+         << ", qucs_ViewX2="      << ViewX2
+         << ", qucs_ViewY2="      << ViewY2
+         << ", qucs_Scale="       << Scale
+         << ", qucs_tmpViewX1="   << tmpViewX1
+         << ", qucs_tmpViewY1="   << tmpViewY1;
+  // Grid
+  stream << ", qucs_GridX="       << GridX
+         << ", qucs_GridY="       << GridY
+         << ", qucs_GridOn="      << GridOn;
+  // Data
+  stream << ", qucs_DataSet="     << "\"" << DataSet << "\""
+         << ", qucs_DataDisplay=" << "\"" << DataDisplay << "\"";
+  // DPL
+  stream << ", qucs_SimOpenDpl="  << SimOpenDpl;
+  // Scripts
+  stream << ", qucs_Script="      << "\"" << Script << "\""
+         << ", qucs_SimRunScript="<< SimRunScript;
+  // Frame
+  stream << ", qucs_showFrame="   << showFrame
+         << ", qucs_FrameText0="  << "\"" << Frame_Text0 << "\""
+         << ", qucs_FrameText1="  << "\"" << Frame_Text1 << "\""
+         << ", qucs_FrameText2="  << "\"" << Frame_Text2 << "\""
+         << ", qucs_FrameText3="  << "\"" << Frame_Text3 << "\"";
+}
+
 // BUG: wrong compilation unit
 int Schematic::saveVerilogDocument(QFile *file)
 {
@@ -220,6 +250,12 @@ int Schematic::saveVerilogDocument(QFile *file)
     module_name.replace(".sch","");
     module_name.replace(".vs","");
   }
+
+  stream << "(* ";
+  dumpVerilogQucsPreamble(stream);
+  // stream << ", ";
+  // stream << attr_get();
+  stream << " *) ";
 
   stream << "module " << module_name << "(" << ioPorts.join(", ") << ");\n";
 

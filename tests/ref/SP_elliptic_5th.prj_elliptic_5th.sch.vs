@@ -1,4 +1,4 @@
-module elliptic_5th();
+(* qucs_ViewX1=0, qucs_ViewY1=30, qucs_ViewX2=800, qucs_ViewY2=606, qucs_Scale=1, qucs_tmpViewX1=0, qucs_tmpViewY1=0, qucs_GridX=10, qucs_GridY=10, qucs_GridOn=1, qucs_DataSet="elliptic_5th.dat", qucs_DataDisplay="elliptic_5th.dpl", qucs_SimOpenDpl=1, qucs_Script="elliptic_5th.m", qucs_SimRunScript=0, qucs_showFrame=0, qucs_FrameText0="Title", qucs_FrameText1="Drawn By:", qucs_FrameText2="Date:", qucs_FrameText3="Revision:" *) module elliptic_5th();
     wire n_50_90;
     wire n_50_120;
     wire n_50_150;

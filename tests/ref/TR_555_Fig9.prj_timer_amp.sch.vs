@@ -1,4 +1,4 @@
-module timer_amp(.P_vout(n_365_265), .Pamp_P(n_210_265), .Pamp_N(n_210_325));
+(* qucs_ViewX1=143, qucs_ViewY1=214, qucs_ViewX2=453, qucs_ViewY2=404, qucs_Scale=2.73871, qucs_tmpViewX1=0, qucs_tmpViewY1=0, qucs_GridX=5, qucs_GridY=5, qucs_GridOn=0, qucs_DataSet="timer_amp.dat", qucs_DataDisplay="timer_amp.dpl", qucs_SimOpenDpl=1, qucs_Script="timer_amp.m", qucs_SimRunScript=0, qucs_showFrame=0, qucs_FrameText0="Title", qucs_FrameText1="Drawn By:", qucs_FrameText2="Date:", qucs_FrameText3="Revision:" *) module timer_amp(.P_vout(n_365_265), .Pamp_P(n_210_265), .Pamp_N(n_210_325));
     inout n_365_265;
     inout n_210_265;
     inout n_210_325;

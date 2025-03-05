@@ -1,4 +1,4 @@
-module timer_thresh(.PinP(n_60_120), .PinN(n_60_180), .POUT(n_390_150));
+(* qucs_ViewX1=-7, qucs_ViewY1=-10, qucs_ViewX2=480, qucs_ViewY2=300, qucs_Scale=1.74333, qucs_tmpViewX1=0, qucs_tmpViewY1=0, qucs_GridX=5, qucs_GridY=5, qucs_GridOn=0, qucs_DataSet="timer_thresh.dat", qucs_DataDisplay="timer_thresh.dpl", qucs_SimOpenDpl=1, qucs_Script="timer_thresh.m", qucs_SimRunScript=0, qucs_showFrame=0, qucs_FrameText0="Title", qucs_FrameText1="Drawn By:", qucs_FrameText2="Date:", qucs_FrameText3="Revision:" *) module timer_thresh(.PinP(n_60_120), .PinN(n_60_180), .POUT(n_390_150));
     inout n_60_120;
     inout n_60_180;
     inout n_390_150;

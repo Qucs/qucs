@@ -1,4 +1,4 @@
-module timer_Discharge(.P_control_in(n_255_150), .P_GND(n_260_260), .P_Discharge(n_260_320));
+(* qucs_ViewX1=188, qucs_ViewY1=80, qucs_ViewX2=540, qucs_ViewY2=401, qucs_Scale=1.83178, qucs_tmpViewX1=0, qucs_tmpViewY1=0, qucs_GridX=5, qucs_GridY=5, qucs_GridOn=0, qucs_DataSet="timer_Discharge.dat", qucs_DataDisplay="timer_Discharge.dpl", qucs_SimOpenDpl=1, qucs_Script="timer_Discharge.m", qucs_SimRunScript=0, qucs_showFrame=0, qucs_FrameText0="Title", qucs_FrameText1="Drawn By:", qucs_FrameText2="Date:", qucs_FrameText3="Revision:" *) module timer_Discharge(.P_control_in(n_255_150), .P_GND(n_260_260), .P_Discharge(n_260_320));
     inout n_255_150;
     inout n_260_260;
     inout n_260_320;

@@ -1,4 +1,4 @@
-module multiplier();
+(* qucs_ViewX1=0, qucs_ViewY1=16, qucs_ViewX2=790, qucs_ViewY2=531, qucs_Scale=1, qucs_tmpViewX1=0, qucs_tmpViewY1=0, qucs_GridX=10, qucs_GridY=10, qucs_GridOn=1, qucs_DataSet="multiplier.dat", qucs_DataDisplay="multiplier.dpl", qucs_SimOpenDpl=1, qucs_Script="multiplier.m", qucs_SimRunScript=0, qucs_showFrame=0, qucs_FrameText0="Title", qucs_FrameText1="Drawn By:", qucs_FrameText2="Date:", qucs_FrameText3="Revision:" *) module multiplier();
     wire n_90_350;
     wire n_100_140;
     wire n_100_180;

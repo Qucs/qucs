@@ -1,4 +1,4 @@
-module ring();
+(* qucs_ViewX1=-3601, qucs_ViewY1=-1423, qucs_ViewX2=5513, qucs_ViewY2=4557, qucs_Scale=1.03315, qucs_tmpViewX1=0, qucs_tmpViewY1=0, qucs_GridX=10, qucs_GridY=10, qucs_GridOn=1, qucs_DataSet="logic1.dat", qucs_DataDisplay="logic1.dpl", qucs_SimOpenDpl=1, qucs_Script="logic1.m", qucs_SimRunScript=0, qucs_showFrame=0, qucs_FrameText0="Title", qucs_FrameText1="Drawn By:", qucs_FrameText2="Date:", qucs_FrameText3="Revision:" *) module ring();
     wire n_m3230_m870;
     wire n_m2830_m920;
     wire n_m2830_m810;

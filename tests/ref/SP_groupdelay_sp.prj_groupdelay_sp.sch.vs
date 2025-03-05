@@ -1,4 +1,4 @@
-module groupdelay_sp();
+(* qucs_ViewX1=56, qucs_ViewY1=-10, qucs_ViewX2=840, qucs_ViewY2=509, qucs_Scale=1, qucs_tmpViewX1=0, qucs_tmpViewY1=0, qucs_GridX=10, qucs_GridY=10, qucs_GridOn=1, qucs_DataSet="groupdelay_sp.dat", qucs_DataDisplay="groupdelay_sp.dpl", qucs_SimOpenDpl=1, qucs_Script="groupdelay_sp.m", qucs_SimRunScript=0, qucs_showFrame=0, qucs_FrameText0="Titel", qucs_FrameText1="Gezeichnet von:", qucs_FrameText2="Datum:", qucs_FrameText3="Revision:" *) module groupdelay_sp();
     wire n_110_100;
     wire n_110_150;
     wire n_110_180;

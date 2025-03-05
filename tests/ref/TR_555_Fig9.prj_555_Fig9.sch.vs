@@ -1,4 +1,4 @@
-module 555_Fig9();
+(* qucs_ViewX1=107, qucs_ViewY1=-1, qucs_ViewX2=1158, qucs_ViewY2=805, qucs_Scale=0.949919, qucs_tmpViewX1=0, qucs_tmpViewY1=64, qucs_GridX=10, qucs_GridY=10, qucs_GridOn=1, qucs_DataSet="555_Fig9.dat", qucs_DataDisplay="555_Fig9.dpl", qucs_SimOpenDpl=0, qucs_Script="555_Fig9.m", qucs_SimRunScript=0, qucs_showFrame=0, qucs_FrameText0="Title", qucs_FrameText1="Drawn By:", qucs_FrameText2="Date:", qucs_FrameText3="Revision:" *) module 555_Fig9();
     wire n_160_160;
     wire n_160_200;
     wire n_160_230;
