@@ -218,7 +218,7 @@ fi # if pkg-config exists
       dnl Set Clang
       if test "$CXX -dM -E - < /dev/null | grep __clang__" ; then
         CFLAGS="$CFLAGS -pipe"
-        CXXFLAGS="$CXXFLAGS -pipe -fno-exceptions -Wno-deprecated-register"
+        CXXFLAGS="$CXXFLAGS -pipe -fexceptions -Wno-deprecated-register"
         LDDFLAGS="$LDDFLAGS"
         use_CLANG="yes"
       fi
@@ -226,7 +226,7 @@ fi # if pkg-config exists
       dnl Set GCC.
       if test "x$use_CLANG" != "xyes" -a "x$GCC" = "xyes" ; then
         CFLAGS="$CFLAGS -pipe"
-        CXXFLAGS="$CXXFLAGS -pipe -fno-exceptions -fno-check-new"
+        CXXFLAGS="$CXXFLAGS -pipe -fexceptions -fno-check-new"
         if test x$WIN32 = xyes; then
           CXXFLAGS="$CXXFLAGS"
         fi

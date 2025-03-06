@@ -109,12 +109,15 @@ set(QUCS_SRCS
     qucs_init.cpp
     syntax.cpp
     misc.cpp
+    verilog_parser.cpp
     messagedock.cpp
     imagewriter.cpp
     printerwriter.cpp
     projectView.cpp)
 
 set(QUCS_HDRS
+    ap.h
+    exception.h
     sharedObjectList.h
     element.h
     messagedock.h

@@ -70,7 +70,7 @@ libqucsschematic_la_SOURCES= \
   viewpainter.cpp mnemo.cpp schematic.cpp schematic_element.cpp textdoc.cpp \
   schematic_file.cpp schematic_file_write.cpp schematic_file_read.cpp syntax.cpp module.cpp \
   octave_window.cpp messagedock.cpp misc.cpp imagewriter.cpp printerwriter.cpp \
-  projectView.cpp
+  projectView.cpp verilog_parser.cpp
 
 nodist_libqucsschematic_la_SOURCES = $(MOCFILES)
 
