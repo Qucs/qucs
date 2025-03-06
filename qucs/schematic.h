@@ -307,6 +307,8 @@ public:
   int  prepareNetlist(QTextStream&, QStringList&, QPlainTextEdit*);
   QString createNetlist(QTextStream&, int);
   bool loadDocument();
+  bool readLegacy(QFile &file);
+  bool readVerilog(QFile &file);
   void highlightWireLabels (void);
 
 private:

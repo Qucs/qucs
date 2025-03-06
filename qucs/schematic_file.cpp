@@ -22,7 +22,6 @@
 #endif
 #include <iostream>
 
-#include <QtCore>
 #include <QMessageBox>
 #include <QDir>
 #include <QStringList>
@@ -735,64 +734,26 @@ bool Schematic::loadDocument()
       file.close();
       return true;
     }
-
     Line = stream.readLine();
   } while(Line.isEmpty());
 
-  if(Line.left(16) != "<Qucs Schematic ") {  // wrong file type ?
-    file.close();
+  if(Line.left(2) == "(*" && Line.right(2) == "*)") {
+    return readVerilog(file);
+  } else if(Line.left(16) == "<Qucs Schematic ") { // Legacy format
+    Line = Line.mid(16, Line.length()-17);
+    VersionTriplet DocVersion = VersionTriplet(Line);
+    if (DocVersion > QucsVersion) { // wrong version number ?
+      if (!QucsSettings.IgnoreFutureVersion) {
+        QMessageBox::critical(0, QObject::tr("Error"),
+                              QObject::tr("Wrong document version: %1").arg(DocVersion.toString()));
+      }
+    }
+    return readLegacy(file);
+  } else {
     QMessageBox::critical(0, QObject::tr("Error"),
  		 QObject::tr("Wrong document type: ")+DocName);
     return false;
   }
-
-  Line = Line.mid(16, Line.length()-17);
-  VersionTriplet DocVersion = VersionTriplet(Line);
-  if (DocVersion > QucsVersion) { // wrong version number ?
-    if (!QucsSettings.IgnoreFutureVersion) {
-      QMessageBox::critical(0, QObject::tr("Error"),
-                            QObject::tr("Wrong document version: %1").arg(DocVersion.toString()));
-    }
-  }
-
-  // read content *************************
-  while(!stream.atEnd()) {
-    Line = stream.readLine();
-    Line = Line.trimmed();
-    if(Line.isEmpty()) continue;
-
-    if(Line == "<Symbol>") {
-      if(!loadPaintings(&stream, SymbolPaints)) {
-        file.close();
-        return false;
-      }
-    }
-    else
-    if(Line == "<Properties>") {
-      if(!loadProperties(&stream)) { file.close(); return false; } }
-    else
-    if(Line == "<Components>") {
-      if(!loadComponents(&stream)) { file.close(); return false; } }
-    else
-    if(Line == "<Wires>") {
-      if(!loadWires(&stream)) { file.close(); return false; } }
-    else
-    if(Line == "<Diagrams>") {
-      if(!loadDiagrams(&stream, DocDiags)) { file.close(); return false; } }
-    else
-    if(Line == "<Paintings>") {
-      if(!loadPaintings(&stream, DocPaints)) { file.close(); return false; } }
-    else {
-       qDebug() << Line;
-       QMessageBox::critical(0, QObject::tr("Error"),
-		   QObject::tr("File Format Error:\nUnknown field!"));
-      file.close();
-      return false;
-    }
-  }
-
-  file.close();
-  return true;
 }
 
 // -------------------------------------------------------------
