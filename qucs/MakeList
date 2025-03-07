@@ -1,12 +1,33 @@
+# MakeList for Qucs
 
 CXX_SRCS = \
-  attach.cpp ap.cpp \
-  node.cpp element.cpp qucsdoc.cpp wire.cpp mouseactions.cpp   \
-  qucs.cpp wirelabel.cpp qucs_init.cpp qucs_actions.cpp            \
-  viewpainter.cpp mnemo.cpp schematic.cpp schematic_element.cpp textdoc.cpp \
-  schematic_file.cpp schematic_file_write.cpp schematic_file_read.cpp syntax.cpp module.cpp \
-  octave_window.cpp messagedock.cpp misc.cpp imagewriter.cpp printerwriter.cpp \
-  projectView.cpp
+	ap.cpp \
+	attach.cpp \
+	element.cpp \
+	imagewriter.cpp \
+	messagedock.cpp \
+	misc.cpp \
+	mnemo.cpp \
+	module.cpp \
+	mouseactions.cpp \
+	node.cpp \
+	octave_window.cpp \
+	printerwriter.cpp \
+	projectView.cpp \
+	qucs_actions.cpp \
+	qucs.cpp \
+	qucsdoc.cpp \
+	qucs_init.cpp \
+	schematic.cpp \
+	schematic_element.cpp \
+	schematic_file.cpp \
+	schematic_file_read.cpp \
+	schematic_file_write.cpp \
+	syntax.cpp \
+	textdoc.cpp \
+	viewpainter.cpp \
+	wire.cpp \
+	wirelabel.cpp
 
 CXX_HDRS = \
   platform.h trace.h
