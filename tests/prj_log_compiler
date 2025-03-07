@@ -18,7 +18,7 @@ mkdir ${out}
 status=PASS
 
 # TODO: cleanup. explicit any to any
-for i in $( cd ${srcdir}; ls $base/*.sch ) ; do
+for i in $( cd ${srcdir}; ls $base/*.{sch,vs} ) ; do
 	schname=$(basename $i)
 	eval echo more $base $schname ${REDIR}
 
