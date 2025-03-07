@@ -22,18 +22,7 @@ void DocumentTests::loadDocument(QString name)
 
 void DocumentTests::testDocumentLoading()
 {
-    QTextStream out(stdout);
-    QDir dirs(QUCS_TEST_DIR);
-    QString project_name;
-    QFileInfoList list = dirs.entryInfoList();
-    QFileInfoList schematics_list;
-    QString name;
-    for (int i = 0; i < list.size(); ++i) {
-        project_name = list.at(i).fileName();
-        if(project_name.endsWith("_prj")) {
-            loadDocument(dirs.filePath(project_name));
-        }
-    }
+  loadDocument(PROJECT);
 }
 
 QTEST_MAIN(DocumentTests)

@@ -77,52 +77,76 @@ set(QucsAppTest_SRCS QucsAppTest.cpp QucsAppTest.h)
 add_library(QucsAppTest "${QucsAppTest_SRCS}")
 target_link_libraries(QucsAppTest Qt::Test Qt::Core Qt::Gui Qt::Widgets Qt::Script Qt::PrintSupport Qt::Svg qucsschematic element QucsApp QucsFunctions)
 
-set(SignalTests_SRCS SignalTests.cpp SignalTests.h)
-add_executable(SignalTests ${SignalTests_SRCS})
-target_link_libraries(SignalTests QucsAppTest)
-add_test(NAME SignalTests COMMAND SignalTests)
-
-set(ElementTests_SRCS ElementTests.cpp ElementTests.h)
-add_executable(ElementTests ${ElementTests_SRCS})
-target_link_libraries(ElementTests QucsAppTest)
-add_test(NAME ElementTests COMMAND ElementTests)
-
-set(ComponentTests_SRCS ComponentTests.cpp ComponentTests.h)
-add_executable(ComponentTests ${ComponentTests_SRCS})
-target_link_libraries(ComponentTests QucsAppTest)
-add_test(NAME ComponentTests COMMAND ComponentTests)
-
-set(SchematicTests_SRCS SchematicTests.cpp SchematicTests.h)
-add_executable(SchematicTests ${SchematicTests_SRCS})
-target_link_libraries(SchematicTests QucsAppTest)
-add_test(NAME SchematicTests COMMAND SchematicTests)
-
-set(NetlistTests_SRCS NetlistTests.cpp NetlistTests.h)
-add_executable(NetlistTests ${NetlistTests_SRCS})
-target_link_libraries(NetlistTests QucsAppTest)
-add_test(NAME NetlistTests COMMAND NetlistTests)
-
-set(DocumentTests_SRCS DocumentTests.cpp DocumentTests.h)
-add_executable(DocumentTests ${DocumentTests_SRCS})
-target_link_libraries(DocumentTests QucsAppTest)
-add_test(NAME DocumentTests COMMAND DocumentTests)
-
 readVariable(${PROJECT_SOURCE_DIR}/MakeList PRJ_TESTS PRJ_TESTS)
-#message(STATUS "Got following PRJ_TESTS: ${PRJ_TESTS}")
 
-#string(REGEX REPLACE ";" " " PRJ_TESTS "${PRJ_TESTS}")
+set(SignalTests_SRCS SignalTests.cpp SignalTests.h)
+set(NetlistTests_SRCS NetlistTests.cpp NetlistTests.h)
+set(ElementTests_SRCS ElementTests.cpp ElementTests.h)
+set(ComponentTests_SRCS ComponentTests.cpp ComponentTests.h)
+set(SchematicTests_SRCS SchematicTests.cpp SchematicTests.h)
+set(DocumentTests_SRCS DocumentTests.cpp DocumentTests.h)
+set(VerilogParseTests_SRCS VerilogParse.cpp VerilogParse.h)
+
+if(BUILD_API_TESTS)
+    set(TestCounter 0)
+    foreach(project IN LISTS PRJ_TESTS)
+        # Test Documents
+        #add_executable("DocumentTests${TestCounter}" ${DocumentTests_SRCS})
+        #target_link_libraries("DocumentTests${TestCounter}" QucsAppTest)
+        #target_compile_options("DocumentTests${TestCounter}" PRIVATE -DPROJECT="${PROJECT_SOURCE_DIR}/${project}")
+        #add_test(NAME "DocumentTests${TestCounter}" COMMAND "DocumentTests${TestCounter}")
+        file(GLOB schematics "${PROJECT_SOURCE_DIR}/${project}/*.sch")
+        foreach(schematic ${schematics})
+            # Test Signals
+            add_executable("SignalTests${TestCounter}" ${SignalTests_SRCS})
+            target_compile_options("SignalTests${TestCounter}" PRIVATE -DSCHEMATIC="${schematic}")
+            target_link_libraries("SignalTests${TestCounter}" QucsAppTest)
+            add_test(NAME "SignalTests${TestCounter}" COMMAND "SignalTests${TestCounter}")
+            # Test Netlists
+            add_executable("NetlistTests${TestCounter}" ${NetlistTests_SRCS})
+            target_compile_options("NetlistTests${TestCounter}" PRIVATE -DSCHEMATIC="${schematic}")
+            target_link_libraries("NetlistTests${TestCounter}" QucsAppTest)
+            add_test(NAME "NetlistTests${TestCounter}" COMMAND "NetlistTests${TestCounter}")
+            # Test Schematics
+            add_executable("SchematicTests${TestCounter}" ${SchematicTests_SRCS})
+            target_compile_options("SchematicTests${TestCounter}" PRIVATE -DSCHEMATIC="${schematic}")
+            target_link_libraries("SchematicTests${TestCounter}" QucsAppTest)
+            add_test(NAME "SchematicTests${TestCounter}" COMMAND "SchematicTests${TestCounter}")
+            # Increment counter
+            math(EXPR TestCounter "${TestCounter}+1")
+        endforeach()
+    endforeach()
+
+# Test Components
+add_executable("ComponentTests" ${ComponentTests_SRCS})
+target_link_libraries("ComponentTests" QucsAppTest)
+add_test(NAME "ComponentTests" COMMAND "ComponentTests")
+
+# Test Elements
+add_executable("ElementTests" ${ElementTests_SRCS})
+target_link_libraries("ElementTests" QucsAppTest)
+add_test(NAME "ElementTests" COMMAND "ElementTests")
+
+endif() # BUILD_API_TESTS
+
+make_directory(${PROJECT_BINARY_DIR}/out)
 
 set(check_commands)
 foreach(project IN LISTS PRJ_TESTS)
     file(GLOB schematics "${PROJECT_SOURCE_DIR}/${project}/*.sch")
     foreach(schematic ${schematics})
-        string(REPLACE "${PROJECT_SOURCE_DIR}" "${PROJECT_SOURCE_DIR}/ref" outfile ${schematic})
+        string(REPLACE "${PROJECT_SOURCE_DIR}" "${PROJECT_BINARY_DIR}/out" outfile ${schematic})
         string(REPLACE "prj/" "prj_" outfile ${outfile})
-        # For compatibility this is commented for now until felix can fix his automake implementation too
-        #string(REPLACE ".sch" "" outfile ${outfile})
         list(APPEND check_commands COMMAND ${PROJECT_BINARY_DIR}/../qucs/qucs --dump -i ${schematic} -o ${outfile}.sch)
         list(APPEND check_commands COMMAND ${PROJECT_BINARY_DIR}/../qucs/qucs --dump -i ${schematic} -o ${outfile}.vs)
     endforeach()
+    file(GLOB verilogs "${PROJECT_SOURCE_DIR}/${project}/*.vs")
+    foreach(verilog ${verilogs})
+        string(REPLACE "${PROJECT_SOURCE_DIR}" "${PROJECT_BINARY_DIR}/out" outfile ${verilog})
+        string(REPLACE "prj/" "prj_" outfile ${outfile})
+        list(APPEND check_commands COMMAND ${PROJECT_BINARY_DIR}/../qucs/qucs --dump -i ${verilog} -o ${outfile}.sch)
+        list(APPEND check_commands COMMAND ${PROJECT_BINARY_DIR}/../qucs/qucs --dump -i ${verilog} -o ${outfile}.vs)
+    endforeach()
 endforeach()
 
-add_custom_target(update_refs ${check_commands})
+add_custom_target(check ${check_commands})

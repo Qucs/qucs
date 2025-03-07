@@ -1,6 +1,30 @@
-module main()
-GND #() anonymous_gnd_hack_0(net_660_370);
-R #(.R(50 Ohm), .Temp(26.85), .Tc1(0.0), .Tc2(0.0), .Tnom(26.85), .Symbol(european)) R2(net_580_270, net_640_270);
-R #(.R(50 Ohm), .Temp(26.85), .Tc1(0.0), .Tc2(0.0), .Tnom(26.85), .Symbol(european)) R1(net_500_270, net_560_270);
-Vac #(.U(10 V), .f(1kHz), .Phase(0), .Theta(0)) V1(net_450_290, net_450_350);
+(* qucs_ViewX1=0, qucs_ViewY1=0, qucs_ViewX2=800, qucs_ViewY2=800, qucs_Scale=1, qucs_tmpViewX1=0, qucs_tmpViewY1=0, qucs_GridX=10, qucs_GridY=10, qucs_GridOn=1, qucs_DataSet="resistor.dat", qucs_DataDisplay="resistor.dpl", qucs_SimOpenDpl=0, qucs_Script="TR_resistor.m", qucs_SimRunScript=0, qucs_showFrame=0, qucs_FrameText0="Title", qucs_FrameText1="Drawn By:", qucs_FrameText2="Date:", qucs_FrameText3="Revision:" *) module resistor();
+    wire n_260_300;
+    wire n_450_270;
+    wire n_450_290;
+    wire n_450_320;
+    wire n_450_350;
+    wire n_450_360;
+    wire n_500_270;
+    wire n_530_270;
+    wire n_560_270;
+    wire n_580_270;
+    wire n_610_270;
+    wire n_640_270;
+    wire n_660_270;
+    wire n_660_360;
+    wire n_660_370;
+    (* S0_x1=660, S0_y1=370 *) GND #() \*  ( n_660_370 );
+    (*  *) \.TR  #(.Type(lin),.Start(0),.Stop(1 ms),.Points(101),.IntegrationMethod(Trapezoidal),.Order(2),.InitialStep(1 ns),.MinStep(1e-16),.MaxIter(150),.reltol(0.001),.abstol(1 pA),.vntol(1 uV),.Temp(26.85),.LTEreltol(1e-3),.LTEabstol(1e-6),.LTEfactor(1),.Solver(CroutLU),.relaxTSR(no),.initialDC(yes),.MaxStep(0)) TR1 (  );
+    (* S0_x1=580, S0_y1=270, S0_x2=640, S0_y2=270 *) R #(.R(50 Ohm),.Temp(26.85),.Tc1(0.0),.Tc2(0.0),.Tnom(26.85)) R2 ( n_580_270, n_640_270 );
+    (* S0_x1=500, S0_y1=270, S0_x2=560, S0_y2=270 *) R #(.R(50 Ohm),.Temp(26.85),.Tc1(0.0),.Tc2(0.0),.Tnom(26.85)) R1 ( n_500_270, n_560_270 );
+    (* S0_x1=450, S0_y1=290, S0_x2=450, S0_y2=350 *) Vac #(.U(10 V),.f(1kHz),.Phase(0),.Theta(0)) V1 ( n_450_290, n_450_350 );
+    (* S0_x1=450, S0_y1=350, S0_x2=450, S0_y2=360 *) net #() net1 ( n_450_350, n_450_360 );
+    (* S0_x1=450, S0_y1=360, S0_x2=660, S0_y2=360 *) net #() net2 ( n_450_360, n_660_360 );
+    (* S0_x1=660, S0_y1=360, S0_x2=660, S0_y2=370 *) net #() net3 ( n_660_360, n_660_370 );
+    (* S0_x1=660, S0_y1=270, S0_x2=660, S0_y2=360 *) net #() net4 ( n_660_270, n_660_360 );
+    (* S0_x1=450, S0_y1=270, S0_x2=450, S0_y2=290 *) net #() net5 ( n_450_270, n_450_290 );
+    (* S0_x1=450, S0_y1=270, S0_x2=500, S0_y2=270 *) net #() Vin ( n_450_270, n_500_270 );
+    (* S0_x1=560, S0_y1=270, S0_x2=580, S0_y2=270 *) net #() Vout ( n_560_270, n_580_270 );
+    (* S0_x1=640, S0_y1=270, S0_x2=660, S0_y2=270 *) net #() net6 ( n_640_270, n_660_270 );
 endmodule
