@@ -1395,7 +1395,7 @@ bool QucsApp::gotoPage(const QString& Name)
 
   QFileInfo Info(Name);
   if(Info.suffix() == "sch" || Info.suffix() == "dpl" ||
-     Info.suffix() == "sym") {
+     Info.suffix() == "sym" || Info.suffix() == "vs") {
     d = DocumentTab->createEmptySchematic(Name);
   } else {
     d = DocumentTab->createEmptyTextDoc(Name);
