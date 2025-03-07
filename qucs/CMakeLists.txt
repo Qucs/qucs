@@ -12,6 +12,7 @@
 
 project(qucs CXX)
 cmake_minimum_required(VERSION 3.10.0)
+include(${PROJECT_SOURCE_DIR}/../cmake/readMakeList.cmake)
 
 # use top VERSION file
 file(STRINGS ${PROJECT_SOURCE_DIR}/../VERSION QUCS_VERSION)
@@ -86,56 +87,9 @@ add_subdirectory(octave)
 add_subdirectory(python)
 add_subdirectory(paintings)
 
-set(QUCS_SRCS
-    attach.cpp
-    element.cpp
-    octave_window.cpp
-    qucsdoc.cpp
-    textdoc.cpp
-    schematic.cpp
-    mnemo.cpp
-    qucs.cpp
-    viewpainter.cpp
-    module.cpp
-    schematic_element.cpp
-    wire.cpp
-    mouseactions.cpp
-    qucs_actions.cpp
-    schematic_file.cpp
-    schematic_file_write.cpp
-    schematic_file_read.cpp
-    wirelabel.cpp
-    node.cpp
-    qucs_init.cpp
-    syntax.cpp
-    misc.cpp
-	 verilog_parser.cpp // #BUG. use CXX_SRCS from MakeList.
-    messagedock.cpp
-    imagewriter.cpp
-    printerwriter.cpp
-    projectView.cpp)
 
-set(QUCS_HDRS
-    ap.h
-    exception.h
-    sharedObjectList.h
-    element.h
-    messagedock.h
-    misc.h
-    mnemo.h
-    module.h
-    mouseactions.h
-    node.h
-    octave_window.h
-    platform.h
-    qucs.h
-    qucsdoc.h
-    schematic.h
-    syntax.h
-    textdoc.h
-    viewpainter.h
-    wire.h
-    wirelabel.h)
+readVariable(${PROJECT_SOURCE_DIR}/MakeList CXX_SRCS QUCS_SRCS)
+readVariable(${PROJECT_SOURCE_DIR}/MakeList CXX_HDRS QUCS_HDRS)
 
 #
 # files that have Q_OBJECT need to be MOC'ed
