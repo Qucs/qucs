@@ -14,6 +14,7 @@
 #include <QProcess>
 #include <QDebug>
 
+#include "ap.h"
 #include "qucs.h"
 #include "node.h"
 #include "schematic.h"
@@ -78,6 +79,20 @@ bool Schematic::readLegacy(QFile &file) {
 bool Schematic::readVerilog(QFile &file)
 {
   trace_method_calls();
+  file.reset();
+  QTextStream stream(&file);
+  CS cmd(&stream);
+  //std::cout << "Dummy read" << std::endl;
+  //std::cout << "-------------" << std::endl;
+  char c;
+  while(!cmd.atEnd()) {
+    cmd.read_line();
+    do {
+      c = cmd.ctoc();
+      //std::cout << c;
+    } while(c);
+  }
+  //std::cout << std::endl << "-------------" << std::endl;
   file.close();
   return true;
 }

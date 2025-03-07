@@ -737,7 +737,11 @@ bool Schematic::loadDocument()
     Line = stream.readLine();
   } while(Line.isEmpty());
 
-  if(Line.left(2) == "(*" && Line.right(2) == "*)") {
+  /*
+   * The Verilog Schematic preamble is in the form (* ... *)
+   * (* is at the beginning at some point it has to be closed
+   */
+  if( (Line.left(2) == "(*") && Line.contains("*)") ) {
     return readVerilog(file);
   } else if(Line.left(16) == "<Qucs Schematic ") { // Legacy format
     Line = Line.mid(16, Line.length()-17);
