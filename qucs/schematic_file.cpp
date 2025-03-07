@@ -42,6 +42,7 @@
 #include "components/libcomp.h"
 #include "module.h"
 #include "misc.h"
+#include "trace.h"
 
 #if TRACE_FUNCTION_CALLS
 #define trace_method_calls() qInfo()<<__FILE__ <<":"<<__func__
@@ -741,7 +742,8 @@ bool Schematic::loadDocument()
    * The Verilog Schematic preamble is in the form (* ... *)
    * (* is at the beginning at some point it has to be closed
    */
-  if( (Line.left(2) == "(*") && Line.contains("*)") ) {
+  if( (Line.left(2) == "(*") && Line.contains("*)") ) { untested();
+    // this is asking for a magic byte/sting in a schematic, which we do not have yet.
     return readVerilog(file);
   } else if(Line.left(16) == "<Qucs Schematic ") { // Legacy format
     Line = Line.mid(16, Line.length()-17);
@@ -753,7 +755,11 @@ bool Schematic::loadDocument()
       }
     }
     return readLegacy(file);
-  } else {
+  } else { untested();
+    return readVerilog(file);
+    // BUG. implicit file type.
+    // possibly use file extension as a fallback?
+    // (OK for now)
     QMessageBox::critical(0, QObject::tr("Error"),
  		 QObject::tr("Wrong document type: ")+DocName);
     return false;
