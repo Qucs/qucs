@@ -25,9 +25,7 @@
 #ifndef AP_H
 #define AP_H
 #include <string.h>
-#include <QTextStream>
 #include "platform.h"
-#define CS istream_t
 #define AP_MOD AP_MOD_
 /*--------------------------------------------------------------------------*/
 INTERFACE char* getcmd(const char*,char*,int);
@@ -45,7 +43,7 @@ enum AP_MOD{
 const bool ONE_OF = false;
 
 class QTextStream;
-class istream_t {
+class CS {
 public:
   enum STDIN {_STDIN};
   enum INC_FILE {_INC_FILE};

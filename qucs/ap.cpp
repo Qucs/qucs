@@ -13,14 +13,12 @@
 #include "platform.h"
 #include "ap.h"
 #include "exception.h"
+#include "trace.h"
 #include <QFile>
 #include <QDebug>
-
-#define unreachable() qDebug() << "Unreachable"
-#define itested() qDebug() << "Works for me"
-#define untested() qDebug() << "Untested"
-#define incomplete() qDebug() << "Incomplete"
-
+#include <QTextStream> // still used in legacy code
+							  // wrap alrady-open stream
+							  // BUG, screws up diagnostics etc.
 /*--------------------------------------------------------------------------*/
 enum {
   BUFLEN = 256,
@@ -36,7 +34,7 @@ static char* trim(char *string)
   return string;
 }
 /*--------------------------------------------------------------------------*/
-std::string istream_t::read_line()
+std::string CS::read_line()
 {
 	get_line("incomplete");
 	return fullstring();
@@ -61,7 +59,7 @@ std::string istream_t::read_line()
 }
 
 /*--------------------------------------------------------------------------*/
-istream_t::istream_t(istream_t::STRING, const std::string&s )
+CS::CS(CS::STRING, const std::string&s )
 	: _file(nullptr), _cmd(s), _cnt(0), _ok(true), _stream(nullptr)
 {
 	auto qs = new QString(QString::fromStdString(s)); // BUG: memory leak.
@@ -69,12 +67,12 @@ istream_t::istream_t(istream_t::STRING, const std::string&s )
 	_length = s.size();
 }
 /*--------------------------------------------------------------------------*/
-istream_t::istream_t(istream_t::STDIN)
+CS::CS(CS::STDIN)
 	: _file(stdin), _cnt(0), _ok(true), _stream(nullptr)
 {
 }
 /*--------------------------------------------------------------------------*/
-istream_t::istream_t(istream_t::WHOLE_FILE, const std::string& name)
+CS::CS(CS::WHOLE_FILE, const std::string& name)
 	: _file(nullptr), _cnt(0), _ok(true), _stream(nullptr)
 {
 	auto qfn = QString::fromStdString(name);
@@ -88,7 +86,7 @@ istream_t::istream_t(istream_t::WHOLE_FILE, const std::string& name)
 }
 /*--------------------------------------------------------------------------*/
 /// borrowed from ap_*.cc
-int istream_t::ctoi()
+int CS::ctoi()
 {
   int val = 0;
   int sign = 1;
@@ -109,7 +107,7 @@ int istream_t::ctoi()
   return val * sign;
 }
 
-istream_t& istream_t::skipbl()
+CS& CS::skipbl()
 {
   while (peek() && (!isgraph(peek()))) {
     skip();
@@ -117,7 +115,7 @@ istream_t& istream_t::skipbl()
   return *this;
 }
 /*--------------------------------------------------------------------------*/
-istream_t& istream_t::skip1b(char t)
+CS& CS::skip1b(char t)
 {
   skipbl();
   skip1(t);
@@ -125,7 +123,7 @@ istream_t& istream_t::skip1b(char t)
   return *this;
 }
 /*--------------------------------------------------------------------------*/
-char istream_t::ctoc()
+char CS::ctoc()
 {
   char c=_cmd[_cnt];
   if(_cnt<=_cmd.size()) {
@@ -135,7 +133,7 @@ char istream_t::ctoc()
   return c;
 }
 /*--------------------------------------------------------------------------*/
-istream_t& istream_t::skip1b(const std::string& t)
+CS& CS::skip1b(const std::string& t)
 {
   skipbl();
   skip1(t);
@@ -143,7 +141,7 @@ istream_t& istream_t::skip1b(const std::string& t)
   return *this;
 }
 /*--------------------------------------------------------------------------*/
-istream_t& istream_t::skip1(const std::string& t)
+CS& CS::skip1(const std::string& t)
 {
   if (match1(t)) {
     skip();
@@ -155,7 +153,7 @@ istream_t& istream_t::skip1(const std::string& t)
   return *this;
 }
 /*--------------------------------------------------------------------------*/
-istream_t& istream_t::skip1(char t)
+CS& CS::skip1(char t)
 {
   if (match1(t)) {
     skip();
@@ -167,7 +165,7 @@ istream_t& istream_t::skip1(char t)
 }
 /*--------------------------------------------------------------------------*/
 // borrowed from ap_match
-std::string istream_t::ctos(const std::string& term,
+std::string CS::ctos(const std::string& term,
 		     const std::string& begin_quote,
 		     const std::string& end_quote,
 		     const std::string& trap)
@@ -229,7 +227,7 @@ std::string istream_t::ctos(const std::string& term,
 	return s;
 }
 /*--------------------------------------------------------------------------*/
-bool istream_t::ctob()
+bool CS::ctob()
 {
 #if 1
 	unreachable(); // not used anywhere (is it?)
@@ -255,7 +253,7 @@ bool istream_t::ctob()
 }
 /*--------------------------------------------------------------------------*/
 // borrowed from ap_match
-istream_t& istream_t::umatch(const std::string& s)
+CS& CS::umatch(const std::string& s)
 {
   size_t start = cursor();
   skipbl();
@@ -317,7 +315,7 @@ istream_t& istream_t::umatch(const std::string& s)
 }
 /*--------------------------------------------------------------------------*/
 // from ap_error.cc
-istream_t& istream_t::warn(int badness, size_t spot, const std::string& message)
+CS& CS::warn(int badness, size_t spot, const std::string& message)
 {
 	incomplete();
   //std::cerr << "parse warning " << message << "\n";
@@ -338,7 +336,7 @@ istream_t& istream_t::warn(int badness, size_t spot, const std::string& message)
   return *this;
 }
 /*--------------------------------------------------------------------------*/
-#define CS istream_t
+#define CS CS
 #include <math.h>
 /*--------------------------------------------------------------------------*/
 // from ap_convert.cc
@@ -441,7 +439,7 @@ CS & CS::check(int badness, const std::string& message)
   return *this;
 }
 /*--------------------------------------------------------------------------*/
-bool istream_t::is_file() const
+bool CS::is_file() const
 {
 	if(_stream){
 		return true;
@@ -497,7 +495,7 @@ static std::string getlines(FILE *fileptr)
 	return s;
 }
 /*--------------------------------------------------------------------------*/
-CS& istream_t::get_line(std::string const& prompt)
+CS& CS::get_line(std::string const& prompt)
 {
   ++_line_number;
 
@@ -533,7 +531,7 @@ CS& istream_t::get_line(std::string const& prompt)
   return *this;
 }
 /*--------------------------------------------------------------------------*/
-bool istream_t::atEnd()
+bool CS::atEnd()
 {
 	if(_stream){
 		return _stream->atEnd();

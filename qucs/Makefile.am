@@ -23,6 +23,7 @@
 #
 
 include ../common.mk
+include MakeList
 
 AM_DEFAULT_SOURCE_EXT = .cpp
 
@@ -63,14 +64,7 @@ MOCFILES = $(MOCHEADERS:.h=.moc.cpp)
 
 noinst_LTLIBRARIES = libqucsschematic.la libqucsfunctions.la
 
-libqucsschematic_la_SOURCES= \
-  attach.cpp \
-  node.cpp element.cpp qucsdoc.cpp wire.cpp mouseactions.cpp   \
-  qucs.cpp wirelabel.cpp qucs_init.cpp qucs_actions.cpp            \
-  viewpainter.cpp mnemo.cpp schematic.cpp schematic_element.cpp textdoc.cpp \
-  schematic_file.cpp schematic_file_write.cpp schematic_file_read.cpp syntax.cpp module.cpp \
-  octave_window.cpp messagedock.cpp misc.cpp imagewriter.cpp printerwriter.cpp \
-  projectView.cpp verilog_parser.cpp
+libqucsschematic_la_SOURCES = ${CXX_SRCS}
 
 nodist_libqucsschematic_la_SOURCES = $(MOCFILES)
 
@@ -102,7 +96,7 @@ noinst_HEADERS = $(MOCHEADERS) wire.h qucsdoc.h element.h node.h \
   projectView.h printerwriter.h imagewriter.h
 
 # must be installed. but later
-noinst_HEADERS += platform.h
+noinst_HEADERS += ${CXX_HDRS}
 
 hicolor16dir = ${prefix}/share/icons/hicolor/16x16/apps
 hicolor16_DATA =  bitmaps/hicolor/16x16/apps/qucs.png

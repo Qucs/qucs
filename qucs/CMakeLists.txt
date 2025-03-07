@@ -109,7 +109,7 @@ set(QUCS_SRCS
     qucs_init.cpp
     syntax.cpp
     misc.cpp
-    verilog_parser.cpp
+	 verilog_parser.cpp // #BUG. use CXX_SRCS from MakeList.
     messagedock.cpp
     imagewriter.cpp
     printerwriter.cpp
