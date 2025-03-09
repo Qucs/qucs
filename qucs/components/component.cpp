@@ -25,6 +25,8 @@
 #include "viewpainter.h"
 #include "module.h"
 #include "misc.h"
+#include "exception.h"
+#include "trace.h"
 
 #include <QPen>
 #include <QString>
@@ -749,6 +751,11 @@ QString Component::get_VHDL_Code(int NumPorts)
   return "  " + Node1 + " <= " + port(1).getConnection()->Name + ";\n";
 }
 
+void Component::set_port_by_index(int num, std::string const& ext_name)
+{
+  incomplete();
+}
+
 // -------------------------------------------------------
 // number of parameters
 int Component::param_count() const
@@ -762,26 +769,64 @@ bool Component::param_is_printable(int i) const
   return true;
 }
 
-QString Component::param_id_tag(int i) const
-{
-  return QString("");
-}
-
-QString Component::param_name(int i) const
+std::string Component::param_name(int i) const
 {
   auto it = Props.begin();
   // BUG: Missing random access
   std::advance(it, i);
-  return it->Name;
+  return it->Name.toStdString();
 }
 
-QString Component::param_value(int i) const
+std::string Component::param_value(int i) const
 {
   auto it = Props.begin();
   // BUG: Missing random access
   std::advance(it, i);
-  return it->Value;
+  return it->Value.toStdString();
 }
+
+
+void Component::set_param_by_index(int i, std::string const& Value)
+{
+  incomplete();
+//  auto it = Props.begin();
+//  std::advance(it, i);
+//  it->Value = Value;
+}
+
+void Component::set_param_by_name(std::string const& name, std::string const& v)
+{
+  // BUG. creates new entry.
+  // find existing slot when instanciating a
+  // legacy qucs symbol.
+  // NB: Props is a list, not a map.
+  incomplete();
+  Props.push_back(
+    qucs::Property(
+      QString::fromStdString(name),
+      QString::fromStdString(v),
+      false,
+      ""
+    )
+  );
+}
+
+void Component::set_dev_type(std::string const& type)
+{ untested();
+  Model = QString::fromStdString(type);
+}
+
+void Component::set_label(std::string const& name)
+{ untested();
+  Name = QString::fromStdString(name);
+}
+
+void Component::set_port_by_name(std::string const&, std::string const&)
+{ incomplete();
+  // BUG: missing port name
+  // BUG: using position for connection making, are we?
+}
+
 
 // -------------------------------------------------------
 // save a component
@@ -1475,7 +1520,7 @@ void MultiViewComponent::recreate(Schematic *Doc)
 // ***********************************************************************
 bool GateComponent::param_is_printable(int i) const
 {
-  QString pname = param_name(i);
+  std::string pname = param_name(i);
   if(pname=="Symbol") {
     return false;
   }else{

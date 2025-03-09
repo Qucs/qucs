@@ -53,6 +53,8 @@ class QMouseEvent;
 class QDragEnterEvent;
 class QPainter;
 
+class outputStream;
+
 // digital signal data
 struct DigSignal {
   DigSignal() { Name=""; Type=""; }
@@ -317,10 +319,10 @@ private:
   QString getWireName(const QPoint *p)const; // BUG // names are key!
 
 private: /// BUG // move to Verilog class, create if needed.
-  void dumpDeclaration(QTextStream& stream, const Component *c, QString model, QString name, QList<QPoint> ports) const;
-  void dumpVerilogComponent(QTextStream& stream, Component const* c) const;
-  void dumpVerilogWire(QTextStream& stream, Wire const* w) const;
-  void dumpVerilogQucsPreamble(QTextStream& stream) const;
+  void dumpDeclaration(outputStream& stream, const Component *c, QString model, QString name, QList<QPoint> ports) const;
+  void dumpVerilogComponent(outputStream& stream, Component const* c) const;
+  void dumpVerilogWire(outputStream& stream, Wire const* w) const;
+  void dumpVerilogQucsPreamble(outputStream& stream) const;
   int  saveVerilogDocument(QFile *file);
 
   bool loadProperties(QTextStream*);
