@@ -76,12 +76,13 @@ bool Schematic::readLegacy(QFile &file) {
   return true;
 }
 
-bool Schematic::readVerilog(QFile &file)
+// BUG; this is not Schematic code.
+bool Schematic::readVerilog(QFile /* BUG: need CS */ &file)
 {
   trace_method_calls();
-  file.reset();
-  QTextStream stream(&file);
-  CS cmd(&stream);
+  file.reset(); // BUG. why?
+  QTextStream stream(&file); // BUG, remove
+  CS cmd(&stream); // BUG. remove
   //std::cout << "Dummy read" << std::endl;
   //std::cout << "-------------" << std::endl;
   char c;
@@ -93,6 +94,6 @@ bool Schematic::readVerilog(QFile &file)
     } while(c);
   }
   //std::cout << std::endl << "-------------" << std::endl;
-  file.close();
+  file.close(); // BUG. see above.
   return true;
 }
