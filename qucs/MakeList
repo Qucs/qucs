@@ -5,6 +5,7 @@ CXX_SRCS = \
 	attach.cpp \
 	element.cpp \
 	imagewriter.cpp \
+    lang_verilog.cpp \
 	messagedock.cpp \
 	misc.cpp \
 	mnemo.cpp \
