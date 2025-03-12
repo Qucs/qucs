@@ -5,15 +5,6 @@
 #endif
 #include <iostream>
 
-#include <QMessageBox>
-#include <QDir>
-#include <QStringList>
-#include <QPlainTextEdit>
-#include <QTextStream>
-#include <QList>
-#include <QProcess>
-#include <QDebug>
-
 #include "ap.h"
 #include "qucs.h"
 #include "node.h"
@@ -22,20 +13,21 @@
 #include "misc.h"
 #include "trace.h"
 #include "exception.h"
-#include "components.h"
+#include "components/component.h"
 
-void Schematic::skip_attributes(CS& cmd)
+void skip_attributes(CS& cmd)
 {
   while (cmd >> "(*") {
     cmd.skipto1('*') && (cmd >> "*)");
   }
 }
 
-void Schematic::parse_attributes(CS& cmd, std::shared_ptr<Wire> x)
+// BUG. need extra function, Wire is not a Component.
+void parse_attributes(CS& cmd, Wire* x)
 {
 }
 
-void Schematic::parse_attributes(CS& cmd, std::shared_ptr<Component> x)
+void parse_attributes(CS& cmd, Component* x)
 {
   assert(x);
   incomplete();
@@ -48,10 +40,12 @@ void Schematic::parse_attributes(CS& cmd, std::shared_ptr<Component> x)
   }
 }
 
-void Schematic::parse_type(CS& cmd, std::shared_ptr<Wire> x)
-{}
+// BUG. need extra function, Wire is not a Component.
+void parse_type(CS& cmd, Wire* x)
+{
+}
 
-void Schematic::parse_type(CS& cmd, std::shared_ptr<Component> x)
+void parse_type(CS& cmd, Component* x)
 {
   assert(x);
   //incomplete();
@@ -60,10 +54,11 @@ void Schematic::parse_type(CS& cmd, std::shared_ptr<Component> x)
   x->set_dev_type(new_type);
 }
 
-void Schematic::parse_args_instance(CS& cmd, std::shared_ptr<Wire> x)
+// BUG. need extra function, Wire is not a Component.
+void parse_args_instance(CS& cmd, Wire* x)
 {}
 
-void Schematic::parse_args_instance(CS& cmd, std::shared_ptr<Component> x)
+void parse_args_instance(CS& cmd, Component* x)
 {
   assert(x);
   if (cmd >> "#(") {
@@ -101,11 +96,12 @@ void Schematic::parse_args_instance(CS& cmd, std::shared_ptr<Component> x)
   }
 }
 
-void Schematic::parse_label(CS &cmd, std::shared_ptr<Wire> x)
+// BUG. see above
+void parse_label(CS &cmd, Wire* x)
 {
 }
 
-void Schematic::parse_label(CS &cmd, std::shared_ptr<Component> x)
+void parse_label(CS &cmd, Component* x)
 {
   assert(x);
   std::string my_name;
@@ -118,12 +114,12 @@ void Schematic::parse_label(CS &cmd, std::shared_ptr<Component> x)
   }
 }
 
-void Schematic::parse_ports(CS& cmd, std::shared_ptr<Wire> x, bool all_new)
+void parse_ports(CS& cmd, Wire* x, bool all_new)
 {
 
 }
 
-void Schematic::parse_ports(CS& cmd, std::shared_ptr<Component> x, bool all_new)
+void parse_ports(CS& cmd, Component* x, bool all_new)
 {
   assert(x);
   if (cmd >> '(') {
@@ -194,7 +190,7 @@ void Schematic::parse_ports(CS& cmd, std::shared_ptr<Component> x, bool all_new)
   }
 }
 
-std::shared_ptr<Component> Schematic::parse_instance(CS& cmd, std::shared_ptr<Component> x)
+void parse_instance(CS& cmd, Component* x)
 {
   assert(x);
   cmd.reset();
@@ -205,10 +201,10 @@ std::shared_ptr<Component> Schematic::parse_instance(CS& cmd, std::shared_ptr<Co
   parse_ports(cmd, x, false/*allow dups*/);
   cmd >> ';';
   cmd.check(0, "what's this?");
-  return x;
+  // return x;
 }
 
-std::shared_ptr<Wire> Schematic::parse_wire(CS& cmd, std::shared_ptr<Wire> x)
+void parse_wire(CS& cmd, Wire* x)
 {
   assert(x);
   cmd.reset();
@@ -219,5 +215,5 @@ std::shared_ptr<Wire> Schematic::parse_wire(CS& cmd, std::shared_ptr<Wire> x)
   parse_ports(cmd, x, false/*allow dups*/);
   cmd >> ';';
   cmd.check(0, "what's this?");
-  return x;
+  // return x;
 }
