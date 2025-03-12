@@ -1,21 +1,2 @@
 (* qucs_ViewX1=0, qucs_ViewY1=0, qucs_ViewX2=800, qucs_ViewY2=800, qucs_Scale=1, qucs_tmpViewX1=-200, qucs_tmpViewY1=-200, qucs_GridX=10, qucs_GridY=10, qucs_GridOn=1, qucs_DataSet="active_bp.dat", qucs_DataDisplay="active_bp.dpl", qucs_SimOpenDpl=1, qucs_Script="active_bp.m", qucs_SimRunScript=0, qucs_showFrame=0, qucs_FrameText0="Title", qucs_FrameText1="Drawn By:", qucs_FrameText2="Date:", qucs_FrameText3="Revision:" *) module active_bp();
-    wire n_60_200;
-    wire n_60_260;
-    wire n_100_140;
-    wire n_180_120;
-    wire n_180_260;
-    wire n_200_140;
-    wire n_300_120;
-    wire n_300_180;
-    wire n_340_180;
-    (* S0_x1=310, S0_y1=200, S0_x2=310, S0_y2=160, S0_x3=380, S0_y3=180, qucs_mirroredX=0, qucs_rotated=0 *) OpAmp #(.G(1e6),.Umax(15 V)) OP1 ( n_310_200, n_310_160, n_380_180 );
-    (* S0_x1=300, S0_y1=180, qucs_mirroredX=0, qucs_rotated=0 *) GND #() \\*  ( n_300_180 );
-    (* S0_x1=180, S0_y1=260, qucs_mirroredX=0, qucs_rotated=0 *) GND #() \\*  ( n_180_260 );
-    (* S0_x1=60, S0_y1=260, qucs_mirroredX=0, qucs_rotated=0 *) GND #() \\*  ( n_60_260 );
-    (* S0_x1=60, S0_y1=170, S0_x2=60, S0_y2=230, qucs_mirroredX=0, qucs_rotated=1 *) Vac #(.U(1 V),.f(1 GHz),.Phase(0),.Theta(0)) V1 ( n_60_170, n_60_230 );
-    (* S0_x1=70, S0_y1=140, S0_x2=130, S0_y2=140, qucs_mirroredX=0, qucs_rotated=0 *) R #(.R(390),.Temp(26.85),.Tc1(0.0),.Tc2(0.0),.Tnom(26.85)) R3 ( n_70_140, n_130_140 );
-    (* S0_x1=150, S0_y1=260, S0_x2=210, S0_y2=260, qucs_mirroredX=0, qucs_rotated=0 *) R #(.R(5.6k),.Temp(26.85),.Tc1(0.0),.Tc2(0.0),.Tnom(26.85)) R2 ( n_150_260, n_210_260 );
-    (* S0_x1=170, S0_y1=140, S0_x2=230, S0_y2=140, qucs_mirroredX=0, qucs_rotated=0 *) C #(.C(47n),.V(),.Symbol(neutral)) C1 ( n_170_140, n_230_140 );
-    (* S0_x1=150, S0_y1=120, S0_x2=210, S0_y2=120, qucs_mirroredX=0, qucs_rotated=0 *) C #(.C(47n),.V(),.Symbol(neutral)) C2 ( n_150_120, n_210_120 );
-    (* S0_x1=270, S0_y1=120, S0_x2=330, S0_y2=120, qucs_mirroredX=0, qucs_rotated=0 *) R #(.R(3.9k),.Temp(26.85),.Tc1(0.0),.Tc2(0.0),.Tnom(26.85)) R1 ( n_270_120, n_330_120 );
 endmodule

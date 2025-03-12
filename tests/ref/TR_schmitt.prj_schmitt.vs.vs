@@ -1,25 +1,2 @@
 (* qucs_ViewX1=0, qucs_ViewY1=0, qucs_ViewX2=800, qucs_ViewY2=800, qucs_Scale=1, qucs_tmpViewX1=-200, qucs_tmpViewY1=-200, qucs_GridX=10, qucs_GridY=10, qucs_GridOn=1, qucs_DataSet="schmitt.dat", qucs_DataDisplay="schmitt.dpl", qucs_SimOpenDpl=1, qucs_Script="schmitt.m", qucs_SimRunScript=0, qucs_showFrame=0, qucs_FrameText0="Title", qucs_FrameText1="Drawn By:", qucs_FrameText2="Date:", qucs_FrameText3="Revision:" *) module schmitt();
-    wire n_120_160;
-    wire n_120_280;
-    wire n_150_250;
-    wire n_180_310;
-    wire n_180_370;
-    wire n_220_180;
-    wire n_270_250;
-    wire n_300_100;
-    wire n_300_280;
-    wire n_400_100;
-    wire n_400_160;
-    (* S0_x1=90, S0_y1=160, S0_x2=150, S0_y2=160, qucs_mirroredX=0, qucs_rotated=0 *) R #(.R(4.7k),.Temp(26.85),.Tc1(0.0),.Tc2(0.0),.Tnom(26.85)) R1 ( n_90_160, n_150_160 );
-    (* S0_x1=270, S0_y1=100, S0_x2=330, S0_y2=100, qucs_mirroredX=0, qucs_rotated=0 *) R #(.R(4.7k),.Temp(26.85),.Tc1(0.0),.Tc2(0.0),.Tnom(26.85)) R2 ( n_270_100, n_330_100 );
-    (* S0_x1=120, S0_y1=280, qucs_mirroredX=0, qucs_rotated=0 *) GND #() \\*  ( n_120_280 );
-    (* S0_x1=300, S0_y1=280, qucs_mirroredX=0, qucs_rotated=0 *) GND #() \\*  ( n_300_280 );
-    (* S0_x1=190, S0_y1=180, S0_x2=250, S0_y2=180, qucs_mirroredX=0, qucs_rotated=0 *) R #(.R(47k),.Temp(26.85),.Tc1(0.0),.Tc2(0.0),.Tnom(26.85)) R3 ( n_190_180, n_250_180 );
-    (* S0_x1=150, S0_y1=310, S0_x2=210, S0_y2=310, qucs_mirroredX=0, qucs_rotated=0 *) R #(.R(47k),.Temp(26.85),.Tc1(0.0),.Tc2(0.0),.Tnom(26.85)) R4 ( n_150_310, n_210_310 );
-    (* S0_x1=180, S0_y1=370, qucs_mirroredX=0, qucs_rotated=0 *) GND #() \\*  ( n_180_370 );
-    (* S0_x1=180, S0_y1=280, S0_x2=180, S0_y2=340, qucs_mirroredX=0, qucs_rotated=1 *) Vpulse #(.U1(-5 V),.U2(+5 V),.T1(0),.T2(210 us),.Tr(100 us),.Tf(100 us)) Ve ( n_180_280, n_180_340 );
-    (* S0_x1=120, S0_y1=250, S0_x2=150, S0_y2=220, S0_x3=150, S0_y3=280, qucs_mirroredX=0, qucs_rotated=0 *) _BJT #(.Type(npn),.Is(1e-16),.Nf(1),.Nr(1),.Ikf(0),.Ikr(0),.Vaf(0),.Var(0),.Ise(0),.Ne(1.5),.Isc(0),.Nc(2),.Bf(100),.Br(1),.Rbm(0),.Irb(0),.Rc(0),.Re(0),.Rb(0),.Cje(0),.Vje(0.75),.Mje(0.33),.Cjc(1p),.Vjc(0.75),.Mjc(0.33),.Xcjc(1.0),.Cjs(0),.Vjs(0.75),.Mjs(0),.Fc(0.5),.Tf(0.1n),.Xtf(0.0),.Vtf(0.0),.Itf(0.0),.Tr(0.0),.Temp(26.85),.Kf(0.0),.Af(1.0),.Ffe(1.0),.Kb(0.0),.Ab(1.0),.Fb(1.0),.Ptf(0.0),.Xtb(0.0),.Xti(3.0),.Eg(1.11),.Tnom(26.85),.Area(1.0)) T2 ( n_120_250, n_150_220, n_150_280 );
-    (* S0_x1=240, S0_y1=250, S0_x2=270, S0_y2=220, S0_x3=270, S0_y3=280, qucs_mirroredX=0, qucs_rotated=0 *) _BJT #(.Type(npn),.Is(1e-16),.Nf(1),.Nr(1),.Ikf(0),.Ikr(0),.Vaf(0),.Var(0),.Ise(0),.Ne(1.5),.Isc(0),.Nc(2),.Bf(100),.Br(1),.Rbm(0),.Irb(0),.Rc(0),.Re(0),.Rb(0),.Cje(0),.Vje(0.75),.Mje(0.33),.Cjc(1p),.Vjc(0.75),.Mjc(0.33),.Xcjc(1.0),.Cjs(0),.Vjs(0.75),.Mjs(0),.Fc(0.5),.Tf(0.1n),.Xtf(0.0),.Vtf(0.0),.Itf(0.0),.Tr(0.0),.Temp(26.85),.Kf(0.0),.Af(1.0),.Ffe(1.0),.Kb(0.0),.Ab(1.0),.Fb(1.0),.Ptf(0.0),.Xtb(0.0),.Xti(3.0),.Eg(1.11),.Tnom(26.85),.Area(1.0)) T3 ( n_240_250, n_270_220, n_270_280 );
-    (* S0_x1=400, S0_y1=160, qucs_mirroredX=0, qucs_rotated=0 *) GND #() \\*  ( n_400_160 );
-    (* S0_x1=400, S0_y1=70, S0_x2=400, S0_y2=130, qucs_mirroredX=0, qucs_rotated=1 *) Vdc #(.U(5 V)) Vdd ( n_400_70, n_400_130 );
 endmodule

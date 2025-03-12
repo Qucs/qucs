@@ -759,11 +759,15 @@ void Component::set_port_by_index(int num, std::string const& ext_name)
 // Attributes
 std::string Component::attr_get() const
 {
-  std::string ret = _attr;
-  ret += "qucs_mirroredX=";
+  std::string ret;
+  ret += "qucs_mirrored=";
   ret += std::to_string(mirroredX);
   ret += ", qucs_rotated=";
   ret += std::to_string(rotated);
+  if(_attr.size()){
+    ret += ", " + _attr;
+  }else{
+  }
   return ret;
 }
 

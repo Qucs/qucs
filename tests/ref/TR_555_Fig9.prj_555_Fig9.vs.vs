@@ -1,24 +1,2 @@
 (* qucs_ViewX1=0, qucs_ViewY1=0, qucs_ViewX2=800, qucs_ViewY2=800, qucs_Scale=1, qucs_tmpViewX1=-200, qucs_tmpViewY1=-200, qucs_GridX=10, qucs_GridY=10, qucs_GridOn=1, qucs_DataSet="555_Fig9.dat", qucs_DataDisplay="555_Fig9.dpl", qucs_SimOpenDpl=1, qucs_Script="555_Fig9.m", qucs_SimRunScript=0, qucs_showFrame=0, qucs_FrameText0="Title", qucs_FrameText1="Drawn By:", qucs_FrameText2="Date:", qucs_FrameText3="Revision:" *) module 555_Fig9();
-    wire n_0_0;
-    wire n_160_260;
-    wire n_160_370;
-    wire n_160_460;
-    wire n_300_160;
-    wire n_300_220;
-    wire n_390_250;
-    wire n_410_470;
-    wire n_410_540;
-    wire n_590_430;
-    (* S0_x1=590, S0_y1=430, qucs_mirroredX=0, qucs_rotated=0 *) GND #() \\*  ( n_590_430 );
-    (* S0_x1=300, S0_y1=220, qucs_mirroredX=0, qucs_rotated=0 *) GND #() \\*  ( n_300_220 );
-    (* S0_x1=390, S0_y1=250, qucs_mirroredX=0, qucs_rotated=0 *) GND #() \\*  ( n_390_250 );
-    (* S0_x1=410, S0_y1=540, qucs_mirroredX=0, qucs_rotated=0 *) GND #() \\*  ( n_410_540 );
-    (* S0_x1=160, S0_y1=460, qucs_mirroredX=0, qucs_rotated=0 *) GND #() \\*  ( n_160_460 );
-    (* S0_x1=410, S0_y1=440, S0_x2=410, S0_y2=500, qucs_mirroredX=0, qucs_rotated=1 *) Vpulse #(.U1(5 V),.U2(0 V),.T1(0),.T2(0.02 ms),.Tr(5 ns),.Tf(5 ns)) V3 ( n_410_440, n_410_500 );
-    (* S0_x1=300, S0_y1=130, S0_x2=300, S0_y2=190, qucs_mirroredX=0, qucs_rotated=1 *) Vdc #(.U(5 V)) V1 ( n_300_130, n_300_190 );
-    (* S0_x1=130, S0_y1=260, S0_x2=190, S0_y2=260, qucs_mirroredX=0, qucs_rotated=0 *) R #(.R(3.9k),.Temp(26.85),.Tc1(0.0),.Tc2(0.0),.Tnom(26.85)) R1 ( n_130_260, n_190_260 );
-    (* S0_x1=130, S0_y1=370, S0_x2=190, S0_y2=370, qucs_mirroredX=0, qucs_rotated=0 *) R #(.R(3k),.Temp(26.85),.Tc1(0.0),.Tc2(0.0),.Tnom(26.85)) R2 ( n_130_370, n_190_370 );
-    (* S0_x1=560, S0_y1=430, S0_x2=620, S0_y2=430, qucs_mirroredX=0, qucs_rotated=0 *) C #(.C(0.01uF),.V(0V),.Symbol(neutral)) C2 ( n_560_430, n_620_430 );
-    (* S0_x1=130, S0_y1=460, S0_x2=190, S0_y2=460, qucs_mirroredX=0, qucs_rotated=0 *) C #(.C(0.01u),.V(0V),.Symbol(neutral)) C1 ( n_130_460, n_190_460 );
-    (* , qucs_mirroredX=0, qucs_rotated=0 *) Sub #(.File(timer_555.sch)) SUB1 (  );
 endmodule

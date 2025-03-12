@@ -1,22 +1,2 @@
 (* qucs_ViewX1=0, qucs_ViewY1=0, qucs_ViewX2=800, qucs_ViewY2=800, qucs_Scale=1, qucs_tmpViewX1=-200, qucs_tmpViewY1=-200, qucs_GridX=10, qucs_GridY=10, qucs_GridOn=1, qucs_DataSet="wilkinson.dat", qucs_DataDisplay="wilkinson.dpl", qucs_SimOpenDpl=1, qucs_Script="wilkinson.m", qucs_SimRunScript=0, qucs_showFrame=0, qucs_FrameText0="Title", qucs_FrameText1="Drawn By:", qucs_FrameText2="Date:", qucs_FrameText3="Revision:" *) module wilkinson();
-    wire n_60_80;
-    wire n_60_140;
-    wire n_100_80;
-    wire n_200_40;
-    wire n_200_140;
-    wire n_300_120;
-    wire n_410_40;
-    wire n_410_100;
-    wire n_410_140;
-    wire n_410_200;
-    (* S0_x1=60, S0_y1=50, S0_x2=60, S0_y2=110, qucs_mirroredX=0, qucs_rotated=1 *) Pac #(.Num(1),.Z(50 Ohm),.P(0 dBm),.f(1 GHz),.Temp(26.85)) P1 ( n_60_50, n_60_110 );
-    (* S0_x1=60, S0_y1=140, qucs_mirroredX=0, qucs_rotated=0 *) GND #() \\*  ( n_60_140 );
-    (* S0_x1=70, S0_y1=80, S0_x2=130, S0_y2=80, qucs_mirroredX=0, qucs_rotated=0 *) TLIN #(.Z(50 Ohm),.L(100 mm),.Alpha(0 dB),.Temp(26.85)) Line1 ( n_70_80, n_130_80 );
-    (* S0_x1=170, S0_y1=40, S0_x2=230, S0_y2=40, qucs_mirroredX=0, qucs_rotated=0 *) TLIN #(.Z(70.7 Ohm),.L(75 mm),.Alpha(0 dB),.Temp(26.85)) Line2 ( n_170_40, n_230_40 );
-    (* S0_x1=170, S0_y1=140, S0_x2=230, S0_y2=140, qucs_mirroredX=0, qucs_rotated=0 *) TLIN #(.Z(70.7 Ohm),.L(75 mm),.Alpha(0 dB),.Temp(26.85)) Line3 ( n_170_140, n_230_140 );
-    (* S0_x1=410, S0_y1=10, S0_x2=410, S0_y2=70, qucs_mirroredX=0, qucs_rotated=1 *) Pac #(.Num(2),.Z(50 Ohm),.P(0 dBm),.f(1 GHz),.Temp(26.85)) P2 ( n_410_10, n_410_70 );
-    (* S0_x1=410, S0_y1=110, S0_x2=410, S0_y2=170, qucs_mirroredX=0, qucs_rotated=1 *) Pac #(.Num(3),.Z(50 Ohm),.P(0 dBm),.f(1 GHz),.Temp(26.85)) P3 ( n_410_110, n_410_170 );
-    (* S0_x1=410, S0_y1=200, qucs_mirroredX=0, qucs_rotated=0 *) GND #() \\*  ( n_410_200 );
-    (* S0_x1=410, S0_y1=100, qucs_mirroredX=0, qucs_rotated=0 *) GND #() \\*  ( n_410_100 );
-    (* S0_x1=270, S0_y1=120, S0_x2=330, S0_y2=120, qucs_mirroredX=0, qucs_rotated=0 *) R #(.R(100 Ohm),.Temp(26.85),.Tc1(0.0),.Tc2(0.0),.Tnom(26.85)) R1 ( n_270_120, n_330_120 );
 endmodule

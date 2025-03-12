@@ -13,12 +13,12 @@
     wire n_410_260;
     wire n_500_120;
     wire n_500_320;
-    (* S0_x1=320, S0_y1=150, S0_x2=380, S0_y2=150, qucs_mirroredX=0, qucs_rotated=0 *) R #(.R(10K),.Temp(26.85),.Tc1(0.0),.Tc2(0.0),.Tnom(26.85)) R1 ( n_320_150, n_380_150 );
-    (* S0_x1=255, S0_y1=150, qucs_mirroredX=0, qucs_rotated=0 *) Port #(.Num(1),.Type(analog)) P_control_in ( n_255_150 );
-    (* S0_x1=260, S0_y1=260, qucs_mirroredX=0, qucs_rotated=0 *) Port #(.Num(3),.Type(analog)) P_GND ( n_260_260 );
-    (* S0_x1=260, S0_y1=320, qucs_mirroredX=0, qucs_rotated=0 *) Port #(.Num(2),.Type(analog)) P_Discharge ( n_260_320 );
-    (* S0_x1=380, S0_y1=150, S0_x2=410, S0_y2=120, S0_x3=410, S0_y3=180, qucs_mirroredX=0, qucs_rotated=0 *) _BJT #(.Type(npn),.Is(1e-16),.Nf(1),.Nr(1),.Ikf(0),.Ikr(0),.Vaf(0),.Var(0),.Ise(0),.Ne(1.5),.Isc(0),.Nc(2),.Bf(100),.Br(1),.Rbm(0),.Irb(0),.Rc(0),.Re(0),.Rb(0),.Cje(0),.Vje(0.75),.Mje(0.33),.Cjc(0),.Vjc(0.75),.Mjc(0.33),.Xcjc(1.0),.Cjs(0),.Vjs(0.75),.Mjs(0),.Fc(0.5),.Tf(1e-9),.Xtf(0.0),.Vtf(0.0),.Itf(0.0),.Tr(0.0),.Temp(26.85),.Kf(0.0),.Af(1.0),.Ffe(1.0),.Kb(0.0),.Ab(1.0),.Fb(1.0),.Ptf(0.0),.Xtb(0.0),.Xti(3.0),.Eg(1.11),.Tnom(26.85),.Area(1.0)) T1 ( n_380_150, n_410_120, n_410_180 );
-    (* S0_x1=340, S0_y1=320, S0_x2=400, S0_y2=320, qucs_mirroredX=0, qucs_rotated=0 *) R #(.R(200),.Temp(26.85),.Tc1(0.0),.Tc2(0.0),.Tnom(26.85)) R2 ( n_340_320, n_400_320 );
+    (* S0_x1=320, S0_y1=150, S0_x2=380, S0_y2=150, qucs_mirrored=0, qucs_rotated=0 *) R #(.R(10K),.Temp(26.85),.Tc1(0.0),.Tc2(0.0),.Tnom(26.85)) R1 ( n_320_150, n_380_150 );
+    (* S0_x1=255, S0_y1=150, qucs_mirrored=0, qucs_rotated=0 *) Port #(.Num(1),.Type(analog)) P_control_in ( n_255_150 );
+    (* S0_x1=260, S0_y1=260, qucs_mirrored=0, qucs_rotated=0 *) Port #(.Num(3),.Type(analog)) P_GND ( n_260_260 );
+    (* S0_x1=260, S0_y1=320, qucs_mirrored=0, qucs_rotated=0 *) Port #(.Num(2),.Type(analog)) P_Discharge ( n_260_320 );
+    (* S0_x1=380, S0_y1=150, S0_x2=410, S0_y2=120, S0_x3=410, S0_y3=180, qucs_mirrored=0, qucs_rotated=0 *) _BJT #(.Type(npn),.Is(1e-16),.Nf(1),.Nr(1),.Ikf(0),.Ikr(0),.Vaf(0),.Var(0),.Ise(0),.Ne(1.5),.Isc(0),.Nc(2),.Bf(100),.Br(1),.Rbm(0),.Irb(0),.Rc(0),.Re(0),.Rb(0),.Cje(0),.Vje(0.75),.Mje(0.33),.Cjc(0),.Vjc(0.75),.Mjc(0.33),.Xcjc(1.0),.Cjs(0),.Vjs(0.75),.Mjs(0),.Fc(0.5),.Tf(1e-9),.Xtf(0.0),.Vtf(0.0),.Itf(0.0),.Tr(0.0),.Temp(26.85),.Kf(0.0),.Af(1.0),.Ffe(1.0),.Kb(0.0),.Ab(1.0),.Fb(1.0),.Ptf(0.0),.Xtb(0.0),.Xti(3.0),.Eg(1.11),.Tnom(26.85),.Area(1.0)) T1 ( n_380_150, n_410_120, n_410_180 );
+    (* S0_x1=340, S0_y1=320, S0_x2=400, S0_y2=320, qucs_mirrored=0, qucs_rotated=0 *) R #(.R(200),.Temp(26.85),.Tc1(0.0),.Tc2(0.0),.Tnom(26.85)) R2 ( n_340_320, n_400_320 );
     (* S0_x1=255, S0_y1=150, S0_x2=320, S0_y2=150 *) net #() net1 ( n_255_150, n_320_150 );
     (* S0_x1=260, S0_y1=260, S0_x2=410, S0_y2=260 *) net #() net2 ( n_260_260, n_410_260 );
     (* S0_x1=410, S0_y1=180, S0_x2=410, S0_y2=260 *) net #() net3 ( n_410_180, n_410_260 );

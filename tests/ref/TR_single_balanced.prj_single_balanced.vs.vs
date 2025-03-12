@@ -1,28 +1,2 @@
 (* qucs_ViewX1=0, qucs_ViewY1=0, qucs_ViewX2=800, qucs_ViewY2=800, qucs_Scale=1, qucs_tmpViewX1=-200, qucs_tmpViewY1=-200, qucs_GridX=10, qucs_GridY=10, qucs_GridOn=1, qucs_DataSet="single_balanced.dat", qucs_DataDisplay="single_balanced.dpl", qucs_SimOpenDpl=1, qucs_Script="single_balanced.m", qucs_SimRunScript=0, qucs_showFrame=0, qucs_FrameText0="Title", qucs_FrameText1="Drawn By:", qucs_FrameText2="Date:", qucs_FrameText3="Revision:" *) module single_balanced();
-    wire n_180_180;
-    wire n_180_300;
-    wire n_180_360;
-    wire n_270_170;
-    wire n_280_300;
-    wire n_280_360;
-    wire n_300_100;
-    wire n_330_290;
-    wire n_360_360;
-    wire n_420_100;
-    wire n_450_170;
-    wire n_540_40;
-    wire n_540_100;
-    (* S0_x1=270, S0_y1=100, S0_x2=330, S0_y2=100, qucs_mirroredX=0, qucs_rotated=0 *) R #(.R(10k),.Temp(26.85),.Tc1(0.0),.Tc2(0.0),.Tnom(26.85)) R1 ( n_270_100, n_330_100 );
-    (* S0_x1=390, S0_y1=100, S0_x2=450, S0_y2=100, qucs_mirroredX=0, qucs_rotated=0 *) R #(.R(10k),.Temp(26.85),.Tc1(0.0),.Tc2(0.0),.Tnom(26.85)) R2 ( n_390_100, n_450_100 );
-    (* S0_x1=540, S0_y1=10, S0_x2=540, S0_y2=70, qucs_mirroredX=0, qucs_rotated=1 *) Vdc #(.U(5 V)) V1 ( n_540_10, n_540_70 );
-    (* S0_x1=280, S0_y1=270, S0_x2=280, S0_y2=330, qucs_mirroredX=0, qucs_rotated=1 *) Vac #(.U(0.2 V),.f(1 MHz),.Phase(0),.Theta(0)) RF ( n_280_270, n_280_330 );
-    (* S0_x1=180, S0_y1=150, S0_x2=180, S0_y2=210, qucs_mirroredX=0, qucs_rotated=1 *) Vac #(.U(3 V),.f(10 MHz),.Phase(0),.Theta(0)) LO ( n_180_150, n_180_210 );
-    (* S0_x1=360, S0_y1=360, qucs_mirroredX=0, qucs_rotated=0 *) GND #() \\*  ( n_360_360 );
-    (* S0_x1=540, S0_y1=100, qucs_mirroredX=0, qucs_rotated=0 *) GND #() \\*  ( n_540_100 );
-    (* S0_x1=300, S0_y1=290, S0_x2=330, S0_y2=260, S0_x3=330, S0_y3=320, qucs_mirroredX=0, qucs_rotated=0 *) _MOSFET #(.Type(nfet),.Vt0(-1.0 V),.Kp(2e-5),.Gamma(0.0),.Phi(0.6 V),.Lambda(0.0),.Rd(0.0 Ohm),.Rs(0.0 Ohm),.Rg(0.0 Ohm),.Is(1e-14 A),.N(1.0),.W(1 um),.L(1 um),.Ld(0.0),.Tox(0.1 um),.Cgso(0.0),.Cgdo(0.0),.Cgbo(0.0),.Cbd(0.0 F),.Cbs(0.0 F),.Pb(0.8 V),.Mj(0.5),.Fc(0.5),.Cjsw(0.0),.Mjsw(0.33),.Tt(0.0 ps),.Nsub(0.0),.Nss(0.0),.Tpg(1),.Uo(600.0),.Rsh(0.0),.Nrd(1),.Nrs(1),.Cj(0.0),.Js(0.0),.Ad(0.0),.As(0.0),.Pd(0.0 m),.Ps(0.0 m),.Kf(0.0),.Af(1.0),.Ffe(1.0),.Temp(26.85),.Tnom(26.85)) T3 ( n_300_290, n_330_260, n_330_320 );
-    (* S0_x1=280, S0_y1=360, qucs_mirroredX=0, qucs_rotated=0 *) GND #() \\*  ( n_280_360 );
-    (* S0_x1=180, S0_y1=360, qucs_mirroredX=0, qucs_rotated=0 *) GND #() \\*  ( n_180_360 );
-    (* S0_x1=240, S0_y1=170, S0_x2=270, S0_y2=140, S0_x3=270, S0_y3=200, qucs_mirroredX=0, qucs_rotated=0 *) _MOSFET #(.Type(nfet),.Vt0(1.0 V),.Kp(2e-5),.Gamma(0.0),.Phi(0.6 V),.Lambda(0.0),.Rd(0.0 Ohm),.Rs(0.0 Ohm),.Rg(0.0 Ohm),.Is(1e-14 A),.N(1.0),.W(1 um),.L(1 um),.Ld(0.0),.Tox(0.1 um),.Cgso(0.0),.Cgdo(0.0),.Cgbo(0.0),.Cbd(0.0 F),.Cbs(0.0 F),.Pb(0.8 V),.Mj(0.5),.Fc(0.5),.Cjsw(0.0),.Mjsw(0.33),.Tt(0.0 ps),.Nsub(0.0),.Nss(0.0),.Tpg(1),.Uo(600.0),.Rsh(0.0),.Nrd(1),.Nrs(1),.Cj(0.0),.Js(0.0),.Ad(0.0),.As(0.0),.Pd(0.0 m),.Ps(0.0 m),.Kf(0.0),.Af(1.0),.Ffe(1.0),.Temp(26.85),.Tnom(26.85)) T1 ( n_240_170, n_270_140, n_270_200 );
-    (* S0_x1=420, S0_y1=170, S0_x2=450, S0_y2=140, S0_x3=450, S0_y3=200, qucs_mirroredX=0, qucs_rotated=0 *) _MOSFET #(.Type(nfet),.Vt0(1.0 V),.Kp(2e-5),.Gamma(0.0),.Phi(0.6 V),.Lambda(0.0),.Rd(0.0 Ohm),.Rs(0.0 Ohm),.Rg(0.0 Ohm),.Is(1e-14 A),.N(1.0),.W(1 um),.L(1 um),.Ld(0.0),.Tox(0.1 um),.Cgso(0.0),.Cgdo(0.0),.Cgbo(0.0),.Cbd(0.0 F),.Cbs(0.0 F),.Pb(0.8 V),.Mj(0.5),.Fc(0.5),.Cjsw(0.0),.Mjsw(0.33),.Tt(0.0 ps),.Nsub(0.0),.Nss(0.0),.Tpg(1),.Uo(600.0),.Rsh(0.0),.Nrd(1),.Nrs(1),.Cj(0.0),.Js(0.0),.Ad(0.0),.As(0.0),.Pd(0.0 m),.Ps(0.0 m),.Kf(0.0),.Af(1.0),.Ffe(1.0),.Temp(26.85),.Tnom(26.85)) T2 ( n_420_170, n_450_140, n_450_200 );
-    (* S0_x1=180, S0_y1=270, S0_x2=180, S0_y2=330, qucs_mirroredX=0, qucs_rotated=1 *) Vdc #(.U(5 V)) V4 ( n_180_270, n_180_330 );
 endmodule

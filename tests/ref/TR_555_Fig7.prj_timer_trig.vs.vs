@@ -1,20 +1,2 @@
-(* qucs_ViewX1=0, qucs_ViewY1=0, qucs_ViewX2=800, qucs_ViewY2=800, qucs_Scale=1, qucs_tmpViewX1=-200, qucs_tmpViewY1=-200, qucs_GridX=10, qucs_GridY=10, qucs_GridOn=1, qucs_DataSet="timer_trig.dat", qucs_DataDisplay="timer_trig.dpl", qucs_SimOpenDpl=1, qucs_Script="timer_trig.m", qucs_SimRunScript=0, qucs_showFrame=0, qucs_FrameText0="Title", qucs_FrameText1="Drawn By:", qucs_FrameText2="Date:", qucs_FrameText3="Revision:" *) module timer_trig(.Pcomp_vp1(n_140_140), .Pcomp_vn1(n_140_200), .comp_vout1(n_440_165));
-    inout n_140_140;
-    inout n_140_200;
-    inout n_440_165;
-    wire n_120_80;
-    wire n_160_140;
-    wire n_210_185;
-    wire n_320_165;
-    wire n_410_240;
-    wire n_410_245;
-    (* S0_x1=140, S0_y1=140, qucs_mirroredX=0, qucs_rotated=0 *) Port #(.Num(1),.Type(analog)) Pcomp_vp1 ( n_140_140 );
-    (* S0_x1=140, S0_y1=200, qucs_mirroredX=0, qucs_rotated=0 *) Port #(.Num(2),.Type(analog)) Pcomp_vn1 ( n_140_200 );
-    (* S0_x1=120, S0_y1=80, qucs_mirroredX=0, qucs_rotated=0 *) GND #() \\*  ( n_120_80 );
-    (* S0_x1=160, S0_y1=110, S0_x2=160, S0_y2=170, qucs_mirroredX=0, qucs_rotated=1 *) Idc #(.I(500 nA)) I1 ( n_160_110, n_160_170 );
-    (* S0_x1=290, S0_y1=165, S0_x2=350, S0_y2=165, qucs_mirroredX=0, qucs_rotated=0 *) R #(.R(1k),.Temp(26.85),.Tc1(0.0),.Tc2(0.0),.Tnom(26.85)) R4 ( n_290_165, n_350_165 );
-    (* S0_x1=410, S0_y1=245, qucs_mirroredX=0, qucs_rotated=0 *) GND #() \\*  ( n_410_245 );
-    (* S0_x1=440, S0_y1=165, qucs_mirroredX=0, qucs_rotated=0 *) Port #(.Num(3),.Type(analog)) comp_vout1 ( n_440_165 );
-    (* S0_x1=180, S0_y1=205, S0_x2=180, S0_y2=165, S0_x3=250, S0_y3=185, qucs_mirroredX=0, qucs_rotated=0 *) OpAmp #(.G(1e6),.Umax(1 V)) OP1 ( n_180_205, n_180_165, n_250_185 );
-    (* S0_x1=380, S0_y1=240, S0_x2=440, S0_y2=240, qucs_mirroredX=0, qucs_rotated=0 *) C #(.C(1 nF),.V(),.Symbol(neutral)) C1 ( n_380_240, n_440_240 );
+(* qucs_ViewX1=0, qucs_ViewY1=0, qucs_ViewX2=800, qucs_ViewY2=800, qucs_Scale=1, qucs_tmpViewX1=-200, qucs_tmpViewY1=-200, qucs_GridX=10, qucs_GridY=10, qucs_GridOn=1, qucs_DataSet="timer_trig.dat", qucs_DataDisplay="timer_trig.dpl", qucs_SimOpenDpl=1, qucs_Script="timer_trig.m", qucs_SimRunScript=0, qucs_showFrame=0, qucs_FrameText0="Title", qucs_FrameText1="Drawn By:", qucs_FrameText2="Date:", qucs_FrameText3="Revision:" *) module timer_trig();
 endmodule
