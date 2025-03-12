@@ -217,3 +217,37 @@ void parse_wire(CS& cmd, Wire* x)
   cmd.check(0, "what's this?");
   // return x;
 }
+
+bool Schematic::readVerilog(CS &cmd)
+{
+  assert(cmd);
+  trace_method_calls();
+  while(!cmd.atEnd()) {
+    cmd.read_line();
+    skip_attributes(cmd);
+    if(cmd>>"module") {
+      //ignore for now;
+    }else if(cmd>>"endmodule"){
+      //ignore for now;
+    }else{
+      std::string type;
+      cmd >> type;
+      if(type=="wire") continue; // BUG: Not a component
+      if(type=="net") {
+        std::shared_ptr<Wire> w(new Wire(0,0,0,0, (Node*)4,(Node*)4));
+        if(w) {
+          parse_wire(cmd, w.get());
+          simpleInsertWire(w);
+        }
+      } else {
+        QString qtype = QString::fromStdString(type);
+        auto x = Module::getComponent(qtype);
+        if(x) {
+          parse_instance(cmd, x.get());
+          simpleInsertComponent(x);
+        }
+      }
+    }
+  }
+  return true;
+}
