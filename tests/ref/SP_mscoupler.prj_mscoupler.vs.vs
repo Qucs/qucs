@@ -1,2 +1,22 @@
 (* qucs_ViewX1=0, qucs_ViewY1=0, qucs_ViewX2=800, qucs_ViewY2=800, qucs_Scale=1, qucs_tmpViewX1=-200, qucs_tmpViewY1=-200, qucs_GridX=10, qucs_GridY=10, qucs_GridOn=1, qucs_DataSet="mscoupler.dat", qucs_DataDisplay="mscoupler.dpl", qucs_SimOpenDpl=1, qucs_Script="mscoupler.m", qucs_SimRunScript=0, qucs_showFrame=0, qucs_FrameText0="Title", qucs_FrameText1="Drawn By:", qucs_FrameText2="Date:", qucs_FrameText3="Revision:" *) module mscoupler();
+    wire n_0_0;
+    wire n_80_60;
+    wire n_80_120;
+    wire n_120_130;
+    wire n_120_190;
+    wire n_140_40;
+    wire n_260_150;
+    wire n_260_210;
+    wire n_300_60;
+    wire n_300_120;
+    (* S0_x1=80, S0_y1=30, S0_x2=80, S0_y2=90, qucs_mirroredX=0, qucs_rotated=1 *) Pac #(.Num(1),.Z(50 Ohm),.P(0 dBm),.f(1 GHz),.Temp(26.85)) P1 ( n_80_30, n_80_90 );
+    (* S0_x1=300, S0_y1=30, S0_x2=300, S0_y2=90, qucs_mirroredX=0, qucs_rotated=1 *) Pac #(.Num(2),.Z(50 Ohm),.P(0 dBm),.f(1 GHz),.Temp(26.85)) P2 ( n_300_30, n_300_90 );
+    (* S0_x1=260, S0_y1=120, S0_x2=260, S0_y2=180, qucs_mirroredX=0, qucs_rotated=1 *) Pac #(.Num(3),.Z(50 Ohm),.P(0 dBm),.f(1 GHz),.Temp(26.85)) P3 ( n_260_120, n_260_180 );
+    (* S0_x1=120, S0_y1=100, S0_x2=120, S0_y2=160, qucs_mirroredX=0, qucs_rotated=1 *) Pac #(.Num(4),.Z(50 Ohm),.P(0 dBm),.f(1 GHz),.Temp(26.85)) P4 ( n_120_100, n_120_160 );
+    (* S0_x1=80, S0_y1=120, qucs_mirroredX=0, qucs_rotated=0 *) GND #() \\*  ( n_80_120 );
+    (* S0_x1=120, S0_y1=190, qucs_mirroredX=0, qucs_rotated=0 *) GND #() \\*  ( n_120_190 );
+    (* S0_x1=300, S0_y1=120, qucs_mirroredX=0, qucs_rotated=0 *) GND #() \\*  ( n_300_120 );
+    (* S0_x1=260, S0_y1=210, qucs_mirroredX=0, qucs_rotated=0 *) GND #() \\*  ( n_260_210 );
+    (* , qucs_mirroredX=0, qucs_rotated=0 *) SUBST #(.er(9.8),.h(0.635 mm),.t(17.5 um),.tand(0.0001),.rho(2.43902e-08),.D(1.5e-07)) SubstTC1 (  );
+    (* S0_x1=110, S0_y1=10, S0_x2=170, S0_y2=10, S0_x3=170, S0_y3=70, S0_x4=110, S0_y4=70, qucs_mirroredX=0, qucs_rotated=0 *) MCOUPLED #(.Subst(SubstTC1),.W(0.518 mm),.L(14.94 mm),.S(0.185 mm),.Model(Kirschning),.DispModel(Kirschning),.Temp(26.85)) MSTC1 ( n_110_10, n_170_10, n_170_70, n_110_70 );
 endmodule

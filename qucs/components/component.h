@@ -56,10 +56,9 @@ public:
   bool    load(const QString&);
 
 public: // attributes
-  virtual std::string attr_get()const {return _attr;}
+  virtual std::string attr_get()const; 
   virtual void attr_add(std::string s) {_attr += ", " + s;}
-
-public: // label support. TODO: move up
+  virtual void set_attribute(std::string name, std::string value);
   virtual void set_label(std::string const& name);
 
 public: // parameter access

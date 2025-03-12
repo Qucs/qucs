@@ -1,2 +1,22 @@
 (* qucs_ViewX1=0, qucs_ViewY1=0, qucs_ViewX2=800, qucs_ViewY2=800, qucs_Scale=1, qucs_tmpViewX1=-200, qucs_tmpViewY1=-200, qucs_GridX=10, qucs_GridY=10, qucs_GridOn=1, qucs_DataSet="sawtooth-3.dat", qucs_DataDisplay="sawtooth-3.dpl", qucs_SimOpenDpl=1, qucs_Script="sawtooth-3.m", qucs_SimRunScript=0, qucs_showFrame=0, qucs_FrameText0="Title", qucs_FrameText1="Drawn By:", qucs_FrameText2="Date:", qucs_FrameText3="Revision:" *) module sawtooth-3();
+    wire n_130_170;
+    wire n_140_230;
+    wire n_160_330;
+    wire n_210_170;
+    wire n_360_170;
+    wire n_370_230;
+    wire n_410_330;
+    wire n_440_170;
+    wire n_440_360;
+    wire n_560_110;
+    (* S0_x1=330, S0_y1=170, S0_x2=390, S0_y2=170, qucs_mirroredX=0, qucs_rotated=0 *) R #(.R(1000),.Temp(26.85),.Tc1(0.0),.Tc2(0.0),.Tnom(26.85)) RfT1 ( n_330_170, n_390_170 );
+    (* S0_x1=100, S0_y1=170, S0_x2=160, S0_y2=170, qucs_mirroredX=0, qucs_rotated=0 *) R #(.R(20),.Temp(26.85),.Tc1(0.0),.Tc2(0.0),.Tnom(26.85)) RfL2 ( n_100_170, n_160_170 );
+    (* S0_x1=130, S0_y1=330, S0_x2=160, S0_y2=300, S0_x3=160, S0_y3=360, qucs_mirroredX=0, qucs_rotated=0 *) _BJT #(.Type(npn),.Is(4.04n),.Nf(1),.Nr(1),.Ikf(0.273),.Ikr(0.675),.Vaf(121),.Var(20),.Ise(6.86n),.Ne(2),.Isc(0),.Nc(2),.Bf(342),.Br(4),.Rbm(0),.Irb(0),.Rc(90.7m),.Re(0.227),.Rb(0.907),.Cje(107p),.Vje(1.1),.Mje(0.5),.Cjc(34.7p),.Vjc(0.3),.Mjc(0.3),.Xcjc(1),.Cjs(0),.Vjs(0.75),.Mjs(0),.Fc(0.5),.Tf(651p),.Xtf(0),.Vtf(0),.Itf(0),.Tr(111n),.Temp(26.85),.Kf(0),.Af(1),.Ffe(1),.Kb(0),.Ab(1),.Fb(1),.Ptf(0),.Xtb(0.0),.Xti(3.0),.Eg(1.11),.Tnom(26.85),.Area(1.0)) T_BC817_16_2 ( n_130_330, n_160_300, n_160_360 );
+    (* S0_x1=410, S0_y1=170, S0_x2=470, S0_y2=170, qucs_mirroredX=0, qucs_rotated=0 *) R #(.R(20),.Temp(26.85),.Tc1(0.0),.Tc2(0.0),.Tnom(26.85)) RfL1 ( n_410_170, n_470_170 );
+    (* S0_x1=440, S0_y1=360, qucs_mirroredX=0, qucs_rotated=0 *) GND #() \\*  ( n_440_360 );
+    (* S0_x1=380, S0_y1=330, S0_x2=410, S0_y2=300, S0_x3=410, S0_y3=360, qucs_mirroredX=0, qucs_rotated=0 *) _BJT #(.Type(npn),.Is(4.04n),.Nf(1),.Nr(1),.Ikf(0.273),.Ikr(0.675),.Vaf(121),.Var(20),.Ise(6.86n),.Ne(2),.Isc(0),.Nc(2),.Bf(342),.Br(4),.Rbm(0),.Irb(0),.Rc(90.7m),.Re(0.227),.Rb(0.907),.Cje(107p),.Vje(1.1),.Mje(0.5),.Cjc(34.7p),.Vjc(0.3),.Mjc(0.3),.Xcjc(1),.Cjs(0),.Vjs(0.75),.Mjs(0),.Fc(0.5),.Tf(651p),.Xtf(0),.Vtf(0),.Itf(0),.Tr(111n),.Temp(26.85),.Kf(0),.Af(1),.Ffe(1),.Kb(0),.Ab(1),.Fb(1),.Ptf(0),.Xtb(0.0),.Xti(3.0),.Eg(1.11),.Tnom(26.85),.Area(1.0)) T_BC817_16_1 ( n_380_330, n_410_300, n_410_360 );
+    (* S0_x1=180, S0_y1=170, S0_x2=240, S0_y2=170, qucs_mirroredX=0, qucs_rotated=0 *) R #(.R(1000),.Temp(26.85),.Tc1(0.0),.Tc2(0.0),.Tnom(26.85)) RfT2 ( n_180_170, n_240_170 );
+    (* S0_x1=110, S0_y1=230, S0_x2=170, S0_y2=230, qucs_mirroredX=0, qucs_rotated=0 *) C #(.C(100nF),.V(),.Symbol(neutral)) Cp2 ( n_110_230, n_170_230 );
+    (* S0_x1=340, S0_y1=230, S0_x2=400, S0_y2=230, qucs_mirroredX=0, qucs_rotated=0 *) C #(.C(100nF),.V(),.Symbol(neutral)) Cp1 ( n_340_230, n_400_230 );
+    (* S0_x1=560, S0_y1=80, S0_x2=560, S0_y2=140, qucs_mirroredX=0, qucs_rotated=1 *) Vdc #(.U(4 V)) V1 ( n_560_80, n_560_140 );
 endmodule

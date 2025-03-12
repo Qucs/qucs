@@ -1,2 +1,22 @@
 (* qucs_ViewX1=0, qucs_ViewY1=0, qucs_ViewX2=800, qucs_ViewY2=800, qucs_Scale=1, qucs_tmpViewX1=-200, qucs_tmpViewY1=-200, qucs_GridX=10, qucs_GridY=10, qucs_GridOn=1, qucs_DataSet="Puls3b.dat", qucs_DataDisplay="Puls3b.dpl", qucs_SimOpenDpl=1, qucs_Script="Puls3b.m", qucs_SimRunScript=0, qucs_showFrame=0, qucs_FrameText0="Title", qucs_FrameText1="Drawn By:", qucs_FrameText2="Date:", qucs_FrameText3="Revision:" *) module Puls3b();
+    wire n_40_140;
+    wire n_70_80;
+    wire n_160_200;
+    wire n_190_80;
+    wire n_280_200;
+    wire n_280_240;
+    wire n_280_300;
+    wire n_310_80;
+    wire n_400_200;
+    wire n_440_80;
+    (* S0_x1=280, S0_y1=80, S0_x2=340, S0_y2=80, qucs_mirroredX=0, qucs_rotated=0 *) R #(.R(200m),.Temp(26.85),.Tc1(0.0),.Tc2(0.0),.Tnom(26.85)) RD ( n_280_80, n_340_80 );
+    (* S0_x1=280, S0_y1=300, qucs_mirroredX=0, qucs_rotated=0 *) GND #() \\*  ( n_280_300 );
+    (* S0_x1=280, S0_y1=210, S0_x2=280, S0_y2=270, qucs_mirroredX=0, qucs_rotated=1 *) Vdc #(.U(13.5V)) VDC ( n_280_210, n_280_270 );
+    (* S0_x1=40, S0_y1=110, S0_x2=40, S0_y2=170, qucs_mirroredX=0, qucs_rotated=1 *) Vdc #(.U(200V)) VGEN ( n_40_110, n_40_170 );
+    (* S0_x1=130, S0_y1=200, S0_x2=190, S0_y2=200, qucs_mirroredX=0, qucs_rotated=0 *) C #(.C(40nF),.V(),.Symbol(neutral)) CS ( n_130_200, n_190_200 );
+    (* S0_x1=250, S0_y1=200, S0_x2=310, S0_y2=200, qucs_mirroredX=0, qucs_rotated=0 *) R #(.R(400m),.Temp(26.85),.Tc1(0.0),.Tc2(0.0),.Tnom(26.85)) RE ( n_250_200, n_310_200 );
+    (* S0_x1=370, S0_y1=200, S0_x2=430, S0_y2=200, qucs_mirroredX=0, qucs_rotated=0 *) C #(.C(40nF),.V(),.Symbol(neutral)) CL ( n_370_200, n_430_200 );
+    (* S0_x1=410, S0_y1=80, S0_x2=470, S0_y2=80, qucs_mirroredX=0, qucs_rotated=0 *) R #(.R(50),.Temp(26.85),.Tc1(0.0),.Tc2(0.0),.Tnom(26.85)) RI ( n_410_80, n_470_80 );
+    (* S0_x1=160, S0_y1=80, S0_x2=220, S0_y2=80, qucs_mirroredX=0, qucs_rotated=0 *) Switch #(.init(off),.time(10ns),.Ron(0),.Roff(1e9),.Temp(26.85),.MaxDuration(1e-6),.Transition(spline)) S2 ( n_160_80, n_220_80 );
+    (* S0_x1=40, S0_y1=80, S0_x2=100, S0_y2=80, qucs_mirroredX=0, qucs_rotated=0 *) Switch #(.init(on),.time(9ns),.Ron(0),.Roff(1e9),.Temp(26.85),.MaxDuration(1e-6),.Transition(spline)) S1 ( n_40_80, n_100_80 );
 endmodule

@@ -119,7 +119,7 @@ static void print_args(outputStream& o, Component const* x)
 // BUG: wrong compilation unit
 void Schematic::dumpDeclaration(outputStream& stream, Component const* c, QString model, QString name, QList<QPoint> ports) const
 {
-  // assert(c); ??
+  //assert(c);
   QStringList nets;
   int port_idx = 0;
   stream << "    (* ";

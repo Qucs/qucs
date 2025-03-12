@@ -756,6 +756,54 @@ void Component::set_port_by_index(int num, std::string const& ext_name)
   incomplete();
 }
 
+// Attributes
+std::string Component::attr_get() const
+{
+  std::string ret = _attr;
+  ret += "qucs_mirroredX=";
+  ret += std::to_string(mirroredX);
+  ret += ", qucs_rotated=";
+  ret += std::to_string(rotated);
+  return ret;
+}
+
+void Component::set_attribute(std::string name, std::string value)
+{
+  QString qname = QString::fromStdString(name);
+  QString qvalue = QString::fromStdString(value);
+  if(qname.contains("S0_x")||qname.contains("S0_y")) {
+    int i=1,x=0,y=0,index=0;
+    bool setx = false;
+    for(auto pp = Ports.begin(); pp!=Ports.end(); pp++) {
+      setx = qname.contains("S0_x");
+      index = qname.replace("S0_x","").replace("S0_y","").trimmed().toInt();
+      if(i==index) {
+        if(setx) {
+          x = qvalue.trimmed().toInt();
+          y = (pp->getConnection())?pp->getConnection()->cy:0;
+        } else {
+          x = (pp->getConnection())?pp->getConnection()->cx:0;
+          y = qvalue.trimmed().toInt();
+        }
+        if(i==1) setCenter(x, y, true);
+        std::shared_ptr<Node> node(new Node(x,y));
+        pp->Connection = node;
+        assert(pp->getConnection());
+        break;
+      }
+      i++;
+    }
+  } else if(qname.contains("qucs_mirroredX")) {
+    if(qvalue.trimmed().toInt()) {
+      mirrorX();
+    }
+  } else if(qname.contains("qucs_rotated")) {
+    for(int i=0; i<qvalue.trimmed().toInt(); i++) {
+      rotate();
+    }
+  }
+}
+
 // -------------------------------------------------------
 // number of parameters
 int Component::param_count() const
@@ -766,6 +814,7 @@ int Component::param_count() const
 // whether a parameter is shown in a dump
 bool Component::param_is_printable(int i) const
 {
+  incomplete();
   return true;
 }
 
@@ -785,7 +834,6 @@ std::string Component::param_value(int i) const
   return it->Value.toStdString();
 }
 
-
 void Component::set_param_by_index(int i, std::string const& Value)
 {
   incomplete();
@@ -796,19 +844,11 @@ void Component::set_param_by_index(int i, std::string const& Value)
 
 void Component::set_param_by_name(std::string const& name, std::string const& v)
 {
-  // BUG. creates new entry.
-  // find existing slot when instanciating a
-  // legacy qucs symbol.
-  // NB: Props is a list, not a map.
-  incomplete();
-  Props.push_back(
-    qucs::Property(
-      QString::fromStdString(name),
-      QString::fromStdString(v),
-      false,
-      ""
-    )
-  );
+  for(auto ap = Props.begin(); ap!=Props.end(); ap++) {
+    if(ap->Name.toStdString() == name) {
+      ap->Value = QString::fromStdString(v);
+    }
+  }
 }
 
 void Component::set_dev_type(std::string const& type)

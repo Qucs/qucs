@@ -1,2 +1,25 @@
 (* qucs_ViewX1=0, qucs_ViewY1=0, qucs_ViewX2=800, qucs_ViewY2=800, qucs_Scale=1, qucs_tmpViewX1=-200, qucs_tmpViewY1=-200, qucs_GridX=10, qucs_GridY=10, qucs_GridOn=1, qucs_DataSet="supply.dat", qucs_DataDisplay="supply.dpl", qucs_SimOpenDpl=1, qucs_Script="supply.m", qucs_SimRunScript=0, qucs_showFrame=0, qucs_FrameText0="Title", qucs_FrameText1="Drawn By:", qucs_FrameText2="Date:", qucs_FrameText3="Revision:" *) module supply();
+    wire n_40_170;
+    wire n_40_240;
+    wire n_80_170;
+    wire n_140_170;
+    wire n_260_230;
+    wire n_280_170;
+    wire n_340_170;
+    wire n_340_230;
+    wire n_410_250;
+    wire n_570_250;
+    (* S0_x1=310, S0_y1=170, S0_x2=370, S0_y2=170, qucs_mirroredX=0, qucs_rotated=0 *) Diode #(.Is(1e-15 A),.N(1),.Cj0(10 fF),.M(0.5),.Vj(0.7 V),.Fc(0.5),.Cp(0.0 fF),.Isr(0.0),.Nr(2.0),.Rs(0.0 Ohm),.Tt(0.0 ps),.Ikf(26.85),.Kf(0.0),.Af(1.0),.Ffe(0),.Bv(0),.Ibv(1 mA),.Temp(26.85),.Xti(3.0),.Eg(1.11),.Tbv(0.0),.Trs(0.0),.Ttt1(0.0),.Ttt2(0.0),.Tm1(0.0),.Tm2(0.0),.Tnom(26.85),.Area(1.0),.Symbol(normal)) D2 ( n_310_170, n_370_170 );
+    (* S0_x1=250, S0_y1=170, S0_x2=310, S0_y2=170, qucs_mirroredX=0, qucs_rotated=0 *) Diode #(.Is(1e-15 A),.N(1),.Cj0(10 fF),.M(0.5),.Vj(0.7 V),.Fc(0.5),.Cp(0.0 fF),.Isr(0.0),.Nr(2.0),.Rs(0.0 Ohm),.Tt(0.0 ps),.Ikf(26.85),.Kf(0.0),.Af(1.0),.Ffe(0),.Bv(0),.Ibv(1 mA),.Temp(26.85),.Xti(3.0),.Eg(1.11),.Tbv(0.0),.Trs(0.0),.Ttt1(0.0),.Ttt2(0.0),.Tm1(0.0),.Tm2(0.0),.Tnom(26.85),.Area(1.0),.Symbol(normal)) D4 ( n_250_170, n_310_170 );
+    (* S0_x1=310, S0_y1=170, S0_x2=370, S0_y2=170, qucs_mirroredX=0, qucs_rotated=0 *) Diode #(.Is(1e-15 A),.N(1),.Cj0(10 fF),.M(0.5),.Vj(0.7 V),.Fc(0.5),.Cp(0.0 fF),.Isr(0.0),.Nr(2.0),.Rs(0.0 Ohm),.Tt(0.0 ps),.Ikf(26.85),.Kf(0.0),.Af(1.0),.Ffe(0),.Bv(0),.Ibv(1 mA),.Temp(26.85),.Xti(3.0),.Eg(1.11),.Tbv(0.0),.Trs(0.0),.Ttt1(0.0),.Ttt2(0.0),.Tm1(0.0),.Tm2(0.0),.Tnom(26.85),.Area(1.0),.Symbol(normal)) D1 ( n_310_170, n_370_170 );
+    (* S0_x1=540, S0_y1=250, S0_x2=600, S0_y2=250, qucs_mirroredX=0, qucs_rotated=0 *) R #(.R(100 Ohm),.Temp(26.85),.Tc1(0.0),.Tc2(0.0),.Tnom(26.85)) Load ( n_540_250, n_600_250 );
+    (* S0_x1=310, S0_y1=230, S0_x2=370, S0_y2=230, qucs_mirroredX=0, qucs_rotated=0 *) Diode #(.Is(1e-15 A),.N(1),.Cj0(10 fF),.M(0.5),.Vj(0.7 V),.Fc(0.5),.Cp(0.0 fF),.Isr(0.0),.Nr(2.0),.Rs(0.0 Ohm),.Tt(0.0 ps),.Ikf(26.85),.Kf(0.0),.Af(1.0),.Ffe(0),.Bv(0),.Ibv(1 mA),.Temp(26.85),.Xti(3.0),.Eg(1.11),.Tbv(0.0),.Trs(0.0),.Ttt1(0.0),.Ttt2(0.0),.Tm1(0.0),.Tm2(0.0),.Tnom(26.85),.Area(1.0),.Symbol(normal)) D3 ( n_310_230, n_370_230 );
+    (* S0_x1=570, S0_y1=250, qucs_mirroredX=0, qucs_rotated=0 *) GND #() \\*  ( n_570_250 );
+    (* S0_x1=410, S0_y1=250, qucs_mirroredX=0, qucs_rotated=0 *) GND #() \\*  ( n_410_250 );
+    (* S0_x1=260, S0_y1=230, qucs_mirroredX=0, qucs_rotated=0 *) GND #() \\*  ( n_260_230 );
+    (* S0_x1=110, S0_y1=140, S0_x2=170, S0_y2=140, S0_x3=170, S0_y3=200, S0_x4=110, S0_y4=200, qucs_mirroredX=0, qucs_rotated=0 *) Tr #(.T(20)) Tr1 ( n_110_140, n_170_140, n_170_200, n_110_200 );
+    (* S0_x1=40, S0_y1=140, S0_x2=40, S0_y2=200, qucs_mirroredX=0, qucs_rotated=1 *) Vac #(.U(230 V),.f(50 Hz),.Phase(0),.Theta(0)) V1 ( n_40_140, n_40_200 );
+    (* S0_x1=40, S0_y1=240, qucs_mirroredX=0, qucs_rotated=0 *) GND #() \\*  ( n_40_240 );
+    (* S0_x1=50, S0_y1=170, S0_x2=110, S0_y2=170, qucs_mirroredX=0, qucs_rotated=0 *) R #(.R(0.5 Ohm),.Temp(26.85),.Tc1(0.0),.Tc2(0.0),.Tnom(26.85)) R1 ( n_50_170, n_110_170 );
+    (* S0_x1=380, S0_y1=250, S0_x2=440, S0_y2=250, qucs_mirroredX=0, qucs_rotated=0 *) C #(.C(1000 uF),.V(),.Symbol(neutral)) C1 ( n_380_250, n_440_250 );
 endmodule

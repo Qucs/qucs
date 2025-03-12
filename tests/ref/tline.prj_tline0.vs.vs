@@ -1,2 +1,27 @@
 (* qucs_ViewX1=0, qucs_ViewY1=0, qucs_ViewX2=800, qucs_ViewY2=800, qucs_Scale=1, qucs_tmpViewX1=-200, qucs_tmpViewY1=-200, qucs_GridX=10, qucs_GridY=10, qucs_GridOn=1, qucs_DataSet="tline0.dat", qucs_DataDisplay="tline0.dpl", qucs_SimOpenDpl=1, qucs_Script="tline0.m", qucs_SimRunScript=0, qucs_showFrame=0, qucs_FrameText0="Title", qucs_FrameText1="Drawn By:", qucs_FrameText2="Date:", qucs_FrameText3="Revision:" *) module tline0();
+    wire n_290_300;
+    wire n_290_430;
+    wire n_290_550;
+    wire n_310_300;
+    wire n_390_350;
+    wire n_480_300;
+    wire n_500_300;
+    wire n_660_350;
+    wire n_910_300;
+    wire n_930_300;
+    wire n_980_350;
+    wire n_1230_680;
+    (* S0_x1=290, S0_y1=550, qucs_mirroredX=0, qucs_rotated=0 *) GND #() \\*  ( n_290_550 );
+    (* S0_x1=500, S0_y1=300, qucs_mirroredX=0, qucs_rotated=0 *) GND #() \\*3  ( n_500_300 );
+    (* S0_x1=930, S0_y1=300, qucs_mirroredX=0, qucs_rotated=0 *) GND #() \\*2  ( n_930_300 );
+    (* S0_x1=310, S0_y1=300, qucs_mirroredX=0, qucs_rotated=0 *) GND #() \\*4  ( n_310_300 );
+    (* S0_x1=630, S0_y1=350, S0_x2=690, S0_y2=350, qucs_mirroredX=0, qucs_rotated=0 *) TLIN #(.Z(50 Ohm),.L(.1),.Alpha(0 dB),.Temp(26.85)) Line1 ( n_630_350, n_690_350 );
+    (* S0_x1=360, S0_y1=350, S0_x2=420, S0_y2=350, qucs_mirroredX=0, qucs_rotated=0 *) R #(.R(50 Ohm),.Temp(26.85),.Tc1(0.0),.Tc2(0.0),.Tnom(26.85)) R1 ( n_360_350, n_420_350 );
+    (* S0_x1=470, S0_y1=320, S0_x2=490, S0_y2=320, qucs_mirroredX=0, qucs_rotated=0 *) VProbe #() Pr2 ( n_470_320, n_490_320 );
+    (* S0_x1=280, S0_y1=320, S0_x2=300, S0_y2=320, qucs_mirroredX=0, qucs_rotated=0 *) VProbe #() Pr1 ( n_280_320, n_300_320 );
+    (* S0_x1=900, S0_y1=320, S0_x2=920, S0_y2=320, qucs_mirroredX=0, qucs_rotated=0 *) VProbe #() Pr3 ( n_900_320, n_920_320 );
+    (* S0_x1=950, S0_y1=350, S0_x2=1010, S0_y2=350, qucs_mirroredX=0, qucs_rotated=0 *) R #(.R(50 Ohm),.Temp(26.85),.Tc1(0.0),.Tc2(0.0),.Tnom(26.85)) R2 ( n_950_350, n_1010_350 );
+    (* S0_x1=1230, S0_y1=680, qucs_mirroredX=0, qucs_rotated=0 *) GND #() \\*1  ( n_1230_680 );
+    (* S0_x1=290, S0_y1=400, S0_x2=290, S0_y2=460, qucs_mirroredX=0, qucs_rotated=1 *) Vpulse #(.U1(0 V),.U2(1 V),.T1(1 ns),.T2(2 ns),.Tr(.1 ns),.Tf(.1 ns)) V1 ( n_290_400, n_290_460 );
+    (* S0_x1=950, S0_y1=350, S0_x2=1010, S0_y2=350, qucs_mirroredX=0, qucs_rotated=0 *) R #(.R(50),.Temp(26.85),.Tc1(0.0),.Tc2(0.0),.Tnom(26.85)) R2 ( n_950_350, n_1010_350 );
 endmodule

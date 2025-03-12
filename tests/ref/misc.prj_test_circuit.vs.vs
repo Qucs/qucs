@@ -1,2 +1,10 @@
 (* qucs_ViewX1=0, qucs_ViewY1=0, qucs_ViewX2=800, qucs_ViewY2=800, qucs_Scale=1, qucs_tmpViewX1=-200, qucs_tmpViewY1=-200, qucs_GridX=10, qucs_GridY=10, qucs_GridOn=1, qucs_DataSet="test_circuit.dat", qucs_DataDisplay="test_circuit.dpl", qucs_SimOpenDpl=1, qucs_Script="test_circuit.m", qucs_SimRunScript=0, qucs_showFrame=0, qucs_FrameText0="Title", qucs_FrameText1="Drawn By:", qucs_FrameText2="Date:", qucs_FrameText3="Revision:" *) module test_circuit();
+    wire n_0_0;
+    wire n_140_220;
+    wire n_140_320;
+    wire n_340_220;
+    (* S0_x1=140, S0_y1=190, S0_x2=140, S0_y2=250, qucs_mirroredX=0, qucs_rotated=1 *) Vdc #(.U(1 V)) V1 ( n_140_190, n_140_250 );
+    (* S0_x1=140, S0_y1=320, qucs_mirroredX=0, qucs_rotated=0 *) GND #() \\*  ( n_140_320 );
+    (* S0_x1=310, S0_y1=220, S0_x2=370, S0_y2=220, qucs_mirroredX=0, qucs_rotated=0 *) R #(.R(50 Ohm),.Temp(26.85),.Tc1(0.0),.Tc2(0.0),.Tnom(26.85)) R1 ( n_310_220, n_370_220 );
+    (* , qucs_mirroredX=0, qucs_rotated=0 *) Sub #(.File(short_circuit.sch)) SC1 (  );
 endmodule

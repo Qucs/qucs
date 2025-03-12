@@ -1,2 +1,26 @@
-(* qucs_ViewX1=0, qucs_ViewY1=0, qucs_ViewX2=800, qucs_ViewY2=800, qucs_Scale=1, qucs_tmpViewX1=-200, qucs_tmpViewY1=-200, qucs_GridX=10, qucs_GridY=10, qucs_GridOn=1, qucs_DataSet="curtice_1.dat", qucs_DataDisplay="curtice_1.dpl", qucs_SimOpenDpl=1, qucs_Script="curtice_1.m", qucs_SimRunScript=0, qucs_showFrame=0, qucs_FrameText0="Title", qucs_FrameText1="Drawn By:", qucs_FrameText2="Date:", qucs_FrameText3="Revision:" *) module curtice_1();
+(* qucs_ViewX1=0, qucs_ViewY1=0, qucs_ViewX2=800, qucs_ViewY2=800, qucs_Scale=1, qucs_tmpViewX1=-200, qucs_tmpViewY1=-200, qucs_GridX=10, qucs_GridY=10, qucs_GridOn=1, qucs_DataSet="curtice_1.dat", qucs_DataDisplay="curtice_1.dpl", qucs_SimOpenDpl=1, qucs_Script="curtice_1.m", qucs_SimRunScript=0, qucs_showFrame=0, qucs_FrameText0="Title", qucs_FrameText1="Drawn By:", qucs_FrameText2="Date:", qucs_FrameText3="Revision:" *) module curtice_1(.Source(n_90_410), .Drain(n_90_180), .Gate(n_360_30));
+    inout n_90_410;
+    inout n_90_180;
+    inout n_360_30;
+    wire n_110_180;
+    wire n_170_410;
+    wire n_190_180;
+    wire n_210_320;
+    wire n_250_410;
+    wire n_340_180;
+    wire n_360_90;
+    wire n_360_160;
+    wire n_390_240;
+    (* S0_x1=220, S0_y1=410, S0_x2=280, S0_y2=410, qucs_mirroredX=0, qucs_rotated=0 *) R #(.R(RS),.Temp(26.85),.Tc1(0.0),.Tc2(0.0),.Tnom(26.85)) Rs ( n_220_410, n_280_410 );
+    (* S0_x1=140, S0_y1=410, S0_x2=200, S0_y2=410, qucs_mirroredX=0, qucs_rotated=0 *) L #(.L(LS),.I()) Ls ( n_140_410, n_200_410 );
+    (* S0_x1=90, S0_y1=410, qucs_mirroredX=0, qucs_rotated=0 *) Port #(.Num(1),.Type(analog)) Source ( n_90_410 );
+    (* S0_x1=180, S0_y1=320, S0_x2=240, S0_y2=320, qucs_mirroredX=0, qucs_rotated=0 *) R #(.R(RIN),.Temp(26.85),.Tc1(0.0),.Tc2(0.0),.Tnom(26.85)) Rin ( n_180_320, n_240_320 );
+    (* S0_x1=310, S0_y1=180, S0_x2=370, S0_y2=180, qucs_mirroredX=0, qucs_rotated=0 *) EDD #(.Type(explicit),.Branches(1),.I1(0),.Q1(CGD*V1)) D2 ( n_310_180, n_370_180 );
+    (* S0_x1=90, S0_y1=180, qucs_mirroredX=0, qucs_rotated=0 *) Port #(.Num(3),.Type(analog)) Drain ( n_90_180 );
+    (* S0_x1=160, S0_y1=180, S0_x2=220, S0_y2=180, qucs_mirroredX=0, qucs_rotated=0 *) R #(.R(RD),.Temp(26.85),.Tc1(0.0),.Tc2(0.0),.Tnom(26.85)) Rd ( n_160_180, n_220_180 );
+    (* S0_x1=80, S0_y1=180, S0_x2=140, S0_y2=180, qucs_mirroredX=0, qucs_rotated=0 *) L #(.L(LD),.I()) Ld ( n_80_180, n_140_180 );
+    (* S0_x1=330, S0_y1=160, S0_x2=390, S0_y2=160, qucs_mirroredX=0, qucs_rotated=0 *) R #(.R(RG),.Temp(26.85),.Tc1(0.0),.Tc2(0.0),.Tnom(26.85)) Rg ( n_330_160, n_390_160 );
+    (* S0_x1=330, S0_y1=90, S0_x2=390, S0_y2=90, qucs_mirroredX=0, qucs_rotated=0 *) L #(.L(LG),.I()) Lg ( n_330_90, n_390_90 );
+    (* S0_x1=360, S0_y1=30, qucs_mirroredX=0, qucs_rotated=0 *) Port #(.Num(2),.Type(analog)) Gate ( n_360_30 );
+    (* S0_x1=360, S0_y1=240, S0_x2=420, S0_y2=240, qucs_mirroredX=0, qucs_rotated=0 *) EDD #(.Type(explicit),.Branches(4),.I1(V1<-VBR+50*Vt ? -IsT*(1+exp(-(VBR+V1)/Vt)) + GMIN*V1 : 0),.Q1(0)) D1 ( n_360_240, n_420_240 );
 endmodule

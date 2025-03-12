@@ -1,2 +1,24 @@
 (* qucs_ViewX1=0, qucs_ViewY1=0, qucs_ViewX2=800, qucs_ViewY2=800, qucs_Scale=1, qucs_tmpViewX1=-200, qucs_tmpViewY1=-200, qucs_GridX=10, qucs_GridY=10, qucs_GridOn=1, qucs_DataSet="colpitts.dat", qucs_DataDisplay="colpitts.dpl", qucs_SimOpenDpl=1, qucs_Script="colpitts.m", qucs_SimRunScript=0, qucs_showFrame=0, qucs_FrameText0="Title", qucs_FrameText1="Drawn By:", qucs_FrameText2="Date:", qucs_FrameText3="Revision:" *) module colpitts();
+    wire n_200_90;
+    wire n_200_150;
+    wire n_280_230;
+    wire n_360_200;
+    wire n_360_260;
+    wire n_430_120;
+    wire n_460_70;
+    wire n_460_260;
+    wire n_540_170;
+    wire n_620_260;
+    (* S0_x1=200, S0_y1=150, qucs_mirroredX=0, qucs_rotated=0 *) GND #() \\*  ( n_200_150 );
+    (* S0_x1=460, S0_y1=260, qucs_mirroredX=0, qucs_rotated=0 *) GND #() \\*  ( n_460_260 );
+    (* S0_x1=620, S0_y1=260, qucs_mirroredX=0, qucs_rotated=0 *) GND #() \\*  ( n_620_260 );
+    (* S0_x1=510, S0_y1=170, S0_x2=570, S0_y2=170, qucs_mirroredX=0, qucs_rotated=0 *) C #(.C(1 nF),.V(),.Symbol(neutral)) C3 ( n_510_170, n_570_170 );
+    (* S0_x1=590, S0_y1=260, S0_x2=650, S0_y2=260, qucs_mirroredX=0, qucs_rotated=0 *) R #(.R(500 Ohm),.Temp(26.85),.Tc1(0.0),.Tc2(0.0),.Tnom(26.85)) R2 ( n_590_260, n_650_260 );
+    (* S0_x1=200, S0_y1=60, S0_x2=200, S0_y2=120, qucs_mirroredX=0, qucs_rotated=1 *) Vdc #(.U(10 V)) V1 ( n_200_60, n_200_120 );
+    (* S0_x1=250, S0_y1=230, S0_x2=310, S0_y2=230, qucs_mirroredX=0, qucs_rotated=0 *) L #(.L(100 uH),.I()) L1 ( n_250_230, n_310_230 );
+    (* S0_x1=400, S0_y1=120, S0_x2=430, S0_y2=90, S0_x3=430, S0_y3=150, qucs_mirroredX=0, qucs_rotated=0 *) JFET #(.Type(nfet),.Vt0(-0.8 V),.Beta(5e-3),.Lambda(0.0),.Rd(0.0),.Rs(0.0),.Is(1e-14),.N(1.0),.Isr(1e-14),.Nr(2.0),.Cgs(0.0),.Cgd(0.0),.Pb(1.0),.Fc(0.5),.M(0.5),.Kf(0.0),.Af(1.0),.Ffe(1.0),.Temp(26.85),.Xti(3.0),.Vt0tc(0.0),.Betatce(0.0),.Tnom(26.85),.Area(1.0)) T1 ( n_400_120, n_430_90, n_430_150 );
+    (* S0_x1=430, S0_y1=260, S0_x2=490, S0_y2=260, qucs_mirroredX=0, qucs_rotated=0 *) R #(.R(500 Ohm),.Temp(26.85),.Tc1(0.0),.Tc2(0.0),.Tnom(26.85)) R1 ( n_430_260, n_490_260 );
+    (* S0_x1=330, S0_y1=260, S0_x2=390, S0_y2=260, qucs_mirroredX=0, qucs_rotated=0 *) C #(.C(0.5 nF),.V(),.Symbol(neutral)) C2 ( n_330_260, n_390_260 );
+    (* S0_x1=330, S0_y1=200, S0_x2=390, S0_y2=200, qucs_mirroredX=0, qucs_rotated=0 *) C #(.C(0.5 nF),.V(),.Symbol(neutral)) C1 ( n_330_200, n_390_200 );
+    (* S0_x1=430, S0_y1=70, S0_x2=490, S0_y2=70, qucs_mirroredX=0, qucs_rotated=0 *) R #(.R(5 kOhm),.Temp(26.85),.Tc1(0.0),.Tc2(0.0),.Tnom(26.85)) R3 ( n_430_70, n_490_70 );
 endmodule
