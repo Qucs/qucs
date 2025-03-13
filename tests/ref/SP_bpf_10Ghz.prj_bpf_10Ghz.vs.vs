@@ -24,28 +24,4 @@
     (* S0_x1=-30, S0_y1=0, qucs_mirrored=0, qucs_rotated=0 *) MOPEN #(.Subst(Subst1),.W(1.08 mm),.MSModel(Hammerstad),.MSDispModel(Kirschning),.Model(Kirschning)) MS6 ( n_m30_0 );
     (* S0_x1=-30, S0_y1=0, qucs_mirrored=0, qucs_rotated=0 *) MOPEN #(.Subst(Subst1),.W(1.3mm),.MSModel(Hammerstad),.MSDispModel(Kirschning),.Model(Kirschning)) MS7 ( n_m30_0 );
     (* S0_x1=-30, S0_y1=0, qucs_mirrored=0, qucs_rotated=0 *) MOPEN #(.Subst(Subst1),.W(1.08 mm),.MSModel(Hammerstad),.MSDispModel(Kirschning),.Model(Kirschning)) MS8 ( n_m30_0 );
-    (* S0_x1=-30, S0_y1=-30, S0_x2=30, S0_y2=-30, S0_x3=30, S0_y3=30, S0_x4=-30, S0_y4=30, qucs_mirrored=0, qucs_rotated=0 *) MCOUPLED #(.Subst(Subst1),.W(384um),.L(5.24mm),.S(482um),.Model(Kirschning),.DispModel(Kirschning),.Temp(26.85)) MS1 ( n_m30_m30, n_30_m30, n_30_30, n_m30_30 );
-    (* S0_x1=-30, S0_y1=-30, S0_x2=30, S0_y2=-30, S0_x3=30, S0_y3=30, S0_x4=-30, S0_y4=30, qucs_mirrored=0, qucs_rotated=0 *) MCOUPLED #(.Subst(Subst1),.W(1.08mm),.L(4.72mm),.S(712um),.Model(Kirschning),.DispModel(Kirschning),.Temp(26.85)) MS2 ( n_m30_m30, n_30_m30, n_30_30, n_m30_30 );
-    (* S0_x1=-30, S0_y1=0, S0_x2=30, S0_y2=0, qucs_mirrored=0, qucs_rotated=0 *) MSTEP #(.Subst(Subst1),.W1(1.08mm),.W2(1.3mm),.MSModel(Hammerstad),.MSDispModel(Kirschning)) MS17 ( n_m30_0, n_30_0 );
-    (* S0_x1=-30, S0_y1=0, S0_x2=30, S0_y2=0, qucs_mirrored=0, qucs_rotated=0 *) MSTEP #(.Subst(Subst1),.W1(1.08mm),.W2(384um),.MSModel(Hammerstad),.MSDispModel(Kirschning)) MS16 ( n_m30_0, n_30_0 );
-    (* S0_x1=-30, S0_y1=-30, S0_x2=30, S0_y2=-30, S0_x3=30, S0_y3=30, S0_x4=-30, S0_y4=30, qucs_mirrored=0, qucs_rotated=0 *) MCOUPLED #(.Subst(Subst1),.W(1.3m),.L(5.03mm),.S(913um),.Model(Kirschning),.DispModel(Kirschning),.Temp(26.85)) MS3 ( n_m30_m30, n_30_m30, n_30_30, n_m30_30 );
-    (* S0_x1=-30, S0_y1=0, S0_x2=30, S0_y2=0, qucs_mirrored=0, qucs_rotated=0 *) MSTEP #(.Subst(Subst1),.W1(1.08mm),.W2(1.3mm),.MSModel(Hammerstad),.MSDispModel(Kirschning)) MS18 ( n_m30_0, n_30_0 );
-    (* S0_x1=-30, S0_y1=0, qucs_mirrored=0, qucs_rotated=0 *) MOPEN #(.Subst(Subst1),.W(1.3mm),.MSModel(Hammerstad),.MSDispModel(Kirschning),.Model(Kirschning)) MS13 ( n_m30_0 );
-    (* S0_x1=-30, S0_y1=0, qucs_mirrored=0, qucs_rotated=0 *) MOPEN #(.Subst(Subst1),.W(1.08 mm),.MSModel(Hammerstad),.MSDispModel(Kirschning),.Model(Kirschning)) MS14 ( n_m30_0 );
-    (* S0_x1=-30, S0_y1=-30, S0_x2=30, S0_y2=-30, S0_x3=30, S0_y3=30, S0_x4=-30, S0_y4=30, qucs_mirrored=0, qucs_rotated=0 *) MCOUPLED #(.Subst(Subst1),.W(1.08mm),.L(4.72mm),.S(712um),.Model(Kirschning),.DispModel(Kirschning),.Temp(26.85)) MS4 ( n_m30_m30, n_30_m30, n_30_30, n_m30_30 );
-    (* S0_x1=-30, S0_y1=0, S0_x2=30, S0_y2=0, qucs_mirrored=0, qucs_rotated=0 *) MSTEP #(.Subst(Subst1),.W1(1.08mm),.W2(384um),.MSModel(Hammerstad),.MSDispModel(Kirschning)) MS19 ( n_m30_0, n_30_0 );
-    (* S0_x1=-30, S0_y1=-30, S0_x2=30, S0_y2=-30, S0_x3=30, S0_y3=30, S0_x4=-30, S0_y4=30, qucs_mirrored=0, qucs_rotated=0 *) MCOUPLED #(.Subst(Subst1),.W(384um),.L(5.24mm),.S(482um),.Model(Kirschning),.DispModel(Kirschning),.Temp(26.85)) MS5 ( n_m30_m30, n_30_m30, n_30_30, n_m30_30 );
-    (* S0_x1=-30, S0_y1=0, qucs_mirrored=0, qucs_rotated=0 *) MOPEN #(.Subst(Subst1),.W(384 um),.MSModel(Hammerstad),.MSDispModel(Kirschning),.Model(Kirschning)) MS9 ( n_m30_0 );
-    (* S0_x1=0, S0_y1=-30, S0_x2=0, S0_y2=30, qucs_mirrored=0, qucs_rotated=1 *) Pac #(.Num(2),.Z(50 Ohm),.P(0 dBm),.f(10 GHz),.Temp(26.85)) P2 ( n_0_m30, n_0_30 );
-    (* S0_x1=0, S0_y1=0, qucs_mirrored=0, qucs_rotated=0 *) GND #() \\*  ( n_0_0 );
-    (* S0_x1=0, S0_y1=-30, S0_x2=0, S0_y2=30, qucs_mirrored=0, qucs_rotated=1 *) Pac #(.Num(1),.Z(50 Ohm),.P(0 dBm),.f(10 GHz),.Temp(26.85)) P1 ( n_0_m30, n_0_30 );
-    (* S0_x1=0, S0_y1=0, qucs_mirrored=0, qucs_rotated=0 *) GND #() \\*  ( n_0_0 );
-    (* qucs_mirrored=0, qucs_rotated=0 *) SUBST #(.er(2.56),.h(0.76 mm),.t(18 um),.tand(3e-3),.rho(0.022e-6),.D(100)) Subst1 (  );
-    (* S0_x1=-30, S0_y1=0, qucs_mirrored=0, qucs_rotated=0 *) MOPEN #(.Subst(Subst1),.W(384 um),.MSModel(Hammerstad),.MSDispModel(Kirschning),.Model(Kirschning)) MS11 ( n_m30_0 );
-    (* S0_x1=-30, S0_y1=0, qucs_mirrored=0, qucs_rotated=0 *) MOPEN #(.Subst(Subst1),.W(1.08 mm),.MSModel(Hammerstad),.MSDispModel(Kirschning),.Model(Kirschning)) MS12 ( n_m30_0 );
-    (* S0_x1=-30, S0_y1=0, qucs_mirrored=0, qucs_rotated=0 *) MOPEN #(.Subst(Subst1),.W(384 um),.MSModel(Hammerstad),.MSDispModel(Kirschning),.Model(Kirschning)) MS15 ( n_m30_0 );
-    (* S0_x1=-30, S0_y1=0, qucs_mirrored=0, qucs_rotated=0 *) MOPEN #(.Subst(Subst1),.W(384 um),.MSModel(Hammerstad),.MSDispModel(Kirschning),.Model(Kirschning)) MS10 ( n_m30_0 );
-    (* S0_x1=-30, S0_y1=0, qucs_mirrored=0, qucs_rotated=0 *) MOPEN #(.Subst(Subst1),.W(1.08 mm),.MSModel(Hammerstad),.MSDispModel(Kirschning),.Model(Kirschning)) MS6 ( n_m30_0 );
-    (* S0_x1=-30, S0_y1=0, qucs_mirrored=0, qucs_rotated=0 *) MOPEN #(.Subst(Subst1),.W(1.3mm),.MSModel(Hammerstad),.MSDispModel(Kirschning),.Model(Kirschning)) MS7 ( n_m30_0 );
-    (* S0_x1=-30, S0_y1=0, qucs_mirrored=0, qucs_rotated=0 *) MOPEN #(.Subst(Subst1),.W(1.08 mm),.MSModel(Hammerstad),.MSDispModel(Kirschning),.Model(Kirschning)) MS8 ( n_m30_0 );
 endmodule

@@ -10,14 +10,4 @@
     (* S0_x1=-30, S0_y1=0, S0_x2=30, S0_y2=0, qucs_mirrored=0, qucs_rotated=0 *) R #(.R(50),.Temp(26.85),.Tc1(0.0),.Tc2(0.0),.Tnom(26.85)) RI ( n_m30_0, n_30_0 );
     (* S0_x1=-30, S0_y1=0, S0_x2=30, S0_y2=0, qucs_mirrored=0, qucs_rotated=0 *) Switch #(.init(off),.time(10ns),.Ron(0),.Roff(1e9),.Temp(26.85),.MaxDuration(1e-6),.Transition(spline)) S2 ( n_m30_0, n_30_0 );
     (* S0_x1=-30, S0_y1=0, S0_x2=30, S0_y2=0, qucs_mirrored=0, qucs_rotated=0 *) Switch #(.init(on),.time(9ns),.Ron(0),.Roff(1e9),.Temp(26.85),.MaxDuration(1e-6),.Transition(spline)) S1 ( n_m30_0, n_30_0 );
-    (* S0_x1=-30, S0_y1=0, S0_x2=30, S0_y2=0, qucs_mirrored=0, qucs_rotated=0 *) R #(.R(200m),.Temp(26.85),.Tc1(0.0),.Tc2(0.0),.Tnom(26.85)) RD ( n_m30_0, n_30_0 );
-    (* S0_x1=0, S0_y1=0, qucs_mirrored=0, qucs_rotated=0 *) GND #() \\*  ( n_0_0 );
-    (* S0_x1=0, S0_y1=-30, S0_x2=0, S0_y2=30, qucs_mirrored=0, qucs_rotated=1 *) Vdc #(.U(13.5V)) VDC ( n_0_m30, n_0_30 );
-    (* S0_x1=0, S0_y1=-30, S0_x2=0, S0_y2=30, qucs_mirrored=0, qucs_rotated=1 *) Vdc #(.U(200V)) VGEN ( n_0_m30, n_0_30 );
-    (* S0_x1=-30, S0_y1=0, S0_x2=30, S0_y2=0, qucs_mirrored=0, qucs_rotated=0 *) C #(.C(40nF),.V(),.Symbol(neutral)) CS ( n_m30_0, n_30_0 );
-    (* S0_x1=-30, S0_y1=0, S0_x2=30, S0_y2=0, qucs_mirrored=0, qucs_rotated=0 *) R #(.R(400m),.Temp(26.85),.Tc1(0.0),.Tc2(0.0),.Tnom(26.85)) RE ( n_m30_0, n_30_0 );
-    (* S0_x1=-30, S0_y1=0, S0_x2=30, S0_y2=0, qucs_mirrored=0, qucs_rotated=0 *) C #(.C(40nF),.V(),.Symbol(neutral)) CL ( n_m30_0, n_30_0 );
-    (* S0_x1=-30, S0_y1=0, S0_x2=30, S0_y2=0, qucs_mirrored=0, qucs_rotated=0 *) R #(.R(50),.Temp(26.85),.Tc1(0.0),.Tc2(0.0),.Tnom(26.85)) RI ( n_m30_0, n_30_0 );
-    (* S0_x1=-30, S0_y1=0, S0_x2=30, S0_y2=0, qucs_mirrored=0, qucs_rotated=0 *) Switch #(.init(off),.time(10ns),.Ron(0),.Roff(1e9),.Temp(26.85),.MaxDuration(1e-6),.Transition(spline)) S2 ( n_m30_0, n_30_0 );
-    (* S0_x1=-30, S0_y1=0, S0_x2=30, S0_y2=0, qucs_mirrored=0, qucs_rotated=0 *) Switch #(.init(on),.time(9ns),.Ron(0),.Roff(1e9),.Temp(26.85),.MaxDuration(1e-6),.Transition(spline)) S1 ( n_m30_0, n_30_0 );
 endmodule

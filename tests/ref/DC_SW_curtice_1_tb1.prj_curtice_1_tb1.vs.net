@@ -28,7 +28,3 @@ Vdc:V2 _net0 _net1 U="Vgs"
 Vdc:V1 _net0 _net1 U="Vds"
 IProbe:Pr1 _net2 _net3
 Sub:Curtice1 Type="curtice_1"
-Vdc:V2 _net0 _net1 U="Vgs"
-Vdc:V1 _net0 _net1 U="Vds"
-IProbe:Pr1 _net2 _net3
-Sub:Curtice1 Type="curtice_1"
