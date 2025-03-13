@@ -222,11 +222,12 @@ bool readVerilog(CS &cmd, Schematic*s)
 {
   trace0("readVerilog0");
   assert(s);
-  // trace_method_calls();
+  // todo: catch ExceptionEOF.
   while(!cmd.atEnd()) {
     cmd.read_line();
-    // trace1("readVerilog", cmd.fullstring());
+    trace2("readVerilog1", cmd.fullstring(), cmd.atEnd());
     skip_attributes(cmd);
+    trace2("readVerilog2", cmd.fullstring(), cmd.atEnd());
     if(cmd>>"module") {
       //ignore for now;
     }else if(cmd>>"endmodule"){
@@ -234,8 +235,9 @@ bool readVerilog(CS &cmd, Schematic*s)
     }else{
       std::string type;
       cmd >> type;
-      if(type=="wire") continue; // BUG: Not a component
-      if(type=="net") {
+      if(type=="wire") {
+	 // BUG: Not a component
+      }else if(type=="net") {
         Wire* w = new Wire(0,0,0,0, (Node*)4,(Node*)4);
         if(w) {
           parse_wire(cmd, w);
@@ -252,6 +254,7 @@ bool readVerilog(CS &cmd, Schematic*s)
 		  }
       }
     }
+    trace2("readVerilog3", cmd.fullstring(), cmd.atEnd());
   }
   return true;
 }

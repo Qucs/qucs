@@ -50,15 +50,15 @@ public:
   enum WHOLE_FILE {_WHOLE_FILE};
   enum STRING {_STRING};
 private:
-  FILE* _file;
+  FILE* _file{nullptr};
   std::string _name;
   std::string _cmd;
-  size_t  _cnt;
-  size_t  _length;
-  size_t  _begin_match;
-  size_t  _end_match;
-  bool _ok;
-  int _line_number;
+  size_t  _cnt{0};
+  size_t  _length{0};
+  size_t  _begin_match{0};
+  size_t  _end_match{0};
+  bool _ok{true};
+  int _line_number{0};
 public:
   // construction, destruction, and re-construction
   explicit    CS(STDIN);
@@ -165,7 +165,7 @@ public:
   CS&	      operator>>(const char& x)	{return skip1b(x);}
   CS&	      operator>>(const char* x)	{return umatch(x);}
 private: // historical hack
-  QTextStream* _stream;
+  QTextStream* _stream{nullptr};
 };	
 /*--------------------------------------------------------------------------*/
 /*--------------------------------------------------------------------------*/

@@ -536,11 +536,21 @@ CS& CS::get_line(std::string const& prompt)
 
   if(_stream){
     // yikes.
-	   if(_stream->atEnd()){
+	   trace1("CS::get_line0", _stream->atEnd());
+	   if(_stream->status() != QTextStream::Ok){ untested();
+			throw qucs::Exception_End_Of_Input("");
+		}else{
+		}
+	   if(_stream->atEnd()){ untested();
 			throw qucs::Exception_End_Of_Input("");
 		}else{
 		}
       _cmd = _stream->readLine().toStdString();
+	   if(_stream->status() != QTextStream::Ok){ untested();
+			throw qucs::Exception_End_Of_Input("");
+		}else{
+		}
+	   trace1("CS::get_line1", _stream->atEnd());
       _cnt = 0;
       _length = _cmd.length();
       _ok = true;
@@ -568,10 +578,14 @@ CS& CS::get_line(std::string const& prompt)
 /*--------------------------------------------------------------------------*/
 bool CS::atEnd()
 {
-	if(_stream){
-		return _stream->atEnd();
-	}else{itested();
+	if(!_stream){
 		return is_end();
+	}else if(_stream->atEnd()) {
+		return true;
+	}else if (_stream->status() != QTextStream::Ok){ untested();
+		return true;
+	}else{
+		return false;
 	}
 }
 /*--------------------------------------------------------------------------*/
