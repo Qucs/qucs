@@ -1,2 +1,14 @@
 # Qucs
 
+Vac:V1 _net0 _net1 U="10 V" f="1 GHz" Phase="0" Theta="0"
+C:C1 _net2 _net3 C="1 pF" V=""
+Diode:D1 _net2 _net3 Is="1e-15 A" N="1" Cj0="0 fF" M="0.5" Vj="0.7 V" Fc="0.5" Cp="0.0 fF" Isr="0.0" Nr="2.0" Rs="0.0 Ohm" Tt="0.0 ps" Ikf="26.85" Kf="0.0" Af="1.0" Ffe="1.0" Bv="0.7" Ibv="1 mA" Temp="0" Xti="3.0" Eg="1.11" Tbv="0.0" Trs="0.0" Ttt1="0.0" Ttt2="0.0" Tm1="0.0" Tm2="0.0" Tnom="26.85" Area="1.0"
+R:R1 _net2 _net3 R="100" Temp="26.85" Tc1="0.0" Tc2="0.0" Tnom="26.85"
+R:R2 _net2 _net3 R="100" Temp="26.85" Tc1="0.0" Tc2="0.0" Tnom="26.85"
+R:R3 _net2 _net3 R="100k" Temp="26.85" Tc1="0.0" Tc2="0.0" Tnom="26.85"
+Vac:V1 _net0 _net1 U="10 V" f="1 GHz" Phase="0" Theta="0"
+C:C1 _net2 _net3 C="1 pF" V=""
+Diode:D1 _net2 _net3 Is="1e-15 A" N="1" Cj0="0 fF" M="0.5" Vj="0.7 V" Fc="0.5" Cp="0.0 fF" Isr="0.0" Nr="2.0" Rs="0.0 Ohm" Tt="0.0 ps" Ikf="26.85" Kf="0.0" Af="1.0" Ffe="1.0" Bv="0.7" Ibv="1 mA" Temp="0" Xti="3.0" Eg="1.11" Tbv="0.0" Trs="0.0" Ttt1="0.0" Ttt2="0.0" Tm1="0.0" Tm2="0.0" Tnom="26.85" Area="1.0"
+R:R1 _net2 _net3 R="100" Temp="26.85" Tc1="0.0" Tc2="0.0" Tnom="26.85"
+R:R2 _net2 _net3 R="100" Temp="26.85" Tc1="0.0" Tc2="0.0" Tnom="26.85"
+R:R3 _net2 _net3 R="100k" Temp="26.85" Tc1="0.0" Tc2="0.0" Tnom="26.85"

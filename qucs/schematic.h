@@ -310,7 +310,6 @@ public:
   QString createNetlist(QTextStream&, int);
   bool loadDocument();
   bool readLegacy(QFile &file);
-  bool readVerilog(QFile &file);
   void highlightWireLabels (void);
 
 private:
@@ -366,6 +365,17 @@ public:
 
 public: // serializer
   void saveComponent(QTextStream& s, Component /* FIXME const */* c) const;
+
+public:
+  void pushBack(Wire* w){
+	  simpleInsertWire(std::shared_ptr<Wire>(w));
+  }
+  void pushBack(std::shared_ptr<Component> w){
+	  simpleInsertComponent(w);
+  }
+  void pushBack(Component* w){
+	  simpleInsertComponent(std::shared_ptr<Component>(w));
+  }
 };
 
 #endif

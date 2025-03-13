@@ -1,2 +1,34 @@
 # Qucs
 
+.Def:IdealBalun _net1 _net4 _net3 _net0 _net2
+sTr:Tr1 _net0 _net1 _net2 _net3 _net4 _net4 T1="0.5" T2="0.5"
+.Def:End
+
+L:L1 _net0 _net1 L="1.2uH" I=""
+L:L2 _net0 _net1 L="470nH" I=""
+C:C1 _net0 _net1 C="270pF" V=""
+C:C2 _net0 _net1 C="270pF" V=""
+L:L3 _net0 _net1 L="470nH" I=""
+L:L4 _net0 _net1 L="470nH" I=""
+L:L5 _net0 _net1 L="1.2uH" I=""
+L:L6 _net0 _net1 L="470nH" I=""
+Pac:P1 _net2 _net3 Num="1" Z="100 Ohm" P="0 dBm" f="1 GHz" Temp="26.85"
+Sub:Balun1 Type="IdealBalun"
+Sub:Balun2 Type="IdealBalun"
+Vdc:V1 _net2 _net3 U="1V"
+VProbe:Pr1 _net4 _net5
+Pac:P2 _net2 _net3 Num="2" Z="100 Ohm" P="0 dBm" f="1 GHz" Temp="26.85"
+L:L1 _net0 _net1 L="1.2uH" I=""
+L:L2 _net0 _net1 L="470nH" I=""
+C:C1 _net0 _net1 C="270pF" V=""
+C:C2 _net0 _net1 C="270pF" V=""
+L:L3 _net0 _net1 L="470nH" I=""
+L:L4 _net0 _net1 L="470nH" I=""
+L:L5 _net0 _net1 L="1.2uH" I=""
+L:L6 _net0 _net1 L="470nH" I=""
+Pac:P1 _net2 _net3 Num="1" Z="100 Ohm" P="0 dBm" f="1 GHz" Temp="26.85"
+Sub:Balun1 Type="IdealBalun"
+Sub:Balun2 Type="IdealBalun"
+Vdc:V1 _net2 _net3 U="1V"
+VProbe:Pr1 _net4 _net5
+Pac:P2 _net2 _net3 Num="2" Z="100 Ohm" P="0 dBm" f="1 GHz" Temp="26.85"

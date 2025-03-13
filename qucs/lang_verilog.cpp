@@ -218,10 +218,10 @@ void parse_wire(CS& cmd, Wire* x)
   // return x;
 }
 
-bool Schematic::readVerilog(CS &cmd)
+bool readVerilog(CS &cmd, Schematic*s)
 {
-  assert(cmd);
-  trace_method_calls();
+  assert(s);
+  // trace_method_calls();
   while(!cmd.atEnd()) {
     cmd.read_line();
     skip_attributes(cmd);
@@ -234,18 +234,20 @@ bool Schematic::readVerilog(CS &cmd)
       cmd >> type;
       if(type=="wire") continue; // BUG: Not a component
       if(type=="net") {
-        std::shared_ptr<Wire> w(new Wire(0,0,0,0, (Node*)4,(Node*)4));
+        Wire* w = new Wire(0,0,0,0, (Node*)4,(Node*)4);
         if(w) {
-          parse_wire(cmd, w.get());
-          simpleInsertWire(w);
-        }
+          parse_wire(cmd, w);
+          s->pushBack(w);
+        }else{
+		  }
       } else {
         QString qtype = QString::fromStdString(type);
-        auto x = Module::getComponent(qtype);
+		  std::shared_ptr<Component> x = Module::getComponent(qtype); // BUG. need proper dispatcher.
         if(x) {
           parse_instance(cmd, x.get());
-          simpleInsertComponent(x);
-        }
+          s->pushBack(x);
+        }else{
+		  }
       }
     }
   }

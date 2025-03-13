@@ -16,6 +16,12 @@
 <Symbol>
 </Symbol>
 <Components>
+  <Vdc V1 1 0 0 18 -26 0 1 "1 V" 1>
+  <GND \* 5 0 0 0 0 0 0>
+  <R R1 1 0 0 -26 15 0 0 "50 Ohm" 1 "26.85" 0 "0.0" 0 "0.0" 0 "26.85" 0 "european" 0>
+  <Vdc V1 1 0 0 18 -26 0 1 "1 V" 1>
+  <GND \* 5 0 0 0 0 0 0>
+  <R R1 1 0 0 -26 15 0 0 "50 Ohm" 1 "26.85" 0 "0.0" 0 "0.0" 0 "26.85" 0 "european" 0>
 </Components>
 <Wires>
 </Wires>

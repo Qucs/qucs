@@ -43,6 +43,7 @@
 #include "module.h"
 #include "misc.h"
 #include "trace.h"
+#include "ap.h"
 
 #if TRACE_FUNCTION_CALLS
 #define trace_method_calls() qInfo()<<__FILE__ <<":"<<__func__
@@ -703,6 +704,10 @@ bool Schematic::loadPaintings(QTextStream *stream, SharedObjectList<Element> &Li
   return false;
 }
 
+// TODO: language header.
+class CS;
+bool readVerilog(CS& cmd, Schematic* s);
+
 /*!
  * \brief Schematic::loadDocument tries to load a schematic document.
  * \return true/false in case of success/failure
@@ -744,7 +749,9 @@ bool Schematic::loadDocument()
    */
   if( (Line.left(2) == "(*") && Line.contains("*)") ) { untested();
     // this is asking for a magic byte/sting in a schematic, which we do not have yet.
-    return readVerilog(file);
+    file.reset();
+    CS cmd(&stream);
+    readVerilog(cmd, this);
   } else if(Line.left(16) == "<Qucs Schematic ") { // Legacy format
     Line = Line.mid(16, Line.length()-17);
     VersionTriplet DocVersion = VersionTriplet(Line);
@@ -756,14 +763,17 @@ bool Schematic::loadDocument()
     }
     return readLegacy(file);
   } else { untested();
-    return readVerilog(file);
+    file.reset();
+    CS cmd(&stream);
+    readVerilog(cmd, this);
     // BUG. implicit file type.
     // possibly use file extension as a fallback?
     // (OK for now)
-    QMessageBox::critical(0, QObject::tr("Error"),
- 		 QObject::tr("Wrong document type: ")+DocName);
-    return false;
+    //QMessageBox::critical(0, QObject::tr("Error"),
+    //    	 QObject::tr("Wrong document type: ")+DocName);
+    //return false;
   }
+  return true;
 }
 
 // -------------------------------------------------------------
