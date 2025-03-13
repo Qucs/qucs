@@ -220,10 +220,12 @@ void parse_wire(CS& cmd, Wire* x)
 
 bool readVerilog(CS &cmd, Schematic*s)
 {
+  trace0("readVerilog0");
   assert(s);
   // trace_method_calls();
   while(!cmd.atEnd()) {
     cmd.read_line();
+    // trace1("readVerilog", cmd.fullstring());
     skip_attributes(cmd);
     if(cmd>>"module") {
       //ignore for now;
@@ -253,3 +255,4 @@ bool readVerilog(CS &cmd, Schematic*s)
   }
   return true;
 }
+// vim:ts=8:sw=2:noet:
