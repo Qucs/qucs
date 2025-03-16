@@ -72,6 +72,9 @@ public: // parameter access
   virtual void set_port_by_index(int num, std::string const& ext_name);
   virtual void set_dev_type(std::string const& type);
 
+public:
+  virtual void set_qucs_text_position(int x, int y) {tx=x;ty=y;}
+
   // to hold track of the component appearance for saving and copying
   bool mirroredX;   // is it mirrored about X axis or not
   int  rotated;     // rotation angle divided by 90 degrees

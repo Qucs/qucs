@@ -246,9 +246,14 @@ bool readVerilog(CS &cmd, Schematic*s)
 		  }
       } else {
         QString qtype = QString::fromStdString(type);
-		  std::shared_ptr<Component> x = Module::getComponent(qtype); // BUG. need proper dispatcher.
+        std::shared_ptr<Component> x = Module::getComponent(qtype); // BUG. need proper dispatcher.
+        //trace3("readVerilog, gotComponent", type, x->tx, x->ty);
         if(x) {
           parse_instance(cmd, x.get());
+          // BUG: Gives inconsisten values when generating refs
+          // setting text position to 0,0 for now.
+          x->tx = 0;
+          x->ty = 0;
           s->pushBack(x);
         }else{
 		  }
