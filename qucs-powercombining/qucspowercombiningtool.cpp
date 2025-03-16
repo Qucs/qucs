@@ -586,7 +586,7 @@ int QucsPowerCombiningTool::Wilkinson(double Z0, double Freq, double K, bool SP_
     double R =  wilkstr.section(';', 2, 2).toDouble();
     double R2 =  wilkstr.section(';', 3, 3).toDouble();
     double R3 =  wilkstr.section(';', 4, 4).toDouble();
-    double C2, C3, CC, C2_, C3_, L2, L3, L2_, L3_, Z4, Z5;
+    double C2 = 0, C3 = 0, CC = 0, C2_ = 0, C3_ = 0, L2 = 0, L3 = 0, L2_ = 0, L3_ = 0, Z4 = 0, Z5 = 0;
 
     if (LumpedElements)//Quarter wave transmission line Pi LC equivalent
     {

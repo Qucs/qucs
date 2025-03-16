@@ -203,7 +203,7 @@ QString ProjectView::ReadDescription(QString file)
     if (!QucsDocument.open(QIODevice::ReadOnly)) return "";
     QTextStream in (&QucsDocument);
     QString line, description;
-    int showFrame;
+    int showFrame = 0;
     int index, index2;
     do {
         line = in.readLine();

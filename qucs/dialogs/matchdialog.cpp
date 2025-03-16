@@ -1158,7 +1158,7 @@ QString MatchDialog::calcSingleStub(double r_real, double r_imag, double Z0,
                                     bool BalancedStubs) {
   double t = 0, t1 = 0, t2 = 0;
   double dl, dl1, dl2, B;
-  double B1, B2, d, lstub, ll;
+  double B1, B2, d = 0, lstub = 0, ll;
   double lambda = SPEED_OF_LIGHT / (Freq);
   double RL = r_real, XL = r_imag;
   r2z(RL, XL, Z0);
@@ -1494,7 +1494,7 @@ QString MatchDialog::calcMatchingCascadedLCSections(double r_real,
   double RL = r_real, XL = r_imag, RS = Z0;
   double w = 2 * pi * Freq, Q, C, L;
   r2z(RL, XL, Z0);
-  double Raux, R, R1, R2;
+  double Raux, R = 0, R1, R2;
   QString s = "";
 
   if (RL == 0) {
@@ -1564,7 +1564,7 @@ void MatchDialog::SchematicParser(QString laddercode, int &x_pos, double Freq,
   QStringList strlist = laddercode.split(";");//Slipt the string code to get the components
   QString component, tag, label;
   qDebug() << laddercode;
-  double value, value2, er, width;
+  double value = 0, value2 = 0, er, width;
   int x_series = 120, x_shunt = 20; // x-axis spacing depending on whether the
                                     // component is placed in a series or shunt
                                     // configuration

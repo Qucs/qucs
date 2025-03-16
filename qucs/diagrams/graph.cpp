@@ -234,6 +234,7 @@ int Graph::getSelected(int x, int y)
       dx  = x - x1;
       dy  = y - y1;
 
+      dx2 = 0;
       if(pp->isPt()){
         dx2 = int(pp->getScrX());
       }else if(pp->isBranchEnd()) {
