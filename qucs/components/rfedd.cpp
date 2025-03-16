@@ -181,6 +181,6 @@ void RFedd::createSymbol()
   x2 =  30; y2 =  h+2;
   // compute component name text position - normal size font
   QFontMetrics  metrics(QucsSettings.font, 0);   // use the screen-compatible metric
-  tx = x1+4;
-  ty = y1 - metrics.lineSpacing() - 4;
+  set_qucs_text_position(x1+4,
+  y1 - metrics.lineSpacing() - 4); // yikes.
 }

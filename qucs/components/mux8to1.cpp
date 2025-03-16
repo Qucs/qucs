@@ -31,8 +31,7 @@ mux8to1::mux8to1()
     +" ("+QObject::tr ("s")+")"));
  
   createSymbol ();
-  tx = x1 + 19;
-  ty = y2 + 4;
+  set_qucs_text_position(x1+19, y2+4);
   Model = "mux8to1";
   Name  = "Y";
 }

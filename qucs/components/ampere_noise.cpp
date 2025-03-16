@@ -42,8 +42,7 @@ Ampere_noise::Ampere_noise()
   x1 = -30; y1 = -15;
   x2 =  30; y2 =  15;
 
-  tx = x1+4;
-  ty = y2+4;
+  set_qucs_text_position(x1+4, y2+4);
   Model = "Inoise";
   Name  = "I";
 

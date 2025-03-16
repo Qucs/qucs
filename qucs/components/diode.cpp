@@ -82,8 +82,7 @@ Diode::Diode()
 	QObject::tr("schematic symbol")+" [normal, US, Schottky, Zener, Varactor]"));
 
   createSymbol();
-  tx = x1+4;
-  ty = y2+4;
+  set_qucs_text_position(x1+4, y2+4);
   Model = "Diode";
   Name  = "D";
 }

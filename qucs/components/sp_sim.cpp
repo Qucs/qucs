@@ -37,8 +37,7 @@ SP_Sim::SP_Sim()
   x1 = -10; y1 = -9;
   x2 = x1+121; y2 = y1+59;
 
-  tx = 0;
-  ty = y2+1;
+  set_qucs_text_position(0, y2+1);
   Model = ".SP";
   Name  = "SP";
 

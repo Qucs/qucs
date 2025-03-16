@@ -58,11 +58,16 @@ Component* LibComp::newOne()
 // of ports.
 void LibComp::createSymbol()
 {
-  tx = INT_MIN;
-  ty = INT_MIN;
+  set_qucs_text_position(INT_MIN, INT_MIN);
   if(loadSymbol() > 0) {
-    if(tx == INT_MIN)  tx = x1+4;
-    if(ty == INT_MIN)  ty = y2+4;
+    if(tx() == INT_MIN) {
+	  	 set_qucs_text_position(x1+4, ty());
+	 }else{
+	 }
+    if(ty() == INT_MIN) {
+		 set_qucs_text_position(tx(), y2+4);
+	 }else{
+	 }
   }
   else {
     // only paint a rectangle
@@ -74,8 +79,7 @@ void LibComp::createSymbol()
     x1 = -18; y1 = -18;
     x2 =  18; y2 =  18;
 
-    tx = x1+4;
-    ty = y2+4;
+	 set_qucs_text_position(x1+4, y2+4);
   }
 }
 

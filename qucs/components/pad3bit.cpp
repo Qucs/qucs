@@ -20,8 +20,7 @@ pad3bit::pad3bit()
     QObject::tr ("pad output value")));
  
   createSymbol ();
-  tx = x1 + 4;
-  ty = y2 + 4;
+  set_qucs_text_position(x1+4, y2+4);
   Model = "pad3bit";
   Name  = "Y";
 }

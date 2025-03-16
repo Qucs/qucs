@@ -75,11 +75,16 @@ void Subcircuit::createSymbol()
   QString FileName(Props.front().Value);
   FileName = getSubcircuitFile();
 
-  tx = INT_MIN;
-  ty = INT_MIN;
+  set_qucs_text_position(INT_MIN, INT_MIN); // what?
   if(loadSymbol(FileName) > 0) {  // try to load subcircuit symbol
-    if(tx == INT_MIN)  tx = x1+4;
-    if(ty == INT_MIN)  ty = y2+4;
+    if(tx() == INT_MIN){
+		set_qucs_text_position(x1+4, ty());
+	 }else{
+	 }
+    if(ty() == INT_MIN){
+		set_qucs_text_position(tx(), y2+4);
+	 }else{
+	 }
     // remove unused ports
     auto pw = Ports.begin();
     for (auto p = Ports.begin(); p != Ports.end(); ++p) {
@@ -125,8 +130,7 @@ void Subcircuit::remakeSymbol(int No)
 
   x1 = -30; y1 = -h-2;
   x2 =  30; y2 =  h+2;
-  tx = x1+4;
-  ty = y2+4;
+  set_qucs_text_position(x1+4, y2+4);
 }
 
 // ---------------------------------------------------------------------

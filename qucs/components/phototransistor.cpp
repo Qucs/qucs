@@ -91,8 +91,7 @@ phototransistor::phototransistor()
     QObject::tr ("simulation temperature")));
 
   createSymbol ();
-  tx = x2 + 4;
-  ty = y1 +24;
+  set_qucs_text_position(x2+4, y1+24);
   Model = "phototransistor";
   Name  = "PT";
 }

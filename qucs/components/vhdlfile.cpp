@@ -169,8 +169,7 @@ void VHDL_File::createSymbol()
 
   x1 = -30; y1 = -h-2;
   x2 =  30; y2 =  h+2;
-  tx = x1+4;
-  ty = y2+4;
+  set_qucs_text_position(x1+4, y2+4);
 
   // now create/modify properties
   No = 0;

@@ -42,8 +42,7 @@ MSgap::MSgap()
   x1 = -30; y1 =-11;
   x2 =  30; y2 = 11;
 
-  tx = x1+4;
-  ty = y2+4;
+  set_qucs_text_position(x1+4, y2+4);
   Model = "MGAP";
   Name  = "MS";
 

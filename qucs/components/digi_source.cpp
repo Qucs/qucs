@@ -42,8 +42,7 @@ Digi_Source::Digi_Source()
   x1 = -39; y1 = -14;
   x2 =   0; y2 =  14;
 
-  tx = x1+4;
-  ty = y2+2;
+  set_qucs_text_position(x1+4, y2+2);
   Model = "DigiSource";
   Name  = "S";
 

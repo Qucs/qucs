@@ -38,8 +38,7 @@ Logical_Buf::Logical_Buf()
 		QObject::tr("schematic symbol")+" [old, DIN40900]"));
 
   createSymbol();
-  tx = x1+4;
-  ty = y2+4;
+  set_qucs_text_position(x1+4, y2+4);
   Model = "Buf";
   Name  = "Y";
 }

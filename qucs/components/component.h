@@ -73,7 +73,7 @@ public: // parameter access
   virtual void set_dev_type(std::string const& type);
 
 public:
-  virtual void set_qucs_text_position(int x, int y) {tx=x;ty=y;}
+  virtual void set_qucs_text_position(int x, int y) {_tx=x;_ty=y;}
 
   // to hold track of the component appearance for saving and copying
   bool mirroredX;   // is it mirrored about X axis or not
@@ -106,9 +106,13 @@ public:
   #define COMP_IS_ACTIVE  1
   #define COMP_IS_SHORTEN 2
   int  isActive; // should it be used in simulation or not ?
-  int  tx, ty;   // upper left corner of text (position)
+private:
+  int  _tx, _ty;   // upper left corner of text (position)
+public:
+  int tx()const {return _tx;}
+  int ty()const {return _ty;}
 
-// private: // TODO
+public: // private: // TODO
   bool showName;
 
 public:

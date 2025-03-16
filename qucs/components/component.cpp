@@ -56,8 +56,7 @@ Component::Component()
 
   cx = 0;
   cy = 0;
-  tx = 0;
-  ty = 0;
+  set_qucs_text_position(0, 0);
 
   containingSchematic = NULL;
 }
@@ -150,15 +149,15 @@ void Component::entireBounds(int& _x1, int& _y1, int& _x2, int& _y2, float Corr)
   _y2 = y2+cy;
 
   // text boundings
-  if(tx < x1) _x1 = tx+cx;
-  if(ty < y1) _y1 = ty+cy;
+  if(tx() < x1) _x1 = tx()+cx;
+  if(ty() < y1) _y1 = ty()+cy;
 
   int dx, dy, ny;
   ny = textSize(dx, dy);
   dy = int(float(ny) / Corr);  // correction for unproportional font scaling
 
-  if((tx+dx) > x2) _x2 = tx+dx+cx;
-  if((ty+dy) > y2) _y2 = ty+dy+cy;
+  if((tx()+dx) > x2) _x2 = tx()+dx+cx;
+  if((ty()+dy) > y2) _y2 = ty()+dy+cy;
 }
 
 // -------------------------------------------------------
@@ -180,11 +179,11 @@ int Component::getTextSelected(int x_, int y_, float Corr)
 {
   x_ -= cx;
   y_ -= cy;
-  if(x_ < tx) return -1;
-  if(y_ < ty) return -1;
+  if(x_ < tx()) return -1;
+  if(y_ < ty()) return -1;
 
-  x_ -= tx;
-  y_ -= ty;
+  x_ -= tx();
+  y_ -= ty();
   int w, dy = int(float(y_) * Corr);  // correction for font scaling
   // use the screen-compatible metric
   QFontMetrics  metrics(QucsSettings.font, 0);
@@ -246,7 +245,10 @@ void Component::paint(ViewPainter *p)
     yb = b + int(10.0*p->Scale);
     x2 = x1+25 + int(float(a) / p->Scale);
     y2 = y1+23 + int(float(b) / p->Scale);
-    if(ty < y2+1) if(ty > y1-r.height())  ty = y2 + 1;
+    if(ty() < y2+1) if(ty() > y1-r.height()){
+      set_qucs_text_position(tx(), y2 + 1);
+    }else{
+    }
 
     p->map(cx-1, cy, x, y);
     p->map(cx-6, cy-5, a, b);
@@ -319,7 +321,7 @@ void Component::paint(ViewPainter *p)
   p->Painter->setFont(f);
 
   p->Painter->setPen(QPen(Qt::black,1));
-  p->map(cx+tx, cy+ty, x, y);
+  p->map(cx+tx(), cy+ty(), x, y);
   if(showName) {
     p->Painter->drawText(x, y, 0, 0, Qt::TextDontClip, Name);
     y += p->LineSpacing;
@@ -376,7 +378,10 @@ void Component::paintScheme(Schematic *p)
     yb = b + int(10.0*Scale);
     x2 = x1+25 + int(float(a) / Scale);
     y2 = y1+23 + int(float(b) / Scale);
-    if(ty < y2+1) if(ty > y1-r.height())  ty = y2 + 1;
+    if(ty() < y2+1) if(ty() > y1-r.height()) {
+     set_qucs_text_position(tx(), y2 + 1);
+    }else{
+    }
 
     p->PostPaintEvent(_Rect,cx-6, cy-5, xb, yb);
     p->PostPaintEvent(_Line,cx-1, cy+yb, cx-6, cy+yb-5);
@@ -495,9 +500,8 @@ void Component::rotate()
   x1  = y1; y1 = -x2;
   x2  = y2; y2 = tmp;
 
-  tmp = -tx;    // rotate text position
-  tx  = ty;
-  ty  = tmp;
+  tmp = -tx();    // rotate text position
+  set_qucs_text_position(ty(), -tx());
   // use the screen-compatible metric
   QFontMetrics  metrics(QucsSettings.font, 0);   // get size of text
   dx = dy = 0;
@@ -512,10 +516,16 @@ void Component::rotate()
       if(tmp > dx) dx = tmp;
       dy += metrics.lineSpacing();
     }
-  if(tx > x2) ty = y1-ty+y2;    // rotate text position
-  else if(ty < y1) ty -= dy;
-  else if(tx < x1) { tx += dy-dx;  ty = y1-ty+y2; }
-  else ty -= dx;
+  if(tx() > x2){
+    // rotate text position
+    set_qucs_text_position(tx(), y1-ty()+y2);
+  } else if(ty() < y1){
+    set_qucs_text_position(tx(), ty() - dy);
+  }else if(tx() < x1) {
+    set_qucs_text_position(tx() + dy - dx, y1-ty()+y2);
+  }else{
+    set_qucs_text_position(tx(), ty() - dx);
+  }
 
   rotated++;  // keep track of what's done
   rotated &= 3;
@@ -575,8 +585,12 @@ void Component::mirrorX()
     dy = metrics.lineSpacing();   // for "Name"
   for(auto pp = Props.begin(); pp != Props.end(); ++pp)
     if(pp->display)  dy += metrics.lineSpacing();
-  if((tx > x1) && (tx < x2)) ty = -ty-dy;     // mirror text position
-  else ty = y1+ty+y2;
+  if((tx() > x1) && (tx() < x2)) {
+    // mirror text position
+    set_qucs_text_position(tx(), -ty()-dy);
+  }else{
+    set_qucs_text_position(tx(), y1+ty()+y2);
+  }
 
   mirroredX = !mirroredX;    // keep track of what's done
   rotated += rotated << 1;
@@ -640,8 +654,12 @@ void Component::mirrorY()
       tmp = metrics.horizontalAdvance(pp->Name+"="+pp->Value);
       if(tmp > dx)  dx = tmp;
     }
-  if((ty > y1) && (ty < y2)) tx = -tx-dx;     // mirror text position
-  else tx = x1+tx+x2;
+  if((ty() > y1) && (ty() < y2)){
+    // mirror text position
+    set_qucs_text_position(-tx()-dx, ty());
+  }else{
+    set_qucs_text_position(x1+tx()+x2, ty());
+  }
 
   mirroredX = !mirroredX;   // keep track of what's done
   rotated += rotated << 1;
@@ -884,7 +902,7 @@ void Schematic::saveComponent(QTextStream& s, Component /*const*/ * c) const
   i |= c->isActive;
   s << QString::number(i);
   s << " "+QString::number(c->cx)+" "+QString::number(c->cy);
-  s << " "+QString::number(c->tx)+" "+QString::number(c->ty);
+  s << " "+QString::number(c->tx())+" "+QString::number(c->ty());
   s << " ";
   if(c->mirroredX){
     s << "1";
@@ -977,8 +995,8 @@ bool Schematic::loadComponent(const QString& _s, const std::shared_ptr<Component
     }
   }
 
-  c->tx = ttx;
-  c->ty = tty; // restore text position (was changed by rotate/mirror)
+  // restore text position (was changed by rotate/mirror)
+  c->set_qucs_text_position(ttx, tty);
 
   QString Model = c->obsolete_model_hack(); // BUG: don't use names
 
@@ -1168,8 +1186,7 @@ int Component::analyseLine(const QString& Row, int numProps)
   }
   else if(s == ".ID") {
     if(!getIntegers(Row, &i1, &i2))  return -1;
-    tx = i1;
-    ty = i2;
+    set_qucs_text_position(i1, i2);
     Name = Row.section(' ',3,3);
     if(Name.isEmpty())  Name = "SUB";
 
@@ -1416,6 +1433,7 @@ qucs::Property &Component::getProperty(const QString& name)
 }
 
 // ---------------------------------------------------------------------
+// BUG // why not Commonent::Component(Commonent const&)?
 void Component::copyComponent(const Component &c)
 {
   Type = c.Type;
@@ -1432,8 +1450,8 @@ void Component::copyComponent(const Component &c)
   isActive = c.isActive;
   rotated  = c.rotated;
   mirroredX = c.mirroredX;
-  tx = c.tx;
-  ty = c.ty;
+  _tx = c._tx;
+  _ty = c._ty;
 
   Props  = c.Props;
   Ports  = c.Ports;
@@ -1701,8 +1719,7 @@ void GateComponent::createSymbol()
   x1 = -30; y1 = -y-3;
   x2 =  30; y2 =  y+3;
 
-  tx = x1+4;
-  ty = y2+4;
+  set_qucs_text_position(x1+4, y2+4);
 
   z = 0;
   if(Model.at(0) == 'N')  z = 1;
@@ -1849,11 +1866,11 @@ std::shared_ptr<Component> getComponentFromName(QString& Line, Schematic* p)
   }
 
   cstr = c->name();   // is perhaps changed in "recreate" (e.g. subcircuit)
-  int x = c->tx, y = c->ty;
+  int x = c->tx(), y = c->ty();
   c->setSchematic (p);
   c->recreate(0);
   c->obsolete_name_override_hack(cstr);
-  c->tx = x;  c->ty = y;
+  c->set_qucs_text_position(x, y);
   return c;
 }
 

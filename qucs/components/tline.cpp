@@ -40,8 +40,7 @@ TLine::TLine()
   x1 = -30; y1 = -4;
   x2 =  30; y2 = 16;
 
-  tx = x1+4;
-  ty = y2+4;
+  set_qucs_text_position(x2+4, y1+4);
   Model = "TLIN";
   Name  = "Line";
 

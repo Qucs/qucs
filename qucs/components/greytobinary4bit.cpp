@@ -31,8 +31,7 @@ greytobinary4bit::greytobinary4bit()
     +" ("+QObject::tr ("s")+")"));
 
   createSymbol ();
-  tx = x1 + 19;
-  ty = y2 + 4;
+  set_qucs_text_position(x1+19, y2+4);
   Model = "greytobinary4bit";
   Name  = "Y";
 }

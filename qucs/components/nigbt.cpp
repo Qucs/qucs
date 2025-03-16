@@ -70,8 +70,7 @@ nigbt::nigbt()
     +" ("+QObject::tr ("Celsius")+")"));
 
   createSymbol ();
-  tx = x2 + 4;
-  ty = y1 + 4;
+  set_qucs_text_position(x2+4, y1+4);
   Model = "nigbt";
   Name  = "T";
 }
