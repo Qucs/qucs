@@ -123,7 +123,19 @@ void Schematic::dumpDeclaration(outputStream& stream, Component const* c, QStrin
   QStringList nets;
   int port_idx = 0;
   stream << "    (* ";
+  //print_attributes(o, nets);
+  std::string attr;
+  if(c){
+    attr = c->attr_get();
+  }else{
+    //what?
+  }
+  stream << QString::fromStdString(attr);
   QString sep;
+  if(attr.size()){
+    sep = ", ";
+  }else{
+  }
   for (auto pp = ports.begin(); pp != ports.end(); ++pp) {
     stream << sep << QString("S0_x%1=%2, S0_y%1=%3")
         .arg(++port_idx)
@@ -132,18 +144,7 @@ void Schematic::dumpDeclaration(outputStream& stream, Component const* c, QStrin
     sep = ", ";
     nets.append(getWireName(&(*pp)));
   }
-  //print_attributes(o, nets);
-  std::string attr;
-  if(c){
-    attr = c->attr_get();
-  }else{
-    //what?
-  }
-  if(attr.size()){
-    stream << sep;
-  }else{
-  }
-  stream << QString::fromStdString(attr) << QString(" *) ");
+  stream << QString(" *) ");
   dumpIdentifier(stream, model);
   print_args(stream, c);
   dumpIdentifier(stream, name);

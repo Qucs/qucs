@@ -13,11 +13,11 @@
     wire n_380_280;
     wire n_380_310;
     wire n_380_360;
-    (* S0_x1=400, S0_y1=180, qucs_mirroredX=0, qucs_rotated=2 *) Port #(.Num(2),.Type(analog)) P2 ( n_400_180 );
-    (* S0_x1=180, S0_y1=180, qucs_mirroredX=1, qucs_rotated=0 *) Port #(.Num(1),.Type(analog)) P1 ( n_180_180 );
-    (* S0_x1=260, S0_y1=260, S0_x2=320, S0_y2=260, qucs_mirroredX=0, qucs_rotated=0 *) R #(.R(0 Ohm),.Temp(26.85),.Tc1(0.0),.Tc2(0.0),.Tnom(26.85)) R1 ( n_260_260, n_320_260 );
-    (* S0_x1=380, S0_y1=360, qucs_mirroredX=0, qucs_rotated=0 *) GND #() \*  ( n_380_360 );
-    (* S0_x1=380, S0_y1=310, S0_x2=380, S0_y2=250, qucs_mirroredX=0, qucs_rotated=1 *) C #(.C(1 pF),.V(),.Symbol(neutral)) C1 ( n_380_310, n_380_250 );
+    (* qucs_mirrored=0, qucs_rotated=2, S0_x1=400, S0_y1=180 *) Port #(.Num(2),.Type(analog)) P2 ( n_400_180 );
+    (* qucs_mirrored=1, qucs_rotated=0, S0_x1=180, S0_y1=180 *) Port #(.Num(1),.Type(analog)) P1 ( n_180_180 );
+    (* qucs_mirrored=0, qucs_rotated=0, S0_x1=260, S0_y1=260, S0_x2=320, S0_y2=260 *) R #(.R(0 Ohm),.Temp(26.85),.Tc1(0.0),.Tc2(0.0),.Tnom(26.85)) R1 ( n_260_260, n_320_260 );
+    (* qucs_mirrored=0, qucs_rotated=0, S0_x1=380, S0_y1=360 *) GND #() \*  ( n_380_360 );
+    (* qucs_mirrored=0, qucs_rotated=1, S0_x1=380, S0_y1=310, S0_x2=380, S0_y2=250 *) C #(.C(1 pF),.V(),.Symbol(neutral)) C1 ( n_380_310, n_380_250 );
     (* S0_x1=240, S0_y1=260, S0_x2=260, S0_y2=260 *) net #() net1 ( n_240_260, n_260_260 );
     (* S0_x1=320, S0_y1=260, S0_x2=340, S0_y2=260 *) net #() net2 ( n_320_260, n_340_260 );
     (* S0_x1=380, S0_y1=180, S0_x2=400, S0_y2=180 *) net #() net3 ( n_380_180, n_400_180 );
