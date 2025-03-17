@@ -191,7 +191,7 @@ int ImageWriter::print(QWidget *doc)
 
     if (dlg->isValidFilename()) {
       if (!dlg->isSvg()) {
-        QImage* img = NULL;
+        QImage* img = nullptr;
 
         switch (dlg->getImgFormat()) {
           case ExportDialog::Coloured : 

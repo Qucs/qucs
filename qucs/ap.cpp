@@ -350,7 +350,7 @@ CS& CS::umatch(const std::string& s)
 }
 /*--------------------------------------------------------------------------*/
 // from ap_error.cc
-CS& CS::warn(int badness, size_t spot, const std::string& message)
+CS& CS::warn(int /*badness*/, size_t /*spot*/, const std::string& message)
 {
 	incomplete();
   //std::cerr << "parse warning " << message << "\n";

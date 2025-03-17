@@ -245,8 +245,11 @@ void Component::paint(ViewPainter *p)
     yb = b + int(10.0*p->Scale);
     x2 = x1+25 + int(float(a) / p->Scale);
     y2 = y1+23 + int(float(b) / p->Scale);
-    if(ty() < y2+1) if(ty() > y1-r.height()){
-      set_qucs_text_position(tx(), y2 + 1);
+    if(ty() < y2+1) {
+      if(ty() > y1-r.height()){
+	set_qucs_text_position(tx(), y2 + 1);
+      }else{
+      }
     }else{
     }
 
@@ -378,8 +381,11 @@ void Component::paintScheme(Schematic *p)
     yb = b + int(10.0*Scale);
     x2 = x1+25 + int(float(a) / Scale);
     y2 = y1+23 + int(float(b) / Scale);
-    if(ty() < y2+1) if(ty() > y1-r.height()) {
-     set_qucs_text_position(tx(), y2 + 1);
+    if(ty() < y2+1) {
+     if(ty() > y1-r.height()) {
+       set_qucs_text_position(tx(), y2 + 1);
+      }else{
+      }
     }else{
     }
 
@@ -803,7 +809,7 @@ int Component::param_count() const
 }
 
 // whether a parameter is shown in a dump
-bool Component::param_is_printable(int i) const
+bool Component::param_is_printable(int) const
 {
   incomplete();
   return true;
