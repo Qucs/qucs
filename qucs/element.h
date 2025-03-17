@@ -153,6 +153,10 @@ public:
   bool isSelected;
   int  Type;    // whether it is Component, Wire, ...
   int  cx, cy, x1, y1, x2, y2;  // center and relative boundings
+
+public:
+  // std::string attr_add()const {return "";}
+  virtual std::string attr_get()const {return "";}
 };
 
 
@@ -160,6 +164,7 @@ public:
   * \brief label for Node and Wire classes
   *
   */
+// BUG. wrong file.
 class Conductor : public Element {
 public:
   std::shared_ptr<WireLabel> Label;

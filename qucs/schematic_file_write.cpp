@@ -115,14 +115,15 @@ static void print_args(outputStream& o, Component const* x)
   o << ") ";
 }
 
-// BUG. what does it do?
-// BUG: wrong compilation unit
-void Schematic::dumpDeclaration(outputStream& stream, Component const* c, QString model, QString name, QList<QPoint> ports) const
+// BUG: needs Schematic
+// BUG: wire is not a Component, need template
+template<class T>
+void dump_attributes(outputStream& stream, T const* c, QList<QPoint> ports, Schematic const* s)
 {
   //assert(c);
   QStringList nets;
   int port_idx = 0;
-  stream << "    (* ";
+  stream << "(* ";
   //print_attributes(o, nets);
   std::string attr;
   if(c){
@@ -142,18 +143,27 @@ void Schematic::dumpDeclaration(outputStream& stream, Component const* c, QStrin
         .arg(pp->x())
         .arg(pp->y());
     sep = ", ";
-    nets.append(getWireName(&(*pp)));
+    nets.append(s->getWireName(&(*pp)));
   }
   stream << QString(" *) ");
+}
+
+void Schematic::dumpDeclaration(outputStream& stream, Component const* c, QString model, QString name, QList<QPoint> ports) const
+{
   dumpIdentifier(stream, model);
   print_args(stream, c);
   dumpIdentifier(stream, name);
   stream << " ( ";
-  stream << nets.join(", ");
+  std::string sep;
+  for (auto pp = ports.begin(); pp != ports.end(); ++pp) {
+    stream << sep << getWireName(&(*pp));
+    sep = ", ";
+  }
   stream << " );\n";
 }
 
 // BUG: wrong compilation unit
+// BUG: wrong class
 void Schematic::dumpVerilogComponent(outputStream& stream, Component const* c) const
 {
   assert(c);
@@ -166,6 +176,8 @@ void Schematic::dumpVerilogComponent(outputStream& stream, Component const* c) c
       ports.append(QPoint(con->cx,con->cy));
     }
   }
+  stream << "    ";
+  dump_attributes(stream, c, ports, this);
   dumpDeclaration(stream, c, model, name, ports);
 }
 
@@ -173,6 +185,8 @@ void Schematic::dumpVerilogComponent(outputStream& stream, Component const* c) c
  * <280 100 460 100 "" 0 0 0> == net w1(n_280_100, n_460_100);
  */
 // BUG: wrong compilation unit
+// BUG: wrong class
+// BUG: duplicates dumpVerilogComponent
 void Schematic::dumpVerilogWire(outputStream& stream, Wire const* w) const
 {
 	assert(w);
@@ -187,6 +201,8 @@ void Schematic::dumpVerilogWire(outputStream& stream, Wire const* w) const
   }
   ports.append(QPoint(w->x1,w->y1));
   ports.append(QPoint(w->x2,w->y2));
+  stream << "    ";
+  dump_attributes(stream, w, ports, this);
   dumpDeclaration(stream, NULL, "net", name, ports);
 }
 

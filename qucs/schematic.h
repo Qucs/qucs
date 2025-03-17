@@ -315,7 +315,10 @@ public:
 private:
   int  saveDocument(QString OutputFileName, QString OutputTypeName);
   int  saveSchematicDocument(QFile *file);
+
+public:
   QString getWireName(const QPoint *p)const; // BUG // names are key!
+  // position getNodePosition(std::string)const; // TODO
 
 private: /// BUG // move to Verilog class, create if needed.
   void dumpDeclaration(outputStream& stream, const Component *c, QString model, QString name, QList<QPoint> ports) const;
