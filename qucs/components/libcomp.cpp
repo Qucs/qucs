@@ -271,8 +271,13 @@ bool LibComp::createSubNetlist(QTextStream *stream, QStringList &FileList,
 // -------------------------------------------------------
 QString LibComp::createType()
 {
+  assert(Props.size()>0);
   QString Type = misc::properFileName(prop(0).Value);
-  return misc::properName(Type + "_" + prop(1).Value);
+  if(Props.size() < 2) {
+    return misc::properName(Type);
+  } else {
+    return misc::properName(Type + "_" + prop(1).Value);
+  }
 }
 
 // -------------------------------------------------------

@@ -1164,6 +1164,7 @@ bool Schematic::throughAllComps(QTextStream *stream, int& countInit,
 	continue;
       }
       QString scfile = pc->getSubcircuitFile();
+      assert(pc->Props.size() > 1);
       s = scfile + "/" + pc->prop(1).Value;
       SubMap::Iterator it = FileList.find(s);
       if(it != FileList.end())
