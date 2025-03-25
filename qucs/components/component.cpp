@@ -80,10 +80,17 @@ void Component::Bounding(int& _x1, int& _y1, int& _x2, int& _y2)
 
 qucs::Property &Component::prop(int n)
 {
+  while (Props.size()<=n) {
+    incomplete();
+    Props.push_back(qucs::Property());
+  }
+
   auto p = Props.begin();
-  while (n-- > 0 && p != Props.end())
+  while (n-- > 0 && p != Props.end()){
     ++p;
-  assert(p != Props.end());
+    assert(p!=Props.end());
+  }
+
   return *p;
 }
 
