@@ -226,8 +226,7 @@ void MutualX::createSymbol()
   x1 = x-6;  y1 = -30;
   x2 = 10-x; y2 =  30;
 
-  tx = x2+4;
-  ty = y1+4;
+  set_qucs_text_position(x2+4, y1+4);
 
   x -= 6;
   for(int i=0; i<Num; i++) {

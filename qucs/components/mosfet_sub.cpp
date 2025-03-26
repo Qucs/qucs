@@ -126,8 +126,7 @@ MOSFET_sub::MOSFET_sub()
 {
   Description = QObject::tr("MOS field-effect transistor with substrate");
   createSymbol();
-  tx = x2+4;
-  ty = y1+4;
+  set_qucs_text_position(x2+4, y1+4);
   Model = "MOSFET";
 }
 

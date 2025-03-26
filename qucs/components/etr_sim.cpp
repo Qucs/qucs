@@ -33,8 +33,7 @@ ETR_Sim::ETR_Sim()
   x1 = -10; y1 = -9;
   x2 = x1+130; y2 = y1+59;
 
-  tx = 0;
-  ty = y2+1;
+  set_qucs_text_position(0, y2+1);
   Model = ".ETR";
   Name  = "ETR";
 

@@ -40,8 +40,8 @@ Circulator::Circulator()
   x1 = -30; y1 = -16;
   x2 =  30; y2 =  30;
 
-  tx = x1 + 4;
-  ty = y1 - QucsSettings.font.pointSize()-4;
+  set_qucs_text_position(x1+4,
+  y1 - QucsSettings.font.pointSize()-4); // yikes.
   Model = "Circulator";
   Name  = "X";
 

@@ -39,8 +39,7 @@ Switch::Switch()
 		QObject::tr("Resistance transition shape")+" [abrupt, linear, spline]"));
 
   createSymbol();
-  tx = x1+4;
-  ty = y2+4;
+  set_qucs_text_position(x1+4, y2+4);
   Model = "Switch";
   Name  = "S";
 }

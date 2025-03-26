@@ -347,7 +347,7 @@ void MFBfilter::calcLowPass()
 void MFBfilter::calcBandPass()
 {
     double  W0 = 2*pi*F0;
-    double  R1,R2,R3,C1,C2;
+    double  R1=0,R2=0,R3=0,C1=0,C2=0;
     //float rho = Kv/Q;
     //float gamma = 1.0;
     int cnt = 1; 

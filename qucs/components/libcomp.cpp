@@ -19,6 +19,7 @@
 #include "qucs.h"
 #include "schematic.h"
 #include "misc.h"
+#include "trace.h"
 
 #include <limits.h>
 
@@ -37,20 +38,80 @@ LibComp::LibComp()
   Model = "Lib";
   Name  = "X";
 
+  assert(!Props.size());
   Props.push_back(qucs::Property("Lib", "", true,
 		QObject::tr("name of qucs library file")));
   Props.push_back(qucs::Property("Comp", "", true,
 		QObject::tr("name of component in library")));
 }
+// ---------------------------------------------------------------------
+LibComp::LibComp(LibComp const& p) : MultiViewComponent(p)
+{ untested();
+	incomplete(); // not reached?!
+}
+
+// ---------------------------------------------------------------------
+#if 0 // TODO
+std::string LibComp::param_is_printable(int i) const
+{ untested();
+	if(i==0){ untested();
+		return false; "Lib" is an attibute, not a parameter
+	if(i==1){ untested();
+		return false; type is not a parameter.
+	}else{ untested();
+		return true;
+	}
+}
+#endif
+
+// ---------------------------------------------------------------------
+
+std::string LibComp::param_name(int i) const
+{
+	if(i==0){
+		return "Lib"; // BUG, it's a file name
+	}else if(i==1){
+		return "Comp"; // BUG, isn't this the type?
+	}else{ untested();
+		return Component::param_name(i);
+	}
+}
+
+// ---------------------------------------------------------------------
+std::string LibComp::param_value(int i) const
+{
+	if(i < int(Props.size())){
+		return Component::param_value(i);
+	}else{ untested();
+		return "NA";
+	}
+}
+
 
 // ---------------------------------------------------------------------
 Component* LibComp::newOne()
-{
+{ untested();
   LibComp *p = new LibComp();
+  assert(Props.size()>1);
   p->prop(0).Value = prop(0).Value;
   p->prop(1).Value = prop(1).Value;
   p->recreate(0);
+  assert(Props.size()>1);
   return p;
+}
+
+// ---------------------------------------------------------------------
+std::string LibComp::dev_type() const
+{ untested();
+	assert((Props.size() > 1));
+	return prop(1).Value.toStdString();
+}
+
+// ---------------------------------------------------------------------
+void LibComp::set_dev_type(std::string const& t)
+{ untested();
+	assert((Props.size() > 1));
+	prop(1).Value = QString::fromStdString(t);
 }
 
 // ---------------------------------------------------------------------
@@ -58,13 +119,19 @@ Component* LibComp::newOne()
 // of ports.
 void LibComp::createSymbol()
 {
-  tx = INT_MIN;
-  ty = INT_MIN;
+  assert(Props.size()>1);
+  set_qucs_text_position(INT_MIN, INT_MIN);
   if(loadSymbol() > 0) {
-    if(tx == INT_MIN)  tx = x1+4;
-    if(ty == INT_MIN)  ty = y2+4;
-  }
-  else {
+    if(tx() == INT_MIN) { untested();
+	  	 set_qucs_text_position(x1+4, ty());
+	 }else{
+	 }
+    if(ty() == INT_MIN) { untested();
+		 set_qucs_text_position(tx(), y2+4);
+	 }else{
+	 }
+    assert(Props.size()>1);
+  } else { untested();
     // only paint a rectangle
     Lines.push_back(qucs::Line(-15, -15, 15, -15, QPen(Qt::darkBlue,2)));
     Lines.push_back(qucs::Line( 15, -15, 15,  15, QPen(Qt::darkBlue,2)));
@@ -74,9 +141,23 @@ void LibComp::createSymbol()
     x1 = -18; y1 = -18;
     x2 =  18; y2 =  18;
 
-    tx = x1+4;
-    ty = y2+4;
+	 set_qucs_text_position(x1+4, y2+4);
+    assert(Props.size()>1);
   }
+
+  if (Props.size()==0) { untested();
+	  // BUG: props got lost.
+	  Props.push_back(qucs::Property("Lib", "BUG", true,
+			QObject::tr("name of qucs library file")));
+  }else{
+  }
+  if (Props.size()==1) { untested();
+	  // BUG: props got lost.
+	  Props.push_back(qucs::Property("Comp", "BUG", true,
+			QObject::tr("name of component in library")));
+  }else{
+  }
+
 }
 
 // ---------------------------------------------------------------------
@@ -140,7 +221,7 @@ int LibComp::loadSection(const QString& Name, QString& Section,
       StartI++; EndI--;
       QString inc = Section.mid(StartI, EndI-StartI);
       QStringList f = inc.split(QRegExp("\"\\s+\""));
-      for(QStringList::Iterator it = f.begin(); it != f.end(); ++it ) {
+      for(QStringList::Iterator it = f.begin(); it != f.end(); ++it ) { untested();
 	Includes->append(*it);
       }
     }
@@ -153,7 +234,7 @@ int LibComp::loadSection(const QString& Name, QString& Section,
       // component does not define its own symbol but the library defines a default symbol
       Section = libDefaultSymbol;
       return 0;
-    } else {
+    } else { untested();
       return -7;  // symbol not found
     }
   }
@@ -173,23 +254,29 @@ int LibComp::loadSection(const QString& Name, QString& Section,
 // returns the number of painting elements.
 int LibComp::loadSymbol()
 {
+  assert(Props.size()>1);
   int z, Result;
   QString FileString, Line;
   z = loadSection("Symbol", FileString);
-  if(z < 0) {
+  assert(Props.size()>1);
+  if(z < 0) { untested();
     if(z != -7)  return z;
 
     // If library component not defined as subcircuit, then load
     // new component and transfer data to this component.
     z = loadSection("Model", Line);
+    assert(Props.size()>1);
     if(z < 0)  return z;
 
     // Note: the component returned from getComponentFromName does not have an ownership yet.
     std::shared_ptr<Component> pc(getComponentFromName(Line));
     if(!pc)  return -20;
+    assert(Props.size()>1);
     copyComponent(*pc);
+    assert(Props.size()>1);
 
     return 1;
+  }else{
   }
 
 
@@ -197,6 +284,13 @@ int LibComp::loadSymbol()
   x1 = y1 = INT_MAX;
   x2 = y2 = INT_MIN;
 
+  assert(Props.size()>1);
+  if(Props.size()==2){
+	  // BUG: analyseLine erases the trailing parameter?!
+	  // (wtf)
+	 // Props.push_back(qucs::Property("dummy", "", false));
+  }else{
+  }
   QTextStream stream(&FileString, QIODevice::ReadOnly);
   while(!stream.atEnd()) {
     Line = stream.readLine();
@@ -205,10 +299,13 @@ int LibComp::loadSymbol()
     if(Line.at(0) != '<') return -11;
     if(Line.at(Line.length()-1) != '>') return -12;
     Line = Line.mid(1, Line.length()-2); // cut off start and end character
+	 assert(Props.size()>1);
     Result = analyseLine(Line, 2);
+	 assert(Props.size()>1);
     if(Result < 0) return -13;   // line format error
     z += Result;
   }
+  assert(Props.size()>1);
 
   x1 -= 4;  x2 += 4;   // enlarge component boundings a little
   y1 -= 4;  y2 += 4;
@@ -232,9 +329,9 @@ bool LibComp::createSubNetlist(QTextStream *stream, QStringList &FileList,
   QStringList Includes;
   if(type&1) {
     r = loadSection("Model", FileString, &Includes);
-  } else if(type&2) {
+  } else if(type&2) { untested();
     r = loadSection("VHDLModel", FileString, &Includes);
-  } else if(type&4) {
+  } else if(type&4) { untested();
     r = loadSection("VerilogModel", FileString, &Includes);
   }
   if(r < 0)  return false;
@@ -242,16 +339,16 @@ bool LibComp::createSubNetlist(QTextStream *stream, QStringList &FileList,
   // also include files
   int error = 0;
   for(QStringList::Iterator it = Includes.begin();
-      it != Includes.end(); ++it ) {
+      it != Includes.end(); ++it ) { untested();
     QString s = getSubcircuitFile()+"/"+*it;
     if(FileList.indexOf(s) >= 0) continue;
     FileList.append(s);
 
     // load file and stuff into stream
     QFile file(s);
-    if(!file.open(QIODevice::ReadOnly)) {
+    if(!file.open(QIODevice::ReadOnly)) { untested();
       error++;
-    } else {
+    } else { untested();
       QByteArray FileContent = file.readAll();
       file.close();
       //?stream->writeRawBytes(FileContent.value(), FileContent.size());
@@ -267,8 +364,13 @@ bool LibComp::createSubNetlist(QTextStream *stream, QStringList &FileList,
 // -------------------------------------------------------
 QString LibComp::createType()
 {
+  assert(Props.size()>0);
   QString Type = misc::properFileName(prop(0).Value);
-  return misc::properName(Type + "_" + prop(1).Value);
+  if(Props.size() < 2) { untested();
+    return misc::properName(Type);
+  } else {
+    return misc::properName(Type + "_" + prop(1).Value);
+  }
 }
 
 // -------------------------------------------------------
@@ -295,12 +397,12 @@ QString LibComp::netlist()
 
 // -------------------------------------------------------
 QString LibComp::verilogCode(int)
-{
+{ untested();
   QString s = "  Sub_" + createType() + " " + Name + " (";
 
   // output all node names
   auto iport = Ports.begin();
-  if (iport != Ports.end()) {
+  if (iport != Ports.end()) { untested();
     s += iport->getConnection()->Name;
     while (++iport != Ports.end())
       s += ", "+iport->getConnection()->Name;   // node names
@@ -312,12 +414,12 @@ QString LibComp::verilogCode(int)
 
 // -------------------------------------------------------
 QString LibComp::vhdlCode(int)
-{
+{ untested();
   QString s = "  " + Name + ": entity Sub_" + createType() + " port map (";
 
   // output all node names
   auto iport = Ports.begin();
-  if (iport != Ports.end()) {
+  if (iport != Ports.end()) { untested();
     s += iport->getConnection()->Name;
     while (++iport != Ports.end())
       s += ", "+iport->getConnection()->Name;   // node names

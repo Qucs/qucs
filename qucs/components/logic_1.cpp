@@ -27,8 +27,7 @@ logic_1::logic_1()
     QObject::tr ("logic 1 voltage level")
     +" ("+QObject::tr ("V")+")"));
   createSymbol ();
-  tx = x1 + 4;
-  ty = y2 + 4;
+  set_qucs_text_position(x1+4, y2+4);
   Model = "logic_1";
   Name  = "S";
 }

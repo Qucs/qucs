@@ -85,8 +85,7 @@ vacomponent::vacomponent(QString filename)
   Name  = getString(vadata, "SymName");
 
   /// TODO adjust location of text
-  tx = x1+100;
-  ty = y1+20;
+  set_qucs_text_position(x1+100, y2+20);
 }
 
 /*!

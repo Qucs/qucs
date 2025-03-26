@@ -12,6 +12,7 @@
 
 project(qucs CXX)
 cmake_minimum_required(VERSION 3.10.0)
+include(${PROJECT_SOURCE_DIR}/../cmake/readMakeList.cmake)
 
 # use top VERSION file
 file(STRINGS ${PROJECT_SOURCE_DIR}/../VERSION QUCS_VERSION)
@@ -86,53 +87,9 @@ add_subdirectory(octave)
 add_subdirectory(python)
 add_subdirectory(paintings)
 
-set(QUCS_SRCS
-    attach.cpp
-    element.cpp
-    octave_window.cpp
-    qucsdoc.cpp
-    textdoc.cpp
-    schematic.cpp
-    mnemo.cpp
-    qucs.cpp
-    viewpainter.cpp
-    module.cpp
-    schematic_element.cpp
-    wire.cpp
-    mouseactions.cpp
-    qucs_actions.cpp
-    schematic_file.cpp
-    schematic_file_write.cpp
-    schematic_file_read.cpp
-    wirelabel.cpp
-    node.cpp
-    qucs_init.cpp
-    syntax.cpp
-    misc.cpp
-    messagedock.cpp
-    imagewriter.cpp
-    printerwriter.cpp
-    projectView.cpp)
 
-set(QUCS_HDRS
-    sharedObjectList.h
-    element.h
-    messagedock.h
-    misc.h
-    mnemo.h
-    module.h
-    mouseactions.h
-    node.h
-    octave_window.h
-    platform.h
-    qucs.h
-    qucsdoc.h
-    schematic.h
-    syntax.h
-    textdoc.h
-    viewpainter.h
-    wire.h
-    wirelabel.h)
+readVariable(${PROJECT_SOURCE_DIR}/MakeList CXX_SRCS QUCS_SRCS)
+readVariable(${PROJECT_SOURCE_DIR}/MakeList CXX_HDRS QUCS_HDRS)
 
 #
 # files that have Q_OBJECT need to be MOC'ed
@@ -252,8 +209,25 @@ target_link_libraries(qucsschematic ${CMAKE_DL_LIBS})
 add_library(QucsFunctions qucs_functions.cpp qucs_functions.h)
 target_link_libraries(QucsFunctions Qt::Core Qt::Gui Qt::Widgets Qt::Svg Qt::PrintSupport Qt::Script qucsschematic)
 add_library(QucsApp ${RESOURCES_SRCS})
-add_executable(qucs MACOSX_BUNDLE WIN32 main.cpp ${RESOURCES_SRCS})
+
+if(APPLE)
+add_executable(qucs MACOSX_BUNDLE main.cpp ${RESOURCES_SRCS})
 target_link_libraries(qucs QucsFunctions qucsschematic)
+elseif(WIN32)
+add_executable(qucs WIN32 main.cpp ${RESOURCES_SRCS})
+target_link_libraries(qucs QucsFunctions qucsschematic)
+else()
+add_executable(qucs.real main.cpp ${RESOURCES_SRCS})
+target_link_libraries(qucs.real QucsFunctions qucsschematic)
+set(abs_top_builddir "${PROJECT_BINARY_DIR}/..")
+set(abs_top_srcdir "${PROJECT_SOURCE_DIR}/..")
+configure_file(
+    "${PROJECT_SOURCE_DIR}/qucs.in"
+    "${PROJECT_BINARY_DIR}/qucs"
+    @ONLY
+    FILE_PERMISSIONS OWNER_READ OWNER_WRITE OWNER_EXECUTE GROUP_READ GROUP_EXECUTE WORLD_READ WORLD_EXECUTE
+)
+endif()
 
 #
 # Prepare the installation
@@ -275,10 +249,23 @@ endif(WIN32)
 # Install the Qucs application, on Apple, the bundle is installed as on other
 # platforms it'll go into the bin directory.
 #
+
+if(APPLE)
 install(
   TARGETS qucs
   BUNDLE DESTINATION bin COMPONENT Runtime
   RUNTIME DESTINATION bin COMPONENT Runtime)
+elseif(WIN32)
+install(
+  TARGETS qucs
+  BUNDLE DESTINATION bin COMPONENT Runtime
+  RUNTIME DESTINATION bin COMPONENT Runtime)
+else()
+install(
+    PROGRAMS "${PROJECT_BINARY_DIR}/qucs.real"
+    DESTINATION bin
+    RENAME qucs)
+endif()
 
 # set Windows runtime location for libqucschematic See:
 # http://www.cmake.org/pipermail/cmake/2010-June/037461.html
@@ -343,6 +330,7 @@ else()
   set(SCRIPTS qucsdigi qucsveri qucsdigilib)
 endif()
 install(FILES ${SCRIPTS} DESTINATION bin/)
+
 
 # To Create a package, one can run "cpack -G DragNDrop CPackConfig.cmake" on Mac
 # OS X where CPackConfig.cmake is created by including CPack And then there's

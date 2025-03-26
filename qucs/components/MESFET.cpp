@@ -151,8 +151,7 @@ MESFET::MESFET()
     QObject::tr("simulation temperature")));
 
   createSymbol ();
-  tx = x2 + 4;
-  ty = y1 + 4;
+  set_qucs_text_position(x2+4, y1+4);
   Model = "MESFET";
   Name  = "T";
 }

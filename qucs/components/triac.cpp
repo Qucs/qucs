@@ -42,8 +42,7 @@ Triac::Triac()
   x1 = -30; y1 = -30;
   x2 =  20; y2 =  30;
 
-  tx = x2+4;
-  ty = y1+4;
+  set_qucs_text_position(x2+4, y1+4);
   Model = "Triac";
   Name  = "D";
 

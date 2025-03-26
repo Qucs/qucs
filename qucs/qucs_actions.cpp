@@ -1077,8 +1077,8 @@ void QucsApp::slotApplyCompText()
 
   auto pc = std::dynamic_pointer_cast<Component>(view->focusElement);
   if(!pc) return;  // should never happen
-  view->MAx1 = pc->cx + pc->tx;
-  view->MAy1 = pc->cy + pc->ty;
+  view->MAx1 = pc->cx + pc->tx();
+  view->MAy1 = pc->cy + pc->ty();
 
   int z, n=0;  // "n" is number of property on screen
   {

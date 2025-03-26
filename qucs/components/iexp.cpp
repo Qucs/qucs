@@ -48,8 +48,7 @@ iExp::iExp()
   x1 = -30; y1 = -14;
   x2 =  30; y2 =  20;
 
-  tx = x1+4;
-  ty = y2+8;
+  set_qucs_text_position(x1+4, y2+8);
   Model = "Iexp";
   Name  = "I";
 

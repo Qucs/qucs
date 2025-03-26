@@ -62,8 +62,7 @@ Noise_ii::Noise_ii()
   x1 = -44; y1 = -30;
   x2 =  44; y2 =  30;
 
-  tx = x1+4;
-  ty = y2+4;
+  set_qucs_text_position(x1+4, y2+4);
   Model = "IInoise";
   Name  = "SRC";
 

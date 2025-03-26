@@ -31,8 +31,7 @@ mux4to1::mux4to1()
     +" ("+QObject::tr ("s")+")"));
  
   createSymbol ();
-  tx = x1 + 19;
-  ty = y2 + 4;
+  set_qucs_text_position(x1+19, y2+4);
   Model = "mux4to1";
   Name  = "Y";
 }

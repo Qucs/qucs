@@ -34,8 +34,7 @@ Ground::Ground()
   x1 = -12; y1 =  0;
   x2 =  12; y2 = 25;
 
-  tx = 0;
-  ty = 0;
+  set_qucs_text_position(0, 0);
   Model = "GND";
   Name  = "";
   showName = false;

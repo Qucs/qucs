@@ -219,23 +219,28 @@ void ChangeDialog::slotButtReplace()
 
         int tx_Dist, ty_Dist, tmp;
         pc->textSize(tx_Dist, ty_Dist);
-        tmp = pc->tx+tx_Dist - pc->x1;
+        tmp = pc->tx()+tx_Dist - pc->x1;
         if((tmp > 0) || (tmp < -6))  tx_Dist = 0; // remember text position
-        tmp = pc->ty+ty_Dist - pc->y1;
+        tmp = pc->ty()+ty_Dist - pc->y1;
         if((tmp > 0) || (tmp < -6))  ty_Dist = 0;
 
         pp->Value = NewValueEdit->text();
 
         int dx, dy;
+		  int tx = pc->tx();
+		  int ty = pc->ty();
         pc->textSize(dx, dy);   // correct text position
         if(tx_Dist != 0) {
-          pc->tx += tx_Dist-dx;
+          tx += tx_Dist-dx;
           tx_Dist = dx;
-        }
+        }else{
+		  }
         if(ty_Dist != 0) {
-          pc->ty += ty_Dist-dy;
+          ty += ty_Dist-dy;
           ty_Dist = dy;
-        }
+        }else{
+		  }
+		  pc->set_qucs_text_position(tx, ty);
 
         // apply changes to schematic symbol
         Doc->recreateComponent(pc.ref());

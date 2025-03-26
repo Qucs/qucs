@@ -1,8 +1,25 @@
-module main()
-Vac #(.U(1 V), .f(1 GHz), .Phase(0), .Theta(0)) V1(net_120_120, net_120_180);
-GND #() anonymous_gnd_hack_0(net_320_240);
-GND #() anonymous_gnd_hack_1(net_120_240);
-R #(.R(R_par), .Temp(26.85), .Tc1(0.0), .Tc2(0.0), .Tnom(26.85), .Symbol(european)) R1(net_320_120, net_320_60);
-C #(.C(2 pF), .V(), .Symbol(neutral)) C1(net_320_240, net_320_180);
-L #(.L(13 nH), .I()) L1(net_320_180, net_320_120);
+(* qucs_ViewX1=0, qucs_ViewY1=0, qucs_ViewX2=800, qucs_ViewY2=800, qucs_Scale=1, qucs_tmpViewX1=0, qucs_tmpViewY1=0, qucs_GridX=10, qucs_GridY=10, qucs_GridOn=1, qucs_DataSet="resonance.dat", qucs_DataDisplay="resonance.dpl", qucs_SimOpenDpl=1, qucs_Script="resonance.m", qucs_SimRunScript=0, qucs_showFrame=0, qucs_FrameText0="Title", qucs_FrameText1="Drawn By:", qucs_FrameText2="Date:", qucs_FrameText3="Revision:" *) module resonance();
+    wire n_120_60;
+    wire n_120_120;
+    wire n_120_150;
+    wire n_120_180;
+    wire n_120_240;
+    wire n_320_60;
+    wire n_320_90;
+    wire n_320_150;
+    wire n_320_210;
+    wire n_320_240;
+    wire n_440_70;
+    wire n_440_200;
+    (* qucs_mirrored=0, qucs_rotated=1, S0_x1=120, S0_y1=120, S0_x2=120, S0_y2=180 *) Vac #(.U(1 V),.f(1 GHz),.Phase(0),.Theta(0)) V1 ( n_120_120, n_120_180 );
+    (* qucs_mirrored=0, qucs_rotated=0, S0_x1=320, S0_y1=240 *) GND #() \*  ( n_320_240 );
+    (* qucs_mirrored=0, qucs_rotated=0, S0_x1=120, S0_y1=240 *) GND #() \*  ( n_120_240 );
+    (* qucs_mirrored=0, qucs_rotated=1, S0_x1=320, S0_y1=120, S0_x2=320, S0_y2=60 *) R #(.R(R_par),.Temp(26.85),.Tc1(0.0),.Tc2(0.0),.Tnom(26.85)) R1 ( n_320_120, n_320_60 );
+    (* qucs_mirrored=0, qucs_rotated=1, S0_x1=320, S0_y1=240, S0_x2=320, S0_y2=180 *) C #(.C(2 pF),.V(),.Symbol(neutral)) C1 ( n_320_240, n_320_180 );
+    (* qucs_mirrored=0, qucs_rotated=1, S0_x1=320, S0_y1=180, S0_x2=320, S0_y2=120 *) L #(.L(13 nH),.I()) L1 ( n_320_180, n_320_120 );
+    (* qucs_mirrored=0, qucs_rotated=0 *) \.SW  #(.Sim(AC1),.Type(log),.Start(R_par),.Stop(1 Ohm),.Points(20 Ohm),.Points(6)) SW1 (  );
+    (* qucs_mirrored=0, qucs_rotated=0 *) \.AC  #(.Type(lin),.Start(0.9 GHz),.Stop(1.1 GHz),.Points(150),.Noise(no)) AC1 (  );
+    (* S0_x1=120, S0_y1=180, S0_x2=120, S0_y2=240 *) net #() net1 ( n_120_180, n_120_240 );
+    (* S0_x1=120, S0_y1=60, S0_x2=320, S0_y2=60 *) net #() net2 ( n_120_60, n_320_60 );
+    (* S0_x1=120, S0_y1=60, S0_x2=120, S0_y2=120 *) net #() net3 ( n_120_60, n_120_120 );
 endmodule

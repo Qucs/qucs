@@ -19,6 +19,7 @@
 #define COMPONENT_H
 
 #include "element.h"
+#include "trace.h"
 #include <list>
 
 #include <QTextStream>
@@ -56,15 +57,27 @@ public:
   bool    load(const QString&);
 
 public: // attributes
-  virtual std::string attr_get()const {return _attr;}
+  std::string attr_get()const override;
   virtual void attr_add(std::string s) {_attr += ", " + s;}
+  virtual void set_attribute(std::string name, std::string value);
+  virtual void set_label(std::string const& name);
 
 public: // parameter access
   virtual int param_count() const;
   virtual bool param_is_printable(int i) const;
-  virtual QString param_name(int i) const;
-  virtual QString param_value(int i) const;
-  virtual QString param_id_tag(int i) const;
+  virtual std::string param_name(int i) const;
+  virtual std::string param_value(int i) const;
+  virtual void set_param_by_index(int i, std::string const& Value);
+  virtual void set_param_by_name(std::string const& name, std::string const& v);
+  virtual void set_port_by_name(std::string const&, std::string const&);
+  virtual void set_port_by_index(int num, std::string const& ext_name);
+
+public:
+  virtual std::string dev_type()const {unreachable(); return "???";}
+  virtual void set_dev_type(std::string const& type);
+
+public:
+  virtual void set_qucs_text_position(int x, int y) {_tx=x;_ty=y;}
 
   // to hold track of the component appearance for saving and copying
   bool mirroredX;   // is it mirrored about X axis or not
@@ -97,9 +110,13 @@ public: // parameter access
   #define COMP_IS_ACTIVE  1
   #define COMP_IS_SHORTEN 2
   int  isActive; // should it be used in simulation or not ?
-  int  tx, ty;   // upper left corner of text (position)
+private:
+  int  _tx, _ty;   // upper left corner of text (position)
+public:
+  int tx()const {return _tx;}
+  int ty()const {return _ty;}
 
-// private: // TODO
+public: // private: // TODO
   bool showName;
 
 public:

@@ -30,7 +30,7 @@ public:
   static Element* info_us(QString&, char* &, bool getNewOne=false);
 
   bool param_is_printable(int i)const override {
-    QString pname = param_name(i);
+    std::string pname = param_name(i);
     if(pname=="Symbol") {
       return false;
     }else{

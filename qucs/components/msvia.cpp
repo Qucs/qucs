@@ -36,8 +36,7 @@ MSvia::MSvia()
   x1 = -20; y1 = -7;
   x2 =  14; y2 = 30;
 
-  tx = 20;
-  ty = 0;
+  set_qucs_text_position(20, 0);
   Model = "MVIA";
   Name  = "MS";
 

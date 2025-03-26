@@ -426,9 +426,9 @@ ComponentDialog::ComponentDialog(const std::shared_ptr<Component> &c, Schematic 
   changed = false;
 
   Comp->textSize(tx_Dist, ty_Dist);
-  int tmp = Comp->tx+tx_Dist - Comp->x1;
+  int tmp = Comp->tx()+tx_Dist - Comp->x1;
   if((tmp > 0) || (tmp < -6))  tx_Dist = 0;  // remember the text position
-  tmp = Comp->ty+ty_Dist - Comp->y1;
+  tmp = Comp->ty()+ty_Dist - Comp->y1;
   if((tmp > 0) || (tmp < -6))  ty_Dist = 0;
 
   /*! Insert all \a Comp properties into the dialog \a prop list */
@@ -1045,14 +1045,19 @@ void ComponentDialog::slotApplyInput()
   if(changed) {
     int dx, dy;
     Comp->textSize(dx, dy);
+    int newtx = Comp->tx();
+    int newty = Comp->ty();
     if(tx_Dist != 0) {
-      Comp->tx += tx_Dist-dx;
+      newtx += tx_Dist-dx;
       tx_Dist = dx;
+    }else{
     }
     if(ty_Dist != 0) {
-      Comp->ty += ty_Dist-dy;
+      newty += ty_Dist-dy;
       ty_Dist = dy;
+    }else{
     }
+    Comp->set_qucs_text_position(newtx, newty);
 
     Doc->recreateComponent(Comp);
     Doc->viewport()->repaint();

@@ -215,22 +215,8 @@ fi # if pkg-config exists
   case $host_os in
     *linux* | *cygwin* | *mingw* | *msys* | *bsd* )
 
-      dnl Set Clang
-      if test "$CXX -dM -E - < /dev/null | grep __clang__" ; then
-        CFLAGS="$CFLAGS -pipe"
-        CXXFLAGS="$CXXFLAGS -pipe -fno-exceptions -Wno-deprecated-register"
-        LDDFLAGS="$LDDFLAGS"
-        use_CLANG="yes"
-      fi
-
-      dnl Set GCC.
-      if test "x$use_CLANG" != "xyes" -a "x$GCC" = "xyes" ; then
-        CFLAGS="$CFLAGS -pipe"
-        CXXFLAGS="$CXXFLAGS -pipe -fno-exceptions -fno-check-new"
-        if test x$WIN32 = xyes; then
-          CXXFLAGS="$CXXFLAGS"
-        fi
-      fi
+      CFLAGS="$CFLAGS -pipe"
+      CXXFLAGS="$CXXFLAGS -pipe -fexceptions"
 
       dnl Windows GUI programs should not have console window visible
       if test x$WIN32 = xyes; then
@@ -238,12 +224,11 @@ fi # if pkg-config exists
       fi
 
       if test "$enable_qucs_gui_debug" = yes; then
-        CFLAGS="$CFLAGS -W -Wall -Wmissing-prototypes"
         CXXFLAGS="$CXXFLAGS -W -Wall"
       fi
 
       dnl Enable C++11 support
-      CXXFLAGS="$CXXFLAGS -std=c++0x"
+      CXXFLAGS="$CXXFLAGS -std=c++14"
 
 # use pkg-config, if it exists
 if test "x$PKG_CONFIG" != "x"; then
@@ -424,9 +409,6 @@ AS_IF([test $QT_MAJOR_VERSION -ge 5],
     if test "$enable_qucs_gui_debug" = yes; then
       CPPFLAGS="$CPPFLAGS -W -Wall"
     fi
-
-    dnl Enable C++11 support
-    CPPFLAGS="$CPPFLAGS -std=c++0x"
 
     dnl ===================================================================
     dnl Test if search for SDK was enabled

@@ -47,8 +47,7 @@ vProbe::vProbe()
   x1 = -24; y1 = -35;
   x2 =  24; y2 =  20;
 
-  tx = x2+4;
-  ty = y1+4;
+  set_qucs_text_position(x2+4, y1+4);
   Model = "VProbe";
   Name  = "Pr";
 }

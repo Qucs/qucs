@@ -38,8 +38,7 @@ DC_Sim::DC_Sim()
   x1 = -10; y1 = -9;
   x2 = x1+128; y2 = y1+41;
 
-  tx = 0;
-  ty = y2+1;
+  set_qucs_text_position(0, y2+1);
   Model = ".DC";
   Name  = "DC";
 

@@ -1,0 +1,23 @@
+(* qucs_ViewX1=0, qucs_ViewY1=0, qucs_ViewX2=800, qucs_ViewY2=800, qucs_Scale=1, qucs_tmpViewX1=-200, qucs_tmpViewY1=-200, qucs_GridX=10, qucs_GridY=10, qucs_GridOn=1, qucs_DataSet="fet.dat", qucs_DataDisplay="fet.dpl", qucs_SimOpenDpl=1, qucs_Script="fet.m", qucs_SimRunScript=0, qucs_showFrame=0, qucs_FrameText0="Title", qucs_FrameText1="Drawn By:", qucs_FrameText2="Date:", qucs_FrameText3="Revision:" *) module fet(.P2(n_0_0), .P1(n_0_0), .P3(n_0_0));
+    inout n_0_0;
+    inout n_0_0;
+    inout n_0_0;
+    (* qucs_mirrored=0, qucs_rotated=0, S0_x1=-30, S0_y1=0, S0_x2=30, S0_y2=0 *) C #(.C(234 fF),.V(),.Symbol(neutral)) C3 ( n_m30_0, n_30_0 );
+    (* qucs_mirrored=0, qucs_rotated=0, S0_x1=-30, S0_y1=-30, S0_x2=30, S0_y2=-30, S0_x3=30, S0_y3=30, S0_x4=-30, S0_y4=30 *) VCCS #(.G(0.069 S),.T(1.69 ps)) SRC1 ( n_m30_m30, n_30_m30, n_30_30, n_m30_30 );
+    (* qucs_mirrored=0, qucs_rotated=0, S0_x1=-30, S0_y1=0, S0_x2=30, S0_y2=0 *) C #(.C(5 fF),.V(),.Symbol(neutral)) C4 ( n_m30_0, n_30_0 );
+    (* qucs_mirrored=0, qucs_rotated=0, S0_x1=-30, S0_y1=0, S0_x2=30, S0_y2=0 *) C #(.C(39 fF),.V(),.Symbol(neutral)) C1 ( n_m30_0, n_30_0 );
+    (* qucs_mirrored=0, qucs_rotated=0, S0_x1=-30, S0_y1=0, S0_x2=30, S0_y2=0 *) C #(.C(31 fF),.V(),.Symbol(neutral)) C2 ( n_m30_0, n_30_0 );
+    (* qucs_mirrored=0, qucs_rotated=0, S0_x1=-30, S0_y1=0, S0_x2=30, S0_y2=0 *) L #(.L(16.7 pH),.I()) L2 ( n_m30_0, n_30_0 );
+    (* qucs_mirrored=0, qucs_rotated=0, S0_x1=0, S0_y1=0 *) Port #(.Num(2),.Type(analog)) P2 ( n_0_0 );
+    (* qucs_mirrored=0, qucs_rotated=0, S0_x1=-30, S0_y1=0, S0_x2=30, S0_y2=0 *) L #(.L(6 pH),.I()) L1 ( n_m30_0, n_30_0 );
+    (* qucs_mirrored=0, qucs_rotated=0, S0_x1=0, S0_y1=0 *) Port #(.Num(1),.Type(analog)) P1 ( n_0_0 );
+    (* qucs_mirrored=0, qucs_rotated=0, S0_x1=-30, S0_y1=0, S0_x2=30, S0_y2=0 *) R #(.R(0.9 Ohm),.Temp(16.85),.Tc1(0.0),.Tc2(0.0),.Tnom(26.85)) R1 ( n_m30_0, n_30_0 );
+    (* qucs_mirrored=0, qucs_rotated=0, S0_x1=-30, S0_y1=0, S0_x2=30, S0_y2=0 *) R #(.R(1.9),.Temp(16.85),.Tc1(0.0),.Tc2(0.0),.Tnom(26.85)) R4 ( n_m30_0, n_30_0 );
+    (* qucs_mirrored=0, qucs_rotated=0, S0_x1=-30, S0_y1=0, S0_x2=30, S0_y2=0 *) R #(.R(3.6 Ohm),.Temp(16.85),.Tc1(0.0),.Tc2(0.0),.Tnom(26.85)) R2 ( n_m30_0, n_30_0 );
+    (* qucs_mirrored=0, qucs_rotated=0, S0_x1=-30, S0_y1=0, S0_x2=30, S0_y2=0 *) R #(.R(2.5),.Temp(16.85),.Tc1(0.0),.Tc2(0.0),.Tnom(26.85)) R6 ( n_m30_0, n_30_0 );
+    (* qucs_mirrored=0, qucs_rotated=0, S0_x1=-30, S0_y1=0, S0_x2=30, S0_y2=0 *) C #(.C(14 fF),.V(),.Symbol(neutral)) C5 ( n_m30_0, n_30_0 );
+    (* qucs_mirrored=0, qucs_rotated=0, S0_x1=-30, S0_y1=0, S0_x2=30, S0_y2=0 *) R #(.R(2.4 Ohm),.Temp(16.85),.Tc1(0.0),.Tc2(0.0),.Tnom(26.85)) R5 ( n_m30_0, n_30_0 );
+    (* qucs_mirrored=0, qucs_rotated=0, S0_x1=-30, S0_y1=0, S0_x2=30, S0_y2=0 *) L #(.L(6.4 pH),.I()) L3 ( n_m30_0, n_30_0 );
+    (* qucs_mirrored=0, qucs_rotated=0, S0_x1=0, S0_y1=0 *) Port #(.Num(3),.Type(analog)) P3 ( n_0_0 );
+    (* qucs_mirrored=0, qucs_rotated=0, S0_x1=-30, S0_y1=0, S0_x2=30, S0_y2=0 *) R #(.R(312),.Temp(6000),.Tc1(0.0),.Tc2(0.0),.Tnom(26.85)) R3 ( n_m30_0, n_30_0 );
+endmodule

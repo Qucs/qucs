@@ -39,7 +39,7 @@ QString* QuarterWave_Filter::createSchematic(tFilter *Filter, tSubstrate *Substr
 {
   int i, x;
   double d_lamdba4;
-  double Z;
+  double Z = 0;
   double er_eff=1, width=1;
   double fc = Filter->Frequency+0.5*(Filter->Frequency2-Filter->Frequency);
   double bw = (Filter->Frequency2-Filter->Frequency)/(fc);

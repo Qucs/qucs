@@ -42,6 +42,8 @@
 #include "components/libcomp.h"
 #include "module.h"
 #include "misc.h"
+#include "trace.h"
+#include "ap.h"
 
 #if TRACE_FUNCTION_CALLS
 #define trace_method_calls() qInfo()<<__FILE__ <<":"<<__func__
@@ -702,6 +704,10 @@ bool Schematic::loadPaintings(QTextStream *stream, SharedObjectList<Element> &Li
   return false;
 }
 
+// TODO: language header.
+class CS;
+bool readVerilog(CS& cmd, Schematic* s);
+
 /*!
  * \brief Schematic::loadDocument tries to load a schematic document.
  * \return true/false in case of success/failure
@@ -737,8 +743,16 @@ bool Schematic::loadDocument()
     Line = stream.readLine();
   } while(Line.isEmpty());
 
-  if(Line.left(2) == "(*" && Line.right(2) == "*)") {
-    return readVerilog(file);
+  /*
+   * The Verilog Schematic preamble is in the form (* ... *)
+   * (* is at the beginning at some point it has to be closed
+   */
+  if( (Line.left(2) == "(*") && Line.contains("*)") ) {
+    // this is asking for a magic byte/sting in a schematic, which we do not have yet.
+    file.reset();
+    QTextStream s(&file);
+    CS cmd(&s);
+    readVerilog(cmd, this);
   } else if(Line.left(16) == "<Qucs Schematic ") { // Legacy format
     Line = Line.mid(16, Line.length()-17);
     VersionTriplet DocVersion = VersionTriplet(Line);
@@ -749,11 +763,19 @@ bool Schematic::loadDocument()
       }
     }
     return readLegacy(file);
-  } else {
-    QMessageBox::critical(0, QObject::tr("Error"),
- 		 QObject::tr("Wrong document type: ")+DocName);
-    return false;
+  } else { untested();
+    file.reset();
+    QTextStream s(&file);
+    CS cmd(&s);
+    readVerilog(cmd, this);
+    // BUG. implicit file type.
+    // possibly use file extension as a fallback?
+    // (OK for now)
+    //QMessageBox::critical(0, QObject::tr("Error"),
+    //    	 QObject::tr("Wrong document type: ")+DocName);
+    //return false;
   }
+  return true;
 }
 
 // -------------------------------------------------------------
@@ -1142,6 +1164,7 @@ bool Schematic::throughAllComps(QTextStream *stream, int& countInit,
 	continue;
       }
       QString scfile = pc->getSubcircuitFile();
+      assert(pc->Props.size() > 1);
       s = scfile + "/" + pc->prop(1).Value;
       SubMap::Iterator it = FileList.find(s);
       if(it != FileList.end())
@@ -1153,9 +1176,10 @@ bool Schematic::throughAllComps(QTextStream *stream, int& countInit,
       unsigned whatisit = isAnalog?1:(isVerilog?4:2);
       r = lib->createSubNetlist(stream, Collect, whatisit);
       if(!r) {
+	// BUG. this is what exceptions are for.
 	ErrText->appendPlainText(
 	    QObject::tr("ERROR: \"%1\": Cannot load library component \"%2\" from \"%3\"").
-            arg(pc->name(), pc->prop(1).Value, scfile));
+            arg(pc->name(), QString::fromStdString(lib->dev_type()), scfile));
 	return false;
       }
       continue;
@@ -1395,7 +1419,7 @@ int NumPorts)
             case 'o': // output ports need workaround
               Signals.insert(*it_name, DigSignal(*it_name, *it_type));
               (*it_name) = "net_out" + (*it_name);
-              // no "break;" here !!!
+	      // fall through
             default:
               (*it_name) += " : " + pc->prop(1).Value;
           }

@@ -1003,7 +1003,7 @@ void MouseActions::MPressSelect(Schematic *Doc, QMouseEvent *Event, float fX, fl
 
     case isDiagramHScroll:  // scroll in tabular ?
       MAy1 = MAx1;
-
+      // fall through
     case isDiagramVScroll:
       {
         focusElement->Type = isDiagram;
@@ -1262,7 +1262,10 @@ void MouseActions::MPressElement(Schematic *Doc, QMouseEvent *Event, float, floa
 	Comp->textSize(x1, y1);
 	Doc->insertComponent(Comp);
 	Comp->textSize(x2, y2);
-	if(Comp->tx < Comp->x1) Comp->tx -= x2 - x1;
+	if(Comp->tx() < Comp->x1){
+	  Comp->set_qucs_text_position(Comp->tx() - x2 - x1, Comp->ty());
+	}else{
+	}
 
     // Note: insertCopmponents does increment  name1 -> name2
 //    qDebug() << "  +-+ got to insert:" << Comp->Name;
@@ -1529,8 +1532,8 @@ void MouseActions::MPressMoveText(Schematic *Doc, QMouseEvent*, float fX, float 
     MAx3 = MAx1;
     MAy3 = MAy1;
     auto c = std::dynamic_pointer_cast<Component>(focusElement);
-    MAx1 = c->cx + c->tx;
-    MAy1 = c->cy + c->ty;
+    MAx1 = c->cx + c->tx();
+    MAy1 = c->cy + c->ty();
     Doc->viewport()->update();
     drawn = false;
     QucsMain->MouseMoveAction = &MouseActions::MMoveMoveText;
@@ -1870,8 +1873,7 @@ void MouseActions::MReleaseMoveText(Schematic *Doc, QMouseEvent *Event)
   Doc->releaseKeyboard();  // allow keyboard inputs again
 
   auto c = std::dynamic_pointer_cast<Component>(focusElement);
-  c->tx = MAx1 - c->cx;
-  c->ty = MAy1 - c->cy;
+  c->set_qucs_text_position(MAx1 - c->cx, MAy1 - c->cy);
   Doc->viewport()->update();
   drawn = false;
   Doc->setChanged(true, true);

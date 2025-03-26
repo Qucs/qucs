@@ -22,8 +22,7 @@ DLS_nto1::DLS_nto1()
     +" ("+QObject::tr ("s")+")"));
 
   createSymbol ();
-  tx = x1 + 14;
-  ty = y2 + 4;
+  set_qucs_text_position(x1+14, y2+4);
   Model = "DLS_nto1";
   Name  = "Y";
 }

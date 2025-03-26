@@ -52,8 +52,7 @@ Transformer::Transformer()
   x1 = -33; y1 = -34;
   x2 =  33; y2 =  34;
 
-  tx = x1+4;
-  ty = y2+4;
+  set_qucs_text_position(x1+4, y2+4);
   Model = "Tr";
   Name  = "Tr";
 

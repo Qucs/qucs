@@ -408,11 +408,11 @@ int main(int argc, char *argv[])
 
   QucsSettings.BinDir =      QucsDir.absolutePath() + "/bin/";
   QucsSettings.LangDir =     QucsDir.canonicalPath() + "/share/qucs/lang/";
-  var = getenv("QUCS_LIBDIR");
+  var = getenv("QUCS_LIBRARY");
   if(var != NULL) {
 	  QucsSettings.LibDir = QString(var);
   }else{
-	  QucsSettings.LibDir =      QucsDir.canonicalPath() + "/share/qucs/library/";
+	  QucsSettings.LibDir = QucsDir.canonicalPath() + "/share/qucs/library/";
   }
   QucsSettings.OctaveDir =   QucsDir.canonicalPath() + "/share/qucs/octave/";
   QucsSettings.ExamplesDir = QucsDir.canonicalPath() + "/share/qucs/examples/";

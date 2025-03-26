@@ -41,8 +41,7 @@ Equation::Equation()
   x1 = -xb-3;  y1 = -yb-5;
   x2 =  xb+9; y2 =  yb+3;
 
-  tx = x1+4;
-  ty = y2+4;
+  set_qucs_text_position(x1+4, y2+4);
   Model = "Eqn"; // BUG: don't use
   Name  = "Eqn"; // BUG: don't use
 

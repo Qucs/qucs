@@ -24,8 +24,7 @@ MOSFET::MOSFET()
   // properties obtained from "Basic_MOSFET" in mosfet_sub.cpp
   Description = QObject::tr("MOS field-effect transistor");
   createSymbol();
-  tx = x2+4;
-  ty = y1+4;
+  set_qucs_text_position(x2+4, y1+4);
   Model = "_MOSFET";
 }
 

@@ -29,8 +29,8 @@ MStee::MStee()
 
   // use the screen-compatible metric
   QFontMetrics metrics(QucsSettings.font, 0);   // get size of text
-  tx = x1+4;
-  ty = y1 - 5*metrics.lineSpacing() - 4; // 5 lines of text
+  set_qucs_text_position(x1+4,
+  y1 - 5*metrics.lineSpacing() - 4); // BUG
   Model = "MTEE";
   Name  = "MS";
 

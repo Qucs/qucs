@@ -108,7 +108,8 @@ PRJ_TESTS = \
 	TR_Puls3b.prj \
 	TR_resistor.prj \
 	TR_sawtooth-1.prj \
-	misc.prj
+	misc.prj \
+	unittest.prj
 
 # some of these hangup or crash qucs. needs more work
 PRJ_TESTS_TODO = \

@@ -34,8 +34,7 @@ Optimize_Sim::Optimize_Sim()
   x1 = -10; y1 = -9;
   x2 = x1+128; y2 = y1+41;
 
-  tx = 0;
-  ty = y2+1;
+  set_qucs_text_position(0, y1+1);
   Model = ".Opt";
   Name  = "Opt";
 

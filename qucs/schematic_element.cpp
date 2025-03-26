@@ -2567,7 +2567,7 @@ void Schematic::recreateComponent(const std::shared_ptr<Component> &Comp)
     }
 
 
-    int x = Comp->tx, y = Comp->ty;
+    int x = Comp->tx(), y = Comp->ty();
     int x1 = Comp->x1, x2 = Comp->x2, y1 = Comp->y1, y2 = Comp->y2;
     QString tmp = Comp->name();    // is sometimes changed by "recreate"
     Comp->recreate(this);   // to apply changes to the schematic symbol
@@ -2580,8 +2580,7 @@ void Schematic::recreateComponent(const std::shared_ptr<Component> &Comp)
         y += Comp->y1 - y1;
     else if(y > y2)
         y += Comp->y2 - y2;
-    Comp->tx = x;
-    Comp->ty = y;
+    Comp->set_qucs_text_position(x, y);
 
 
     if(PortCount > 0)
@@ -2798,9 +2797,9 @@ std::shared_ptr<Component> Schematic::selectCompText(int x_, int y_, int& w, int
     int a, b, dx, dy;
     for(auto pc = Components->begin(); pc != Components->end(); ++pc)
     {
-        a = pc->cx + pc->tx;
+        a = pc->cx + pc->tx();
         if(x_ < a)  continue;
-        b = pc->cy + pc->ty;
+        b = pc->cy + pc->ty();
         if(y_ < b)  continue;
 
         pc->textSize(dx, dy);

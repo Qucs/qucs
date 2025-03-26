@@ -33,6 +33,24 @@
 #define trace_method_calls() {}
 #endif
 
+// BUG: wrong compilation unit. this is *not* Schematic code.
+// still used in Schematic implementation though
+struct outputStream{
+  explicit outputStream(QTextStream& q) : _s(q) {}
+  QTextStream& _s;
+  template<class T>
+  outputStream& operator<<(T const& t){
+    _s << t;
+    return *this;
+  }
+  // support standard strings
+  outputStream& operator<<(std::string const& t){
+    _s << QString::fromStdString(t);
+    return *this;
+  }
+  void flush(){_s.flush();}
+};
+
 /*
 
 We wanna print out something in the following form.
@@ -57,7 +75,7 @@ QString Schematic::getWireName(const QPoint *p) const
   return net;
 }
 
-static void dumpIdentifier(QTextStream& stream, QString const& name)
+static void dumpIdentifier(outputStream& stream, QString const& name)
 {
   if (!name.size()){
 	  //incomplete();
@@ -76,7 +94,7 @@ static void dumpIdentifier(QTextStream& stream, QString const& name)
 }*/
 
 #define INACTIVE 0
-static void print_args(QTextStream& o, Component const* x)
+static void print_args(outputStream& o, Component const* x)
 {
   // assert(x);
   o << " #(";
@@ -97,23 +115,15 @@ static void print_args(QTextStream& o, Component const* x)
   o << ") ";
 }
 
-// BUG. what does it do?
-// BUG: wrong compilation unit
-void Schematic::dumpDeclaration(QTextStream& stream, Component const* c, QString model, QString name, QList<QPoint> ports) const
+// BUG: needs Schematic
+// BUG: wire is not a Component, need template
+template<class T>
+void dump_attributes(outputStream& stream, T const* c, QList<QPoint> ports, Schematic const* s)
 {
-  // assert(c); ??
+  //assert(c);
   QStringList nets;
   int port_idx = 0;
-  stream << "    (* ";
-  QString sep;
-  for (auto pp = ports.begin(); pp != ports.end(); ++pp) {
-    stream << sep << QString("S0_x%1=%2, S0_y%1=%3")
-        .arg(++port_idx)
-        .arg(pp->x())
-        .arg(pp->y());
-    sep = ", ";
-    nets.append(getWireName(&(*pp)));
-  }
+  stream << "(* ";
   //print_attributes(o, nets);
   std::string attr;
   if(c){
@@ -121,21 +131,40 @@ void Schematic::dumpDeclaration(QTextStream& stream, Component const* c, QString
   }else{
     //what?
   }
+  stream << QString::fromStdString(attr);
+  QString sep;
   if(attr.size()){
-    stream << sep;
+    sep = ", ";
   }else{
   }
-  stream << QString::fromStdString(attr) << QString(" *) ");
+  for (auto pp = ports.begin(); pp != ports.end(); ++pp) {
+    stream << sep << QString("S0_x%1=%2, S0_y%1=%3")
+        .arg(++port_idx)
+        .arg(pp->x())
+        .arg(pp->y());
+    sep = ", ";
+    nets.append(s->getWireName(&(*pp)));
+  }
+  stream << QString(" *) ");
+}
+
+void Schematic::dumpDeclaration(outputStream& stream, Component const* c, QString model, QString name, QList<QPoint> ports) const
+{
   dumpIdentifier(stream, model);
   print_args(stream, c);
   dumpIdentifier(stream, name);
   stream << " ( ";
-  stream << nets.join(", ");
+  std::string sep;
+  for (auto pp = ports.begin(); pp != ports.end(); ++pp) {
+    stream << sep << getWireName(&(*pp));
+    sep = ", ";
+  }
   stream << " );\n";
 }
 
 // BUG: wrong compilation unit
-void Schematic::dumpVerilogComponent(QTextStream& stream, Component const* c) const
+// BUG: wrong class
+void Schematic::dumpVerilogComponent(outputStream& stream, Component const* c) const
 {
   assert(c);
   QList<QPoint> ports;
@@ -147,6 +176,8 @@ void Schematic::dumpVerilogComponent(QTextStream& stream, Component const* c) co
       ports.append(QPoint(con->cx,con->cy));
     }
   }
+  stream << "    ";
+  dump_attributes(stream, c, ports, this);
   dumpDeclaration(stream, c, model, name, ports);
 }
 
@@ -154,7 +185,9 @@ void Schematic::dumpVerilogComponent(QTextStream& stream, Component const* c) co
  * <280 100 460 100 "" 0 0 0> == net w1(n_280_100, n_460_100);
  */
 // BUG: wrong compilation unit
-void Schematic::dumpVerilogWire(QTextStream& stream, Wire const* w) const
+// BUG: wrong class
+// BUG: duplicates dumpVerilogComponent
+void Schematic::dumpVerilogWire(outputStream& stream, Wire const* w) const
 {
 	assert(w);
   QList<QPoint> ports;
@@ -168,10 +201,12 @@ void Schematic::dumpVerilogWire(QTextStream& stream, Wire const* w) const
   }
   ports.append(QPoint(w->x1,w->y1));
   ports.append(QPoint(w->x2,w->y2));
+  stream << "    ";
+  dump_attributes(stream, w, ports, this);
   dumpDeclaration(stream, NULL, "net", name, ports);
 }
 
-void Schematic::dumpVerilogQucsPreamble(QTextStream& stream) const
+void Schematic::dumpVerilogQucsPreamble(outputStream& stream) const
 {
   // View
   stream <<   "qucs_ViewX1="      << ViewX1
@@ -243,7 +278,8 @@ int Schematic::saveVerilogDocument(QFile *file)
   );
 
   // Writing stuff out
-  QTextStream stream(file);
+  QTextStream Qs(file);
+  outputStream stream(Qs);
   QString module_name = QFileInfo(DocName).baseName();
   if(DocName.contains(".prj_")) {
     module_name = DocName.split(".prj_").at(1);

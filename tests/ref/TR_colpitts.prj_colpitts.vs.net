@@ -1,0 +1,11 @@
+# Qucs
+
+C:C3 _net0 _net1 C="1 nF" V=""
+R:R2 _net0 _net1 R="500 Ohm" Temp="26.85" Tc1="0.0" Tc2="0.0" Tnom="26.85"
+Vdc:V1 _net2 _net3 U="10 V"
+L:L1 _net0 _net1 L="100 uH" I=""
+JFET:T1 _net0 _net2 _net3 Type="nfet" Vt0="-0.8 V" Beta="5e-3" Lambda="0.0" Rd="0.0" Rs="0.0" Is="1e-14" N="1.0" Isr="1e-14" Nr="2.0" Cgs="0.0" Cgd="0.0" Pb="1.0" Fc="0.5" M="0.5" Kf="0.0" Af="1.0" Ffe="1.0" Temp="26.85" Xti="3.0" Vt0tc="0.0" Betatce="0.0" Tnom="26.85" Area="1.0"
+R:R1 _net0 _net1 R="500 Ohm" Temp="26.85" Tc1="0.0" Tc2="0.0" Tnom="26.85"
+C:C2 _net0 _net1 C="0.5 nF" V=""
+C:C1 _net0 _net1 C="0.5 nF" V=""
+R:R3 _net0 _net1 R="5 kOhm" Temp="26.85" Tc1="0.0" Tc2="0.0" Tnom="26.85"

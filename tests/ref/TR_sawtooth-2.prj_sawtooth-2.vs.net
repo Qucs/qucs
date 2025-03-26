@@ -1,0 +1,15 @@
+# Qucs
+
+OpAmp:OP1 _net0 _net1 _net2 G="1e4" Umax="15 V"
+OpAmp:OP2 _net0 _net1 _net2 G="1e4" Umax="15 V"
+Vdc:V1 _net3 _net4 U="-14.5 V"
+R:R1 _net5 _net6 R="100 kOhm" Temp="26.85" Tc1="0.0" Tc2="0.0" Tnom="26.85"
+R:R2 _net5 _net6 R="120 kOhm" Temp="26.85" Tc1="0.0" Tc2="0.0" Tnom="26.85"
+C:C1 _net5 _net6 C="1 pF" V=""
+R:R3 _net5 _net6 R="43 kOhm" Temp="26.85" Tc1="0.0" Tc2="0.0" Tnom="26.85"
+OpAmp:OP3 _net0 _net1 _net2 G="1e6" Umax="15 V"
+R:R4 _net5 _net6 R="100 kOhm" Temp="26.85" Tc1="0.0" Tc2="0.0" Tnom="26.85"
+Vdc:V2 _net3 _net4 U="0.6 V"
+R:R5 _net5 _net6 R="100 kOhm" Temp="26.85" Tc1="0.0" Tc2="0.0" Tnom="26.85"
+R:R6 _net5 _net6 R="47.4 kOhm" Temp="26.85" Tc1="0.0" Tc2="0.0" Tnom="26.85"
+R:R7 _net5 _net6 R="924 kOhm" Temp="26.85" Tc1="0.0" Tc2="0.0" Tnom="26.85"

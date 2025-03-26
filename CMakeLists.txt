@@ -20,6 +20,12 @@ if(EXISTS ${CMAKE_SOURCE_DIR}/../.git)
 endif()
 
 set(PROJECT_VERSION ${QUCS_VERSION})
+option(BUILD_API_TESTS "Build extended API tests (compute intensive)" OFF)
+if(BUILD_API_TESTS)
+    message(STATUS "Building all the extended API tests")
+else()
+    message(STATUS "Not Building extended API tests")
+endif()
 
 message(STATUS "${PROJECT_NAME} ${CMAKE_INSTALL_PREFIX}
     ${qucs-suite_BINARY_DIR}")
@@ -95,3 +101,5 @@ configure_file("${CMAKE_CURRENT_SOURCE_DIR}/cmake/uninstall.cmake.in"
                "${CMAKE_CURRENT_BINARY_DIR}/uninstall.cmake" IMMEDIATE @ONLY)
 
 add_custom_target(uninstall-ui COMMAND ${CMAKE_COMMAND} -P ${CMAKE_CURRENT_BINARY_DIR}/uninstall.cmake)
+add_custom_target(subdirs COMMAND
+echo "man qucs qucs-activefilter qucs-attenuator qucs-filter qucs-lib qucs-rescodes qucs-transcalc qucs-powercombining translations contrib examples tests")

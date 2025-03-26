@@ -54,8 +54,7 @@ indq::indq()
   x1 = -30; y1 = -13;
   x2 =  30; y2 =  13;
 
-  tx = x1+4;
-  ty = y2+4;
+  set_qucs_text_position(x1+4, y2+4);
   Model = "INDQ";
   Name  = "INDQ";
 

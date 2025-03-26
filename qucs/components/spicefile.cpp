@@ -141,9 +141,11 @@ void SpiceFile::createSymbol()
   // compute component name text position - normal size font
   QFontMetrics  metrics(QucsSettings.font, 0);   // use the screen-compatible metric
   fHeight = metrics.lineSpacing();
-  tx = x1+4;
-  ty = y1 - fHeight - 4;
-  if(prop(0).display) ty -= fHeight;
+  set_qucs_text_position(x1+4, y1 - fHeight - 4); // BUG
+  if(prop(0).display){
+	  set_qucs_text_position(tx(), ty() - fHeight);
+  }else{
+  }
   changed = true;
 }
 

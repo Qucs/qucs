@@ -31,8 +31,7 @@ binarytogrey4bit::binarytogrey4bit()
     +" ("+QObject::tr ("s")+")"));
 
   createSymbol ();
-  tx = x1 + 19;
-  ty = y2 + 4;
+  set_qucs_text_position(x1 + 19, y2 + 4);
   Model = "binarytogrey4bit";
   Name  = "Y";
 }

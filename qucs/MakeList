@@ -1,0 +1,34 @@
+# MakeList for Qucs
+
+CXX_SRCS = \
+	ap.cpp \
+	attach.cpp \
+	element.cpp \
+	imagewriter.cpp \
+	lang_verilog.cpp \
+	messagedock.cpp \
+	misc.cpp \
+	mnemo.cpp \
+	module.cpp \
+	mouseactions.cpp \
+	node.cpp \
+	octave_window.cpp \
+	printerwriter.cpp \
+	projectView.cpp \
+	qucs_actions.cpp \
+	qucs.cpp \
+	qucsdoc.cpp \
+	qucs_init.cpp \
+	schematic.cpp \
+	schematic_element.cpp \
+	schematic_file.cpp \
+	schematic_file_read.cpp \
+	schematic_file_write.cpp \
+	syntax.cpp \
+	textdoc.cpp \
+	viewpainter.cpp \
+	wire.cpp \
+	wirelabel.cpp
+
+CXX_HDRS = \
+  platform.h trace.h

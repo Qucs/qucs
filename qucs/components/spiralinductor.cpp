@@ -44,8 +44,7 @@ spiralinductor::spiralinductor()
   x1 = -30; y1 =-25;
   x2 =  30; y2 = 25;
 
-  tx = x1;
-  ty = y1+50;
+  set_qucs_text_position(x1, y1+50);
   Model = "SPIRALIND";
   Name  = "SPIRALIND";
 
