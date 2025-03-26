@@ -11,5 +11,5 @@
     (* qucs_mirrored=0, qucs_rotated=0, S0_x1=-30, S0_y1=0, S0_x2=30, S0_y2=0 *) R #(.R(3k),.Temp(26.85),.Tc1(0.0),.Tc2(0.0),.Tnom(26.85)) R2 ( n_m30_0, n_30_0 );
     (* qucs_mirrored=0, qucs_rotated=0, S0_x1=-30, S0_y1=0, S0_x2=30, S0_y2=0 *) C #(.C(0.01uF),.V(0V),.Symbol(neutral)) C2 ( n_m30_0, n_30_0 );
     (* qucs_mirrored=0, qucs_rotated=0, S0_x1=-30, S0_y1=0, S0_x2=30, S0_y2=0 *) C #(.C(0.01u),.V(0V),.Symbol(neutral)) C1 ( n_m30_0, n_30_0 );
-    (* qucs_mirrored=0, qucs_rotated=0 *) Sub #(.File(timer_555.sch)) SUB1 (  );
+    (* qucs_mirrored=0, qucs_rotated=0, qucs_type="Sub", qucs_file="timer_555.sch" *) timer_555 #() SUB1 (  );
 endmodule

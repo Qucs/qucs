@@ -54,6 +54,41 @@ Component* Subcircuit::newOne()
 }
 
 // -------------------------------------------------------
+std::string Subcircuit::dev_type() const
+{ untested();
+  assert(Props.size());
+  QString f = misc::properFileName(Props.front().Value);
+  return misc::properName(f).toStdString();
+}
+
+// ---------------------------------------------------------------------
+void Subcircuit::set_dev_type(std::string const& t)
+{ untested();
+	assert(Props.size());
+	prop(0).Value = QString::fromStdString(t);
+}
+
+// ---------------------------------------------------------------------
+void Subcircuit::set_attribute(std::string name, std::string value)
+{
+	if(name == "qucs_file"){
+	  assert(Props.size());
+	  Props.front().Value = QString::fromStdString(value);
+	}else{
+		Component::set_attribute(name, value);
+	}
+}
+// ---------------------------------------------------------------------
+std::string Subcircuit::attr_get() const
+{
+  std::string ret = Component::attr_get();
+  ret += ", qucs_type=\"Sub\"";
+  assert(Props.size());
+  ret += ", qucs_file=\"" + prop(0).Value.toStdString() + "\"";
+  return ret;
+}
+
+// -------------------------------------------------------
 Element* Subcircuit::info(QString& Name, char* &BitmapFile, bool getNewOne)
 {
   Name = QObject::tr("Subcircuit");
@@ -209,9 +244,7 @@ QString Subcircuit::netlist()
   for(auto p1 = Ports.begin(); p1 != Ports.end(); ++p1)
     s += " "+p1->getConnection()->Name;   // node names
 
-  // type for subcircuit
-  QString f = misc::properFileName(Props.front().Value);
-  s += " Type=\""+misc::properName(f)+"\"";
+  s += " Type=\""+QString::fromStdString(dev_type())+"\"";
 
   // output all user defined properties
   for(auto pp = Props.begin(); pp != Props.end(); ++pp) {

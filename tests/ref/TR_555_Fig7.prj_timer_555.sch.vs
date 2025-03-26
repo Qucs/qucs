@@ -62,11 +62,11 @@
     (* qucs_mirrored=0, qucs_rotated=3, S0_x1=220, S0_y1=30 *) Port #(.Num(8),.Type(analog)) P_VCC ( n_220_30 );
     (* qucs_mirrored=0, qucs_rotated=0, S0_x1=140, S0_y1=355 *) Port #(.Num(2),.Type(analog)) P_TRIGGER ( n_140_355 );
     (* qucs_mirrored=0, qucs_rotated=0, S0_x1=120, S0_y1=140 *) Port #(.Num(6),.Type(analog)) P_THRESH ( n_120_140 );
-    (* qucs_mirrored=0, qucs_rotated=0, S0_x1=610, S0_y1=410, S0_x2=710, S0_y2=360, S0_x3=670, S0_y3=470 *) Sub #(.File(timer_Discharge.sch)) SUB5 ( n_610_410, n_710_360, n_670_470 );
-    (* qucs_mirrored=0, qucs_rotated=0, S0_x1=505, S0_y1=200, S0_x2=505, S0_y2=220, S0_x3=505, S0_y3=240, S0_x4=585, S0_y4=200, S0_x5=585, S0_y5=240 *) Sub #(.File(timer_digital_comb.sch)) SUB3 ( n_505_200, n_505_220, n_505_240, n_585_200, n_585_240 );
-    (* qucs_mirrored=0, qucs_rotated=0, S0_x1=690, S0_y1=200, S0_x2=690, S0_y2=260, S0_x3=820, S0_y3=230 *) Sub #(.File(timer_amp.sch)) SUB4 ( n_690_200, n_690_260, n_820_230 );
-    (* qucs_mirrored=0, qucs_rotated=0, S0_x1=275, S0_y1=280, S0_x2=275, S0_y2=350, S0_x3=385, S0_y3=315 *) Sub #(.File(timer_trig.sch)) SUB6 ( n_275_280, n_275_350, n_385_315 );
-    (* qucs_mirrored=0, qucs_rotated=0, S0_x1=255, S0_y1=140, S0_x2=255, S0_y2=200, S0_x3=375, S0_y3=170 *) Sub #(.File(timer_thresh.sch)) SUB7 ( n_255_140, n_255_200, n_375_170 );
+    (* qucs_mirrored=0, qucs_rotated=0, qucs_type="Sub", qucs_file="timer_Discharge.sch", S0_x1=610, S0_y1=410, S0_x2=710, S0_y2=360, S0_x3=670, S0_y3=470 *) timer_Discharge #() SUB5 ( n_610_410, n_710_360, n_670_470 );
+    (* qucs_mirrored=0, qucs_rotated=0, qucs_type="Sub", qucs_file="timer_digital_comb.sch", S0_x1=505, S0_y1=200, S0_x2=505, S0_y2=220, S0_x3=505, S0_y3=240, S0_x4=585, S0_y4=200, S0_x5=585, S0_y5=240 *) timer_digital_comb #() SUB3 ( n_505_200, n_505_220, n_505_240, n_585_200, n_585_240 );
+    (* qucs_mirrored=0, qucs_rotated=0, qucs_type="Sub", qucs_file="timer_amp.sch", S0_x1=690, S0_y1=200, S0_x2=690, S0_y2=260, S0_x3=820, S0_y3=230 *) timer_amp #() SUB4 ( n_690_200, n_690_260, n_820_230 );
+    (* qucs_mirrored=0, qucs_rotated=0, qucs_type="Sub", qucs_file="timer_trig.sch", S0_x1=275, S0_y1=280, S0_x2=275, S0_y2=350, S0_x3=385, S0_y3=315 *) timer_trig #() SUB6 ( n_275_280, n_275_350, n_385_315 );
+    (* qucs_mirrored=0, qucs_rotated=0, qucs_type="Sub", qucs_file="timer_thresh.sch", S0_x1=255, S0_y1=140, S0_x2=255, S0_y2=200, S0_x3=375, S0_y3=170 *) timer_thresh #() SUB7 ( n_255_140, n_255_200, n_375_170 );
     (* S0_x1=690, S0_y1=260, S0_x2=690, S0_y2=300 *) net #() net1 ( n_690_260, n_690_300 );
     (* S0_x1=690, S0_y1=300, S0_x2=760, S0_y2=300 *) net #() net2 ( n_690_300, n_760_300 );
     (* S0_x1=760, S0_y1=300, S0_x2=820, S0_y2=300 *) net #() net3 ( n_760_300, n_820_300 );
