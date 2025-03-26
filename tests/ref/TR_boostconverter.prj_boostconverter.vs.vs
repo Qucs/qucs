@@ -3,6 +3,8 @@
     (* qucs_mirrored=0, qucs_rotated=0, S0_x1=-30, S0_y1=0, S0_x2=30, S0_y2=0 *) L #(.L(47uH),.I(0)) L1 ( n_m30_0, n_30_0 );
     (* qucs_mirrored=0, qucs_rotated=1, S0_x1=0, S0_y1=-30, S0_x2=0, S0_y2=30 *) Vdc #(.U(12V)) V2 ( n_0_m30, n_0_30 );
     (* qucs_mirrored=0, qucs_rotated=0, S0_x1=0, S0_y1=0 *) GND #() \\*  ( n_0_0 );
+    (* qucs_mirrored=0, qucs_rotated=0 *) Eqn #(.y(1),.Export(yes)) Eqn1 (  );
+    (* qucs_mirrored=0, qucs_rotated=0 *) Eqn #(.y(1),.Export(yes)) Eqn2 (  );
     (* qucs_mirrored=0, qucs_rotated=0, S0_x1=-30, S0_y1=-30, S0_x2=30, S0_y2=-30, S0_x3=30, S0_y3=30, S0_x4=-30, S0_y4=30 *) Relais #(.Vt(0.5 V),.Vh(0.1 V),.Ron(1),.Roff(1e12),.Temp(26.85)) S1 ( n_m30_m30, n_30_m30, n_30_30, n_m30_30 );
     (* qucs_mirrored=0, qucs_rotated=1, S0_x1=0, S0_y1=-30, S0_x2=0, S0_y2=30 *) Vrect #(.U(1V),.TH(Ton),.TL(Toff),.Tr(1 ns),.Tf(1 ns),.Td(0 ns)) V1 ( n_0_m30, n_0_30 );
     (* qucs_mirrored=0, qucs_rotated=0, S0_x1=0, S0_y1=0 *) GND #() \\*  ( n_0_0 );

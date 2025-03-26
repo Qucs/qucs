@@ -32,6 +32,7 @@
   <C C2 1 0 0 0 0 0 0 "100n" 1 "" 0 "neutral" 0>
   <GND \* 5 0 0 0 0 0 0>
   <Vdc V1 1 0 0 0 0 0 1 "12 V" 1>
+  <Eqn Eqn1 1 0 0 0 0 0 0 "y=1" 1 "yes" 0>
 </Components>
 <Wires>
 </Wires>

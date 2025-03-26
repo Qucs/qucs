@@ -26,6 +26,7 @@
     (* qucs_mirrored=0, qucs_rotated=0, S0_x1=-30, S0_y1=0, S0_x2=30, S0_y2=0 *) TLIN #(.Z(38.05 Ohm),.L(74.95 mm),.Alpha(0 dB),.Temp(26.85)) Line6 ( n_m30_0, n_30_0 );
     (* qucs_mirrored=0, qucs_rotated=1, S0_x1=0, S0_y1=-30, S0_x2=0, S0_y2=30 *) Pac #(.Num(3),.Z(50 Ohm),.P(0 dBm),.f(1 MHz),.Temp(26.85)) P3 ( n_0_m30, n_0_30 );
     (* qucs_mirrored=0, qucs_rotated=1, S0_x1=0, S0_y1=-30, S0_x2=0, S0_y2=30 *) Pac #(.Num(4),.Z(50 Ohm),.P(0 dBm),.f(1 MHz),.Temp(26.85)) P4 ( n_0_m30, n_0_30 );
+    (* qucs_mirrored=0, qucs_rotated=0 *) Eqn #(.y(1),.Export(yes)) Eqn1 (  );
     (* qucs_mirrored=0, qucs_rotated=0, S0_x1=-30, S0_y1=-10, S0_x2=30, S0_y2=-10, S0_x3=30, S0_y3=10, S0_x4=-30, S0_y4=10 *) TLIN4P #(.Z(65.7 Ohm),.L(74.95 mm),.Alpha(0 dB),.Temp(26.85)) Line1 ( n_m30_m10, n_30_m10, n_30_10, n_m30_10 );
     (* qucs_mirrored=0, qucs_rotated=0, S0_x1=-30, S0_y1=-10, S0_x2=30, S0_y2=-10, S0_x3=30, S0_y3=10, S0_x4=-30, S0_y4=10 *) TLIN4P #(.Z(76.1 Ohm),.L(74.95 mm),.Alpha(0 dB),.Temp(26.85)) Line3 ( n_m30_m10, n_30_m10, n_30_10, n_m30_10 );
     (* qucs_mirrored=0, qucs_rotated=0, S0_x1=-30, S0_y1=-10, S0_x2=30, S0_y2=-10, S0_x3=30, S0_y3=10, S0_x4=-30, S0_y4=10 *) TLIN4P #(.Z(76.1 Ohm),.L(74.95 mm),.Alpha(0 dB),.Temp(26.85)) Line2 ( n_m30_m10, n_30_m10, n_30_10, n_m30_10 );

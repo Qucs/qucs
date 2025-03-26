@@ -14,4 +14,5 @@
     (* qucs_mirrored=0, qucs_rotated=0, S0_x1=0, S0_y1=0 *) GND #() \\*  ( n_0_0 );
     (* qucs_mirrored=0, qucs_rotated=0, S0_x1=0, S0_y1=0 *) GND #() \\*  ( n_0_0 );
     (* qucs_mirrored=0, qucs_rotated=0, S0_x1=-30, S0_y1=0, S0_x2=0, S0_y2=-30, S0_x3=0, S0_y3=30 *) _MOSFET #(.Type(nfet),.Vt0(1.0 V),.Kp(1e-3),.Gamma(0.0),.Phi(0.6 V),.Lambda(0.0),.Rd(0.0 Ohm),.Rs(0.0 Ohm),.Rg(0.0 Ohm),.Is(1e-14 A),.N(1.0),.W(200 um),.L(1 um),.Ld(0.0),.Tox(0.1 um),.Cgso(0.0),.Cgdo(0.0),.Cgbo(0.0),.Cbd(0.0 F),.Cbs(0.0 F),.Pb(0.8 V),.Mj(0.5),.Fc(0.5),.Cjsw(0.0),.Mjsw(0.33),.Tt(0.0 ps),.Nsub(0.0),.Nss(0.0),.Tpg(1),.Uo(600.0),.Rsh(0.0),.Nrd(1),.Nrs(1),.Cj(1p),.Js(0.0),.Ad(0.0),.As(0.0),.Pd(0.0 m),.Ps(0.0 m),.Kf(0.0),.Af(1.0),.Ffe(1.0),.Temp(26.85),.Tnom(26.85)) T3 ( n_m30_0, n_0_m30, n_0_30 );
+    (* qucs_mirrored=0, qucs_rotated=0 *) Eqn #(.y(1),.Export(yes)) Eqn1 (  );
 endmodule

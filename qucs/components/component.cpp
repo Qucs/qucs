@@ -27,18 +27,13 @@
 #include "misc.h"
 #include "exception.h"
 #include "trace.h"
+#include "qt_compat.h"
 
 #include <QPen>
 #include <QString>
 #include <QMessageBox>
 #include <QPainter>
 #include <QDebug>
-
-// TODO: move to compat header?
-inline std::ostream& operator<<(std::ostream& o, QString const& s)
-{ //
-  return o << s.toStdString();
-}
 
 /*!
  * \file component.cpp
@@ -1857,18 +1852,7 @@ std::shared_ptr<Component> getComponentFromName(QString& Line, Schematic* p)
 
   QString cstr = Line.section (' ',0,0); // component type
   cstr.remove (0,1);    // remove leading "<"
-  if (cstr == "Lib") c.reset(new LibComp ());
-  else if (cstr == "Eqn") c.reset(new Equation ());
-  else if (cstr == "SPICE") c.reset(new SpiceFile());
-  else if (cstr == "Rus") c.reset(new Resistor (false));  // backward compatible
-  else if (cstr.left (6) == "SPfile" && cstr != "SPfile") { untested();
-    // backward compatible
-    c.reset(new SPEmbed ());
-    c->Props.back().Value = cstr.mid (6);
-  }else{
-	  // FIXME: fetch proto from dictionary.
-    c = Module::getComponent(cstr);
-  }
+  c = Module::getComponent(cstr);
 
   if(!c) { untested();
     /// \todo enable user to load partial schematic, skip unknown components
@@ -1898,7 +1882,8 @@ std::shared_ptr<Component> getComponentFromName(QString& Line, Schematic* p)
   }
 
   // BUG: don't use schematic.
-  if(!p->loadComponent(Line, c)) { untested();
+  if(!p){
+  }else if(!p->loadComponent(Line, c)) { untested();
     QMessageBox::critical(0, QObject::tr("Error"),
 	QObject::tr("Format Error:\nWrong 'component' line format!"));
     return 0;

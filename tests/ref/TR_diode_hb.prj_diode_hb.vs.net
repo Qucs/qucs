@@ -6,3 +6,4 @@ Diode:D1 _net2 _net3 Is="1e-15 A" N="1" Cj0="0 fF" M="0.5" Vj="0.7 V" Fc="0.5" C
 R:R1 _net2 _net3 R="100" Temp="26.85" Tc1="0.0" Tc2="0.0" Tnom="26.85"
 R:R2 _net2 _net3 R="100" Temp="26.85" Tc1="0.0" Tc2="0.0" Tnom="26.85"
 R:R3 _net2 _net3 R="100k" Temp="26.85" Tc1="0.0" Tc2="0.0" Tnom="26.85"
+Eqn:Eqn1 y="1" Export="yes"

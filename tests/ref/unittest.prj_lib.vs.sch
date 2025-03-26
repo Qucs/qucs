@@ -2,10 +2,10 @@
 <Properties>
   <View=0,0,800,800,1,0,0>
   <Grid=10,10,1>
-  <DataSet=libparam.dat>
-  <DataDisplay=libparam.dpl>
+  <DataSet=lib.dat>
+  <DataDisplay=lib.dpl>
   <OpenDisplay=1>
-  <Script=libparam.m>
+  <Script=lib.m>
   <RunScript=0>
   <showFrame=0>
   <FrameText0=Title>
@@ -16,10 +16,8 @@
 <Symbol>
 </Symbol>
 <Components>
-  <Vdc V1 1 0 0 0 0 0 1 "1 V" 1>
-  <GND \* 5 0 0 0 0 0 0>
-  <R R1 1 0 0 0 0 0 0 "50 Ohm" 1 "26.85" 0 "0.0" 0 "0.0" 0 "26.85" 0 "european" 0>
-  <Lib IB1 1 0 0 0 0 0 0 "Ideal" 1 "Notch2" 1>
+  <Lib inst 1 0 0 0 0 0 0 "" 1 "foo" 1>
+  <Lib inst 1 0 0 0 0 0 0 "" 1 "Lib" 1>
 </Components>
 <Wires>
 </Wires>

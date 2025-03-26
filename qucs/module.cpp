@@ -74,8 +74,28 @@ void Module::registerComponent (QString category, pInfoFunc info) {
 
 // Returns instantiated component based on the given "Model" name.  If
 // there is no such component registers the function returns NULL.
+//
+// BUG // sometimes gets a new instance, sometimes a clone.
 std::shared_ptr<Component> Module::getComponent (QString Model) {
-  if ( Modules.contains(Model)) {
+	Component* c=nullptr;
+  if (Model == "Lib") {
+	  c = new LibComp ();
+  }else if (Model == "Eqn") {
+	  c = new Equation ();
+  }else if (Model == "SPICE") {
+	 c = new SpiceFile();
+  }else if (Model == "Rus") {
+	  c = new Resistor (false);  // backward compatible
+  } else if (Model.left (6) == "SPfile" && Model != "SPfile") { untested();
+    // backward compatible
+    c = new SPEmbed ();
+    c->Props.back().Value = Model.mid (6);
+  }else{
+  }
+
+  if(c){
+	  return std::shared_ptr<Component>(c);
+  }else if ( Modules.contains(Model)) {
     Module *m = Modules.find(Model).value();
     QString Name;
     char * File;

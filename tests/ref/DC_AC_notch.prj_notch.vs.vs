@@ -9,6 +9,7 @@
     (* qucs_mirrored=0, qucs_rotated=0, S0_x1=-30, S0_y1=0, S0_x2=30, S0_y2=0 *) C #(.C(1u),.V(),.Symbol(neutral)) C2 ( n_m30_0, n_30_0 );
     (* qucs_mirrored=0, qucs_rotated=0, S0_x1=-30, S0_y1=20, S0_x2=-30, S0_y2=-20, S0_x3=40, S0_y3=0 *) OpAmp #(.G(1e6),.Umax(15 V)) OP1 ( n_m30_20, n_m30_m20, n_40_0 );
     (* qucs_mirrored=0, qucs_rotated=0, S0_x1=-30, S0_y1=20, S0_x2=-30, S0_y2=-20, S0_x3=40, S0_y3=0 *) OpAmp #(.G(1e6),.Umax(15 V)) OP2 ( n_m30_20, n_m30_m20, n_40_0 );
+    (* qucs_mirrored=0, qucs_rotated=0 *) Eqn #(.y(1),.Export(yes)) Eqn1 (  );
     (* qucs_mirrored=0, qucs_rotated=0, S0_x1=-30, S0_y1=0, S0_x2=30, S0_y2=0 *) R #(.R(10k),.Temp(26.85),.Tc1(0.0),.Tc2(0.0),.Tnom(26.85)) R1 ( n_m30_0, n_30_0 );
     (* qucs_mirrored=0, qucs_rotated=0, S0_x1=0, S0_y1=0 *) GND #() \\*  ( n_0_0 );
     (* qucs_mirrored=0, qucs_rotated=1, S0_x1=0, S0_y1=-30, S0_x2=0, S0_y2=30 *) Vac #(.U(1uV),.f(1 GHz),.Phase(0),.Theta(0)) V1 ( n_0_m30, n_0_30 );

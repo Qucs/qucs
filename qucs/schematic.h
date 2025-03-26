@@ -321,8 +321,7 @@ public:
   // position getNodePosition(std::string)const; // TODO
 
 private: /// BUG // move to Verilog class, create if needed.
-  void dumpDeclaration(outputStream& stream, const Component *c, QString model, QString name, QList<QPoint> ports) const;
-  void dumpVerilogComponent(outputStream& stream, Component const* c) const;
+  void dumpVerilogComponent(outputStream& stream, Element const* c) const;
   void dumpVerilogWire(outputStream& stream, Wire const* w) const;
   void dumpVerilogQucsPreamble(outputStream& stream) const;
   int  saveVerilogDocument(QFile *file);

@@ -10,4 +10,5 @@
     (* qucs_mirrored=0, qucs_rotated=0, S0_x1=0, S0_y1=0 *) GND #() \\*  ( n_0_0 );
     (* qucs_mirrored=0, qucs_rotated=0 *) SUBST #(.er(9.8),.h(0.635 mm),.t(17.5 um),.tand(0.0001),.rho(2.43902e-08),.D(1.5e-07)) SubstTC1 (  );
     (* qucs_mirrored=0, qucs_rotated=0, S0_x1=-30, S0_y1=-30, S0_x2=30, S0_y2=-30, S0_x3=30, S0_y3=30, S0_x4=-30, S0_y4=30 *) MCOUPLED #(.Subst(SubstTC1),.W(0.518 mm),.L(14.94 mm),.S(0.185 mm),.Model(Kirschning),.DispModel(Kirschning),.Temp(26.85)) MSTC1 ( n_m30_m30, n_30_m30, n_30_30, n_m30_30 );
+    (* qucs_mirrored=0, qucs_rotated=0 *) Eqn #(.y(1),.Export(yes)) Eqn1 (  );
 endmodule

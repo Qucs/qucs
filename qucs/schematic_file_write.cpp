@@ -75,13 +75,14 @@ QString Schematic::getWireName(const QPoint *p) const
   return net;
 }
 
-static void dumpIdentifier(outputStream& stream, QString const& name)
+template<class S>
+void dumpIdentifier(outputStream& stream, S const& name)
 {
   if (!name.size()){
 	  //incomplete();
  // }else if name contains special character
     // stream << '\\' << name << ' ';
-  }else if(isalpha(name[0].toLatin1()) || name[0] == '_') {
+  }else if(isalpha(name[0]) || name[0] == '_') {
     stream << name;
   } else {
     stream << '\\' << name << ' ';
@@ -148,15 +149,44 @@ void dump_attributes(outputStream& stream, T const* c, QList<QPoint> ports, Sche
   stream << QString(" *) ");
 }
 
-void Schematic::dumpDeclaration(outputStream& stream, Component const* c, QString model, QString name, QList<QPoint> ports) const
+// BUG: wrong compilation unit
+static std::string wirelabel(Wire const* w)
 {
-  dumpIdentifier(stream, model);
+  std::string name;
+  static int wire_index = 1;
+  if(w->Label && !w->Label->Name.isEmpty()) {
+    name = w->Label->Name.toStdString();
+  } else {
+    name = "net" + std::to_string(wire_index++);
+  }
+  return name;
+}
+
+// BUG: wrong compilation unit
+static void dumpDeclaration(outputStream& stream, Element const* e, QList<QPoint> ports,
+    Schematic const* s)
+{
+  auto c = dynamic_cast<Component const*>(e);
+  auto w = dynamic_cast<Wire const*>(e);
+  if(c){
+    std::string type = c->dev_type();
+    dumpIdentifier(stream, type);
+  }else{
+    stream << "net"; // BUG
+  }
   print_args(stream, c);
-  dumpIdentifier(stream, name);
+  if(c){
+    dumpIdentifier(stream, c->name().toStdString());
+  }else if(w){
+    // BUG. Wire is not a Component.
+    stream << wirelabel(w);
+  }else{
+    unreachable();
+  }
   stream << " ( ";
   std::string sep;
   for (auto pp = ports.begin(); pp != ports.end(); ++pp) {
-    stream << sep << getWireName(&(*pp));
+    stream << sep << s->getWireName(&(*pp));
     sep = ", ";
   }
   stream << " );\n";
@@ -164,46 +194,28 @@ void Schematic::dumpDeclaration(outputStream& stream, Component const* c, QStrin
 
 // BUG: wrong compilation unit
 // BUG: wrong class
-void Schematic::dumpVerilogComponent(outputStream& stream, Component const* c) const
+void Schematic::dumpVerilogComponent(outputStream& stream, Element const* e) const
 {
-  assert(c);
+  assert(e);
   QList<QPoint> ports;
-  QString model = c->obsolete_model_hack();
-  QString name = c->name();
-  for (auto pp = c->Ports.begin(); pp != c->Ports.end(); ++pp) {
-    auto con = pp->getConnection();
-    if(con) {
-      ports.append(QPoint(con->cx,con->cy));
+  if(auto c = dynamic_cast<Component const*>(e)){
+    for (auto pp = c->Ports.begin(); pp != c->Ports.end(); ++pp) {
+      auto con = pp->getConnection();
+      if(con) {
+	ports.append(QPoint(con->cx,con->cy));
+      }
     }
+  }else if(auto w = dynamic_cast<Wire const*>(e)){
+    // BUG. wire is not a component.
+    ports.append(QPoint(w->x1,w->y1));
+    ports.append(QPoint(w->x2,w->y2));
+  }else{
+    unreachable()
   }
   stream << "    ";
-  dump_attributes(stream, c, ports, this);
-  dumpDeclaration(stream, c, model, name, ports);
-}
 
-/*
- * <280 100 460 100 "" 0 0 0> == net w1(n_280_100, n_460_100);
- */
-// BUG: wrong compilation unit
-// BUG: wrong class
-// BUG: duplicates dumpVerilogComponent
-void Schematic::dumpVerilogWire(outputStream& stream, Wire const* w) const
-{
-	assert(w);
-  QList<QPoint> ports;
-  QString name;
-  static int wire_index = 1;
-  if(w->Label && !w->Label->Name.isEmpty()) {
-    name = w->Label->Name;
-  } else {
-    name = QString("net%1").arg(wire_index);
-    wire_index++;
-  }
-  ports.append(QPoint(w->x1,w->y1));
-  ports.append(QPoint(w->x2,w->y2));
-  stream << "    ";
-  dump_attributes(stream, w, ports, this);
-  dumpDeclaration(stream, NULL, "net", name, ports);
+  dump_attributes(stream, e, ports, this);
+  dumpDeclaration(stream, e, ports, this);
 }
 
 void Schematic::dumpVerilogQucsPreamble(outputStream& stream) const
@@ -317,7 +329,7 @@ int Schematic::saveVerilogDocument(QFile *file)
   // net connections (connecting the nodes)
   for (auto it = DocWires.begin(); it != DocWires.end(); ++it) {
 	  // BUG: Wire is not a Component. (why?)
-    dumpVerilogWire(stream, &*it);
+    dumpVerilogComponent(stream, &*it);
   }
 
   // done

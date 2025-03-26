@@ -33,6 +33,7 @@
   <Pac P1 1 0 0 0 0 0 1 "1" 1 "50 Ohm" 1 "0 dBm" 0 "10 GHz" 0 "26.85" 0>
   <GND \* 5 0 0 0 0 0 0>
   <SUBST Subst1 1 0 0 0 0 0 0 "2.56" 1 "0.76 mm" 1 "18 um" 1 "3e-3" 1 "0.022e-6" 1 "100" 1>
+  <Eqn Eqn1 1 0 0 0 0 0 0 "y=1" 1 "yes" 0>
   <MOPEN MS11 1 0 0 0 0 0 0 "Subst1" 1 "384 um" 1 "Hammerstad" 0 "Kirschning" 0 "Kirschning" 0>
   <MOPEN MS12 1 0 0 0 0 0 0 "Subst1" 1 "1.08 mm" 1 "Hammerstad" 0 "Kirschning" 0 "Kirschning" 0>
   <MOPEN MS15 1 0 0 0 0 0 0 "Subst1" 1 "384 um" 1 "Hammerstad" 0 "Kirschning" 0 "Kirschning" 0>

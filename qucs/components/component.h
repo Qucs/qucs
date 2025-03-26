@@ -73,7 +73,10 @@ public: // parameter access
   virtual void set_port_by_index(int num, std::string const& ext_name);
 
 public:
-  virtual std::string dev_type()const {unreachable(); return "???";}
+  virtual std::string dev_type()const {
+	  // incomplete();
+	  return obsolete_model_hack().toStdString();
+  }
   virtual void set_dev_type(std::string const& type);
 
 public:

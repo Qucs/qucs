@@ -26,6 +26,7 @@
   <GND \* 5 0 0 0 0 0 0>
   <GND \* 5 0 0 0 0 0 0>
   <R R1 1 0 0 0 0 0 0 "100 Ohm" 1 "26.85" 0 "0.0" 0 "0.0" 0 "26.85" 0 "european" 0>
+  <Eqn Eqn1 1 0 0 0 0 0 0 "y=1" 1 "yes" 0>
 </Components>
 <Wires>
 </Wires>
