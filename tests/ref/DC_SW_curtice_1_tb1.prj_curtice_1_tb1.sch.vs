@@ -30,7 +30,7 @@
     (* qucs_mirrored=0, qucs_rotated=1, S0_x1=380, S0_y1=90, S0_x2=380, S0_y2=150 *) Vdc #(.U(Vds)) V1 ( n_380_90, n_380_150 );
     (* qucs_mirrored=0, qucs_rotated=0, S0_x1=210, S0_y1=160 *) GND #() \*  ( n_210_160 );
     (* qucs_mirrored=1, qucs_rotated=2, S0_x1=350, S0_y1=60, S0_x2=290, S0_y2=60 *) IProbe #() Pr1 ( n_350_60, n_290_60 );
-    (* qucs_mirrored=0, qucs_rotated=0, S0_x1=210, S0_y1=160, S0_x2=180, S0_y2=120, S0_x3=210, S0_y3=80 *) Sub #(.File(curtice_1.sch),.p(1m),.RG(1m),.RD(1m),.RS(10e10),.VBR(1e-15),.LG(1e-15),.LD(1e-15),.LS(10f),.IS(1),.N(0),.XTI(1.11),.EG(3m),.Beta(40m),.Lambda(-6),.VT0(27),.Temp(0.8),.Alpha(300f),.CDS(10p),.TAU(1m),.RIN(300f),.CGS(300f),.CGD(27)) Curtice1 ( n_210_160, n_180_120, n_210_80 );
+    (* qucs_mirrored=0, qucs_rotated=0, S0_x1=210, S0_y1=160, S0_x2=180, S0_y2=120, S0_x3=210, S0_y3=80 *) Sub #(.File(curtice_1.sch),.p(1m),.RG(1m),.RD(1m),.RS(10e10),.VBR(1e-15),.LG(1e-15),.LD(1e-15),.LS(10f),.IS(1),.N(0),.XTI(1.11),.EG(3m),.Beta(40m),.Lambda(-6),.VT0(27),.Temp(0.8),.Alpha(300f),.CDS(10p),.TAU(1m),.RIN(300f),.CGS(300f),.CGD(27),.Tnom(27)) Curtice1 ( n_210_160, n_180_120, n_210_80 );
     (* S0_x1=380, S0_y1=150, S0_x2=380, S0_y2=160 *) net #() net1 ( n_380_150, n_380_160 );
     (* S0_x1=380, S0_y1=60, S0_x2=380, S0_y2=90 *) net #() net2 ( n_380_60, n_380_90 );
     (* S0_x1=210, S0_y1=60, S0_x2=290, S0_y2=60 *) net #() net3 ( n_210_60, n_290_60 );

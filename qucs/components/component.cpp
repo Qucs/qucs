@@ -34,6 +34,12 @@
 #include <QPainter>
 #include <QDebug>
 
+// TODO: move to compat header?
+inline std::ostream& operator<<(std::ostream& o, QString const& s)
+{ //
+  return o << s.toStdString();
+}
+
 /*!
  * \file component.cpp
  * \brief Implementation of the Component class.
@@ -63,13 +69,13 @@ Component::Component()
 
 // -------------------------------------------------------
 Component* Component::newOne()
-{
+{ untested();
   return new Component();
 }
 
 // -------------------------------------------------------
 void Component::Bounding(int& _x1, int& _y1, int& _x2, int& _y2)
-{
+{ untested();
   _x1 = x1+cx;
   _y1 = y1+cy;
   _x2 = x2+cx;
@@ -80,15 +86,18 @@ void Component::Bounding(int& _x1, int& _y1, int& _x2, int& _y2)
 
 qucs::Property &Component::prop(int n)
 {
+  assert (n < int(Props.size()));
   auto p = Props.begin();
-  while (n-- > 0 && p != Props.end())
+  while (n-- > 0 && p != Props.end()){
     ++p;
-  assert(p != Props.end());
+    assert(p!=Props.end());
+  }
+
   return *p;
 }
 
 const qucs::Property &Component::prop(int n) const
-{
+{ untested();
   auto p = Props.begin();
   while (n-- > 0 && p != Props.end())
     ++p;
@@ -106,7 +115,7 @@ qucs::Port &Component::port(int n)
 }
 
 const qucs::Port &Component::port(int n) const
-{
+{ untested();
   auto p = Ports.begin();
   while (n-- > 0 && p != Ports.end())
     ++p;
@@ -162,21 +171,21 @@ void Component::entireBounds(int& _x1, int& _y1, int& _x2, int& _y2, float Corr)
 
 // -------------------------------------------------------
 void Component::setCenter(int x, int y, bool relative)
-{
-  if(relative) { cx += x;  cy += y; }
-  else { cx = x;  cy = y; }
+{ untested();
+  if(relative) { untested(); cx += x;  cy += y; }
+  else { untested(); cx = x;  cy = y; }
 }
 
 // -------------------------------------------------------
 void Component::getCenter(int& x, int& y)
-{
+{ untested();
   x = cx;
   y = cy;
 }
 
 // -------------------------------------------------------
 int Component::getTextSelected(int x_, int y_, float Corr)
-{
+{ untested();
   x_ -= cx;
   y_ -= cy;
   if(x_ < tx()) return -1;
@@ -187,9 +196,9 @@ int Component::getTextSelected(int x_, int y_, float Corr)
   int w, dy = int(float(y_) * Corr);  // correction for font scaling
   // use the screen-compatible metric
   QFontMetrics  metrics(QucsSettings.font, 0);
-  if(showName) {
+  if(showName) { untested();
     w  = metrics.horizontalAdvance(Name);
-    if(dy < 1) {
+    if(dy < 1) { untested();
       if(x_ < w) return 0;
       return -1;
     }
@@ -211,7 +220,7 @@ int Component::getTextSelected(int x_, int y_, float Corr)
 
 // -------------------------------------------------------
 bool Component::getSelected(int x_, int y_)
-{
+{ untested();
   x_ -= cx;
   y_ -= cy;
   if(x_ >= x1) if(x_ <= x2) if(y_ >= y1) if(y_ <= y2)
@@ -222,7 +231,7 @@ bool Component::getSelected(int x_, int y_)
 
 // -------------------------------------------------------
 void Component::paint(ViewPainter *p)
-{
+{ untested();
   int x, y, a, b, xb, yb;
   QFont f = p->Painter->font();   // save current font
   QFont newFont = f;
@@ -235,7 +244,7 @@ void Component::paint(ViewPainter *p)
     p->Painter->setPen(QPen(Qt::darkBlue,2));
     a = b = 0;
     QRect r, t;
-    for(auto pt = Texts.begin(); pt != Texts.end(); ++pt) {
+    for(auto pt = Texts.begin(); pt != Texts.end(); ++pt) { untested();
       t.setRect(x, y+b, 0, 0);
       p->Painter->drawText(t, Qt::AlignLeft|Qt::TextDontClip, pt->s, &r);
       b += r.height();
@@ -245,12 +254,12 @@ void Component::paint(ViewPainter *p)
     yb = b + int(10.0*p->Scale);
     x2 = x1+25 + int(float(a) / p->Scale);
     y2 = y1+23 + int(float(b) / p->Scale);
-    if(ty() < y2+1) {
-      if(ty() > y1-r.height()){
+    if(ty() < y2+1) { untested();
+      if(ty() > y1-r.height()){ untested();
 	set_qucs_text_position(tx(), y2 + 1);
-      }else{
+      }else{ untested();
       }
-    }else{
+    }else{ untested();
     }
 
     p->map(cx-1, cy, x, y);
@@ -265,26 +274,26 @@ void Component::paint(ViewPainter *p)
   else {    // normal components go here
 
     // paint all lines
-    for(auto p1 = Lines.begin(); p1 != Lines.end(); ++p1) {
+    for(auto p1 = Lines.begin(); p1 != Lines.end(); ++p1) { untested();
       p->Painter->setPen(p1->style);
       p->drawLine(cx+p1->x1, cy+p1->y1, cx+p1->x2, cy+p1->y2);
     }
 
     // paint all arcs
-    for(auto p3 = Arcs.begin(); p3 != Arcs.end(); ++p3) {
+    for(auto p3 = Arcs.begin(); p3 != Arcs.end(); ++p3) { untested();
       p->Painter->setPen(p3->style);
       p->drawArc(cx+p3->x, cy+p3->y, p3->w, p3->h, p3->angle, p3->arclen);
     }
 
     // paint all rectangles
-    for(auto pa = Rects.begin(); pa != Rects.end(); ++pa) {
+    for(auto pa = Rects.begin(); pa != Rects.end(); ++pa) { untested();
       p->Painter->setPen(pa->Pen);
       p->Painter->setBrush(pa->Brush);
       p->drawRect(cx+pa->x, cy+pa->y, pa->w, pa->h);
     }
 
     // paint all ellipses
-    for(auto pa = Ellips.begin(); pa != Ellips.end(); ++pa) {
+    for(auto pa = Ellips.begin(); pa != Ellips.end(); ++pa) { untested();
       p->Painter->setPen(pa->Pen);
       p->Painter->setBrush(pa->Brush);
       p->drawEllipse(cx+pa->x, cy+pa->y, pa->w, pa->h);
@@ -297,7 +306,7 @@ void Component::paint(ViewPainter *p)
     p->Painter->save();
 
     // write all text
-    for(auto pt = Texts.begin(); pt != Texts.end(); ++pt) {
+    for(auto pt = Texts.begin(); pt != Texts.end(); ++pt) { untested();
       p->Painter->setWorldTransform(
           QTransform(pt->mCos, -pt->mSin, pt->mSin, pt->mCos,
                      p->DX + float(cx+pt->x) * p->Scale,
@@ -307,9 +316,9 @@ void Component::paint(ViewPainter *p)
       newFont.setUnderline(pt->under);
       p->Painter->setFont(newFont);
       p->Painter->setPen(pt->Color);
-      if (0) {
+      if (0) { untested();
 	p->Painter->drawText(0, 0, 0, 0, Qt::AlignLeft|Qt::TextDontClip, pt->s);
-      } else {
+      } else { untested();
 	int w, h;
 	w = p->drawTextMapped (pt->s, 0, 0, &h);
     Q_UNUSED(w);
@@ -325,13 +334,13 @@ void Component::paint(ViewPainter *p)
 
   p->Painter->setPen(QPen(Qt::black,1));
   p->map(cx+tx(), cy+ty(), x, y);
-  if(showName) {
+  if(showName) { untested();
     p->Painter->drawText(x, y, 0, 0, Qt::TextDontClip, Name);
     y += p->LineSpacing;
   }
   // write all properties
   for(auto p4 = Props.begin(); p4 != Props.end(); ++p4)
-    if(p4->display) {
+    if(p4->display) { untested();
       p->Painter->drawText(x, y, 0, 0, Qt::TextDontClip, p4->Name+"="+p4->Value);
       y += p->LineSpacing;
     }
@@ -340,14 +349,14 @@ void Component::paint(ViewPainter *p)
     p->Painter->setPen(QPen(Qt::red,0));
   else if(isActive & COMP_IS_SHORTEN)
     p->Painter->setPen(QPen(Qt::darkGreen,0));
-  if(isActive != COMP_IS_ACTIVE) {
+  if(isActive != COMP_IS_ACTIVE) { untested();
     p->drawRect(cx+x1, cy+y1, x2-x1+1, y2-y1+1);
     p->drawLine(cx+x1, cy+y1, cx+x2, cy+y2);
     p->drawLine(cx+x1, cy+y2, cx+x2, cy+y1);
   }
 
   // draw component bounding box
-  if(isSelected) {
+  if(isSelected) { untested();
     p->Painter->setPen(QPen(Qt::darkGray,3));
     p->drawRoundRect(cx+x1, cy+y1, x2-x1, y2-y1);
   }
@@ -356,7 +365,7 @@ void Component::paint(ViewPainter *p)
 // -------------------------------------------------------
 // Paints the component when moved with the mouse.
 void Component::paintScheme(Schematic *p)
-{
+{ untested();
   // qDebug() << "paintScheme" << Model;
   if(Model.at(0) == '.') {   // is simulation component (dc, ac, ...)
     int a, b, xb, yb;
@@ -372,7 +381,7 @@ void Component::paintScheme(Schematic *p)
 
     a = b = 0;
     QSize r;
-    for(auto pt = Texts.begin(); pt != Texts.end(); ++pt) {
+    for(auto pt = Texts.begin(); pt != Texts.end(); ++pt) { untested();
       r = metrics.size(0, pt->s);
       b += r.height();
       if(a < r.width())  a = r.width();
@@ -381,12 +390,12 @@ void Component::paintScheme(Schematic *p)
     yb = b + int(10.0*Scale);
     x2 = x1+25 + int(float(a) / Scale);
     y2 = y1+23 + int(float(b) / Scale);
-    if(ty() < y2+1) {
-     if(ty() > y1-r.height()) {
+    if(ty() < y2+1) { untested();
+     if(ty() > y1-r.height()) { untested();
        set_qucs_text_position(tx(), y2 + 1);
-      }else{
+      }else{ untested();
       }
-    }else{
+    }else{ untested();
     }
 
     p->PostPaintEvent(_Rect,cx-6, cy-5, xb, yb);
@@ -422,7 +431,7 @@ void Component::paintScheme(Schematic *p)
 // -------------------------------------------------------
 // For output on a printer device.
 void Component::print(ViewPainter *p, float FontScale)
-{
+{ untested();
   for(auto pt = Texts.begin(); pt != Texts.end(); ++pt)
     pt->Size *= FontScale;
 
@@ -471,7 +480,7 @@ void Component::rotate()
   }
 
   // rotate all rectangles
-  for (auto pa = Rects.begin(); pa != Rects.end(); ++pa) {
+  for (auto pa = Rects.begin(); pa != Rects.end(); ++pa) { untested();
     tmp = -pa->x;
     pa->x = pa->y;
     pa->y = tmp - pa->w;
@@ -726,13 +735,13 @@ QString Component::getNetlist()
 
 // -------------------------------------------------------
 QString Component::verilogCode(int)
-{
+{ untested();
   return QString("");   // no digital model
 }
 
 // -------------------------------------------------------
 QString Component::get_Verilog_Code(int NumPorts)
-{
+{ untested();
   switch(isActive) {
     case COMP_IS_OPEN:
       return QString("");
@@ -752,13 +761,13 @@ QString Component::get_Verilog_Code(int NumPorts)
 
 // -------------------------------------------------------
 QString Component::vhdlCode(int)
-{
+{ untested();
   return QString("");   // no digital model
 }
 
 // -------------------------------------------------------
 QString Component::get_VHDL_Code(int NumPorts)
-{
+{ untested();
   switch(isActive) {
     case COMP_IS_OPEN:
       return QString("");
@@ -788,7 +797,7 @@ std::string Component::attr_get() const
   ret += std::to_string(mirroredX);
   ret += ", qucs_rotated=";
   ret += std::to_string(rotated);
-  if(_attr.size()){
+  if(_attr.size()){ untested();
     ret += ", " + _attr;
   }else{
   }
@@ -817,6 +826,7 @@ bool Component::param_is_printable(int) const
 
 std::string Component::param_name(int i) const
 {
+  assert(i<int(Props.size()));
   auto it = Props.begin();
   // BUG: Missing random access
   std::advance(it, i);
@@ -825,6 +835,7 @@ std::string Component::param_name(int i) const
 
 std::string Component::param_value(int i) const
 {
+  assert(i<int(Props.size()));
   auto it = Props.begin();
   // BUG: Missing random access
   std::advance(it, i);
@@ -832,7 +843,7 @@ std::string Component::param_value(int i) const
 }
 
 void Component::set_param_by_index(int i, std::string const& Value)
-{
+{ untested();
   incomplete();
 //  auto it = Props.begin();
 //  std::advance(it, i);
@@ -849,12 +860,12 @@ void Component::set_param_by_name(std::string const& name, std::string const& v)
 }
 
 void Component::set_dev_type(std::string const& type)
-{ untested();
+{
   Model = QString::fromStdString(type);
 }
 
 void Component::set_label(std::string const& name)
-{ untested();
+{
   Name = QString::fromStdString(name);
 }
 
@@ -885,7 +896,7 @@ void Schematic::saveComponent(QTextStream& s, Component /*const*/ * c) const
   el.setAttribute ("mirror", mirroredX);
   el.setAttribute ("rotate", rotated);
 
-  for (qucs::Property *pr = Props.front(); pr != 0; pr = Props.next()) {
+  for (qucs::Property *pr = Props.front(); pr != 0; pr = Props.next()) { untested();
     el.setAttribute (pr->Name, (pr->display ? "1@" : "0@") + pr.Value);
   }
   qDebug (doc.toString());
@@ -894,7 +905,7 @@ void Schematic::saveComponent(QTextStream& s, Component /*const*/ * c) const
   s << "<" << c->obsolete_model_hack();
 
   s << " ";
-  if(c->name().isEmpty()){
+  if(c->name().isEmpty()){ untested();
     s << "*";
   }else{
     s << c->name();
@@ -943,9 +954,9 @@ bool Schematic::loadComponent(const QString& _s, const std::shared_ptr<Component
   int  ttx, tty, tmp;
   QString s = _s;
 
-  if(s.at(0) != '<'){
+  if(s.at(0) != '<'){ untested();
     return false;
-  }else if(s.at(s.length()-1) != '>'){
+  }else if(s.at(s.length()-1) != '>'){ untested();
     return false;
   }
   s = s.mid(1, s.length()-2);   // cut off start and end character
@@ -956,7 +967,7 @@ bool Schematic::loadComponent(const QString& _s, const std::shared_ptr<Component
   QString n;
   n  = s.section(' ',2,2);      // isActive
   tmp = n.toInt(&ok);
-  if(!ok){
+  if(!ok){ untested();
     return false;
   }
   c->isActive = tmp & 3;
@@ -1008,13 +1019,13 @@ bool Schematic::loadComponent(const QString& _s, const std::shared_ptr<Component
 
   unsigned int counts = s.count('"');
   // FIXME. use c->paramCount()
-  if(Model == "Sub")
+  if(Model == "Sub"){
     tmp = 2;   // first property (File) already exists
-  else if(Model == "Lib")
+  }else if(Model == "Lib"){
     tmp = 3;
-  else if(Model == "EDD")
+  }else if(Model == "EDD"){
     tmp = 5;
-  else if(Model == "RFEDD")
+  }else if(Model == "RFEDD")
     tmp = 8;
   else if(Model == "VHDL")
     tmp = 2;
@@ -1023,14 +1034,16 @@ bool Schematic::loadComponent(const QString& _s, const std::shared_ptr<Component
   else tmp = counts + 1;    // "+1" because "counts" could be zero
 
   /// BUG FIXME. dont use Component parameter dictionary.
-  for(; tmp<=(int)counts/2; tmp++)
+  for(; tmp<=(int)counts/2; tmp++){
     c->Props.push_back(qucs::Property("p", "", true, " "));
+  }
 
   // BUG this is weird ...
 
   // load all properties
   unsigned int z = 0;
   for(auto p1 = c->Props.begin(); p1 != c->Props.end(); ++p1) {
+    trace1("parseLegacy", Model);
     z++;
     n = s.section('"',z,z);    // property value
     z++;
@@ -1039,7 +1052,8 @@ bool Schematic::loadComponent(const QString& _s, const std::shared_ptr<Component
     // not all properties have to be mentioned (backward compatible)
     if(z > counts) {
 
-      if(p1->Description.isEmpty()){
+      if(p1->Description.isEmpty()){ untested();
+	trace2("erasing prop", p1->Name, p1->Value);
         c->Props.erase(p1++);    // remove if allocated in vain
       }
 
@@ -1064,13 +1078,13 @@ bool Schematic::loadComponent(const QString& _s, const std::shared_ptr<Component
         }
       }
       else if(Model == "AND" || Model == "NAND" || Model == "NOR" ||
-	      Model == "OR" ||  Model == "XNOR"|| Model == "XOR") {
+	      Model == "OR" ||  Model == "XNOR"|| Model == "XOR") { untested();
 	if(counts < 10) {   // backward compatible
           counts >>= 1;
           p1 = c->Props.begin();
           for(int i = 0; i < int(counts) && p1 != c->Props.end(); ++i)
             ++p1;
-          for(; p1 != c->Props.begin(); ) {
+          for(; p1 != c->Props.begin(); ) { untested();
             if(counts-- < 4)
               break;
             auto p1prev = p1;
@@ -1081,13 +1095,13 @@ bool Schematic::loadComponent(const QString& _s, const std::shared_ptr<Component
           p1->Value = "10";
 	}
       }
-      else if(Model == "Buf" || Model == "Inv") {
+      else if(Model == "Buf" || Model == "Inv") { untested();
 	if(counts < 8) {   // backward compatible
           counts >>= 1;
           p1 = c->Props.begin();
           for(int i = 0; i < int(counts) && p1 != c->Props.end(); ++i)
             ++p1;
-          for(; p1 != c->Props.begin(); ) {
+          for(; p1 != c->Props.begin(); ) { untested();
             if(counts-- < 3)
               break;
             auto p1prev = p1;
@@ -1097,14 +1111,16 @@ bool Schematic::loadComponent(const QString& _s, const std::shared_ptr<Component
           }
           p1->Value = "10";
         }
+      }else{
       }
 
       return true;
     }
 
     // for equations
-    if(Model != "EDD" && Model != "RFEDD" && Model != "RFEDD2P")
-      if(p1->Description.isEmpty()) {  // unknown number of properties ?
+    if(Model != "EDD" && Model != "RFEDD" && Model != "RFEDD2P") {
+      if(p1->Description.isEmpty()) {
+      	// unknown number of properties ?
         p1->Name = n.section('=',0,0);
         n = n.section('=',1);
         // allocate memory for a new property (e.g. for equations)
@@ -1113,10 +1129,17 @@ bool Schematic::loadComponent(const QString& _s, const std::shared_ptr<Component
           ++p1next;
           c->Props.insert(p1next, qucs::Property("y", "1", true));
         }
+      }else{
       }
+    }else{
+    }
+
     if(Model == "R" && z == 6 && counts == 6) {    // backward compatible
       c->Props.back().Value = n;
       return true;
+    }else if(Model == "Lib"){
+      trace1("Lib??", c->Props.size());
+    }else{
     }
     p1->Value = n;
 
@@ -1220,7 +1243,10 @@ int Component::analyseLine(const QString& Row, int numProps)
       i1 += 2;
     }
 
-    Props.erase(pp, Props.end());
+    /// BUG: Lib stores type and filename in Props.
+    /// must keep it, either way
+    /// (there are more bugs related to this).
+    // Props.erase(pp, Props.end());
     return 0;   // do not count IDs
   }
   else if(s == "Arrow") {
@@ -1441,7 +1467,7 @@ qucs::Property &Component::getProperty(const QString& name)
 // ---------------------------------------------------------------------
 // BUG // why not Commonent::Component(Commonent const&)?
 void Component::copyComponent(const Component &c)
-{
+{ untested();
   Type = c.Type;
   x1 = c.x1;
   y1 = c.y1;
@@ -1477,7 +1503,7 @@ void Component::copyComponent(const Component &c)
 void MultiViewComponent::recreate(Schematic *Doc)
 {
   ComponentList::holder holder;
-  if(Doc) {
+  if(Doc) { untested();
     auto i = Doc->Components->find(this);
     assert(i != Doc->Components->end());
     holder = i.ref();
@@ -1492,20 +1518,19 @@ void MultiViewComponent::recreate(Schematic *Doc)
   //Removes all connections to this component's ports, and deletes dangling nodes.
   //Code is very similar to Schematic::setCompPorts
   if(holder)
-  {
+  { untested();
     std::list<std::shared_ptr<WireLabel> > LabelCache;
 
     for (auto pp = holder->Ports.begin(); pp != holder->Ports.end(); ++pp)
-    {
+    { untested();
       auto pcc = pp->getConnection();
       pcc->removeConnection(holder);  // delete connections
-      switch(pcc->Connections.size())
-      {
+      switch(pcc->Connections.size()) {
       case 0:
-          {
+          { untested();
             auto pl = pcc->Label;
             if(pl)
-            {
+            { untested();
               LabelCache.push_back(pl);
               pl->cx = pp->x + holder->cx;
               pl->cy = pp->y + holder->cy;
@@ -1543,7 +1568,7 @@ void MultiViewComponent::recreate(Schematic *Doc)
   rotated = rrot;   // restore properties (were changed by rotate/mirror)
   mirroredX = mmir;
 
-  if(Doc) {
+  if(Doc) { untested();
     Doc->insertRawComponent(holder);
   }
 }
@@ -1603,13 +1628,13 @@ QString GateComponent::netlist()
 
 // -------------------------------------------------------
 QString GateComponent::vhdlCode(int NumPorts)
-{
+{ untested();
   auto iport = Ports.begin();
   ++iport;
   QString s = "  " + iport->getConnection()->Name + " <= ";  // output port
 
   // xnor NOT defined for std_logic, so here use not and xor
-  if (Model == "XNOR") {
+  if (Model == "XNOR") { untested();
     QString Op = " xor ";
 
     // first input port
@@ -1617,14 +1642,14 @@ QString GateComponent::vhdlCode(int NumPorts)
     QString rhs = iport->getConnection()->Name;
 
     // output all input ports with node names
-    while(++iport != Ports.end()) {
+    while(++iport != Ports.end()) { untested();
       rhs = "not ((" + rhs + ")" + Op + iport->getConnection()->Name + ")";
     }
     s += rhs;
   }
-  else {
+  else { untested();
     QString Op = ' ' + Model.toLower() + ' ';
-    if(Model.at(0) == 'N') {
+    if(Model.at(0) == 'N') { untested();
       s += "not (";    // nor, nand is NOT assoziative !!! but xnor is !!!
       Op = Op.remove(1, 1);
     }
@@ -1633,7 +1658,7 @@ QString GateComponent::vhdlCode(int NumPorts)
     s += iport->getConnection()->Name;   // first input port
 
     // output all input ports with node names
-    while(++iport != Ports.end()) {
+    while(++iport != Ports.end()) { untested();
       s += Op + iport->getConnection()->Name;
     }
     if(Model.at(0) == 'N')
@@ -1652,13 +1677,13 @@ QString GateComponent::vhdlCode(int NumPorts)
 
 // -------------------------------------------------------
 QString GateComponent::verilogCode(int NumPorts)
-{
+{ untested();
   bool synthesize = true;
   auto iport = Ports.begin();
   ++iport;
   QString s("");
 
-  if(synthesize) {
+  if(synthesize) { untested();
     QString op = Model.toLower();
     if(op == "and" || op == "nand")
       op = "&";
@@ -1683,14 +1708,14 @@ QString GateComponent::verilogCode(int NumPorts)
     s += iport->getConnection()->Name;   // first input port
 
     // output all input ports with node names
-    while (++iport != Ports.end()) {
+    while (++iport != Ports.end()) { untested();
       s += " " + op + " " + iport->getConnection()->Name;
     }
 
     if(Model.at(0) == 'N') s += ")";
     s += ";\n";
   }
-  else {
+  else { untested();
     s = "  " + Model.toLower();
 
     if(NumPorts <= 0) { // no truth table simulation ?
@@ -1704,7 +1729,7 @@ QString GateComponent::verilogCode(int NumPorts)
     s += ", " + iport->getConnection()->Name;   // first input port
 
     // output all input ports with node names
-    while (++iport != Ports.end()) {
+    while (++iport != Ports.end()) { untested();
       s += ", " + iport->getConnection()->Name;
     }
 
@@ -1748,8 +1773,8 @@ void GateComponent::createSymbol()
     }
     else if(Model.at(z) == 'A')
       Texts.push_back(qucs::Text( -10, 3-y, "&", Qt::darkBlue, 15.0));
-    else if(Model.at(0) == 'X') {
-      if(Model.at(1) == 'N') {
+    else if(Model.at(0) == 'X') { untested();
+      if(Model.at(1) == 'N') { untested();
 	Ellips.push_back(qucs::Area(xr,-4, 8, 8,
                   QPen(Qt::darkBlue,0), QBrush(Qt::darkBlue)));
         Texts.push_back(qucs::Text( -11, 3-y, "=1", Qt::darkBlue, 15.0));
@@ -1816,7 +1841,7 @@ std::shared_ptr<Component> getComponentFromName(QString& Line, Schematic* p)
   std::shared_ptr<Component> c;
 
   Line = Line.trimmed();
-  if(Line.at(0) != '<') {
+  if(Line.at(0) != '<') { untested();
     QMessageBox::critical(0, QObject::tr("Error"),
 			QObject::tr("Format Error:\nWrong line start!"));
     return 0;
@@ -1828,7 +1853,7 @@ std::shared_ptr<Component> getComponentFromName(QString& Line, Schematic* p)
   else if (cstr == "Eqn") c.reset(new Equation ());
   else if (cstr == "SPICE") c.reset(new SpiceFile());
   else if (cstr == "Rus") c.reset(new Resistor (false));  // backward compatible
-  else if (cstr.left (6) == "SPfile" && cstr != "SPfile") {
+  else if (cstr.left (6) == "SPfile" && cstr != "SPfile") { untested();
     // backward compatible
     c.reset(new SPEmbed ());
     c->Props.back().Value = cstr.mid (6);
@@ -1837,9 +1862,9 @@ std::shared_ptr<Component> getComponentFromName(QString& Line, Schematic* p)
     c = Module::getComponent(cstr);
   }
 
-  if(!c) {
+  if(!c) { untested();
     /// \todo enable user to load partial schematic, skip unknown components
-      if (QucsMain!=0) {
+      if (QucsMain!=0) { untested();
           QMessageBox* msg = new QMessageBox(QMessageBox::Warning,QObject::tr("Warning"),
                                              QObject::tr("Format Error:\nUnknown component!\n"
                                                          "%1\n\n"
@@ -1849,14 +1874,14 @@ std::shared_ptr<Component> getComponentFromName(QString& Line, Schematic* p)
                                              QMessageBox::Yes|QMessageBox::No);
           int r = msg->exec();
           delete msg;
-          if (r == QMessageBox::Yes) {
+          if (r == QMessageBox::Yes) { untested();
               c.reset(new Subcircuit());
               // Hack: insert dummy File property before the first property
               int pos1 = Line.indexOf('"');
               QString filestr = QString("\"%1.sch\" 1 ").arg(cstr);
               Line.insert(pos1,filestr);
           } else return 0;
-      } else {
+      } else { untested();
           QString err_msg = QString("Schematic loading error! Unknown device %1").arg(cstr);
           qCritical()<<err_msg;
           return 0;
@@ -1865,7 +1890,7 @@ std::shared_ptr<Component> getComponentFromName(QString& Line, Schematic* p)
   }
 
   // BUG: don't use schematic.
-  if(!p->loadComponent(Line, c)) {
+  if(!p->loadComponent(Line, c)) { untested();
     QMessageBox::critical(0, QObject::tr("Error"),
 	QObject::tr("Format Error:\nWrong 'component' line format!"));
     return 0;
@@ -1882,7 +1907,7 @@ std::shared_ptr<Component> getComponentFromName(QString& Line, Schematic* p)
 
 // do something with Dialog Buttons
 void Component::dialgButtStuff(ComponentDialog& d)const
-{
+{ untested();
   d.disableButtons();
 }
 

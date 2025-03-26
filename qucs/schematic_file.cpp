@@ -747,7 +747,7 @@ bool Schematic::loadDocument()
    * The Verilog Schematic preamble is in the form (* ... *)
    * (* is at the beginning at some point it has to be closed
    */
-  if( (Line.left(2) == "(*") && Line.contains("*)") ) { untested();
+  if( (Line.left(2) == "(*") && Line.contains("*)") ) {
     // this is asking for a magic byte/sting in a schematic, which we do not have yet.
     file.reset();
     QTextStream s(&file);
@@ -1176,9 +1176,10 @@ bool Schematic::throughAllComps(QTextStream *stream, int& countInit,
       unsigned whatisit = isAnalog?1:(isVerilog?4:2);
       r = lib->createSubNetlist(stream, Collect, whatisit);
       if(!r) {
+	// BUG. this is what exceptions are for.
 	ErrText->appendPlainText(
 	    QObject::tr("ERROR: \"%1\": Cannot load library component \"%2\" from \"%3\"").
-            arg(pc->name(), pc->prop(1).Value, scfile));
+            arg(pc->name(), QString::fromStdString(lib->dev_type()), scfile));
 	return false;
       }
       continue;

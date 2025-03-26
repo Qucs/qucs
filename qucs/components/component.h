@@ -19,6 +19,7 @@
 #define COMPONENT_H
 
 #include "element.h"
+#include "trace.h"
 #include <list>
 
 #include <QTextStream>
@@ -70,6 +71,9 @@ public: // parameter access
   virtual void set_param_by_name(std::string const& name, std::string const& v);
   virtual void set_port_by_name(std::string const&, std::string const&);
   virtual void set_port_by_index(int num, std::string const& ext_name);
+
+public:
+  virtual std::string dev_type()const {unreachable(); return "???";}
   virtual void set_dev_type(std::string const& type);
 
 public:

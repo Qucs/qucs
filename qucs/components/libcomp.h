@@ -26,12 +26,21 @@ class QString;
 
 class LibComp : public MultiViewComponent  {
 public:
-  LibComp();
+  explicit LibComp();
+  explicit LibComp(LibComp const&);
  ~LibComp() {};
   Component* newOne();
 
   bool createSubNetlist(QTextStream *, QStringList&, int type=1);
   QString getSubcircuitFile();
+
+private: // parameters
+  std::string param_name(int i)const override;
+  std::string param_value(int i)const override;
+
+public:
+  std::string dev_type()const override;
+  void set_dev_type(std::string const&)override;
 
 protected:
   QString netlist();
