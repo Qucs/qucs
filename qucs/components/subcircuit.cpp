@@ -47,6 +47,7 @@ Subcircuit::Subcircuit()
 Component* Subcircuit::newOne()
 {
   Subcircuit *p = new Subcircuit();
+  assert(Props.size());
   p->Props.front().Value = Props.front().Value;
   p->recreate(0);
   return p;

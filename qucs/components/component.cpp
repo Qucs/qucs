@@ -1221,19 +1221,26 @@ int Component::analyseLine(const QString& Row, int numProps)
 
     i1 = 1;
     auto pp = Props.begin();
-    for(int i = 0; i < (numProps) && pp != Props.end(); ++i)
+    for(int i = 0; i < (numProps-1) && pp != Props.end(); ++i)
       ++pp;
     for(;;) {
       s = Row.section('"', i1,i1);
-      if(s.isEmpty())  break;
+      if(s.isEmpty()){
+	break;
+      }else{
+      }
 
+      assert(pp!=Props.end());
       ++pp;
       if(pp == Props.end()) {
         Props.push_back(qucs::Property());
         pp = --Props.end();
+	assert(pp!=Props.end());
         pp->display = (s.at(0) == '1');
         pp->Value = s.section('=', 2,2);
+      }else{
       }
+      assert(pp!=Props.end());
 
       pp->Name  = s.section('=', 1,1);
       pp->Description = s.section('=', 3,3);
@@ -1243,10 +1250,11 @@ int Component::analyseLine(const QString& Row, int numProps)
       i1 += 2;
     }
 
-    /// BUG: Lib stores type and filename in Props.
-    /// must keep it, either way
-    /// (there are more bugs related to this).
-    // Props.erase(pp, Props.end());
+    if (pp!=Props.end()){
+      ++pp;
+    }else{
+    }
+    Props.erase(pp, Props.end());
     return 0;   // do not count IDs
   }
   else if(s == "Arrow") {

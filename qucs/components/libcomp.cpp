@@ -285,6 +285,12 @@ int LibComp::loadSymbol()
   x2 = y2 = INT_MIN;
 
   assert(Props.size()>1);
+  if(Props.size()==2){
+	  // BUG: analyseLine erases the trailing parameter?!
+	  // (wtf)
+	 // Props.push_back(qucs::Property("dummy", "", false));
+  }else{
+  }
   QTextStream stream(&FileString, QIODevice::ReadOnly);
   while(!stream.atEnd()) {
     Line = stream.readLine();
