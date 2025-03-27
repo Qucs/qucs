@@ -36,6 +36,7 @@
   <C C6 1 0 0 0 0 0 0 "1n" 1 "" 0 "neutral" 0>
   <GND \* 5 0 0 0 0 0 0>
   <C C3 1 0 0 0 0 0 0 "256n" 1 "" 0 "neutral" 0>
+  <Eqn Eqn1 1 0 0 0 0 0 0 "y=1" 1 "yes" 0>
 </Components>
 <Wires>
 </Wires>

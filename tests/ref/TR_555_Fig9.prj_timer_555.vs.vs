@@ -18,9 +18,9 @@
     (* qucs_mirrored=0, qucs_rotated=0, S0_x1=0, S0_y1=0 *) Port #(.Num(8),.Type(analog)) P_VCC ( n_0_0 );
     (* qucs_mirrored=0, qucs_rotated=0, S0_x1=0, S0_y1=0 *) Port #(.Num(2),.Type(analog)) P_TRIGGER ( n_0_0 );
     (* qucs_mirrored=0, qucs_rotated=0, S0_x1=0, S0_y1=0 *) Port #(.Num(6),.Type(analog)) P_THRESH ( n_0_0 );
-    (* qucs_mirrored=0, qucs_rotated=0 *) Sub #(.File(timer_Discharge.sch)) SUB5 (  );
-    (* qucs_mirrored=0, qucs_rotated=0 *) Sub #(.File(timer_digital_comb.sch)) SUB3 (  );
-    (* qucs_mirrored=0, qucs_rotated=0 *) Sub #(.File(timer_amp.sch)) SUB4 (  );
-    (* qucs_mirrored=0, qucs_rotated=0 *) Sub #(.File(timer_trig.sch)) SUB6 (  );
-    (* qucs_mirrored=0, qucs_rotated=0 *) Sub #(.File(timer_thresh.sch)) SUB7 (  );
+    (* qucs_mirrored=0, qucs_rotated=0, qucs_type="Sub", qucs_file="timer_Discharge.sch" *) timer_Discharge #() SUB5 (  );
+    (* qucs_mirrored=0, qucs_rotated=0, qucs_type="Sub", qucs_file="timer_digital_comb.sch" *) timer_digital_comb #() SUB3 (  );
+    (* qucs_mirrored=0, qucs_rotated=0, qucs_type="Sub", qucs_file="timer_amp.sch" *) timer_amp #() SUB4 (  );
+    (* qucs_mirrored=0, qucs_rotated=0, qucs_type="Sub", qucs_file="timer_trig.sch" *) timer_trig #() SUB6 (  );
+    (* qucs_mirrored=0, qucs_rotated=0, qucs_type="Sub", qucs_file="timer_thresh.sch" *) timer_thresh #() SUB7 (  );
 endmodule

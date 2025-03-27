@@ -2,9 +2,10 @@
     wire n_0_0;
     (* qucs_mirrored=0, qucs_rotated=1, S0_x1=0, S0_y1=-30, S0_x2=0, S0_y2=30 *) Vdc #(.U(Vgs)) V2 ( n_0_m30, n_0_30 );
     (* qucs_mirrored=0, qucs_rotated=0, S0_x1=0, S0_y1=0 *) GND #() \\*  ( n_0_0 );
+    (* qucs_mirrored=0, qucs_rotated=0 *) Eqn #(.y(1),.Export(yes)) Eqn1 (  );
     (* qucs_mirrored=0, qucs_rotated=0, S0_x1=0, S0_y1=0 *) GND #() \\*  ( n_0_0 );
     (* qucs_mirrored=0, qucs_rotated=1, S0_x1=0, S0_y1=-30, S0_x2=0, S0_y2=30 *) Vdc #(.U(Vds)) V1 ( n_0_m30, n_0_30 );
     (* qucs_mirrored=0, qucs_rotated=0, S0_x1=0, S0_y1=0 *) GND #() \\*  ( n_0_0 );
     (* qucs_mirrored=0, qucs_rotated=0, S0_x1=-30, S0_y1=0, S0_x2=30, S0_y2=0 *) IProbe #() Pr1 ( n_m30_0, n_30_0 );
-    (* qucs_mirrored=0, qucs_rotated=0 *) Sub #(.File(curtice_1.sch)) Curtice1 (  );
+    (* qucs_mirrored=0, qucs_rotated=0, qucs_type="Sub", qucs_file="curtice_1.sch" *) curtice_1 #() Curtice1 (  );
 endmodule

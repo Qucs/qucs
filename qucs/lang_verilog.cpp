@@ -14,6 +14,7 @@
 #include "trace.h"
 #include "exception.h"
 #include "components/component.h"
+#include "qt_compat.h"
 
 void skip_attributes(CS& cmd)
 {
@@ -25,6 +26,7 @@ void skip_attributes(CS& cmd)
 // BUG. need extra function, Wire is not a Component.
 void parse_attributes(CS& cmd, Wire* x)
 {
+  incomplete();
 }
 
 void parse_attributes(CS& cmd, Component* x)
@@ -218,6 +220,32 @@ void parse_wire(CS& cmd, Wire* x)
   // return x;
 }
 
+class inspect_attributes {
+  std::string _type;
+public:
+  explicit inspect_attributes(CS& cmd) { untested();
+    while (cmd >> "(*") { untested();
+      while(cmd.ns_more() && !(cmd >> ",") && !(cmd >> "*)")) { untested();
+	std::string name, value;
+	cmd >> name;
+        if(cmd >> "="){
+	  cmd >> value;
+	}else{
+	  value = "1";
+	}
+	trace2("inspect", name, value);
+	if(name=="qucs_type") { untested();
+	  _type = value;
+	}else{ untested();
+	}
+      }
+    }
+  }
+
+  std::string type()const {return _type;}
+  bool has_type()const {return _type.size();}
+};
+
 bool readVerilog(CS &cmd, Schematic*s)
 {
   trace0("readVerilog0");
@@ -225,10 +253,9 @@ bool readVerilog(CS &cmd, Schematic*s)
   // todo: catch ExceptionEOF.
   while(!cmd.atEnd()) {
     cmd.read_line();
-    trace2("readVerilog1", cmd.fullstring(), cmd.atEnd());
-    skip_attributes(cmd);
-    trace2("readVerilog2", cmd.fullstring(), cmd.atEnd());
-    if(cmd>>"module") {
+    inspect_attributes attr(cmd);
+    trace1("inspected", cmd.tail());
+    if(cmd>>"module") { untested();
       //ignore for now;
     }else if(cmd>>"endmodule"){
       //ignore for now;
@@ -246,16 +273,21 @@ bool readVerilog(CS &cmd, Schematic*s)
 		  }
       } else {
         QString qtype = QString::fromStdString(type);
+	if(attr.has_type()){
+	  qtype = QString::fromStdString(attr.type());
+	}else{
+	}
         std::shared_ptr<Component> x = Module::getComponent(qtype); // BUG. need proper dispatcher.
-        //trace3("readVerilog, gotComponent", type, x->tx, x->ty);
         if(x) {
+	  trace3("readVerilog, gotComponent", qtype, x->tx(), x->ty());
           parse_instance(cmd, x.get());
           // BUG: Gives inconsisten values when generating refs
           // setting text position to 0,0 for now.
 	  x->set_qucs_text_position(0, 0);
           s->pushBack(x);
         }else{
-		  }
+	  trace1("readVerilog, no Component", qtype);
+	}
       }
     }
     trace2("readVerilog3", cmd.fullstring(), cmd.atEnd());

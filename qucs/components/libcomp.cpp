@@ -362,6 +362,14 @@ bool LibComp::createSubNetlist(QTextStream *stream, QStringList &FileList,
 }
 
 // -------------------------------------------------------
+std::string LibComp::attr_get() const
+{
+  std::string ret = Component::attr_get();
+  ret += ", qucs_type=\"Lib\"";
+  return ret;
+}
+
+// -------------------------------------------------------
 QString LibComp::createType()
 {
   assert(Props.size()>0);

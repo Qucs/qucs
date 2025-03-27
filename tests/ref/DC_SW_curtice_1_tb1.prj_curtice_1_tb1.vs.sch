@@ -18,6 +18,7 @@
 <Components>
   <Vdc V2 1 0 0 0 0 0 1 "Vgs" 1>
   <GND \* 5 0 0 0 0 0 0>
+  <Eqn Eqn1 1 0 0 0 0 0 0 "y=1" 1 "yes" 0>
   <GND \* 5 0 0 0 0 0 0>
   <Vdc V1 1 0 0 0 0 0 1 "Vds" 1>
   <GND \* 5 0 0 0 0 0 0>

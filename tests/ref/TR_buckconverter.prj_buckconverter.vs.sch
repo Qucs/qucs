@@ -26,6 +26,8 @@
   <L L1 1 0 0 0 0 0 0 "47uH" 1 "0" 0>
   <C C1 1 0 0 0 0 0 0 "100u" 1 "0" 0 "neutral" 0>
   <R R1 1 0 0 0 0 0 0 "5" 1 "26.85" 0 "0.0" 0 "0.0" 0 "26.85" 0 "european" 0>
+  <Eqn Eqn2 1 0 0 0 0 0 0 "y=1" 1 "yes" 0>
+  <Eqn Eqn1 1 0 0 0 0 0 0 "y=1" 1 "yes" 0>
 </Components>
 <Wires>
 </Wires>

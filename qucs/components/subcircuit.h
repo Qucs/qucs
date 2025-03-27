@@ -30,6 +30,15 @@ public:
 
   QString getSubcircuitFile();
 
+private:
+  bool param_is_printable(int i)const {return i;}
+  std::string attr_get()const override;
+  void set_attribute(std::string name, std::string value)override;
+
+public:
+  std::string dev_type()const override;
+  void set_dev_type(std::string const&)override;
+
 protected:
   QString netlist();
   QString vhdlCode(int);

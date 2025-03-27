@@ -17,5 +17,6 @@ IProbe:Basis _net2 _net3
 L:L2 _net2 _net3 L="100 nH" I=""
 R:R3 _net2 _net3 R="10 Ohm" Temp="26.85" Tc1="0.0" Tc2="0.0" Tnom="26.85"
 R:R1 _net2 _net3 R="20 kOhm" Temp="26.85" Tc1="0.0" Tc2="0.0" Tnom="26.85"
+Eqn:Eqn1 y="1" Export="yes"
 C:C1 _net2 _net3 C="0.1 uF" V=""
 C:C2 _net2 _net3 C="5 uF" V=""
