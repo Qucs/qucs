@@ -40,6 +40,7 @@ void parse_attributes(CS& cmd, Component* x)
       x->set_attribute(name, value);
     }
   }
+  x->apply_qucs_values();
 }
 
 // BUG. need extra function, Wire is not a Component.

@@ -19,15 +19,15 @@
   <.PortSym 40 100 2 0>
 </Symbol>
 <Components>
-  <VCVS SRC2 1 0 0 0 0 0 0 "1" 1 "0" 0>
-  <GND \* 5 0 0 0 0 0 0>
-  <R R1 1 0 0 0 0 0 0 "1 kOhm" 1 "26.85" 0 "0.0" 0 "0.0" 0 "26.85" 0 "european" 0>
-  <C C1 1 0 0 0 0 0 0 "1.98944 mF" 1 "" 0 "neutral" 0>
-  <VCVS SRC1 1 0 0 0 0 0 0 "1e8" 1 "0" 0>
-  <Port P1 1 0 0 0 0 0 0 "1" 1 "analog" 0>
-  <Port P3 1 0 0 0 0 0 0 "3" 1 "analog" 0>
-  <Port P2 1 0 0 0 0 0 0 "2" 1 "analog" 0>
-  <GND \* 5 0 0 0 0 0 0>
+  <VCVS SRC2 1 530 190 0 0 0 0 "1" 1 "0" 0>
+  <GND \* 5 410 220 0 0 0 0>
+  <R R1 1 360 160 0 0 0 0 "1 kOhm" 1 "26.85" 0 "0.0" 0 "0.0" 0 "26.85" 0 "european" 0>
+  <C C1 1 440 190 0 0 0 1 "1.98944 mF" 1 "" 0 "neutral" 0>
+  <VCVS SRC1 1 260 190 0 0 0 0 "1e8" 1 "0" 0>
+  <Port P1 1 160 160 0 0 0 0 "1" 1 "analog" 0>
+  <Port P3 1 610 160 0 0 1 2 "3" 1 "analog" 0>
+  <Port P2 1 160 220 0 0 0 0 "2" 1 "analog" 0>
+  <GND \* 5 600 220 0 0 0 0>
 </Components>
 <Wires>
 </Wires>

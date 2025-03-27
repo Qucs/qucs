@@ -19,12 +19,12 @@
   <.PortSym 40 100 2 0>
 </Symbol>
 <Components>
-  <GND \* 5 0 0 0 0 0 0>
-  <Port P_vout 1 0 0 0 0 0 0 "3" 1 "analog" 0>
-  <R R2 1 0 0 0 0 0 0 "7" 1 "26.85" 0 "0.0" 0 "0.0" 0 "26.85" 0 "european" 0>
-  <Port Pamp_P 1 0 0 0 0 0 0 "1" 1 "analog" 0>
-  <Port Pamp_N 1 0 0 0 0 0 0 "2" 1 "analog" 0>
-  <VCVS SRC1 1 0 0 0 0 0 0 "3.7" 1 "0" 0>
+  <GND \* 5 310 325 0 0 0 0>
+  <Port P_vout 1 365 265 0 0 1 2 "3" 1 "analog" 0>
+  <R R2 1 335 265 0 0 0 0 "7" 1 "26.85" 0 "0.0" 0 "0.0" 0 "26.85" 0 "european" 0>
+  <Port Pamp_P 1 210 265 0 0 0 0 "1" 1 "analog" 0>
+  <Port Pamp_N 1 210 325 0 0 0 0 "2" 1 "analog" 0>
+  <VCVS SRC1 1 270 290 0 0 0 0 "3.7" 1 "0" 0>
 </Components>
 <Wires>
 </Wires>

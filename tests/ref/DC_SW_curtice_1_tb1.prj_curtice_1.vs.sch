@@ -19,20 +19,20 @@
   <.PortSym 40 100 2 0>
 </Symbol>
 <Components>
-  <R Rs 1 0 0 0 0 0 0 "RS" 1 "26.85" 0 "0.0" 0 "0.0" 0 "26.85" 0 "european" 0>
-  <L Ls 1 0 0 0 0 0 0 "LS" 1 "" 0>
-  <Port Source 1 0 0 0 0 0 0 "1" 1 "analog" 0>
-  <R Rin 1 0 0 0 0 0 0 "RIN" 1 "26.85" 0 "0.0" 0 "0.0" 0 "26.85" 0 "european" 0>
-  <EDD D2 1 0 0 0 0 0 0 "explicit" 0 "1" 0 "0" 1 "CGD*V1" 0>
-  <Port Drain 1 0 0 0 0 0 0 "3" 1 "analog" 0>
-  <R Rd 1 0 0 0 0 0 0 "RD" 1 "26.85" 0 "0.0" 0 "0.0" 0 "26.85" 0 "european" 0>
-  <L Ld 1 0 0 0 0 0 0 "LD" 1 "" 0>
-  <R Rg 1 0 0 0 0 0 0 "RG" 1 "26.85" 0 "0.0" 0 "0.0" 0 "26.85" 0 "european" 0>
-  <L Lg 1 0 0 0 0 0 0 "LG" 1 "" 0>
-  <Port Gate 1 0 0 0 0 0 0 "2" 1 "analog" 0>
+  <R Rs 1 280 410 0 0 0 0 "RS" 1 "26.85" 0 "0.0" 0 "0.0" 0 "26.85" 0 "european" 0>
+  <L Ls 1 200 410 0 0 0 0 "LS" 1 "" 0>
+  <Port Source 1 90 410 0 0 0 0 "1" 1 "analog" 0>
+  <R Rin 1 240 320 0 0 0 0 "RIN" 1 "26.85" 0 "0.0" 0 "0.0" 0 "26.85" 0 "european" 0>
+  <EDD D2 1 310 180 0 0 1 2 "explicit" 0 "1" 0 "0" 1 "CGD*V1" 0>
+  <Port Drain 1 90 180 0 0 1 0 "3" 1 "analog" 0>
+  <R Rd 1 220 180 0 0 1 0 "RD" 1 "26.85" 0 "0.0" 0 "0.0" 0 "26.85" 0 "european" 0>
+  <L Ld 1 140 180 0 0 0 0 "LD" 1 "" 0>
+  <R Rg 1 360 130 0 0 0 1 "RG" 1 "26.85" 0 "0.0" 0 "0.0" 0 "26.85" 0 "european" 0>
+  <L Lg 1 360 60 0 0 0 1 "LG" 1 "" 0>
+  <Port Gate 1 360 30 0 0 0 3 "2" 1 "analog" 0>
   <Eqn Eqn1 1 0 0 0 0 0 0 "y=1" 1 "yes" 0>
   <Eqn Eqn2 1 0 0 0 0 0 0 "y=1" 1 "yes" 0>
-  <EDD D1 1 0 0 0 0 0 0 "explicit" 0 "4" 0 "V1<-VBR+50*Vt ? -IsT*(1+exp(-(VBR+V1)/Vt)) + GMIN*V1 : 0" 1 "0" 0>
+  <EDD D1 1 390 270 0 0 0 3 "explicit" 0 "4" 0 "V1<-VBR+50*Vt ? -IsT*(1+exp(-(VBR+V1)/Vt)) + GMIN*V1 : 0" 1 "0" 0>
 </Components>
 <Wires>
 </Wires>

@@ -43,9 +43,9 @@ OpAmp:OP1 _net1 _net0 _net2 G="1e6" Umax="1 V"
 C:C1 gnd _net3 C="1 nF" V=""
 .Def:End
 
-R:R1 _net1 _net2 R="5k" Temp="26.85" Tc1="0.0" Tc2="0.0" Tnom="26.85"
-R:R2 _net1 _net2 R="5k" Temp="26.85" Tc1="0.0" Tc2="0.0" Tnom="26.85"
-R:R3 _net1 _net2 R="5k" Temp="26.85" Tc1="0.0" Tc2="0.0" Tnom="26.85"
+R:R1 _net2 _net3 R="5k" Temp="26.85" Tc1="0.0" Tc2="0.0" Tnom="26.85"
+R:R2 _net5 _net6 R="5k" Temp="26.85" Tc1="0.0" Tc2="0.0" Tnom="26.85"
+R:R3 _net7 _net8 R="5k" Temp="26.85" Tc1="0.0" Tc2="0.0" Tnom="26.85"
 Sub:SUB5 Type="timer_Discharge"
 Sub:SUB3 Type="timer_digital_comb"
 Sub:SUB4 Type="timer_amp"
