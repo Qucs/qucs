@@ -37,7 +37,7 @@ public:
   static Element* info(QString&, char* &, bool getNewOne=false);
 
   bool withSim;
-  bool createSubNetlist(QTextStream *);
+  bool createSubNetlist(QTextStream *)override;
   QString getErrorText() { return ErrText; }
   QString getSubcircuitFile();
 

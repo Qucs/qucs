@@ -102,6 +102,8 @@ public:
   virtual Schematic* getSchematic () {return containingSchematic; }
   // do somehting with buttons. can sb think of a more descriptive name?
   virtual void dialgButtStuff(ComponentDialog&)const;
+  virtual bool createSubNetlist(QTextStream*){return false;} // BUG: callback. BUG: const?!
+  virtual QString getErrorText() { return ""; } // BUG. that's what exceptions are for. BUG: const?!
 
   //  gets property by index
   qucs::Property &prop(int n);

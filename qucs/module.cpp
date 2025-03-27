@@ -78,7 +78,9 @@ void Module::registerComponent (QString category, pInfoFunc info) {
 // BUG // sometimes gets a new instance, sometimes a clone.
 std::shared_ptr<Component> Module::getComponent (QString Model) {
 	Component* c=nullptr;
-  if (Model == "Lib") {
+  if (Model == "Verilog") {
+	  c = new_verilog_file ();
+  }if (Model == "Lib") {
 	  c = new LibComp ();
   }else if (Model == "Eqn") {
 	  c = new Equation ();
@@ -404,7 +406,7 @@ void Module::registerModules (void) {
   REGISTER_DIGITAL_1 (comp_4bit);
   REGISTER_DIGITAL_1 (hpribin4bit);
   REGISTER_DIGITAL_1 (VHDL_File);
-  REGISTER_DIGITAL_1 (Verilog_File);
+  //REGISTER_DIGITAL_1 (Verilog_File);
   REGISTER_DIGITAL_1 (Digi_Sim);
 
   // file components

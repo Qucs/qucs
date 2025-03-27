@@ -1238,13 +1238,14 @@ bool Schematic::throughAllComps(QTextStream *stream, int& countInit,
 	  return false;
 	}
       }
-      if(pc->obsolete_model_hack() == "Verilog") {
-	Verilog_File *vf = (Verilog_File*)pc;
-	r = vf->createSubNetlist(stream);
-	ErrText->appendPlainText(vf->getErrorText());
+      if(is_verilog_file(pc)) {
+	r = pc->createSubNetlist(stream); // BUG: callback
+	ErrText->appendPlainText(pc->getErrorText());
 	if(!r) {
 	  return false;
 	}
+      }else{
+	// what?!
       }
       continue;
     }

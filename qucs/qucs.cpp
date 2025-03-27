@@ -2399,7 +2399,7 @@ void QucsApp::slotSelectSubcircuit(const QModelIndex &idx)
   if(isVHDL)
     Comp.reset(new VHDL_File());
   else if(isVerilog)
-    Comp.reset(new Verilog_File());
+    Comp.reset(new_verilog_file());
   else
     Comp.reset(new Subcircuit());
   Comp->Props.front().Value = idx.sibling(idx.row(), 0).data().toString();

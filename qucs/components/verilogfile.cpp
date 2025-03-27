@@ -24,7 +24,52 @@
 #include <QRegExp>
 #include <QFileInfo>
 
+class QTextStream;
+class QString;
 
+class Verilog_File_Info; // BUG. use Component.
+
+class Verilog_File : public MultiViewComponent  {
+public:
+  Verilog_File(Verilog_File const&);
+  Verilog_File();
+ ~Verilog_File();
+  Component* newOne();
+  static Element* info(QString&, char* &, bool getNewOne=false);
+
+  bool createSubNetlist(QTextStream *)override;
+  QString getErrorText()override { return ErrText; } // BUG. that's what exceptions are for
+  QString getSubcircuitFile();
+private:
+  Verilog_File_Info* _proto{nullptr};
+
+public:
+  bool param_is_printable(int)const override;
+  std::string dev_type()const override;
+  void set_dev_type(std::string const&)override;
+  void set_attribute(std::string name, std::string value)override;
+
+  std::string attr_get() const override {
+	  std::string ret = Component::attr_get();
+	  ret += ", qucs_type=\"Verilog\"";
+	  assert(Props.size());
+	  ret += ", qucs_File=\"" + prop(0).Value.toStdString() + "\"";
+	  return ret;
+  }
+  std::string port_name(int i)const override;
+  std::string port_value(int i)const override;
+
+protected:
+  QString verilogCode(int);
+  void createSymbol();
+  QString loadFile();
+
+  QString ModuleName;
+  QString ErrText;
+};
+
+
+// -------------------------------------------------------
 Verilog_File::Verilog_File()
 {
   Type = isDigitalComponent;
@@ -350,6 +395,12 @@ Verilog_File_Info::Verilog_File_Info(QString File, bool isfile)
 
   // parse ports, i.e. network connections; and generics, i.e. parameters
   PortNames = parsePorts (s, 0);
+
+  // BUG: copy names.
+  _portnames.clear();
+  for(int i = 0; i <= PortNames.count(','); ++i){
+     _portnames.push_back(PortNames.section(',', i, i).toStdString());
+  }
 }
 
 // -------------------------------------------------------
@@ -389,3 +440,15 @@ std::string Verilog_File_Info::port_value(int i)const
 }
 
 // -------------------------------------------------------
+
+Component* new_verilog_file()
+{
+	return new Verilog_File();
+}
+// -------------------------------------------------------
+
+// BUG.
+bool is_verilog_file(Component const* x)
+{
+	return dynamic_cast<Verilog_File const*>(x);
+}
