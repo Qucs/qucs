@@ -44,7 +44,7 @@
     (* qucs_mirrored=0, qucs_rotated=0 *) \.AC  #(.Type(log),.Start(1),.Stop(10 MHz),.Points(200),.Noise(no)) AC1 (  );
     (* qucs_mirrored=0, qucs_rotated=0 *) \.DC  #(.Temp(26.85),.reltol(0.001),.abstol(1 pA),.vntol(1 uV),.saveOPs(no),.MaxIter(150),.saveAll(no),.convHelper(none),.Solver(CroutLU)) DC1 (  );
     (* qucs_mirrored=0, qucs_rotated=0 *) Eqn #(.Gain(dB(Output.v/Input.v)),.Phase(phase(Output.v/Input.v)),.Export(yes)) Eqn1 (  );
-    (* qucs_mirrored=0, qucs_rotated=0, S0_x1=160, S0_y1=240, S0_x2=160, S0_y2=200, S0_x3=210, S0_y3=170, S0_x4=210, S0_y4=270, S0_x5=260, S0_y5=220 *) Sub #(.File(singleOPV.sch)) OPV1 ( n_160_240, n_160_200, n_210_170, n_210_270, n_260_220 );
+    (* qucs_mirrored=0, qucs_rotated=0, qucs_type="Sub", qucs_file="singleOPV.sch", S0_x1=160, S0_y1=240, S0_x2=160, S0_y2=200, S0_x3=210, S0_y3=170, S0_x4=210, S0_y4=270, S0_x5=260, S0_y5=220 *) singleOPV #() OPV1 ( n_160_240, n_160_200, n_210_170, n_210_270, n_260_220 );
     (* qucs_mirrored=0, qucs_rotated=2, S0_x1=160, S0_y1=310, S0_x2=100, S0_y2=310 *) R #(.R(1.7k),.Temp(26.85),.Tc1(0.0),.Tc2(0.0),.Tnom(26.85)) R3 ( n_160_310, n_100_310 );
     (* S0_x1=260, S0_y1=220, S0_x2=290, S0_y2=220 *) net #() net1 ( n_260_220, n_290_220 );
     (* S0_x1=40, S0_y1=260, S0_x2=40, S0_y2=270 *) net #() net2 ( n_40_260, n_40_270 );
