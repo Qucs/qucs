@@ -32,6 +32,9 @@ Verilog_File::Verilog_File()
 
   Props.push_back(qucs::Property("File", "sub.v", false,
 		QObject::tr("Name of Verilog file")));
+  // TODO
+//  Props.push_back(qucs::Property("Type", "", false,
+//		QObject::tr("Device type")));
 
   Model = "Verilog";
   Name  = "X";
@@ -41,10 +44,22 @@ Verilog_File::Verilog_File()
 }
 
 // -------------------------------------------------------
+Verilog_File::Verilog_File(Verilog_File const& p)
+	: MultiViewComponent(p)
+{
+}
+
+// -------------------------------------------------------
+Verilog_File::~Verilog_File()
+{
+	delete _proto;
+}
+
+// -------------------------------------------------------
 Component* Verilog_File::newOne()
 {
-  Verilog_File *p = new Verilog_File();
-  p->Props.front().Value = Props.front().Value;
+  Verilog_File *p = new Verilog_File(*this);
+  assert(p->Props.front().Value == Props.front().Value);
   p->recreate(0);
   return p;
 }
@@ -105,9 +120,10 @@ QString Verilog_File::loadFile()
   f.close();
 
   // parse ports, i.e. network connections
-  Verilog_File_Info VInfo(File);
-  ModuleName = VInfo.ModuleName;
-  return VInfo.PortNames;
+  delete _proto;
+  _proto = new Verilog_File_Info(File);
+  ModuleName = _proto->ModuleName;
+  return _proto->PortNames;
 }
 
 // -------------------------------------------------------
@@ -201,6 +217,62 @@ bool Verilog_File::createSubNetlist(QTextStream *stream)
 }
 
 // -------------------------------------------------------
+std::string Verilog_File::dev_type() const
+{ untested();
+  assert(Props.size());
+  if(ModuleName.size()){
+	  return ModuleName.toStdString();
+  }else{
+	  QString f = "unknown_in_";
+	  f += misc::properFileName(Props.front().Value);
+	  return misc::properName(f).toStdString();
+  }
+}
+
+// ---------------------------------------------------------------------
+void Verilog_File::set_dev_type(std::string const& t)
+{ untested();
+	assert(Props.size());
+	prop(0).Value = QString::fromStdString(t);
+}
+
+// ---------------------------------------------------------------------
+bool Verilog_File::param_is_printable(int i)const
+{
+	return i;
+}
+
+// ---------------------------------------------------------------------
+void Verilog_File::set_attribute(std::string name, std::string value)
+{
+	if(name == "qucs_File"){
+	  assert(Props.size());
+	  Props.front().Value = QString::fromStdString(value);
+	}else{
+		Component::set_attribute(name, value);
+	}
+}
+
+// -------------------------------------------------------
+std::string Verilog_File::port_name(int i)const
+{
+//	assert(i<max_nodes());
+  if(_proto){
+	  return _proto->port_value(i);
+  }else{
+	  return "????";
+  }
+}
+
+// -------------------------------------------------------
+std::string Verilog_File::port_value(int i)const
+{
+	assert(i<net_nodes());
+	return "??";
+}
+
+// -------------------------------------------------------
+// BUG: use verilog parser.
 Verilog_File_Info::Verilog_File_Info()
 {
   ModuleName = "";
@@ -208,6 +280,9 @@ Verilog_File_Info::Verilog_File_Info()
 }
 
 // -------------------------------------------------------
+// BUG: use verilog parser.
+// TODO: parse port names
+// TODO: select component from file
 Verilog_File_Info::Verilog_File_Info(QString File, bool isfile)
 {
   if (isfile) {
@@ -278,6 +353,7 @@ Verilog_File_Info::Verilog_File_Info(QString File, bool isfile)
 }
 
 // -------------------------------------------------------
+// BUG: use verilog parser.
 QString Verilog_File_Info::parsePorts(QString s, int i)
 {
   QRegExp Expr,Expr1;
@@ -301,3 +377,15 @@ QString Verilog_File_Info::parsePorts(QString s, int i)
   s.remove('\t');
   return s;
 }
+
+// -------------------------------------------------------
+std::string Verilog_File_Info::port_value(int i)const
+{
+	if(i<_portnames.size()){
+		return _portnames[i];
+	}else{
+		return "???";
+	}
+}
+
+// -------------------------------------------------------

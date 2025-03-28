@@ -69,6 +69,11 @@ public: // parameter access
   virtual std::string param_value(int i) const;
   virtual void set_param_by_index(int i, std::string const& Value);
   virtual void set_param_by_name(std::string const& name, std::string const& v);
+
+public: // ports
+  virtual int net_nodes()const{return Ports.size();}
+  virtual std::string port_name(int)const{incomplete(); return "???";}
+  virtual std::string port_value(int)const{incomplete(); return "???";}
   virtual void set_port_by_name(std::string const&, std::string const&);
   virtual void set_port_by_index(int num, std::string const& ext_name);
 

@@ -840,7 +840,7 @@ int Component::param_count() const
 // whether a parameter is shown in a dump
 bool Component::param_is_printable(int) const
 {
-  incomplete();
+  // incomplete(); // props(i)->is_attribute?
   return true;
 }
 
