@@ -1,0 +1,27 @@
+verilog
+* lang_spice with caneda patch
+load qucs/lang_spice.so
+
+* qucs models with caneda attributes
+// `include spice_caneda.v
+
+(* spice_caneda="V%label %port{p} %port{n} DC %property{U} AC %property{U} 0 SIN( 0 %property{U} %property{f} 0. %property{Theta} )" *) module Vac(p, n);
+  parameter U=1;
+  parameter td=0;
+  parameter f=1;
+  parameter Phase=0;
+  parameter Theta=0;
+endmodule;
+
+`include qucs.v
+
+* load the schematic.
+`include helloworld.vs
+
+`spice
+.options noinsensitive
+.acs
+save helloworld.sp helloworld
+
+* run ngspice
+!ngspice -b commands.sp
