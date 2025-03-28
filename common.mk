@@ -22,13 +22,6 @@
 # the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
 # Boston, MA 02110-1301, USA.
 #
+CXX_STD = -std=c++14
+AM_CXXFLAGS = ${CXX_STD}
 
-SUFFIXES = .qrc
-
-.qrc.cpp:
-	$(RCC) -o $@ $<
-
-SUFFIXES += .moc.cpp
-
-.h.moc.cpp:
-	$(MOC) -o $@ $<

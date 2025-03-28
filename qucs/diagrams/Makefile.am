@@ -22,6 +22,8 @@
 # Boston, MA 02110-1301, USA.  
 #
 
+include ../../common.mk
+
 noinst_LTLIBRARIES = libdiagrams.la
 
 MOCHEADERS = diagramdialog.h markerdialog.h
@@ -40,12 +42,7 @@ noinst_HEADERS = $(MOCHEADERS) diagram.h graph.h polardiagram.h rectdiagram.h \
   curvediagram.h timingdiagram.h truthdiagram.h 
 #phasordiagram.h waveac.h
 
-include ../../Makefile.common
-
-SUFFIXES = .moc.cpp
-
-.h.moc.cpp:
-	$(MOC) -o $@ $<
+include ../../autotools/common.qt
 
 CLEANFILES = *~ *.moc.cpp
 MAINTAINERCLEANFILES = Makefile.in

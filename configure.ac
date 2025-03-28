@@ -227,9 +227,6 @@ fi # if pkg-config exists
         CXXFLAGS="$CXXFLAGS -W -Wall"
       fi
 
-      dnl Enable C++11 support
-      CXXFLAGS="$CXXFLAGS -std=c++14"
-
 # use pkg-config, if it exists
 if test "x$PKG_CONFIG" != "x"; then
 

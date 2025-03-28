@@ -23,6 +23,8 @@
 # Boston, MA 02110-1301, USA.
 #
 
+include ../../common.mk
+
 noinst_LTLIBRARIES = libcomponents.la
 
 MOCHEADERS = componentdialog.h spicedialog.h optimizedialog.h spicefile.h
@@ -94,12 +96,7 @@ noinst_HEADERS = $(MOCHEADERS) resistor.h components.h capacitor.h vccs.h     \
   mutualx.h circline.h taperedline.h \
   capq.h indq.h spiralinductor.h circularloop.h spdeembed.h
 
-include ../../Makefile.common
-
-SUFFIXES = .moc.cpp
-
-.h.moc.cpp:
-	$(MOC) -o $@ $<
+include ../../autotools/common.qt
 
 CLEANFILES = *~ *.moc.cpp
 MAINTAINERCLEANFILES = Makefile.in

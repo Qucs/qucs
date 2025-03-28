@@ -23,6 +23,7 @@
 #
 
 include ../common.mk
+include ../autotools/common.qt
 include MakeList
 
 AM_DEFAULT_SOURCE_EXT = .cpp
@@ -68,7 +69,6 @@ libqucsschematic_la_SOURCES = ${CXX_SRCS}
 
 nodist_libqucsschematic_la_SOURCES = $(MOCFILES)
 
-include ../Makefile.common
 libqucsschematic_la_LDFLAGS = $(X11_LDFLAGS) $(QT_LIBS)
 
 # TODO:

@@ -1,0 +1,16 @@
+# qucs autotools. qt stuff
+
+AM_CPPFLAGS = $(X11_INCLUDES) $(QT_CFLAGS) -I$(top_srcdir)/qucs
+
+# BUG. put as needed.
+AM_CPPFLAGS += -I$(top_srcdir)/qucs-lib
+
+SUFFIXES = .qrc
+
+.qrc.cpp:
+	$(RCC) -o $@ $<
+
+SUFFIXES += .moc.cpp
+
+.h.moc.cpp:
+	$(MOC) -o $@ $<

@@ -49,7 +49,7 @@ nodist_libdialogs_la_SOURCES = $(MOCFILES)
 
 noinst_HEADERS = $(MOCHEADERS) $(UIHEADERS)
 
-include ../../Makefile.common
+include ../../autotools/common.qt
 
 # common?!
 ui_searchdialog.h: searchdialog.ui

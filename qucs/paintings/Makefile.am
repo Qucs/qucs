@@ -22,6 +22,8 @@
 # Boston, MA 02110-1301, USA.  
 #
 
+include ../../common.mk
+
 noinst_LTLIBRARIES = libpaintings.la
 
 MOCHEADERS = arrowdialog.h graphictextdialog.h filldialog.h id_dialog.h
@@ -37,12 +39,7 @@ nodist_libpaintings_la_SOURCES = $(MOCFILES)
 noinst_HEADERS = $(MOCHEADERS) arrow.h ellipse.h graphicline.h graphictext.h  \
   painting.h paintings.h rectangle.h portsymbol.h ellipsearc.h id_text.h
 
-include ../../Makefile.common
-
-SUFFIXES = .moc.cpp
-
-.h.moc.cpp:
-	$(MOC) -o $@ $<
+include ../../autotools/common.qt
 
 CLEANFILES = *~ *.moc.cpp
 MAINTAINERCLEANFILES = Makefile.in
