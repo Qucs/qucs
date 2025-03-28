@@ -1,0 +1,28 @@
+=== Qucs hello Verilog world
+
+The new schematic format plays well with other tools.
+For simulation, load the circuit into a simulator (not part of Qucs).
+
+== edit schematic (old)
+
+edit legacy schematic data
+$ qucs -i helloworld.sch
+
+convert to standard format
+$ qucs -i helloworld.sch --dump -t vs -o helloworld.vs
+
+== edit schematic (new)
+
+no more need for legacy data
+$ qucs -i helloworld.vs
+
+== simulate circuit
+
+Here's a small demo script, have a look, less is more.
+$ less commands.gc
+
+run it with
+$ gnucap commands.gc
+[..]
+
+== ngspice

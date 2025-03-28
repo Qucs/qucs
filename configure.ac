@@ -778,6 +778,8 @@ AC_CONFIG_FILES([Makefile
     contrib/Makefile
     man/Makefile
     examples/Makefile
+    examples/legacy/Makefile
+    examples/verilog/Makefile
     qucs-filter/Makefile
     qucs-activefilter/Makefile
     qucs-transcalc/Makefile
