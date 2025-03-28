@@ -1,0 +1,33 @@
+verilog
+
+// Gnucsator has models for legacy Qucs symbols
+`include some_gnucsator_models.v
+
+// load the schematic.
+`include helloworld.vs
+
+// instanciate it, connect two nets.
+helloworld h(.P1(in), .P2(out));
+
+// set some probes
+`print tran v(in) v(out)
+
+// simulate 1 second
+`tran 1
+
+// print some stats
+status notime
+
+// get rid of the ac source
+delete helloworld.V1
+
+// is it gone?
+list helloworld
+
+// some retro computing (but need case sensitive)
+`spice
+.options noinsensitive
+V1 in 0 pulse iv=0 pv=1 rise=1
+.print tran v(in) v(out)
+.tran 1
+.status notime
