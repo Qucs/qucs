@@ -1,5 +1,9 @@
 
-AM_CPPFLAGS = $(X11_INCLUDES) $(QT_CFLAGS) -I$(top_srcdir)/qucs
+#TODO: relation to common.mk??
 
-# BUG?
-AM_CPPFLAGS += -I$(top_srcdir)/qucs-lib
+QUCS_LIB_INCLUDE = -I$(top_srcdir)/qucs-lib
+AM_CPPFLAGS = $(X11_INCLUDES) $(QT_CFLAGS) -I$(top_srcdir)/qucs \
+              ${QUCS_LIB_INCLUDE}
+
+CXX_STD = "-std=c++14"
+AM_CXXFLAGS = ${CXX_STD}
