@@ -37,7 +37,7 @@
     wire n_600_210;
     wire n_600_240;
     wire n_600_320;
-    (* qucs_mirrored=0, qucs_rotated=1, S0_x1=290, S0_y1=240, S0_x2=290, S0_y2=180 *) C #(.C(1 nF),.V(),.Symbol(neutral)) C1 ( n_290_240, n_290_180 );
+    (* qucs_mirrored=0, qucs_rotated=1, S0_x1=290, S0_y1=240, S0_x2=290, S0_y2=180 *) C #(.C(1 nF),.V()) C1 ( n_290_240, n_290_180 );
     (* qucs_mirrored=0, qucs_rotated=1, S0_x1=380, S0_y1=240, S0_x2=380, S0_y2=180 *) L #(.L(100 uH),.I()) L1 ( n_380_240, n_380_180 );
     (* qucs_mirrored=0, qucs_rotated=1, S0_x1=180, S0_y1=300, S0_x2=180, S0_y2=240, S0_x3=240, S0_y3=240, S0_x4=240, S0_y4=300 *) Tr #(.T(1)) Tr1 ( n_180_300, n_180_240, n_240_240, n_240_300 );
     (* qucs_mirrored=0, qucs_rotated=0, S0_x1=600, S0_y1=240 *) GND #() \*  ( n_600_240 );
@@ -48,7 +48,7 @@
     (* qucs_mirrored=0, qucs_rotated=1, S0_x1=460, S0_y1=240, S0_x2=460, S0_y2=180 *) R #(.R(500 kOhm),.Temp(26.85),.Tc1(0.0),.Tc2(0.0),.Tnom(26.85)) R1 ( n_460_240, n_460_180 );
     (* qucs_mirrored=0, qucs_rotated=1, S0_x1=80, S0_y1=240, S0_x2=80, S0_y2=180 *) R #(.R(120 kOhm),.Temp(26.85),.Tc1(0.0),.Tc2(0.0),.Tnom(26.85)) R2 ( n_80_240, n_80_180 );
     (* qucs_mirrored=0, qucs_rotated=1, S0_x1=460, S0_y1=380, S0_x2=460, S0_y2=320 *) R #(.R(600 Ohm),.Temp(26.85),.Tc1(0.0),.Tc2(0.0),.Tnom(26.85)) R3 ( n_460_380, n_460_320 );
-    (* qucs_mirrored=0, qucs_rotated=0, S0_x1=360, S0_y1=300, S0_x2=420, S0_y2=300 *) C #(.C(5 nF),.V(),.Symbol(neutral)) C3 ( n_360_300, n_420_300 );
+    (* qucs_mirrored=0, qucs_rotated=0, S0_x1=360, S0_y1=300, S0_x2=420, S0_y2=300 *) C #(.C(5 nF),.V()) C3 ( n_360_300, n_420_300 );
     (* qucs_mirrored=0, qucs_rotated=0 *) \.TR  #(.Type(lin),.Start(0),.Stop(30 us),.Points(200),.IntegrationMethod(Trapezoidal),.Order(2),.InitialStep(1 ns),.MinStep(1e-16),.MaxIter(150),.reltol(0.001),.abstol(1 pA),.vntol(1 uV),.Temp(26.85),.LTEreltol(1e-3),.LTEabstol(1e-6),.LTEfactor(1),.Solver(CroutLU),.relaxTSR(no),.initialDC(yes),.MaxStep(0)) TR1 (  );
     (* S0_x1=380, S0_y1=240, S0_x2=460, S0_y2=240 *) net #() net1 ( n_380_240, n_460_240 );
     (* S0_x1=240, S0_y1=240, S0_x2=290, S0_y2=240 *) net #() net2 ( n_240_240, n_290_240 );

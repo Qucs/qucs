@@ -37,7 +37,7 @@
     (* qucs_mirrored=1, qucs_rotated=0, S0_x1=230, S0_y1=230, S0_x2=260, S0_y2=260, S0_x3=260, S0_y3=200 *) _BJT #(.Type(pnp),.Is(15.2f),.Nf(1),.Nr(1),.Ikf(54.7m),.Ikr(0.135),.Vaf(127),.Var(24),.Ise(3.88p),.Ne(2),.Isc(0),.Nc(2),.Bf(523),.Br(4),.Rbm(0),.Irb(0),.Rc(0.284),.Re(0.710),.Rb(2.84),.Cje(42.6p),.Vje(1.1),.Mje(0.5),.Cjc(13.7p),.Vjc(0.3),.Mjc(0.3),.Xcjc(1),.Cjs(0),.Vjs(0.75),.Mjs(0),.Fc(0.5),.Tf(453p),.Xtf(0),.Vtf(0),.Itf(0),.Tr(96.4n),.Temp(26.85),.Kf(0),.Af(1),.Ffe(1),.Kb(0),.Ab(1),.Fb(1),.Ptf(0),.Xtb(0.0),.Xti(3.0),.Eg(1.11),.Tnom(26.85),.Area(1.0)) T_2DA1774R1 ( n_230_230, n_260_260, n_260_200 );
     (* qucs_mirrored=0, qucs_rotated=0, S0_x1=200, S0_y1=320 *) GND #() \*  ( n_200_320 );
     (* qucs_mirrored=0, qucs_rotated=0, S0_x1=80, S0_y1=320 *) GND #() \*  ( n_80_320 );
-    (* qucs_mirrored=0, qucs_rotated=1, S0_x1=320, S0_y1=300, S0_x2=320, S0_y2=240 *) C #(.C(1n),.V(),.Symbol(neutral)) C1 ( n_320_300, n_320_240 );
+    (* qucs_mirrored=0, qucs_rotated=1, S0_x1=320, S0_y1=300, S0_x2=320, S0_y2=240 *) C #(.C(1n),.V()) C1 ( n_320_300, n_320_240 );
     (* qucs_mirrored=0, qucs_rotated=0, S0_x1=320, S0_y1=320 *) GND #() \*  ( n_320_320 );
     (* qucs_mirrored=0, qucs_rotated=1, S0_x1=420, S0_y1=100, S0_x2=420, S0_y2=160 *) Vdc #(.U(10)) V1 ( n_420_100, n_420_160 );
     (* qucs_mirrored=0, qucs_rotated=0, S0_x1=420, S0_y1=160 *) GND #() \*  ( n_420_160 );

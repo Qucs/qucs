@@ -38,7 +38,21 @@ SubCirPort::SubCirPort()
   Name  = "P";
 }
 
-// -------------------------------------------------------
+// ---------------------------------------------------------------------
+void SubCirPort::set_attribute(std::string name, std::string value)
+{
+	if(name == "qucs_Num"){
+	  assert(Props.size());
+	  Props.front().Value = QString::fromStdString(value);
+	}else if(name == "qucs_Type"){
+	  assert(Props.size()>1);
+	  prop(1).Value = QString::fromStdString(value);
+	}else{
+		Component::set_attribute(name, value);
+	}
+}
+
+// ---------------------------------------------------------------------
 void SubCirPort::createSymbol()
 {
   x1 = -27; y1 = -8;

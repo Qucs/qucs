@@ -31,7 +31,7 @@
     (* qucs_mirrored=0, qucs_rotated=0 *) \.AC  #(.Type(log),.Start(1 Hz),.Stop(100 kHz),.Points(100),.Noise(no)) AC1 (  );
     (* qucs_mirrored=0, qucs_rotated=1, S0_x1=360, S0_y1=160, S0_x2=330, S0_y2=130, S0_x3=390, S0_y3=130 *) _BJT #(.Type(npn),.Is(1e-16),.Nf(1),.Nr(1),.Ikf(0),.Ikr(0),.Vaf(0),.Var(0),.Ise(0),.Ne(1.5),.Isc(0),.Nc(2),.Bf(250),.Br(1),.Rbm(0),.Irb(0),.Rc(0),.Re(0),.Rb(0),.Cje(0),.Vje(0.75),.Mje(0.33),.Cjc(0),.Vjc(0.75),.Mjc(0.33),.Xcjc(1.0),.Cjs(0),.Vjs(0.75),.Mjs(0),.Fc(0.5),.Tf(0.0),.Xtf(0.0),.Vtf(0.0),.Itf(0.0),.Tr(0.0),.Temp(26.85),.Kf(0.0),.Af(1.0),.Ffe(1.0),.Kb(0.0),.Ab(1.0),.Fb(1.0),.Ptf(0.0),.Xtb(0.0),.Xti(3.0),.Eg(1.11),.Tnom(26.85),.Area(1.0)) T1 ( n_360_160, n_330_130, n_390_130 );
     (* qucs_mirrored=0, qucs_rotated=0, S0_x1=280, S0_y1=160, S0_x2=340, S0_y2=160 *) R #(.R(20 kOhm),.Temp(26.85),.Tc1(0.0),.Tc2(0.0),.Tnom(26.85)) R1 ( n_280_160, n_340_160 );
-    (* qucs_mirrored=0, qucs_rotated=0, S0_x1=380, S0_y1=160, S0_x2=440, S0_y2=160 *) C #(.C(200 uF),.V(),.Symbol(neutral)) C1 ( n_380_160, n_440_160 );
+    (* qucs_mirrored=0, qucs_rotated=0, S0_x1=380, S0_y1=160, S0_x2=440, S0_y2=160 *) C #(.C(200 uF),.V()) C1 ( n_380_160, n_440_160 );
     (* S0_x1=280, S0_y1=130, S0_x2=330, S0_y2=130 *) net #() net1 ( n_280_130, n_330_130 );
     (* S0_x1=280, S0_y1=130, S0_x2=280, S0_y2=160 *) net #() net2 ( n_280_130, n_280_160 );
     (* S0_x1=340, S0_y1=160, S0_x2=360, S0_y2=160 *) net #() net3 ( n_340_160, n_360_160 );

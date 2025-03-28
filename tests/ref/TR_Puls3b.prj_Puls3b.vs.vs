@@ -39,9 +39,9 @@
     (* qucs_mirrored=0, qucs_rotated=0, S0_x1=280, S0_y1=300 *) GND #() \\*  ( n_280_300 );
     (* qucs_mirrored=0, qucs_rotated=1, S0_x1=280, S0_y1=240, S0_x2=280, S0_y2=300 *) Vdc #(.U(13.5V)) VDC ( n_280_240, n_280_300 );
     (* qucs_mirrored=0, qucs_rotated=1, S0_x1=40, S0_y1=140, S0_x2=40, S0_y2=200 *) Vdc #(.U(200V)) VGEN ( n_40_140, n_40_200 );
-    (* qucs_mirrored=0, qucs_rotated=1, S0_x1=160, S0_y1=200, S0_x2=160, S0_y2=140 *) C #(.C(40nF),.V(),.Symbol(neutral)) CS ( n_160_200, n_160_140 );
+    (* qucs_mirrored=0, qucs_rotated=1, S0_x1=160, S0_y1=200, S0_x2=160, S0_y2=140 *) C #(.C(40nF),.V()) CS ( n_160_200, n_160_140 );
     (* qucs_mirrored=0, qucs_rotated=1, S0_x1=280, S0_y1=200, S0_x2=280, S0_y2=140 *) R #(.R(400m),.Temp(26.85),.Tc1(0.0),.Tc2(0.0),.Tnom(26.85)) RE ( n_280_200, n_280_140 );
-    (* qucs_mirrored=0, qucs_rotated=1, S0_x1=400, S0_y1=200, S0_x2=400, S0_y2=140 *) C #(.C(40nF),.V(),.Symbol(neutral)) CL ( n_400_200, n_400_140 );
+    (* qucs_mirrored=0, qucs_rotated=1, S0_x1=400, S0_y1=200, S0_x2=400, S0_y2=140 *) C #(.C(40nF),.V()) CL ( n_400_200, n_400_140 );
     (* qucs_mirrored=0, qucs_rotated=0, S0_x1=440, S0_y1=80, S0_x2=500, S0_y2=80 *) R #(.R(50),.Temp(26.85),.Tc1(0.0),.Tc2(0.0),.Tnom(26.85)) RI ( n_440_80, n_500_80 );
     (* qucs_mirrored=0, qucs_rotated=0, S0_x1=190, S0_y1=80, S0_x2=250, S0_y2=80 *) Switch #(.init(off),.time(10ns),.Ron(0),.Roff(1e9),.Temp(26.85),.MaxDuration(1e-6),.Transition(spline)) S2 ( n_190_80, n_250_80 );
     (* qucs_mirrored=0, qucs_rotated=0, S0_x1=70, S0_y1=80, S0_x2=130, S0_y2=80 *) Switch #(.init(on),.time(9ns),.Ron(0),.Roff(1e9),.Temp(26.85),.MaxDuration(1e-6),.Transition(spline)) S1 ( n_70_80, n_130_80 );

@@ -38,7 +38,7 @@
     (* qucs_mirrored=0, qucs_rotated=1, S0_x1=306, S0_y1=287, S0_x2=306, S0_y2=227 *) R #(.R(15 Ohm),.Temp(26.85),.Tc1(0.0),.Tc2(0.0),.Tnom(26.85)) R1 ( n_306_287, n_306_227 );
     (* qucs_mirrored=0, qucs_rotated=1, S0_x1=406, S0_y1=287, S0_x2=406, S0_y2=227 *) R #(.R(6 Ohm),.Temp(26.85),.Tc1(0.0),.Tc2(0.0),.Tnom(26.85)) R2 ( n_406_287, n_406_227 );
     (* qucs_mirrored=0, qucs_rotated=1, S0_x1=516, S0_y1=287, S0_x2=516, S0_y2=227 *) R #(.R(8 Ohm),.Temp(26.85),.Tc1(0.0),.Tc2(0.0),.Tnom(26.85)) R3 ( n_516_287, n_516_227 );
-    (* qucs_mirrored=0, qucs_rotated=1, S0_x1=516, S0_y1=407, S0_x2=516, S0_y2=347 *) C #(.C(177 uF),.V(),.Symbol(neutral)) C1 ( n_516_407, n_516_347 );
+    (* qucs_mirrored=0, qucs_rotated=1, S0_x1=516, S0_y1=407, S0_x2=516, S0_y2=347 *) C #(.C(177 uF),.V()) C1 ( n_516_407, n_516_347 );
     (* qucs_mirrored=0, qucs_rotated=0, S0_x1=186, S0_y1=187, S0_x2=246, S0_y2=187, S0_x3=206, S0_y3=207, S0_x4=226, S0_y4=207 *) WProbe #() PF ( n_186_187, n_246_187, n_206_207, n_226_207 );
     (* qucs_mirrored=0, qucs_rotated=1, S0_x1=406, S0_y1=407, S0_x2=406, S0_y2=347 *) L #(.L(0.1 H),.I()) L1 ( n_406_407, n_406_347 );
     (* S0_x1=56, S0_y1=187, S0_x2=186, S0_y2=187 *) net #() net1 ( n_56_187, n_186_187 );

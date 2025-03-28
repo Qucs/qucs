@@ -23,7 +23,7 @@
     (* qucs_mirrored=0, qucs_rotated=1, S0_x1=380, S0_y1=90, S0_x2=380, S0_y2=150 *) Vdc #(.U(Vds)) V1 ( n_380_90, n_380_150 );
     (* qucs_mirrored=0, qucs_rotated=0, S0_x1=210, S0_y1=160 *) GND #() \\*  ( n_210_160 );
     (* qucs_mirrored=1, qucs_rotated=2, S0_x1=350, S0_y1=60, S0_x2=290, S0_y2=60 *) IProbe #() Pr1 ( n_350_60, n_290_60 );
-    (* qucs_mirrored=0, qucs_rotated=0, qucs_type="Sub", qucs_file="curtice_1.sch" *) curtice_1 #() Curtice1 (  );
+    (* qucs_mirrored=0, qucs_rotated=0, qucs_type="Sub", qucs_File="curtice_1.sch" *) curtice_1 #() Curtice1 (  );
     (* S0_x1=380, S0_y1=150, S0_x2=380, S0_y2=160 *) net #() net1 ( n_380_150, n_380_160 );
     (* S0_x1=380, S0_y1=60, S0_x2=380, S0_y2=90 *) net #() net2 ( n_380_60, n_380_90 );
     (* S0_x1=210, S0_y1=60, S0_x2=290, S0_y2=60 *) net #() net3 ( n_210_60, n_290_60 );

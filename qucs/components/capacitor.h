@@ -28,6 +28,14 @@ public:
   Component* newOne();
   static Element* info(QString&, char* &, bool getNewOne=false);
 
+  bool param_is_printable(int i)const override {
+    if(i == 2) { // "Symbol"
+      return false;
+    }else{
+      return Component::param_is_printable(i);
+    }
+  }
+
 protected:
   void createSymbol();
 };
