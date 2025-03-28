@@ -40,7 +40,7 @@
     wire n_670_310;
     wire n_670_590;
     wire n_790_150;
-    (* qucs_mirrored=0, qucs_rotated=0, qucs_type="Sub", qucs_File="timer_555.sch", S0_x1=420, S0_y1=250, S0_x2=420, S0_y2=290, S0_x3=420, S0_y3=330, S0_x4=420, S0_y4=370, S0_x5=550, S0_y5=370, S0_x6=550, S0_y6=330, S0_x7=550, S0_y7=290, S0_x8=550, S0_y8=250 *) timer_555 #() SUB1 ( n_420_250, n_420_290, n_420_330, n_420_370, n_550_370, n_550_330, n_550_290, n_550_250 );
+    (* qucs_mirrored=0, qucs_rotated=0, qucs_Type="Sub", qucs_File="timer_555.sch", S0_x1=420, S0_y1=250, S0_x2=420, S0_y2=290, S0_x3=420, S0_y3=330, S0_x4=420, S0_y4=370, S0_x5=550, S0_y5=370, S0_x6=550, S0_y6=330, S0_x7=550, S0_y7=290, S0_x8=550, S0_y8=250 *) timer_555 #() SUB1 ( n_420_250, n_420_290, n_420_330, n_420_370, n_550_370, n_550_330, n_550_290, n_550_250 );
     (* qucs_mirrored=0, qucs_rotated=0, S0_x1=590, S0_y1=430 *) GND #() \*  ( n_590_430 );
     (* qucs_mirrored=0, qucs_rotated=0, S0_x1=160, S0_y1=360 *) GND #() \*  ( n_160_360 );
     (* qucs_mirrored=0, qucs_rotated=0, S0_x1=300, S0_y1=220 *) GND #() \*  ( n_300_220 );

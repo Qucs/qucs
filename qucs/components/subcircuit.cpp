@@ -82,7 +82,7 @@ void Subcircuit::set_attribute(std::string name, std::string value)
 std::string Subcircuit::attr_get() const
 {
   std::string ret = Component::attr_get();
-  ret += ", qucs_type=\"Sub\"";
+  ret += ", qucs_Type=\"Sub\"";
   assert(Props.size());
   ret += ", qucs_File=\"" + prop(0).Value.toStdString() + "\"";
   return ret;

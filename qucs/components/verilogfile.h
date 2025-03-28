@@ -35,6 +35,20 @@ public:
   QString getErrorText() { return ErrText; }
   QString getSubcircuitFile();
 
+public:
+  bool param_is_printable(int)const override;
+  std::string dev_type()const override;
+  void set_dev_type(std::string const&)override;
+  void set_attribute(std::string name, std::string value)override;
+
+  std::string attr_get() const override {
+	  std::string ret = Component::attr_get();
+	  ret += ", qucs_Type=\"Verilog\"";
+	  assert(Props.size());
+	  ret += ", qucs_File=\"" + prop(0).Value.toStdString() + "\"";
+	  return ret;
+  }
+
 protected:
   QString verilogCode(int);
   void createSymbol();

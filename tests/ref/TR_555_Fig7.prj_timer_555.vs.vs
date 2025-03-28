@@ -22,9 +22,9 @@
     (* qucs_mirrored=0, qucs_rotated=3, qucs_Num=8, qucs_Type="analog", S0_x1=220, S0_y1=30 *) Port #() P_VCC ( n_220_30 );
     (* qucs_mirrored=0, qucs_rotated=0, qucs_Num=2, qucs_Type="analog", S0_x1=140, S0_y1=355 *) Port #() P_TRIGGER ( n_140_355 );
     (* qucs_mirrored=0, qucs_rotated=0, qucs_Num=6, qucs_Type="analog", S0_x1=120, S0_y1=140 *) Port #() P_THRESH ( n_120_140 );
-    (* qucs_mirrored=0, qucs_rotated=0, qucs_type="Sub", qucs_File="timer_Discharge.sch" *) timer_Discharge #() SUB5 (  );
-    (* qucs_mirrored=0, qucs_rotated=0, qucs_type="Sub", qucs_File="timer_digital_comb.sch" *) timer_digital_comb #() SUB3 (  );
-    (* qucs_mirrored=0, qucs_rotated=0, qucs_type="Sub", qucs_File="timer_amp.sch" *) timer_amp #() SUB4 (  );
-    (* qucs_mirrored=0, qucs_rotated=0, qucs_type="Sub", qucs_File="timer_trig.sch" *) timer_trig #() SUB6 (  );
-    (* qucs_mirrored=0, qucs_rotated=0, qucs_type="Sub", qucs_File="timer_thresh.sch" *) timer_thresh #() SUB7 (  );
+    (* qucs_mirrored=0, qucs_rotated=0, qucs_Type="Sub", qucs_File="timer_Discharge.sch" *) timer_Discharge #() SUB5 (  );
+    (* qucs_mirrored=0, qucs_rotated=0, qucs_Type="Sub", qucs_File="timer_digital_comb.sch" *) timer_digital_comb #() SUB3 (  );
+    (* qucs_mirrored=0, qucs_rotated=0, qucs_Type="Sub", qucs_File="timer_amp.sch" *) timer_amp #() SUB4 (  );
+    (* qucs_mirrored=0, qucs_rotated=0, qucs_Type="Sub", qucs_File="timer_trig.sch" *) timer_trig #() SUB6 (  );
+    (* qucs_mirrored=0, qucs_rotated=0, qucs_Type="Sub", qucs_File="timer_thresh.sch" *) timer_thresh #() SUB7 (  );
 endmodule

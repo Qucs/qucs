@@ -12,7 +12,7 @@
     wire n_410_540;
     wire n_590_400;
     wire n_590_430;
-    (* qucs_mirrored=0, qucs_rotated=0, qucs_type="Sub", qucs_File="timer_555.sch" *) timer_555 #() SUB1 (  );
+    (* qucs_mirrored=0, qucs_rotated=0, qucs_Type="Sub", qucs_File="timer_555.sch" *) timer_555 #() SUB1 (  );
     (* qucs_mirrored=0, qucs_rotated=0, S0_x1=590, S0_y1=430 *) GND #() \\*  ( n_590_430 );
     (* qucs_mirrored=0, qucs_rotated=0, S0_x1=160, S0_y1=360 *) GND #() \\*  ( n_160_360 );
     (* qucs_mirrored=0, qucs_rotated=0, S0_x1=300, S0_y1=220 *) GND #() \\*  ( n_300_220 );
