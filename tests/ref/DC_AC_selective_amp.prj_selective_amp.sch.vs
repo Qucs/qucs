@@ -54,11 +54,11 @@
     (* qucs_mirrored=0, qucs_rotated=0, S0_x1=20, S0_y1=330 *) GND #() \*  ( n_20_330 );
     (* qucs_mirrored=0, qucs_rotated=0, S0_x1=40, S0_y1=200, S0_x2=100, S0_y2=200 *) DCBlock #(.C(1 uF)) C3 ( n_40_200, n_100_200 );
     (* qucs_mirrored=0, qucs_rotated=0, S0_x1=160, S0_y1=200, S0_x2=190, S0_y2=170, S0_x3=190, S0_y3=230 *) _BJT #(.Type(npn),.Is(1e-16),.Nf(1),.Nr(1),.Ikf(0),.Ikr(0),.Vaf(0),.Var(0),.Ise(0),.Ne(1.5),.Isc(0),.Nc(2),.Bf(100),.Br(1),.Rbm(0),.Irb(0),.Rc(0),.Re(0),.Rb(0),.Cje(0),.Vje(0.75),.Mje(0.33),.Cjc(0),.Vjc(0.75),.Mjc(0.33),.Xcjc(1.0),.Cjs(0),.Vjs(0.75),.Mjs(0),.Fc(0.5),.Tf(0.0),.Xtf(0.0),.Vtf(0.0),.Itf(0.0),.Tr(0.0),.Temp(26.85),.Kf(0.0),.Af(1.0),.Ffe(1.0),.Kb(0.0),.Ab(1.0),.Fb(1.0),.Ptf(0.0),.Xtb(0.0),.Xti(3.0),.Eg(1.11),.Tnom(26.85),.Area(1.0)) T1 ( n_160_200, n_190_170, n_190_230 );
-    (* qucs_mirrored=0, qucs_rotated=1, S0_x1=190, S0_y1=140, S0_x2=190, S0_y2=80 *) C #(.C(1.5n),.V(),.Symbol(neutral)) C1 ( n_190_140, n_190_80 );
+    (* qucs_mirrored=0, qucs_rotated=1, S0_x1=190, S0_y1=140, S0_x2=190, S0_y2=80 *) C #(.C(1.5n),.V()) C1 ( n_190_140, n_190_80 );
     (* qucs_mirrored=0, qucs_rotated=1, S0_x1=270, S0_y1=140, S0_x2=270, S0_y2=80 *) R #(.R(100k),.Temp(26.85),.Tc1(0.0),.Tc2(0.0),.Tnom(26.85)) R4 ( n_270_140, n_270_80 );
     (* qucs_mirrored=0, qucs_rotated=1, S0_x1=350, S0_y1=140, S0_x2=350, S0_y2=80 *) L #(.L(80u),.I()) L1 ( n_350_140, n_350_80 );
     (* qucs_mirrored=0, qucs_rotated=1, S0_x1=20, S0_y1=240, S0_x2=20, S0_y2=300 *) Vac #(.U(1 uV),.f(1 GHz),.Phase(0),.Theta(0)) V2 ( n_20_240, n_20_300 );
-    (* qucs_mirrored=0, qucs_rotated=1, S0_x1=280, S0_y1=330, S0_x2=280, S0_y2=270 *) C #(.C(100n),.V(),.Symbol(neutral)) C2 ( n_280_330, n_280_270 );
+    (* qucs_mirrored=0, qucs_rotated=1, S0_x1=280, S0_y1=330, S0_x2=280, S0_y2=270 *) C #(.C(100n),.V()) C2 ( n_280_330, n_280_270 );
     (* qucs_mirrored=0, qucs_rotated=0, S0_x1=420, S0_y1=230 *) GND #() \*  ( n_420_230 );
     (* qucs_mirrored=1, qucs_rotated=1, S0_x1=420, S0_y1=170, S0_x2=420, S0_y2=230 *) Vdc #(.U(12 V)) V1 ( n_420_170, n_420_230 );
     (* qucs_mirrored=0, qucs_rotated=0 *) \.AC  #(.Type(log),.Start(300 kHz),.Stop(800 kHz),.Points(100),.Noise(no)) AC1 (  );

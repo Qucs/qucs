@@ -11,10 +11,10 @@
     wire n_480_140;
     wire n_550_200;
     wire n_550_250;
-    (* qucs_mirrored=0, qucs_rotated=1, S0_x1=240, S0_y1=250, S0_x2=240, S0_y2=190 *) C #(.C(39.01pF),.V(),.Symbol(neutral)) C1 ( n_240_250, n_240_190 );
+    (* qucs_mirrored=0, qucs_rotated=1, S0_x1=240, S0_y1=250, S0_x2=240, S0_y2=190 *) C #(.C(39.01pF),.V()) C1 ( n_240_250, n_240_190 );
     (* qucs_mirrored=0, qucs_rotated=0, S0_x1=240, S0_y1=250 *) GND #() \\*  ( n_240_250 );
     (* qucs_mirrored=0, qucs_rotated=0, S0_x1=280, S0_y1=140, S0_x2=340, S0_y2=140 *) L #(.L(280.9nH),.I()) L1 ( n_280_140, n_340_140 );
-    (* qucs_mirrored=0, qucs_rotated=1, S0_x1=380, S0_y1=250, S0_x2=380, S0_y2=190 *) C #(.C(39.01pF),.V(),.Symbol(neutral)) C2 ( n_380_250, n_380_190 );
+    (* qucs_mirrored=0, qucs_rotated=1, S0_x1=380, S0_y1=250, S0_x2=380, S0_y2=190 *) C #(.C(39.01pF),.V()) C2 ( n_380_250, n_380_190 );
     (* qucs_mirrored=0, qucs_rotated=0, S0_x1=380, S0_y1=250 *) GND #() \\*  ( n_380_250 );
     (* qucs_mirrored=0, qucs_rotated=0, S0_x1=60, S0_y1=250 *) GND #() \\*  ( n_60_250 );
     (* qucs_mirrored=0, qucs_rotated=1, S0_x1=60, S0_y1=170, S0_x2=60, S0_y2=230 *) Vac #(.U(1 V),.f(1 GHz),.Phase(0),.Theta(0)) V1 ( n_60_170, n_60_230 );

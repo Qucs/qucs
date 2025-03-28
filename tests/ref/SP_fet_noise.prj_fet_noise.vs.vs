@@ -9,7 +9,7 @@
     wire n_400_140;
     wire n_400_170;
     (* qucs_mirrored=0, qucs_rotated=0, S0_x1=240, S0_y1=130 *) GND #() \\*  ( n_240_130 );
-    (* qucs_mirrored=0, qucs_rotated=0, qucs_type="Sub", qucs_file="fet.sch" *) fet #() SUB1 (  );
+    (* qucs_mirrored=0, qucs_rotated=0, qucs_type="Sub", qucs_File="fet.sch" *) fet #() SUB1 (  );
     (* qucs_mirrored=0, qucs_rotated=0, S0_x1=100, S0_y1=110, S0_x2=160, S0_y2=110 *) L #(.L(1.1 nH),.I()) L1 ( n_100_110, n_160_110 );
     (* qucs_mirrored=0, qucs_rotated=1, S0_x1=180, S0_y1=210, S0_x2=180, S0_y2=150 *) L #(.L(4.0 nH),.I()) L2 ( n_180_210, n_180_150 );
     (* qucs_mirrored=0, qucs_rotated=0, S0_x1=180, S0_y1=210 *) GND #() \\*  ( n_180_210 );

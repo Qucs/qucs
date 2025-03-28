@@ -20,8 +20,8 @@
     wire n_990_250;
     (* qucs_mirrored=0, qucs_rotated=0, S0_x1=480, S0_y1=90, S0_x2=540, S0_y2=90 *) L #(.L(1.2uH),.I()) L1 ( n_480_90, n_540_90 );
     (* qucs_mirrored=0, qucs_rotated=0, S0_x1=620, S0_y1=90, S0_x2=680, S0_y2=90 *) L #(.L(470nH),.I()) L2 ( n_620_90, n_680_90 );
-    (* qucs_mirrored=0, qucs_rotated=1, S0_x1=440, S0_y1=200, S0_x2=440, S0_y2=140 *) C #(.C(270pF),.V(),.Symbol(neutral)) C1 ( n_440_200, n_440_140 );
-    (* qucs_mirrored=0, qucs_rotated=1, S0_x1=580, S0_y1=200, S0_x2=580, S0_y2=140 *) C #(.C(270pF),.V(),.Symbol(neutral)) C2 ( n_580_200, n_580_140 );
+    (* qucs_mirrored=0, qucs_rotated=1, S0_x1=440, S0_y1=200, S0_x2=440, S0_y2=140 *) C #(.C(270pF),.V()) C1 ( n_440_200, n_440_140 );
+    (* qucs_mirrored=0, qucs_rotated=1, S0_x1=580, S0_y1=200, S0_x2=580, S0_y2=140 *) C #(.C(270pF),.V()) C2 ( n_580_200, n_580_140 );
     (* qucs_mirrored=0, qucs_rotated=0, S0_x1=330, S0_y1=90, S0_x2=390, S0_y2=90 *) L #(.L(470nH),.I()) L3 ( n_330_90, n_390_90 );
     (* qucs_mirrored=0, qucs_rotated=0, S0_x1=330, S0_y1=260, S0_x2=390, S0_y2=260 *) L #(.L(470nH),.I()) L4 ( n_330_260, n_390_260 );
     (* qucs_mirrored=0, qucs_rotated=0, S0_x1=480, S0_y1=260, S0_x2=540, S0_y2=260 *) L #(.L(1.2uH),.I()) L5 ( n_480_260, n_540_260 );
@@ -30,8 +30,8 @@
     (* qucs_mirrored=0, qucs_rotated=1, S0_x1=-20, S0_y1=160, S0_x2=-20, S0_y2=220 *) Pac #(.Num(1),.Z(100 Ohm),.P(0 dBm),.f(1 GHz),.Temp(26.85)) P1 ( n_m20_160, n_m20_220 );
     (* qucs_mirrored=0, qucs_rotated=0, S0_x1=-20, S0_y1=240 *) GND #() \\*  ( n_m20_240 );
     (* qucs_mirrored=0, qucs_rotated=0, S0_x1=870, S0_y1=190 *) GND #() \\*  ( n_870_190 );
-    (* qucs_mirrored=0, qucs_rotated=0, qucs_type="Sub", qucs_file="IdealBalun.sch" *) IdealBalun #() Balun1 (  );
-    (* qucs_mirrored=1, qucs_rotated=2, qucs_type="Sub", qucs_file="IdealBalun.sch" *) IdealBalun #() Balun2 (  );
+    (* qucs_mirrored=0, qucs_rotated=0, qucs_type="Sub", qucs_File="IdealBalun.sch" *) IdealBalun #() Balun1 (  );
+    (* qucs_mirrored=1, qucs_rotated=2, qucs_type="Sub", qucs_File="IdealBalun.sch" *) IdealBalun #() Balun2 (  );
     (* qucs_mirrored=0, qucs_rotated=0, S0_x1=80, S0_y1=210 *) GND #() \\*  ( n_80_210 );
     (* qucs_mirrored=0, qucs_rotated=1, S0_x1=80, S0_y1=130, S0_x2=80, S0_y2=190 *) Vdc #(.U(1V)) V1 ( n_80_130, n_80_190 );
     (* qucs_mirrored=0, qucs_rotated=0, S0_x1=910, S0_y1=150, S0_x2=930, S0_y2=150 *) VProbe #() Pr1 ( n_910_150, n_930_150 );

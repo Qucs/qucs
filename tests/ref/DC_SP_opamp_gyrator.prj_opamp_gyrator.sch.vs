@@ -36,7 +36,7 @@
     wire n_640_220;
     wire n_640_250;
     (* qucs_mirrored=0, qucs_rotated=0, S0_x1=260, S0_y1=280 *) GND #() \*  ( n_260_280 );
-    (* qucs_mirrored=0, qucs_rotated=0, S0_x1=180, S0_y1=150, S0_x2=240, S0_y2=150 *) C #(.C(1 uF),.V(),.Symbol(neutral)) C1 ( n_180_150, n_240_150 );
+    (* qucs_mirrored=0, qucs_rotated=0, S0_x1=180, S0_y1=150, S0_x2=240, S0_y2=150 *) C #(.C(1 uF),.V()) C1 ( n_180_150, n_240_150 );
     (* qucs_mirrored=0, qucs_rotated=1, S0_x1=70, S0_y1=130, S0_x2=70, S0_y2=190 *) Pac #(.Num(1),.Z(50 Ohm),.P(0 dBm),.f(1 GHz),.Temp(26.85)) P1 ( n_70_130, n_70_190 );
     (* qucs_mirrored=0, qucs_rotated=0, S0_x1=70, S0_y1=190 *) GND #() \*  ( n_70_190 );
     (* qucs_mirrored=0, qucs_rotated=0, S0_x1=260, S0_y1=150, S0_x2=260, S0_y2=110, S0_x3=330, S0_y3=130 *) OpAmp #(.G(1e6),.Umax(15 V)) OP1 ( n_260_150, n_260_110, n_330_130 );

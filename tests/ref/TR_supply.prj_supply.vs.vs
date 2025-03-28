@@ -24,5 +24,5 @@
     (* qucs_mirrored=0, qucs_rotated=1, S0_x1=40, S0_y1=170, S0_x2=40, S0_y2=230 *) Vac #(.U(230 V),.f(50 Hz),.Phase(0),.Theta(0)) V1 ( n_40_170, n_40_230 );
     (* qucs_mirrored=0, qucs_rotated=0, S0_x1=40, S0_y1=240 *) GND #() \\*  ( n_40_240 );
     (* qucs_mirrored=1, qucs_rotated=0, S0_x1=80, S0_y1=170, S0_x2=140, S0_y2=170 *) R #(.R(0.5 Ohm),.Temp(26.85),.Tc1(0.0),.Tc2(0.0),.Tnom(26.85)) R1 ( n_80_170, n_140_170 );
-    (* qucs_mirrored=0, qucs_rotated=1, S0_x1=410, S0_y1=250, S0_x2=410, S0_y2=190 *) C #(.C(1000 uF),.V(),.Symbol(neutral)) C1 ( n_410_250, n_410_190 );
+    (* qucs_mirrored=0, qucs_rotated=1, S0_x1=410, S0_y1=250, S0_x2=410, S0_y2=190 *) C #(.C(1000 uF),.V()) C1 ( n_410_250, n_410_190 );
 endmodule

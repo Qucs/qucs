@@ -35,11 +35,11 @@
     (* qucs_mirrored=1, qucs_rotated=1, S0_x1=170, S0_y1=150, S0_x2=170, S0_y2=90 *) Diode #(.Is(1e-15 A),.N(1),.Cj0(10 pF),.M(0.5),.Vj(0.7 V),.Fc(0.5),.Cp(0.0 fF),.Isr(0.0),.Nr(2.0),.Rs(0.0 Ohm),.Tt(0.0 ps),.Ikf(26.85),.Kf(0.0),.Af(1.0),.Ffe(0),.Bv(0),.Ibv(1 mA),.Temp(26.85),.Xti(3.0),.Eg(1.11),.Tbv(0.0),.Trs(0.0),.Ttt1(0.0),.Ttt2(0.0),.Tm1(0.0),.Tm2(0.0),.Tnom(26.85),.Area(1.0),.Symbol(normal)) D1 ( n_170_150, n_170_90 );
     (* qucs_mirrored=1, qucs_rotated=0, S0_x1=190, S0_y1=150, S0_x2=220, S0_y2=180, S0_x3=220, S0_y3=120 *) _BJT #(.Type(pnp),.Is(1e-16),.Nf(1),.Nr(1),.Ikf(0),.Ikr(0),.Vaf(0),.Var(0),.Ise(0),.Ne(1.5),.Isc(0),.Nc(2),.Bf(300),.Br(1),.Rbm(0),.Irb(0),.Rc(0),.Re(0),.Rb(0),.Cje(30 pF),.Vje(0.75),.Mje(0.33),.Cjc(0),.Vjc(0.75),.Mjc(0.33),.Xcjc(1.0),.Cjs(0),.Vjs(0.75),.Mjs(0),.Fc(0.5),.Tf(0.0),.Xtf(0.0),.Vtf(0.0),.Itf(0.0),.Tr(0.0),.Temp(26.85),.Kf(0.0),.Af(1.0),.Ffe(1.0),.Kb(0.0),.Ab(1.0),.Fb(1.0),.Ptf(0.0),.Xtb(0.0),.Xti(3.0),.Eg(1.11),.Tnom(26.85),.Area(1.0)) T2 ( n_190_150, n_220_180, n_220_120 );
     (* qucs_mirrored=0, qucs_rotated=0, S0_x1=50, S0_y1=460 *) GND #() \\*  ( n_50_460 );
-    (* qucs_mirrored=0, qucs_rotated=0, S0_x1=160, S0_y1=400, S0_x2=220, S0_y2=400 *) C #(.C(1 nF),.V(),.Symbol(neutral)) C4 ( n_160_400, n_220_400 );
+    (* qucs_mirrored=0, qucs_rotated=0, S0_x1=160, S0_y1=400, S0_x2=220, S0_y2=400 *) C #(.C(1 nF),.V()) C4 ( n_160_400, n_220_400 );
     (* qucs_mirrored=0, qucs_rotated=0, S0_x1=470, S0_y1=460 *) GND #() \\*  ( n_470_460 );
     (* qucs_mirrored=0, qucs_rotated=0, S0_x1=650, S0_y1=460 *) GND #() \\*  ( n_650_460 );
     (* qucs_mirrored=0, qucs_rotated=0, S0_x1=610, S0_y1=270 *) GND #() \\*  ( n_610_270 );
-    (* qucs_mirrored=0, qucs_rotated=0, S0_x1=550, S0_y1=360, S0_x2=610, S0_y2=360 *) C #(.C(1 nF),.V(),.Symbol(neutral)) C3 ( n_550_360, n_610_360 );
+    (* qucs_mirrored=0, qucs_rotated=0, S0_x1=550, S0_y1=360, S0_x2=610, S0_y2=360 *) C #(.C(1 nF),.V()) C3 ( n_550_360, n_610_360 );
     (* qucs_mirrored=0, qucs_rotated=1, S0_x1=470, S0_y1=350, S0_x2=470, S0_y2=290 *) L #(.L(100 nH),.I()) L1 ( n_470_350, n_470_290 );
     (* qucs_mirrored=0, qucs_rotated=1, S0_x1=50, S0_y1=400, S0_x2=50, S0_y2=460 *) Pac #(.Num(1),.Z(50 Ohm),.P(0),.f(1 GHz),.Temp(26.85)) P1 ( n_50_400, n_50_460 );
     (* qucs_mirrored=0, qucs_rotated=1, S0_x1=650, S0_y1=400, S0_x2=650, S0_y2=460 *) Pac #(.Num(2),.Z(50 Ohm),.P(0),.f(1 GHz),.Temp(26.85)) P2 ( n_650_400, n_650_460 );
@@ -51,6 +51,6 @@
     (* qucs_mirrored=0, qucs_rotated=0, S0_x1=170, S0_y1=210 *) GND #() \\*  ( n_170_210 );
     (* qucs_mirrored=1, qucs_rotated=1, S0_x1=170, S0_y1=210, S0_x2=170, S0_y2=150 *) R #(.R(20 kOhm),.Temp(26.85),.Tc1(0.0),.Tc2(0.0),.Tnom(26.85)) R1 ( n_170_210, n_170_150 );
     (* qucs_mirrored=0, qucs_rotated=0 *) Eqn #(.y(1),.Export(yes)) Eqn1 (  );
-    (* qucs_mirrored=1, qucs_rotated=0, S0_x1=550, S0_y1=270, S0_x2=610, S0_y2=270 *) C #(.C(0.1 uF),.V(),.Symbol(neutral)) C1 ( n_550_270, n_610_270 );
-    (* qucs_mirrored=1, qucs_rotated=0, S0_x1=300, S0_y1=270, S0_x2=360, S0_y2=270 *) C #(.C(5 uF),.V(),.Symbol(neutral)) C2 ( n_300_270, n_360_270 );
+    (* qucs_mirrored=1, qucs_rotated=0, S0_x1=550, S0_y1=270, S0_x2=610, S0_y2=270 *) C #(.C(0.1 uF),.V()) C1 ( n_550_270, n_610_270 );
+    (* qucs_mirrored=1, qucs_rotated=0, S0_x1=300, S0_y1=270, S0_x2=360, S0_y2=270 *) C #(.C(5 uF),.V()) C2 ( n_300_270, n_360_270 );
 endmodule

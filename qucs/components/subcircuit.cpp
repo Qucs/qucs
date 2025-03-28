@@ -71,7 +71,7 @@ void Subcircuit::set_dev_type(std::string const& t)
 // ---------------------------------------------------------------------
 void Subcircuit::set_attribute(std::string name, std::string value)
 {
-	if(name == "qucs_file"){
+	if(name == "qucs_File"){
 	  assert(Props.size());
 	  Props.front().Value = QString::fromStdString(value);
 	}else{
@@ -84,7 +84,7 @@ std::string Subcircuit::attr_get() const
   std::string ret = Component::attr_get();
   ret += ", qucs_type=\"Sub\"";
   assert(Props.size());
-  ret += ", qucs_file=\"" + prop(0).Value.toStdString() + "\"";
+  ret += ", qucs_File=\"" + prop(0).Value.toStdString() + "\"";
   return ret;
 }
 

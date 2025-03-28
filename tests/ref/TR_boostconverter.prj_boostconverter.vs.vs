@@ -20,6 +20,6 @@
     (* qucs_mirrored=0, qucs_rotated=0, S0_x1=220, S0_y1=370 *) GND #() \\*  ( n_220_370 );
     (* qucs_mirrored=0, qucs_rotated=2, S0_x1=520, S0_y1=150, S0_x2=460, S0_y2=150 *) Diode #(.Is(1e-12 A),.N(1),.Cj0(10 fF),.M(0.5),.Vj(0.7 V),.Fc(0.5),.Cp(0.0 fF),.Isr(0.0),.Nr(2.0),.Rs(0.0 Ohm),.Tt(0.0 ps),.Ikf(0),.Kf(0.0),.Af(1.0),.Ffe(1.0),.Bv(0),.Ibv(1 mA),.Temp(26.85),.Xti(3.0),.Eg(1.11),.Tbv(0.0),.Trs(0.0),.Ttt1(0.0),.Ttt2(0.0),.Tm1(0.0),.Tm2(0.0),.Tnom(26.85),.Area(1.0),.Symbol(normal)) D1 ( n_520_150, n_460_150 );
     (* qucs_mirrored=0, qucs_rotated=0, S0_x1=660, S0_y1=250 *) GND #() \\*  ( n_660_250 );
-    (* qucs_mirrored=1, qucs_rotated=3, S0_x1=560, S0_y1=170, S0_x2=560, S0_y2=230 *) C #(.C(100u),.V(0),.Symbol(neutral)) C1 ( n_560_170, n_560_230 );
+    (* qucs_mirrored=1, qucs_rotated=3, S0_x1=560, S0_y1=170, S0_x2=560, S0_y2=230 *) C #(.C(100u),.V(0)) C1 ( n_560_170, n_560_230 );
     (* qucs_mirrored=0, qucs_rotated=1, S0_x1=660, S0_y1=230, S0_x2=660, S0_y2=170 *) R #(.R(5),.Temp(26.85),.Tc1(0.0),.Tc2(0.0),.Tnom(26.85)) R1 ( n_660_230, n_660_170 );
 endmodule

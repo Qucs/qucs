@@ -6,9 +6,9 @@
     inout n_260_180;
     wire n_380_210;
     (* qucs_mirrored=1, qucs_rotated=2, S0_x1=410, S0_y1=140, S0_x2=350, S0_y2=180, S0_x3=350, S0_y3=240, S0_x4=410, S0_y4=280, S0_x5=410, S0_y5=220, S0_x6=410, S0_y6=200 *) sTr #(.T1(0.5),.T2(0.5)) Tr1 ( n_410_140, n_350_180, n_350_240, n_410_280, n_410_220, n_410_200 );
-    (* qucs_mirrored=1, qucs_rotated=2, S0_x1=460, S0_y1=280 *) Port #(.Num(3),.Type(analog)) P3 ( n_460_280 );
-    (* qucs_mirrored=1, qucs_rotated=2, S0_x1=460, S0_y1=140 *) Port #(.Num(4),.Type(analog)) P4 ( n_460_140 );
-    (* qucs_mirrored=0, qucs_rotated=1, S0_x1=340, S0_y1=390 *) Port #(.Num(5),.Type(analog)) P5 ( n_340_390 );
-    (* qucs_mirrored=0, qucs_rotated=0, S0_x1=260, S0_y1=360 *) Port #(.Num(2),.Type(analog)) P2 ( n_260_360 );
-    (* qucs_mirrored=0, qucs_rotated=0, S0_x1=260, S0_y1=180 *) Port #(.Num(1),.Type(analog)) P1 ( n_260_180 );
+    (* qucs_mirrored=1, qucs_rotated=2, qucs_Num=3, qucs_Type="analog", S0_x1=460, S0_y1=280 *) Port #() P3 ( n_460_280 );
+    (* qucs_mirrored=1, qucs_rotated=2, qucs_Num=4, qucs_Type="analog", S0_x1=460, S0_y1=140 *) Port #() P4 ( n_460_140 );
+    (* qucs_mirrored=0, qucs_rotated=1, qucs_Num=5, qucs_Type="analog", S0_x1=340, S0_y1=390 *) Port #() P5 ( n_340_390 );
+    (* qucs_mirrored=0, qucs_rotated=0, qucs_Num=2, qucs_Type="analog", S0_x1=260, S0_y1=360 *) Port #() P2 ( n_260_360 );
+    (* qucs_mirrored=0, qucs_rotated=0, qucs_Num=1, qucs_Type="analog", S0_x1=260, S0_y1=180 *) Port #() P1 ( n_260_180 );
 endmodule

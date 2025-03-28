@@ -30,7 +30,7 @@
     wire n_470_410;
     (* qucs_mirrored=0, qucs_rotated=0, S0_x1=100, S0_y1=410 *) GND #() \*  ( n_100_410 );
     (* qucs_mirrored=1, qucs_rotated=1, S0_x1=100, S0_y1=340, S0_x2=100, S0_y2=400 *) Vac #(.U(10 V),.f(1 GHz),.Phase(0),.Theta(0)) V1 ( n_100_340, n_100_400 );
-    (* qucs_mirrored=0, qucs_rotated=1, S0_x1=210, S0_y1=400, S0_x2=210, S0_y2=340 *) C #(.C(1 pF),.V(),.Symbol(neutral)) C1 ( n_210_400, n_210_340 );
+    (* qucs_mirrored=0, qucs_rotated=1, S0_x1=210, S0_y1=400, S0_x2=210, S0_y2=340 *) C #(.C(1 pF),.V()) C1 ( n_210_400, n_210_340 );
     (* qucs_mirrored=0, qucs_rotated=1, S0_x1=470, S0_y1=390, S0_x2=470, S0_y2=330 *) Diode #(.Is(1e-15 A),.N(1),.Cj0(0 fF),.M(0.5),.Vj(0.7 V),.Fc(0.5),.Cp(0.0 fF),.Isr(0.0),.Nr(2.0),.Rs(0.0 Ohm),.Tt(0.0 ps),.Ikf(26.85),.Kf(0.0),.Af(1.0),.Ffe(1.0),.Bv(0.7),.Ibv(1 mA),.Temp(0),.Xti(3.0),.Eg(1.11),.Tbv(0.0),.Trs(0.0),.Ttt1(0.0),.Ttt2(0.0),.Tm1(0.0),.Tm2(0.0),.Tnom(26.85),.Area(1.0),.Symbol(normal)) D1 ( n_470_390, n_470_330 );
     (* qucs_mirrored=0, qucs_rotated=0, S0_x1=130, S0_y1=320, S0_x2=190, S0_y2=320 *) R #(.R(100),.Temp(26.85),.Tc1(0.0),.Tc2(0.0),.Tnom(26.85)) R1 ( n_130_320, n_190_320 );
     (* qucs_mirrored=0, qucs_rotated=0, S0_x1=280, S0_y1=320, S0_x2=340, S0_y2=320 *) R #(.R(100),.Temp(26.85),.Tc1(0.0),.Tc2(0.0),.Tnom(26.85)) R2 ( n_280_320, n_340_320 );

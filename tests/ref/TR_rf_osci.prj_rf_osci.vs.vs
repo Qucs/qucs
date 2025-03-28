@@ -8,7 +8,7 @@
     wire n_400_150;
     wire n_480_150;
     wire n_480_250;
-    (* qucs_mirrored=0, qucs_rotated=1, S0_x1=480, S0_y1=180, S0_x2=480, S0_y2=120 *) C #(.C(10 nF),.V(),.Symbol(neutral)) C1 ( n_480_180, n_480_120 );
+    (* qucs_mirrored=0, qucs_rotated=1, S0_x1=480, S0_y1=180, S0_x2=480, S0_y2=120 *) C #(.C(10 nF),.V()) C1 ( n_480_180, n_480_120 );
     (* qucs_mirrored=0, qucs_rotated=0, S0_x1=360, S0_y1=380 *) GND #() \\*  ( n_360_380 );
     (* qucs_mirrored=0, qucs_rotated=1, S0_x1=400, S0_y1=180, S0_x2=400, S0_y2=120 *) L #(.L(0.5 mH),.I()) L1 ( n_400_180, n_400_120 );
     (* qucs_mirrored=0, qucs_rotated=1, S0_x1=360, S0_y1=380, S0_x2=360, S0_y2=320 *) R #(.R(50 kOhm),.Temp(26.85),.Tc1(0.0),.Tc2(0.0),.Tnom(26.85)) R1 ( n_360_380, n_360_320 );

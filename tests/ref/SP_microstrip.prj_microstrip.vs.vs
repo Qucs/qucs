@@ -19,7 +19,7 @@
     (* qucs_mirrored=0, qucs_rotated=0, S0_x1=550, S0_y1=200 *) GND #() \\*  ( n_550_200 );
     (* qucs_mirrored=0, qucs_rotated=1, S0_x1=100, S0_y1=140, S0_x2=100, S0_y2=200 *) Pac #(.Num(1),.Z(50 Ohm),.P(0 dBm),.f(1 GHz),.Temp(26.85)) P1 ( n_100_140, n_100_200 );
     (* qucs_mirrored=0, qucs_rotated=0, S0_x1=100, S0_y1=200 *) GND #() \\*  ( n_100_200 );
-    (* qucs_mirrored=0, qucs_rotated=0, S0_x1=260, S0_y1=290, S0_x2=320, S0_y2=290 *) C #(.C(30 pF),.V(),.Symbol(neutral)) C1 ( n_260_290, n_320_290 );
+    (* qucs_mirrored=0, qucs_rotated=0, S0_x1=260, S0_y1=290, S0_x2=320, S0_y2=290 *) C #(.C(30 pF),.V()) C1 ( n_260_290, n_320_290 );
     (* qucs_mirrored=0, qucs_rotated=0, S0_x1=200, S0_y1=130, S0_x2=260, S0_y2=130 *) MLIN #(.Subst(Aluminia),.W(1 mm),.L(10 mm),.Model(Hammerstad),.DispModel(Kirschning),.Temp(26.85)) MS1 ( n_200_130, n_260_130 );
     (* qucs_mirrored=0, qucs_rotated=0, S0_x1=420, S0_y1=130, S0_x2=480, S0_y2=130 *) MLIN #(.Subst(Aluminia),.W(1 mm),.L(10 mm),.Model(Hammerstad),.DispModel(Kirschning),.Temp(26.85)) MS2 ( n_420_130, n_480_130 );
     (* qucs_mirrored=0, qucs_rotated=0 *) SUBST #(.er(9.8),.h(1 mm),.t(35 um),.tand(1e-3),.rho(0.022e-6),.D(0.15e-6)) Aluminia (  );

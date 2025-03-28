@@ -22,6 +22,6 @@
     (* qucs_mirrored=0, qucs_rotated=0, S0_x1=210, S0_y1=400 *) GND #() \\*  ( n_210_400 );
     (* qucs_mirrored=0, qucs_rotated=1, S0_x1=210, S0_y1=340, S0_x2=210, S0_y2=400 *) Vdc #(.U(-2.5 V)) V6 ( n_210_340, n_210_400 );
     (* qucs_mirrored=0, qucs_rotated=0 *) Eqn #(.y(1),.Export(yes)) Eqn1 (  );
-    (* qucs_mirrored=0, qucs_rotated=0, qucs_type="Sub", qucs_file="singleOPV.sch" *) singleOPV #() OPV1 (  );
+    (* qucs_mirrored=0, qucs_rotated=0, qucs_type="Sub", qucs_File="singleOPV.sch" *) singleOPV #() OPV1 (  );
     (* qucs_mirrored=0, qucs_rotated=2, S0_x1=160, S0_y1=310, S0_x2=100, S0_y2=310 *) R #(.R(1.7k),.Temp(26.85),.Tc1(0.0),.Tc2(0.0),.Tnom(26.85)) R3 ( n_160_310, n_100_310 );
 endmodule
