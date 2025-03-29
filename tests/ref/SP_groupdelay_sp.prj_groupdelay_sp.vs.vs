@@ -1,12 +1,22 @@
 (* qucs_ViewX1=0, qucs_ViewY1=0, qucs_ViewX2=800, qucs_ViewY2=800, qucs_Scale=1, qucs_tmpViewX1=-200, qucs_tmpViewY1=-200, qucs_GridX=10, qucs_GridY=10, qucs_GridOn=1, qucs_DataSet="groupdelay_sp.dat", qucs_DataDisplay="groupdelay_sp.dpl", qucs_SimOpenDpl=1, qucs_Script="groupdelay_sp.m", qucs_SimRunScript=0, qucs_showFrame=0, qucs_FrameText0="Title", qucs_FrameText1="Drawn By:", qucs_FrameText2="Date:", qucs_FrameText3="Revision:" *) module groupdelay_sp();
     wire n_0_0;
+    wire n_110_100;
+    wire n_110_150;
     wire n_110_180;
     wire n_110_210;
+    wire n_220_100;
+    wire n_220_150;
     wire n_220_180;
     wire n_220_210;
+    wire n_260_100;
     wire n_290_100;
+    wire n_320_100;
+    wire n_360_100;
+    wire n_360_150;
     wire n_360_180;
     wire n_360_210;
+    wire n_500_100;
+    wire n_500_160;
     wire n_500_190;
     wire n_500_220;
     (* qucs_mirrored=0, qucs_rotated=0, S0_x1=110, S0_y1=210 *) GND #() \\*  ( n_110_210 );
@@ -19,4 +29,12 @@
     (* qucs_mirrored=0, qucs_rotated=1, S0_x1=500, S0_y1=160, S0_x2=500, S0_y2=220 *) Pac #(.Num(2),.Z(60 Ohm),.P(0 dBm),.f(1 GHz),.Temp(26.85)) P2 ( n_500_160, n_500_220 );
     (* qucs_mirrored=0, qucs_rotated=0, S0_x1=500, S0_y1=220 *) GND #() \\*  ( n_500_220 );
     (* qucs_mirrored=0, qucs_rotated=0 *) Eqn #(.y(1),.Export(yes)) Eqn1 (  );
+    (* S0_x1=220, S0_y1=100, S0_x2=220, S0_y2=150 *) net #() net1 ( n_220_100, n_220_150 );
+    (* S0_x1=360, S0_y1=100, S0_x2=360, S0_y2=150 *) net #() net2 ( n_360_100, n_360_150 );
+    (* S0_x1=220, S0_y1=100, S0_x2=260, S0_y2=100 *) net #() net3 ( n_220_100, n_260_100 );
+    (* S0_x1=320, S0_y1=100, S0_x2=360, S0_y2=100 *) net #() net4 ( n_320_100, n_360_100 );
+    (* S0_x1=110, S0_y1=100, S0_x2=220, S0_y2=100 *) net #() net5 ( n_110_100, n_220_100 );
+    (* S0_x1=110, S0_y1=100, S0_x2=110, S0_y2=150 *) net #() net6 ( n_110_100, n_110_150 );
+    (* S0_x1=360, S0_y1=100, S0_x2=500, S0_y2=100 *) net #() net7 ( n_360_100, n_500_100 );
+    (* S0_x1=500, S0_y1=100, S0_x2=500, S0_y2=160 *) net #() net8 ( n_500_100, n_500_160 );
 endmodule

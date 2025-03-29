@@ -1,12 +1,24 @@
 (* qucs_ViewX1=0, qucs_ViewY1=0, qucs_ViewX2=800, qucs_ViewY2=800, qucs_Scale=1, qucs_tmpViewX1=-200, qucs_tmpViewY1=-200, qucs_GridX=10, qucs_GridY=10, qucs_GridOn=1, qucs_DataSet="mscoupler.dat", qucs_DataDisplay="mscoupler.dpl", qucs_SimOpenDpl=1, qucs_Script="mscoupler.m", qucs_SimRunScript=0, qucs_showFrame=0, qucs_FrameText0="Title", qucs_FrameText1="Drawn By:", qucs_FrameText2="Date:", qucs_FrameText3="Revision:" *) module mscoupler();
     wire n_0_0;
+    wire n_80_40;
+    wire n_80_60;
     wire n_80_90;
     wire n_80_120;
+    wire n_120_100;
+    wire n_120_130;
     wire n_120_160;
     wire n_120_190;
+    wire n_140_40;
+    wire n_140_100;
     wire n_170_70;
+    wire n_200_40;
+    wire n_200_100;
+    wire n_260_100;
+    wire n_260_150;
     wire n_260_180;
     wire n_260_210;
+    wire n_300_40;
+    wire n_300_60;
     wire n_300_90;
     wire n_300_120;
     (* qucs_mirrored=1, qucs_rotated=1, S0_x1=80, S0_y1=60, S0_x2=80, S0_y2=120 *) Pac #(.Num(1),.Z(50 Ohm),.P(0 dBm),.f(1 GHz),.Temp(26.85)) P1 ( n_80_60, n_80_120 );
@@ -20,4 +32,12 @@
     (* qucs_mirrored=0, qucs_rotated=0 *) SUBST #(.er(9.8),.h(0.635 mm),.t(17.5 um),.tand(0.0001),.rho(2.43902e-08),.D(1.5e-07)) SubstTC1 (  );
     (* qucs_mirrored=0, qucs_rotated=0, S0_x1=140, S0_y1=40, S0_x2=200, S0_y2=40, S0_x3=200, S0_y3=100, S0_x4=140, S0_y4=100 *) MCOUPLED #(.Subst(SubstTC1),.W(0.518 mm),.L(14.94 mm),.S(0.185 mm),.Model(Kirschning),.DispModel(Kirschning),.Temp(26.85)) MSTC1 ( n_140_40, n_200_40, n_200_100, n_140_100 );
     (* qucs_mirrored=0, qucs_rotated=0 *) Eqn #(.y(1),.Export(yes)) Eqn1 (  );
+    (* S0_x1=80, S0_y1=40, S0_x2=140, S0_y2=40 *) net #() net1 ( n_80_40, n_140_40 );
+    (* S0_x1=80, S0_y1=40, S0_x2=80, S0_y2=60 *) net #() net2 ( n_80_40, n_80_60 );
+    (* S0_x1=120, S0_y1=100, S0_x2=120, S0_y2=130 *) net #() net3 ( n_120_100, n_120_130 );
+    (* S0_x1=120, S0_y1=100, S0_x2=140, S0_y2=100 *) net #() net4 ( n_120_100, n_140_100 );
+    (* S0_x1=300, S0_y1=40, S0_x2=300, S0_y2=60 *) net #() net5 ( n_300_40, n_300_60 );
+    (* S0_x1=200, S0_y1=40, S0_x2=300, S0_y2=40 *) net #() net6 ( n_200_40, n_300_40 );
+    (* S0_x1=260, S0_y1=100, S0_x2=260, S0_y2=150 *) net #() net7 ( n_260_100, n_260_150 );
+    (* S0_x1=200, S0_y1=100, S0_x2=260, S0_y2=100 *) net #() net8 ( n_200_100, n_260_100 );
 endmodule

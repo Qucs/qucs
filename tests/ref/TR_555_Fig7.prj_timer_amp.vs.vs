@@ -2,7 +2,16 @@
     inout n_365_265;
     inout n_210_265;
     inout n_210_325;
+    wire n_210_260;
+    wire n_210_320;
+    wire n_240_260;
+    wire n_240_320;
     wire n_270_290;
+    wire n_300_260;
+    wire n_300_265;
+    wire n_300_320;
+    wire n_305_265;
+    wire n_310_320;
     wire n_310_325;
     wire n_335_265;
     (* qucs_mirrored=0, qucs_rotated=0, S0_x1=310, S0_y1=325 *) GND #() \\*  ( n_310_325 );
@@ -11,4 +20,12 @@
     (* qucs_mirrored=0, qucs_rotated=0, S0_x1=210, S0_y1=265 *) Port #(.Num(1),.Type(analog)) Pamp_P ( n_210_265 );
     (* qucs_mirrored=0, qucs_rotated=0, S0_x1=210, S0_y1=325 *) Port #(.Num(2),.Type(analog)) Pamp_N ( n_210_325 );
     (* qucs_mirrored=0, qucs_rotated=0, S0_x1=240, S0_y1=260, S0_x2=300, S0_y2=260, S0_x3=300, S0_y3=320, S0_x4=240, S0_y4=320 *) VCVS #(.G(3.7),.T(0)) SRC1 ( n_240_260, n_300_260, n_300_320, n_240_320 );
+    (* S0_x1=210, S0_y1=260, S0_x2=240, S0_y2=260 *) net #() net1 ( n_210_260, n_240_260 );
+    (* S0_x1=210, S0_y1=260, S0_x2=210, S0_y2=265 *) net #() net2 ( n_210_260, n_210_265 );
+    (* S0_x1=300, S0_y1=260, S0_x2=300, S0_y2=265 *) net #() net3 ( n_300_260, n_300_265 );
+    (* S0_x1=300, S0_y1=265, S0_x2=305, S0_y2=265 *) net #() net4 ( n_300_265, n_305_265 );
+    (* S0_x1=300, S0_y1=320, S0_x2=310, S0_y2=320 *) net #() net5 ( n_300_320, n_310_320 );
+    (* S0_x1=310, S0_y1=320, S0_x2=310, S0_y2=325 *) net #() net6 ( n_310_320, n_310_325 );
+    (* S0_x1=210, S0_y1=320, S0_x2=240, S0_y2=320 *) net #() net7 ( n_210_320, n_240_320 );
+    (* S0_x1=210, S0_y1=320, S0_x2=210, S0_y2=325 *) net #() net8 ( n_210_320, n_210_325 );
 endmodule

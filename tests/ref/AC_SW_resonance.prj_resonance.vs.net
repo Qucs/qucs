@@ -1,6 +1,6 @@
 # Qucs
 
-Vac:V1 _net0 _net1 U="1 V" f="1 GHz" Phase="0" Theta="0"
-R:R1 _net2 _net3 R="R_par" Temp="26.85" Tc1="0.0" Tc2="0.0" Tnom="26.85"
-C:C1 gnd _net4 C="2 pF" V=""
-L:L1 _net4 _net2 L="13 nH" I=""
+Vac:V1 _net0 gnd U="1 V" f="1 GHz" Phase="0" Theta="0"
+R:R1 _net1 _net0 R="R_par" Temp="26.85" Tc1="0.0" Tc2="0.0" Tnom="26.85"
+C:C1 gnd _net2 C="2 pF" V=""
+L:L1 _net2 _net1 L="13 nH" I=""

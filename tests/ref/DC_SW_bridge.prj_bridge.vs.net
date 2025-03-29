@@ -2,9 +2,9 @@
 
 IProbe:Pr1 _net0 _net1
 R:R2 _net2 _net3 R="500 Ohm" Temp="26.85" Tc1="0.0" Tc2="0.0" Tnom="26.85"
-Vdc:V1 _net4 _net5 U="1 V"
-R:R5 gnd _net6 R="Rmeasure" Temp="26.85" Tc1="0.0" Tc2="0.0" Tnom="26.85"
-R:R1 _net7 _net8 R="Rbranch" Temp="26.85" Tc1="0.0" Tc2="0.0" Tnom="26.85"
-R:R4 gnd _net9 R="Rbranch" Temp="26.85" Tc1="0.0" Tc2="0.0" Tnom="26.85"
-R:R3 _net1 _net10 R="500 Ohm" Temp="26.85" Tc1="0.0" Tc2="0.0" Tnom="26.85"
+Vdc:V1 _net3 gnd U="1 V"
+R:R5 gnd _net2 R="Rmeasure" Temp="26.85" Tc1="0.0" Tc2="0.0" Tnom="26.85"
+R:R1 _net0 _net3 R="Rbranch" Temp="26.85" Tc1="0.0" Tc2="0.0" Tnom="26.85"
+R:R4 gnd _net0 R="Rbranch" Temp="26.85" Tc1="0.0" Tc2="0.0" Tnom="26.85"
+R:R3 _net1 _net2 R="500 Ohm" Temp="26.85" Tc1="0.0" Tc2="0.0" Tnom="26.85"
 Eqn:Eqn1 y="1" Export="yes"

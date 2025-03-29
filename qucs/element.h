@@ -152,7 +152,7 @@ public:
 
   bool isSelected;
   int  Type;    // whether it is Component, Wire, ...
-  int  cx, cy, x1, y1, x2, y2;  // center and relative boundings
+  int  cx{0}, cy{0}, x1{0}, y1{0}, x2{0}, y2{0};  // center and relative boundings
 
 public:
   // std::string attr_add()const {return "";}

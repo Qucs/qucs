@@ -1,4 +1,4 @@
 # Qucs
 
-R:R1 _net2 _net3 R="0 Ohm" Temp="26.85" Tc1="0.0" Tc2="0.0" Tnom="26.85"
-C:C1 _net4 _net5 C="1 pF" V=""
+R:R1 _net0 _net0 R="0 Ohm" Temp="26.85" Tc1="0.0" Tc2="0.0" Tnom="26.85"
+C:C1 gnd _net0 C="1 pF" V=""

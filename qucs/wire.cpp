@@ -212,3 +212,14 @@ bool Wire::load(const QString& _s)
 
   return true;
 }
+
+void Wire::set_attribute(std::string name, std::string value)
+{
+  if(name == "S0_x2"){
+    set_qucs_x2(std::stoi(value));
+  }
+  else
+  if(name == "S0_y2"){
+    set_qucs_y2(std::stoi(value));
+  }
+}

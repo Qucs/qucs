@@ -3,7 +3,7 @@
 VProbe:Pr3 _net0 gnd
 VProbe:Pr5 _net1 gnd
 Vdc:V3 _net2 gnd U="1 V"
-mux4to1:Y5 _net3 _net4 _net5 _net6 _net7 _net8 _net9 _net10 TR="6" Delay="1"
-Vrect:V1 _net11 _net12 U="1" TH="20 ns" TL="20 ns" Tr="1 ns" Tf="1 ns" Td="0"
-VProbe:Pr1 _net13 gnd
-Vrect:V2 _net14 gnd U="1" TH="10 ns" TL="10 ns" Tr="1 ns" Tf="1 ns" Td="10ns"
+mux4to1:Y5 gnd _net3 _net0 gnd _net2 _net2 gnd _net1 TR="6" Delay="1"
+Vrect:V1 _net3 gnd U="1" TH="20 ns" TL="20 ns" Tr="1 ns" Tf="1 ns" Td="0"
+VProbe:Pr1 _net3 gnd
+Vrect:V2 _net0 gnd U="1" TH="10 ns" TL="10 ns" Tr="1 ns" Tf="1 ns" Td="10ns"

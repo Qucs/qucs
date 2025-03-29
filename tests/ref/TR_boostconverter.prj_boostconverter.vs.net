@@ -1,11 +1,11 @@
 # Qucs
 
 L:L1 _net0 _net1 L="47uH" I="0"
-Vdc:V2 _net2 _net3 U="12V"
+Vdc:V2 _net0 gnd U="12V"
 Eqn:Eqn1 y="1" Export="yes"
 Eqn:Eqn2 y="1" Export="yes"
-Relais:S1 _net4 _net5 _net6 _net7 Vt="0.5 V" Vh="0.1 V" Ron="1" Roff="1e12" Temp="26.85"
-Vrect:V1 _net8 _net9 U="1V" TH="Ton" TL="Toff" Tr="1 ns" Tf="1 ns" Td="0 ns"
-Diode:D1 _net10 _net11 Is="1e-12 A" N="1" Cj0="10 fF" M="0.5" Vj="0.7 V" Fc="0.5" Cp="0.0 fF" Isr="0.0" Nr="2.0" Rs="0.0 Ohm" Tt="0.0 ps" Ikf="0" Kf="0.0" Af="1.0" Ffe="1.0" Bv="0" Ibv="1 mA" Temp="26.85" Xti="3.0" Eg="1.11" Tbv="0.0" Trs="0.0" Ttt1="0.0" Ttt2="0.0" Tm1="0.0" Tm2="0.0" Tnom="26.85" Area="1.0"
-C:C1 _net12 _net13 C="100u" V="0"
-R:R1 _net14 _net15 R="5" Temp="26.85" Tc1="0.0" Tc2="0.0" Tnom="26.85"
+Relais:S1 _net2 _net1 gnd gnd Vt="0.5 V" Vh="0.1 V" Ron="1" Roff="1e12" Temp="26.85"
+Vrect:V1 _net2 gnd U="1V" TH="Ton" TL="Toff" Tr="1 ns" Tf="1 ns" Td="0 ns"
+Diode:D1 _net3 _net1 Is="1e-12 A" N="1" Cj0="10 fF" M="0.5" Vj="0.7 V" Fc="0.5" Cp="0.0 fF" Isr="0.0" Nr="2.0" Rs="0.0 Ohm" Tt="0.0 ps" Ikf="0" Kf="0.0" Af="1.0" Ffe="1.0" Bv="0" Ibv="1 mA" Temp="26.85" Xti="3.0" Eg="1.11" Tbv="0.0" Trs="0.0" Ttt1="0.0" Ttt2="0.0" Tm1="0.0" Tm2="0.0" Tnom="26.85" Area="1.0"
+C:C1 _net3 gnd C="100u" V="0"
+R:R1 gnd _net3 R="5" Temp="26.85" Tc1="0.0" Tc2="0.0" Tnom="26.85"

@@ -801,14 +801,6 @@ std::string Component::attr_get() const
 
 void Component::set_attribute(std::string name, std::string value)
 {
-  if(name == "S0_x1"){
-    set_qucs_x1(std::stoi(value));
-  }
-  else
-  if(name == "S0_y1"){
-    set_qucs_y1(std::stoi(value));
-  }
-  else
   if(name == "qucs_dev") {
     set_dev_type(value);
   }
