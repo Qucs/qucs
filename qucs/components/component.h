@@ -81,6 +81,11 @@ public:
 
 public:
   virtual void set_qucs_text_position(int x, int y) {_tx=x;_ty=y;}
+  virtual void set_qucs_rotated(int x) {_qucs_rotated=x;}
+  virtual void set_qucs_mirrored(int x) {_qucs_mirrored=x;}
+  virtual void set_qucs_x1(int x) {_qucs_x1=x;}
+  virtual void set_qucs_y1(int y) {_qucs_y1=y;}
+  virtual void apply_qucs_values();
 
   // to hold track of the component appearance for saving and copying
   bool mirroredX;   // is it mirrored about X axis or not
@@ -114,7 +119,10 @@ public:
   #define COMP_IS_SHORTEN 2
   int  isActive; // should it be used in simulation or not ?
 private:
-  int  _tx, _ty;   // upper left corner of text (position)
+  int _tx{0}, _ty{0}; // upper left corner of text (position)
+  int _qucs_x1{0}, _qucs_y1{0}; // position of port 1 after transform
+  bool _qucs_mirrored{false}; // value from XML document
+  int _qucs_rotated{0}; // value from XML document
 public:
   int tx()const {return _tx;}
   int ty()const {return _ty;}

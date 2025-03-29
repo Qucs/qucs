@@ -1,8 +1,8 @@
 # Qucs
 
-C:C1 _net0 _net1 C="39.01pF" V=""
+C:C1 gnd _net0 C="39.01pF" V=""
 L:L1 _net0 _net1 L="280.9nH" I=""
-C:C2 _net0 _net1 C="39.01pF" V=""
-Pac:P1 _net2 _net3 Num="1" Z="60 Ohm" P="0 dBm" f="1 GHz" Temp="26.85"
-Pac:P2 _net2 _net3 Num="2" Z="60 Ohm" P="0 dBm" f="1 GHz" Temp="26.85"
+C:C2 gnd _net1 C="39.01pF" V=""
+Pac:P1 _net0 gnd Num="1" Z="60 Ohm" P="0 dBm" f="1 GHz" Temp="26.85"
+Pac:P2 _net1 gnd Num="2" Z="60 Ohm" P="0 dBm" f="1 GHz" Temp="26.85"
 Eqn:Eqn1 y="1" Export="yes"

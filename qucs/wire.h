@@ -40,6 +40,15 @@ public:
   bool getSelected(int, int);
   void setName(const QString&, const QString&, int delta_=0, int x_=0, int y_=0);
 
+  // Setter functions for verilog parsing
+  // x1, y1, x2, y2 are going to be private in the future
+  virtual void set_qucs_x1(int x) {x1 = x;}
+  virtual void set_qucs_y1(int y) {y1 = y;}
+  virtual void set_qucs_x2(int x) {x2 = x;}
+  virtual void set_qucs_y2(int y) {y2 = y;}
+  virtual void set_attribute(std::string name, std::string value);
+  virtual void apply_qucs_values() {}
+
   //  TODO: would like to turn this into a weak pointer, but the pointer value
   //  is sometimes used as flag set while moving the full wire.
   Node      *Port1, *Port2;

@@ -1,10 +1,10 @@
 # Qucs
 
 TLIN:Line1 _net0 _net1 Z="50 Ohm" L=".1" Alpha="0 dB" Temp="26.85"
-R:R1 _net0 _net1 R="50 Ohm" Temp="26.85" Tc1="0.0" Tc2="0.0" Tnom="26.85"
-VProbe:Pr2 _net2 _net3
-VProbe:Pr1 _net2 _net3
-VProbe:Pr3 _net2 _net3
-R:R2 _net0 _net1 R="50 Ohm" Temp="26.85" Tc1="0.0" Tc2="0.0" Tnom="26.85"
-Vpulse:V1 _net4 _net5 U1="0 V" U2="1 V" T1="1 ns" T2="2 ns" Tr=".1 ns" Tf=".1 ns"
-R:R2 _net0 _net1 R="50" Temp="26.85" Tc1="0.0" Tc2="0.0" Tnom="26.85"
+R:R1 _net2 _net0 R="50 Ohm" Temp="26.85" Tc1="0.0" Tc2="0.0" Tnom="26.85"
+VProbe:Pr2 _net0 gnd
+VProbe:Pr1 _net2 gnd
+VProbe:Pr3 _net1 gnd
+R:R2 _net1 gnd R="50 Ohm" Temp="26.85" Tc1="0.0" Tc2="0.0" Tnom="26.85"
+Vpulse:V1 _net2 gnd U1="0 V" U2="1 V" T1="1 ns" T2="2 ns" Tr=".1 ns" Tf=".1 ns"
+R:R2 _net1 gnd R="50" Temp="26.85" Tc1="0.0" Tc2="0.0" Tnom="26.85"

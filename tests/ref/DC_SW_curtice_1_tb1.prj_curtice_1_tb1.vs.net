@@ -24,8 +24,8 @@ EDD:D1 _net4 _net1 _net4 _net1 _net5 _net1 _net4 _net3 I1="D1.I1" Q1="D1.Q1" I2=
   Eqn:EqnD1Q4 D1.Q4="CGS*V4" Export="no"
 .Def:End
 
-Vdc:V2 _net0 _net1 U="Vgs"
+Vdc:V2 _net0 gnd U="Vgs"
 Eqn:Eqn1 y="1" Export="yes"
-Vdc:V1 _net0 _net1 U="Vds"
-IProbe:Pr1 _net2 _net3
+Vdc:V1 _net1 gnd U="Vds"
+IProbe:Pr1 _net1 _net2
 Sub:Curtice1 Type="curtice_1"

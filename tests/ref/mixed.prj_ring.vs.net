@@ -1,16 +1,16 @@
 # Qucs
 
-MOSFET:T3 _net0 _net1 _net2 _net3 Type="pfet" Vt0="-.6" Kp="2e-5" Gamma="0.0" Phi="0.6 V" Lambda="0.0" Rd="0.0 Ohm" Rs="0.0 Ohm" Rg="0.0 Ohm" Is="1e-14 A" N="1.0" W="1 um" L="1 um" Ld="0.0" Tox="0.1 um" Cgso="0.0" Cgdo="0.0" Cgbo="0.0" Cbd="0.0 F" Cbs="0.0 F" Pb="0.8 V" Mj="0.5" Fc="0.5" Cjsw="0.0" Mjsw="0.33" Tt="0.0 ps" Nsub="0.0" Nss="0.0" Tpg="1" Uo="600.0" Rsh="0.0" Nrd="1" Nrs="1" Cj="0.0" Js="0.0" Ad="0.0" As="0.0" Pd="0.0 m" Ps="0.0 m" Kf="0.0" Af="1.0" Ffe="1.0" Temp="26.85" Tnom="26.85"
-MOSFET:T2 _net0 _net1 _net2 _net3 Type="nfet" Vt0=".6V" Kp="2e-5" Gamma="0.0" Phi="0.6 V" Lambda="0.0" Rd="0.0 Ohm" Rs="0.0 Ohm" Rg="0.0 Ohm" Is="1e-14 A" N="1.0" W="1 um" L="1 um" Ld="0.0" Tox="0.1 um" Cgso="0.0" Cgdo="0.0" Cgbo="0.0" Cbd="0.0 F" Cbs="0.0 F" Pb="0.8 V" Mj="0.5" Fc="0.5" Cjsw="0.0" Mjsw="0.33" Tt="0.0 ps" Nsub="0.0" Nss="0.0" Tpg="1" Uo="600.0" Rsh="0.0" Nrd="1" Nrs="1" Cj="0.0" Js="0.0" Ad="0.0" As="0.0" Pd="0.0 m" Ps="0.0 m" Kf="0.0" Af="1.0" Ffe="1.0" Temp="26.85" Tnom="26.85"
-MOSFET:T4 _net0 _net1 _net2 _net3 Type="pfet" Vt0="-.6" Kp="2e-5" Gamma="0.0" Phi="0.6 V" Lambda="0.0" Rd="0.0 Ohm" Rs="0.0 Ohm" Rg="0.0 Ohm" Is="1e-14 A" N="1.0" W="1 um" L="1 um" Ld="0.0" Tox="0.1 um" Cgso="0.0" Cgdo="0.0" Cgbo="0.0" Cbd="0.0 F" Cbs="0.0 F" Pb="0.8 V" Mj="0.5" Fc="0.5" Cjsw="0.0" Mjsw="0.33" Tt="0.0 ps" Nsub="0.0" Nss="0.0" Tpg="1" Uo="600.0" Rsh="0.0" Nrd="1" Nrs="1" Cj="0.0" Js="0.0" Ad="0.0" As="0.0" Pd="0.0 m" Ps="0.0 m" Kf="0.0" Af="1.0" Ffe="1.0" Temp="26.85" Tnom="26.85"
-MOSFET:T5 _net0 _net1 _net2 _net3 Type="nfet" Vt0=".6V" Kp="2e-5" Gamma="0.0" Phi="0.6 V" Lambda="0.0" Rd="0.0 Ohm" Rs="0.0 Ohm" Rg="0.0 Ohm" Is="1e-14 A" N="1.0" W="1 um" L="1 um" Ld="0.0" Tox="0.1 um" Cgso="0.0" Cgdo="0.0" Cgbo="0.0" Cbd="0.0 F" Cbs="0.0 F" Pb="0.8 V" Mj="0.5" Fc="0.5" Cjsw="0.0" Mjsw="0.33" Tt="0.0 ps" Nsub="0.0" Nss="0.0" Tpg="1" Uo="600.0" Rsh="0.0" Nrd="1" Nrs="1" Cj="0.0" Js="0.0" Ad="0.0" As="0.0" Pd="0.0 m" Ps="0.0 m" Kf="0.0" Af="1.0" Ffe="1.0" Temp="26.85" Tnom="26.85"
-Inv:Y1 _net4 _net0 V="1 V" t="10" TR="10"
-Inv:Y4 _net4 _net0 V="1 V" t="10" TR="10"
-Inv:Y5 _net4 _net0 V="1 V" t="10" TR="10"
-VProbe:Pr6 _net5 _net6
-VProbe:Pr4 _net5 _net6
-VProbe:Pr7 _net5 _net6
-Vdc:V3 _net1 _net2 U="1 V"
-Vpulse:V4 _net1 _net2 U1="0 V" U2="1 V" T1="1n" T2="10" Tr="1 ns" Tf="1 ns"
-NAND:Y3 _net4 _net7 _net8 in="2" V="1 V" t="10"
-Inv:Y2 _net4 _net0 V="1 V" t="10" TR="10"
+MOSFET:T3 _net0 _net1 _net2 _net2 Type="pfet" Vt0="-.6" Kp="2e-5" Gamma="0.0" Phi="0.6 V" Lambda="0.0" Rd="0.0 Ohm" Rs="0.0 Ohm" Rg="0.0 Ohm" Is="1e-14 A" N="1.0" W="1 um" L="1 um" Ld="0.0" Tox="0.1 um" Cgso="0.0" Cgdo="0.0" Cgbo="0.0" Cbd="0.0 F" Cbs="0.0 F" Pb="0.8 V" Mj="0.5" Fc="0.5" Cjsw="0.0" Mjsw="0.33" Tt="0.0 ps" Nsub="0.0" Nss="0.0" Tpg="1" Uo="600.0" Rsh="0.0" Nrd="1" Nrs="1" Cj="0.0" Js="0.0" Ad="0.0" As="0.0" Pd="0.0 m" Ps="0.0 m" Kf="0.0" Af="1.0" Ffe="1.0" Temp="26.85" Tnom="26.85"
+MOSFET:T2 _net0 gnd _net1 gnd Type="nfet" Vt0=".6V" Kp="2e-5" Gamma="0.0" Phi="0.6 V" Lambda="0.0" Rd="0.0 Ohm" Rs="0.0 Ohm" Rg="0.0 Ohm" Is="1e-14 A" N="1.0" W="1 um" L="1 um" Ld="0.0" Tox="0.1 um" Cgso="0.0" Cgdo="0.0" Cgbo="0.0" Cbd="0.0 F" Cbs="0.0 F" Pb="0.8 V" Mj="0.5" Fc="0.5" Cjsw="0.0" Mjsw="0.33" Tt="0.0 ps" Nsub="0.0" Nss="0.0" Tpg="1" Uo="600.0" Rsh="0.0" Nrd="1" Nrs="1" Cj="0.0" Js="0.0" Ad="0.0" As="0.0" Pd="0.0 m" Ps="0.0 m" Kf="0.0" Af="1.0" Ffe="1.0" Temp="26.85" Tnom="26.85"
+MOSFET:T4 _net1 _net3 _net2 _net2 Type="pfet" Vt0="-.6" Kp="2e-5" Gamma="0.0" Phi="0.6 V" Lambda="0.0" Rd="0.0 Ohm" Rs="0.0 Ohm" Rg="0.0 Ohm" Is="1e-14 A" N="1.0" W="1 um" L="1 um" Ld="0.0" Tox="0.1 um" Cgso="0.0" Cgdo="0.0" Cgbo="0.0" Cbd="0.0 F" Cbs="0.0 F" Pb="0.8 V" Mj="0.5" Fc="0.5" Cjsw="0.0" Mjsw="0.33" Tt="0.0 ps" Nsub="0.0" Nss="0.0" Tpg="1" Uo="600.0" Rsh="0.0" Nrd="1" Nrs="1" Cj="0.0" Js="0.0" Ad="0.0" As="0.0" Pd="0.0 m" Ps="0.0 m" Kf="0.0" Af="1.0" Ffe="1.0" Temp="26.85" Tnom="26.85"
+MOSFET:T5 _net1 gnd _net3 gnd Type="nfet" Vt0=".6V" Kp="2e-5" Gamma="0.0" Phi="0.6 V" Lambda="0.0" Rd="0.0 Ohm" Rs="0.0 Ohm" Rg="0.0 Ohm" Is="1e-14 A" N="1.0" W="1 um" L="1 um" Ld="0.0" Tox="0.1 um" Cgso="0.0" Cgdo="0.0" Cgbo="0.0" Cbd="0.0 F" Cbs="0.0 F" Pb="0.8 V" Mj="0.5" Fc="0.5" Cjsw="0.0" Mjsw="0.33" Tt="0.0 ps" Nsub="0.0" Nss="0.0" Tpg="1" Uo="600.0" Rsh="0.0" Nrd="1" Nrs="1" Cj="0.0" Js="0.0" Ad="0.0" As="0.0" Pd="0.0 m" Ps="0.0 m" Kf="0.0" Af="1.0" Ffe="1.0" Temp="26.85" Tnom="26.85"
+Inv:Y1 _net0 _net4 V="1 V" t="10" TR="10"
+Inv:Y4 _net5 _net3 V="1 V" t="10" TR="10"
+Inv:Y5 _net6 _net5 V="1 V" t="10" TR="10"
+VProbe:Pr6 _net0 gnd
+VProbe:Pr4 _net1 gnd
+VProbe:Pr7 _net6 gnd
+Vdc:V3 _net2 gnd U="1 V"
+Vpulse:V4 _net7 gnd U1="0 V" U2="1 V" T1="1n" T2="10" Tr="1 ns" Tf="1 ns"
+NAND:Y3 _net8 _net7 _net6 in="2" V="1 V" t="10"
+Inv:Y2 _net4 _net8 V="1 V" t="10" TR="10"

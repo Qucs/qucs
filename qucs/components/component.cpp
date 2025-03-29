@@ -801,8 +801,33 @@ std::string Component::attr_get() const
 
 void Component::set_attribute(std::string name, std::string value)
 {
-  // TODO: parse "qucs_" attributes
-  incomplete();
+  if(name == "qucs_dev") {
+    set_dev_type(value);
+  }
+  else
+  if(name == "qucs_mirrored") {
+    set_qucs_mirrored(std::stoi(value));
+  }
+  else
+  if(name == "qucs_rotated"){
+    set_qucs_rotated(std::stoi(value));
+  }
+}
+
+void Component::apply_qucs_values()
+{
+  if(_qucs_mirrored){
+    mirrorX();
+  }
+  if(rotated > _qucs_rotated)
+    _qucs_rotated += 4;
+  for(int z=rotated; z<_qucs_rotated; z++){
+    rotate();
+  }
+  if(Ports.size()) {
+    cx = _qucs_x1 - Ports.begin()->x;
+    cy = _qucs_y1 - Ports.begin()->y;
+  }
 }
 
 // -------------------------------------------------------
