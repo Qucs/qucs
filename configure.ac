@@ -779,7 +779,7 @@ AC_CONFIG_FILES([Makefile
     man/Makefile
     examples/Makefile
     examples/legacy/Makefile
-    examples/verilog/Makefile
+    examples/helloworld/Makefile
     qucs-filter/Makefile
     qucs-activefilter/Makefile
     qucs-transcalc/Makefile

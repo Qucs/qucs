@@ -1,7 +1,7 @@
 verilog
 
-// Gnucsator has models for legacy Qucs symbols
-`include some_gnucsator_models.v
+// example qucs models. see Gnucsator for more..
+`include qucs.v
 
 // load the schematic.
 `include helloworld.vs
@@ -10,10 +10,10 @@ verilog
 helloworld h(.P1(in), .P2(out));
 
 // set some probes
-`print tran v(in) v(out)
+`print tran v(in) v(out) iter(0)
 
 // simulate 1 second
-`tran 1
+`tran 1 basic
 
 // print some stats
 status notime
@@ -28,6 +28,6 @@ list helloworld
 `spice
 .options noinsensitive
 V1 in 0 pulse iv=0 pv=1 rise=1
-.print tran v(in) v(out)
-.tran 1
+.print tran v(in) v(out) iter(0)
+.tran 1 basic
 .status notime

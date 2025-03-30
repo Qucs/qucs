@@ -14,13 +14,13 @@
     wire n_1050_590;
     wire n_1050_620;
     wire n_1050_680;
-    (* qucs_mirrored=0, qucs_rotated=0, S0_x1=810, S0_y1=480, S0_x2=870, S0_y2=480 *) R #(.R(50 Ohm),.Temp(26.85),.Tc1(0.0),.Tc2(0.0),.Tnom(26.85)) R1 ( n_810_480, n_870_480 );
+    (* qucs_mirrored=0, qucs_rotated=0, S0_x1=810, S0_y1=480, S0_x2=870, S0_y2=480 *) R #(.R(50),.Temp(26.85),.Tc1(0.0),.Tc2(0.0),.Tnom(26.85)) R1 ( n_810_480, n_870_480 );
     (* qucs_mirrored=0, qucs_rotated=0, S0_x1=470, S0_y1=690 *) GND #() \*  ( n_470_690 );
-    (* qucs_mirrored=0, qucs_rotated=1, S0_x1=470, S0_y1=580, S0_x2=470, S0_y2=640 *) Vac #(.U(1 V),.f(1 Hz),.Phase(0),.Theta(0)) V1 ( n_470_580, n_470_640 );
-    (* qucs_mirrored=0, qucs_rotated=0, S0_x1=330, S0_y1=480 *) Port #(.Num(1),.Type(analog)) P1 ( n_330_480 );
+    (* qucs_mirrored=0, qucs_rotated=1, S0_x1=470, S0_y1=580, S0_x2=470, S0_y2=640 *) Vac #(.U(1),.f(1),.Phase(0),.Theta(0)) V1 ( n_470_580, n_470_640 );
+    (* qucs_mirrored=0, qucs_rotated=0, qucs_Num=1, qucs_Type="analog", S0_x1=330, S0_y1=480 *) Port #() P1 ( n_330_480 );
     (* qucs_mirrored=0, qucs_rotated=0, S0_x1=1050, S0_y1=680 *) GND #() \*1  ( n_1050_680 );
-    (* qucs_mirrored=0, qucs_rotated=1, S0_x1=1050, S0_y1=620, S0_x2=1050, S0_y2=560 *) C #(.C(1 uF),.V(),.Symbol(neutral)) C1 ( n_1050_620, n_1050_560 );
-    (* qucs_mirrored=1, qucs_rotated=2, S0_x1=1090, S0_y1=480 *) Port #(.Num(2),.Type(analog)) P2 ( n_1090_480 );
+    (* qucs_mirrored=0, qucs_rotated=1, S0_x1=1050, S0_y1=620, S0_x2=1050, S0_y2=560 *) C #(.C(1e-3),.V()) C1 ( n_1050_620, n_1050_560 );
+    (* qucs_mirrored=1, qucs_rotated=2, qucs_Num=2, qucs_Type="analog", S0_x1=1090, S0_y1=480 *) Port #() P2 ( n_1090_480 );
     (* S0_x1=470, S0_y1=480, S0_x2=810, S0_y2=480 *) net #() net1 ( n_470_480, n_810_480 );
     (* S0_x1=470, S0_y1=480, S0_x2=470, S0_y2=580 *) net #() net2 ( n_470_480, n_470_580 );
     (* S0_x1=470, S0_y1=640, S0_x2=470, S0_y2=690 *) net #() net3 ( n_470_640, n_470_690 );

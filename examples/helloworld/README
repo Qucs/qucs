@@ -26,3 +26,10 @@ $ gnucap commands.gc
 [..]
 
 == ngspice
+
+A small control script and spice control file
+$ less commands.sp
+$ less ngspice.gc
+
+Run ngspice with
+$ gnucap ngspice.gc
