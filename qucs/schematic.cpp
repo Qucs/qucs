@@ -1886,16 +1886,16 @@ bool Schematic::elementsOnGrid()
     if(pw->isSelected) {
       // rescue non-selected node label
       pLabel = 0;
-      if(pw->Port1->Label) {
-        if(pw->Port1->Connections.size() < 2) {
-            pLabel = pw->Port1->Label;
-            pw->Port1->Label = 0;
+      if(pw->ports(0)->Label) {
+        if(pw->ports(0)->Connections.size() < 2) {
+            pLabel = pw->ports(0)->Label;
+            pw->ports(0)->Label = 0;
         }
       }
-      else if(pw->Port2->Label) {
-        if(pw->Port2->Connections.size() < 2) {
-            pLabel = pw->Port2->Label;
-            pw->Port2->Label = 0;
+      else if(pw->ports(1)->Label) {
+        if(pw->ports(1)->Connections.size() < 2) {
+            pLabel = pw->ports(1)->Label;
+            pw->ports(1)->Label = 0;
         }
       }
 

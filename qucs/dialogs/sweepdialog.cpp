@@ -222,10 +222,10 @@ Graph* SweepDialog::setBiasPoints()
       std::shared_ptr<Element> pe(*i);
       if(pe->Type == isWire) {
         auto pw = std::dynamic_pointer_cast<Wire>(pe);
-        if (pw->Port1 != pn.operator->())  // no text at next node
-          pw->Port1->Name = "";
+        if (pw->ports(0) != &*pn)  // no text at next node
+          pw->ports(0)->Name = "";
         else
-          pw->Port2->Name = "";
+          pw->ports(1)->Name = "";
       }
     }
   }
