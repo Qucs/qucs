@@ -13,7 +13,7 @@
 
 #include "component.h"
 
-class pad4bit : public Component
+class pad4bit : public LegacyComponent
 {
   public:
     pad4bit();

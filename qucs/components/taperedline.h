@@ -26,7 +26,7 @@
 #include "component.h"
 
 
-class taperedline : public Component  {
+class taperedline : public LegacyComponent  {
 public:
   taperedline();
  ~taperedline();

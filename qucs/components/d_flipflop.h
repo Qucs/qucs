@@ -21,7 +21,7 @@
 #include "component.h"
 
 
-class D_FlipFlop : public Component  {
+class D_FlipFlop : public LegacyComponent  {
 public:
   D_FlipFlop();
  ~D_FlipFlop() {};

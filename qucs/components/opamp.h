@@ -21,7 +21,7 @@
 #include "component.h"
 
 
-class OpAmp : public Component  {
+class OpAmp : public LegacyComponent  {
 public:
   OpAmp();
   ~OpAmp();

@@ -21,7 +21,7 @@
 #include "component.h"
 
 
-class Source_ac : public Component  {
+class Source_ac : public LegacyComponent  {
 public:
   Source_ac();
   ~Source_ac();

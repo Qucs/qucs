@@ -13,7 +13,7 @@
 
 #include "component.h"
 
-class comp_1bit : public Component
+class comp_1bit : public LegacyComponent
 {
   public:
     comp_1bit();

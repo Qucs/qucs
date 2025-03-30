@@ -95,14 +95,14 @@ void createIcons() {
 
         Element *e = (Mod->info) (Name, File, true);
 
-        Component *c = (Component* ) e;
-
-        std::list<qucs::Line> Lines      = c->Lines;
-        std::list<qucs::Arc> Arcs        = c-> Arcs;
-        std::list<qucs::Area> Rects      = c-> Rects;
-        std::list<qucs::Area> Ellips     = c-> Ellips;
-        std::list<qucs::Port> Ports      = c->Ports;
-        std::list<qucs::Text> Texts      = c->Texts;
+        Component *c = (Component* ) e; // BUG
+					//
+        std::list<qucs::Line>const& Lines      = c->lines();
+        std::list<qucs::Arc>const& Arcs        = c->arcs();
+        std::list<qucs::Area>const& Rects      = c->rects();
+        std::list<qucs::Area>const& Ellips     = c->ellips();
+        std::list<qucs::Port>const& Ports      = c->Ports;
+        std::list<qucs::Text>const& Texts      = c->texts();
 
         QGraphicsScene *scene = new QGraphicsScene();
 

@@ -21,7 +21,7 @@
 #include "component.h"
 
 
-class Volt_noise : public Component  {
+class Volt_noise : public LegacyComponent  {
 public:
   Volt_noise();
   ~Volt_noise();

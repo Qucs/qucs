@@ -13,7 +13,7 @@
 
 #include "component.h"
 
-class potentiometer : public Component
+class potentiometer : public LegacyComponent
 {
   public:
     potentiometer();

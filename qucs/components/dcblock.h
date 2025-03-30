@@ -21,7 +21,7 @@
 #include "component.h"
 
 
-class dcBlock : public Component  {
+class dcBlock : public LegacyComponent  {
 public:
   dcBlock();
   ~dcBlock();

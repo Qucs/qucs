@@ -21,7 +21,7 @@
 #include "component.h"
 
 
-class Mutual2 : public Component  {
+class Mutual2 : public LegacyComponent  {
 public:
   Mutual2();
  ~Mutual2();

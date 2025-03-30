@@ -21,7 +21,7 @@
 #include "component.h"
 
 
-class Equation : public Component  {
+class Equation : public LegacyComponent  {
 
 public:
   Equation();

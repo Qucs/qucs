@@ -4,6 +4,7 @@ CXX_SRCS = \
 	ap.cpp \
 	attach.cpp \
 	element.cpp \
+	component.cpp \
 	imagewriter.cpp \
 	lang_verilog.cpp \
 	messagedock.cpp \

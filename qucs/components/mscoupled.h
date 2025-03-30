@@ -21,7 +21,7 @@
 #include "component.h"
 
 
-class MScoupled : public Component  {
+class MScoupled : public LegacyComponent  {
 public:
   MScoupled();
   ~MScoupled();

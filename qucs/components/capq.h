@@ -26,7 +26,7 @@
 #include "component.h"
 
 
-class capq : public Component  {
+class capq : public LegacyComponent  {
 public:
   capq();
  ~capq();

@@ -21,7 +21,7 @@
 #include "component.h"
 
 
-class Substrate : public Component  {
+class Substrate : public LegacyComponent  {
 public:
   Substrate();
   ~Substrate();

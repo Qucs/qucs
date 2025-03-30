@@ -21,7 +21,7 @@
 #include "component.h"
 
 
-class MSline : public Component  {
+class MSline : public LegacyComponent  {
 public:
   MSline();
   ~MSline();

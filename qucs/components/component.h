@@ -24,9 +24,39 @@
 
 #include <QTextStream>
 
+class LegacyComponent : public Component {
+
+public:  // BUG
+  std::list<qucs::Line>   Lines;
+  std::list<qucs::Arc>    Arcs;
+  std::list<qucs::Area>   Rects;
+  std::list<qucs::Area>   Ellips;
+  std::list<qucs::Text>   Texts;
+
+public:
+  void    rotate()override;
+  void    mirrorX()override; // mirror Y
+  void    mirrorY()override; // mirror X
+  std::list<qucs::Line> const& lines(){return  Lines;}
+  std::list<qucs::Arc>  const& arcs(){return   Arcs;}
+  std::list<qucs::Area> const& rects(){return  Rects;}
+  std::list<qucs::Area> const& ellips(){return Ellips;}
+  std::list<qucs::Text> const& texts(){return  Texts;}
+
+public:
+  void    paint(ViewPainter*) /*const*/ override;
+  void    paintScheme(Schematic*) /*const*/ override;
+  void    print(ViewPainter*, float) /*const*/ override;
+
+protected: // legacy schematic
+  int  analyseLine(const QString&, int);
+
+protected: // legacy overrides
+  void copyComponent(const Component &c)override;
+};
 
 
-class MultiViewComponent : public Component {
+class MultiViewComponent : public LegacyComponent {
 public:
   MultiViewComponent() {};
   virtual ~MultiViewComponent() {};
@@ -38,7 +68,6 @@ protected:
 };
 
 
-// BUG wrong place.
 class GateComponent : public MultiViewComponent {
 public:
   GateComponent();
@@ -51,8 +80,5 @@ public:
 protected:
   void createSymbol();
 };
-
-// prototype of independent function
-std::shared_ptr<Component> getComponentFromName(QString& Line, Schematic* p=NULL);
 
 #endif

@@ -13,7 +13,7 @@
 
 #include "component.h"
 
-class DLS_nto1 : public Component
+class DLS_nto1 : public LegacyComponent
 {
   public:
     DLS_nto1();

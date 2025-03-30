@@ -13,7 +13,7 @@
 
 #include "component.h"
 
-class nigbt : public Component
+class nigbt : public LegacyComponent
 {
   public:
     nigbt();

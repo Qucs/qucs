@@ -13,7 +13,7 @@
 
 #include "component.h"
 
-class MESFET : public Component
+class MESFET : public LegacyComponent
 {
   public:
     MESFET();

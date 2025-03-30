@@ -21,7 +21,7 @@
 #include "component.h"
 
 
-class Attenuator : public Component  {
+class Attenuator : public LegacyComponent  {
 public:
   Attenuator();
   ~Attenuator();

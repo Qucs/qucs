@@ -21,7 +21,7 @@
 #include "component.h"
 
 
-class Circulator : public Component  {
+class Circulator : public LegacyComponent  {
 public:
   Circulator();
   ~Circulator();

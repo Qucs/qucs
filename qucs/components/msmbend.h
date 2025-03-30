@@ -21,7 +21,7 @@
 #include "component.h"
 
 
-class MSmbend : public Component  {
+class MSmbend : public LegacyComponent  {
 public:
   MSmbend();
   ~MSmbend();

@@ -21,7 +21,7 @@
 #include "component.h"
 
 
-class MSopen : public Component  {
+class MSopen : public LegacyComponent  {
 public:
   MSopen();
   ~MSopen();

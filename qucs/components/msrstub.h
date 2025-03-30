@@ -20,7 +20,7 @@
 
 #include "component.h"
 
-class MSrstub : public Component  {
+class MSrstub : public LegacyComponent  {
 public:
   MSrstub();
   ~MSrstub();

@@ -21,7 +21,7 @@
 #include "component.h"
 
 
-class vRect : public Component  {
+class vRect : public LegacyComponent  {
 public:
   vRect();
   ~vRect();

@@ -13,7 +13,7 @@
 
 #include "component.h"
 
-class dff_SR : public Component
+class dff_SR : public LegacyComponent
 {
   public:
     dff_SR();

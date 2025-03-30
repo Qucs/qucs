@@ -27,7 +27,7 @@
 #include "component.h"
 
 
-class circularloop : public Component  {
+class circularloop : public LegacyComponent  {
 public:
   circularloop();
   ~circularloop();

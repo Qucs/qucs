@@ -21,7 +21,7 @@
 #include "component.h"
 
 
-class Phaseshifter : public Component  {
+class Phaseshifter : public LegacyComponent  {
 public:
   Phaseshifter();
   ~Phaseshifter();

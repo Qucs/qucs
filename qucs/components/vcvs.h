@@ -21,7 +21,7 @@
 #include "component.h"
 
 
-class VCVS : public Component  {
+class VCVS : public LegacyComponent  {
 public:
   VCVS();
   ~VCVS();

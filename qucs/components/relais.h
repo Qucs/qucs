@@ -21,7 +21,7 @@
 #include "component.h"
 
 
-class Relais : public Component  {
+class Relais : public LegacyComponent  {
 public:
   Relais();
  ~Relais();

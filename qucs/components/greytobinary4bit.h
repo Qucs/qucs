@@ -13,7 +13,7 @@
 
 #include "component.h"
 
-class greytobinary4bit : public Component
+class greytobinary4bit : public LegacyComponent
 {
   public:
     greytobinary4bit();

@@ -13,7 +13,7 @@
 
 #include "component.h"
 
-class mod_amp : public Component
+class mod_amp : public LegacyComponent
 {
   public:
     mod_amp();

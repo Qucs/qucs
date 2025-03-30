@@ -21,7 +21,7 @@
 #include "component.h"
 
 
-class MScorner : public Component  {
+class MScorner : public LegacyComponent  {
 public:
   MScorner();
   ~MScorner();

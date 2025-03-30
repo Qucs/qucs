@@ -21,7 +21,7 @@
 #include "component.h"
 
 
-class symTrafo : public Component  {
+class symTrafo : public LegacyComponent  {
 public:
   symTrafo();
   ~symTrafo();

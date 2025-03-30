@@ -21,7 +21,7 @@
 #include "component.h"
 
 
-class RectLine : public Component  {
+class RectLine : public LegacyComponent  {
 public:
   RectLine();
  ~RectLine();

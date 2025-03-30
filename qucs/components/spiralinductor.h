@@ -27,7 +27,7 @@
 #include "component.h"
 
 
-class spiralinductor : public Component  {
+class spiralinductor : public LegacyComponent  {
 public:
   spiralinductor();
   ~spiralinductor();

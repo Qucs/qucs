@@ -20,6 +20,11 @@
 #include "element.h"
 #include "trace.h"
 
+// BUG. enum?
+#define COMP_IS_OPEN    0
+#define COMP_IS_ACTIVE  1
+#define COMP_IS_SHORTEN 2
+
 class Schematic;
 class ViewPainter;
 class QString;
@@ -29,6 +34,16 @@ class QTextStream; // BUG
 
 class Component : public Element {
   std::string _attr;
+
+public: // BUG.
+  std::list<qucs::Port>   Ports;
+  std::list<qucs::Property>   Props;
+public: // BUG
+  virtual std::list<qucs::Line> const& lines() {static std::list<qucs::Line>x;  return x;}
+  virtual std::list<qucs::Arc>  const& arcs()  {static std::list<qucs::Arc>x;   return x;}
+  virtual std::list<qucs::Area> const& rects() {static std::list<qucs::Area>x;  return x;}
+  virtual std::list<qucs::Area> const& ellips(){static std::list<qucs::Area>x; return x;}
+  virtual std::list<qucs::Text> const& texts() {static std::list<qucs::Text>x;  return x;}
 public:
   Component();
   virtual ~Component() {}
@@ -38,9 +53,9 @@ public:
   QString getNetlist();
   QString get_VHDL_Code(int);
   QString get_Verilog_Code(int);
-  void    paint(ViewPainter*);
-  void    paintScheme(Schematic*);
-  void    print(ViewPainter*, float);
+  virtual void    paint(ViewPainter*) /*const*/ {};
+  virtual void    paintScheme(Schematic*) /*const*/ {};
+  virtual void    print(ViewPainter*, float) /*const*/ {};
   void    setCenter(int, int, bool relative=false);
   void    getCenter(int&, int&);
   int     textSize(int&, int&);
@@ -48,9 +63,9 @@ public:
   void    entireBounds(int&, int&, int&, int&, float);
   bool    getSelected(int, int);
   int     getTextSelected(int, int, float);
-  void    rotate();
-  void    mirrorX();  // mirror about X axis
-  void    mirrorY();  // mirror about Y axis
+  virtual void    rotate() {incomplete();}
+  virtual void    mirrorX() {incomplete();} // mirror Y
+  virtual void    mirrorY() {incomplete();} // mirror X
   bool    load(const QString&);
 
 public: // attributes
@@ -110,17 +125,6 @@ public:
   qucs::Port &port(int n);
   const qucs::Port &port(int n) const;
 
-  std::list<qucs::Line>   Lines;
-  std::list<qucs::Arc>    Arcs;
-  std::list<qucs::Area>   Rects;
-  std::list<qucs::Area>   Ellips;
-  std::list<qucs::Port>   Ports;
-  std::list<qucs::Text>   Texts;
-  std::list<qucs::Property>   Props;
-
-  #define COMP_IS_OPEN    0
-  #define COMP_IS_ACTIVE  1
-  #define COMP_IS_SHORTEN 2
   int  isActive; // should it be used in simulation or not ?
 private:
   int _tx{0}, _ty{0}; // upper left corner of text (position)
@@ -170,15 +174,17 @@ protected:
   virtual QString vhdlCode(int);
   virtual QString verilogCode(int);
 
-  int  analyseLine(const QString&, int);
   bool getIntegers(const QString&, int *i1=0, int *i2=0, int *i3=0,
                    int *i4=0, int *i5=0, int *i6=0);
   bool getPen(const QString&, QPen&, int);
   bool getBrush(const QString&, QBrush&, int);
 
-  void copyComponent(const Component &);
+  virtual void copyComponent(const Component &c);
+
   qucs::Property &getProperty(const QString&);
   Schematic* containingSchematic;
 };
+
+std::shared_ptr<Component> getComponentFromName(QString& Line, Schematic* p=NULL);
 
 #endif

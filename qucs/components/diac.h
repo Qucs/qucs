@@ -21,7 +21,7 @@
 #include "component.h"
 
 
-class Diac : public Component  {
+class Diac : public LegacyComponent  {
 public:
   Diac();
  ~Diac() {};

@@ -21,7 +21,7 @@
 #include "component.h"
 
 
-class PM_Modulator : public Component  {
+class PM_Modulator : public LegacyComponent  {
 public:
   PM_Modulator();
  ~PM_Modulator();

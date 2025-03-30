@@ -21,7 +21,7 @@
 #include "component.h"
 
 
-class vProbe : public Component  {
+class vProbe : public LegacyComponent  {
 public:
   vProbe();
  ~vProbe();

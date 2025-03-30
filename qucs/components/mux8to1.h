@@ -13,7 +13,7 @@
 
 #include "component.h"
 
-class mux8to1 : public Component
+class mux8to1 : public LegacyComponent
 {
   public:
     mux8to1();

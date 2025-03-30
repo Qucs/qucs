@@ -21,7 +21,7 @@
 #include "component.h"
 
 
-class VCCS : public Component  {
+class VCCS : public LegacyComponent  {
 public:
   VCCS();
   ~VCCS();

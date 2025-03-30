@@ -21,7 +21,7 @@
 #include "component.h"
 
 
-class Ampere_ac : public Component  {
+class Ampere_ac : public LegacyComponent  {
 public:
   Ampere_ac();
   ~Ampere_ac();

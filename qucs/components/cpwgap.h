@@ -21,7 +21,7 @@
 #include "component.h"
 
 
-class CPWgap : public Component  {
+class CPWgap : public LegacyComponent  {
 public:
   CPWgap();
   ~CPWgap();

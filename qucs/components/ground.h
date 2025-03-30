@@ -21,7 +21,7 @@
 #include "component.h"
 
 
-class Ground : public Component  {
+class Ground : public LegacyComponent  {
 public:
   Ground();
  ~Ground();

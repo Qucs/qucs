@@ -21,7 +21,7 @@
 #include "component.h"
 
 
-class MSlange : public Component  {
+class MSlange : public LegacyComponent  {
 public:
   MSlange();
   ~MSlange();

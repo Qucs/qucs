@@ -21,7 +21,7 @@
 #include "component.h"
 
 
-class Amplifier : public Component  {
+class Amplifier : public LegacyComponent  {
 public:
   Amplifier();
   ~Amplifier();
