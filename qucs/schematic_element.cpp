@@ -37,7 +37,7 @@ std::shared_ptr<Node> Schematic::insertNode(int x, int y, const std::shared_ptr<
     for( ; pn != Nodes->end(); ++pn)  // check every node
         if(pn->cx == x) if(pn->cy == y)
             {
-                pn->Connections.push_back(e);
+		pn->connect(e);
                 break;
             }
 
@@ -48,7 +48,7 @@ std::shared_ptr<Node> Schematic::insertNode(int x, int y, const std::shared_ptr<
     // create new node, if no existing one lies at this position
     std::shared_ptr<Node> newNode(new Node(x, y));
     Nodes->append(newNode);
-    newNode->Connections.push_back(e);  // connect schematic node to component node
+    newNode->connect(e);
 
     // check if the new node lies upon an existing wire
     for(auto pw = Wires->begin(); pw != Wires->end(); ++pw)
@@ -127,8 +127,7 @@ int Schematic::insertWireNode1(const std::shared_ptr<Wire> &w)
                 {
                     // one part of the wire lies within an existing wire
                     // the other part not
-                    if(ptr2->ports(1)->Connections.size() == 1)
-                    {
+                    if(ptr2->ports(1)->refcount() == 1) {
                         w->y1 = ptr2->y1;
                         w->ports(0) = ptr2->ports(0);
                         if(ptr2->Label)
@@ -167,8 +166,7 @@ int Schematic::insertWireNode1(const std::shared_ptr<Wire> &w)
                 {
                     // one part of the wire lies within an existing wire
                     // the other part not
-                    if(ptr2->ports(1)->Connections.size() == 1)
-                    {
+                    if(ptr2->ports(1)->refcount() == 1) {
                         w->x1 = ptr2->x1;
                         w->ports(0) = ptr2->ports(0);
                         if(ptr2->Label)
@@ -186,7 +184,7 @@ int Schematic::insertWireNode1(const std::shared_ptr<Wire> &w)
                     {
                         w->x1 = ptr2->x2;
                         w->ports(0) = ptr2->ports(1);
-                        ptr2->ports(1)->Connections.push_back(w);   // shorten new wire
+                        ptr2->ports(1)->connect(w);   // shorten new wire
                         return 2;
                     }
                 }
@@ -217,9 +215,9 @@ bool Schematic::connectHWires1(const std::shared_ptr<Wire> &w)
 {
     Node *n = w->ports(0);
 
-    auto pw = n->Connections.end();
+    auto pw = n->connections().end();
     --pw;  // last connection is the new wire itself
-    for( ; pw != n->Connections.begin(); )
+    for( ; pw != n->connections().begin(); )
     {
         --pw;
         auto pws = pw->lock();
@@ -228,7 +226,7 @@ bool Schematic::connectHWires1(const std::shared_ptr<Wire> &w)
         if(!wire->isHorizontal()) continue;
         if(wire->x1 < w->x1)
         {
-            if(n->Connections.size() != 2) continue;
+            if(n->refcount() != 2) continue;
             if(wire->Label)
             {
                 w->Label = wire->Label;
@@ -253,7 +251,7 @@ bool Schematic::connectHWires1(const std::shared_ptr<Wire> &w)
             w->ports(0)->removeConnection(w); // second node not yet made
             return false;
         }
-        if(wire->ports(1)->Connections.size() < 2)
+        if(wire->ports(1)->refcount() < 2)
         {
             // existing wire lies within the new one
             if(wire->Label)
@@ -282,9 +280,9 @@ bool Schematic::connectVWires1(const std::shared_ptr<Wire> &w)
 {
     Node *n = w->ports(0);
 
-    auto pw = n->Connections.end();
+    auto pw = n->connections().end();
     --pw;  // last connection is the new wire itself
-    for( ; pw != n->Connections.begin(); )
+    for( ; pw != n->connections().begin(); )
     {
         --pw;
         auto pws = pw->lock();
@@ -293,7 +291,7 @@ bool Schematic::connectVWires1(const std::shared_ptr<Wire> &w)
         if(wire->isHorizontal()) continue;
         if(wire->y1 < w->y1)
         {
-            if(n->Connections.size() != 2) continue;
+            if(n->refcount() != 2) continue;
             if(wire->Label)
             {
                 w->Label = wire->Label;
@@ -318,7 +316,7 @@ bool Schematic::connectVWires1(const std::shared_ptr<Wire> &w)
             w->ports(0)->removeConnection(w); // second node not yet made
             return false;
         }
-        if(wire->ports(1)->Connections.size() < 2)
+        if(wire->ports(1)->refcount() < 2)
         {
             // existing wire lies within the new one
             if(wire->Label)
@@ -372,7 +370,7 @@ int Schematic::insertWireNode2(const std::shared_ptr<Wire> &w)
             {
                 // one part of the wire lies within an existing wire
                 // the other part not
-                if(ptr2->ports(0)->Connections.size() == 1)
+                if(ptr2->ports(0)->refcount() == 1)
                 {
                     if(ptr2->Label)
                     {
@@ -406,7 +404,7 @@ int Schematic::insertWireNode2(const std::shared_ptr<Wire> &w)
             {
                 // one part of the wire lies within an existing wire
                 // the other part not
-                if(ptr2->ports(0)->Connections.size() == 1)
+                if(ptr2->ports(0)->refcount() == 1)
                 {
                     if(ptr2->Label)
                     {
@@ -434,7 +432,7 @@ int Schematic::insertWireNode2(const std::shared_ptr<Wire> &w)
 
         std::shared_ptr<Node> newNode(new Node(w->x2, w->y2));   // create new node
         Nodes->append(newNode);
-        newNode->Connections.push_back(w);  // connect schematic node to the new wire
+        newNode->connect(w);  // connect schematic node to the new wire
         w->ports(1) = newNode.get();
 
         // split the wire into two wires
@@ -444,7 +442,7 @@ int Schematic::insertWireNode2(const std::shared_ptr<Wire> &w)
 
     std::shared_ptr<Node> newNode(new Node(w->x2, w->y2));   // create new node
     Nodes->append(newNode);
-    newNode->Connections.push_back(w);  // connect schematic node to the new wire
+    newNode->connect(w);  // connect schematic node to the new wire
     w->ports(1) = newNode.get();
     return 1;
 }
@@ -455,9 +453,9 @@ bool Schematic::connectHWires2(const std::shared_ptr<Wire> &w)
 {
     Node *n = w->ports(1);
 
-    auto pw = n->Connections.end();
+    auto pw = n->connections().end();
     --pw;  // last connection is the new wire itself
-    for( ; pw != n->Connections.begin(); )
+    for( ; pw != n->connections().begin(); )
     {
         --pw;
         auto pws = pw->lock();
@@ -466,7 +464,7 @@ bool Schematic::connectHWires2(const std::shared_ptr<Wire> &w)
         if(!wire->isHorizontal()) continue;
         if(wire->x2 > w->x2)
         {
-            if(n->Connections.size() != 2) continue;
+            if(n->refcount() != 2) continue;
             if(wire->Label)
             {
                 w->Label = wire->Label;
@@ -483,7 +481,7 @@ bool Schematic::connectHWires2(const std::shared_ptr<Wire> &w)
         // (if new wire lies complete within an existing one, was already
         // checked before)
 
-        if(wire->ports(0)->Connections.size() < 2)
+        if(wire->ports(0)->refcount() < 2)
         {
             // existing wire lies within the new one
             if(wire->Label)
@@ -512,9 +510,9 @@ bool Schematic::connectVWires2(const std::shared_ptr<Wire> &w)
 {
     Node *n = w->ports(1);
 
-    auto pw = n->Connections.end();
+    auto pw = n->connections().end();
     --pw;  // last connection is the new wire itself
-    for( ; pw != n->Connections.begin(); )
+    for( ; pw != n->connections().begin(); )
     {
         --pw;
         auto pws = pw->lock();
@@ -523,7 +521,7 @@ bool Schematic::connectVWires2(const std::shared_ptr<Wire> &w)
         if(wire->isHorizontal()) continue;
         if(wire->y2 > w->y2)
         {
-            if(n->Connections.size() != 2) continue;
+            if(n->refcount() != 2) continue;
             if(wire->Label)
             {
                 w->Label = wire->Label;
@@ -540,7 +538,7 @@ bool Schematic::connectVWires2(const std::shared_ptr<Wire> &w)
         // (if new wire lies complete within an existing one, was already
         // checked before)
 
-        if(wire->ports(0)->Connections.size() < 2)
+        if(wire->ports(0)->refcount() < 2)
         {
             // existing wire lies within the new one
             if(wire->Label)
@@ -662,7 +660,7 @@ int Schematic::insertWire(const std::shared_ptr<Wire> &w)
             Node *pn1 = pn.operator->();
             Node *pn2 = pn1;
             // check all connections of the current node
-            for(auto pe = pn->Connections.begin(); pe != pn->Connections.end(); ++pe)
+            for(auto pe = pn->connections().begin(); pe != pn->connections().end(); ++pe)
             {
                 auto pes = pe->lock();
                 if(pes->Type != isWire) continue;
@@ -672,8 +670,8 @@ int Schematic::insertWire(const std::shared_ptr<Wire> &w)
 
                 pn1 = nw->ports(0);
                 pn2 = nw->ports(1);
-                n1  = pn1->Connections.size();
-                n2  = pn2->Connections.size();
+                n1  = pn1->refcount();
+                n2  = pn2->refcount();
                 if(n1 == 1)
                 {
                     nodesToDelete.insert(pn1);  // delete node 1 if open
@@ -742,12 +740,12 @@ void Schematic::selectWireLine(const std::shared_ptr<Element> &_pe, Node *pn, bo
     std::shared_ptr<Element> pe = _pe;
     //  as we assign pn from ports(0) or ports(1), we have to use pointers
     Node *pn_1st = pn;
-    while(pn->Connections.size() == 2)
+    while(pn->refcount() == 2)
     {
-        if(pn->Connections.front().lock() == pe)
-          pe = pn->Connections.back().lock();
+        if(pn->connections().front().lock() == pe)
+          pe = pn->connections().back().lock();
         else
-          pe = pn->Connections.front().lock();
+          pe = pn->connections().front().lock();
 
         if(pe->Type != isWire) break;
         if(ctrl) pe->isSelected ^= ctrl;
@@ -781,9 +779,9 @@ std::shared_ptr<Wire> Schematic::splitWire(const std::shared_ptr<Wire> &pw, cons
     pw->y2 = pn->cy;
     pw->ports(1) = pn.get();
 
-    newWire->ports(1)->Connections.push_front(newWire);
-    pn->Connections.push_front(pw);
-    pn->Connections.push_front(newWire);
+    newWire->ports(1)->connect(newWire);
+    pn->connect(pw);
+    pn->connect(newWire);
     newWire->ports(1)->removeConnection(pw);
     Wires->append(newWire);
 
@@ -802,8 +800,8 @@ std::shared_ptr<Wire> Schematic::splitWire(const std::shared_ptr<Wire> &pw, cons
 // If possible, make one wire out of two wires.
 bool Schematic::oneTwoWires(const std::shared_ptr<Node> &n)
 {
-    auto e1 = n->Connections.front().lock();  // two wires -> one wire
-    auto e2 = n->Connections.back().lock();
+    auto e1 = n->connections().front().lock();  // two wires -> one wire
+    auto e2 = n->connections().back().lock();
 
     if(e1->Type == isWire && e2->Type == isWire)
     {
@@ -847,28 +845,28 @@ bool Schematic::oneTwoWires(const std::shared_ptr<Node> &n)
 // Deletes the wire 'w'.
 void Schematic::deleteWire(const WireList::iterator &w)
 {
-    if(w->ports(0)->Connections.size() == 1)
+    if(w->ports(0)->refcount() == 1)
     {
         Nodes->erase(w->ports(0));     // delete node 1 if open
     }
     else
     {
         w->ports(0)->removeConnection(w.ref());   // remove connection
-        if(w->ports(0)->Connections.size() == 2) {
+        if(w->ports(0)->refcount() == 2) {
             auto n1 = Nodes->find(w->ports(0));
             assert(n1 != Nodes->end());
             oneTwoWires(n1.ref());  // two wires -> one wire
         }
     }
 
-    if(w->ports(1)->Connections.size() == 1)
+    if(w->ports(1)->refcount() == 1)
     {
         Nodes->erase(w->ports(1));     // delete node 2 if open
     }
     else
     {
         w->ports(1)->removeConnection(w.ref());   // remove connection
-        if(w->ports(1)->Connections.size() == 2) {
+        if(w->ports(1)->refcount() == 2) {
             auto n2 = Nodes->find(w->ports(1));
             assert(n2 != Nodes->end());
             oneTwoWires(n2.ref());  // two wires -> one wire
@@ -900,7 +898,7 @@ int Schematic::copyWires(int& x1, int& y1, int& x2, int& y2,
             // rescue non-selected node labels
             pn = pw->ports(0);
             if(pn->Label)
-                if(pn->Connections.size() < 2)
+                if(pn->refcount() < 2)
                 {
                     ElementCache.append(pn->Label);
 
@@ -911,7 +909,7 @@ int Schematic::copyWires(int& x1, int& y1, int& x2, int& y2,
                 }
             pn = pw->ports(1);
             if(pn->Label)
-                if(pn->Connections.size() < 2)
+                if(pn->refcount() < 2)
                 {
                     ElementCache.append(pn->Label);
 
@@ -1625,10 +1623,10 @@ void Schematic::newMovingWires(SharedObjectList<Element> &p, Node *pn, int pos)
         if(pn->State & 16)  // node was already worked on
             break;
 
-        pe = pn->Connections.front().lock();
+        pe = pn->connections().front().lock();
         if(!pe)  return;
 
-        if(pn->Connections.size() > 1)
+        if(pn->refcount() > 1)
             break;
         if(pe->Type != isWire)  // is it connected to exactly one wire ?
             break;
@@ -1641,11 +1639,11 @@ void Schematic::newMovingWires(SharedObjectList<Element> &p, Node *pn, int pos)
         Node *pn2 = pw->ports(0);
         if(pn2 == pn) pn2 = pw->ports(1);
 
-        if(pn2->Connections.size() == 2) // two existing wires connected ?
+        if(pn2->refcount() == 2) // two existing wires connected ?
             if((pn2->State & (8+4)) == 0)
             {
-                std::shared_ptr<Element> pe2 = pn2->Connections.front().lock();
-                if(pe2 == pe) pe2 = pn2->Connections.back().lock();
+                std::shared_ptr<Element> pe2 = pn2->connections().front().lock();
+                if(pe2 == pe) pe2 = pn2->connections().back().lock();
                 // connected wire connected to exactly one wire ?
                 if(pe2->Type == isWire)
                     pw2  = std::dynamic_pointer_cast<Wire>(pe2);
@@ -1822,13 +1820,13 @@ int Schematic::copySelectedElements(SharedObjectList<Element> &p)
         auto pn = pnn;
         ++pnn;
         if(pn->State & 8)
-            if(pn->Connections.size() == 2)
+            if(pn->refcount() == 2)
                 if(oneTwoWires(pn.ref()))    // if possible, connect two wires to one
                 {
                     continue;
                 }
 
-        if(pn->Connections.size() == 0)
+        if(pn->refcount() == 0)
         {
             if(pn->Label)
             {
@@ -2496,17 +2494,18 @@ void Schematic::insertComponentNodes(const std::shared_ptr<Component> &c, bool n
     while (pp != c->Ports.end())
     {
         auto pn = pp->getConnection();
-        for(auto i = pn->Connections.begin(); i != pn->Connections.end(); ++i)
+        for(auto i = pn->connections().begin(); i != pn->connections().end(); ++i)
         {
             auto pe = i->lock();
             if(pe->Type == isWire)
             {
-                std::list<std::weak_ptr<Element> > *pL;
+                std::list<std::weak_ptr<Element> > const* pL;
                 std::shared_ptr<Wire> pw = std::dynamic_pointer_cast<Wire>(pe);
-                if (pw->ports(0) == pn.get())
-                  pL = &pw->ports(1)->Connections;
-                else
-                  pL = &pw->ports(0)->Connections;
+                if (pw->ports(0) == pn.get()){
+                  pL = &pw->ports(1)->connections();
+		}else{
+                  pL = &pw->ports(0)->connections();
+		}
 
                 for(auto pe1 = pL->begin(); pe1 != pL->end(); ++pe1)
                     if(std::shared_ptr<Element>(*pe1) == c)
@@ -2557,7 +2556,7 @@ void Schematic::recreateComponent(const std::shared_ptr<Component> &Comp)
         // Otherwise the label would be deleted.
         for (auto pp = Comp->Ports.begin(); pp != Comp->Ports.end(); ++pp) {
             auto pcc = pp->getConnection();
-            if(pcc->Connections.size() < 2)
+            if(pcc->refcount() < 2)
             {
                 plMem.push_back(pcc->Label);
                 pcc->Label = 0;
@@ -2760,7 +2759,7 @@ void Schematic::setCompPorts(std::shared_ptr<Component> &pc)
     {
         auto pcc = pp->getConnection();
         pcc->removeConnection(pc);  // delete connections
-        switch(pcc->Connections.size())
+        switch(pcc->refcount())
         {
         case 0:
             {
@@ -2852,7 +2851,7 @@ void Schematic::deleteComp(const ComponentList::iterator &c)
     // delete all port connections
     for (auto pn = c->Ports.begin(); pn != c->Ports.end(); ++pn) {
         auto pcc = pn->getConnection();
-        switch(pcc->Connections.size())
+        switch(pcc->refcount())
         {
         case 1  :
             Nodes->erase(pcc);  // delete open nodes
@@ -2896,7 +2895,7 @@ int Schematic::copyComponents(int& x1, int& y1, int& x2, int& y2,
             for (auto pp = pc->Ports.begin(); pp != pc->Ports.end(); ++pp) {
                 auto pcc = pp->getConnection();
                 if(pcc->Label)
-                    if(pcc->Connections.size() < 2)
+                    if(pcc->refcount() < 2)
                     {
                         ElementCache.append(pcc->Label);
 
@@ -2938,7 +2937,7 @@ void Schematic::copyComponents2(int& x1, int& y1, int& x2, int& y2,
             for (auto pp = pc->Ports.begin(); pp != pc->Ports.end(); ++pp) {
                 auto pcc = pp->getConnection();
                 if(pcc->Label)
-                    if(pcc->Connections.size() < 2)
+                    if(pcc->refcount() < 2)
                     {
                         ElementCache.append(pcc->Label);
                         pcc->Label = 0;
@@ -2988,7 +2987,7 @@ void Schematic::oneLabel(Node *n1)
             }
         }
 
-        for(auto j = pn->Connections.begin(); j != pn->Connections.end(); ++j)
+        for(auto j = pn->connections().begin(); j != pn->connections().end(); ++j)
         {
             auto pe = j->lock();
             if(pe->Type != isWire)
@@ -3087,7 +3086,7 @@ std::shared_ptr<Element> Schematic::getWireLabel(Node *pn_)
         }
         else
         {
-            for(auto j = pn->Connections.begin(); j != pn->Connections.end(); ++j)
+            for(auto j = pn->connections().begin(); j != pn->connections().end(); ++j)
             {
                 auto pe = j->lock();
                 if(pe->Type != isWire)

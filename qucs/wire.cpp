@@ -223,3 +223,19 @@ void Wire::set_attribute(std::string name, std::string value)
     set_qucs_y2(std::stoi(value));
   }
 }
+
+// ----------------------------------------------------------------
+bool is_wire(Element const* e)
+{
+	return dynamic_cast<Wire const*>(e);
+}
+
+// ----------------------------------------------------------------
+bool is_wire(std::weak_ptr<Element> e)
+{
+	return is_wire(e.lock());
+}
+
+// ----------------------------------------------------------------
+// ----------------------------------------------------------------
+// :vim:ts=8:sw=2:noet

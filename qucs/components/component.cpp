@@ -1551,7 +1551,7 @@ void MultiViewComponent::recreate(Schematic *Doc)
     { untested();
       auto pcc = pp->getConnection();
       pcc->removeConnection(holder);  // delete connections
-      switch(pcc->Connections.size()) {
+      switch(pcc->refcount()) {
       case 0:
           { untested();
             auto pl = pcc->Label;
