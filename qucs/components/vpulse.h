@@ -21,7 +21,7 @@
 #include "component.h"
 
 
-class vPulse : public Component  {
+class vPulse : public LegacyComponent  {
 public:
   vPulse();
   ~vPulse();

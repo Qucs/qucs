@@ -13,7 +13,7 @@
 
 #include "component.h"
 
-class gatedDlatch : public Component
+class gatedDlatch : public LegacyComponent
 {
   public:
     gatedDlatch();

@@ -21,7 +21,7 @@
 #include "component.h"
 
 
-class Triac : public Component  {
+class Triac : public LegacyComponent  {
 public:
   Triac();
  ~Triac() {};

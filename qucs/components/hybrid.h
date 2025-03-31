@@ -17,7 +17,7 @@
 
 #include "component.h"
 
-class Hybrid : public Component  {
+class Hybrid : public LegacyComponent  {
 public:
   Hybrid();
   Component* newOne();

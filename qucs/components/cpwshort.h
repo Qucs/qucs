@@ -21,7 +21,7 @@
 #include "component.h"
 
 
-class CPWshort : public Component  {
+class CPWshort : public LegacyComponent  {
 public:
   CPWshort();
   ~CPWshort();

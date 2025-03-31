@@ -21,7 +21,7 @@
 #include "component.h"
 
 
-class TwistedPair : public Component  {
+class TwistedPair : public LegacyComponent  {
 public:
   TwistedPair();
  ~TwistedPair();

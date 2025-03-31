@@ -13,7 +13,7 @@
 
 #include "component.h"
 
-class hpribin4bit : public Component
+class hpribin4bit : public LegacyComponent
 {
   public:
     hpribin4bit();

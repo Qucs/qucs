@@ -21,7 +21,7 @@
 #include "component.h"
 
 
-class Coplanar : public Component  {
+class Coplanar : public LegacyComponent  {
 public:
   Coplanar();
   ~Coplanar();

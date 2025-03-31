@@ -225,7 +225,7 @@ bool Component::getSelected(int x_, int y_)
 }
 
 // -------------------------------------------------------
-void Component::paint(ViewPainter *p)
+void LegacyComponent::paint(ViewPainter *p)
 { untested();
   int x, y, a, b, xb, yb;
   QFont f = p->Painter->font();   // save current font
@@ -359,7 +359,7 @@ void Component::paint(ViewPainter *p)
 
 // -------------------------------------------------------
 // Paints the component when moved with the mouse.
-void Component::paintScheme(Schematic *p)
+void LegacyComponent::paintScheme(Schematic *p)
 { untested();
   // qDebug() << "paintScheme" << Model;
   if(Model.at(0) == '.') {   // is simulation component (dc, ac, ...)
@@ -425,7 +425,7 @@ void Component::paintScheme(Schematic *p)
 
 // -------------------------------------------------------
 // For output on a printer device.
-void Component::print(ViewPainter *p, float FontScale)
+void LegacyComponent::print(ViewPainter *p, float FontScale)
 { untested();
   for(auto pt = Texts.begin(); pt != Texts.end(); ++pt)
     pt->Size *= FontScale;
@@ -438,7 +438,7 @@ void Component::print(ViewPainter *p, float FontScale)
 
 // -------------------------------------------------------
 // Rotates the component 90 counter-clockwise around its center
-void Component::rotate()
+void LegacyComponent::rotate()
 {
   // Port count only available after recreate, createSymbol
   if ((Model != "Sub") && (Model !="VHDL") && (Model != "Verilog")) // skip port count
@@ -543,7 +543,7 @@ void Component::rotate()
 
 // -------------------------------------------------------
 // Mirrors the component about the x-axis.
-void Component::mirrorX()
+void LegacyComponent::mirrorX()
 {
   // Port count only available after recreate, createSymbol
   if ((Model != "Sub") && (Model !="VHDL") && (Model != "Verilog")) // skip port count
@@ -609,7 +609,7 @@ void Component::mirrorX()
 
 // -------------------------------------------------------
 // Mirrors the component about the y-axis.
-void Component::mirrorY()
+void LegacyComponent::mirrorY()
 {
   // Port count only available after recreate, createSymbol
   if ((Model != "Sub") && (Model !="VHDL") && (Model != "Verilog")) // skip port count
@@ -1176,7 +1176,7 @@ bool Schematic::loadComponent(const QString& _s, const std::shared_ptr<Component
 // ***  The following functions are used to load the schematic symbol
 // ***  from file. (e.g. subcircuit, library component)
 
-int Component::analyseLine(const QString& Row, int numProps)
+int LegacyComponent::analyseLine(const QString& Row, int numProps)
 {
   QPen Pen;
   QBrush Brush;
@@ -1493,33 +1493,31 @@ qucs::Property &Component::getProperty(const QString& name)
 }
 
 // ---------------------------------------------------------------------
-// BUG // why not Commonent::Component(Commonent const&)?
-void Component::copyComponent(const Component &c)
+// BUG: misleading name. there is no copying here.
+void LegacyComponent::copyComponent(const Component &c)
 { untested();
+  Component::copyComponent(c);
   Type = c.Type;
   x1 = c.x1;
   y1 = c.y1;
   x2 = c.x2;
   y2 = c.y2;
 
-  Model = c.Model;
-  Name  = c.Name;
-  showName = c.showName;
-  Description = c.Description;
-
   isActive = c.isActive;
   rotated  = c.rotated;
   mirroredX = c.mirroredX;
-  _tx = c._tx;
-  _ty = c._ty;
 
   Props  = c.Props;
   Ports  = c.Ports;
-  Lines  = c.Lines;
-  Arcs   = c.Arcs;
-  Rects  = c.Rects;
-  Ellips = c.Ellips;
-  Texts  = c.Texts;
+
+  if(auto l=dynamic_cast<LegacyComponent const*>(&c)) {
+    Lines  = l->Lines;
+    Arcs   = l->Arcs;
+    Rects  = l->Rects;
+    Ellips = l->Ellips;
+    Texts  = l->Texts;
+  }else{
+  }
 }
 
 
@@ -1553,7 +1551,7 @@ void MultiViewComponent::recreate(Schematic *Doc)
     { untested();
       auto pcc = pp->getConnection();
       pcc->removeConnection(holder);  // delete connections
-      switch(pcc->Connections.size()) {
+      switch(pcc->refcount()) {
       case 0:
           { untested();
             auto pl = pcc->Label;

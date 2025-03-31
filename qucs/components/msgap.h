@@ -21,7 +21,7 @@
 #include "component.h"
 
 
-class MSgap : public Component  {
+class MSgap : public LegacyComponent  {
 public:
   MSgap();
   ~MSgap();

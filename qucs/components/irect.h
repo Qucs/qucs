@@ -21,7 +21,7 @@
 #include "component.h"
 
 
-class iRect : public Component  {
+class iRect : public LegacyComponent  {
 public:
   iRect();
   ~iRect();

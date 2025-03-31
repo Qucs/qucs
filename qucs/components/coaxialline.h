@@ -21,7 +21,7 @@
 #include "component.h"
 
 
-class CoaxialLine : public Component  {
+class CoaxialLine : public LegacyComponent  {
 public:
   CoaxialLine();
  ~CoaxialLine();

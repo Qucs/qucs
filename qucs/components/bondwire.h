@@ -21,7 +21,7 @@
 #include "component.h"
 
 
-class BondWire : public Component  {
+class BondWire : public LegacyComponent  {
 public:
   BondWire();
  ~BondWire() {};

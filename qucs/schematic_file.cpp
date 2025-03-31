@@ -458,7 +458,7 @@ void Schematic::simpleInsertComponent(const std::shared_ptr<Component> &c)
       pn.reset(new Node(x, y));
       DocNodes.append(pn);
     }
-    pn->Connections.push_back(c);  // connect schematic node to component node
+    pn->connect(c);  // connect schematic node to component node
     if (!pp->Type.isEmpty()) {
       pn->DType = pp->Type;
     }
@@ -523,8 +523,8 @@ void Schematic::simpleInsertWire(const std::shared_ptr<Wire> &pw)
     }
     return;
   }
-  pn->Connections.push_back(pw);  // connect schematic node to component node
-  pw->Port1 = pn.operator->();
+  pn->connect(pw);  // connect schematic node to component node
+  pw->ports(0) = pn.operator->();
 
   // check if second wire node lies upon existing node
   for(pn = DocNodes.begin(); pn != DocNodes.end(); ++pn)
@@ -535,8 +535,8 @@ void Schematic::simpleInsertWire(const std::shared_ptr<Wire> &pw)
     pn = DocNodes.end();
     --pn;
   }
-  pn->Connections.push_back(pw);  // connect schematic node to component node
-  pw->Port2 = pn.operator->();
+  pn->connect(pw);  // connect schematic node to component node
+  pw->ports(1) = pn.operator->();
 
   DocWires.append(pw);
 }
@@ -1017,22 +1017,22 @@ void Schematic::propagateNode(QStringList& Collect,
   Cons.append(pn.get());
   for(int i = 0; i < Cons.count(); ++i) {
     Node *p2 = Cons[i];
-    for(auto pe = p2->Connections.begin(); pe != p2->Connections.end(); ++pe) {
+    for(auto pe = p2->connections().begin(); pe != p2->connections().end(); ++pe) {
       if(pe->lock()->Type == isWire) {
         auto pw = std::dynamic_pointer_cast<Wire>(pe->lock());
-        if(p2 != pw->Port1) {
-	  if(pw->Port1->Name.isEmpty()) {
-	    pw->Port1->Name = pn->Name;
-	    pw->Port1->State = 1;
-	    Cons.append(pw->Port1);
+        if(p2 != pw->ports(0)) {
+	  if(pw->ports(0)->Name.isEmpty()) {
+	    pw->ports(0)->Name = pn->Name;
+	    pw->ports(0)->State = 1;
+	    Cons.append(pw->ports(0));
 	    setName = true;
 	  }
 	}
 	else {
-	  if(pw->Port2->Name.isEmpty()) {
-	    pw->Port2->Name = pn->Name;
-	    pw->Port2->State = 1;
-	    Cons.append(pw->Port2);
+	  if(pw->ports(1)->Name.isEmpty()) {
+	    pw->ports(1)->Name = pn->Name;
+	    pw->ports(1)->State = 1;
+	    Cons.append(pw->ports(1));
 	    setName = true;
 	  }
 	}
@@ -1276,9 +1276,9 @@ bool Schematic::giveNodeNames(QTextStream *stream, int& countInit,
   for(auto pw = DocWires.begin(); pw != DocWires.end(); ++pw) {
     if(pw->Label != 0) {
       if(isAnalog)
-        pw->Port1->Name = pw->Label->Name;
+        pw->ports(0)->Name = pw->Label->Name;
       else  // avoid to use reserved VHDL words
-        pw->Port1->Name = "net" + pw->Label->Name;
+        pw->ports(0)->Name = "net" + pw->Label->Name;
     }
   }
 

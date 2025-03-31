@@ -21,7 +21,7 @@
 #include "component.h"
 
 
-class MSstep : public Component  {
+class MSstep : public LegacyComponent  {
 public:
   MSstep();
   ~MSstep();

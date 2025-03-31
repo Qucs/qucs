@@ -21,7 +21,7 @@
 #include "component.h"
 
 
-class MSvia : public Component  {
+class MSvia : public LegacyComponent  {
 public:
   MSvia();
   ~MSvia();

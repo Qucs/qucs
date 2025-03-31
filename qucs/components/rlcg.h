@@ -20,7 +20,7 @@
 
 #include "component.h"
 
-class RLCG : public Component  {
+class RLCG : public LegacyComponent  {
 public:
   RLCG();
   ~RLCG();

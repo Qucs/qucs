@@ -34,12 +34,20 @@ Node::Node(int _x, int _y)
 
 Node::~Node()
 {
+	if(refcount()){
+	}else{
+		// historical bug?
+		// missing destructors?
+		// start debugging here.
+
+		// incomplete();
+	}
 }
 
 // -------------------------------------------------------------
 void Node::paint(ViewPainter *p)
 {
-  switch(Connections.size()) {
+  switch(refcount()) {
     case 1:  if(Label)
                p->fillRect(cx-2, cy-2, 4, 4, Qt::darkBlue); // open but labeled
              else {
@@ -47,8 +55,13 @@ void Node::paint(ViewPainter *p)
                p->drawEllipse(cx-4, cy-4, 8, 8);
              }
              return;
-    case 2:  if(Connections.front().lock()->Type == isWire)
-               if(Connections.back().lock()->Type == isWire) return;
+    case 2:  if(is_wire(connections().front())){
+               if(is_wire(connections().back())) {
+						return;
+					}else{
+					}
+				 }else{
+				 }
              p->fillRect(cx-2, cy-2, 4, 4, Qt::darkBlue);
              break;
     default: p->Painter->setBrush(Qt::darkBlue);  // more than 2 connections
@@ -85,9 +98,9 @@ void Node::setName(const QString& Name_, const QString& Value_, int x_, int y_)
 // ----------------------------------------------------------------
 void Node::removeConnection(const std::shared_ptr<Element> &e)
 {
-  for (auto i = Connections.begin(); i != Connections.end(); ++i) {
+  for (auto i = connections().begin(); i != connections().end(); ++i) {
     if (i->lock() == e) {
-      Connections.erase (i);
+      mutable_conn().erase (i);
       break;
     }
   }
@@ -97,5 +110,8 @@ void Node::removeConnection(const std::shared_ptr<Element> &e)
 void
 Node::appendConnection(const std::shared_ptr<Element> &e)
 {
-  Connections.push_back(e);
+  mutable_conn().push_back(e);
 }
+
+// ----------------------------------------------------------------
+// ----------------------------------------------------------------

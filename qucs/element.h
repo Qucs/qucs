@@ -73,6 +73,17 @@ namespace qucs {
   struct Port {
     Port() {}
     Port(int _x, int _y, bool _avail=true) : x(_x), y(_y), avail(_avail) {}
+	 bool operator==(const Port& p) const{
+		 // a port is essentially a pointer to a Node.
+		 // hence equality is "points to the same"
+		 // This will be easier with c++26
+		 return !operator!=(p);
+	 }
+	 bool operator!=(const Port& p) const{
+		 return Connection.owner_before(p.Connection)
+		     || p.Connection.owner_before(Connection);
+	 }
+	 // BUG private:
     int   x, y;
     bool  avail;
     QString Type;

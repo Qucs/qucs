@@ -17,7 +17,7 @@
 
 #include "component.h"
 
-class CoupledTLine : public Component  {
+class CoupledTLine : public LegacyComponent  {
 public:
   CoupledTLine();
   Component* newOne();

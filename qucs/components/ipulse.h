@@ -21,7 +21,7 @@
 #include "component.h"
 
 
-class iPulse : public Component  {
+class iPulse : public LegacyComponent  {
 public:
   iPulse();
   ~iPulse();

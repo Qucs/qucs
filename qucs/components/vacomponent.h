@@ -30,7 +30,7 @@ class QScriptValue;
  * \brief Definition of the vacomponent class.
  */
 
-class vacomponent : public Component
+class vacomponent : public LegacyComponent
 {
   public:
     using Component::newOne;

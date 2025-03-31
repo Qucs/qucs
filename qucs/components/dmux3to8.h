@@ -12,7 +12,7 @@
 #define dmux3to8_H
 #include "component.h"
 
-class dmux3to8 : public Component
+class dmux3to8 : public LegacyComponent
 {
   public:
     dmux3to8();

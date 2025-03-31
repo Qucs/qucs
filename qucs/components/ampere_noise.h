@@ -21,7 +21,7 @@
 #include "component.h"
 
 
-class Ampere_noise : public Component  {
+class Ampere_noise : public LegacyComponent  {
 public:
   Ampere_noise();
   ~Ampere_noise();

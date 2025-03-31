@@ -21,7 +21,7 @@
 #include "component.h"
 
 
-class Thyristor : public Component  {
+class Thyristor : public LegacyComponent  {
 public:
   Thyristor();
  ~Thyristor() {};

@@ -13,7 +13,7 @@
 
 #include "component.h"
 
-class DLS_1ton : public Component
+class DLS_1ton : public LegacyComponent
 {
   public:
     DLS_1ton();

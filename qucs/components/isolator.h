@@ -21,7 +21,7 @@
 #include "component.h"
 
 
-class Isolator : public Component  {
+class Isolator : public LegacyComponent  {
 public:
   Isolator();
   ~Isolator();

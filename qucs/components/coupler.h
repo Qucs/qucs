@@ -21,7 +21,7 @@
 #include "component.h"
 
 
-class Coupler : public Component  {
+class Coupler : public LegacyComponent  {
 public:
   Coupler();
  ~Coupler();

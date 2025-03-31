@@ -21,7 +21,7 @@
 #include "component.h"
 
 
-class dcFeed : public Component  {
+class dcFeed : public LegacyComponent  {
 public:
   dcFeed();
   ~dcFeed();

@@ -21,7 +21,7 @@
 #include "component.h"
 
 
-class BiasT : public Component  {
+class BiasT : public LegacyComponent  {
 public:
   BiasT();
   ~BiasT();

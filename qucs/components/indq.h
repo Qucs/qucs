@@ -26,7 +26,7 @@
 #include "component.h"
 
 
-class indq : public Component  {
+class indq : public LegacyComponent  {
 public:
   indq();
  ~indq();

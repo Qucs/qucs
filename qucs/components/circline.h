@@ -26,7 +26,7 @@
 #include "component.h"
 
 
-class CircLine : public Component  {
+class CircLine : public LegacyComponent  {
 public:
   CircLine();
  ~CircLine();

@@ -21,7 +21,7 @@
 #include "component.h"
 
 
-class CPWstep : public Component  {
+class CPWstep : public LegacyComponent  {
 public:
   CPWstep();
   ~CPWstep();

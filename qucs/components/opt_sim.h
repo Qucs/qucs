@@ -21,7 +21,7 @@
 #include "component.h"
 
 
-class Optimize_Sim : public Component  {
+class Optimize_Sim : public LegacyComponent  {
 public:
   Optimize_Sim();
  ~Optimize_Sim();

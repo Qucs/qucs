@@ -179,13 +179,13 @@ Graph* SweepDialog::setBiasPoints()
     if(pn->Name.isEmpty()) continue;
 
     pn->x1 = 0;
-    if(pn->Connections.size() < 2) {
+    if(pn->refcount() < 2) {
       pn->Name = "";  // no text at open nodes
       continue;
     }
     else {
       hasNoComp = true;
-      for(auto i = pn->Connections.begin(); i != pn->Connections.end(); ++i) {
+      for(auto i = pn->connections().begin(); i != pn->connections().end(); ++i) {
         std::shared_ptr<Element> pe(*i);
         if(pe->Type == isWire) {
           if( std::dynamic_pointer_cast<Wire>(pe)->isHorizontal() )  pn->x1 |= 2;
@@ -218,14 +218,14 @@ Graph* SweepDialog::setBiasPoints()
       pn->Name = "0V";
 
 
-    for(auto i = pn->Connections.begin(); i != pn->Connections.end(); ++i) {
+    for(auto i = pn->connections().begin(); i != pn->connections().end(); ++i) {
       std::shared_ptr<Element> pe(*i);
       if(pe->Type == isWire) {
         auto pw = std::dynamic_pointer_cast<Wire>(pe);
-        if (pw->Port1 != pn.operator->())  // no text at next node
-          pw->Port1->Name = "";
+        if (pw->ports(0) != &*pn)  // no text at next node
+          pw->ports(0)->Name = "";
         else
-          pw->Port2->Name = "";
+          pw->ports(1)->Name = "";
       }
     }
   }
@@ -250,7 +250,7 @@ Graph* SweepDialog::setBiasPoints()
       else
         pn->Name = "0A";
 
-      for(auto i = pn->Connections.begin(); i != pn->Connections.end(); ++i) {
+      for(auto i = pn->connections().begin(); i != pn->connections().end(); ++i) {
         std::shared_ptr<Element> pe(*i);
         if(pe->Type == isWire) {
           if( std::dynamic_pointer_cast<Wire>(pe)->isHorizontal() )  pn->x1 |= 2;

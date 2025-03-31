@@ -21,7 +21,7 @@
 #include "component.h"
 
 
-class ETR_Sim : public Component  {
+class ETR_Sim : public LegacyComponent  {
 public:
   ETR_Sim();
   ~ETR_Sim();

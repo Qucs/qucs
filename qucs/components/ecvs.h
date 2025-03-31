@@ -30,7 +30,7 @@
 #include "component.h"
 
 
-class ecvs : public Component  {
+class ecvs : public LegacyComponent  {
 public:
   ecvs();
   ~ecvs();

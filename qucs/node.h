@@ -24,6 +24,7 @@ class ViewPainter;
 
 
 class Node : public Conductor {
+  std::list<std::weak_ptr<Element> > _conn;
 public:
   Node(int, int);
  ~Node();
@@ -33,11 +34,28 @@ public:
   void  setName(const QString&, const QString&, int x_=0, int y_=0);
   void  removeConnection(const std::shared_ptr<Element> &);
   void  appendConnection(const std::shared_ptr<Element> &);
+  int refcount() { return _conn.size(); }
 
-  std::list<std::weak_ptr<Element> > Connections;
+  std::list<std::weak_ptr<Element> > const& connections() const {return _conn;}
+  std::list<std::weak_ptr<Element> > const& connections() {return _conn;}
+
   QString Name;  // node name used by creation of netlist
   QString DType; // type of node (used by digital files)
   int State;	 // remember some things during some operations
+
+public:
+  void connect(std::weak_ptr<Element> x) {
+    // assert( .. )??
+    mutable_conn().push_back(x);
+  }
+
+private:
+  std::list<std::weak_ptr<Element> >& mutable_conn() {return _conn;}
 };
 
+bool is_wire(std::weak_ptr<Element>);
+bool is_wire(Element const*);
+
+
 #endif
+// :vim:ts=8:sw=2:noet:

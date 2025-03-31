@@ -242,16 +242,16 @@ void MouseActions::moveElements(SharedObjectList<Element> &movElements, int x, i
     if(pe->Type == isWire) {
       auto pw = std::dynamic_pointer_cast<Wire>(pe);   // connected wires are not moved completely
 
-      if(((uintptr_t)pw->Port1) > 3) {
+      if(((uintptr_t)pw->ports(0)) > 3) {
 	pw->x1 += x;  pw->y1 += y;
 	if(pw->Label) { pw->Label->cx += x;  pw->Label->cy += y; }
       }
-      else {  if((uintptr_t)(pw->Port1) & 1) { pw->x1 += x; }
-              if((uintptr_t)(pw->Port1) & 2) { pw->y1 += y; } }
+      else {  if((uintptr_t)(pw->ports(0)) & 1) { pw->x1 += x; }
+              if((uintptr_t)(pw->ports(0)) & 2) { pw->y1 += y; } }
 
-      if(((uintptr_t)pw->Port2) > 3) { pw->x2 += x;  pw->y2 += y; }
-      else {  if((uintptr_t)(pw->Port2) & 1) pw->x2 += x;
-              if((uintptr_t)(pw->Port2) & 2) pw->y2 += y; }
+      if(((uintptr_t)pw->ports(1)) > 3) { pw->x2 += x;  pw->y2 += y; }
+      else {  if((uintptr_t)(pw->ports(1)) & 1) pw->x2 += x;
+              if((uintptr_t)(pw->ports(1)) & 2) pw->y2 += y; }
 
       if(pw->Label) {      // root of node label must lie on wire
         if(pw->Label->cx < pw->x1) pw->Label->cx = pw->x1;
@@ -452,13 +452,13 @@ void MouseActions::MMoveMoving(Schematic *Doc, QMouseEvent *Event)
     if(pe->Type == isWire) {
       auto pw = std::dynamic_pointer_cast<Wire>(pe);   // connecting wires are not moved completely
 
-      if(((uintptr_t)pw->Port1) > 3) { pw->x1 += MAx1;  pw->y1 += MAy1; }
-      else {  if((uintptr_t)(pw->Port1) & 1) { pw->x1 += MAx1; }
-              if((uintptr_t)(pw->Port1) & 2) { pw->y1 += MAy1; } }
+      if(((uintptr_t)pw->ports(0)) > 3) { pw->x1 += MAx1;  pw->y1 += MAy1; }
+      else {  if((uintptr_t)(pw->ports(0)) & 1) { pw->x1 += MAx1; }
+              if((uintptr_t)(pw->ports(0)) & 2) { pw->y1 += MAy1; } }
 
-      if(((uintptr_t)pw->Port2) > 3) { pw->x2 += MAx1;  pw->y2 += MAy1; }
-      else {  if((uintptr_t)(pw->Port2) & 1) pw->x2 += MAx1;
-              if((uintptr_t)(pw->Port2) & 2) pw->y2 += MAy1; }
+      if(((uintptr_t)pw->ports(1)) > 3) { pw->x2 += MAx1;  pw->y2 += MAy1; }
+      else {  if((uintptr_t)(pw->ports(1)) & 1) pw->x2 += MAx1;
+              if((uintptr_t)(pw->ports(1)) & 2) pw->y2 += MAy1; }
 
       if(pw->Label) {      // root of node label must lie on wire
         if(pw->Label->cx < pw->x1) pw->Label->cx = pw->x1;
@@ -886,7 +886,7 @@ void MouseActions::MPressLabel(Schematic *Doc, QMouseEvent*, float fX, float fY)
   QString Name, Value;
   std::shared_ptr<Element> pe;
   // is wire line already labeled ?
-  if(pw) pe = Doc->getWireLabel(pw->Port1);
+  if(pw) pe = Doc->getWireLabel(pw->ports(0));
   else pe = Doc->getWireLabel(pn);
   if(pe) {
     if(pe->Type & isComponent) {
@@ -1573,8 +1573,8 @@ void MouseActions::MReleaseSelect(Schematic *Doc, QMouseEvent *Event)
   if(focusElement)  if(Event->button() == Qt::LeftButton)
     if(focusElement->Type == isWire) {
       auto w = std::dynamic_pointer_cast<Wire>(focusElement);
-      Doc->selectWireLine(focusElement, w->Port1, ctrl);
-      Doc->selectWireLine(focusElement, w->Port2, ctrl);
+      Doc->selectWireLine(focusElement, w->ports(0), ctrl);
+      Doc->selectWireLine(focusElement, w->ports(1), ctrl);
     }
 
   Doc->releaseKeyboard();  // allow keyboard inputs again

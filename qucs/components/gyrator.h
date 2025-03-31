@@ -21,7 +21,7 @@
 #include "component.h"
 
 
-class Gyrator : public Component  {
+class Gyrator : public LegacyComponent  {
 public:
   Gyrator();
   ~Gyrator();

@@ -13,7 +13,7 @@
 
 #include "component.h"
 
-class dmux4to16 : public Component
+class dmux4to16 : public LegacyComponent
 {
   public:
     dmux4to16();

@@ -27,7 +27,7 @@
 #include "component.h"
 
 //Following vprobe as basis
-class wProbe : public Component  {
+class wProbe : public LegacyComponent  {
 public:
   wProbe();
   ~wProbe();

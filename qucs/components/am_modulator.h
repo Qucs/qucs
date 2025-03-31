@@ -21,7 +21,7 @@
 #include "component.h"
 
 
-class AM_Modulator : public Component  {
+class AM_Modulator : public LegacyComponent  {
 public:
   AM_Modulator();
  ~AM_Modulator();

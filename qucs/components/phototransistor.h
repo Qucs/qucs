@@ -13,7 +13,7 @@
 
 #include "component.h"
 
-class phototransistor : public Component
+class phototransistor : public LegacyComponent
 {
   public:
     phototransistor();

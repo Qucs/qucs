@@ -13,7 +13,7 @@
 
 #include "component.h"
 
-class logic_0 : public Component
+class logic_0 : public LegacyComponent
 {
   public:
     logic_0();

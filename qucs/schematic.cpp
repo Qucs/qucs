@@ -702,7 +702,7 @@ void Schematic::paintSchToViewpainter(ViewPainter *p, bool printAll, bool toImag
   }
 
   for(auto pn = Nodes->begin(); pn != Nodes->end(); ++pn) {
-    for(auto pe = pn->Connections.begin(); pe != pn->Connections.end(); ++pe)
+    for(auto pe = pn->connections().begin(); pe != pn->connections().end(); ++pe)
       if(pe->lock()->isSelected || printAll) {
         pn->paint(p); // paint all nodes with selected elements
         break;
@@ -1846,7 +1846,7 @@ bool Schematic::elementsOnGrid()
       for (auto pp = pc->Ports.begin(); pp != pc->Ports.end(); ++pp) {
         auto pc = pp->getConnection();
         if(pc->Label)
-          if(pc->Connections.size() < 2) {
+          if(pc->refcount() < 2) {
             LabelCache.append(pc->Label);
             pc->Label->pOwner = 0;
             pc->Label = 0;
@@ -1886,16 +1886,16 @@ bool Schematic::elementsOnGrid()
     if(pw->isSelected) {
       // rescue non-selected node label
       pLabel = 0;
-      if(pw->Port1->Label) {
-        if(pw->Port1->Connections.size() < 2) {
-            pLabel = pw->Port1->Label;
-            pw->Port1->Label = 0;
+      if(pw->ports(0)->Label) {
+        if(pw->ports(0)->refcount() < 2) {
+            pLabel = pw->ports(0)->Label;
+            pw->ports(0)->Label = 0;
         }
       }
-      else if(pw->Port2->Label) {
-        if(pw->Port2->Connections.size() < 2) {
-            pLabel = pw->Port2->Label;
-            pw->Port2->Label = 0;
+      else if(pw->ports(1)->Label) {
+        if(pw->ports(1)->refcount() < 2) {
+            pLabel = pw->ports(1)->Label;
+            pw->ports(1)->Label = 0;
         }
       }
 

@@ -21,7 +21,7 @@
 #include "component.h"
 
 
-class Inductor : public Component  {
+class Inductor : public LegacyComponent  {
 public:
   Inductor();
  ~Inductor();

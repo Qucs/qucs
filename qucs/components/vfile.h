@@ -21,7 +21,7 @@
 #include "component.h"
 
 
-class vFile : public Component  {
+class vFile : public LegacyComponent  {
 public:
   vFile();
   ~vFile();

@@ -17,7 +17,7 @@
 
 #include "component.h"
 
-class TunnelDiode : public Component  {
+class TunnelDiode : public LegacyComponent  {
 public:
   TunnelDiode();
   Component* newOne();

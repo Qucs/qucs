@@ -21,7 +21,7 @@
 #include "component.h"
 
 
-class Param_Sweep : public Component  {
+class Param_Sweep : public LegacyComponent  {
 public:
   Param_Sweep();
   ~Param_Sweep();

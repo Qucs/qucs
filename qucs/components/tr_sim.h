@@ -21,7 +21,7 @@
 #include "component.h"
 
 
-class TR_Sim : public Component  {
+class TR_Sim : public LegacyComponent  {
 public:
   TR_Sim();
   ~TR_Sim();

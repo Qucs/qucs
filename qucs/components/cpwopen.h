@@ -21,7 +21,7 @@
 #include "component.h"
 
 
-class CPWopen : public Component  {
+class CPWopen : public LegacyComponent  {
 public:
   CPWopen();
   ~CPWopen();

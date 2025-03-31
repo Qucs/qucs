@@ -21,7 +21,7 @@
 #include "component.h"
 
 
-class vcresistor : public Component  {
+class vcresistor : public LegacyComponent  {
 public:
   vcresistor();
   ~vcresistor();

@@ -13,7 +13,7 @@
 
 #include "component.h"
 
-class fa2b : public Component
+class fa2b : public LegacyComponent
 {
   public:
     fa2b();

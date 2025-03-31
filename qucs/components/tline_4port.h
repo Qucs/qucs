@@ -21,7 +21,7 @@
 #include "component.h"
 
 
-class TLine_4Port : public Component  {
+class TLine_4Port : public LegacyComponent  {
 public:
   TLine_4Port();
  ~TLine_4Port();

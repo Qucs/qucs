@@ -13,7 +13,7 @@
 
 #include "component.h"
 
-class andor4x2 : public Component
+class andor4x2 : public LegacyComponent
 {
   public:
     andor4x2();

@@ -13,7 +13,7 @@
 
 #include "component.h"
 
-class binarytogrey4bit : public Component
+class binarytogrey4bit : public LegacyComponent
 {
   public:
     binarytogrey4bit();

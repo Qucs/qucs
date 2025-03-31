@@ -21,7 +21,7 @@
 #include "component.h"
 
 
-class TLine : public Component  {
+class TLine : public LegacyComponent  {
 public:
   TLine();
   ~TLine();

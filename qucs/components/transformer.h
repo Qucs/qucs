@@ -21,7 +21,7 @@
 #include "component.h"
 
 
-class Transformer : public Component  {
+class Transformer : public LegacyComponent  {
 public:
   Transformer();
   ~Transformer();

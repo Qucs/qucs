@@ -21,7 +21,7 @@
 #include "component.h"
 
 
-class iExp : public Component  {
+class iExp : public LegacyComponent  {
 public:
   iExp();
   ~iExp();
