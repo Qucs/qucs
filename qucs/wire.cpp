@@ -233,7 +233,8 @@ bool is_wire(Element const* e)
 // ----------------------------------------------------------------
 bool is_wire(std::weak_ptr<Element> e)
 {
-	return is_wire(e.lock());
+	Element* p = &*e.lock();
+	return is_wire(p);
 }
 
 // ----------------------------------------------------------------
