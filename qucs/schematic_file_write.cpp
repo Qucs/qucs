@@ -33,25 +33,6 @@
 #define trace_method_calls() {}
 #endif
 
-// BUG: wrong compilation unit. this is *not* Schematic code.
-// still used in Schematic implementation though
-
-
-/*
-
-We wanna print out something in the following form.
-It's not yet Verilog AMS neither is it Verilog-A, but
-our own little Verilog schematics hacking.
-
-(* qucs_symbol="capacitor.svg" *)
-module capacitor(p, n);
-(* x=0, y=0 *) inout p;
-(* x=10, y=0 *) inout n;
-[..]
-endmodule
-
-*/
-
 QString Schematic::getWireName(const QPoint *p) const
 {
   QString net = QString("n_%1_%2")
@@ -60,11 +41,6 @@ QString Schematic::getWireName(const QPoint *p) const
   net.replace("-","m");
   return net;
 }
-
-/*static void print_attributes(QTextStream& o, QStringList attributes)
-{
-  o << "(* " << attributes.join(", ") << " *) ";
-}*/
 
 // -------------------------------------------------------------
 // Returns the number of subcircuit ports.
