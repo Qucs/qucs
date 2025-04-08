@@ -3,6 +3,7 @@
     wire n_80_60;
     wire n_80_90;
     wire n_80_120;
+    wire n_80_250;
     wire n_120_100;
     wire n_120_130;
     wire n_120_160;
@@ -26,11 +27,12 @@
     (* qucs_mirrored=0, qucs_rotated=1, S0_x1=300, S0_y1=60, S0_x2=300, S0_y2=120 *) Pac #(.Num(2),.Z(50 Ohm),.P(0 dBm),.f(1 GHz),.Temp(26.85)) P2 ( n_300_60, n_300_120 );
     (* qucs_mirrored=0, qucs_rotated=1, S0_x1=260, S0_y1=150, S0_x2=260, S0_y2=210 *) Pac #(.Num(3),.Z(50 Ohm),.P(0 dBm),.f(1 GHz),.Temp(26.85)) P3 ( n_260_150, n_260_210 );
     (* qucs_mirrored=1, qucs_rotated=1, S0_x1=120, S0_y1=130, S0_x2=120, S0_y2=190 *) Pac #(.Num(4),.Z(50 Ohm),.P(0 dBm),.f(1 GHz),.Temp(26.85)) P4 ( n_120_130, n_120_190 );
-    (* qucs_mirrored=0, qucs_rotated=0, S0_x1=80, S0_y1=120 *) GND #() \\*  ( n_80_120 );
-    (* qucs_mirrored=0, qucs_rotated=0, S0_x1=120, S0_y1=190 *) GND #() \\*  ( n_120_190 );
-    (* qucs_mirrored=0, qucs_rotated=0, S0_x1=300, S0_y1=120 *) GND #() \\*  ( n_300_120 );
-    (* qucs_mirrored=0, qucs_rotated=0, S0_x1=260, S0_y1=210 *) GND #() \\*  ( n_260_210 );
+    (* qucs_mirrored=0, qucs_rotated=0, S0_x1=80, S0_y1=120 *) GND #() \*  ( n_80_120 );
+    (* qucs_mirrored=0, qucs_rotated=0, S0_x1=120, S0_y1=190 *) GND #() \*  ( n_120_190 );
+    (* qucs_mirrored=0, qucs_rotated=0, S0_x1=300, S0_y1=120 *) GND #() \*  ( n_300_120 );
+    (* qucs_mirrored=0, qucs_rotated=0, S0_x1=260, S0_y1=210 *) GND #() \*  ( n_260_210 );
     (* qucs_mirrored=0, qucs_rotated=0, S0_x1=390, S0_y1=180 *) SUBST #(.er(9.8),.h(0.635 mm),.t(17.5 um),.tand(0.0001),.rho(2.43902e-08),.D(1.5e-07)) SubstTC1 (  );
+    (* qucs_mirrored=0, qucs_rotated=0, S0_x1=80, S0_y1=250 *) \.SP  #(.Type(lin),.Start(0.2 GHz),.Stop(4.2 GHz),.Points(101),.Noise(no),.NoiseIP(1),.NoiseOP(2),.saveCVs(no),.saveAll(no)) SPTC1 (  );
     (* qucs_mirrored=0, qucs_rotated=0, S0_x1=140, S0_y1=40, S0_x2=200, S0_y2=40, S0_x3=200, S0_y3=100, S0_x4=140, S0_y4=100 *) MCOUPLED #(.Subst(SubstTC1),.W(0.518 mm),.L(14.94 mm),.S(0.185 mm),.Model(Kirschning),.DispModel(Kirschning),.Temp(26.85)) MSTC1 ( n_140_40, n_200_40, n_200_100, n_140_100 );
     (* qucs_mirrored=0, qucs_rotated=0, S0_x1=250, S0_y1=300 *) Eqn #(.y(1),.Export(yes)) Eqn1 (  );
     (* S0_x1=80, S0_y1=40, S0_x2=140, S0_y2=40 *) net #() net1 ( n_80_40, n_140_40 );

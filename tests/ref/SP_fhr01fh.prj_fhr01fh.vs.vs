@@ -17,6 +17,7 @@
     wire n_100_360;
     wire n_100_390;
     wire n_130_70;
+    wire n_130_470;
     wire n_160_70;
     wire n_190_70;
     wire n_190_130;
@@ -86,8 +87,9 @@
     (* qucs_mirrored=0, qucs_rotated=1, S0_x1=0, S0_y1=390, S0_x2=0, S0_y2=330 *) C #(.C(110 fF),.V()) C4 ( n_0_390, n_0_330 );
     (* qucs_mirrored=0, qucs_rotated=0, S0_x1=20, S0_y1=70, S0_x2=80, S0_y2=70 *) L #(.L(360 pH),.I()) L1 ( n_20_70, n_80_70 );
     (* qucs_mirrored=0, qucs_rotated=0, S0_x1=270, S0_y1=130, S0_x2=330, S0_y2=130, S0_x3=330, S0_y3=190, S0_x4=270, S0_y4=190 *) VCCS #(.G(57 mS),.T(3 ps)) SRC1 ( n_270_130, n_330_130, n_330_190, n_270_190 );
-    (* qucs_mirrored=0, qucs_rotated=0, S0_x1=290, S0_y1=440 *) GND #() \\*  ( n_290_440 );
+    (* qucs_mirrored=0, qucs_rotated=0, S0_x1=290, S0_y1=440 *) GND #() \*  ( n_290_440 );
     (* qucs_mirrored=0, qucs_rotated=1, S0_x1=350, S0_y1=190, S0_x2=350, S0_y2=130 *) R #(.R(400),.Temp(5240),.Tc1(0.0),.Tc2(0.0),.Tnom(26.85)) R2 ( n_350_190, n_350_130 );
+    (* qucs_mirrored=0, qucs_rotated=0, S0_x1=130, S0_y1=470 *) \.SP  #(.Type(lin),.Start(1 GHz),.Stop(23 GHz),.Points(150),.Noise(yes),.NoiseIP(1),.NoiseOP(2),.saveCVs(no),.saveAll(no)) SP1 (  );
     (* qucs_mirrored=1, qucs_rotated=2, S0_x1=-10, S0_y1=440, S0_x2=50, S0_y2=440 *) Pac #(.Num(1),.Z(50 Ohm),.P(0 dBm),.f(1 GHz),.Temp(26.85)) P1 ( n_m10_440, n_50_440 );
     (* qucs_mirrored=1, qucs_rotated=0, S0_x1=680, S0_y1=440, S0_x2=620, S0_y2=440 *) Pac #(.Num(2),.Z(50 Ohm),.P(0 dBm),.f(1 GHz),.Temp(26.85)) P2 ( n_680_440, n_620_440 );
     (* qucs_mirrored=0, qucs_rotated=0, S0_x1=610, S0_y1=530 *) Eqn #(.y(1),.Export(yes)) Eqn1 (  );

@@ -3,6 +3,7 @@
 C:C1 _net0 _net1 C="0.1 uF" V=""
 R:R2 gnd _net2 R="10 kOhm" Temp="26.85" Tc1="0.0" Tc2="0.0" Tnom="26.85"
 R:R5 gnd _net3 R="10 kOhm" Temp="26.85" Tc1="0.0" Tc2="0.0" Tnom="26.85"
+.AC:AC1 Type="log" Start="10 Hz" Stop="1 MHz" Points="1000" Noise="no"
 Vac:V1 _net0 gnd U="1 V" f="1 kHz" Phase="0" Theta="0"
 Eqn:Eqn1 y="1" Export="yes"
 R:R1 _net2 _net4 R="10 kOhm" Temp="26.85" Tc1="0.0" Tc2="0.0" Tnom="26.85"

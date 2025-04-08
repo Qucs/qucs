@@ -92,17 +92,84 @@ static void print_args(outputStream& o, Component const* x)
 }
 
 template<class S>
-void dumpIdentifier(outputStream& stream, S const& name)
+void dump_identifier(outputStream& o, S const& name)
 {
-  if (!name.size()){
-    //incomplete();
- // }else if name contains special character
-    // stream << '\\' << name << ' ';
-  }else if(isalpha(name[0]) || name[0] == '_') {
-    stream << name;
-  } else {
-    stream << '\\' << name << ' ';
+  bool plain = true;
+
+  if(isalpha(name[0])){
+  }else if(name[0] == '$'){ untested();
+  }else if(name[0] == '_'){ untested();
+  }else{
+    plain = false;
   }
+
+  for(size_t i=1; plain && i<name.size(); ++i){
+    if(isalnum(name[i])){
+    }else if(name[i] == '_'){
+    }else{ untested();
+      plain = false;
+    }
+  }
+
+  if(plain){
+    o << name;
+  }else{
+    o << '\\';
+    for(size_t i=0; i<name.size(); ++i){
+      if(name[i] == '\\'){
+  o << '\\';
+      }else{
+      }
+      o << name[i];
+    }
+    o << ' ';
+  }
+}
+
+/*--------------------------------------------------------------------------*/
+// get identifier and turn into internal representation
+// "\1 " -> "1"         -- so it also works with spice
+// "\a " -> "a"         -- identical, use simple form
+// "\$ " -> "$"         -- not sure.
+// "\a* " -> "a*"       -- store unprotected
+// "\\\xyz " -> "\xyz"  -- remove additional escapes
+// "\foo\bar"           -- incomplete
+static std::string parse_identifier(CS& cmd, std::string const& term)
+{
+  cmd.skipbl();
+  std::string id;
+
+  if(cmd.is_digit()) {
+    cmd.warn(bDANGER, "invalid identifier");
+  }else{
+  }
+
+  bool esc = cmd.skip1('\\');
+
+  while(esc && cmd.more()) {
+    if(cmd.skip1('\\')){
+      if(cmd.skip1('\\')){
+  id += "\\";
+      }else{ untested();
+  cmd.warn(bDANGER, "invalid escaped char");
+      }
+    }else{
+    }
+    id += cmd.get_to(" \t\f\\");
+
+    if(cmd.skip1(" \t\f")){
+      break;
+    }else{
+    }
+  }
+
+  if(!esc) {
+    id = cmd.ctos(term, "", "");
+  }else{
+  }
+
+  trace1("identifier", id);
+  return id;
 }
 
 template<class T>
@@ -162,13 +229,13 @@ static void dumpDeclaration(outputStream& stream, Element const* e, QList<QPoint
   auto w = dynamic_cast<Wire const*>(e);
   if(c){
     std::string type = c->dev_type();
-    dumpIdentifier(stream, type);
+    dump_identifier(stream, type);
   }else{
     stream << "net"; // BUG
   }
   print_args(stream, c);
   if(c){
-    dumpIdentifier(stream, c->name().toStdString());
+    dump_identifier(stream, c->name().toStdString());
   }else if(w){
     // BUG. Wire is not a Component.
     stream << wirelabel(w);
@@ -349,7 +416,7 @@ void parse_type(CS& cmd, Component* x)
   assert(x);
   //incomplete();
   std::string new_type;
-  cmd >> new_type;
+  new_type = parse_identifier(cmd, ",=(){};");
   x->set_dev_type(new_type);
 }
 
@@ -404,7 +471,8 @@ void parse_label(CS &cmd, Component* x)
 {
   assert(x);
   std::string my_name;
-  if (cmd >> my_name) {
+  my_name = parse_identifier(cmd, ",=(){};");
+  if (my_name!="") {
     x->set_label(my_name);
   }else{ untested();
     //x->set_label(x->id_letter() + std::string("_unnamed")); //BUG// not unique
@@ -543,7 +611,7 @@ bool readVerilog(CS &cmd, Schematic*s)
       //ignore for now;
     }else{
       std::string type;
-      cmd >> type;
+      type = parse_identifier(cmd, ",=(){};");
       if(type=="wire") {
 	 // BUG: Not a component
       }else if(type=="net") {

@@ -22,6 +22,7 @@
     wire n_560_870;
     wire n_560_930;
     wire n_590_900;
+    wire n_590_1120;
     wire n_620_830;
     wire n_620_870;
     wire n_620_930;
@@ -74,9 +75,9 @@
     (* qucs_mirrored=0, qucs_rotated=0, S0_x1=1060, S0_y1=1050, S0_x2=1120, S0_y2=1050, S0_x3=1120, S0_y3=1110, S0_x4=1060, S0_y4=1110 *) MCOUPLED #(.Subst(Subst1),.W(384um),.L(5.24mm),.S(482um),.Model(Kirschning),.DispModel(Kirschning),.Temp(26.85)) MS5 ( n_1060_1050, n_1120_1050, n_1120_1110, n_1060_1110 );
     (* qucs_mirrored=1, qucs_rotated=0, S0_x1=1120, S0_y1=1050 *) MOPEN #(.Subst(Subst1),.W(384 um),.MSModel(Hammerstad),.MSDispModel(Kirschning),.Model(Kirschning)) MS9 ( n_1120_1050 );
     (* qucs_mirrored=0, qucs_rotated=1, S0_x1=1170, S0_y1=1110, S0_x2=1170, S0_y2=1170 *) Pac #(.Num(2),.Z(50 Ohm),.P(0 dBm),.f(10 GHz),.Temp(26.85)) P2 ( n_1170_1110, n_1170_1170 );
-    (* qucs_mirrored=0, qucs_rotated=0, S0_x1=1170, S0_y1=1170 *) GND #() \\*  ( n_1170_1170 );
+    (* qucs_mirrored=0, qucs_rotated=0, S0_x1=1170, S0_y1=1170 *) GND #() \*  ( n_1170_1170 );
     (* qucs_mirrored=0, qucs_rotated=1, S0_x1=270, S0_y1=790, S0_x2=270, S0_y2=850 *) Pac #(.Num(1),.Z(50 Ohm),.P(0 dBm),.f(10 GHz),.Temp(26.85)) P1 ( n_270_790, n_270_850 );
-    (* qucs_mirrored=0, qucs_rotated=0, S0_x1=270, S0_y1=850 *) GND #() \\*  ( n_270_850 );
+    (* qucs_mirrored=0, qucs_rotated=0, S0_x1=270, S0_y1=850 *) GND #() \*  ( n_270_850 );
     (* qucs_mirrored=0, qucs_rotated=0, S0_x1=340, S0_y1=1030 *) SUBST #(.er(2.56),.h(0.76 mm),.t(18 um),.tand(3e-3),.rho(0.022e-6),.D(100)) Subst1 (  );
     (* qucs_mirrored=0, qucs_rotated=0, S0_x1=470, S0_y1=1130 *) Eqn #(.y(1),.Export(yes)) Eqn1 (  );
     (* qucs_mirrored=1, qucs_rotated=2, S0_x1=340, S0_y1=870 *) MOPEN #(.Subst(Subst1),.W(384 um),.MSModel(Hammerstad),.MSDispModel(Kirschning),.Model(Kirschning)) MS11 ( n_340_870 );
@@ -86,6 +87,7 @@
     (* qucs_mirrored=1, qucs_rotated=0, S0_x1=620, S0_y1=830 *) MOPEN #(.Subst(Subst1),.W(1.08 mm),.MSModel(Hammerstad),.MSDispModel(Kirschning),.Model(Kirschning)) MS6 ( n_620_830 );
     (* qucs_mirrored=1, qucs_rotated=0, S0_x1=780, S0_y1=890 *) MOPEN #(.Subst(Subst1),.W(1.3mm),.MSModel(Hammerstad),.MSDispModel(Kirschning),.Model(Kirschning)) MS7 ( n_780_890 );
     (* qucs_mirrored=1, qucs_rotated=0, S0_x1=950, S0_y1=950 *) MOPEN #(.Subst(Subst1),.W(1.08 mm),.MSModel(Hammerstad),.MSDispModel(Kirschning),.Model(Kirschning)) MS8 ( n_950_950 );
+    (* qucs_mirrored=0, qucs_rotated=0, S0_x1=590, S0_y1=1120 *) \.SP  #(.Type(lin),.Start(5 GHz),.Stop(15 GHz),.Points(150),.Noise(no),.NoiseIP(1),.NoiseOP(2),.saveCVs(no),.saveAll(no)) SP1 (  );
     (* S0_x1=520, S0_y1=870, S0_x2=560, S0_y2=870 *) net #() net1 ( n_520_870, n_560_870 );
     (* S0_x1=620, S0_y1=930, S0_x2=660, S0_y2=930 *) net #() net2 ( n_620_930, n_660_930 );
     (* S0_x1=780, S0_y1=990, S0_x2=800, S0_y2=990 *) net #() net3 ( n_780_990, n_800_990 );

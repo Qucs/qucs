@@ -23,3 +23,4 @@ MOPEN:MS10 _net1 Subst="Subst1" W="384 um" MSModel="Hammerstad" MSDispModel="Kir
 MOPEN:MS6 _net5 Subst="Subst1" W="1.08 mm" MSModel="Hammerstad" MSDispModel="Kirschning" Model="Kirschning"
 MOPEN:MS7 _net9 Subst="Subst1" W="1.3mm" MSModel="Hammerstad" MSDispModel="Kirschning" Model="Kirschning"
 MOPEN:MS8 _net14 Subst="Subst1" W="1.08 mm" MSModel="Hammerstad" MSDispModel="Kirschning" Model="Kirschning"
+.SP:SP1 Type="lin" Start="5 GHz" Stop="15 GHz" Points="150" Noise="no" NoiseIP="1" NoiseOP="2" saveCVs="no" saveAll="no"

@@ -14,7 +14,7 @@
     wire n_310_320;
     wire n_310_325;
     wire n_335_265;
-    (* qucs_mirrored=0, qucs_rotated=0, S0_x1=310, S0_y1=325 *) GND #() \\*  ( n_310_325 );
+    (* qucs_mirrored=0, qucs_rotated=0, S0_x1=310, S0_y1=325 *) GND #() \*  ( n_310_325 );
     (* qucs_mirrored=1, qucs_rotated=2, qucs_Num=3, qucs_Type="analog", S0_x1=365, S0_y1=265 *) Port #() P_vout ( n_365_265 );
     (* qucs_mirrored=0, qucs_rotated=0, S0_x1=305, S0_y1=265, S0_x2=365, S0_y2=265 *) R #(.R(7),.Temp(26.85),.Tc1(0.0),.Tc2(0.0),.Tnom(26.85)) R2 ( n_305_265, n_365_265 );
     (* qucs_mirrored=0, qucs_rotated=0, qucs_Num=1, qucs_Type="analog", S0_x1=210, S0_y1=265 *) Port #() Pamp_P ( n_210_265 );

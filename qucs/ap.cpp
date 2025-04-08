@@ -199,6 +199,17 @@ CS& CS::skipto1(char c)
 }
 /*--------------------------------------------------------------------------*/
 /*--------------------------------------------------------------------------*/
+
+// borrowed from ap_convert
+std::string CS::get_to(const std::string& term)
+{
+  std::string des;
+  while(ns_more() && !match1(term)) {
+    des += ctoc();
+  }
+  return des;
+}
+
 // borrowed from ap_match
 std::string CS::ctos(const std::string& term,
 		     const std::string& begin_quote,

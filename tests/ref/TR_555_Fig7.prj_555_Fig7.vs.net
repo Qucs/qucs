@@ -6,3 +6,4 @@ Vpulse:V3 _net3 gnd U1="5 V" U2="0 V" T1="0.1ms" T2="0.15 ms" Tr="1 ns" Tf="5 ns
 Vdc:V1 _net1 gnd U="5 V"
 C:C2 gnd _net4 C="0.01uF" V="0V"
 C:C1 gnd _net0 C="0.01u" V="0V"
+.TR:TR1 Type="lin" Start="0" Stop="0.6 ms" Points="201" IntegrationMethod="Gear" Order="6" InitialStep="1 ns" MinStep="1e-16" MaxIter="150" reltol="0.001" abstol="1 pA" vntol="1 uV" Temp="26.85" LTEreltol="1e-3" LTEabstol="1e-6" LTEfactor="1" Solver="CroutLU" relaxTSR="no" initialDC="yes" MaxStep="0"

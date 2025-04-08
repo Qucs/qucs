@@ -6,4 +6,6 @@ Diode:D1 gnd _net2 Is="1e-15 A" N="1" Cj0="0 fF" M="0.5" Vj="0.7 V" Fc="0.5" Cp=
 R:R1 _net0 _net1 R="100" Temp="26.85" Tc1="0.0" Tc2="0.0" Tnom="26.85"
 R:R2 _net1 _net2 R="100" Temp="26.85" Tc1="0.0" Tc2="0.0" Tnom="26.85"
 R:R3 gnd _net2 R="100k" Temp="26.85" Tc1="0.0" Tc2="0.0" Tnom="26.85"
+.HB:HB1 f="1 GHz" n="8" iabstol="1 pA" vabstol="1 uV" reltol="0.001" MaxIter="150"
 Eqn:Eqn1 y="1" Export="yes"
+.TR:TR1 Type="lin" Start="0" Stop="4 ns" Points="256" IntegrationMethod="Trapezoidal" Order="2" InitialStep="1 ns" MinStep="1e-16" MaxIter="150" reltol="0.001" abstol="1 pA" vntol="1 uV" Temp="26.85" LTEreltol="1e-3" LTEabstol="1e-6" LTEfactor="1" Solver="CroutLU" relaxTSR="no" initialDC="yes" MaxStep="0"

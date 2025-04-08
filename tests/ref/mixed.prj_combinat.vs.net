@@ -1,6 +1,7 @@
 # Qucs
 
 VProbe:Pr3 _net0 gnd
+.TR:TR1 Type="lin" Start="0" Stop="50 ns" Points="1000" IntegrationMethod="Trapezoidal" Order="2" InitialStep="1 ns" MinStep="1e-16" MaxIter="150" reltol="0.001" abstol="1 pA" vntol="1 uV" Temp="26.85" LTEreltol="1e-3" LTEabstol="1e-6" LTEfactor="1" Solver="CroutLU" relaxTSR="no" initialDC="yes" MaxStep="0"
 VProbe:Pr5 _net1 gnd
 Vdc:V3 _net2 gnd U="1 V"
 mux4to1:Y5 gnd _net3 _net0 gnd _net2 _net2 gnd _net1 TR="6" Delay="1"
