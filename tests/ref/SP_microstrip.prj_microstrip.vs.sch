@@ -26,7 +26,7 @@
   <C C1 1 290 290 0 0 0 0 "30 pF" 1 "" 0 "neutral" 0>
   <MLIN MS1 1 230 130 0 0 0 0 "Aluminia" 1 "1 mm" 1 "10 mm" 1 "Hammerstad" 0 "Kirschning" 0 "26.85" 0>
   <MLIN MS2 1 450 130 0 0 0 0 "Aluminia" 1 "1 mm" 1 "10 mm" 1 "Hammerstad" 0 "Kirschning" 0 "26.85" 0>
-  <SUBST Aluminia 1 0 0 0 0 0 0 "9.8" 1 "1 mm" 1 "35 um" 1 "1e-3" 1 "0.022e-6" 1 "0.15e-6" 1>
+  <SUBST Aluminia 1 500 280 0 0 0 0 "9.8" 1 "1 mm" 1 "35 um" 1 "1e-3" 1 "0.022e-6" 1 "0.15e-6" 1>
   <MTEE MS4 1 340 130 0 0 0 0 "Aluminia" 1 "1 mm" 1 "1 mm" 1 "0.5 mm" 1 "Hammerstad" 0 "Kirschning" 0 "26.85" 0 "showNumbers" 0>
   <MLIN Stub 1 340 240 0 0 0 1 "Aluminia" 1 "0.5 mm" 1 "10 mm" 1 "Hammerstad" 0 "Kirschning" 0 "26.85" 0>
 </Components>

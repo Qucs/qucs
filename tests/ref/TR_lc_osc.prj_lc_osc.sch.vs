@@ -65,8 +65,8 @@
     (* qucs_mirrored=0, qucs_rotated=0, S0_x1=120, S0_y1=370 *) GND #() \*  ( n_120_370 );
     (* qucs_mirrored=0, qucs_rotated=0, S0_x1=180, S0_y1=370 *) GND #() \*  ( n_180_370 );
     (* qucs_mirrored=0, qucs_rotated=0, S0_x1=150, S0_y1=310, S0_x2=180, S0_y2=280, S0_x3=180, S0_y3=340 *) _MOSFET #(.Type(nfet),.Vt0(1.0 V),.Kp(1e-3),.Gamma(0.0),.Phi(0.6 V),.Lambda(0.0),.Rd(0.0 Ohm),.Rs(0.0 Ohm),.Rg(0.0 Ohm),.Is(1e-14 A),.N(1.0),.W(200 um),.L(1 um),.Ld(0.0),.Tox(0.1 um),.Cgso(0.0),.Cgdo(0.0),.Cgbo(0.0),.Cbd(0.0 F),.Cbs(0.0 F),.Pb(0.8 V),.Mj(0.5),.Fc(0.5),.Cjsw(0.0),.Mjsw(0.33),.Tt(0.0 ps),.Nsub(0.0),.Nss(0.0),.Tpg(1),.Uo(600.0),.Rsh(0.0),.Nrd(1),.Nrs(1),.Cj(1p),.Js(0.0),.Ad(0.0),.As(0.0),.Pd(0.0 m),.Ps(0.0 m),.Kf(0.0),.Af(1.0),.Ffe(1.0),.Temp(26.85),.Tnom(26.85)) T3 ( n_150_310, n_180_280, n_180_340 );
-    (* qucs_mirrored=0, qucs_rotated=0 *) \.TR  #(.Type(lin),.Start(1.95 ns),.Stop(5 ns),.Points(201),.IntegrationMethod(Trapezoidal),.Order(2),.InitialStep(1 ns),.MinStep(1e-16),.MaxIter(150),.reltol(0.001),.abstol(1 pA),.vntol(1 uV),.Temp(26.85),.LTEreltol(1e-3),.LTEabstol(1e-6),.LTEfactor(1),.Solver(CroutLU),.relaxTSR(no),.initialDC(yes),.MaxStep(0)) TR1 (  );
-    (* qucs_mirrored=0, qucs_rotated=0 *) Eqn #(.Vout(pos.Vt-neg.Vt),.Spectrum(dB(Time2Freq(Vout,time))),.Export(yes)) Eqn1 (  );
+    (* qucs_mirrored=0, qucs_rotated=0, S0_x1=350, S0_y1=310 *) \.TR  #(.Type(lin),.Start(1.95 ns),.Stop(5 ns),.Points(201),.IntegrationMethod(Trapezoidal),.Order(2),.InitialStep(1 ns),.MinStep(1e-16),.MaxIter(150),.reltol(0.001),.abstol(1 pA),.vntol(1 uV),.Temp(26.85),.LTEreltol(1e-3),.LTEabstol(1e-6),.LTEfactor(1),.Solver(CroutLU),.relaxTSR(no),.initialDC(yes),.MaxStep(0)) TR1 (  );
+    (* qucs_mirrored=0, qucs_rotated=0, S0_x1=380, S0_y1=210 *) Eqn #(.Vout(pos.Vt-neg.Vt),.Spectrum(dB(Time2Freq(Vout,time))),.Export(yes)) Eqn1 (  );
     (* S0_x1=110, S0_y1=150, S0_x2=110, S0_y2=200 *) net #() net1 ( n_110_150, n_110_200 );
     (* S0_x1=240, S0_y1=150, S0_x2=240, S0_y2=200 *) net #() net2 ( n_240_150, n_240_200 );
     (* S0_x1=240, S0_y1=200, S0_x2=270, S0_y2=200 *) net #() net3 ( n_240_200, n_270_200 );

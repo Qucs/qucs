@@ -1,8 +1,8 @@
 (* qucs_ViewX1=0, qucs_ViewY1=0, qucs_ViewX2=800, qucs_ViewY2=800, qucs_Scale=1, qucs_tmpViewX1=-200, qucs_tmpViewY1=-200, qucs_GridX=10, qucs_GridY=10, qucs_GridOn=1, qucs_DataSet="diff1.dat", qucs_DataDisplay="diff1.dpl", qucs_SimOpenDpl=1, qucs_Script="diff1.m", qucs_SimRunScript=0, qucs_showFrame=0, qucs_FrameText0="Title", qucs_FrameText1="Drawn By:", qucs_FrameText2="Date:", qucs_FrameText3="Revision:" *) module diff1();
-    wire n_0_0;
     wire n_60_110;
     wire n_60_140;
     wire n_60_170;
+    wire n_70_390;
     wire n_90_190;
     wire n_90_220;
     wire n_90_250;
@@ -48,7 +48,7 @@
     (* qucs_mirrored=0, qucs_rotated=0, S0_x1=90, S0_y1=250 *) GND #() \\*  ( n_90_250 );
     (* qucs_mirrored=0, qucs_rotated=0, S0_x1=60, S0_y1=170 *) GND #() \\*  ( n_60_170 );
     (* qucs_mirrored=0, qucs_rotated=3, S0_x1=60, S0_y1=170, S0_x2=60, S0_y2=110 *) Vdc #(.U(Vin)) VIN1 ( n_60_170, n_60_110 );
-    (* qucs_mirrored=0, qucs_rotated=0 *) Eqn #(.y(1),.Export(yes)) Eqn1 (  );
+    (* qucs_mirrored=0, qucs_rotated=0, S0_x1=70, S0_y1=390 *) Eqn #(.y(1),.Export(yes)) Eqn1 (  );
     (* qucs_mirrored=0, qucs_rotated=1, S0_x1=330, S0_y1=280, S0_x2=330, S0_y2=340 *) Idc #(.I(0)) IEE ( n_330_280, n_330_340 );
     (* qucs_mirrored=0, qucs_rotated=1, S0_x1=210, S0_y1=340, S0_x2=210, S0_y2=280 *) R #(.R(1.5k),.Temp(26.85),.Tc1(0.0),.Tc2(0.0),.Tnom(26.85)) REE ( n_210_340, n_210_280 );
     (* qucs_mirrored=0, qucs_rotated=0, S0_x1=330, S0_y1=400 *) GND #() \\*  ( n_330_400 );

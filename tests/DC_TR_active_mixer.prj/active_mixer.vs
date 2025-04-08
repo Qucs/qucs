@@ -67,9 +67,9 @@
     (* qucs_mirrored=0, qucs_rotated=0, S0_x1=90, S0_y1=270 *) GND #() \*  ( n_90_270 );
     (* qucs_mirrored=0, qucs_rotated=0, S0_x1=90, S0_y1=410 *) GND #() \*  ( n_90_410 );
     (* qucs_mirrored=0, qucs_rotated=1, S0_x1=90, S0_y1=40, S0_x2=90, S0_y2=100 *) Vdc #(.U(10 V)) V2 ( n_90_40, n_90_100 );
-    (* qucs_mirrored=0, qucs_rotated=0 *) \.DC  #(.Temp(26.85),.reltol(0.001),.abstol(1 pA),.vntol(1 uV),.saveOPs(no),.MaxIter(150),.saveAll(no),.convHelper(none),.Solver(CroutLU)) DC1 (  );
-    (* qucs_mirrored=0, qucs_rotated=0 *) \.TR  #(.Type(lin),.Start(0),.Stop(1 ms),.Points(300),.IntegrationMethod(Trapezoidal),.Order(2),.InitialStep(1 ns),.MinStep(1e-16),.MaxIter(150),.reltol(0.001),.abstol(1 pA),.vntol(1 uV),.Temp(26.85),.LTEreltol(1e-3),.LTEabstol(1e-6),.LTEfactor(1),.Solver(CroutLU),.relaxTSR(no),.initialDC(yes),.MaxStep(0)) TR1 (  );
-    (* qucs_mirrored=0, qucs_rotated=0 *) Eqn #(.Output(pos.Vt-neg.Vt),.Export(yes)) Eqn1 (  );
+    (* qucs_mirrored=0, qucs_rotated=0, S0_x1=530, S0_y1=300 *) \.DC  #(.Temp(26.85),.reltol(0.001),.abstol(1 pA),.vntol(1 uV),.saveOPs(no),.MaxIter(150),.saveAll(no),.convHelper(none),.Solver(CroutLU)) DC1 (  );
+    (* qucs_mirrored=0, qucs_rotated=0, S0_x1=530, S0_y1=360 *) \.TR  #(.Type(lin),.Start(0),.Stop(1 ms),.Points(300),.IntegrationMethod(Trapezoidal),.Order(2),.InitialStep(1 ns),.MinStep(1e-16),.MaxIter(150),.reltol(0.001),.abstol(1 pA),.vntol(1 uV),.Temp(26.85),.LTEreltol(1e-3),.LTEabstol(1e-6),.LTEfactor(1),.Solver(CroutLU),.relaxTSR(no),.initialDC(yes),.MaxStep(0)) TR1 (  );
+    (* qucs_mirrored=0, qucs_rotated=0, S0_x1=610, S0_y1=180 *) Eqn #(.Output(pos.Vt-neg.Vt),.Export(yes)) Eqn1 (  );
     (* qucs_mirrored=1, qucs_rotated=1, S0_x1=90, S0_y1=210, S0_x2=90, S0_y2=270 *) Vac #(.U(0.5 V),.f(10 kHz),.Phase(0),.Theta(0)) LO ( n_90_210, n_90_270 );
     (* qucs_mirrored=0, qucs_rotated=1, S0_x1=320, S0_y1=350, S0_x2=320, S0_y2=410 *) Idc #(.I(2 uA)) I2 ( n_320_350, n_320_410 );
     (* qucs_mirrored=1, qucs_rotated=1, S0_x1=90, S0_y1=350, S0_x2=90, S0_y2=410 *) Iac #(.I(1 uA),.f(1 kHz),.Phase(0),.Theta(0)) RF ( n_90_350, n_90_410 );

@@ -1,5 +1,4 @@
 (* qucs_ViewX1=0, qucs_ViewY1=0, qucs_ViewX2=800, qucs_ViewY2=800, qucs_Scale=1, qucs_tmpViewX1=-200, qucs_tmpViewY1=-200, qucs_GridX=10, qucs_GridY=10, qucs_GridOn=1, qucs_DataSet="elliptic_5th.dat", qucs_DataDisplay="elliptic_5th.dpl", qucs_SimOpenDpl=1, qucs_Script="elliptic_5th.m", qucs_SimRunScript=0, qucs_showFrame=0, qucs_FrameText0="Title", qucs_FrameText1="Drawn By:", qucs_FrameText2="Date:", qucs_FrameText3="Revision:" *) module elliptic_5th();
-    wire n_0_0;
     wire n_50_90;
     wire n_50_120;
     wire n_50_150;
@@ -13,6 +12,7 @@
     wire n_180_120;
     wire n_200_60;
     wire n_200_120;
+    wire n_220_290;
     wire n_230_60;
     wire n_230_120;
     wire n_260_60;
@@ -58,7 +58,7 @@
     (* qucs_mirrored=0, qucs_rotated=0, S0_x1=560, S0_y1=180 *) GND #() \\*  ( n_560_180 );
     (* qucs_mirrored=0, qucs_rotated=1, S0_x1=50, S0_y1=120, S0_x2=50, S0_y2=180 *) Pac #(.Num(1),.Z(50 Ohm),.P(0 dBm),.f(1 GHz),.Temp(26.85)) P1 ( n_50_120, n_50_180 );
     (* qucs_mirrored=0, qucs_rotated=0, S0_x1=50, S0_y1=180 *) GND #() \\*  ( n_50_180 );
-    (* qucs_mirrored=0, qucs_rotated=0 *) Eqn #(.y(1),.Export(yes)) Eqn1 (  );
+    (* qucs_mirrored=0, qucs_rotated=0, S0_x1=220, S0_y1=290 *) Eqn #(.y(1),.Export(yes)) Eqn1 (  );
     (* S0_x1=160, S0_y1=90, S0_x2=160, S0_y2=160 *) net #() net1 ( n_160_90, n_160_160 );
     (* S0_x1=180, S0_y1=120, S0_x2=200, S0_y2=120 *) net #() net2 ( n_180_120, n_200_120 );
     (* S0_x1=180, S0_y1=60, S0_x2=200, S0_y2=60 *) net #() net3 ( n_180_60, n_200_60 );

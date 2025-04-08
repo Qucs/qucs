@@ -16,7 +16,6 @@
 <Symbol>
 </Symbol>
 <Components>
-  <Sub SUB1 1 0 0 0 0 0 0 "timer_555.sch" 0>
   <GND \* 5 590 430 0 0 0 0>
   <GND \* 5 160 360 0 0 0 0>
   <GND \* 5 300 220 0 0 0 0>

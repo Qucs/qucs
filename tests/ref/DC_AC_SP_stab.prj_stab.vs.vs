@@ -1,5 +1,4 @@
 (* qucs_ViewX1=0, qucs_ViewY1=0, qucs_ViewX2=800, qucs_ViewY2=800, qucs_Scale=1, qucs_tmpViewX1=-200, qucs_tmpViewY1=-200, qucs_GridX=10, qucs_GridY=10, qucs_GridOn=1, qucs_DataSet="stab.dat", qucs_DataDisplay="stab.dpl", qucs_SimOpenDpl=1, qucs_Script="stab.m", qucs_SimRunScript=0, qucs_showFrame=0, qucs_FrameText0="Title", qucs_FrameText1="Drawn By:", qucs_FrameText2="Date:", qucs_FrameText3="Revision:" *) module stab();
-    wire n_0_0;
     wire n_50_400;
     wire n_50_430;
     wire n_50_460;
@@ -44,6 +43,7 @@
     wire n_470_400;
     wire n_470_430;
     wire n_470_460;
+    wire n_550_140;
     wire n_550_270;
     wire n_550_360;
     wire n_580_270;
@@ -82,7 +82,7 @@
     (* qucs_mirrored=0, qucs_rotated=1, S0_x1=220, S0_y1=340, S0_x2=220, S0_y2=280 *) R #(.R(10 Ohm),.Temp(26.85),.Tc1(0.0),.Tc2(0.0),.Tnom(26.85)) R3 ( n_220_340, n_220_280 );
     (* qucs_mirrored=0, qucs_rotated=0, S0_x1=170, S0_y1=210 *) GND #() \\*  ( n_170_210 );
     (* qucs_mirrored=1, qucs_rotated=1, S0_x1=170, S0_y1=210, S0_x2=170, S0_y2=150 *) R #(.R(20 kOhm),.Temp(26.85),.Tc1(0.0),.Tc2(0.0),.Tnom(26.85)) R1 ( n_170_210, n_170_150 );
-    (* qucs_mirrored=0, qucs_rotated=0 *) Eqn #(.y(1),.Export(yes)) Eqn1 (  );
+    (* qucs_mirrored=0, qucs_rotated=0, S0_x1=550, S0_y1=140 *) Eqn #(.y(1),.Export(yes)) Eqn1 (  );
     (* qucs_mirrored=1, qucs_rotated=0, S0_x1=550, S0_y1=270, S0_x2=610, S0_y2=270 *) C #(.C(0.1 uF),.V()) C1 ( n_550_270, n_610_270 );
     (* qucs_mirrored=1, qucs_rotated=0, S0_x1=300, S0_y1=270, S0_x2=360, S0_y2=270 *) C #(.C(5 uF),.V()) C2 ( n_300_270, n_360_270 );
     (* S0_x1=170, S0_y1=150, S0_x2=190, S0_y2=150 *) net #() net1 ( n_170_150, n_190_150 );

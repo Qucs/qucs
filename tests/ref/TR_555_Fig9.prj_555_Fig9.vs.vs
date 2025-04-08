@@ -1,5 +1,4 @@
 (* qucs_ViewX1=0, qucs_ViewY1=0, qucs_ViewX2=800, qucs_ViewY2=800, qucs_Scale=1, qucs_tmpViewX1=-200, qucs_tmpViewY1=-200, qucs_GridX=10, qucs_GridY=10, qucs_GridOn=1, qucs_DataSet="555_Fig9.dat", qucs_DataDisplay="555_Fig9.dpl", qucs_SimOpenDpl=1, qucs_Script="555_Fig9.m", qucs_SimRunScript=0, qucs_showFrame=0, qucs_FrameText0="Title", qucs_FrameText1="Drawn By:", qucs_FrameText2="Date:", qucs_FrameText3="Revision:" *) module 555_Fig9();
-    wire n_0_0;
     wire n_160_160;
     wire n_160_200;
     wire n_160_230;
@@ -53,7 +52,6 @@
     (* qucs_mirrored=0, qucs_rotated=1, S0_x1=160, S0_y1=370, S0_x2=160, S0_y2=310 *) R #(.R(3k),.Temp(26.85),.Tc1(0.0),.Tc2(0.0),.Tnom(26.85)) R2 ( n_160_370, n_160_310 );
     (* qucs_mirrored=0, qucs_rotated=1, S0_x1=590, S0_y1=430, S0_x2=590, S0_y2=370 *) C #(.C(0.01uF),.V(0V)) C2 ( n_590_430, n_590_370 );
     (* qucs_mirrored=0, qucs_rotated=1, S0_x1=160, S0_y1=460, S0_x2=160, S0_y2=400 *) C #(.C(0.01u),.V(0V)) C1 ( n_160_460, n_160_400 );
-    (* qucs_mirrored=0, qucs_rotated=0, qucs_Type="Sub", qucs_File="timer_555.sch" *) timer_555 #() SUB1 (  );
     (* S0_x1=550, S0_y1=370, S0_x2=590, S0_y2=370 *) net #() net1 ( n_550_370, n_590_370 );
     (* S0_x1=160, S0_y1=160, S0_x2=160, S0_y2=200 *) net #() net2 ( n_160_160, n_160_200 );
     (* S0_x1=160, S0_y1=160, S0_x2=300, S0_y2=160 *) net #() net3 ( n_160_160, n_300_160 );

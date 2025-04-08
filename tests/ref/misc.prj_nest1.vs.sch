@@ -22,7 +22,6 @@
   <Port P1 1 180 180 0 0 1 0 "1" 1 "analog" 0>
   <GND \* 5 380 360 0 0 0 0>
   <C C1 1 380 280 0 0 0 1 "1 pF" 1 "" 0 "neutral" 0>
-  <Sub SC2 1 0 0 0 0 0 0 "nest2.sch" 0>
   <R R1 1 230 180 0 0 0 0 "0 Ohm" 1 "26.85" 0 "0.0" 0 "0.0" 0 "26.85" 0 "european" 0>
 </Components>
 <Wires>

@@ -4,7 +4,6 @@
     wire n_m20_190;
     wire n_m20_220;
     wire n_m20_240;
-    wire n_0_0;
     wire n_80_130;
     wire n_80_160;
     wire n_80_190;
@@ -13,6 +12,7 @@
     wire n_130_130;
     wire n_130_170;
     wire n_130_270;
+    wire n_200_370;
     wire n_220_90;
     wire n_220_170;
     wire n_220_260;
@@ -76,15 +76,13 @@
     (* qucs_mirrored=0, qucs_rotated=1, S0_x1=-20, S0_y1=160, S0_x2=-20, S0_y2=220 *) Pac #(.Num(1),.Z(100 Ohm),.P(0 dBm),.f(1 GHz),.Temp(26.85)) P1 ( n_m20_160, n_m20_220 );
     (* qucs_mirrored=0, qucs_rotated=0, S0_x1=-20, S0_y1=240 *) GND #() \\*  ( n_m20_240 );
     (* qucs_mirrored=0, qucs_rotated=0, S0_x1=870, S0_y1=190 *) GND #() \\*  ( n_870_190 );
-    (* qucs_mirrored=0, qucs_rotated=0, qucs_Type="Sub", qucs_File="IdealBalun.sch" *) IdealBalun #() Balun1 (  );
-    (* qucs_mirrored=1, qucs_rotated=2, qucs_Type="Sub", qucs_File="IdealBalun.sch" *) IdealBalun #() Balun2 (  );
     (* qucs_mirrored=0, qucs_rotated=0, S0_x1=80, S0_y1=210 *) GND #() \\*  ( n_80_210 );
     (* qucs_mirrored=0, qucs_rotated=1, S0_x1=80, S0_y1=130, S0_x2=80, S0_y2=190 *) Vdc #(.U(1V)) V1 ( n_80_130, n_80_190 );
     (* qucs_mirrored=0, qucs_rotated=0, S0_x1=910, S0_y1=150, S0_x2=930, S0_y2=150 *) VProbe #() Pr1 ( n_910_150, n_930_150 );
     (* qucs_mirrored=0, qucs_rotated=0, S0_x1=930, S0_y1=170 *) GND #() \\*  ( n_930_170 );
     (* qucs_mirrored=0, qucs_rotated=1, S0_x1=990, S0_y1=150, S0_x2=990, S0_y2=210 *) Pac #(.Num(2),.Z(100 Ohm),.P(0 dBm),.f(1 GHz),.Temp(26.85)) P2 ( n_990_150, n_990_210 );
     (* qucs_mirrored=1, qucs_rotated=2, S0_x1=990, S0_y1=250 *) GND #() \\*  ( n_990_250 );
-    (* qucs_mirrored=0, qucs_rotated=0 *) Eqn #(.y(1),.Export(yes)) Eqn1 (  );
+    (* qucs_mirrored=0, qucs_rotated=0, S0_x1=200, S0_y1=370 *) Eqn #(.y(1),.Export(yes)) Eqn1 (  );
     (* S0_x1=440, S0_y1=90, S0_x2=440, S0_y2=140 *) net #() net1 ( n_440_90, n_440_140 );
     (* S0_x1=580, S0_y1=90, S0_x2=580, S0_y2=140 *) net #() net2 ( n_580_90, n_580_140 );
     (* S0_x1=440, S0_y1=90, S0_x2=480, S0_y2=90 *) net #() net3 ( n_440_90, n_480_90 );

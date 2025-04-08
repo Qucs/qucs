@@ -1,5 +1,4 @@
 (* qucs_ViewX1=0, qucs_ViewY1=0, qucs_ViewX2=800, qucs_ViewY2=800, qucs_Scale=1, qucs_tmpViewX1=-200, qucs_tmpViewY1=-200, qucs_GridX=10, qucs_GridY=10, qucs_GridOn=1, qucs_DataSet="notch.dat", qucs_DataDisplay="notch.dpl", qucs_SimOpenDpl=1, qucs_Script="notch.m", qucs_SimRunScript=0, qucs_showFrame=0, qucs_FrameText0="Title", qucs_FrameText1="Drawn By:", qucs_FrameText2="Date:", qucs_FrameText3="Revision:" *) module notch();
-    wire n_0_0;
     wire n_40_120;
     wire n_40_190;
     wire n_40_220;
@@ -25,6 +24,7 @@
     wire n_300_260;
     wire n_310_120;
     wire n_330_260;
+    wire n_340_40;
     wire n_340_120;
     wire n_340_200;
     wire n_340_260;
@@ -56,7 +56,7 @@
     (* qucs_mirrored=0, qucs_rotated=1, S0_x1=500, S0_y1=200, S0_x2=500, S0_y2=140 *) C #(.C(1u),.V()) C2 ( n_500_200, n_500_140 );
     (* qucs_mirrored=0, qucs_rotated=0, S0_x1=180, S0_y1=280, S0_x2=180, S0_y2=240, S0_x3=250, S0_y3=260 *) OpAmp #(.G(1e6),.Umax(15 V)) OP1 ( n_180_280, n_180_240, n_250_260 );
     (* qucs_mirrored=0, qucs_rotated=0, S0_x1=350, S0_y1=300, S0_x2=350, S0_y2=260, S0_x3=420, S0_y3=280 *) OpAmp #(.G(1e6),.Umax(15 V)) OP2 ( n_350_300, n_350_260, n_420_280 );
-    (* qucs_mirrored=0, qucs_rotated=0 *) Eqn #(.y(1),.Export(yes)) Eqn1 (  );
+    (* qucs_mirrored=0, qucs_rotated=0, S0_x1=340, S0_y1=40 *) Eqn #(.y(1),.Export(yes)) Eqn1 (  );
     (* qucs_mirrored=1, qucs_rotated=1, S0_x1=130, S0_y1=370, S0_x2=130, S0_y2=310 *) R #(.R(10k),.Temp(26.85),.Tc1(0.0),.Tc2(0.0),.Tnom(26.85)) R1 ( n_130_370, n_130_310 );
     (* qucs_mirrored=0, qucs_rotated=0, S0_x1=40, S0_y1=250 *) GND #() \\*  ( n_40_250 );
     (* qucs_mirrored=0, qucs_rotated=1, S0_x1=40, S0_y1=190, S0_x2=40, S0_y2=250 *) Vac #(.U(1uV),.f(1 GHz),.Phase(0),.Theta(0)) V1 ( n_40_190, n_40_250 );

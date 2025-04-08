@@ -50,7 +50,7 @@
     (* qucs_mirrored=0, qucs_rotated=1, S0_x1=120, S0_y1=180, S0_x2=120, S0_y2=120 *) R #(.R(100k),.Temp(26.85),.Tc1(0.0),.Tc2(0.0),.Tnom(26.85)) R1 ( n_120_180, n_120_120 );
     (* qucs_mirrored=0, qucs_rotated=1, S0_x1=120, S0_y1=280, S0_x2=120, S0_y2=220 *) R #(.R(10k),.Temp(26.85),.Tc1(0.0),.Tc2(0.0),.Tnom(26.85)) R2 ( n_120_280, n_120_220 );
     (* qucs_mirrored=0, qucs_rotated=1, S0_x1=190, S0_y1=330, S0_x2=190, S0_y2=270 *) R #(.R(500),.Temp(26.85),.Tc1(0.0),.Tc2(0.0),.Tnom(26.85)) R3 ( n_190_330, n_190_270 );
-    (* qucs_mirrored=0, qucs_rotated=0 *) \.DC  #(.Temp(26.85),.reltol(0.001),.abstol(1 pA),.vntol(1 uV),.saveOPs(no),.MaxIter(150),.saveAll(no),.convHelper(none),.Solver(CroutLU)) DC1 (  );
+    (* qucs_mirrored=0, qucs_rotated=0, S0_x1=40, S0_y1=20 *) \.DC  #(.Temp(26.85),.reltol(0.001),.abstol(1 pA),.vntol(1 uV),.saveOPs(no),.MaxIter(150),.saveAll(no),.convHelper(none),.Solver(CroutLU)) DC1 (  );
     (* qucs_mirrored=0, qucs_rotated=0, S0_x1=20, S0_y1=330 *) GND #() \*  ( n_20_330 );
     (* qucs_mirrored=0, qucs_rotated=0, S0_x1=40, S0_y1=200, S0_x2=100, S0_y2=200 *) DCBlock #(.C(1 uF)) C3 ( n_40_200, n_100_200 );
     (* qucs_mirrored=0, qucs_rotated=0, S0_x1=160, S0_y1=200, S0_x2=190, S0_y2=170, S0_x3=190, S0_y3=230 *) _BJT #(.Type(npn),.Is(1e-16),.Nf(1),.Nr(1),.Ikf(0),.Ikr(0),.Vaf(0),.Var(0),.Ise(0),.Ne(1.5),.Isc(0),.Nc(2),.Bf(100),.Br(1),.Rbm(0),.Irb(0),.Rc(0),.Re(0),.Rb(0),.Cje(0),.Vje(0.75),.Mje(0.33),.Cjc(0),.Vjc(0.75),.Mjc(0.33),.Xcjc(1.0),.Cjs(0),.Vjs(0.75),.Mjs(0),.Fc(0.5),.Tf(0.0),.Xtf(0.0),.Vtf(0.0),.Itf(0.0),.Tr(0.0),.Temp(26.85),.Kf(0.0),.Af(1.0),.Ffe(1.0),.Kb(0.0),.Ab(1.0),.Fb(1.0),.Ptf(0.0),.Xtb(0.0),.Xti(3.0),.Eg(1.11),.Tnom(26.85),.Area(1.0)) T1 ( n_160_200, n_190_170, n_190_230 );
@@ -61,8 +61,8 @@
     (* qucs_mirrored=0, qucs_rotated=1, S0_x1=280, S0_y1=330, S0_x2=280, S0_y2=270 *) C #(.C(100n),.V()) C2 ( n_280_330, n_280_270 );
     (* qucs_mirrored=0, qucs_rotated=0, S0_x1=420, S0_y1=230 *) GND #() \*  ( n_420_230 );
     (* qucs_mirrored=1, qucs_rotated=1, S0_x1=420, S0_y1=170, S0_x2=420, S0_y2=230 *) Vdc #(.U(12 V)) V1 ( n_420_170, n_420_230 );
-    (* qucs_mirrored=0, qucs_rotated=0 *) \.AC  #(.Type(log),.Start(300 kHz),.Stop(800 kHz),.Points(100),.Noise(no)) AC1 (  );
-    (* qucs_mirrored=0, qucs_rotated=0 *) Eqn #(.Gain(dB(Output.v/Input.v)),.Export(yes)) Eqn1 (  );
+    (* qucs_mirrored=0, qucs_rotated=0, S0_x1=370, S0_y1=280 *) \.AC  #(.Type(log),.Start(300 kHz),.Stop(800 kHz),.Points(100),.Noise(no)) AC1 (  );
+    (* qucs_mirrored=0, qucs_rotated=0, S0_x1=500, S0_y1=200 *) Eqn #(.Gain(dB(Output.v/Input.v)),.Export(yes)) Eqn1 (  );
     (* S0_x1=120, S0_y1=180, S0_x2=120, S0_y2=200 *) net #() net1 ( n_120_180, n_120_200 );
     (* S0_x1=120, S0_y1=200, S0_x2=120, S0_y2=220 *) net #() net2 ( n_120_200, n_120_220 );
     (* S0_x1=120, S0_y1=200, S0_x2=160, S0_y2=200 *) net #() net3 ( n_120_200, n_160_200 );

@@ -125,6 +125,12 @@ void dump_attributes(outputStream& stream, T const* c, QList<QPoint> ports, Sche
     sep = ", ";
   }else{
   }
+  if(!ports.size()) {
+    stream << sep << QString("S0_x%1=%2, S0_y%1=%3")
+      .arg(++port_idx)
+      .arg(c->cx)
+      .arg(c->cy);
+  }else{
   for (auto pp = ports.begin(); pp != ports.end(); ++pp) {
     stream << sep << QString("S0_x%1=%2, S0_y%1=%3")
         .arg(++port_idx)
@@ -132,6 +138,7 @@ void dump_attributes(outputStream& stream, T const* c, QList<QPoint> ports, Sche
         .arg(pp->y());
     sep = ", ";
     nets.append(s->getWireName(&(*pp)));
+  }
   }
   stream << QString(" *) ");
 }

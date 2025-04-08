@@ -30,8 +30,8 @@
   <R Rg 1 360 130 0 0 0 1 "RG" 1 "26.85" 0 "0.0" 0 "0.0" 0 "26.85" 0 "european" 0>
   <L Lg 1 360 60 0 0 0 1 "LG" 1 "" 0>
   <Port Gate 1 360 30 0 0 0 3 "2" 1 "analog" 0>
-  <Eqn Eqn1 1 0 0 0 0 0 0 "y=1" 1 "yes" 0>
-  <Eqn Eqn2 1 0 0 0 0 0 0 "y=1" 1 "yes" 0>
+  <Eqn Eqn1 1 490 20 0 0 0 0 "y=1" 1 "yes" 0>
+  <Eqn Eqn2 1 490 240 0 0 0 0 "y=1" 1 "yes" 0>
   <EDD D1 1 390 270 0 0 0 3 "explicit" 0 "4" 0 "V1<-VBR+50*Vt ? -IsT*(1+exp(-(VBR+V1)/Vt)) + GMIN*V1 : 0" 1 "0" 0>
 </Components>
 <Wires>

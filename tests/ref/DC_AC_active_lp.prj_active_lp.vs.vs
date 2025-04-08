@@ -1,5 +1,4 @@
 (* qucs_ViewX1=0, qucs_ViewY1=0, qucs_ViewX2=800, qucs_ViewY2=800, qucs_Scale=1, qucs_tmpViewX1=-200, qucs_tmpViewY1=-200, qucs_GridX=10, qucs_GridY=10, qucs_GridOn=1, qucs_DataSet="active_lp.dat", qucs_DataDisplay="active_lp.dpl", qucs_SimOpenDpl=1, qucs_Script="active_lp.m", qucs_SimRunScript=0, qucs_showFrame=0, qucs_FrameText0="Title", qucs_FrameText1="Drawn By:", qucs_FrameText2="Date:", qucs_FrameText3="Revision:" *) module active_lp();
-    wire n_0_0;
     wire n_40_210;
     wire n_40_280;
     wire n_40_310;
@@ -24,6 +23,7 @@
     wire n_270_100;
     wire n_270_190;
     wire n_300_190;
+    wire n_300_330;
     wire n_330_80;
     wire n_330_190;
     wire n_340_80;
@@ -79,7 +79,7 @@
     (* qucs_mirrored=0, qucs_rotated=1, S0_x1=610, S0_y1=270, S0_x2=610, S0_y2=210 *) C #(.C(1n),.V()) C6 ( n_610_270, n_610_210 );
     (* qucs_mirrored=0, qucs_rotated=0, S0_x1=610, S0_y1=270 *) GND #() \\*  ( n_610_270 );
     (* qucs_mirrored=0, qucs_rotated=0, S0_x1=550, S0_y1=60, S0_x2=610, S0_y2=60 *) C #(.C(256n),.V()) C3 ( n_550_60, n_610_60 );
-    (* qucs_mirrored=0, qucs_rotated=0 *) Eqn #(.y(1),.Export(yes)) Eqn1 (  );
+    (* qucs_mirrored=0, qucs_rotated=0, S0_x1=300, S0_y1=330 *) Eqn #(.y(1),.Export(yes)) Eqn1 (  );
     (* S0_x1=180, S0_y1=210, S0_x2=190, S0_y2=210 *) net #() net1 ( n_180_210, n_190_210 );
     (* S0_x1=190, S0_y1=210, S0_x2=200, S0_y2=210 *) net #() net2 ( n_190_210, n_200_210 );
     (* S0_x1=190, S0_y1=210, S0_x2=190, S0_y2=250 *) net #() net3 ( n_190_210, n_190_250 );

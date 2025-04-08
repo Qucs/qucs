@@ -3,7 +3,6 @@
     wire n_m30_440;
     wire n_m10_440;
     wire n_0_m10;
-    wire n_0_0;
     wire n_0_70;
     wire n_0_330;
     wire n_0_360;
@@ -59,6 +58,7 @@
     wire n_540_390;
     wire n_560_70;
     wire n_590_70;
+    wire n_610_530;
     wire n_620_70;
     wire n_620_440;
     wire n_640_m10;
@@ -90,7 +90,7 @@
     (* qucs_mirrored=0, qucs_rotated=1, S0_x1=350, S0_y1=190, S0_x2=350, S0_y2=130 *) R #(.R(400),.Temp(5240),.Tc1(0.0),.Tc2(0.0),.Tnom(26.85)) R2 ( n_350_190, n_350_130 );
     (* qucs_mirrored=1, qucs_rotated=2, S0_x1=-10, S0_y1=440, S0_x2=50, S0_y2=440 *) Pac #(.Num(1),.Z(50 Ohm),.P(0 dBm),.f(1 GHz),.Temp(26.85)) P1 ( n_m10_440, n_50_440 );
     (* qucs_mirrored=1, qucs_rotated=0, S0_x1=680, S0_y1=440, S0_x2=620, S0_y2=440 *) Pac #(.Num(2),.Z(50 Ohm),.P(0 dBm),.f(1 GHz),.Temp(26.85)) P2 ( n_680_440, n_620_440 );
-    (* qucs_mirrored=0, qucs_rotated=0 *) Eqn #(.y(1),.Export(yes)) Eqn1 (  );
+    (* qucs_mirrored=0, qucs_rotated=0, S0_x1=610, S0_y1=530 *) Eqn #(.y(1),.Export(yes)) Eqn1 (  );
     (* S0_x1=190, S0_y1=130, S0_x2=270, S0_y2=130 *) net #() net1 ( n_190_130, n_270_130 );
     (* S0_x1=190, S0_y1=190, S0_x2=270, S0_y2=190 *) net #() net2 ( n_190_190, n_270_190 );
     (* S0_x1=190, S0_y1=250, S0_x2=290, S0_y2=250 *) net #() net3 ( n_190_250, n_290_250 );

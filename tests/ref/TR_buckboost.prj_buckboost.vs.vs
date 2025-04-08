@@ -1,5 +1,4 @@
 (* qucs_ViewX1=0, qucs_ViewY1=0, qucs_ViewX2=800, qucs_ViewY2=800, qucs_Scale=1, qucs_tmpViewX1=-200, qucs_tmpViewY1=-200, qucs_GridX=10, qucs_GridY=10, qucs_GridOn=1, qucs_DataSet="buckboost.dat", qucs_DataDisplay="buckboost.dpl", qucs_SimOpenDpl=1, qucs_Script="buckboost.m", qucs_SimRunScript=0, qucs_showFrame=0, qucs_FrameText0="Title", qucs_FrameText1="Drawn By:", qucs_FrameText2="Date:", qucs_FrameText3="Revision:" *) module buckboost();
-    wire n_0_0;
     wire n_50_140;
     wire n_50_160;
     wire n_50_190;
@@ -22,9 +21,11 @@
     wire n_330_190;
     wire n_330_220;
     wire n_330_240;
+    wire n_360_290;
     wire n_380_140;
     wire n_410_140;
     wire n_440_140;
+    wire n_520_510;
     wire n_540_140;
     wire n_540_160;
     wire n_540_190;
@@ -45,8 +46,8 @@
     (* qucs_mirrored=0, qucs_rotated=1, S0_x1=330, S0_y1=220, S0_x2=330, S0_y2=160 *) L #(.L(47uH),.I(0)) L1 ( n_330_220, n_330_160 );
     (* qucs_mirrored=0, qucs_rotated=0, S0_x1=380, S0_y1=140, S0_x2=440, S0_y2=140 *) Diode #(.Is(1e-12 A),.N(1),.Cj0(10 fF),.M(0.5),.Vj(0.7 V),.Fc(0.5),.Cp(0.0 fF),.Isr(0.0),.Nr(2.0),.Rs(0.0 Ohm),.Tt(0.0 ps),.Ikf(0),.Kf(0.0),.Af(1.0),.Ffe(1.0),.Bv(0),.Ibv(1 mA),.Temp(26.85),.Xti(3.0),.Eg(1.11),.Tbv(0.0),.Trs(0.0),.Ttt1(0.0),.Ttt2(0.0),.Tm1(0.0),.Tm2(0.0),.Tnom(26.85),.Area(1.0),.Symbol(normal)) D1 ( n_380_140, n_440_140 );
     (* qucs_mirrored=0, qucs_rotated=1, S0_x1=640, S0_y1=220, S0_x2=640, S0_y2=160 *) R #(.R(10),.Temp(26.85),.Tc1(0.0),.Tc2(0.0),.Tnom(26.85)) R1 ( n_640_220, n_640_160 );
-    (* qucs_mirrored=0, qucs_rotated=0 *) Eqn #(.y(1),.Export(yes)) Eqn2 (  );
-    (* qucs_mirrored=0, qucs_rotated=0 *) Eqn #(.y(1),.Export(yes)) Eqn1 (  );
+    (* qucs_mirrored=0, qucs_rotated=0, S0_x1=360, S0_y1=290 *) Eqn #(.y(1),.Export(yes)) Eqn2 (  );
+    (* qucs_mirrored=0, qucs_rotated=0, S0_x1=520, S0_y1=510 *) Eqn #(.y(1),.Export(yes)) Eqn1 (  );
     (* S0_x1=330, S0_y1=140, S0_x2=380, S0_y2=140 *) net #() net1 ( n_330_140, n_380_140 );
     (* S0_x1=330, S0_y1=140, S0_x2=330, S0_y2=160 *) net #() net2 ( n_330_140, n_330_160 );
     (* S0_x1=230, S0_y1=140, S0_x2=330, S0_y2=140 *) net #() net3 ( n_230_140, n_330_140 );

@@ -7,7 +7,6 @@
     inout n_220_30;
     inout n_140_355;
     inout n_120_140;
-    wire n_0_0;
     wire n_140_350;
     wire n_220_70;
     wire n_220_100;
@@ -58,11 +57,6 @@
     (* qucs_mirrored=0, qucs_rotated=3, qucs_Num=8, qucs_Type="analog", S0_x1=220, S0_y1=30 *) Port #() P_VCC ( n_220_30 );
     (* qucs_mirrored=0, qucs_rotated=0, qucs_Num=2, qucs_Type="analog", S0_x1=140, S0_y1=355 *) Port #() P_TRIGGER ( n_140_355 );
     (* qucs_mirrored=0, qucs_rotated=0, qucs_Num=6, qucs_Type="analog", S0_x1=120, S0_y1=140 *) Port #() P_THRESH ( n_120_140 );
-    (* qucs_mirrored=0, qucs_rotated=0, qucs_Type="Sub", qucs_File="timer_Discharge.sch" *) timer_Discharge #() SUB5 (  );
-    (* qucs_mirrored=0, qucs_rotated=0, qucs_Type="Sub", qucs_File="timer_digital_comb.sch" *) timer_digital_comb #() SUB3 (  );
-    (* qucs_mirrored=0, qucs_rotated=0, qucs_Type="Sub", qucs_File="timer_amp.sch" *) timer_amp #() SUB4 (  );
-    (* qucs_mirrored=0, qucs_rotated=0, qucs_Type="Sub", qucs_File="timer_trig.sch" *) timer_trig #() SUB6 (  );
-    (* qucs_mirrored=0, qucs_rotated=0, qucs_Type="Sub", qucs_File="timer_thresh.sch" *) timer_thresh #() SUB7 (  );
     (* S0_x1=690, S0_y1=260, S0_x2=690, S0_y2=300 *) net #() net1 ( n_690_260, n_690_300 );
     (* S0_x1=690, S0_y1=300, S0_x2=760, S0_y2=300 *) net #() net2 ( n_690_300, n_760_300 );
     (* S0_x1=760, S0_y1=300, S0_x2=820, S0_y2=300 *) net #() net3 ( n_760_300, n_820_300 );

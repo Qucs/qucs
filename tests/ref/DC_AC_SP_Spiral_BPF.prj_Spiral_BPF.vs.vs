@@ -1,5 +1,4 @@
 (* qucs_ViewX1=0, qucs_ViewY1=0, qucs_ViewX2=800, qucs_ViewY2=800, qucs_Scale=1, qucs_tmpViewX1=-200, qucs_tmpViewY1=-200, qucs_GridX=10, qucs_GridY=10, qucs_GridOn=1, qucs_DataSet="Spiral_BPF.dat", qucs_DataDisplay="Spiral_BPF.dpl", qucs_SimOpenDpl=1, qucs_Script="Spiral_BPF.m", qucs_SimRunScript=0, qucs_showFrame=0, qucs_FrameText0="Title", qucs_FrameText1="Drawn By:", qucs_FrameText2="Date:", qucs_FrameText3="Revision:" *) module Spiral_BPF();
-    wire n_0_0;
     wire n_30_260;
     wire n_30_270;
     wire n_30_300;
@@ -7,6 +6,7 @@
     wire n_30_350;
     wire n_30_380;
     wire n_30_410;
+    wire n_60_30;
     wire n_180_200;
     wire n_180_260;
     wire n_180_310;
@@ -25,6 +25,7 @@
     wire n_400_340;
     wire n_400_370;
     wire n_400_410;
+    wire n_440_590;
     wire n_480_200;
     wire n_480_260;
     wire n_510_200;
@@ -45,7 +46,7 @@
     (* qucs_mirrored=0, qucs_rotated=1, S0_x1=180, S0_y1=370, S0_x2=180, S0_y2=310 *) C #(.C(195 fF),.V()) C1 ( n_180_370, n_180_310 );
     (* qucs_mirrored=0, qucs_rotated=0, S0_x1=260, S0_y1=200, S0_x2=320, S0_y2=200 *) SPIRALIND #(.Subst(Subst1),.Geometry(Circular),.W(25 um),.Di(91 um),.S(25 um),.N(2),.Temp(26.85)) SPIRALIND1 ( n_260_200, n_320_200 );
     (* qucs_mirrored=0, qucs_rotated=0, S0_x1=260, S0_y1=260, S0_x2=320, S0_y2=260 *) C #(.C(155 fF),.V()) C2 ( n_260_260, n_320_260 );
-    (* qucs_mirrored=0, qucs_rotated=0 *) SUBST #(.er(4.5),.h(0.8 mm),.t(35 um),.tand(2e-4),.rho(0.022e-6),.D(0.15e-6)) Subst1 (  );
+    (* qucs_mirrored=0, qucs_rotated=0, S0_x1=60, S0_y1=30 *) SUBST #(.er(4.5),.h(0.8 mm),.t(35 um),.tand(2e-4),.rho(0.022e-6),.D(0.15e-6)) Subst1 (  );
     (* qucs_mirrored=0, qucs_rotated=0, S0_x1=180, S0_y1=410 *) GND #() \\*  ( n_180_410 );
     (* qucs_mirrored=0, qucs_rotated=0, S0_x1=400, S0_y1=410 *) GND #() \\*  ( n_400_410 );
     (* qucs_mirrored=0, qucs_rotated=0, S0_x1=620, S0_y1=410 *) GND #() \\*  ( n_620_410 );
@@ -54,7 +55,7 @@
     (* qucs_mirrored=0, qucs_rotated=1, S0_x1=620, S0_y1=370, S0_x2=620, S0_y2=310 *) C #(.C(82 fF),.V()) C5 ( n_620_370, n_620_310 );
     (* qucs_mirrored=0, qucs_rotated=0, S0_x1=480, S0_y1=200, S0_x2=540, S0_y2=200 *) CIRCULARLOOP #(.Subst(Subst1),.W(25 um),.a(195 um),.Temp(26.85)) CIRCULARLOOP1 ( n_480_200, n_540_200 );
     (* qucs_mirrored=0, qucs_rotated=0, S0_x1=480, S0_y1=260, S0_x2=540, S0_y2=260 *) C #(.C(600 fF),.V()) C4 ( n_480_260, n_540_260 );
-    (* qucs_mirrored=0, qucs_rotated=0 *) Eqn #(.y(1),.Export(yes)) Eqn1 (  );
+    (* qucs_mirrored=0, qucs_rotated=0, S0_x1=440, S0_y1=590 *) Eqn #(.y(1),.Export(yes)) Eqn1 (  );
     (* qucs_mirrored=0, qucs_rotated=1, S0_x1=730, S0_y1=310, S0_x2=730, S0_y2=370 *) Pac #(.Num(2),.Z(50 Ohm),.P(0 W),.f(1 GHz),.Temp(-273.15)) P2 ( n_730_310, n_730_370 );
     (* qucs_mirrored=0, qucs_rotated=1, S0_x1=30, S0_y1=270, S0_x2=30, S0_y2=330 *) Pac #(.Num(1),.Z(50 Ohm),.P(0 dBm),.f(1 GHz),.Temp(-273.15)) P1 ( n_30_270, n_30_330 );
     (* qucs_mirrored=0, qucs_rotated=1, S0_x1=30, S0_y1=350, S0_x2=30, S0_y2=410 *) Vdc #(.U(1.1 V)) V1 ( n_30_350, n_30_410 );

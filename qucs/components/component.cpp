@@ -827,6 +827,9 @@ void Component::apply_qucs_values()
   if(Ports.size()) {
     cx = _qucs_x1 - Ports.begin()->x;
     cy = _qucs_y1 - Ports.begin()->y;
+  } else {
+    cx = _qucs_x1;
+    cy = _qucs_y1;
   }
 }
 

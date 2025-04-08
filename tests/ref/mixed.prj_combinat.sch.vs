@@ -43,7 +43,7 @@
     wire n_910_130;
     (* qucs_mirrored=0, qucs_rotated=0, S0_x1=380, S0_y1=330, S0_x2=400, S0_y2=330 *) VProbe #() Pr3 ( n_380_330, n_400_330 );
     (* qucs_mirrored=0, qucs_rotated=0, S0_x1=400, S0_y1=330 *) GND #() \*  ( n_400_330 );
-    (* qucs_mirrored=0, qucs_rotated=0 *) \.TR  #(.Type(lin),.Start(0),.Stop(50 ns),.Points(1000),.IntegrationMethod(Trapezoidal),.Order(2),.InitialStep(1 ns),.MinStep(1e-16),.MaxIter(150),.reltol(0.001),.abstol(1 pA),.vntol(1 uV),.Temp(26.85),.LTEreltol(1e-3),.LTEabstol(1e-6),.LTEfactor(1),.Solver(CroutLU),.relaxTSR(no),.initialDC(yes),.MaxStep(0)) TR1 (  );
+    (* qucs_mirrored=0, qucs_rotated=0, S0_x1=150, S0_y1=710 *) \.TR  #(.Type(lin),.Start(0),.Stop(50 ns),.Points(1000),.IntegrationMethod(Trapezoidal),.Order(2),.InitialStep(1 ns),.MinStep(1e-16),.MaxIter(150),.reltol(0.001),.abstol(1 pA),.vntol(1 uV),.Temp(26.85),.LTEreltol(1e-3),.LTEabstol(1e-6),.LTEfactor(1),.Solver(CroutLU),.relaxTSR(no),.initialDC(yes),.MaxStep(0)) TR1 (  );
     (* qucs_mirrored=0, qucs_rotated=0, S0_x1=890, S0_y1=130, S0_x2=910, S0_y2=130 *) VProbe #() Pr5 ( n_890_130, n_910_130 );
     (* qucs_mirrored=0, qucs_rotated=1, S0_x1=620, S0_y1=250, S0_x2=620, S0_y2=310 *) Vdc #(.U(1 V)) V3 ( n_620_250, n_620_310 );
     (* qucs_mirrored=0, qucs_rotated=0, S0_x1=730, S0_y1=310 *) GND #() \*  ( n_730_310 );

@@ -1,10 +1,10 @@
 (* qucs_ViewX1=0, qucs_ViewY1=0, qucs_ViewX2=800, qucs_ViewY2=800, qucs_Scale=1, qucs_tmpViewX1=-200, qucs_tmpViewY1=-200, qucs_GridX=10, qucs_GridY=10, qucs_GridOn=1, qucs_DataSet="bpf_10Ghz.dat", qucs_DataDisplay="bpf_10Ghz.dpl", qucs_SimOpenDpl=1, qucs_Script="bpf_10Ghz.m", qucs_SimRunScript=0, qucs_showFrame=0, qucs_FrameText0="Title", qucs_FrameText1="Drawn By:", qucs_FrameText2="Date:", qucs_FrameText3="Revision:" *) module bpf_10Ghz();
-    wire n_0_0;
     wire n_270_790;
     wire n_270_820;
     wire n_270_850;
     wire n_310_870;
     wire n_340_870;
+    wire n_340_1030;
     wire n_380_790;
     wire n_380_810;
     wire n_380_870;
@@ -14,6 +14,7 @@
     wire n_440_870;
     wire n_460_870;
     wire n_470_770;
+    wire n_470_1130;
     wire n_490_870;
     wire n_490_930;
     wire n_520_870;
@@ -76,8 +77,8 @@
     (* qucs_mirrored=0, qucs_rotated=0, S0_x1=1170, S0_y1=1170 *) GND #() \\*  ( n_1170_1170 );
     (* qucs_mirrored=0, qucs_rotated=1, S0_x1=270, S0_y1=790, S0_x2=270, S0_y2=850 *) Pac #(.Num(1),.Z(50 Ohm),.P(0 dBm),.f(10 GHz),.Temp(26.85)) P1 ( n_270_790, n_270_850 );
     (* qucs_mirrored=0, qucs_rotated=0, S0_x1=270, S0_y1=850 *) GND #() \\*  ( n_270_850 );
-    (* qucs_mirrored=0, qucs_rotated=0 *) SUBST #(.er(2.56),.h(0.76 mm),.t(18 um),.tand(3e-3),.rho(0.022e-6),.D(100)) Subst1 (  );
-    (* qucs_mirrored=0, qucs_rotated=0 *) Eqn #(.y(1),.Export(yes)) Eqn1 (  );
+    (* qucs_mirrored=0, qucs_rotated=0, S0_x1=340, S0_y1=1030 *) SUBST #(.er(2.56),.h(0.76 mm),.t(18 um),.tand(3e-3),.rho(0.022e-6),.D(100)) Subst1 (  );
+    (* qucs_mirrored=0, qucs_rotated=0, S0_x1=470, S0_y1=1130 *) Eqn #(.y(1),.Export(yes)) Eqn1 (  );
     (* qucs_mirrored=1, qucs_rotated=2, S0_x1=340, S0_y1=870 *) MOPEN #(.Subst(Subst1),.W(384 um),.MSModel(Hammerstad),.MSDispModel(Kirschning),.Model(Kirschning)) MS11 ( n_340_870 );
     (* qucs_mirrored=1, qucs_rotated=2, S0_x1=520, S0_y1=930 *) MOPEN #(.Subst(Subst1),.W(1.08 mm),.MSModel(Hammerstad),.MSDispModel(Kirschning),.Model(Kirschning)) MS12 ( n_520_930 );
     (* qucs_mirrored=1, qucs_rotated=2, S0_x1=1020, S0_y1=1110 *) MOPEN #(.Subst(Subst1),.W(384 um),.MSModel(Hammerstad),.MSDispModel(Kirschning),.Model(Kirschning)) MS15 ( n_1020_1110 );

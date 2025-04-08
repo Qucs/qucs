@@ -28,15 +28,13 @@
   <Pac P1 1 -20 190 0 0 0 1 "1" 1 "100 Ohm" 1 "0 dBm" 0 "1 GHz" 0 "26.85" 0>
   <GND \* 5 -20 240 0 0 0 0>
   <GND \* 5 870 190 0 0 0 0>
-  <Sub Balun1 1 0 0 0 0 0 0 "IdealBalun.sch" 0>
-  <Sub Balun2 1 0 0 0 0 1 2 "IdealBalun.sch" 0>
   <GND \* 5 80 210 0 0 0 0>
   <Vdc V1 1 80 160 0 0 0 1 "1V" 1>
   <VProbe Pr1 1 920 130 0 0 0 0>
   <GND \* 5 930 170 0 0 0 0>
   <Pac P2 1 990 180 0 0 0 1 "2" 1 "100 Ohm" 1 "0 dBm" 0 "1 GHz" 0 "26.85" 0>
   <GND \* 5 990 250 0 0 1 2>
-  <Eqn Eqn1 1 0 0 0 0 0 0 "y=1" 1 "yes" 0>
+  <Eqn Eqn1 1 200 370 0 0 0 0 "y=1" 1 "yes" 0>
 </Components>
 <Wires>
   <440 90 440 140 "" 0 0 0 "">

@@ -1,5 +1,4 @@
 (* qucs_ViewX1=0, qucs_ViewY1=0, qucs_ViewX2=800, qucs_ViewY2=800, qucs_Scale=1, qucs_tmpViewX1=-200, qucs_tmpViewY1=-200, qucs_GridX=10, qucs_GridY=10, qucs_GridOn=1, qucs_DataSet="chebyshev1_5th.dat", qucs_DataDisplay="chebyshev1_5th.dpl", qucs_SimOpenDpl=1, qucs_Script="chebyshev1_5th.m", qucs_SimRunScript=0, qucs_showFrame=0, qucs_FrameText0="Title", qucs_FrameText1="Drawn By:", qucs_FrameText2="Date:", qucs_FrameText3="Revision:" *) module chebyshev1_5th();
-    wire n_0_0;
     wire n_70_70;
     wire n_70_90;
     wire n_70_120;
@@ -9,6 +8,7 @@
     wire n_190_160;
     wire n_190_190;
     wire n_210_70;
+    wire n_220_290;
     wire n_240_70;
     wire n_270_70;
     wire n_290_70;
@@ -38,7 +38,7 @@
     (* qucs_mirrored=0, qucs_rotated=0, S0_x1=510, S0_y1=150 *) GND #() \\*  ( n_510_150 );
     (* qucs_mirrored=0, qucs_rotated=1, S0_x1=70, S0_y1=90, S0_x2=70, S0_y2=150 *) Pac #(.Num(1),.Z(50 Ohm),.P(0 dBm),.f(1 GHz),.Temp(26.85)) P1 ( n_70_90, n_70_150 );
     (* qucs_mirrored=0, qucs_rotated=1, S0_x1=510, S0_y1=90, S0_x2=510, S0_y2=150 *) Pac #(.Num(2),.Z(50 Ohm),.P(0 dBm),.f(1 GHz),.Temp(26.85)) P2 ( n_510_90, n_510_150 );
-    (* qucs_mirrored=0, qucs_rotated=0 *) Eqn #(.y(1),.Export(yes)) Eqn1 (  );
+    (* qucs_mirrored=0, qucs_rotated=0, S0_x1=220, S0_y1=290 *) Eqn #(.y(1),.Export(yes)) Eqn1 (  );
     (* S0_x1=70, S0_y1=70, S0_x2=70, S0_y2=90 *) net #() net1 ( n_70_70, n_70_90 );
     (* S0_x1=70, S0_y1=70, S0_x2=190, S0_y2=70 *) net #() net2 ( n_70_70, n_190_70 );
     (* S0_x1=190, S0_y1=70, S0_x2=210, S0_y2=70 *) net #() net3 ( n_190_70, n_210_70 );

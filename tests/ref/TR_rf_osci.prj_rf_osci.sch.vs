@@ -39,7 +39,7 @@
     (* qucs_mirrored=0, qucs_rotated=0, S0_x1=140, S0_y1=220 *) GND #() \*  ( n_140_220 );
     (* qucs_mirrored=0, qucs_rotated=1, S0_x1=140, S0_y1=160, S0_x2=140, S0_y2=220 *) Vdc #(.U(10 V)) V1 ( n_140_160, n_140_220 );
     (* qucs_mirrored=0, qucs_rotated=1, S0_x1=320, S0_y1=180, S0_x2=320, S0_y2=120 *) R #(.R(200k),.Temp(26.85),.Tc1(0.0),.Tc2(0.0),.Tnom(26.85)) R2 ( n_320_180, n_320_120 );
-    (* qucs_mirrored=0, qucs_rotated=0 *) \.TR  #(.Type(lin),.Start(0),.Stop(0.4 ms),.Points(400),.IntegrationMethod(Trapezoidal),.Order(2),.InitialStep(1 ns),.MinStep(1e-16),.MaxIter(150),.reltol(0.001),.abstol(1 pA),.vntol(1 uV),.Temp(26.85),.LTEreltol(1e-3),.LTEabstol(1e-6),.LTEfactor(1),.Solver(CroutLU),.relaxTSR(no),.initialDC(yes),.MaxStep(0)) TR1 (  );
+    (* qucs_mirrored=0, qucs_rotated=0, S0_x1=180, S0_y1=330 *) \.TR  #(.Type(lin),.Start(0),.Stop(0.4 ms),.Points(400),.IntegrationMethod(Trapezoidal),.Order(2),.InitialStep(1 ns),.MinStep(1e-16),.MaxIter(150),.reltol(0.001),.abstol(1 pA),.vntol(1 uV),.Temp(26.85),.LTEreltol(1e-3),.LTEabstol(1e-6),.LTEfactor(1),.Solver(CroutLU),.relaxTSR(no),.initialDC(yes),.MaxStep(0)) TR1 (  );
     (* S0_x1=320, S0_y1=180, S0_x2=400, S0_y2=180 *) net #() net1 ( n_320_180, n_400_180 );
     (* S0_x1=480, S0_y1=180, S0_x2=480, S0_y2=220 *) net #() net2 ( n_480_180, n_480_220 );
     (* S0_x1=260, S0_y1=120, S0_x2=320, S0_y2=120 *) net #() net3 ( n_260_120, n_320_120 );

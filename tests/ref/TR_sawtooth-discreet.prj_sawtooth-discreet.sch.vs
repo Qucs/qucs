@@ -66,7 +66,7 @@
     (* qucs_mirrored=0, qucs_rotated=1, S0_x1=370, S0_y1=100, S0_x2=370, S0_y2=40 *) Diode #(.Is(1e-15 A),.N(1),.Cj0(10 fF),.M(0.5),.Vj(0.7 V),.Fc(0.5),.Cp(0.0 fF),.Isr(0.0),.Nr(2.0),.Rs(0.0 Ohm),.Tt(0.0 ps),.Ikf(0),.Kf(0.0),.Af(1.0),.Ffe(1.0),.Bv(0),.Ibv(1 mA),.Temp(26.85),.Xti(3.0),.Eg(1.11),.Tbv(0.0),.Trs(0.0),.Ttt1(0.0),.Ttt2(0.0),.Tm1(0.0),.Tm2(0.0),.Tnom(26.85),.Area(1.0),.Symbol(normal)) D2 ( n_370_100, n_370_40 );
     (* qucs_mirrored=0, qucs_rotated=1, S0_x1=320, S0_y1=440, S0_x2=320, S0_y2=380 *) C #(.C(680 pF),.V()) C1 ( n_320_440, n_320_380 );
     (* qucs_mirrored=0, qucs_rotated=1, S0_x1=320, S0_y1=140, S0_x2=320, S0_y2=80 *) R #(.R(6.8k),.Temp(26.85),.Tc1(0.0),.Tc2(0.0),.Tnom(26.85)) R2 ( n_320_140, n_320_80 );
-    (* qucs_mirrored=0, qucs_rotated=0 *) \.TR  #(.Type(lin),.Start(0),.Stop(30 us),.Points(4000),.IntegrationMethod(Trapezoidal),.Order(2),.InitialStep(0),.MinStep(1e-10),.MaxIter(150),.reltol(0.001),.abstol(1 pA),.vntol(1 uV),.Temp(26.85),.LTEreltol(1e-3),.LTEabstol(1e-6),.LTEfactor(1),.Solver(CroutLU),.relaxTSR(no),.initialDC(no),.MaxStep(0)) TR1 (  );
+    (* qucs_mirrored=0, qucs_rotated=0, S0_x1=480, S0_y1=20 *) \.TR  #(.Type(lin),.Start(0),.Stop(30 us),.Points(4000),.IntegrationMethod(Trapezoidal),.Order(2),.InitialStep(0),.MinStep(1e-10),.MaxIter(150),.reltol(0.001),.abstol(1 pA),.vntol(1 uV),.Temp(26.85),.LTEreltol(1e-3),.LTEabstol(1e-6),.LTEfactor(1),.Solver(CroutLU),.relaxTSR(no),.initialDC(no),.MaxStep(0)) TR1 (  );
     (* S0_x1=320, S0_y1=140, S0_x2=320, S0_y2=180 *) net #() net1 ( n_320_140, n_320_180 );
     (* S0_x1=350, S0_y1=210, S0_x2=370, S0_y2=210 *) net #() net2 ( n_350_210, n_370_210 );
     (* S0_x1=220, S0_y1=400, S0_x2=240, S0_y2=400 *) net #() net3 ( n_220_400, n_240_400 );

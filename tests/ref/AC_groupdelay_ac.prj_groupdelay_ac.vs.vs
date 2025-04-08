@@ -1,5 +1,4 @@
 (* qucs_ViewX1=0, qucs_ViewY1=0, qucs_ViewX2=800, qucs_ViewY2=800, qucs_Scale=1, qucs_tmpViewX1=-200, qucs_tmpViewY1=-200, qucs_GridX=10, qucs_GridY=10, qucs_GridOn=1, qucs_DataSet="groupdelay_ac.dat", qucs_DataDisplay="groupdelay_ac.dpl", qucs_SimOpenDpl=1, qucs_Script="groupdelay_ac.m", qucs_SimRunScript=0, qucs_showFrame=0, qucs_FrameText0="Title", qucs_FrameText1="Drawn By:", qucs_FrameText2="Date:", qucs_FrameText3="Revision:" *) module groupdelay_ac();
-    wire n_0_0;
     wire n_60_140;
     wire n_60_170;
     wire n_60_200;
@@ -12,6 +11,7 @@
     wire n_240_190;
     wire n_240_220;
     wire n_240_250;
+    wire n_270_340;
     wire n_280_140;
     wire n_310_140;
     wire n_340_140;
@@ -37,7 +37,7 @@
     (* qucs_mirrored=0, qucs_rotated=1, S0_x1=550, S0_y1=170, S0_x2=550, S0_y2=230 *) Vac #(.U(0 V),.f(1 GHz),.Phase(0),.Theta(0)) V2 ( n_550_170, n_550_230 );
     (* qucs_mirrored=0, qucs_rotated=0, S0_x1=550, S0_y1=250 *) GND #() \\*  ( n_550_250 );
     (* qucs_mirrored=0, qucs_rotated=0, S0_x1=450, S0_y1=140, S0_x2=510, S0_y2=140 *) R #(.R(Z0),.Temp(26.85),.Tc1(0.0),.Tc2(0.0),.Tnom(26.85)) R2 ( n_450_140, n_510_140 );
-    (* qucs_mirrored=0, qucs_rotated=0 *) Eqn #(.y(1),.Export(yes)) Eqn1 (  );
+    (* qucs_mirrored=0, qucs_rotated=0, S0_x1=270, S0_y1=340 *) Eqn #(.y(1),.Export(yes)) Eqn1 (  );
     (* qucs_mirrored=0, qucs_rotated=0, S0_x1=120, S0_y1=140, S0_x2=180, S0_y2=140 *) R #(.R(Z0),.Temp(26.85),.Tc1(0.0),.Tc2(0.0),.Tnom(26.85)) R1 ( n_120_140, n_180_140 );
     (* S0_x1=240, S0_y1=140, S0_x2=240, S0_y2=190 *) net #() net1 ( n_240_140, n_240_190 );
     (* S0_x1=380, S0_y1=140, S0_x2=380, S0_y2=190 *) net #() net2 ( n_380_140, n_380_190 );

@@ -1,5 +1,4 @@
 (* qucs_ViewX1=0, qucs_ViewY1=0, qucs_ViewX2=800, qucs_ViewY2=800, qucs_Scale=1, qucs_tmpViewX1=-200, qucs_tmpViewY1=-200, qucs_GridX=10, qucs_GridY=10, qucs_GridOn=1, qucs_DataSet="microstrip.dat", qucs_DataDisplay="microstrip.dpl", qucs_SimOpenDpl=1, qucs_Script="microstrip.m", qucs_SimRunScript=0, qucs_showFrame=0, qucs_FrameText0="Title", qucs_FrameText1="Drawn By:", qucs_FrameText2="Date:", qucs_FrameText3="Revision:" *) module microstrip();
-    wire n_0_0;
     wire n_100_130;
     wire n_100_140;
     wire n_100_170;
@@ -25,6 +24,7 @@
     wire n_420_130;
     wire n_450_130;
     wire n_480_130;
+    wire n_500_280;
     wire n_550_130;
     wire n_550_140;
     wire n_550_170;
@@ -39,7 +39,7 @@
     (* qucs_mirrored=0, qucs_rotated=0, S0_x1=260, S0_y1=290, S0_x2=320, S0_y2=290 *) C #(.C(30 pF),.V()) C1 ( n_260_290, n_320_290 );
     (* qucs_mirrored=0, qucs_rotated=0, S0_x1=200, S0_y1=130, S0_x2=260, S0_y2=130 *) MLIN #(.Subst(Aluminia),.W(1 mm),.L(10 mm),.Model(Hammerstad),.DispModel(Kirschning),.Temp(26.85)) MS1 ( n_200_130, n_260_130 );
     (* qucs_mirrored=0, qucs_rotated=0, S0_x1=420, S0_y1=130, S0_x2=480, S0_y2=130 *) MLIN #(.Subst(Aluminia),.W(1 mm),.L(10 mm),.Model(Hammerstad),.DispModel(Kirschning),.Temp(26.85)) MS2 ( n_420_130, n_480_130 );
-    (* qucs_mirrored=0, qucs_rotated=0 *) SUBST #(.er(9.8),.h(1 mm),.t(35 um),.tand(1e-3),.rho(0.022e-6),.D(0.15e-6)) Aluminia (  );
+    (* qucs_mirrored=0, qucs_rotated=0, S0_x1=500, S0_y1=280 *) SUBST #(.er(9.8),.h(1 mm),.t(35 um),.tand(1e-3),.rho(0.022e-6),.D(0.15e-6)) Aluminia (  );
     (* qucs_mirrored=0, qucs_rotated=0, S0_x1=310, S0_y1=130, S0_x2=370, S0_y2=130, S0_x3=340, S0_y3=160 *) MTEE #(.Subst(Aluminia),.W1(1 mm),.W2(1 mm),.W3(0.5 mm),.MSModel(Hammerstad),.MSDispModel(Kirschning),.Temp(26.85),.Symbol(showNumbers)) MS4 ( n_310_130, n_370_130, n_340_160 );
     (* qucs_mirrored=0, qucs_rotated=1, S0_x1=340, S0_y1=270, S0_x2=340, S0_y2=210 *) MLIN #(.Subst(Aluminia),.W(0.5 mm),.L(10 mm),.Model(Hammerstad),.DispModel(Kirschning),.Temp(26.85)) Stub ( n_340_270, n_340_210 );
     (* S0_x1=260, S0_y1=130, S0_x2=310, S0_y2=130 *) net #() net1 ( n_260_130, n_310_130 );

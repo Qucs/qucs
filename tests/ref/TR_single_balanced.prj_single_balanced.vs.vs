@@ -1,5 +1,4 @@
 (* qucs_ViewX1=0, qucs_ViewY1=0, qucs_ViewX2=800, qucs_ViewY2=800, qucs_Scale=1, qucs_tmpViewX1=-200, qucs_tmpViewY1=-200, qucs_GridX=10, qucs_GridY=10, qucs_GridOn=1, qucs_DataSet="single_balanced.dat", qucs_DataDisplay="single_balanced.dpl", qucs_SimOpenDpl=1, qucs_Script="single_balanced.m", qucs_SimRunScript=0, qucs_showFrame=0, qucs_FrameText0="Title", qucs_FrameText1="Drawn By:", qucs_FrameText2="Date:", qucs_FrameText3="Revision:" *) module single_balanced();
-    wire n_0_0;
     wire n_180_170;
     wire n_180_180;
     wire n_180_210;
@@ -38,6 +37,7 @@
     wire n_450_170;
     wire n_480_170;
     wire n_480_250;
+    wire n_530_170;
     wire n_540_20;
     wire n_540_40;
     wire n_540_70;
@@ -55,7 +55,7 @@
     (* qucs_mirrored=0, qucs_rotated=0, S0_x1=270, S0_y1=170, S0_x2=300, S0_y2=140, S0_x3=300, S0_y3=200 *) _MOSFET #(.Type(nfet),.Vt0(1.0 V),.Kp(2e-5),.Gamma(0.0),.Phi(0.6 V),.Lambda(0.0),.Rd(0.0 Ohm),.Rs(0.0 Ohm),.Rg(0.0 Ohm),.Is(1e-14 A),.N(1.0),.W(1 um),.L(1 um),.Ld(0.0),.Tox(0.1 um),.Cgso(0.0),.Cgdo(0.0),.Cgbo(0.0),.Cbd(0.0 F),.Cbs(0.0 F),.Pb(0.8 V),.Mj(0.5),.Fc(0.5),.Cjsw(0.0),.Mjsw(0.33),.Tt(0.0 ps),.Nsub(0.0),.Nss(0.0),.Tpg(1),.Uo(600.0),.Rsh(0.0),.Nrd(1),.Nrs(1),.Cj(0.0),.Js(0.0),.Ad(0.0),.As(0.0),.Pd(0.0 m),.Ps(0.0 m),.Kf(0.0),.Af(1.0),.Ffe(1.0),.Temp(26.85),.Tnom(26.85)) T1 ( n_270_170, n_300_140, n_300_200 );
     (* qucs_mirrored=1, qucs_rotated=2, S0_x1=450, S0_y1=170, S0_x2=420, S0_y2=140, S0_x3=420, S0_y3=200 *) _MOSFET #(.Type(nfet),.Vt0(1.0 V),.Kp(2e-5),.Gamma(0.0),.Phi(0.6 V),.Lambda(0.0),.Rd(0.0 Ohm),.Rs(0.0 Ohm),.Rg(0.0 Ohm),.Is(1e-14 A),.N(1.0),.W(1 um),.L(1 um),.Ld(0.0),.Tox(0.1 um),.Cgso(0.0),.Cgdo(0.0),.Cgbo(0.0),.Cbd(0.0 F),.Cbs(0.0 F),.Pb(0.8 V),.Mj(0.5),.Fc(0.5),.Cjsw(0.0),.Mjsw(0.33),.Tt(0.0 ps),.Nsub(0.0),.Nss(0.0),.Tpg(1),.Uo(600.0),.Rsh(0.0),.Nrd(1),.Nrs(1),.Cj(0.0),.Js(0.0),.Ad(0.0),.As(0.0),.Pd(0.0 m),.Ps(0.0 m),.Kf(0.0),.Af(1.0),.Ffe(1.0),.Temp(26.85),.Tnom(26.85)) T2 ( n_450_170, n_420_140, n_420_200 );
     (* qucs_mirrored=0, qucs_rotated=1, S0_x1=180, S0_y1=300, S0_x2=180, S0_y2=360 *) Vdc #(.U(5 V)) V4 ( n_180_300, n_180_360 );
-    (* qucs_mirrored=0, qucs_rotated=0 *) Eqn #(.y(1),.Export(yes)) Eqn1 (  );
+    (* qucs_mirrored=0, qucs_rotated=0, S0_x1=530, S0_y1=170 *) Eqn #(.y(1),.Export(yes)) Eqn1 (  );
     (* S0_x1=300, S0_y1=220, S0_x2=360, S0_y2=220 *) net #() net1 ( n_300_220, n_360_220 );
     (* S0_x1=300, S0_y1=200, S0_x2=300, S0_y2=220 *) net #() net2 ( n_300_200, n_300_220 );
     (* S0_x1=420, S0_y1=200, S0_x2=420, S0_y2=220 *) net #() net3 ( n_420_200, n_420_220 );

@@ -16,6 +16,7 @@
 <Symbol>
 </Symbol>
 <Components>
+  <Verilog X1 1 380 290 0 0 0 0 "mysub" 0>
 </Components>
 <Wires>
 </Wires>

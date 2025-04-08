@@ -1,5 +1,4 @@
 (* qucs_ViewX1=0, qucs_ViewY1=0, qucs_ViewX2=800, qucs_ViewY2=800, qucs_Scale=1, qucs_tmpViewX1=-200, qucs_tmpViewY1=-200, qucs_GridX=10, qucs_GridY=10, qucs_GridOn=1, qucs_DataSet="boostconverter.dat", qucs_DataDisplay="boostconverter.dpl", qucs_SimOpenDpl=1, qucs_Script="boostconverter.m", qucs_SimRunScript=0, qucs_showFrame=0, qucs_FrameText0="Title", qucs_FrameText1="Drawn By:", qucs_FrameText2="Date:", qucs_FrameText3="Revision:" *) module boostconverter();
-    wire n_0_0;
     wire n_70_150;
     wire n_70_170;
     wire n_70_200;
@@ -21,6 +20,7 @@
     wire n_380_170;
     wire n_380_230;
     wire n_380_250;
+    wire n_400_300;
     wire n_460_150;
     wire n_490_150;
     wire n_520_150;
@@ -29,6 +29,7 @@
     wire n_560_200;
     wire n_560_230;
     wire n_560_250;
+    wire n_580_520;
     wire n_660_150;
     wire n_660_170;
     wire n_660_200;
@@ -37,8 +38,8 @@
     (* qucs_mirrored=0, qucs_rotated=0, S0_x1=140, S0_y1=150, S0_x2=200, S0_y2=150 *) L #(.L(47uH),.I(0)) L1 ( n_140_150, n_200_150 );
     (* qucs_mirrored=0, qucs_rotated=1, S0_x1=70, S0_y1=170, S0_x2=70, S0_y2=230 *) Vdc #(.U(12V)) V2 ( n_70_170, n_70_230 );
     (* qucs_mirrored=0, qucs_rotated=0, S0_x1=70, S0_y1=250 *) GND #() \\*  ( n_70_250 );
-    (* qucs_mirrored=0, qucs_rotated=0 *) Eqn #(.y(1),.Export(yes)) Eqn1 (  );
-    (* qucs_mirrored=0, qucs_rotated=0 *) Eqn #(.y(1),.Export(yes)) Eqn2 (  );
+    (* qucs_mirrored=0, qucs_rotated=0, S0_x1=400, S0_y1=300 *) Eqn #(.y(1),.Export(yes)) Eqn1 (  );
+    (* qucs_mirrored=0, qucs_rotated=0, S0_x1=580, S0_y1=520 *) Eqn #(.y(1),.Export(yes)) Eqn2 (  );
     (* qucs_mirrored=0, qucs_rotated=0, S0_x1=320, S0_y1=170, S0_x2=380, S0_y2=170, S0_x3=380, S0_y3=230, S0_x4=320, S0_y4=230 *) Relais #(.Vt(0.5 V),.Vh(0.1 V),.Ron(1),.Roff(1e12),.Temp(26.85)) S1 ( n_320_170, n_380_170, n_380_230, n_320_230 );
     (* qucs_mirrored=0, qucs_rotated=1, S0_x1=220, S0_y1=270, S0_x2=220, S0_y2=330 *) Vrect #(.U(1V),.TH(Ton),.TL(Toff),.Tr(1 ns),.Tf(1 ns),.Td(0 ns)) V1 ( n_220_270, n_220_330 );
     (* qucs_mirrored=0, qucs_rotated=0, S0_x1=220, S0_y1=370 *) GND #() \\*  ( n_220_370 );

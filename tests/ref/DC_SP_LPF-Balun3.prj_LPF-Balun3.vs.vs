@@ -1,5 +1,4 @@
 (* qucs_ViewX1=0, qucs_ViewY1=0, qucs_ViewX2=800, qucs_ViewY2=800, qucs_Scale=1, qucs_tmpViewX1=-200, qucs_tmpViewY1=-200, qucs_GridX=10, qucs_GridY=10, qucs_GridOn=1, qucs_DataSet="LPF-Balun3.dat", qucs_DataDisplay="LPF-Balun3.dpl", qucs_SimOpenDpl=1, qucs_Script="LPF-Balun3.m", qucs_SimRunScript=0, qucs_showFrame=0, qucs_FrameText0="Title", qucs_FrameText1="Drawn By:", qucs_FrameText2="Date:", qucs_FrameText3="Revision:" *) module LPF-Balun3();
-    wire n_0_0;
     wire n_40_80;
     wire n_40_110;
     wire n_40_140;
@@ -26,6 +25,7 @@
     wire n_330_250;
     wire n_360_80;
     wire n_360_250;
+    wire n_360_380;
     wire n_390_80;
     wire n_390_250;
     wire n_440_80;
@@ -83,7 +83,7 @@
     (* qucs_mirrored=0, qucs_rotated=1, S0_x1=580, S0_y1=190, S0_x2=580, S0_y2=130 *) C #(.C(270pF),.V()) C2 ( n_580_190, n_580_130 );
     (* qucs_mirrored=0, qucs_rotated=0, S0_x1=330, S0_y1=80, S0_x2=390, S0_y2=80 *) L #(.L(470nH),.I()) L3 ( n_330_80, n_390_80 );
     (* qucs_mirrored=0, qucs_rotated=0, S0_x1=40, S0_y1=190 *) GND #() \\*  ( n_40_190 );
-    (* qucs_mirrored=0, qucs_rotated=0 *) Eqn #(.y(1),.Export(yes)) Eqn1 (  );
+    (* qucs_mirrored=0, qucs_rotated=0, S0_x1=360, S0_y1=380 *) Eqn #(.y(1),.Export(yes)) Eqn1 (  );
     (* qucs_mirrored=0, qucs_rotated=1, S0_x1=960, S0_y1=100, S0_x2=960, S0_y2=160 *) Pac #(.Num(2),.Z(100 Ohm),.P(0 dBm),.f(1 GHz),.Temp(26.85)) P2 ( n_960_100, n_960_160 );
     (* qucs_mirrored=1, qucs_rotated=2, S0_x1=960, S0_y1=200 *) GND #() \\*  ( n_960_200 );
     (* qucs_mirrored=0, qucs_rotated=0, S0_x1=330, S0_y1=250, S0_x2=390, S0_y2=250 *) L #(.L(470nH),.I()) L4 ( n_330_250, n_390_250 );

@@ -1,5 +1,4 @@
 (* qucs_ViewX1=0, qucs_ViewY1=0, qucs_ViewX2=800, qucs_ViewY2=800, qucs_Scale=1, qucs_tmpViewX1=-200, qucs_tmpViewY1=-200, qucs_GridX=10, qucs_GridY=10, qucs_GridOn=1, qucs_DataSet="swr_meter.dat", qucs_DataDisplay="swr_meter.dpl", qucs_SimOpenDpl=1, qucs_Script="swr_meter.m", qucs_SimRunScript=0, qucs_showFrame=0, qucs_FrameText0="Title", qucs_FrameText1="Drawn By:", qucs_FrameText2="Date:", qucs_FrameText3="Revision:" *) module swr_meter();
-    wire n_0_0;
     wire n_140_120;
     wire n_140_160;
     wire n_140_190;
@@ -28,6 +27,7 @@
     wire n_440_320;
     wire n_440_350;
     wire n_440_380;
+    wire n_570_320;
     wire n_620_120;
     wire n_620_160;
     wire n_620_190;
@@ -45,7 +45,7 @@
     (* qucs_mirrored=1, qucs_rotated=3, S0_x1=320, S0_y1=240, S0_x2=320, S0_y2=300, S0_x3=380, S0_y3=300, S0_x4=380, S0_y4=240 *) Tr #(.T(25)) Tr2 ( n_320_240, n_320_300, n_380_300, n_380_240 );
     (* qucs_mirrored=0, qucs_rotated=1, S0_x1=620, S0_y1=220, S0_x2=620, S0_y2=160 *) R #(.R(R_load),.Temp(26.85),.Tc1(0.0),.Tc2(0.0),.Tnom(26.85)) Load ( n_620_220, n_620_160 );
     (* qucs_mirrored=0, qucs_rotated=1, S0_x1=320, S0_y1=180, S0_x2=320, S0_y2=120, S0_x3=380, S0_y3=120, S0_x4=380, S0_y4=180 *) Tr #(.T(25)) Tr1 ( n_320_180, n_320_120, n_380_120, n_380_180 );
-    (* qucs_mirrored=0, qucs_rotated=0 *) Eqn #(.y(1),.Export(yes)) Eqn1 (  );
+    (* qucs_mirrored=0, qucs_rotated=0, S0_x1=570, S0_y1=320 *) Eqn #(.y(1),.Export(yes)) Eqn1 (  );
     (* S0_x1=300, S0_y1=180, S0_x2=300, S0_y2=300 *) net #() net1 ( n_300_180, n_300_300 );
     (* S0_x1=300, S0_y1=180, S0_x2=320, S0_y2=180 *) net #() net2 ( n_300_180, n_320_180 );
     (* S0_x1=300, S0_y1=300, S0_x2=320, S0_y2=300 *) net #() net3 ( n_300_300, n_320_300 );
