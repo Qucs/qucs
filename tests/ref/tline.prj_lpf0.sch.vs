@@ -86,7 +86,7 @@
     (* qucs_mirrored=0, qucs_rotated=0, S0_x1=40, S0_y1=150 *) GND #() \*  ( n_40_150 );
     (* qucs_mirrored=0, qucs_rotated=0, S0_x1=70, S0_y1=190 *) GND #() \*  ( n_70_190 );
     (* qucs_mirrored=0, qucs_rotated=0, S0_x1=390, S0_y1=190 *) GND #() \*  ( n_390_190 );
-    (* qucs_mirrored=0, qucs_rotated=0 *) \.SP  #(.Type(log),.Start(10 MHz),.Stop(10000 MHz),.Points(200),.Noise(no),.NoiseIP(1),.NoiseOP(2),.saveCVs(no),.saveAll(no)) SP1 (  );
+    (* qucs_mirrored=0, qucs_rotated=0, S0_x1=40, S0_y1=320 *) \.SP  #(.Type(log),.Start(10 MHz),.Stop(10000 MHz),.Points(200),.Noise(no),.NoiseIP(1),.NoiseOP(2),.saveCVs(no),.saveAll(no)) SP1 (  );
     (* qucs_mirrored=0, qucs_rotated=0, S0_x1=200, S0_y1=90, S0_x2=260, S0_y2=90 *) L #(.L(10.46 nH),.I()) L1 ( n_200_90, n_260_90 );
     (* qucs_mirrored=0, qucs_rotated=1, S0_x1=680, S0_y1=300, S0_x2=680, S0_y2=240 *) R #(.R(50 Ohm),.Temp(26.85),.Tc1(0.0),.Tc2(0.0),.Tnom(26.85)) R3 ( n_680_300, n_680_240 );
     (* qucs_mirrored=0, qucs_rotated=1, S0_x1=800, S0_y1=300, S0_x2=800, S0_y2=240 *) R #(.R(50 Ohm),.Temp(26.85),.Tc1(0.0),.Tc2(0.0),.Tnom(26.85)) R4 ( n_800_300, n_800_240 );
@@ -99,7 +99,7 @@
     (* qucs_mirrored=0, qucs_rotated=3, S0_x1=740, S0_y1=320, S0_x2=740, S0_y2=380 *) TLIN #(.Z(38.05 Ohm),.L(74.95 mm),.Alpha(0 dB),.Temp(26.85)) Line6 ( n_740_320, n_740_380 );
     (* qucs_mirrored=0, qucs_rotated=1, S0_x1=550, S0_y1=90, S0_x2=550, S0_y2=150 *) Pac #(.Num(3),.Z(50 Ohm),.P(0 dBm),.f(1 MHz),.Temp(26.85)) P3 ( n_550_90, n_550_150 );
     (* qucs_mirrored=0, qucs_rotated=1, S0_x1=930, S0_y1=90, S0_x2=930, S0_y2=150 *) Pac #(.Num(4),.Z(50 Ohm),.P(0 dBm),.f(1 MHz),.Temp(26.85)) P4 ( n_930_90, n_930_150 );
-    (* qucs_mirrored=0, qucs_rotated=0 *) Eqn #(.dBS21(dB(S[2,1])),.dBS11(dB(S[1,1])),.dBS33(dB(S[3,3])),.dBS43(dB(S[4,3])),.Export(yes)) Eqn1 (  );
+    (* qucs_mirrored=0, qucs_rotated=0, S0_x1=300, S0_y1=380 *) Eqn #(.dBS21(dB(S[2,1])),.dBS11(dB(S[1,1])),.dBS33(dB(S[3,3])),.dBS43(dB(S[4,3])),.Export(yes)) Eqn1 (  );
     (* qucs_mirrored=0, qucs_rotated=3, S0_x1=750, S0_y1=30, S0_x2=750, S0_y2=90, S0_x3=730, S0_y3=90, S0_x4=730, S0_y4=30 *) TLIN4P #(.Z(65.7 Ohm),.L(74.95 mm),.Alpha(0 dB),.Temp(26.85)) Line1 ( n_750_30, n_750_90, n_730_90, n_730_30 );
     (* qucs_mirrored=0, qucs_rotated=2, S0_x1=860, S0_y1=170, S0_x2=800, S0_y2=170, S0_x3=800, S0_y3=150, S0_x4=860, S0_y4=150 *) TLIN4P #(.Z(76.1 Ohm),.L(74.95 mm),.Alpha(0 dB),.Temp(26.85)) Line3 ( n_860_170, n_800_170, n_800_150, n_860_150 );
     (* qucs_mirrored=0, qucs_rotated=2, S0_x1=680, S0_y1=170, S0_x2=620, S0_y2=170, S0_x3=620, S0_y3=150, S0_x4=680, S0_y4=150 *) TLIN4P #(.Z(76.1 Ohm),.L(74.95 mm),.Alpha(0 dB),.Temp(26.85)) Line2 ( n_680_170, n_620_170, n_620_150, n_680_150 );

@@ -44,12 +44,12 @@
     (* qucs_mirrored=0, qucs_rotated=1, S0_x1=170, S0_y1=200, S0_x2=170, S0_y2=140, S0_x3=230, S0_y3=140, S0_x4=230, S0_y4=200 *) Relais #(.Vt(0.5 V),.Vh(0.1 V),.Ron(1),.Roff(1e12),.Temp(26.85)) S1 ( n_170_200, n_170_140, n_230_140, n_230_200 );
     (* qucs_mirrored=0, qucs_rotated=0, S0_x1=640, S0_y1=240 *) GND #() \*  ( n_640_240 );
     (* qucs_mirrored=1, qucs_rotated=3, S0_x1=540, S0_y1=160, S0_x2=540, S0_y2=220 *) C #(.C(100u),.V(0)) C1 ( n_540_160, n_540_220 );
-    (* qucs_mirrored=0, qucs_rotated=0 *) \.TR  #(.Type(lin),.Start(0),.Stop(Tmax),.Points(2001),.IntegrationMethod(Trapezoidal),.Order(2),.InitialStep(1 ns),.MinStep(Tstep),.MaxIter(150),.reltol(0.001),.abstol(1 pA),.vntol(1 uV),.Temp(26.85),.LTEreltol(1e-3),.LTEabstol(1e-6),.LTEfactor(1),.Solver(CroutLU),.relaxTSR(no),.initialDC(yes),.MaxStep(Tstep)) TR1 (  );
+    (* qucs_mirrored=0, qucs_rotated=0, S0_x1=490, S0_y1=280 *) \.TR  #(.Type(lin),.Start(0),.Stop(Tmax),.Points(2001),.IntegrationMethod(Trapezoidal),.Order(2),.InitialStep(1 ns),.MinStep(Tstep),.MaxIter(150),.reltol(0.001),.abstol(1 pA),.vntol(1 uV),.Temp(26.85),.LTEreltol(1e-3),.LTEabstol(1e-6),.LTEfactor(1),.Solver(CroutLU),.relaxTSR(no),.initialDC(yes),.MaxStep(Tstep)) TR1 (  );
     (* qucs_mirrored=0, qucs_rotated=1, S0_x1=330, S0_y1=220, S0_x2=330, S0_y2=160 *) L #(.L(47uH),.I(0)) L1 ( n_330_220, n_330_160 );
     (* qucs_mirrored=0, qucs_rotated=0, S0_x1=380, S0_y1=140, S0_x2=440, S0_y2=140 *) Diode #(.Is(1e-12 A),.N(1),.Cj0(10 fF),.M(0.5),.Vj(0.7 V),.Fc(0.5),.Cp(0.0 fF),.Isr(0.0),.Nr(2.0),.Rs(0.0 Ohm),.Tt(0.0 ps),.Ikf(0),.Kf(0.0),.Af(1.0),.Ffe(1.0),.Bv(0),.Ibv(1 mA),.Temp(26.85),.Xti(3.0),.Eg(1.11),.Tbv(0.0),.Trs(0.0),.Ttt1(0.0),.Ttt2(0.0),.Tm1(0.0),.Tm2(0.0),.Tnom(26.85),.Area(1.0),.Symbol(normal)) D1 ( n_380_140, n_440_140 );
     (* qucs_mirrored=0, qucs_rotated=1, S0_x1=640, S0_y1=220, S0_x2=640, S0_y2=160 *) R #(.R(10),.Temp(26.85),.Tc1(0.0),.Tc2(0.0),.Tnom(26.85)) R1 ( n_640_220, n_640_160 );
-    (* qucs_mirrored=0, qucs_rotated=0 *) Eqn #(.Tmax(Bperiod*20),.Tstep(Bperiod/1000),.Export(yes)) Eqn2 (  );
-    (* qucs_mirrored=0, qucs_rotated=0 *) Eqn #(.Bfreq(40k),.Bperiod(1/Bfreq),.Bduty(30),.Ton(Bperiod*Bduty/100),.Toff(Bperiod-Ton),.Export(yes)) Eqn1 (  );
+    (* qucs_mirrored=0, qucs_rotated=0, S0_x1=360, S0_y1=290 *) Eqn #(.Tmax(Bperiod*20),.Tstep(Bperiod/1000),.Export(yes)) Eqn2 (  );
+    (* qucs_mirrored=0, qucs_rotated=0, S0_x1=520, S0_y1=510 *) Eqn #(.Bfreq(40k),.Bperiod(1/Bfreq),.Bduty(30),.Ton(Bperiod*Bduty/100),.Toff(Bperiod-Ton),.Export(yes)) Eqn1 (  );
     (* S0_x1=330, S0_y1=140, S0_x2=380, S0_y2=140 *) net #() dio ( n_330_140, n_380_140 );
     (* S0_x1=330, S0_y1=140, S0_x2=330, S0_y2=160 *) net #() net1 ( n_330_140, n_330_160 );
     (* S0_x1=230, S0_y1=140, S0_x2=330, S0_y2=140 *) net #() net2 ( n_230_140, n_330_140 );

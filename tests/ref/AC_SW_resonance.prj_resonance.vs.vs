@@ -9,12 +9,16 @@
     wire n_320_150;
     wire n_320_210;
     wire n_320_240;
+    wire n_440_70;
+    wire n_440_200;
     (* qucs_mirrored=0, qucs_rotated=1, S0_x1=120, S0_y1=120, S0_x2=120, S0_y2=180 *) Vac #(.U(1 V),.f(1 GHz),.Phase(0),.Theta(0)) V1 ( n_120_120, n_120_180 );
-    (* qucs_mirrored=0, qucs_rotated=0, S0_x1=320, S0_y1=240 *) GND #() \\*  ( n_320_240 );
-    (* qucs_mirrored=0, qucs_rotated=0, S0_x1=120, S0_y1=240 *) GND #() \\*  ( n_120_240 );
+    (* qucs_mirrored=0, qucs_rotated=0, S0_x1=320, S0_y1=240 *) GND #() \*  ( n_320_240 );
+    (* qucs_mirrored=0, qucs_rotated=0, S0_x1=120, S0_y1=240 *) GND #() \*  ( n_120_240 );
     (* qucs_mirrored=0, qucs_rotated=1, S0_x1=320, S0_y1=120, S0_x2=320, S0_y2=60 *) R #(.R(R_par),.Temp(26.85),.Tc1(0.0),.Tc2(0.0),.Tnom(26.85)) R1 ( n_320_120, n_320_60 );
     (* qucs_mirrored=0, qucs_rotated=1, S0_x1=320, S0_y1=240, S0_x2=320, S0_y2=180 *) C #(.C(2 pF),.V()) C1 ( n_320_240, n_320_180 );
     (* qucs_mirrored=0, qucs_rotated=1, S0_x1=320, S0_y1=180, S0_x2=320, S0_y2=120 *) L #(.L(13 nH),.I()) L1 ( n_320_180, n_320_120 );
+    (* qucs_mirrored=0, qucs_rotated=0, S0_x1=440, S0_y1=200 *) \.SW  #(.Sim(AC1),.Type(log),.Param(R1),.Start(R_par),.Stop(1 Ohm),.Points(6)) SW1 (  );
+    (* qucs_mirrored=0, qucs_rotated=0, S0_x1=440, S0_y1=70 *) \.AC  #(.Type(lin),.Start(0.9 GHz),.Stop(1.1 GHz),.Points(150),.Noise(no)) AC1 (  );
     (* S0_x1=120, S0_y1=180, S0_x2=120, S0_y2=240 *) net #() net1 ( n_120_180, n_120_240 );
     (* S0_x1=120, S0_y1=60, S0_x2=320, S0_y2=60 *) net #() net2 ( n_120_60, n_320_60 );
     (* S0_x1=120, S0_y1=60, S0_x2=120, S0_y2=120 *) net #() net3 ( n_120_60, n_120_120 );

@@ -31,7 +31,7 @@
     (* qucs_mirrored=0, qucs_rotated=0, S0_x1=500, S0_y1=300 *) GND #() \*3  ( n_500_300 );
     (* qucs_mirrored=0, qucs_rotated=0, S0_x1=930, S0_y1=300 *) GND #() \*2  ( n_930_300 );
     (* qucs_mirrored=0, qucs_rotated=0, S0_x1=310, S0_y1=300 *) GND #() \*4  ( n_310_300 );
-    (* qucs_mirrored=0, qucs_rotated=0 *) \.TR  #(.Type(lin),.Start(0),.Stop(5 ns),.Points(1000),.IntegrationMethod(Trapezoidal),.Order(2),.InitialStep(1 ns),.MinStep(1e-16),.MaxIter(150),.reltol(0.001),.abstol(1 pA),.vntol(1 uV),.Temp(26.85),.LTEreltol(1e-3),.LTEabstol(1e-6),.LTEfactor(1),.Solver(CroutLU),.relaxTSR(no),.initialDC(yes),.MaxStep(0)) TR1 (  );
+    (* qucs_mirrored=0, qucs_rotated=0, S0_x1=310, S0_y1=760 *) \.TR  #(.Type(lin),.Start(0),.Stop(5 ns),.Points(1000),.IntegrationMethod(Trapezoidal),.Order(2),.InitialStep(1 ns),.MinStep(1e-16),.MaxIter(150),.reltol(0.001),.abstol(1 pA),.vntol(1 uV),.Temp(26.85),.LTEreltol(1e-3),.LTEabstol(1e-6),.LTEfactor(1),.Solver(CroutLU),.relaxTSR(no),.initialDC(yes),.MaxStep(0)) TR1 (  );
     (* qucs_mirrored=0, qucs_rotated=0, S0_x1=660, S0_y1=350, S0_x2=720, S0_y2=350 *) TLIN #(.Z(50 Ohm),.L(.1),.Alpha(0 dB),.Temp(26.85)) Line1 ( n_660_350, n_720_350 );
     (* qucs_mirrored=0, qucs_rotated=0, S0_x1=390, S0_y1=350, S0_x2=450, S0_y2=350 *) R #(.R(50 Ohm),.Temp(26.85),.Tc1(0.0),.Tc2(0.0),.Tnom(26.85)) R1 ( n_390_350, n_450_350 );
     (* qucs_mirrored=0, qucs_rotated=0, S0_x1=480, S0_y1=300, S0_x2=500, S0_y2=300 *) VProbe #() Pr2 ( n_480_300, n_500_300 );

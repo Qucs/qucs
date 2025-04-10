@@ -1,4 +1,5 @@
 (* qucs_ViewX1=0, qucs_ViewY1=0, qucs_ViewX2=800, qucs_ViewY2=800, qucs_Scale=1, qucs_tmpViewX1=-200, qucs_tmpViewY1=-200, qucs_GridX=10, qucs_GridY=10, qucs_GridOn=1, qucs_DataSet="colpitts.dat", qucs_DataDisplay="colpitts.dpl", qucs_SimOpenDpl=1, qucs_Script="colpitts.m", qucs_SimRunScript=0, qucs_showFrame=0, qucs_FrameText0="Title", qucs_FrameText1="Drawn By:", qucs_FrameText2="Date:", qucs_FrameText3="Revision:" *) module colpitts();
+    wire n_140_290;
     wire n_200_70;
     wire n_200_90;
     wire n_200_120;
@@ -32,9 +33,9 @@
     wire n_620_200;
     wire n_620_230;
     wire n_620_260;
-    (* qucs_mirrored=0, qucs_rotated=0, S0_x1=200, S0_y1=150 *) GND #() \\*  ( n_200_150 );
-    (* qucs_mirrored=0, qucs_rotated=0, S0_x1=460, S0_y1=260 *) GND #() \\*  ( n_460_260 );
-    (* qucs_mirrored=0, qucs_rotated=0, S0_x1=620, S0_y1=260 *) GND #() \\*  ( n_620_260 );
+    (* qucs_mirrored=0, qucs_rotated=0, S0_x1=200, S0_y1=150 *) GND #() \*  ( n_200_150 );
+    (* qucs_mirrored=0, qucs_rotated=0, S0_x1=460, S0_y1=260 *) GND #() \*  ( n_460_260 );
+    (* qucs_mirrored=0, qucs_rotated=0, S0_x1=620, S0_y1=260 *) GND #() \*  ( n_620_260 );
     (* qucs_mirrored=0, qucs_rotated=0, S0_x1=540, S0_y1=170, S0_x2=600, S0_y2=170 *) C #(.C(1 nF),.V()) C3 ( n_540_170, n_600_170 );
     (* qucs_mirrored=0, qucs_rotated=1, S0_x1=620, S0_y1=260, S0_x2=620, S0_y2=200 *) R #(.R(500 Ohm),.Temp(26.85),.Tc1(0.0),.Tc2(0.0),.Tnom(26.85)) R2 ( n_620_260, n_620_200 );
     (* qucs_mirrored=0, qucs_rotated=1, S0_x1=200, S0_y1=90, S0_x2=200, S0_y2=150 *) Vdc #(.U(10 V)) V1 ( n_200_90, n_200_150 );
@@ -44,6 +45,7 @@
     (* qucs_mirrored=0, qucs_rotated=1, S0_x1=360, S0_y1=260, S0_x2=360, S0_y2=200 *) C #(.C(0.5 nF),.V()) C2 ( n_360_260, n_360_200 );
     (* qucs_mirrored=0, qucs_rotated=1, S0_x1=360, S0_y1=200, S0_x2=360, S0_y2=140 *) C #(.C(0.5 nF),.V()) C1 ( n_360_200, n_360_140 );
     (* qucs_mirrored=0, qucs_rotated=2, S0_x1=460, S0_y1=70, S0_x2=400, S0_y2=70 *) R #(.R(5 kOhm),.Temp(26.85),.Tc1(0.0),.Tc2(0.0),.Tnom(26.85)) R3 ( n_460_70, n_400_70 );
+    (* qucs_mirrored=0, qucs_rotated=0, S0_x1=140, S0_y1=290 *) \.TR  #(.Type(lin),.Start(0),.Stop(10 us),.Points(300),.IntegrationMethod(Trapezoidal),.Order(2),.InitialStep(1 ns),.MinStep(1e-16),.MaxIter(150),.reltol(0.001),.abstol(1 pA),.vntol(1 uV),.Temp(26.85),.LTEreltol(1e-3),.LTEabstol(1e-6),.LTEfactor(1),.Solver(CroutLU),.relaxTSR(no),.initialDC(yes),.MaxStep(0)) TR1 (  );
     (* S0_x1=460, S0_y1=150, S0_x2=460, S0_y2=170 *) net #() net1 ( n_460_150, n_460_170 );
     (* S0_x1=280, S0_y1=120, S0_x2=360, S0_y2=120 *) net #() net2 ( n_280_120, n_360_120 );
     (* S0_x1=280, S0_y1=120, S0_x2=280, S0_y2=170 *) net #() net3 ( n_280_120, n_280_170 );

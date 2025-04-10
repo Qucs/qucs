@@ -56,8 +56,8 @@
     (* qucs_mirrored=0, qucs_rotated=1, S0_x1=360, S0_y1=160, S0_x2=360, S0_y2=100 *) R #(.R(RG),.Temp(26.85),.Tc1(0.0),.Tc2(0.0),.Tnom(26.85)) Rg ( n_360_160, n_360_100 );
     (* qucs_mirrored=0, qucs_rotated=1, S0_x1=360, S0_y1=90, S0_x2=360, S0_y2=30 *) L #(.L(LG),.I()) Lg ( n_360_90, n_360_30 );
     (* qucs_mirrored=0, qucs_rotated=3, qucs_Num=2, qucs_Type="analog", S0_x1=360, S0_y1=30 *) Port #() Gate ( n_360_30 );
-    (* qucs_mirrored=0, qucs_rotated=0 *) Eqn #(.Vt(kB/q*TK),.GMIN(1e-12),.TK(Temp+273.15),.TnK(Tnom+273.15),.Export(yes)) Eqn1 (  );
-    (* qucs_mirrored=0, qucs_rotated=0 *) Eqn #(.TR(TK/TnK),.IsT(IS*exp(XTI/N*ln(TR) - EG/N/Vt*(1-TR))),.Export(yes)) Eqn2 (  );
+    (* qucs_mirrored=0, qucs_rotated=0, S0_x1=490, S0_y1=20 *) Eqn #(.Vt(kB/q*TK),.GMIN(1e-12),.TK(Temp+273.15),.TnK(Tnom+273.15),.Export(yes)) Eqn1 (  );
+    (* qucs_mirrored=0, qucs_rotated=0, S0_x1=490, S0_y1=240 *) Eqn #(.TR(TK/TnK),.IsT(IS*exp(XTI/N*ln(TR) - EG/N/Vt*(1-TR))),.Export(yes)) Eqn2 (  );
     (* qucs_mirrored=0, qucs_rotated=3, S0_x1=390, S0_y1=240, S0_x2=390, S0_y2=300, S0_x3=330, S0_y3=240, S0_x4=330, S0_y4=300, S0_x5=270, S0_y5=240, S0_x6=270, S0_y6=300, S0_x7=210, S0_y7=240, S0_x8=210, S0_y8=300 *) EDD #(.Type(explicit),.Branches(4),.I1(V1<-VBR+50*Vt ? -IsT*(1+exp(-(VBR+V1)/Vt)) + GMIN*V1 : 0),.Q1(0),.I2(V1>=-VBR+50*Vt && V1<-5*Vt ? -IsT+GMIN*V1 : V1>=-5*Vt ? IsT*(exp(V1/(N*Vt))-1) + GMIN*V1 : 0),.Q2(0),.I3(V1-VT0>0 ? Beta*(V1-VT0)^2*(1+Lambda*V3)*tanh(Alpha*V3) : 0),.Q3(CDS*V3 + TAU*I3),.I4(0),.Q4(CGS*V4)) D1 ( n_390_240, n_390_300, n_330_240, n_330_300, n_270_240, n_270_300, n_210_240, n_210_300 );
     (* S0_x1=270, S0_y1=300, S0_x2=270, S0_y2=320 *) net #() net1 ( n_270_300, n_270_320 );
     (* S0_x1=390, S0_y1=300, S0_x2=390, S0_y2=320 *) net #() net2 ( n_390_300, n_390_320 );

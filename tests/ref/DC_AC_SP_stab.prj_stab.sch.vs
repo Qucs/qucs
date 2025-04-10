@@ -85,10 +85,10 @@
     (* qucs_mirrored=0, qucs_rotated=1, S0_x1=220, S0_y1=340, S0_x2=220, S0_y2=280 *) R #(.R(10 Ohm),.Temp(26.85),.Tc1(0.0),.Tc2(0.0),.Tnom(26.85)) R3 ( n_220_340, n_220_280 );
     (* qucs_mirrored=0, qucs_rotated=0, S0_x1=170, S0_y1=210 *) GND #() \*  ( n_170_210 );
     (* qucs_mirrored=1, qucs_rotated=1, S0_x1=170, S0_y1=210, S0_x2=170, S0_y2=150 *) R #(.R(20 kOhm),.Temp(26.85),.Tc1(0.0),.Tc2(0.0),.Tnom(26.85)) R1 ( n_170_210, n_170_150 );
-    (* qucs_mirrored=0, qucs_rotated=0 *) Eqn #(.LoopGain(output.v / input.v),.LoopPhase(phase(output.v / input.v)),.Export(yes)) Eqn1 (  );
-    (* qucs_mirrored=0, qucs_rotated=0 *) \.SP  #(.Type(lin),.Start(180 MHz),.Stop(220 MHz),.Points(200),.Noise(no),.NoiseIP(1),.NoiseOP(2),.saveCVs(no),.saveAll(no)) SP1 (  );
-    (* qucs_mirrored=0, qucs_rotated=0 *) \.DC  #(.Temp(26.85),.reltol(0.001),.abstol(1 pA),.vntol(1 uV),.saveOPs(no),.MaxIter(150),.saveAll(no),.convHelper(none),.Solver(CroutLU)) DC1 (  );
-    (* qucs_mirrored=0, qucs_rotated=0 *) \.AC  #(.Type(log),.Start(1 Hz),.Stop(100 kHz),.Points(100),.Noise(no)) AC1 (  );
+    (* qucs_mirrored=0, qucs_rotated=0, S0_x1=550, S0_y1=140 *) Eqn #(.LoopGain(output.v / input.v),.LoopPhase(phase(output.v / input.v)),.Export(yes)) Eqn1 (  );
+    (* qucs_mirrored=0, qucs_rotated=0, S0_x1=510, S0_y1=440 *) \.SP  #(.Type(lin),.Start(180 MHz),.Stop(220 MHz),.Points(200),.Noise(no),.NoiseIP(1),.NoiseOP(2),.saveCVs(no),.saveAll(no)) SP1 (  );
+    (* qucs_mirrored=0, qucs_rotated=0, S0_x1=150, S0_y1=470 *) \.DC  #(.Temp(26.85),.reltol(0.001),.abstol(1 pA),.vntol(1 uV),.saveOPs(no),.MaxIter(150),.saveAll(no),.convHelper(none),.Solver(CroutLU)) DC1 (  );
+    (* qucs_mirrored=0, qucs_rotated=0, S0_x1=310, S0_y1=450 *) \.AC  #(.Type(log),.Start(1 Hz),.Stop(100 kHz),.Points(100),.Noise(no)) AC1 (  );
     (* qucs_mirrored=1, qucs_rotated=0, S0_x1=550, S0_y1=270, S0_x2=610, S0_y2=270 *) C #(.C(0.1 uF),.V()) C1 ( n_550_270, n_610_270 );
     (* qucs_mirrored=1, qucs_rotated=0, S0_x1=300, S0_y1=270, S0_x2=360, S0_y2=270 *) C #(.C(5 uF),.V()) C2 ( n_300_270, n_360_270 );
     (* S0_x1=170, S0_y1=150, S0_x2=190, S0_y2=150 *) net #() net1 ( n_170_150, n_190_150 );
