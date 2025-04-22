@@ -781,7 +781,10 @@ QString Component::get_VHDL_Code(int NumPorts)
 
 void Component::set_port_by_index(int num, std::string const& ext_name)
 {
-  incomplete();
+  if(_portvalues.size()<num+1) {
+    _portvalues.resize(num+1);
+  }
+  _portvalues[num]=ext_name;
 }
 
 // Attributes

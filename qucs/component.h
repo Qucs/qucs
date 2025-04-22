@@ -34,6 +34,7 @@ class QTextStream; // BUG
 
 class Component : public Element {
   std::string _attr;
+  std::vector<std::string> _portvalues;
 
 public: // BUG.
   std::list<qucs::Port>   Ports;
@@ -70,6 +71,7 @@ public:
 
 public: // attributes
   std::string attr_get()const override;
+
   virtual void attr_add(std::string s) {_attr += ", " + s;}
   virtual void set_attribute(std::string name, std::string value);
   virtual void set_label(std::string const& name);
