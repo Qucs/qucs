@@ -23,6 +23,7 @@
 #
 
 include ../common.mk
+include ../autotools/common.qt
 
 SUBDIRS = library
 

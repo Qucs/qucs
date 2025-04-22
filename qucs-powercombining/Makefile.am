@@ -29,6 +29,7 @@ MOCFILES = $(MOCHEADERS:.h=.moc.cpp)
 dist_man_MANS = qucspowercombining.1
 
 include ../common.mk
+include ../autotools/common.qt
 
 qucspowercombining_SOURCES = main.cpp qucspowercombiningtool.cpp qrc_qucspowercombining.cpp
 
