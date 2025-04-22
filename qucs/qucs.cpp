@@ -1497,7 +1497,7 @@ bool QucsApp::saveAs()
     }
 
     // list of known file extensions
-    QString ext = "vhdl;vhd;v;va;sch;dpl;m;oct;net;qnet;txt";
+    QString ext = "vhdl;vhd;v;va;vs;sch;dpl;m;oct;net;qnet;txt";
     QStringList extlist = ext.split (';');
 
     if(isTextDocument (w))
@@ -1524,7 +1524,7 @@ bool QucsApp::saveAs()
       if (!isTextDocument (w))
       {
         // assume it is a schematic
-        s += ".sch";
+        s += ".vs";
       }
     }
 
