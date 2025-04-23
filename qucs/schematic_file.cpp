@@ -714,6 +714,12 @@ std::string Schematic::nodename_at(const int x, const int y)
   throw std::out_of_range("No node present at ("+std::to_string(x)+","+std::to_string(y));
 }
 
+void Schematic::warn(int mask, std::string msg)
+{
+  (void)mask; // Disable unused warning
+  std::cout << "Warning: " << msg << std::endl;
+}
+
 // TODO: language header.
 class CS;
 bool readVerilog(CS& cmd, Schematic* s);
