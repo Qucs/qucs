@@ -787,6 +787,46 @@ void Component::set_port_by_index(int num, std::string const& ext_name)
   _portvalues[num]=ext_name;
 }
 
+void Component::check_node_positions(Schematic* schematic)
+{
+  assert(schematic);
+  int i=0;
+  std::string msg="";
+  for(auto p=Ports.begin();p!=Ports.end();p++) {
+    int chx = cx+p->x;
+    int chy = cy+p->y;
+    try {
+      if(i<(int)_portvalues.size()) {
+        if(schematic->nodename_at(chx,chy) != _portvalues[i]) {
+          msg="Port "+std::to_string(i);
+          msg+=" of component "+Name.toStdString();
+          msg+=" at position ("+std::to_string(chx)+","+std::to_string(chy)+")!";
+          msg+="\n";
+          msg+="Should be connected to "+_portvalues[i]+" but isn't!";
+          msg+="\n";
+          schematic->warn(0,msg);
+        }
+      } else {
+        msg="No node assignment for port "+std::to_string(i);
+        msg+=" of component "+Name.toStdString();
+        msg+=" at position ("+std::to_string(chx)+","+std::to_string(chy)+")";
+        msg+="\n";
+        schematic->warn(0,msg);
+      }
+    }
+    catch (const std::out_of_range& e)
+    {
+      msg="Port "+std::to_string(i);
+      msg+=" of component "+Name.toStdString();
+      msg+=" not found at ("+std::to_string(chx)+","+std::to_string(chy)+")!\n";
+      msg+="Exception:"+std::string(e.what());
+      msg+="\n";
+      schematic->warn(0,msg);
+    }
+    i++;
+  }
+}
+
 // Attributes
 std::string Component::attr_get() const
 {

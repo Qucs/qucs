@@ -51,6 +51,8 @@ for i in $( cd ${srcdir}; ls $base/*.{sch,vs} ) ; do
 	rm -f "${out}/${base}_${schname}.vs"
 	cmd="$QUCS -i ${srcdir}/$i --dump -t vs -o ${out}/${base}_${schname}.vs -platform offscreen"
 	eval echo "$cmd" ${REDIR}
+	eval "$cmd > ${out}/${base}_${schname}.vs.log" ${REDIR}
+	cmd="cat ${out}/${base}_${schname}.vs.log >> ${out}/${base}_${schname}.vs"
 	eval "$cmd" ${REDIR}
 
 	# =================================

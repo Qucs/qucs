@@ -90,6 +90,7 @@ public: // ports
   virtual std::string port_value(int)const{incomplete(); return "???";}
   virtual void set_port_by_name(std::string const&, std::string const&);
   virtual void set_port_by_index(int num, std::string const& ext_name);
+  void check_node_positions(Schematic *schematic);
 
 public:
   virtual std::string dev_type()const {

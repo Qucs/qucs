@@ -1429,7 +1429,9 @@ bool Schematic::load()
   DocPaints.clear();
   SymbolPaints.clear();
 
+  _dry_run=true;
   if(!loadDocument()) return false;
+  _dry_run=false;
   lastSaved = QDateTime::currentDateTime();
 
   while(!undoAction.isEmpty()) {
