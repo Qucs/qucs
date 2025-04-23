@@ -704,6 +704,16 @@ bool Schematic::loadPaintings(QTextStream *stream, SharedObjectList<Element> &Li
   return false;
 }
 
+std::string Schematic::nodename_at(const int x, const int y)
+{
+  for(auto n=DocNodes.begin();n!=DocNodes.end();n++) {
+    if((n->cx==x)&&(n->cy==y)) {
+      return n->Name.toStdString();
+    }
+  }
+  throw std::out_of_range("No node present at ("+std::to_string(x)+","+std::to_string(y));
+}
+
 // TODO: language header.
 class CS;
 bool readVerilog(CS& cmd, Schematic* s);

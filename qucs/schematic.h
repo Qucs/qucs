@@ -319,6 +319,7 @@ private:
 public:
   QString getWireName(const QPoint *p)const; // BUG // names are key!
   // position getNodePosition(std::string)const; // TODO
+  std::string nodename_at(const int x, const int y);
 
 private: /// BUG // move to Verilog class, create if needed.
   void dumpVerilogComponent(outputStream& stream, Element const* c) const;
