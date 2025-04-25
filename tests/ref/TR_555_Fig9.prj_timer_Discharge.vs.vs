@@ -3,13 +3,11 @@
     inout n_260_260;
     inout n_260_320;
     wire n_320_150;
-    wire n_340_320;
-    wire n_350_150;
-    wire n_370_320;
-    wire n_400_320;
+    wire n_380_150;
     wire n_410_120;
-    wire n_410_150;
     wire n_410_180;
+    wire n_340_320;
+    wire n_400_320;
     wire n_410_260;
     wire n_500_120;
     wire n_500_320;
