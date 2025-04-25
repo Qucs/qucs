@@ -432,7 +432,7 @@ QString Verilog_File_Info::parsePorts(QString s, int i)
 // -------------------------------------------------------
 std::string Verilog_File_Info::port_value(int i)const
 {
-	if(i<_portnames.size()){
+	if(i<int(_portnames.size())) {
 		return _portnames[i];
 	}else{
 		return "???";

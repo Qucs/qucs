@@ -409,6 +409,9 @@ void parse_attributes(CS& cmd, T* x)
 // BUG. need extra function, Wire is not a Component.
 void parse_type(CS& cmd, Wire* x)
 {
+  incomplete();
+  (void)cmd;
+  (void)x;
 }
 
 void parse_type(CS& cmd, Component* x)
@@ -422,7 +425,11 @@ void parse_type(CS& cmd, Component* x)
 
 // BUG. need extra function, Wire is not a Component.
 void parse_args_instance(CS& cmd, Wire* x)
-{}
+{
+  (void)x;
+  (void)cmd;
+  incomplete();
+}
 
 void parse_args_instance(CS& cmd, Component* x)
 {
@@ -465,6 +472,8 @@ void parse_args_instance(CS& cmd, Component* x)
 // BUG. see above
 void parse_label(CS &cmd, Wire* x)
 {
+  (void)x;
+  (void)cmd;
 }
 
 void parse_label(CS &cmd, Component* x)
@@ -481,8 +490,10 @@ void parse_label(CS &cmd, Component* x)
   }
 }
 
-void parse_ports(CS& cmd, Wire* x, bool all_new)
+void parse_ports(CS& cmd, Wire* x, bool /*all_new*/)
 {
+  (void)x;
+  (void)cmd;
 }
 
 void parse_ports(CS& cmd, Component* x, bool all_new)

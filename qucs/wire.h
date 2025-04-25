@@ -30,7 +30,7 @@ class QString;
 class Wire : public Conductor {
   //  TODO: would like to turn this into a weak pointer, but the pointer value
   //  is sometimes used as flag set while moving the full wire.
-  Node      *_port0{nullptr}, *_port1{nullptr};
+  mutable Node      *_port0{nullptr}, *_port1{nullptr};
 public:
   Wire(int _x1=0, int _y1=0, int _x2=0, int _y2=0, Node *n1=0, Node *n2=0);
  ~Wire();
@@ -44,7 +44,16 @@ public:
 	  }else{
 		  return _port1;
 	  }
+  }
 
+  // BUG: wire is not a Component
+  Node*& ports(int i)const /*override*/ {
+	  assert(i<net_nodes());
+	  if(i==0){
+		  return _port0;
+	  }else{
+		  return _port1;
+	  }
   }
 
   void paint(ViewPainter*);

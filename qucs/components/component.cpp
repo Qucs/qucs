@@ -781,7 +781,7 @@ QString Component::get_VHDL_Code(int NumPorts)
 
 void Component::set_port_by_index(int num, std::string const& ext_name)
 {
-  if(_portvalues.size()<num+1) {
+  if(_portvalues.size()<size_t(num+1)) {
     _portvalues.resize(num+1);
   }
   _portvalues[num]=ext_name;
@@ -870,6 +870,8 @@ std::string Component::param_value(int i) const
 
 void Component::set_param_by_index(int i, std::string const& Value)
 { untested();
+  (void)i;
+  (void)Value;
   incomplete();
 //  auto it = Props.begin();
 //  std::advance(it, i);
