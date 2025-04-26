@@ -33,15 +33,6 @@
 #define trace_method_calls() {}
 #endif
 
-QString Schematic::getWireName(const QPoint *p) const
-{
-  QString net = QString("n_%1_%2")
-      .arg(p->x())
-      .arg(p->y());
-  net.replace("-","m");
-  return net;
-}
-
 // -------------------------------------------------------------
 // Returns the number of subcircuit ports.
 int Schematic::saveSchematicDocument(QFile *file)

@@ -173,39 +173,49 @@ static std::string parse_identifier(CS& cmd, std::string const& term)
 }
 
 template<class T>
-void dump_attributes(outputStream& stream, T const* c, QList<QPoint> ports, Schematic const* s)
+void dump_attributes(outputStream& stream, T const* x)
 {
-  //assert(c);
-  QStringList nets;
-  int port_idx = 0;
+  assert(x);
+  auto c = dynamic_cast<Component const*>(x);
+  auto w = dynamic_cast<Wire const*>(x);
   stream << "(* ";
-  //print_attributes(o, nets);
   std::string attr;
-  if(c){
-    attr = c->attr_get();
-  }else{
-    //what?
-  }
+  attr = x->attr_get();
   stream << QString::fromStdString(attr);
   QString sep;
   if(attr.size()){
-    sep = ", ";
+    stream << ", ";
   }else{
   }
-  if(!ports.size()) {
-    stream << sep << QString("S0_x%1=%2, S0_y%1=%3")
-      .arg(++port_idx)
-      .arg(c->cx)
-      .arg(c->cy);
-  }else{
-  for (auto pp = ports.begin(); pp != ports.end(); ++pp) {
-    stream << sep << QString("S0_x%1=%2, S0_y%1=%3")
-        .arg(++port_idx)
-        .arg(pp->x())
-        .arg(pp->y());
-    sep = ", ";
-    nets.append(s->getWireName(&(*pp)));
-  }
+  if(c) {
+    if(c->net_nodes()) {
+      int port_idx = 1;
+      for (auto pp = c->Ports.begin(); pp != c->Ports.end(); ++pp) {
+        if(pp->getConnection()) {
+          stream << sep
+            << "S0_x" << port_idx
+            << "=" << pp->getConnection()->cx
+            << ", "
+            << "S0_y" << port_idx
+            << "="<< pp->getConnection()->cy;
+          sep = ", ";
+          port_idx++;
+        }
+      }
+    } else {
+      stream << QString("S0_x%1=%2, S0_y%1=%3")
+        .arg(1)
+        .arg(c->cx)
+        .arg(c->cy);
+    }
+  } else if(w) {
+    stream << QString("S0_x1=%1, S0_y1=%2, S0_x2=%3, S0_y2=%4")
+      .arg(w->ports(0)->cx)
+      .arg(w->ports(0)->cy)
+      .arg(w->ports(1)->cx)
+      .arg(w->ports(1)->cy);
+  } else {
+    // what?
   }
   stream << QString(" *) ");
 }
@@ -222,8 +232,7 @@ static std::string wirelabel(Wire const* w)
   return name;
 }
 
-static void dumpDeclaration(outputStream& stream, Element const* e, QList<QPoint> ports,
-    Schematic const* s)
+static void dumpDeclaration(outputStream& stream, Element const* e)
 {
   auto c = dynamic_cast<Component const*>(e);
   auto w = dynamic_cast<Wire const*>(e);
@@ -244,9 +253,18 @@ static void dumpDeclaration(outputStream& stream, Element const* e, QList<QPoint
   }
   stream << " ( ";
   std::string sep;
-  for (auto pp = ports.begin(); pp != ports.end(); ++pp) {
-    stream << sep << s->getWireName(&(*pp));
-    sep = ", ";
+  if(c) {
+    for (int i=0;i<c->net_nodes();i++) {
+      stream << sep << c->port(i).getConnection()->label();
+      sep = ", ";
+    }
+  } else if(w) {
+    // BUG. Wire is not a Component.
+    stream << w->ports(0)->label();
+    stream << ", ";
+    stream << w->ports(1)->label();
+  } else{
+    unreachable();
   }
   stream << " );\n";
 }
@@ -254,66 +272,24 @@ static void dumpDeclaration(outputStream& stream, Element const* e, QList<QPoint
 void Schematic::dumpVerilogComponent(outputStream& stream, Element const* e) const
 {
   assert(e);
-  QList<QPoint> ports;
-  if(auto c = dynamic_cast<Component const*>(e)){
-    for (auto pp = c->Ports.begin(); pp != c->Ports.end(); ++pp) {
-      auto con = pp->getConnection();
-      if(con) {
-  ports.append(QPoint(con->cx,con->cy));
-      }
-    }
-  }else if(auto w = dynamic_cast<Wire const*>(e)){
-    // BUG. wire is not a component.
-    ports.append(QPoint(w->x1,w->y1));
-    ports.append(QPoint(w->x2,w->y2));
-  }else{
-    unreachable()
-  }
   stream << "    ";
-
-  dump_attributes(stream, e, ports, this);
-  dumpDeclaration(stream, e, ports, this);
+  dump_attributes(stream, e);
+  dumpDeclaration(stream, e);
 }
 
 int Schematic::saveVerilogDocument(QFile *file)
 {
   trace_method_calls();
-  QList<QPoint> ioPortNets;
-  QList<QPoint> wireList;
-  QStringList ioPorts;
+  std::list<std::string> ioPortNets;
+  std::list<std::string> ioPorts;
 
   for (auto it = DocComps.begin(); it != DocComps.end(); ++it) {
     QPoint p;
     if(it->obsolete_model_hack() == "Port") {
-      p = QPoint(it->cx,it->cy);
-      ioPorts.append(QString(".%1(%2)").arg(it->name()).arg(getWireName(&p)));
-      ioPortNets.append(p);
-    } else {
-      p = QPoint(it->cx,it->cy);
-      if(!wireList.contains(p))
-        wireList.append(p);
+      ioPorts.push_back("."+it->name().toStdString()+"("+it->port(0).getConnection()->label()+")");
+      ioPortNets.push_back(it->port(0).getConnection()->label());
     }
   }
-
-  for (auto it = DocWires.begin(); it != DocWires.end(); ++it) {
-    QPoint p;
-    p = QPoint(it->x1,it->y1);
-    if(!wireList.contains(p))
-      wireList.append(p);
-    p = QPoint(it->x2,it->y2);
-    if(!wireList.contains(p))
-      wireList.append(p);
-  }
-
-  std::sort(wireList.begin(), wireList.end(),
-    [&](const QPoint& p1, const QPoint& p2){
-      if( p1.x() < p2.x() )
-         return true;
-      if( (p1.x() == p2.x()) && (p1.y() < p2.y()) )
-         return true;
-      return false;
-    }
-  );
 
   // Writing stuff out
   QTextStream Qs(file);
@@ -331,20 +307,25 @@ int Schematic::saveVerilogDocument(QFile *file)
   // stream << attr_get();
   stream << " *) ";
 
-  stream << "module " << module_name << "(" << ioPorts.join(", ") << ");\n";
+  stream << "module " << module_name << "(";
+  std::string sep;
+  for(auto ip=ioPorts.begin();ip!=ioPorts.end();ip++) {
+    stream << sep << *ip;
+    sep=", ";
+  }
+  stream << ");\n";
 
   // io defines
   for (auto it = ioPortNets.begin(); it != ioPortNets.end(); ++it) {
     stream << "    ";
-    stream << "inout " << getWireName(&*it) << ";\n";
+    stream << "inout " << *it << ";\n";
   }
 
   // The wires (subnets)
   for (auto it = DocNodes.begin(); it != DocNodes.end(); ++it) {
-    if((std::find(ioPortNets.begin(), ioPortNets.end(), QPoint(it->cx,it->cy))==ioPortNets.end())) {
+    if((std::find(ioPortNets.begin(), ioPortNets.end(), it->label())==ioPortNets.end())) {
       stream << "    ";
-      QPoint p = QPoint(it->cx,it->cy);
-      stream << "wire " << getWireName(&p) << ";\n";
+      stream << "wire " << it->label() << ";\n";
     }
   }
 

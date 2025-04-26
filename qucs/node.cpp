@@ -114,4 +114,13 @@ Node::appendConnection(const std::shared_ptr<Element> &e)
 }
 
 // ----------------------------------------------------------------
+std::string Node::label()const
+{
+  return "n_"
+    +std::string((cx<0)?"m"+std::to_string(-cx):std::to_string(cx))
+    +"_"
+    +std::string((cy<0)?"m"+std::to_string(-cy):std::to_string(cy));
+}
+
+// ----------------------------------------------------------------
 // ----------------------------------------------------------------
