@@ -6,9 +6,7 @@
     (* qucs_mirrored=0, qucs_rotated=0, S0_x1=2001, S0_y1=0, S0_x2=2061, S0_y2=0 *) R #(.R(50 Ohm),.Temp(26.85),.Tc1(0.0),.Tc2(0.0),.Tnom(26.85)) R1 ( n_2001_0, n_2061_0 );
     (* qucs_mirrored=0, qucs_rotated=0, S0_x1=2110, S0_y1=-280, S0_x2=2170, S0_y2=-280 *) C #(.C(1 pF),.V()) C1 ( n_2110_m280, n_2170_m280 );
 endmodule
-Warning: Port 0 of component R1 at position (2001,0)!
-Should be connected to n_2000_m280 but isn't!
+Warning: R1, Port 0 at (2001,0): not connected to n_2000_m280
 
-Warning: Port 1 of component R1 at position (2061,0)!
-Should be connected to n_2060_m280 but isn't!
+Warning: R1, Port 1 at (2061,0): not connected to n_2060_m280
 

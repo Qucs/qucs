@@ -3,9 +3,7 @@
     (* qucs_mirrored=0, qucs_rotated=0, qucs_type="Lib", S0_x1=0, S0_y1=0 *) foo #(.Lib(),.Comp(foo)) inst ( n_0_0 );
     (* qucs_mirrored=0, qucs_rotated=0, qucs_type="Lib", S0_x1=0, S0_y1=0 *) Lib #(.Lib(),.Comp(Lib)) inst ( n_0_0 );
 endmodule
-Warning: Port 0 of component inst at position (0,0)!
-Should be connected to a but isn't!
+Warning: inst, Port 0 at (0,0): not connected to a
 
-Warning: Port 0 of component inst at position (0,0)!
-Should be connected to a but isn't!
+Warning: inst, Port 0 at (0,0): not connected to a
 
