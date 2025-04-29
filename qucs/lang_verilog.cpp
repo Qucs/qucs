@@ -13,7 +13,7 @@
 #include "misc.h"
 #include "trace.h"
 #include "exception.h"
-#include "components/component.h"
+#include "component.h"
 #include "qt_compat.h"
 
 #if TRACE_FUNCTION_CALLS
