@@ -589,6 +589,13 @@ public:
   bool has_type()const {return _type.size();}
 };
 
+std::shared_ptr<Element> clone_instance(std::string const& type)
+{
+  QString qtype = QString::fromStdString(type);
+  std::shared_ptr<Component> x = Module::getComponent(qtype); // BUG. need proper dispatcher.
+  return x;
+}
+
 bool readVerilog(CS &cmd, Schematic*s)
 {
   trace0("readVerilog0");
@@ -605,6 +612,12 @@ bool readVerilog(CS &cmd, Schematic*s)
     }else{
       std::string type;
       type = parse_identifier(cmd, ",=(){};");
+      if(attr.has_type()){
+	type = attr.type();
+      }else{
+      }
+      std::shared_ptr<Element> inst = clone_instance(type);
+
       if(type=="wire") {
 	 // BUG: Not a component
       }else if(type=="net") {
@@ -614,23 +627,15 @@ bool readVerilog(CS &cmd, Schematic*s)
           s->pushBack(w);
         }else{
 		  }
-      } else {
-        QString qtype = QString::fromStdString(type);
-	if(attr.has_type()){
-	  qtype = QString::fromStdString(attr.type());
-	}else{
-	}
-        std::shared_ptr<Component> x = Module::getComponent(qtype); // BUG. need proper dispatcher.
-        if(x) {
-	  trace3("readVerilog, gotComponent", qtype, x->tx(), x->ty());
-          parse_instance(cmd, x.get());
-          // BUG: Gives inconsisten values when generating refs
-          // setting text position to 0,0 for now.
-	  x->set_qucs_text_position(0, 0);
-          s->pushBack(x);
-        }else{
-	  trace1("readVerilog, no Component", qtype);
-	}
+      }else if(auto x = dynamic_cast<Component*>(inst.get())) {
+	trace3("readVerilog, gotComponent", type, x->tx(), x->ty());
+	/*x = */ parse_instance(cmd, x);
+	// BUG: Gives inconsisten values when generating refs
+	// setting text position to 0,0 for now.
+	x->set_qucs_text_position(0, 0);
+	s->pushBack(std::dynamic_pointer_cast<Component>(inst)); // (yikes)
+      }else{ untested();
+	incomplete();
       }
     }
     trace2("readVerilog3", cmd.fullstring(), cmd.atEnd());
