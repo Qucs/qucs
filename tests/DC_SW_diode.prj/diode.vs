@@ -22,4 +22,5 @@
     (* S0_x1=170, S0_y1=260, S0_x2=260, S0_y2=260 *) net #() net6 ( n_170_260, n_260_260 );
     (* S0_x1=260, S0_y1=260, S0_x2=350, S0_y2=260 *) net #() net7 ( n_260_260, n_350_260 );
     (* S0_x1=260, S0_y1=260, S0_x2=260, S0_y2=280 *) net #() net8 ( n_260_260, n_260_280 );
+    (* S0_x=60, S0_y=10, qucs_type="Text", S0_text="http://www.youtube.com/watch?v=TzJiYSi6ZRc&feature=related" *) S0_text #() S0_text1;
 endmodule

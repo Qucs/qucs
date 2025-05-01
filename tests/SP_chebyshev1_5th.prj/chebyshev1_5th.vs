@@ -43,4 +43,5 @@
     (* S0_x1=390, S0_y1=70, S0_x2=390, S0_y2=130 *) net #() net9 ( n_390_70, n_390_130 );
     (* S0_x1=510, S0_y1=70, S0_x2=510, S0_y2=90 *) net #() net10 ( n_510_70, n_510_90 );
     (* S0_x1=390, S0_y1=70, S0_x2=510, S0_y2=70 *) net #() net11 ( n_390_70, n_510_70 );
+    (* S0_x=310, S0_y=250, qucs_type="Text", S0_text="5th Order Low Pass Chebyshev Type 1 Filter \nEnd of pass band:  100MHz " *) S0_text #() S0_text1;
 endmodule

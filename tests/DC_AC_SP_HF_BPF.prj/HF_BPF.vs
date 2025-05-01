@@ -61,4 +61,5 @@
     (* S0_x1=100, S0_y1=90, S0_x2=100, S0_y2=120 *) net #() net16 ( n_100_90, n_100_120 );
     (* S0_x1=100, S0_y1=180, S0_x2=100, S0_y2=220 *) net #() net17 ( n_100_180, n_100_220 );
     (* S0_x1=630, S0_y1=280, S0_x2=630, S0_y2=290 *) net #() net18 ( n_630_280, n_630_290 );
+    (* S0_x=40, S0_y=-40, qucs_type="Text", S0_text="Chebyshev band-pass filter \n 12MHz...17MHz, pi-type, \n impedance matching 50 Ohm" *) S0_text #() S0_text1;
 endmodule

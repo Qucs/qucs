@@ -46,4 +46,8 @@
     (* S0_x1=40, S0_y1=230, S0_x2=140, S0_y2=230 *) net #() net9 ( n_40_230, n_140_230 );
     (* S0_x1=200, S0_y1=170, S0_x2=280, S0_y2=170 *) net #() net10 ( n_200_170, n_280_170 );
     (* S0_x1=40, S0_y1=170, S0_x2=80, S0_y2=170 *) net #() net11 ( n_40_170, n_80_170 );
+    (* S0_x=200, S0_y=60 *) S0_text #() S0_text1;
+    (* S0_x=400, S0_y=60 *) S0_text #() S0_text2;
+    (* S0_x=320, S0_y=60 *) S0_text #() S0_text3;
+    (* S0_x=180, S0_y=20, qucs_type="Text", S0_text="conventional power supply:\ntransformer, 2-way-rectifier, filter" *) S0_text #() S0_text4;
 endmodule

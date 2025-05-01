@@ -70,4 +70,5 @@
     (* S0_x1=270, S0_y1=140, S0_x2=350, S0_y2=140 *) net #() net18 ( n_270_140, n_350_140 );
     (* S0_x1=420, S0_y1=80, S0_x2=420, S0_y2=170 *) net #() net19 ( n_420_80, n_420_170 );
     (* S0_x1=350, S0_y1=80, S0_x2=420, S0_y2=80 *) net #() net20 ( n_350_80, n_420_80 );
+    (* S0_x=440, S0_y=60, qucs_type="Text", S0_text="Classical design of selective voltage amplifier:\n- common-emitter circuit\n- bias control with voltage divider R1, R2\n- bias stabilisation with negative current\n  feedback R3\n- use C2 to prevent R3 from decreasing gain\n- filtering with high Q resonance C1/L1/R4 load" *) S0_text #() S0_text1;
 endmodule

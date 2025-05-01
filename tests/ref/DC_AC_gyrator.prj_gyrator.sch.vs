@@ -35,4 +35,5 @@
     (* S0_x1=120, S0_y1=160, S0_x2=280, S0_y2=160 *) net #() net8 ( n_120_160, n_280_160 );
     (* S0_x1=120, S0_y1=160, S0_x2=120, S0_y2=200 *) net #() net9 ( n_120_160, n_120_200 );
     (* S0_x1=360, S0_y1=160, S0_x2=380, S0_y2=160 *) net #() net10 ( n_360_160, n_380_160 );
+    (* S0_x=210, S0_y=240, qucs_type="Text", S0_text="This circuit is a primitive gyrator. It simulates an inductor\nby taking a capacitor and an transistor inverter. At the\noutput there should be only little ac voltage." *) S0_text #() S0_text1;
 endmodule

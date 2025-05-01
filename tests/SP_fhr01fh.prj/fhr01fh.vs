@@ -113,4 +113,10 @@
     (* S0_x1=680, S0_y1=440, S0_x2=720, S0_y2=440 *) net #() net39 ( n_680_440, n_720_440 );
     (* S0_x1=720, S0_y1=70, S0_x2=720, S0_y2=440 *) net #() net40 ( n_720_70, n_720_440 );
     (* S0_x1=290, S0_y1=440, S0_x2=620, S0_y2=440 *) net #() net41 ( n_290_440, n_620_440 );
+    (* S0_x=120, S0_y=40 *) S0_text #() S0_text1;
+    (* S0_x=430, S0_y=290, qucs_type="Text", S0_text="intrinsic FET  " *) S0_text #() S0_text2;
+    (* S0_x=410, S0_y=370, qucs_type="Text", S0_text="source " *) S0_text #() S0_text3;
+    (* S0_x=-20, S0_y=110, qucs_type="Text", S0_text="gate " *) S0_text #() S0_text4;
+    (* S0_x=640, S0_y=110, qucs_type="Text", S0_text="drain " *) S0_text #() S0_text5;
+    (* S0_x=210, S0_y=480, qucs_type="Text", S0_text="small-signal model of Fujitsu HEMT FHR01FH (2V, 10mA) \ntaken from:  \nPospieszalski, \"Modeling of Noise Parameters of MESFET's and \nMODFET's and their frequency and temperature dependence\", \nIEEE Trans. Microwave Theory and Techniques, Sept. 1989 " *) S0_text #() S0_text6;
 endmodule

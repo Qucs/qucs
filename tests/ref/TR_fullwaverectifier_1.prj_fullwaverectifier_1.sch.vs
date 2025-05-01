@@ -52,4 +52,5 @@
     (* S0_x1=350, S0_y1=210, S0_x2=350, S0_y2=250 *) net #() net15 ( n_350_210, n_350_250 );
     (* S0_x1=350, S0_y1=250, S0_x2=430, S0_y2=250 *) net #() net16 ( n_350_250, n_430_250 );
     (* S0_x1=430, S0_y1=210, S0_x2=430, S0_y2=250 *) net #() net17 ( n_430_210, n_430_250 );
+    (* S0_x=50, S0_y=30, qucs_type="Text", S0_text="Full-wave rectifier using a transformer and 2 diodes." *) S0_text #() S0_text1;
 endmodule

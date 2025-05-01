@@ -85,4 +85,5 @@
     (* S0_x1=620, S0_y1=830, S0_x2=620, S0_y2=870 *) net #() net17 ( n_620_830, n_620_870 );
     (* S0_x1=780, S0_y1=890, S0_x2=780, S0_y2=930 *) net #() net18 ( n_780_890, n_780_930 );
     (* S0_x1=950, S0_y1=950, S0_x2=950, S0_y2=990 *) net #() net19 ( n_950_950, n_950_990 );
+    (* S0_x=720, S0_y=1170, qucs_type="Text", S0_text="10GHz band pass filter\nCreated by Toyoyuki ISHIKAWA" *) S0_text #() S0_text1;
 endmodule

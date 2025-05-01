@@ -29,4 +29,5 @@
     (* S0_x1=380, S0_y1=50, S0_x2=380, S0_y2=120 *) net #() net4 ( n_380_50, n_380_120 );
     (* S0_x1=200, S0_y1=50, S0_x2=380, S0_y2=50 *) net #() net5 ( n_200_50, n_380_50 );
     (* S0_x1=230, S0_y1=120, S0_x2=290, S0_y2=120 *) net #() net6 ( n_230_120, n_290_120 );
+    (* S0_x=50, S0_y=20, qucs_type="Text", S0_text="reverse gummel characteristic of a BJT" *) S0_text #() S0_text1;
 endmodule

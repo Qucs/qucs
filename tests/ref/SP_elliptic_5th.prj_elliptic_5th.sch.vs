@@ -77,4 +77,5 @@
     (* S0_x1=440, S0_y1=90, S0_x2=560, S0_y2=90 *) net #() net25 ( n_440_90, n_560_90 );
     (* S0_x1=50, S0_y1=90, S0_x2=50, S0_y2=120 *) net #() net26 ( n_50_90, n_50_120 );
     (* S0_x1=50, S0_y1=90, S0_x2=160, S0_y2=90 *) net #() net27 ( n_50_90, n_160_90 );
+    (* S0_x=350, S0_y=260, qucs_type="Text", S0_text="5th Order Low Pass Elliptic Filter \nEnd of pass band:  100MHz " *) S0_text #() S0_text1;
 endmodule

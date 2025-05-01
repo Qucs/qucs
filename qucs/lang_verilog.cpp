@@ -269,6 +269,26 @@ static void dumpDeclaration(outputStream& stream, Element const* e)
   stream << " );\n";
 }
 
+static void dumpPainting(outputStream& stream, Element const* p)
+{
+  static int text_counter=1;
+  stream << "    ";
+  stream << "(* S0_x="
+         << p->cx
+         << ", S0_y="
+         << p->cy;
+  if(p->attr_get()!="") {
+    stream << ", "
+           << p->attr_get();
+  }
+  stream << " *)"
+         << " S0_text #()"
+         << " S0_text"
+         << text_counter
+         << ";\n";
+  text_counter++;
+}
+
 void Schematic::dumpVerilogComponent(outputStream& stream, Element const* e) const
 {
   assert(e);
@@ -338,6 +358,10 @@ int Schematic::saveVerilogDocument(QFile *file)
   for (auto it = DocWires.begin(); it != DocWires.end(); ++it) {
     // BUG: Wire is not a Component. (why?)
     dumpVerilogComponent(stream, &*it);
+  }
+
+  for (auto pt = DocPaints.begin(); pt != DocPaints.end(); ++pt) {
+    dumpPainting(stream, &*pt);
   }
 
   // done

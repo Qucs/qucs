@@ -30,4 +30,5 @@
     (* S0_x1=80, S0_y1=120, S0_x2=180, S0_y2=120 *) net #() net5 ( n_80_120, n_180_120 );
     (* S0_x1=210, S0_y1=60, S0_x2=210, S0_y2=80 *) net #() net6 ( n_210_60, n_210_80 );
     (* S0_x1=350, S0_y1=60, S0_x2=380, S0_y2=60 *) net #() net7 ( n_350_60, n_380_60 );
+    (* S0_x=590, S0_y=80, qucs_type="Text", S0_text="Author: Mike Brinson" *) S0_text #() S0_text1;
 endmodule

@@ -40,4 +40,5 @@
     (* S0_x1=180, S0_y1=230, S0_x2=180, S0_y2=300 *) net #() net8 ( n_180_230, n_180_300 );
     (* S0_x1=460, S0_y1=200, S0_x2=460, S0_y2=240 *) net #() net9 ( n_460_200, n_460_240 );
     (* S0_x1=280, S0_y1=200, S0_x2=280, S0_y2=240 *) net #() net10 ( n_280_200, n_280_240 );
+    (* S0_x=180, S0_y=30, qucs_type="Text", S0_text="Just a simple example:\nNo current flows through the middle branch,\nif the bridge is matched." *) S0_text #() S0_text1;
 endmodule

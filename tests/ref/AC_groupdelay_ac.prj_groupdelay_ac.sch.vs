@@ -44,4 +44,6 @@
     (* S0_x1=180, S0_y1=140, S0_x2=240, S0_y2=140 *) net #() P1 ( n_180_140, n_240_140 );
     (* S0_x1=60, S0_y1=140, S0_x2=60, S0_y2=170 *) net #() net9 ( n_60_140, n_60_170 );
     (* S0_x1=60, S0_y1=140, S0_x2=120, S0_y2=140 *) net #() net10 ( n_60_140, n_120_140 );
+    (* S0_x=470, S0_y=310, qucs_type="Text", S0_text="3rd order\nButterworth low-pass filter\n68MHz cutoff, PI-type,\nimpedance matching 60 Ohm" *) S0_text #() S0_text1;
+    (* S0_x=60, S0_y=50, qucs_type="Text", S0_text="group delay using AC simulation" *) S0_text #() S0_text2;
 endmodule

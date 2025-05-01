@@ -368,3 +368,15 @@ bool GraphicText::Dialog()
   delete d;
   return changed;
 }
+
+// -----------------------------------------------------------------------
+std::string GraphicText::attr_get()const
+{
+  std::string ret;
+  ret="qucs_type=\"Text\"";
+  ret+=", ";
+  ret+="S0_text=\"";
+  ret+=QString(Text).replace("\n","\\n").replace("\"","\\\"").toStdString();// Otherwise the text will be overwritten";
+  ret+="\"";
+  return ret;
+}

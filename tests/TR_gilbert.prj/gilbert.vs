@@ -129,4 +129,5 @@
     (* S0_x1=110, S0_y1=110, S0_x2=110, S0_y2=130 *) net #() net40 ( n_110_110, n_110_130 );
     (* S0_x1=110, S0_y1=190, S0_x2=110, S0_y2=270 *) net #() net41 ( n_110_190, n_110_270 );
     (* S0_x1=490, S0_y1=270, S0_x2=630, S0_y2=270 *) net #() net42 ( n_490_270, n_630_270 );
+    (* S0_x=430, S0_y=470, qucs_type="Text", S0_text="The famous gilbert cell mixer:\nAn active, double-balanced mixer." *) S0_text #() S0_text1;
 endmodule
