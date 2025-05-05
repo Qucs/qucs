@@ -455,8 +455,8 @@ void Schematic::simpleInsertComponent(const std::shared_ptr<Component> &c)
       }
     }
     if(!pn) { // create new node, if no existing one lies at this position
-      pn.reset(new Node(x, y));
-      DocNodes.append(pn);
+      pn = DocNodes.new_node(x, y); // what? why not nodes()?
+    }else{
     }
     pn->connect(c);  // connect schematic node to component node
     if (!pp->Type.isEmpty()) {
@@ -506,13 +506,16 @@ void Schematic::simpleInsertWire(const std::shared_ptr<Wire> &pw)
   trace_method_calls();
   auto pn = DocNodes.begin();
   // check if first wire node lies upon existing node
-  for( ; pn != DocNodes.end(); ++pn)
+  for( ; pn != DocNodes.end(); ++pn){
     if(pn->cx == pw->x1) if(pn->cy == pw->y1) break;
+  }
 
   if(pn == DocNodes.end()) {   // create new node, if no existing one lies at this position
-    DocNodes.push_back(new Node(pw->x1, pw->y1));
+    auto nn = DocNodes.new_node(pw->x1, pw->y1);
     pn = DocNodes.end();
     --pn;
+    assert(&*pn == &*nn); // yikes.
+  }else{
   }
 
   if(pw->x1 == pw->x2) if(pw->y1 == pw->y2) {
@@ -531,9 +534,10 @@ void Schematic::simpleInsertWire(const std::shared_ptr<Wire> &pw)
     if(pn->cx == pw->x2) if(pn->cy == pw->y2) break;
 
   if(pn == DocNodes.end()) {   // create new node, if no existing one lies at this position
-    DocNodes.push_back(new Node(pw->x2, pw->y2));
+    auto nn = DocNodes.new_node(pw->x2, pw->y2);
     pn = DocNodes.end();
     --pn;
+    assert(&*pn == &*nn); // yikes.
   }
   pn->connect(pw);  // connect schematic node to component node
   pw->ports(1) = pn.operator->();

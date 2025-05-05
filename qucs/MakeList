@@ -13,6 +13,7 @@ CXX_SRCS = \
 	module.cpp \
 	mouseactions.cpp \
 	node.cpp \
+	node_map.cpp \
 	octave_window.cpp \
 	printerwriter.cpp \
 	projectView.cpp \

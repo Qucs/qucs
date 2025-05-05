@@ -54,10 +54,11 @@
 #include "components/verilogfile.h"
 #include "components/vafile.h"
 #include "misc.h"
+#include "node_map.h"
 
 // just dummies for empty lists
 WireList      SymbolWires;
-NodeList      SymbolNodes;
+NodeMap       SymbolNodes;
 DiagramList   SymbolDiags;
 ComponentList SymbolComps;
 

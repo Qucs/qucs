@@ -28,6 +28,7 @@
 #endif
 
 #include "wire.h"
+#include "node_map.h"
 #include "node.h"
 #include "qucsdoc.h"
 #include "viewpainter.h"
@@ -79,7 +80,6 @@ struct SubFile {
 typedef QMap<QString, SubFile> SubMap;
 
 typedef SharedObjectList<Wire> WireList;
-typedef SharedObjectList<Node> NodeList;
 typedef SharedObjectList<Diagram> DiagramList;
 typedef SharedObjectList<Component> ComponentList;
 typedef SharedObjectList<Painting> PaintingList;
@@ -151,7 +151,7 @@ public:
   // elements "Doc..." or to the symbol elements "SymbolPaints".
 // private: //TODO. one at a time.
   WireList      *Wires, DocWires;
-  NodeList      *Nodes, DocNodes;
+  NodeMap       *Nodes, DocNodes;
   DiagramList   *Diagrams, DocDiags;
   PaintingList  *Paintings, DocPaints;
   ComponentList *Components, DocComps;
@@ -380,6 +380,8 @@ public:
   void pushBack(Component* w){
 	  simpleInsertComponent(std::shared_ptr<Component>(w));
   }
+public:
+  NodeMap* nodes(){assert(Nodes); return Nodes;}
 };
 
 #endif
