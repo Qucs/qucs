@@ -48,5 +48,5 @@
     (* S0_x1=410, S0_y1=50, S0_x2=410, S0_y2=160 *) net #() Output ( n_410_50, n_410_160 );
     (* S0_x1=180, S0_y1=50, S0_x2=300, S0_y2=50 *) net #() net13 ( n_180_50, n_300_50 );
     (* S0_x1=180, S0_y1=50, S0_x2=180, S0_y2=60 *) net #() net14 ( n_180_50, n_180_60 );
-    (* S0_x=280, S0_y=270, qucs_type="Text", S0_text="active bandpass filter" *) S0_text #() S0_text1;
+    (* S0_x=280, S0_y=270, qucs_type="Text", S0_text="active bandpass filter" *) S__text #() S0_text1;
 endmodule

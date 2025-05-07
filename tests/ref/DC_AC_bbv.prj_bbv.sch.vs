@@ -136,5 +136,5 @@
     (* S0_x1=130, S0_y1=170, S0_x2=320, S0_y2=170 *) net #() net42 ( n_130_170, n_320_170 );
     (* S0_x1=440, S0_y1=130, S0_x2=470, S0_y2=130 *) net #() net43 ( n_440_130, n_470_130 );
     (* S0_x1=650, S0_y1=130, S0_x2=650, S0_y2=190 *) net #() net44 ( n_650_130, n_650_190 );
-    (* S0_x=300, S0_y=470, qucs_type="Text", S0_text="circuit of broadband amplifer NE5205 (Valvo Signetics)\nbut without parasitics" *) S0_text #() S0_text1;
+    (* S0_x=300, S0_y=470, qucs_type="Text", S0_text="circuit of broadband amplifer NE5205 (Valvo Signetics)\nbut without parasitics" *) S__text #() S0_text1;
 endmodule

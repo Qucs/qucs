@@ -50,5 +50,5 @@
     (* S0_x1=140, S0_y1=120, S0_x2=140, S0_y2=160 *) net #() net16 ( n_140_120, n_140_160 );
     (* S0_x1=140, S0_y1=120, S0_x2=260, S0_y2=120 *) net #() net17 ( n_140_120, n_260_120 );
     (* S0_x1=320, S0_y1=120, S0_x2=400, S0_y2=120 *) net #() net18 ( n_320_120, n_400_120 );
-    (* S0_x=330, S0_y=70, qucs_type="Text", S0_text="Peltz oscillator" *) S0_text #() S0_text1;
+    (* S0_x=330, S0_y=70, qucs_type="Text", S0_text="Peltz oscillator" *) S__text #() S0_text1;
 endmodule

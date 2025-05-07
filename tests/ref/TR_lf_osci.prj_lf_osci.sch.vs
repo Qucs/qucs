@@ -56,5 +56,5 @@
     (* S0_x1=500, S0_y1=130, S0_x2=500, S0_y2=180 *) net #() net14 ( n_500_130, n_500_180 );
     (* S0_x1=500, S0_y1=50, S0_x2=500, S0_y2=70 *) net #() net15 ( n_500_50, n_500_70 );
     (* S0_x1=70, S0_y1=50, S0_x2=500, S0_y2=50 *) net #() net16 ( n_70_50, n_500_50 );
-    (* S0_x=80, S0_y=380, qucs_type="Text", S0_text="The feedback of this oscillator is realized by three\nRC networks, which create 60� phase shift each at\noscillating frequency.\n=> freq = sqrt(6) / (2*pi*R*C)" *) S0_text #() S0_text1;
+    (* S0_x=80, S0_y=380, qucs_type="Text", S0_text="The feedback of this oscillator is realized by three\nRC networks, which create 60� phase shift each at\noscillating frequency.\n=> freq = sqrt(6) / (2*pi*R*C)" *) S__text #() S0_text1;
 endmodule

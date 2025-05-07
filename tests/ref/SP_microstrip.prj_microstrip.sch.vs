@@ -45,5 +45,5 @@
     (* S0_x1=100, S0_y1=130, S0_x2=200, S0_y2=130 *) net #() net9 ( n_100_130, n_200_130 );
     (* S0_x1=340, S0_y1=270, S0_x2=340, S0_y2=290 *) net #() net10 ( n_340_270, n_340_290 );
     (* S0_x1=340, S0_y1=160, S0_x2=340, S0_y2=210 *) net #() net11 ( n_340_160, n_340_210 );
-    (* S0_x=400, S0_y=40, qucs_type="Text", S0_text="Schematic shows a Lambda/4 stub that\nis often used to bias active elements.\nPort 1 to 2 is a short, Port 1 and 3 is\ndecoupled. The bandwidth increases\nwith decreasing line width of \"Stub\"." *) S0_text #() S0_text1;
+    (* S0_x=400, S0_y=40, qucs_type="Text", S0_text="Schematic shows a Lambda/4 stub that\nis often used to bias active elements.\nPort 1 to 2 is a short, Port 1 and 3 is\ndecoupled. The bandwidth increases\nwith decreasing line width of \"Stub\"." *) S__text #() S0_text1;
 endmodule

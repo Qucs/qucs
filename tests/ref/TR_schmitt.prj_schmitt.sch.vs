@@ -57,6 +57,6 @@
     (* S0_x1=240, S0_y1=230, S0_x2=240, S0_y2=250 *) net #() net16 ( n_240_230, n_240_250 );
     (* S0_x1=400, S0_y1=80, S0_x2=400, S0_y2=100 *) net #() net17 ( n_400_80, n_400_100 );
     (* S0_x1=300, S0_y1=80, S0_x2=400, S0_y2=80 *) net #() net18 ( n_300_80, n_400_80 );
-    (* S0_x=60, S0_y=40, qucs_type="Text", S0_text="Schmitt-Trigger." *) S0_text #() S0_text1;
-    (* S0_x=320, S0_y=350, qucs_type="Text", S0_text="This Schmitt-Trigger switches on at 1.7V and\nswitches off at approximately -2.7V." *) S0_text #() S0_text2;
+    (* S0_x=60, S0_y=40, qucs_type="Text", S0_text="Schmitt-Trigger." *) S__text #() S0_text1;
+    (* S0_x=320, S0_y=350, qucs_type="Text", S0_text="This Schmitt-Trigger switches on at 1.7V and\nswitches off at approximately -2.7V." *) S__text #() S0_text2;
 endmodule

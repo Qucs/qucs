@@ -53,11 +53,11 @@
     (* S0_x1=100, S0_y1=140, S0_x2=100, S0_y2=180 *) net #() net13 ( n_100_140, n_100_180 );
     (* S0_x1=100, S0_y1=240, S0_x2=320, S0_y2=240 *) net #() net14 ( n_100_240, n_320_240 );
     (* S0_x1=160, S0_y1=140, S0_x2=260, S0_y2=140 *) net #() Input ( n_160_140, n_260_140 );
-    (* S0_x=250, S0_y=80 *) S0_text #() S0_text1;
-    (* S0_x=430, S0_y=80 *) S0_text #() S0_text2;
-    (* S0_x=70, S0_y=80 *) S0_text #() S0_text3;
-    (* S0_x=90, S0_y=310, qucs_type="Text", S0_text="Generator" *) S0_text #() S0_text4;
-    (* S0_x=310, S0_y=310, qucs_type="Text", S0_text="1. stage" *) S0_text #() S0_text5;
-    (* S0_x=500, S0_y=310, qucs_type="Text", S0_text="2. stage" *) S0_text #() S0_text6;
-    (* S0_x=260, S0_y=360, qucs_type="Text", S0_text="Two-stage Villard circuit:\nEvery stage adds two-times the input voltage.\n(Decreased by the diode voltage drop)\nMany stages can be put in cascade.\nThis circuit can only drive a high-impedance load." *) S0_text #() S0_text7;
+    (* S0_x=250, S0_y=80 *) S__text #() S0_text1;
+    (* S0_x=430, S0_y=80 *) S__text #() S0_text2;
+    (* S0_x=70, S0_y=80 *) S__text #() S0_text3;
+    (* S0_x=90, S0_y=310, qucs_type="Text", S0_text="Generator" *) S__text #() S0_text4;
+    (* S0_x=310, S0_y=310, qucs_type="Text", S0_text="1. stage" *) S__text #() S0_text5;
+    (* S0_x=500, S0_y=310, qucs_type="Text", S0_text="2. stage" *) S__text #() S0_text6;
+    (* S0_x=260, S0_y=360, qucs_type="Text", S0_text="Two-stage Villard circuit:\nEvery stage adds two-times the input voltage.\n(Decreased by the diode voltage drop)\nMany stages can be put in cascade.\nThis circuit can only drive a high-impedance load." *) S__text #() S0_text7;
 endmodule

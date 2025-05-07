@@ -60,5 +60,5 @@
     (* S0_x1=560, S0_y1=170, S0_x2=560, S0_y2=360 *) net #() net20 ( n_560_170, n_560_360 );
     (* S0_x1=440, S0_y1=360, S0_x2=560, S0_y2=360 *) net #() net21 ( n_440_360, n_560_360 );
     (* S0_x1=440, S0_y1=110, S0_x2=560, S0_y2=110 *) net #() net22 ( n_440_110, n_560_110 );
-    (* S0_x=190, S0_y=40, qucs_type="Text", S0_text="Saw-Tooth Generator" *) S0_text #() S0_text1;
+    (* S0_x=190, S0_y=40, qucs_type="Text", S0_text="Saw-Tooth Generator" *) S__text #() S0_text1;
 endmodule

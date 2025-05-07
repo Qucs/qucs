@@ -61,6 +61,6 @@
     (* S0_x1=540, S0_y1=220, S0_x2=540, S0_y2=240 *) net #() net16 ( n_540_220, n_540_240 );
     (* S0_x1=440, S0_y1=140, S0_x2=540, S0_y2=140 *) net #() net17 ( n_440_140, n_540_140 );
     (* S0_x1=330, S0_y1=240, S0_x2=540, S0_y2=240 *) net #() net18 ( n_330_240, n_540_240 );
-    (* S0_x=50, S0_y=70, qucs_type="Text", S0_text="Change duty cycle (\"Bduty\" in the equations) to manipulate output voltage." *) S0_text #() S0_text1;
-    (* S0_x=50, S0_y=30, qucs_type="Text", S0_text="Inverting buck-boost converter circuit." *) S0_text #() S0_text2;
+    (* S0_x=50, S0_y=70, qucs_type="Text", S0_text="Change duty cycle (\"Bduty\" in the equations) to manipulate output voltage." *) S__text #() S0_text1;
+    (* S0_x=50, S0_y=30, qucs_type="Text", S0_text="Inverting buck-boost converter circuit." *) S__text #() S0_text2;
 endmodule

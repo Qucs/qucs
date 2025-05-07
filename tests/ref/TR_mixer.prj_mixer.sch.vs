@@ -62,5 +62,5 @@
     (* S0_x1=440, S0_y1=80, S0_x2=440, S0_y2=120 *) net #() net15 ( n_440_80, n_440_120 );
     (* S0_x1=380, S0_y1=220, S0_x2=520, S0_y2=220 *) net #() net16 ( n_380_220, n_520_220 );
     (* S0_x1=380, S0_y1=180, S0_x2=380, S0_y2=220 *) net #() net17 ( n_380_180, n_380_220 );
-    (* S0_x=130, S0_y=310, qucs_type="Text", S0_text="This is a double-balanced mixer, a so called\ndiode ring mixer." *) S0_text #() S0_text1;
+    (* S0_x=130, S0_y=310, qucs_type="Text", S0_text="This is a double-balanced mixer, a so called\ndiode ring mixer." *) S__text #() S0_text1;
 endmodule

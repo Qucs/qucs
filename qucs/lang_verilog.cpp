@@ -282,7 +282,7 @@ static void dumpPainting(outputStream& stream, Element const* p)
            << p->attr_get();
   }
   stream << " *)"
-         << " S0_text #()"
+         << " S__text #()"
          << " S0_text"
          << text_counter
          << ";\n";
