@@ -210,17 +210,15 @@ std::string CS::get_to(const std::string& term)
   return des;
 }
 
-// borrowed from ap_match
+// borrowed from ap_convert
 std::string CS::ctos(const std::string& term,
 		     const std::string& begin_quote,
 		     const std::string& end_quote,
 		     const std::string& trap)
 {
-  //trace2("hmmm", fullstring(), cursor());
 	assert(begin_quote.length() == end_quote.length());
 
 	skipbl();
-  //trace2("hmmm", fullstring(), cursor());
 	size_t begin_string = cursor();
 	size_t end_string = cursor();
 
@@ -233,7 +231,7 @@ std::string CS::ctos(const std::string& term,
 		char the_begin_quote = begin_quote[which_quote];
 		char the_end_quote = end_quote[which_quote];
 		for (;;) {
-			if (!ns_more()) {
+			if (!ns_more()) { untested();
 				end_string = cursor();
 				warn(bDANGER, std::string("need ") + the_end_quote);
 				break;
@@ -245,12 +243,11 @@ std::string CS::ctos(const std::string& term,
 				}
 			}else if (skip1(the_begin_quote)) {
 				++quotes;
-				skip();
-			}else if (skip1('\\')) {
-				end_string = cursor() - 1;
+				//skip();
+			}else if (skip1('\\') && skip1(the_end_quote)) {
+				end_string = cursor() - 2;
 				s += _cmd.substr(begin_string, end_string-begin_string);
-				begin_string = cursor();
-				skip1(the_end_quote);
+				begin_string = cursor() - 1;
 			}else{
 				skip();
 			}
