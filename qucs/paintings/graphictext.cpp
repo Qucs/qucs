@@ -373,10 +373,31 @@ bool GraphicText::Dialog()
 std::string GraphicText::attr_get()const
 {
   std::string ret;
-  ret="qucs_type=\"Text\"";
-  ret+=", ";
   ret+="S0_text=\"";
   ret+=QString(Text).replace("\n","\\n").replace("\"","\\\"").toStdString();// Otherwise the text will be overwritten";
   ret+="\"";
+{ untested();
+  ret+=", ";
+  ret+="qucs_font_color=\""+Color.name().toStdString()+"\"";
+  ret+=", ";
+  ret+="qucs_font_size="+std::to_string(Font.pointSize());
+  ret+=", ";
+  ret+="qucs_font_angle="+std::to_string(Angle);
+}
   return ret;
+}
+
+void GraphicText::set_attribute(std::string name, std::string value)
+{ untested();
+  if(name=="S0_text" && value.size()) {
+    Text=QString::fromStdString(value).replace("\\n","\n").replace("\\\"","\"");
+  } else if(name=="qucs_font_color") {
+    Color.setNamedColor(QString::fromStdString(value));
+  } else if(name=="qucs_font_size") {
+    Font.setPointSize(std::stoi(value));
+  } else if(name=="qucs_font_angle") {
+    Angle=std::stoi(value);
+  } else {
+    Painting::set_attribute(name,value);
+  }
 }

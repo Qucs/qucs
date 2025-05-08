@@ -78,5 +78,5 @@
     (* S0_x1=450, S0_y1=50, S0_x2=450, S0_y2=80 *) net #() net23 ( n_450_50, n_450_80 );
     (* S0_x1=260, S0_y1=290, S0_x2=530, S0_y2=290 *) net #() net24 ( n_260_290, n_530_290 );
     (* S0_x1=260, S0_y1=230, S0_x2=360, S0_y2=230 *) net #() net25 ( n_260_230, n_360_230 );
-    (* S0_x=340, S0_y=300, qucs_type="Text", S0_text="small-signal equivalent circuit of\na microwave FET\nThe temperature of all resistors is set to 16.85�C\n(290K) which is the IEEE standard temperature for\nnoise figure measurement. This means their noise\nis thermal noise. An exception is R3 whose\nelectron gas is highly overheated (diffusion noise)." *) S__text #() S0_text1;
+    (* S0_x=340, S0_y=300, qucs_type="Text", S0_text="small-signal equivalent circuit of\na microwave FET\nThe temperature of all resistors is set to 16.85�C\n(290K) which is the IEEE standard temperature for\nnoise figure measurement. This means their noise\nis thermal noise. An exception is R3 whose\nelectron gas is highly overheated (diffusion noise).", qucs_font_color="#000000", qucs_font_size=12, qucs_font_angle=0 *) S__text #() S0_text1();
 endmodule

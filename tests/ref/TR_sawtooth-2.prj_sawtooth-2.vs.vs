@@ -108,4 +108,5 @@
     (* S0_x1=820, S0_y1=150, S0_x2=880, S0_y2=150 *) net #() net37 ( n_820_150, n_880_150 );
     (* S0_x1=820, S0_y1=150, S0_x2=820, S0_y2=200 *) net #() net38 ( n_820_150, n_820_200 );
     (* S0_x1=820, S0_y1=260, S0_x2=820, S0_y2=340 *) net #() net39 ( n_820_260, n_820_340 );
+    (* S0_x=590, S0_y=390, qucs_type="Text", S0_text="Saw-Tooth Generator", qucs_font_color="#000000", qucs_font_size=12, qucs_font_angle=0 *) S__text #() S0_text1();
 endmodule

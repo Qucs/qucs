@@ -84,5 +84,5 @@
     (* S0_x1=210, S0_y1=210, S0_x2=570, S0_y2=210 *) net #() net21 ( n_210_210, n_570_210 );
     (* S0_x1=210, S0_y1=270, S0_x2=250, S0_y2=270 *) net #() net22 ( n_210_270, n_250_270 );
     (* S0_x1=320, S0_y1=350, S0_x2=380, S0_y2=350 *) net #() net23 ( n_320_350, n_380_350 );
-    (* S0_x=100, S0_y=460, qucs_type="Text", S0_text="Active, single-balanced mixer: In the output signal, one\ncan see a strong carrier (LO signal)." *) S__text #() S0_text1;
+    (* S0_x=100, S0_y=460, qucs_type="Text", S0_text="Active, single-balanced mixer: In the output signal, one\ncan see a strong carrier (LO signal).", qucs_font_color="#000000", qucs_font_size=12, qucs_font_angle=0 *) S__text #() S0_text1();
 endmodule

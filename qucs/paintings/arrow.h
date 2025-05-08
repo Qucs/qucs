@@ -33,6 +33,10 @@ public:
   void getCenter(int&, int&);
   void setCenter(int, int, bool relative=false);
 
+  std::string dev_type()const override {return "Arrow";}
+  std::string attr_get()const override;
+  void set_attribute(std::string name, std::string value)override;
+
   Painting* newOne();
   static Element* info(QString&, char* &, bool getNewOne=false);
   bool load(const QString&);
@@ -54,10 +58,10 @@ public:
   void calcArrowHead();
 
   QPen   Pen;
-  int    Style;
-  double Height, Width;  // size of the arrow head
-  double Length, beta;
-  int    xp1, yp1, xp2, yp2;   // coordinates to paint the arrow head
+  int    Style{0};
+  double Height{0}, Width{0};  // size of the arrow head
+  double Length{0}, beta{0};
+  int    xp1{0}, yp1{0}, xp2{0}, yp2{0};   // coordinates to paint the arrow head
 };
 
 #endif

@@ -73,5 +73,5 @@
     (* S0_x1=90, S0_y1=180, S0_x2=110, S0_y2=180 *) net #() net23 ( n_90_180, n_110_180 );
     (* S0_x1=360, S0_y1=160, S0_x2=360, S0_y2=180 *) net #() net24 ( n_360_160, n_360_180 );
     (* S0_x1=360, S0_y1=90, S0_x2=360, S0_y2=100 *) net #() net25 ( n_360_90, n_360_100 );
-    (* S0_x=700, S0_y=30, qucs_type="Text", S0_text="Author: Mike Brinson" *) S__text #() S0_text1;
+    (* S0_x=700, S0_y=30, qucs_type="Text", S0_text="Author: Mike Brinson", qucs_font_color="#000000", qucs_font_size=13, qucs_font_angle=0 *) S__text #() S0_text1();
 endmodule

@@ -72,6 +72,23 @@ void Module::registerComponent (QString category, pInfoFunc info) {
     Modules.insert (Model, m);
 }
 
+// Returns instantiated painting based on the given graphics name.
+// If there is no such painting type known the function returns NULL.
+std::shared_ptr<Painting> Module::getPainting(QString Name)
+{ untested();
+  Painting *p = NULL;
+  if(Name == "Line") { p = new GraphicLine(); }
+  else if(Name == "EArc") { p = new EllipseArc(); }
+  else if(Name == ".PortSym") { p = new PortSymbol(); }
+  else if(Name == ".ID") { p = new ID_Text(); }
+  else if(Name == "Text") { p = new GraphicText(); }
+  else if(Name == "Rectangle") { p = new Rectangle(); }
+  else if(Name == "Arrow") { p = new Arrow(); }
+  else if(Name == "Ellipse") { p = new Ellipse(); }
+  else {}
+  return std::shared_ptr<Painting>(p);
+}
+
 // Returns instantiated component based on the given "Model" name.  If
 // there is no such component registers the function returns NULL.
 //

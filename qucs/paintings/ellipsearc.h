@@ -32,6 +32,8 @@ public:
   void getCenter(int&, int&);
   void setCenter(int, int, bool relative=false);
 
+  std::string dev_type()const override {return "EArc";}
+
   Painting* newOne();
   static Element* info(QString&, char* &, bool getNewOne=false);
   bool load(const QString&);

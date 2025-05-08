@@ -59,4 +59,5 @@
 <Diagrams>
 </Diagrams>
 <Paintings>
+  <Text 50 40 12 #000000 0 "Gratz bridge rectifier: a full-wave rectifier using 4 diodes.">
 </Paintings>

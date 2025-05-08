@@ -38,4 +38,6 @@
 <Diagrams>
 </Diagrams>
 <Paintings>
+  <Text 190 60 12 #000000 0 "simple subcircuit which just\nshorts the two ports">
+  <Text 140 430 12 #000000 0 "C1 is used just to have a\ncomponent in the subcircuit netlist\n(does not change the simulation/netlisting results)">
 </Paintings>

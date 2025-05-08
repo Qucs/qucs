@@ -38,4 +38,6 @@
 <Diagrams>
 </Diagrams>
 <Paintings>
+  <Text 260 50 12 #000000 0 "For a description of the FET noise\nmodel take a look into its subcircuit.">
+  <Text 30 260 12 #000000 0 "This amplifier is noise matched at the input\nfor a frequency of 10GHz.\nThus, the noise optimum Sopt of the overall\ncircuit is zero. (Okay, the matching circuit\nis really ugly, but hey, this is a simulation.)">
 </Paintings>

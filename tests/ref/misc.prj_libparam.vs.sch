@@ -35,4 +35,5 @@
 <Diagrams>
 </Diagrams>
 <Paintings>
+  <Text 140 40 12 #000000 0 "- if the subcircuit is a plain short (i.e. just a net connecting the two nodes)\nthe simulation result is wrong\n- if the subcircuit shorts the two nodes via a 0 ohm resistor, results are correct">
 </Paintings>

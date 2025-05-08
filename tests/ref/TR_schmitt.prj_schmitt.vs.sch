@@ -53,4 +53,6 @@
 <Diagrams>
 </Diagrams>
 <Paintings>
+  <Text 60 40 12 #000000 0 "Schmitt-Trigger.">
+  <Text 320 350 12 #000000 0 "This Schmitt-Trigger switches on at 1.7V and\nswitches off at approximately -2.7V.">
 </Paintings>

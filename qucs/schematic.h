@@ -380,6 +380,10 @@ public:
   void pushBack(Component* w){
 	  simpleInsertComponent(std::shared_ptr<Component>(w));
   }
+  void pushBack(std::shared_ptr<Painting> p)
+  { untested();
+    DocPaints.append(p);
+  }
 };
 
 #endif

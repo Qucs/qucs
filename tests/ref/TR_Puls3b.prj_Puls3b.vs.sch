@@ -53,4 +53,5 @@
 <Diagrams>
 </Diagrams>
 <Paintings>
+  <Text 380 340 12 #000000 0 "ISO 7637 -- Test Pulse 3b">
 </Paintings>

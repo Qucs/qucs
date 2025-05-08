@@ -32,4 +32,6 @@
     (* S0_x1=110, S0_y1=100, S0_x2=110, S0_y2=150 *) net #() net6 ( n_110_100, n_110_150 );
     (* S0_x1=360, S0_y1=100, S0_x2=500, S0_y2=100 *) net #() net7 ( n_360_100, n_500_100 );
     (* S0_x1=500, S0_y1=100, S0_x2=500, S0_y2=160 *) net #() net8 ( n_500_100, n_500_160 );
+    (* S0_x=560, S0_y=270, qucs_type="Text", S0_text="3rd order\nButterworth low-pass filter\n68MHz cutoff, PI-type,\nimpedance matching 60 Ohm", qucs_font_color="#000000", qucs_font_size=12, qucs_font_angle=0 *) S__text #() S0_text1();
+    (* S0_x=110, S0_y=30, qucs_type="Text", S0_text="group delay using S-parameter simulation", qucs_font_color="#000000", qucs_font_size=12, qucs_font_angle=0 *) S__text #() S0_text2();
 endmodule

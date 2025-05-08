@@ -39,4 +39,5 @@
 <Diagrams>
 </Diagrams>
 <Paintings>
+  <Text 50 20 12 #000000 0 "reverse gummel characteristic of a BJT">
 </Paintings>

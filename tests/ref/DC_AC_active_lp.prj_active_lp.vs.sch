@@ -74,4 +74,5 @@
 <Diagrams>
 </Diagrams>
 <Paintings>
+  <Text 220 410 12 #000000 0 "6th order Chebyshev I low-pass filter\n1kHz band stop frequency, 1dB ripple">
 </Paintings>

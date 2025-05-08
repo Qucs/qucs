@@ -55,4 +55,6 @@
 <Diagrams>
 </Diagrams>
 <Paintings>
+  <Text 50 40 12 #000000 0 "Boost converter circuit.">
+  <Text 50 80 12 #000000 0 "Change duty cycle ("Bduty" in the equations) to manipulate output voltage.">
 </Paintings>

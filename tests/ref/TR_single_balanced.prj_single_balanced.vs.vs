@@ -69,4 +69,5 @@
     (* S0_x1=280, S0_y1=290, S0_x2=330, S0_y2=290 *) net #() net20 ( n_280_290, n_330_290 );
     (* S0_x1=360, S0_y1=320, S0_x2=360, S0_y2=360 *) net #() net21 ( n_360_320, n_360_360 );
     (* S0_x1=180, S0_y1=250, S0_x2=180, S0_y2=300 *) net #() net22 ( n_180_250, n_180_300 );
+    (* S0_x=180, S0_y=-10, qucs_type="Text", S0_text="single balanced active CMOS mixer", qucs_font_color="#000000", qucs_font_size=12, qucs_font_angle=0 *) S__text #() S0_text1();
 endmodule

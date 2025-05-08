@@ -94,5 +94,5 @@
     (* S0_x1=540, S0_y1=60, S0_x2=550, S0_y2=60 *) net #() net26 ( n_540_60, n_550_60 );
     (* S0_x1=610, S0_y1=60, S0_x2=610, S0_y2=130 *) net #() net27 ( n_610_60, n_610_130 );
     (* S0_x1=610, S0_y1=130, S0_x2=620, S0_y2=130 *) net #() net28 ( n_610_130, n_620_130 );
-    (* S0_x=220, S0_y=410, qucs_type="Text", S0_text="6th order Chebyshev I low-pass filter\n1kHz band stop frequency, 1dB ripple" *) S__text #() S0_text1;
+    (* S0_x=220, S0_y=410, qucs_type="Text", S0_text="6th order Chebyshev I low-pass filter\n1kHz band stop frequency, 1dB ripple", qucs_font_color="#000000", qucs_font_size=12, qucs_font_angle=0 *) S__text #() S0_text1();
 endmodule

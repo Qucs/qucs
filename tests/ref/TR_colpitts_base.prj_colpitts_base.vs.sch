@@ -55,4 +55,5 @@
 <Diagrams>
 </Diagrams>
 <Paintings>
+  <Text 40 50 12 #000000 0 "Yet another Colpitts oscillator.">
 </Paintings>

@@ -41,4 +41,6 @@
 <Diagrams>
 </Diagrams>
 <Paintings>
+  <Text 560 270 12 #000000 0 "3rd order\nButterworth low-pass filter\n68MHz cutoff, PI-type,\nimpedance matching 60 Ohm">
+  <Text 110 30 12 #000000 0 "group delay using S-parameter simulation">
 </Paintings>

@@ -58,4 +58,5 @@
 <Diagrams>
 </Diagrams>
 <Paintings>
+  <Text 40 -40 12 #000000 0 "Chebyshev band-pass filter \n 12MHz...17MHz, pi-type, \n impedance matching 50 Ohm">
 </Paintings>

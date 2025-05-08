@@ -55,4 +55,5 @@
 <Diagrams>
 </Diagrams>
 <Paintings>
+  <Text 130 310 12 #000000 0 "This is a double-balanced mixer, a so called\ndiode ring mixer.">
 </Paintings>

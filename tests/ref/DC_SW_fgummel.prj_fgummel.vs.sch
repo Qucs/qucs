@@ -39,4 +39,5 @@
 <Diagrams>
 </Diagrams>
 <Paintings>
+  <Text 40 20 12 #000000 0 "forward gummel characteristic of a BJT">
 </Paintings>

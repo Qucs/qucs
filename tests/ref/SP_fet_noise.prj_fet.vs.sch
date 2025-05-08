@@ -68,4 +68,5 @@
 <Diagrams>
 </Diagrams>
 <Paintings>
+  <Text 340 300 12 #000000 0 "small-signal equivalent circuit of\na microwave FET\nThe temperature of all resistors is set to 16.85�C\n(290K) which is the IEEE standard temperature for\nnoise figure measurement. This means their noise\nis thermal noise. An exception is R3 whose\nelectron gas is highly overheated (diffusion noise).">
 </Paintings>

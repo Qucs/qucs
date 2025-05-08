@@ -35,4 +35,5 @@
 <Diagrams>
 </Diagrams>
 <Paintings>
+  <Text 60 10 12 #000000 0 "http://www.youtube.com/watch?v=TzJiYSi6ZRc&feature=related">
 </Paintings>

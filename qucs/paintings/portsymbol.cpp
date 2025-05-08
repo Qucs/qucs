@@ -221,3 +221,22 @@ void PortSymbol::mirrorY()
   if(Angel == 0)  Angel = 180;
   else  if(Angel == 180)  Angel = 0;
 }
+
+// -----------------------------------------------------------------------
+std::string PortSymbol::attr_get()const
+{ untested();
+  std::string ret;
+  ret+="qucs_angel="+std::to_string(Angel);
+  ret+=", ";
+  ret+=Painting::attr_get();
+  return ret;
+}
+
+void PortSymbol::set_attribute(std::string name, std::string value)
+{ untested();
+  if(name=="qucs_angel") {
+    Angel = std::stoi(value);
+  } else {
+    Painting::set_attribute(name,value);
+  }
+}

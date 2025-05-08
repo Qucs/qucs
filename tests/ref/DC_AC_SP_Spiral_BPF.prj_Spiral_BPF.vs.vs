@@ -74,4 +74,5 @@
     (* S0_x1=30, S0_y1=260, S0_x2=180, S0_y2=260 *) net #() net21 ( n_30_260, n_180_260 );
     (* S0_x1=30, S0_y1=260, S0_x2=30, S0_y2=270 *) net #() net22 ( n_30_260, n_30_270 );
     (* S0_x1=30, S0_y1=330, S0_x2=30, S0_y2=350 *) net #() net23 ( n_30_330, n_30_350 );
+    (* S0_x=610, S0_y=500, qucs_type="Text", S0_text="Cauer low-pass filter\n10GHz cutoff, PI-type,\nimpedance matching 50 Ohm", qucs_font_color="#000000", qucs_font_size=12, qucs_font_angle=0 *) S__text #() S0_text1();
 endmodule

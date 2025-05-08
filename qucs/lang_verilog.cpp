@@ -272,21 +272,34 @@ static void dumpDeclaration(outputStream& stream, Element const* e)
 static void dumpPainting(outputStream& stream, Element const* p)
 {
   static int text_counter=1;
-  stream << "    ";
-  stream << "(* S0_x="
+  { untested();
+  static int graphics_counter=1;
+  stream << "    "
+         << "(* "
+         << "S0_x="
          << p->cx
-         << ", S0_y="
-         << p->cy;
+         << ", "
+         << "S0_y="
+         << p->cy
+         << ", "
+         << "qucs_type=\""+p->dev_type()+"\"";
   if(p->attr_get()!="") {
-    stream << ", "
-           << p->attr_get();
+    stream << ", " << p->attr_get();
+  } else {}
+  stream << " *)";
+  if(p->dev_type()=="Text") {
+    stream << " S__text #()"
+           << " S0_text"
+           << text_counter;
+    text_counter++;
+  } else {
+    stream << " S__graphics #()"
+           << " S0_graphics"
+           << graphics_counter;
+    graphics_counter++;
   }
-  stream << " *)"
-         << " S__text #()"
-         << " S0_text"
-         << text_counter
-         << ";\n";
-  text_counter++;
+  stream << "();\n";
+  }
 }
 
 void Schematic::dumpVerilogComponent(outputStream& stream, Element const* e) const
@@ -587,6 +600,20 @@ void parse_instance(CS& cmd, T* x)
   cmd.check(0, "what's this?");
 }
 
+void parse_painting(CS& cmd, Painting* p)
+{ untested();
+  assert(p);
+  incomplete();
+  cmd.reset();
+  while (cmd >> "(*") {
+    while(cmd.ns_more() && !(cmd >> ",") && !(cmd >> "*)")) {
+      std::string name, value;
+      cmd >> name >> "=" >> value;
+      p->set_attribute(name, value);
+    }
+  }
+}
+
 class inspect_attributes {
   std::string _type;
 public:
@@ -617,11 +644,18 @@ std::shared_ptr<Element> clone_instance(std::string const& type)
 {
   QString qtype = QString::fromStdString(type);
   std::shared_ptr<Component> x = Module::getComponent(qtype); // BUG. need proper dispatcher.
-  return x;
+  { untested();
+  if(x) {
+    return x;
+  } else {
+    std::shared_ptr<Painting> p = Module::getPainting(qtype);
+    return p;
+  }
+  }
 }
 
 bool readVerilog(CS &cmd, Schematic*s)
-{
+{ untested();
   trace0("readVerilog0");
   assert(s);
   // todo: catch ExceptionEOF.
@@ -658,7 +692,11 @@ bool readVerilog(CS &cmd, Schematic*s)
 	// setting text position to 0,0 for now.
 	x->set_qucs_text_position(0, 0);
 	s->pushBack(std::dynamic_pointer_cast<Component>(inst)); // (yikes)
-      }else{ untested();
+      }else if(dynamic_cast<Painting*>(inst.get())) { untested();
+        auto pe = std::dynamic_pointer_cast<Painting>(inst);
+        parse_painting(cmd, pe.get());
+        s->pushBack(pe);
+      }else{
 	incomplete();
       }
     }

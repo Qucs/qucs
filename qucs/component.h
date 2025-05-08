@@ -93,11 +93,11 @@ public: // ports
   void check_node_positions(Schematic *schematic);
 
 public:
-  virtual std::string dev_type()const {
+  std::string dev_type()const override {
 	  // incomplete();
 	  return obsolete_model_hack().toStdString();
   }
-  virtual void set_dev_type(std::string const& type);
+  void set_dev_type(std::string const& type) override;
 
 public:
   virtual void set_qucs_text_position(int x, int y) {_tx=x;_ty=y;}

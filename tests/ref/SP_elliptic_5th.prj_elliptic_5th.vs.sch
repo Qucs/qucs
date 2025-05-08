@@ -65,4 +65,5 @@
 <Diagrams>
 </Diagrams>
 <Paintings>
+  <Text 350 260 12 #000000 0 "5th Order Low Pass Elliptic Filter \nEnd of pass band:  100MHz ">
 </Paintings>

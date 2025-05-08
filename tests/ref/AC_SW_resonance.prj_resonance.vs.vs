@@ -18,4 +18,5 @@
     (* S0_x1=120, S0_y1=180, S0_x2=120, S0_y2=240 *) net #() net1 ( n_120_180, n_120_240 );
     (* S0_x1=120, S0_y1=60, S0_x2=320, S0_y2=60 *) net #() net2 ( n_120_60, n_320_60 );
     (* S0_x1=120, S0_y1=60, S0_x2=120, S0_y2=120 *) net #() net3 ( n_120_60, n_120_120 );
+    (* S0_x=100, S0_y=290, qucs_type="Text", S0_text="The voltage overshot strongly depends on the quality\nof the resonance circuit.", qucs_font_color="#000000", qucs_font_size=12, qucs_font_angle=0 *) S__text #() S0_text1();
 endmodule

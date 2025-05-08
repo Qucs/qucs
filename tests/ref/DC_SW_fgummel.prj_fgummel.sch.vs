@@ -29,5 +29,5 @@
     (* S0_x1=360, S0_y1=60, S0_x2=360, S0_y2=130 *) net #() net4 ( n_360_60, n_360_130 );
     (* S0_x1=180, S0_y1=60, S0_x2=360, S0_y2=60 *) net #() net5 ( n_180_60, n_360_60 );
     (* S0_x1=210, S0_y1=130, S0_x2=270, S0_y2=130 *) net #() net6 ( n_210_130, n_270_130 );
-    (* S0_x=40, S0_y=20, qucs_type="Text", S0_text="forward gummel characteristic of a BJT" *) S__text #() S0_text1;
+    (* S0_x=40, S0_y=20, qucs_type="Text", S0_text="forward gummel characteristic of a BJT", qucs_font_color="#000000", qucs_font_size=12, qucs_font_angle=0 *) S__text #() S0_text1();
 endmodule

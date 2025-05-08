@@ -79,4 +79,6 @@
     (* S0_x1=500, S0_y1=280, S0_x2=500, S0_y2=320 *) net #() net26 ( n_500_280, n_500_320 );
     (* S0_x1=40, S0_y1=120, S0_x2=40, S0_y2=190 *) net #() net27 ( n_40_120, n_40_190 );
     (* S0_x1=40, S0_y1=120, S0_x2=280, S0_y2=120 *) net #() net28 ( n_40_120, n_280_120 );
+    (* S0_x=320, S0_y=350, qucs_type="Text", S0_text="50Hz notch filter:\nbuilt by use of extremly high Q gyrator,\nOpAmps fake a 10.1Henry+0.5mOhm coil\nthat forms resonance circuit with C2", qucs_font_color="#000000", qucs_font_size=12, qucs_font_angle=0 *) S__text #() S0_text1();
+    (* S0_x=320, S0_y=420, qucs_type="Text", S0_text="OpAmp gyrator fakes:\ninductance = C1*R1*R2*R4/R3\nresistance = 0.5*R2*R4/R3/OpAmpGain", qucs_font_color="#000000", qucs_font_size=12, qucs_font_angle=0 *) S__text #() S0_text2();
 endmodule

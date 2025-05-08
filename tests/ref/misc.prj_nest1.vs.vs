@@ -20,4 +20,6 @@
     (* S0_x1=340, S0_y1=180, S0_x2=380, S0_y2=180 *) net #() net4 ( n_340_180, n_380_180 );
     (* S0_x1=180, S0_y1=180, S0_x2=200, S0_y2=180 *) net #() net5 ( n_180_180, n_200_180 );
     (* S0_x1=260, S0_y1=180, S0_x2=280, S0_y2=180 *) net #() net6 ( n_260_180, n_280_180 );
+    (* S0_x=190, S0_y=60, qucs_type="Text", S0_text="simple subcircuit which just\nshorts the two ports", qucs_font_color="#000000", qucs_font_size=12, qucs_font_angle=0 *) S__text #() S0_text1();
+    (* S0_x=140, S0_y=430, qucs_type="Text", S0_text="C1 is used just to have a\ncomponent in the subcircuit netlist\n(does not change the simulation/netlisting results)", qucs_font_color="#000000", qucs_font_size=12, qucs_font_angle=0 *) S__text #() S0_text2();
 endmodule

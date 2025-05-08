@@ -166,6 +166,10 @@ public:
   int  cx{0}, cy{0}, x1{0}, y1{0}, x2{0}, y2{0};  // center and relative boundings
 
 public:
+  virtual std::string dev_type()const {return "";}
+  virtual void set_dev_type(std::string const&) {}
+
+public:
   // std::string attr_add()const {return "";}
   virtual std::string attr_get()const {return "";}
 };

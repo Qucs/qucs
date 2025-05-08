@@ -29,4 +29,6 @@
     (* S0_x1=40, S0_y1=110, S0_x2=100, S0_y2=110 *) net #() net5 ( n_40_110, n_100_110 );
     (* S0_x1=400, S0_y1=90, S0_x2=400, S0_y2=110 *) net #() net6 ( n_400_90, n_400_110 );
     (* S0_x1=260, S0_y1=90, S0_x2=400, S0_y2=90 *) net #() net7 ( n_260_90, n_400_90 );
+    (* S0_x=260, S0_y=50, qucs_type="Text", S0_text="For a description of the FET noise\nmodel take a look into its subcircuit.", qucs_font_color="#000000", qucs_font_size=12, qucs_font_angle=0 *) S__text #() S0_text1();
+    (* S0_x=30, S0_y=260, qucs_type="Text", S0_text="This amplifier is noise matched at the input\nfor a frequency of 10GHz.\nThus, the noise optimum Sopt of the overall\ncircuit is zero. (Okay, the matching circuit\nis really ugly, but hey, this is a simulation.)", qucs_font_color="#000000", qucs_font_size=12, qucs_font_angle=0 *) S__text #() S0_text2();
 endmodule

@@ -93,4 +93,7 @@
     (* S0_x1=470, S0_y1=200, S0_x2=470, S0_y2=270 *) net #() net20 ( n_470_200, n_470_270 );
     (* S0_x1=220, S0_y1=270, S0_x2=220, S0_y2=280 *) net #() net21 ( n_220_270, n_220_280 );
     (* S0_x1=220, S0_y1=270, S0_x2=300, S0_y2=270 *) net #() net22 ( n_220_270, n_300_270 );
+    (* S0_x=70, S0_y=140, qucs_type="Text", S0_text="bias stabilisation", qucs_font_color="#000000", qucs_font_size=12, qucs_font_angle=0 *) S__text #() S0_text1();
+    (* S0_x=20, S0_y=240, qucs_type="Text", S0_text="Circuits of this kind are used to\nstabilize the bias of RF\ntransistors. But sometimes they\ntend to LF oscillations. This\nschematic shows how to\ndetermine the degree of stability\nby simulating magnitude and\nphase margin of the loop gain.\nResult: As a rule of thumb,\nit should be  C2 >> C1", qucs_font_color="#000000", qucs_font_size=12, qucs_font_angle=0 *) S__text #() S0_text2();
+    (* S0_x=360, S0_y=200, qucs_type="Text", S0_text="for measuring\nthe loop stability", qucs_font_color="#000000", qucs_font_size=12, qucs_font_angle=0 *) S__text #() S0_text3();
 endmodule

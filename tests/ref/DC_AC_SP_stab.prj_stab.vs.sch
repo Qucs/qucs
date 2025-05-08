@@ -74,4 +74,7 @@
 <Diagrams>
 </Diagrams>
 <Paintings>
+  <Text 70 140 12 #000000 0 "bias stabilisation">
+  <Text 20 240 12 #000000 0 "Circuits of this kind are used to\nstabilize the bias of RF\ntransistors. But sometimes they\ntend to LF oscillations. This\nschematic shows how to\ndetermine the degree of stability\nby simulating magnitude and\nphase margin of the loop gain.\nResult: As a rule of thumb,\nit should be  C2 >> C1">
+  <Text 360 200 12 #000000 0 "for measuring\nthe loop stability">
 </Paintings>

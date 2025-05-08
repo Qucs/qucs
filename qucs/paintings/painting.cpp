@@ -15,6 +15,7 @@
  *                                                                         *
  ***************************************************************************/
 #include "painting.h"
+#include "trace.h"
 
 Painting::Painting()
 {
@@ -81,4 +82,26 @@ QString Painting::toBrushString (int brush) {
   case Qt::TexturePattern : return "Qt::CustomPattern ";
   }
   return "Qt::NoBrush";
+}
+
+std::string Painting::attr_get()const
+{ untested();
+  return "qucs_w="+std::to_string(x2)+", "+"qucs_h="+std::to_string(y2);
+}
+
+void Painting::set_attribute(std::string name, std::string value)
+{ untested();
+  if(name=="S0_x") {
+    cx = std::stoi(value);
+  }
+  else if(name=="S0_y") {
+    cy = std::stoi(value);
+  }
+  else if(name=="qucs_w") {
+    x2 = std::stoi(value);
+  }
+  else if(name=="qucs_h") {
+    y2 = std::stoi(value);
+  }
+  else {}
 }

@@ -25,6 +25,7 @@
 #include <memory>
 
 class Element;
+class Painting;
 
 // function typedefs for circuits and analyses
 typedef Element * (* pInfoFunc) (QString&, char * &, bool);
@@ -40,6 +41,7 @@ class Module
   static void registerComponent (QString, pInfoFunc);
   static void intoCategory (Module *);
   static std::shared_ptr<Component> getComponent(QString);
+  static std::shared_ptr<Painting> getPainting(QString Name);
   static void registerDynamicComponents(void);
 
  public:

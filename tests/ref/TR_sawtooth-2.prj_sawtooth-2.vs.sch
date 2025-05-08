@@ -79,4 +79,5 @@
 <Diagrams>
 </Diagrams>
 <Paintings>
+  <Text 590 390 12 #000000 0 "Saw-Tooth Generator">
 </Paintings>

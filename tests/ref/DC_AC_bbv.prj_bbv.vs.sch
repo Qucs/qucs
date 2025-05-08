@@ -95,4 +95,5 @@
 <Diagrams>
 </Diagrams>
 <Paintings>
+  <Text 300 470 12 #000000 0 "circuit of broadband amplifer NE5205 (Valvo Signetics)\nbut without parasitics">
 </Paintings>

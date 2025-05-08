@@ -39,5 +39,5 @@
     (* S0_x1=110, S0_y1=100, S0_x2=110, S0_y2=150 *) net #() net10 ( n_110_100, n_110_150 );
     (* S0_x1=110, S0_y1=150, S0_x2=110, S0_y2=170 *) net #() net11 ( n_110_150, n_110_170 );
     (* S0_x1=110, S0_y1=150, S0_x2=160, S0_y2=150 *) net #() net12 ( n_110_150, n_160_150 );
-    (* S0_x=90, S0_y=20, qucs_type="Text", S0_text="Simple series regulator circuit." *) S__text #() S0_text1;
+    (* S0_x=90, S0_y=20, qucs_type="Text", S0_text="Simple series regulator circuit.", qucs_font_color="#000000", qucs_font_size=16, qucs_font_angle=0 *) S__text #() S0_text1();
 endmodule

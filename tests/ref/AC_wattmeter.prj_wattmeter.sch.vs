@@ -57,5 +57,5 @@
     (* S0_x1=226, S0_y1=437, S0_x2=306, S0_y2=437 *) net #() net20 ( n_226_437, n_306_437 );
     (* S0_x1=226, S0_y1=207, S0_x2=226, S0_y2=437 *) net #() net21 ( n_226_207, n_226_437 );
     (* S0_x1=406, S0_y1=187, S0_x2=516, S0_y2=187 *) net #() net22 ( n_406_187, n_516_187 );
-    (* S0_x=232, S0_y=-21, qucs_type="Text", S0_text="Wattmeter in AC, the component always\nacts as both voltmeter and ammeter.\nWith the collected values, it then calculates the\npower triangle and corresponding power factor." *) S__text #() S0_text1;
+    (* S0_x=232, S0_y=-21, qucs_type="Text", S0_text="Wattmeter in AC, the component always\nacts as both voltmeter and ammeter.\nWith the collected values, it then calculates the\npower triangle and corresponding power factor.", qucs_font_color="#000000", qucs_font_size=12, qucs_font_angle=0 *) S__text #() S0_text1();
 endmodule

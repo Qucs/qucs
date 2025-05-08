@@ -53,4 +53,5 @@
 <Diagrams>
 </Diagrams>
 <Paintings>
+  <Text 80 380 12 #000000 0 "The feedback of this oscillator is realized by three\nRC networks, which create 60� phase shift each at\noscillating frequency.\n=> freq = sqrt(6) / (2*pi*R*C)">
 </Paintings>

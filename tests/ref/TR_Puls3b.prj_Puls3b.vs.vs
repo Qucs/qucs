@@ -57,4 +57,5 @@
     (* S0_x1=160, S0_y1=80, S0_x2=190, S0_y2=80 *) net #() net18 ( n_160_80, n_190_80 );
     (* S0_x1=280, S0_y1=80, S0_x2=310, S0_y2=80 *) net #() net19 ( n_280_80, n_310_80 );
     (* S0_x1=500, S0_y1=80, S0_x2=520, S0_y2=80 *) net #() net20 ( n_500_80, n_520_80 );
+    (* S0_x=380, S0_y=340, qucs_type="Text", S0_text="ISO 7637 -- Test Pulse 3b", qucs_font_color="#000000", qucs_font_size=12, qucs_font_angle=0 *) S__text #() S0_text1();
 endmodule

@@ -33,4 +33,5 @@
 <Diagrams>
 </Diagrams>
 <Paintings>
+  <Text 100 290 12 #000000 0 "The voltage overshot strongly depends on the quality\nof the resonance circuit.">
 </Paintings>

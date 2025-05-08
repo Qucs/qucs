@@ -59,6 +59,6 @@
     (* S0_x1=380, S0_y1=250, S0_x2=560, S0_y2=250 *) net #() net15 ( n_380_250, n_560_250 );
     (* S0_x1=560, S0_y1=250, S0_x2=660, S0_y2=250 *) net #() net16 ( n_560_250, n_660_250 );
     (* S0_x1=560, S0_y1=230, S0_x2=560, S0_y2=250 *) net #() net17 ( n_560_230, n_560_250 );
-    (* S0_x=50, S0_y=40, qucs_type="Text", S0_text="Boost converter circuit." *) S__text #() S0_text1;
-    (* S0_x=50, S0_y=80, qucs_type="Text", S0_text="Change duty cycle (\"Bduty\" in the equations) to manipulate output voltage." *) S__text #() S0_text2;
+    (* S0_x=50, S0_y=40, qucs_type="Text", S0_text="Boost converter circuit.", qucs_font_color="#000000", qucs_font_size=16, qucs_font_angle=0 *) S__text #() S0_text1();
+    (* S0_x=50, S0_y=80, qucs_type="Text", S0_text="Change duty cycle (\"Bduty\" in the equations) to manipulate output voltage.", qucs_font_color="#000000", qucs_font_size=12, qucs_font_angle=0 *) S__text #() S0_text2();
 endmodule

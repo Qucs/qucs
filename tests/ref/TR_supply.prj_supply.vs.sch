@@ -48,4 +48,5 @@
 <Diagrams>
 </Diagrams>
 <Paintings>
+  <Text 180 20 12 #000000 0 "conventional power supply:\ntransformer, 2-way-rectifier, filter">
 </Paintings>
