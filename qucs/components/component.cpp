@@ -871,6 +871,13 @@ void Component::apply_qucs_values()
     cx = _qucs_x1;
     cy = _qucs_y1;
   }
+  /* BUG: Tests fail as long as Verilog Schematics are not updated
+  int i=0;
+  for (auto pp=Props.begin(); pp!=Props.end(); pp++, i++) { untested();
+    assert(i<(int)_qucs_p_visibility.size());
+    pp->display=(_qucs_p_visibility[i]=='1');
+  }
+  */
 }
 
 // -------------------------------------------------------
@@ -885,6 +892,15 @@ bool Component::param_is_printable(int) const
 {
   // incomplete(); // props(i)->is_attribute?
   return true;
+}
+
+bool Component::param_is_visible(int i) const
+{ untested();
+  assert(i<int(Props.size()));
+  auto it = Props.begin();
+  // BUG: Missing random access
+  std::advance(it, i);
+  return it->display;
 }
 
 std::string Component::param_name(int i) const

@@ -79,6 +79,7 @@ public: // attributes
 public: // parameter access
   virtual int param_count() const;
   virtual bool param_is_printable(int i) const;
+  virtual bool param_is_visible(int i) const;
   virtual std::string param_name(int i) const;
   virtual std::string param_value(int i) const;
   virtual void set_param_by_index(int i, std::string const& Value);
@@ -134,6 +135,7 @@ private:
   int _qucs_x1{0}, _qucs_y1{0}; // position of port 1 after transform
   bool _qucs_mirrored{false}; // value from XML document
   int _qucs_rotated{0}; // value from XML document
+  std::string _qucs_p_visibility; // store visibility flags of properties in schematic
 public:
   int tx()const {return _tx;}
   int ty()const {return _ty;}

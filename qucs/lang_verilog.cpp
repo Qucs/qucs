@@ -188,6 +188,13 @@ void dump_attributes(outputStream& stream, T const* x)
   }else{
   }
   if(c) {
+    { untested();
+      stream << "qucs_visible=\"";
+      for (int ii = 0; ii < c->param_count(); ++ii) {
+        stream << c->param_is_visible(ii);
+      }
+      stream << "\", ";
+    }
     if(c->net_nodes()) {
       int port_idx = 1;
       for (auto pp = c->Ports.begin(); pp != c->Ports.end(); ++pp) {
