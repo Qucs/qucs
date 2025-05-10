@@ -75,16 +75,16 @@ void Module::registerComponent (QString category, pInfoFunc info) {
 // Returns instantiated painting based on the given graphics name.
 // If there is no such painting type known the function returns NULL.
 std::shared_ptr<Painting> Module::getPainting(QString Name)
-{ untested();
+{
   Painting *p = NULL;
-  if(Name == "Line") { p = new GraphicLine(); }
-  else if(Name == "EArc") { p = new EllipseArc(); }
-  else if(Name == ".PortSym") { p = new PortSymbol(); }
-  else if(Name == ".ID") { p = new ID_Text(); }
+  if(Name == "Line") {untested(); p = new GraphicLine(); }
+  else if(Name == "EArc") {untested(); p = new EllipseArc(); }
+  else if(Name == ".PortSym") {untested(); p = new PortSymbol(); }
+  else if(Name == ".ID") {untested(); p = new ID_Text(); }
   else if(Name == "Text") { p = new GraphicText(); }
-  else if(Name == "Rectangle") { p = new Rectangle(); }
-  else if(Name == "Arrow") { p = new Arrow(); }
-  else if(Name == "Ellipse") { p = new Ellipse(); }
+  else if(Name == "Rectangle") {untested(); p = new Rectangle(); }
+  else if(Name == "Arrow") {untested(); p = new Arrow(); }
+  else if(Name == "Ellipse") {untested(); p = new Ellipse(); }
   else {}
   return std::shared_ptr<Painting>(p);
 }
@@ -101,9 +101,9 @@ std::shared_ptr<Component> Module::getComponent (QString Model) {
 	  c = new LibComp ();
   }else if (Model == "Eqn") {
 	  c = new Equation ();
-  }else if (Model == "SPICE") {
+  }else if (Model == "SPICE") { untested();
 	 c = new SpiceFile();
-  }else if (Model == "Rus") {
+  }else if (Model == "Rus") { untested();
 	  c = new Resistor (false);  // backward compatible
   } else if (Model.left (6) == "SPfile" && Model != "SPfile") { untested();
     // backward compatible
