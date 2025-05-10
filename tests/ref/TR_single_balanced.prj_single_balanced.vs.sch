@@ -59,5 +59,5 @@
 <Diagrams>
 </Diagrams>
 <Paintings>
-  <Text 180 -10 12 #000000 0 "single balanced active CMOS mixer">
+  <Text 180 -10 16 #0055ff 0 "single balanced active CMOS mixer">
 </Paintings>

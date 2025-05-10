@@ -64,5 +64,5 @@
 <Diagrams>
 </Diagrams>
 <Paintings>
-  <Text 700 30 12 #000000 0 "Author: Mike Brinson">
+  <Text 700 30 13 #000000 0 "Author: Mike Brinson">
 </Paintings>

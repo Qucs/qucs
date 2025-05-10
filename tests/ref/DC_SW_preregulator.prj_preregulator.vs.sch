@@ -44,5 +44,5 @@
 <Diagrams>
 </Diagrams>
 <Paintings>
-  <Text 90 20 12 #000000 0 "Simple series regulator circuit.">
+  <Text 90 20 16 #000000 0 "Simple series regulator circuit.">
 </Paintings>

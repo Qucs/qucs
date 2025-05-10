@@ -54,6 +54,8 @@
     (* S0_x1=440, S0_y1=120, S0_x2=620, S0_y2=120 *) net #() net12 ( n_440_120, n_620_120 );
     (* S0_x1=440, S0_y1=120, S0_x2=440, S0_y2=240 *) net #() net13 ( n_440_120, n_440_240 );
     (* S0_x1=380, S0_y1=240, S0_x2=440, S0_y2=240 *) net #() net14 ( n_380_240, n_440_240 );
+    (* S0_x=100, S0_y=60, qucs_type="Rectangle", qucs_w=130, qucs_h=200 *) S__graphics #() S0_graphics1();
+    (* S0_x=580, S0_y=90, qucs_type="Rectangle", qucs_w=130, qucs_h=190 *) S__graphics #() S0_graphics2();
     (* S0_x=590, S0_y=260, qucs_type="Text", S0_text="load (e.g. antenna)", qucs_font_color="#000000", qucs_font_size=12, qucs_font_angle=0 *) S__text #() S0_text1();
     (* S0_x=160, S0_y=240, qucs_type="Text", S0_text="generator", qucs_font_color="#000000", qucs_font_size=12, qucs_font_angle=0 *) S__text #() S0_text2();
     (* S0_x=220, S0_y=420, qucs_type="Text", S0_text="This is a VSWR meter often used to measure if the antenna\nis matched. It is connected between generator and load.\nIt creates a voltage proportional to the forward voltage and\none proportional to the reflected voltage. The equations\non this page calculates the reflection coefficient using\nthe definition and using the voltages. As can be seen they\nequal each other. The mismatch created by the VSWR meter\nis very low.", qucs_font_color="#000000", qucs_font_size=12, qucs_font_angle=0 *) S__text #() S0_text3();

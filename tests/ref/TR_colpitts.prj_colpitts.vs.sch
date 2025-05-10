@@ -51,5 +51,5 @@
 <Diagrams>
 </Diagrams>
 <Paintings>
-  <Text 300 310 12 #000000 0 "Colpitts oscillator">
+  <Text 300 310 16 #000000 0 "Colpitts oscillator">
 </Paintings>

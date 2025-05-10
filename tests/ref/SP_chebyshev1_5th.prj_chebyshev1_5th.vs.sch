@@ -47,5 +47,5 @@
 <Diagrams>
 </Diagrams>
 <Paintings>
-  <Text 310 250 12 #000000 0 "5th Order Low Pass Chebyshev Type 1 Filter \nEnd of pass band:  100MHz ">
+  <Text 310 250 18 #000000 0 "5th Order Low Pass Chebyshev Type 1 Filter \nEnd of pass band:  100MHz ">
 </Paintings>

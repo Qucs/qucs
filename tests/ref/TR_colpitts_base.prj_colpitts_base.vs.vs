@@ -61,5 +61,5 @@
     (* S0_x1=80, S0_y1=160, S0_x2=150, S0_y2=160 *) net #() net22 ( n_80_160, n_150_160 );
     (* S0_x1=80, S0_y1=240, S0_x2=80, S0_y2=260 *) net #() net23 ( n_80_240, n_80_260 );
     (* S0_x1=80, S0_y1=260, S0_x2=100, S0_y2=260 *) net #() net24 ( n_80_260, n_100_260 );
-    (* S0_x=40, S0_y=50, qucs_type="Text", S0_text="Yet another Colpitts oscillator.", qucs_font_color="#000000", qucs_font_size=12, qucs_font_angle=0 *) S__text #() S0_text1();
+    (* S0_x=40, S0_y=50, qucs_type="Text", S0_text="Yet another Colpitts oscillator.", qucs_font_color="#000000", qucs_font_size=16, qucs_font_angle=0 *) S__text #() S0_text1();
 endmodule

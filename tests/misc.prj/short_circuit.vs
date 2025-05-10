@@ -11,11 +11,11 @@
     wire n_340_260;
     wire n_340_180;
     wire n_380_180;
-    (* qucs_mirrored=0, qucs_rotated=2, qucs_Num=2, qucs_Type="analog", S0_x1=400, S0_y1=180 *) Port #() P2 ( n_400_180 );
-    (* qucs_mirrored=1, qucs_rotated=0, qucs_Num=1, qucs_Type="analog", S0_x1=180, S0_y1=180 *) Port #() P1 ( n_180_180 );
-    (* qucs_mirrored=0, qucs_rotated=0, S0_x1=260, S0_y1=260, S0_x2=320, S0_y2=260 *) R #(.R(0 Ohm),.Temp(26.85),.Tc1(0.0),.Tc2(0.0),.Tnom(26.85)) R1 ( n_260_260, n_320_260 );
-    (* qucs_mirrored=0, qucs_rotated=0, S0_x1=380, S0_y1=360 *) GND #() \*  ( n_380_360 );
-    (* qucs_mirrored=0, qucs_rotated=1, S0_x1=380, S0_y1=310, S0_x2=380, S0_y2=250 *) C #(.C(1 pF),.V()) C1 ( n_380_310, n_380_250 );
+    (* qucs_mirrored=0, qucs_rotated=2, qucs_Num=2, qucs_Type="analog", qucs_visible="10", S0_x1=400, S0_y1=180 *) Port #() P2 ( n_400_180 );
+    (* qucs_mirrored=1, qucs_rotated=0, qucs_Num=1, qucs_Type="analog", qucs_visible="10", S0_x1=180, S0_y1=180 *) Port #() P1 ( n_180_180 );
+    (* qucs_mirrored=0, qucs_rotated=0, qucs_visible="100000", S0_x1=260, S0_y1=260, S0_x2=320, S0_y2=260 *) R #(.R(0 Ohm),.Temp(26.85),.Tc1(0.0),.Tc2(0.0),.Tnom(26.85)) R1 ( n_260_260, n_320_260 );
+    (* qucs_mirrored=0, qucs_rotated=0, qucs_visible="", S0_x1=380, S0_y1=360 *) GND #() \*  ( n_380_360 );
+    (* qucs_mirrored=0, qucs_rotated=1, qucs_visible="100", S0_x1=380, S0_y1=310, S0_x2=380, S0_y2=250 *) C #(.C(1 pF),.V()) C1 ( n_380_310, n_380_250 );
     (* S0_x1=180, S0_y1=180, S0_x2=240, S0_y2=180 *) net #() net1 ( n_180_180, n_240_180 );
     (* S0_x1=240, S0_y1=260, S0_x2=260, S0_y2=260 *) net #() net2 ( n_240_260, n_260_260 );
     (* S0_x1=240, S0_y1=180, S0_x2=240, S0_y2=260 *) net #() net3 ( n_240_180, n_240_260 );
@@ -26,6 +26,6 @@
     (* S0_x1=380, S0_y1=180, S0_x2=400, S0_y2=180 *) net #() net8 ( n_380_180, n_400_180 );
     (* S0_x1=380, S0_y1=180, S0_x2=380, S0_y2=250 *) net #() net9 ( n_380_180, n_380_250 );
     (* S0_x1=380, S0_y1=310, S0_x2=380, S0_y2=360 *) net #() net10 ( n_380_310, n_380_360 );
-    (* S0_x=190, S0_y=60, qucs_type="Text", S0_text="simple subcircuit which just\nshorts the two ports" *) S0_text #() S0_text1;
-    (* S0_x=140, S0_y=430, qucs_type="Text", S0_text="C1 is used just to have a\ncomponent in the subcircuit netlist\n(does not change the simulation/netlisting results)" *) S0_text #() S0_text2;
+    (* S0_x=190, S0_y=60, qucs_type="Text", S0_text="simple subcircuit which just\nshorts the two ports", qucs_font_color="#ff5500", qucs_font_size=14, qucs_font_angle=0 *) S__text #() S0_text1();
+    (* S0_x=140, S0_y=430, qucs_type="Text", S0_text="C1 is used just to have a\ncomponent in the subcircuit netlist\n(does not change the simulation/netlisting results)", qucs_font_color="#ff5500", qucs_font_size=12, qucs_font_angle=0 *) S__text #() S0_text2();
 endmodule

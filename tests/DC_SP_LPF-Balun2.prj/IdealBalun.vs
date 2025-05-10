@@ -14,12 +14,12 @@
     wire n_430_200;
     wire n_340_240;
     wire n_430_360;
-    (* qucs_mirrored=1, qucs_rotated=2, S0_x1=410, S0_y1=140, S0_x2=350, S0_y2=180, S0_x3=350, S0_y3=240, S0_x4=410, S0_y4=280, S0_x5=410, S0_y5=220, S0_x6=410, S0_y6=200 *) sTr #(.T1(0.5),.T2(0.5)) Tr1 ( n_410_140, n_350_180, n_350_240, n_410_280, n_410_220, n_410_200 );
-    (* qucs_mirrored=1, qucs_rotated=2, qucs_Num=3, qucs_Type="analog", S0_x1=460, S0_y1=280 *) Port #() P3 ( n_460_280 );
-    (* qucs_mirrored=1, qucs_rotated=2, qucs_Num=4, qucs_Type="analog", S0_x1=460, S0_y1=140 *) Port #() P4 ( n_460_140 );
-    (* qucs_mirrored=0, qucs_rotated=1, qucs_Num=5, qucs_Type="analog", S0_x1=340, S0_y1=390 *) Port #() P5 ( n_340_390 );
-    (* qucs_mirrored=0, qucs_rotated=0, qucs_Num=2, qucs_Type="analog", S0_x1=260, S0_y1=360 *) Port #() P2 ( n_260_360 );
-    (* qucs_mirrored=0, qucs_rotated=0, qucs_Num=1, qucs_Type="analog", S0_x1=260, S0_y1=180 *) Port #() P1 ( n_260_180 );
+    (* qucs_mirrored=1, qucs_rotated=2, qucs_visible="11", S0_x1=410, S0_y1=140, S0_x2=350, S0_y2=180, S0_x3=350, S0_y3=240, S0_x4=410, S0_y4=280, S0_x5=410, S0_y5=220, S0_x6=410, S0_y6=200 *) sTr #(.T1(0.5),.T2(0.5)) Tr1 ( n_410_140, n_350_180, n_350_240, n_410_280, n_410_220, n_410_200 );
+    (* qucs_mirrored=1, qucs_rotated=2, qucs_Num=3, qucs_Type="analog", qucs_visible="10", S0_x1=460, S0_y1=280 *) Port #() P3 ( n_460_280 );
+    (* qucs_mirrored=1, qucs_rotated=2, qucs_Num=4, qucs_Type="analog", qucs_visible="10", S0_x1=460, S0_y1=140 *) Port #() P4 ( n_460_140 );
+    (* qucs_mirrored=0, qucs_rotated=1, qucs_Num=5, qucs_Type="analog", qucs_visible="10", S0_x1=340, S0_y1=390 *) Port #() P5 ( n_340_390 );
+    (* qucs_mirrored=0, qucs_rotated=0, qucs_Num=2, qucs_Type="analog", qucs_visible="10", S0_x1=260, S0_y1=360 *) Port #() P2 ( n_260_360 );
+    (* qucs_mirrored=0, qucs_rotated=0, qucs_Num=1, qucs_Type="analog", qucs_visible="10", S0_x1=260, S0_y1=180 *) Port #() P1 ( n_260_180 );
     (* S0_x1=410, S0_y1=220, S0_x2=430, S0_y2=220 *) net #() net1 ( n_410_220, n_430_220 );
     (* S0_x1=410, S0_y1=200, S0_x2=430, S0_y2=200 *) net #() net2 ( n_410_200, n_430_200 );
     (* S0_x1=430, S0_y1=200, S0_x2=430, S0_y2=220 *) net #() net3 ( n_430_200, n_430_220 );

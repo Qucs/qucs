@@ -57,5 +57,5 @@
 </Diagrams>
 <Paintings>
   <Text 50 70 12 #000000 0 "Change duty cycle ("Bduty" in the equations) to manipulate output voltage.">
-  <Text 50 30 12 #000000 0 "Inverting buck-boost converter circuit.">
+  <Text 50 30 16 #000000 0 "Inverting buck-boost converter circuit.">
 </Paintings>

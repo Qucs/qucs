@@ -50,5 +50,5 @@
 <Diagrams>
 </Diagrams>
 <Paintings>
-  <Text 50 30 12 #000000 0 "Full-wave rectifier using a transformer and 2 diodes.">
+  <Text 50 30 16 #000000 0 "Full-wave rectifier using a transformer and 2 diodes.">
 </Paintings>

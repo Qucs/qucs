@@ -84,5 +84,5 @@
     (* S0_x1=170, S0_y1=60, S0_x2=170, S0_y2=140 *) net #() net30 ( n_170_60, n_170_140 );
     (* S0_x1=170, S0_y1=60, S0_x2=280, S0_y2=60 *) net #() net31 ( n_170_60, n_280_60 );
     (* S0_x1=60, S0_y1=140, S0_x2=100, S0_y2=140 *) net #() net32 ( n_60_140, n_100_140 );
-    (* S0_x=60, S0_y=20, qucs_type="Text", S0_text="Modified Giacoletto equivalent circuit ", qucs_font_color="#000000", qucs_font_size=12, qucs_font_angle=0 *) S__text #() S0_text1();
+    (* S0_x=60, S0_y=20, qucs_type="Text", S0_text="Modified Giacoletto equivalent circuit ", qucs_font_color="#000000", qucs_font_size=16, qucs_font_angle=0 *) S__text #() S0_text1();
 endmodule

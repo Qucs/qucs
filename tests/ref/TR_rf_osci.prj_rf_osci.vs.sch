@@ -50,5 +50,5 @@
 <Diagrams>
 </Diagrams>
 <Paintings>
-  <Text 330 70 12 #000000 0 "Peltz oscillator">
+  <Text 330 70 16 #000000 0 "Peltz oscillator">
 </Paintings>

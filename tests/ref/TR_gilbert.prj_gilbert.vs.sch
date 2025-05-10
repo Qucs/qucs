@@ -91,5 +91,5 @@
 <Diagrams>
 </Diagrams>
 <Paintings>
-  <Text 430 470 12 #000000 0 "The famous gilbert cell mixer:\nAn active, double-balanced mixer.">
+  <Text 430 470 16 #0000ff 0 "The famous gilbert cell mixer:\nAn active, double-balanced mixer.">
 </Paintings>

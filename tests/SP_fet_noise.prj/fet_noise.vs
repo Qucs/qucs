@@ -13,16 +13,16 @@
     wire n_180_110;
     wire n_40_110;
     wire n_400_90;
-    (* qucs_mirrored=0, qucs_rotated=0, S0_x1=240, S0_y1=130 *) GND #() \*  ( n_240_130 );
-    (* qucs_mirrored=0, qucs_rotated=0, qucs_Type="Sub", qucs_File="fet.sch", S0_x1=200, S0_y1=110, S0_x2=260, S0_y2=90, S0_x3=240, S0_y3=130 *) fet #() SUB1 ( n_200_110, n_260_90, n_240_130 );
-    (* qucs_mirrored=0, qucs_rotated=0, S0_x1=100, S0_y1=110, S0_x2=160, S0_y2=110 *) L #(.L(1.1 nH),.I()) L1 ( n_100_110, n_160_110 );
-    (* qucs_mirrored=0, qucs_rotated=1, S0_x1=180, S0_y1=210, S0_x2=180, S0_y2=150 *) L #(.L(4.0 nH),.I()) L2 ( n_180_210, n_180_150 );
-    (* qucs_mirrored=0, qucs_rotated=0, S0_x1=180, S0_y1=210 *) GND #() \*  ( n_180_210 );
-    (* qucs_mirrored=0, qucs_rotated=0, S0_x1=40, S0_y1=210 *) GND #() \*  ( n_40_210 );
-    (* qucs_mirrored=0, qucs_rotated=1, S0_x1=40, S0_y1=150, S0_x2=40, S0_y2=210 *) Pac #(.Num(1),.Z(50 Ohm),.P(0 dBm),.f(1 GHz),.Temp(26.85)) P1 ( n_40_150, n_40_210 );
-    (* qucs_mirrored=0, qucs_rotated=0, S0_x1=400, S0_y1=170 *) GND #() \*  ( n_400_170 );
-    (* qucs_mirrored=0, qucs_rotated=1, S0_x1=400, S0_y1=110, S0_x2=400, S0_y2=170 *) Pac #(.Num(2),.Z(50 Ohm),.P(0 dBm),.f(1 GHz),.Temp(26.85)) P2 ( n_400_110, n_400_170 );
-    (* qucs_mirrored=0, qucs_rotated=0, S0_x1=310, S0_y1=220 *) \.SP  #(.Type(lin),.Start(1 GHz),.Stop(20 GHz),.Points(39),.Noise(yes),.NoiseIP(1),.NoiseOP(2),.saveCVs(no),.saveAll(no)) SP1 (  );
+    (* qucs_mirrored=0, qucs_rotated=0, qucs_visible="", S0_x1=240, S0_y1=130 *) GND #() \*  ( n_240_130 );
+    (* qucs_mirrored=0, qucs_rotated=0, qucs_Type="Sub", qucs_File="fet.sch", qucs_visible="1", S0_x1=200, S0_y1=110, S0_x2=260, S0_y2=90, S0_x3=240, S0_y3=130 *) fet #() SUB1 ( n_200_110, n_260_90, n_240_130 );
+    (* qucs_mirrored=0, qucs_rotated=0, qucs_visible="10", S0_x1=100, S0_y1=110, S0_x2=160, S0_y2=110 *) L #(.L(1.1 nH),.I()) L1 ( n_100_110, n_160_110 );
+    (* qucs_mirrored=0, qucs_rotated=1, qucs_visible="10", S0_x1=180, S0_y1=210, S0_x2=180, S0_y2=150 *) L #(.L(4.0 nH),.I()) L2 ( n_180_210, n_180_150 );
+    (* qucs_mirrored=0, qucs_rotated=0, qucs_visible="", S0_x1=180, S0_y1=210 *) GND #() \*  ( n_180_210 );
+    (* qucs_mirrored=0, qucs_rotated=0, qucs_visible="", S0_x1=40, S0_y1=210 *) GND #() \*  ( n_40_210 );
+    (* qucs_mirrored=0, qucs_rotated=1, qucs_visible="11000", S0_x1=40, S0_y1=150, S0_x2=40, S0_y2=210 *) Pac #(.Num(1),.Z(50 Ohm),.P(0 dBm),.f(1 GHz),.Temp(26.85)) P1 ( n_40_150, n_40_210 );
+    (* qucs_mirrored=0, qucs_rotated=0, qucs_visible="", S0_x1=400, S0_y1=170 *) GND #() \*  ( n_400_170 );
+    (* qucs_mirrored=0, qucs_rotated=1, qucs_visible="11000", S0_x1=400, S0_y1=110, S0_x2=400, S0_y2=170 *) Pac #(.Num(2),.Z(50 Ohm),.P(0 dBm),.f(1 GHz),.Temp(26.85)) P2 ( n_400_110, n_400_170 );
+    (* qucs_mirrored=0, qucs_rotated=0, qucs_visible="111110000", S0_x1=310, S0_y1=220 *) \.SP  #(.Type(lin),.Start(1 GHz),.Stop(20 GHz),.Points(39),.Noise(yes),.NoiseIP(1),.NoiseOP(2),.saveCVs(no),.saveAll(no)) SP1 (  );
     (* S0_x1=160, S0_y1=110, S0_x2=180, S0_y2=110 *) net #() net1 ( n_160_110, n_180_110 );
     (* S0_x1=180, S0_y1=110, S0_x2=200, S0_y2=110 *) net #() net2 ( n_180_110, n_200_110 );
     (* S0_x1=180, S0_y1=110, S0_x2=180, S0_y2=150 *) net #() net3 ( n_180_110, n_180_150 );
@@ -30,6 +30,6 @@
     (* S0_x1=40, S0_y1=110, S0_x2=100, S0_y2=110 *) net #() net5 ( n_40_110, n_100_110 );
     (* S0_x1=400, S0_y1=90, S0_x2=400, S0_y2=110 *) net #() net6 ( n_400_90, n_400_110 );
     (* S0_x1=260, S0_y1=90, S0_x2=400, S0_y2=90 *) net #() net7 ( n_260_90, n_400_90 );
-    (* S0_x=260, S0_y=50, qucs_type="Text", S0_text="For a description of the FET noise\nmodel take a look into its subcircuit." *) S0_text #() S0_text1;
-    (* S0_x=30, S0_y=260, qucs_type="Text", S0_text="This amplifier is noise matched at the input\nfor a frequency of 10GHz.\nThus, the noise optimum Sopt of the overall\ncircuit is zero. (Okay, the matching circuit\nis really ugly, but hey, this is a simulation.)" *) S0_text #() S0_text2;
+    (* S0_x=260, S0_y=50, qucs_type="Text", S0_text="For a description of the FET noise\nmodel take a look into its subcircuit.", qucs_font_color="#000000", qucs_font_size=12, qucs_font_angle=0 *) S__text #() S0_text1();
+    (* S0_x=30, S0_y=260, qucs_type="Text", S0_text="This amplifier is noise matched at the input\nfor a frequency of 10GHz.\nThus, the noise optimum Sopt of the overall\ncircuit is zero. (Okay, the matching circuit\nis really ugly, but hey, this is a simulation.)", qucs_font_color="#000000", qucs_font_size=12, qucs_font_angle=0 *) S__text #() S0_text2();
 endmodule

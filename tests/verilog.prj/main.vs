@@ -4,5 +4,5 @@
     wire n_380_350;
     wire n_440_350;
     wire n_380_410;
-    (* qucs_mirrored=0, qucs_rotated=0, qucs_type="Verilog", qucs_File="sub.v", S0_x1=380, S0_y1=290, S0_x2=440, S0_y2=290, S0_x3=380, S0_y3=350, S0_x4=440, S0_y4=350, S0_x5=380, S0_y5=410 *) mysub #() X1 ( n_380_290, n_440_290, n_380_350, n_440_350, n_380_410 );
+    (* qucs_mirrored=0, qucs_rotated=0, qucs_type="Verilog", qucs_File="sub.v", qucs_visible="0", S0_x1=380, S0_y1=290, S0_x2=440, S0_y2=290, S0_x3=380, S0_y3=350, S0_x4=440, S0_y4=350, S0_x5=380, S0_y5=410 *) mysub #() X1 ( n_380_290, n_440_290, n_380_350, n_440_350, n_380_410 );
 endmodule

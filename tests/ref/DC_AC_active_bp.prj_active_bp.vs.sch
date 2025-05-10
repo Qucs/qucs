@@ -49,5 +49,5 @@
 <Diagrams>
 </Diagrams>
 <Paintings>
-  <Text 280 270 12 #000000 0 "active bandpass filter">
+  <Text 280 270 14 #000000 0 "active bandpass filter">
 </Paintings>

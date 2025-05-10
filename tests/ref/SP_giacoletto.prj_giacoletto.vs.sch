@@ -68,5 +68,5 @@
 <Diagrams>
 </Diagrams>
 <Paintings>
-  <Text 60 20 12 #000000 0 "Modified Giacoletto equivalent circuit ">
+  <Text 60 20 16 #000000 0 "Modified Giacoletto equivalent circuit ">
 </Paintings>

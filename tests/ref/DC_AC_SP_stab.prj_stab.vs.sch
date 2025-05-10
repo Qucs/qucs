@@ -74,7 +74,9 @@
 <Diagrams>
 </Diagrams>
 <Paintings>
-  <Text 70 140 12 #000000 0 "bias stabilisation">
+  <Rectangle 60 20 230 190 #000000 1 1 #c0c0c0 1 0>
+  <Text 70 140 14 #00007f 90 "bias stabilisation">
+  <Arrow 390 200 -20 -60 20 8 #ff0000 3 1 0>
   <Text 20 240 12 #000000 0 "Circuits of this kind are used to\nstabilize the bias of RF\ntransistors. But sometimes they\ntend to LF oscillations. This\nschematic shows how to\ndetermine the degree of stability\nby simulating magnitude and\nphase margin of the loop gain.\nResult: As a rule of thumb,\nit should be  C2 >> C1">
-  <Text 360 200 12 #000000 0 "for measuring\nthe loop stability">
+  <Text 360 200 12 #ff0000 0 "for measuring\nthe loop stability">
 </Paintings>

@@ -46,5 +46,8 @@
     (* S0_x1=40, S0_y1=230, S0_x2=140, S0_y2=230 *) net #() net10 ( n_40_230, n_140_230 );
     (* S0_x1=200, S0_y1=170, S0_x2=280, S0_y2=170 *) net #() net11 ( n_200_170, n_280_170 );
     (* S0_x1=40, S0_y1=170, S0_x2=80, S0_y2=170 *) net #() net12 ( n_40_170, n_80_170 );
-    (* S0_x=180, S0_y=20, qucs_type="Text", S0_text="conventional power supply:\ntransformer, 2-way-rectifier, filter", qucs_font_color="#000000", qucs_font_size=12, qucs_font_angle=0 *) S__text #() S0_text1();
+    (* S0_x=200, S0_y=60, qucs_type="Arrow", qucs_pen_color="#000000", qucs_pen_width=0, qucs_pen_style=1, qucs_w=-30, qucs_h=100 *) S__graphics #() S0_graphics1();
+    (* S0_x=400, S0_y=60, qucs_type="Arrow", qucs_pen_color="#000000", qucs_pen_width=0, qucs_pen_style=1, qucs_w=10, qucs_h=90 *) S__graphics #() S0_graphics2();
+    (* S0_x=320, S0_y=60, qucs_type="Arrow", qucs_pen_color="#000000", qucs_pen_width=0, qucs_pen_style=1, qucs_w=0, qucs_h=90 *) S__graphics #() S0_graphics3();
+    (* S0_x=180, S0_y=20, qucs_type="Text", S0_text="conventional power supply:\ntransformer, 2-way-rectifier, filter", qucs_font_color="#000000", qucs_font_size=16, qucs_font_angle=0 *) S__text #() S0_text1();
 endmodule

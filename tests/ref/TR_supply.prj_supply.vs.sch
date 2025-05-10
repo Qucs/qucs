@@ -48,5 +48,8 @@
 <Diagrams>
 </Diagrams>
 <Paintings>
-  <Text 180 20 12 #000000 0 "conventional power supply:\ntransformer, 2-way-rectifier, filter">
+  <Arrow 200 60 -30 100 20 8 #000000 0 1 0>
+  <Arrow 400 60 10 90 20 8 #000000 0 1 0>
+  <Arrow 320 60 0 90 20 8 #000000 0 1 0>
+  <Text 180 20 16 #000000 0 "conventional power supply:\ntransformer, 2-way-rectifier, filter">
 </Paintings>

@@ -61,6 +61,6 @@
     (* S0_x1=540, S0_y1=240, S0_x2=640, S0_y2=240 *) net #() net19 ( n_540_240, n_640_240 );
     (* S0_x1=540, S0_y1=220, S0_x2=540, S0_y2=240 *) net #() net20 ( n_540_220, n_540_240 );
     (* S0_x1=440, S0_y1=140, S0_x2=540, S0_y2=140 *) net #() net21 ( n_440_140, n_540_140 );
-    (* S0_x=50, S0_y=30, qucs_type="Text", S0_text="Buck converter circuit.", qucs_font_color="#000000", qucs_font_size=12, qucs_font_angle=0 *) S__text #() S0_text1();
+    (* S0_x=50, S0_y=30, qucs_type="Text", S0_text="Buck converter circuit.", qucs_font_color="#000000", qucs_font_size=16, qucs_font_angle=0 *) S__text #() S0_text1();
     (* S0_x=50, S0_y=70, qucs_type="Text", S0_text="Change duty cycle (\"Bduty\" in the equations) to manipulate output voltage.", qucs_font_color="#000000", qucs_font_size=12, qucs_font_angle=0 *) S__text #() S0_text2();
 endmodule
