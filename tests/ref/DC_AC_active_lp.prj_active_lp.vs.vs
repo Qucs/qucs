@@ -63,7 +63,7 @@
     (* qucs_mirrored=0, qucs_rotated=0, qucs_visible="", S0_x1=610, S0_y1=270 *) GND #() \*  ( n_610_270 );
     (* qucs_mirrored=0, qucs_rotated=0, qucs_visible="100", S0_x1=550, S0_y1=60, S0_x2=610, S0_y2=60 *) C #(.C(256n),.V()) C3 ( n_550_60, n_610_60 );
     (* qucs_mirrored=0, qucs_rotated=0, qucs_visible="11110", S0_x1=460, S0_y1=290 *) \.AC  #(.Type(log),.Start(1 Hz),.Stop(10 kHz),.Points(201),.Noise(no)) AC1 (  );
-    (* qucs_mirrored=0, qucs_rotated=0, qucs_visible="10", S0_x1=300, S0_y1=330 *) Eqn #(.y(1),.Export(yes)) Eqn1 (  );
+    (* qucs_mirrored=0, qucs_rotated=0, qucs_visible="11", S0_x1=300, S0_y1=330 *) Eqn #(.y(1),.Export(yes)) Eqn1 (  );
     (* qucs_mirrored=0, qucs_rotated=0, qucs_visible="000000000", S0_x1=100, S0_y1=360 *) \.DC  #(.Temp(26.85),.reltol(0.001),.abstol(1 pA),.vntol(1 uV),.saveOPs(no),.MaxIter(150),.saveAll(no),.convHelper(none),.Solver(CroutLU)) DC1 (  );
     (* S0_x1=180, S0_y1=210, S0_x2=190, S0_y2=210 *) net #() net1 ( n_180_210, n_190_210 );
     (* S0_x1=190, S0_y1=210, S0_x2=200, S0_y2=210 *) net #() net2 ( n_190_210, n_200_210 );
@@ -96,3 +96,5 @@
     (* S0_x1=610, S0_y1=130, S0_x2=620, S0_y2=130 *) net #() net29 ( n_610_130, n_620_130 );
     (* S0_x=220, S0_y=410, qucs_type="Text", S0_text="6th order Chebyshev I low-pass filter\n1kHz band stop frequency, 1dB ripple", qucs_font_color="#000000", qucs_font_size=12, qucs_font_angle=0 *) S__text #() S0_text1();
 endmodule
+Warning: Too many visibility flags in component Eqn
+Warning: Too many visibility flags in component Eqn

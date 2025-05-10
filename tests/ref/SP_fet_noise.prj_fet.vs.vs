@@ -36,7 +36,7 @@
     wire n_530_290;
     wire n_450_170;
     (* qucs_mirrored=0, qucs_rotated=1, qucs_visible="100", S0_x1=190, S0_y1=170, S0_x2=190, S0_y2=110 *) C #(.C(234 fF),.V()) C3 ( n_190_170, n_190_110 );
-    (* qucs_mirrored=0, qucs_rotated=0, qucs_visible="10", S0_x1=270, S0_y1=110, S0_x2=330, S0_y2=110, S0_x3=330, S0_y3=170, S0_x4=270, S0_y4=170 *) VCCS #(.G(0.069 S),.T(1.69 ps)) SRC1 ( n_270_110, n_330_110, n_330_170, n_270_170 );
+    (* qucs_mirrored=0, qucs_rotated=0, qucs_visible="11", S0_x1=270, S0_y1=110, S0_x2=330, S0_y2=110, S0_x3=330, S0_y3=170, S0_x4=270, S0_y4=170 *) VCCS #(.G(0.069 S),.T(1.69 ps)) SRC1 ( n_270_110, n_330_110, n_330_170, n_270_170 );
     (* qucs_mirrored=0, qucs_rotated=1, qucs_visible="100", S0_x1=100, S0_y1=170, S0_x2=100, S0_y2=110 *) C #(.C(5 fF),.V()) C4 ( n_100_170, n_100_110 );
     (* qucs_mirrored=0, qucs_rotated=0, qucs_visible="100", S0_x1=200, S0_y1=50, S0_x2=260, S0_y2=50 *) C #(.C(39 fF),.V()) C1 ( n_200_50, n_260_50 );
     (* qucs_mirrored=0, qucs_rotated=1, qucs_visible="100", S0_x1=530, S0_y1=180, S0_x2=530, S0_y2=120 *) C #(.C(31 fF),.V()) C2 ( n_530_180, n_530_120 );
@@ -52,7 +52,7 @@
     (* qucs_mirrored=0, qucs_rotated=1, qucs_visible="100000", S0_x1=260, S0_y1=290, S0_x2=260, S0_y2=230 *) R #(.R(2.4 Ohm),.Temp(16.85),.Tc1(0.0),.Tc2(0.0),.Tnom(26.85)) R5 ( n_260_290, n_260_230 );
     (* qucs_mirrored=0, qucs_rotated=1, qucs_visible="10", S0_x1=260, S0_y1=350, S0_x2=260, S0_y2=290 *) L #(.L(6.4 pH),.I()) L3 ( n_260_350, n_260_290 );
     (* qucs_mirrored=0, qucs_rotated=1, qucs_Num=3, qucs_Type="analog", qucs_visible="10", S0_x1=260, S0_y1=350 *) Port #() P3 ( n_260_350 );
-    (* qucs_mirrored=0, qucs_rotated=1, qucs_visible="100000", S0_x1=360, S0_y1=170, S0_x2=360, S0_y2=110 *) R #(.R(312),.Temp(6000),.Tc1(0.0),.Tc2(0.0),.Tnom(26.85)) R3 ( n_360_170, n_360_110 );
+    (* qucs_mirrored=0, qucs_rotated=1, qucs_visible="110000", S0_x1=360, S0_y1=170, S0_x2=360, S0_y2=110 *) R #(.R(312),.Temp(6000),.Tc1(0.0),.Tc2(0.0),.Tnom(26.85)) R3 ( n_360_170, n_360_110 );
     (* S0_x1=190, S0_y1=50, S0_x2=190, S0_y2=110 *) net #() net1 ( n_190_50, n_190_110 );
     (* S0_x1=190, S0_y1=110, S0_x2=270, S0_y2=110 *) net #() net2 ( n_190_110, n_270_110 );
     (* S0_x1=330, S0_y1=110, S0_x2=360, S0_y2=110 *) net #() net3 ( n_330_110, n_360_110 );

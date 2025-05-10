@@ -70,7 +70,7 @@
     (* qucs_mirrored=0, qucs_rotated=1, qucs_visible="11000", S0_x1=990, S0_y1=150, S0_x2=990, S0_y2=210 *) Pac #(.Num(2),.Z(100 Ohm),.P(0 dBm),.f(1 GHz),.Temp(26.85)) P2 ( n_990_150, n_990_210 );
     (* qucs_mirrored=1, qucs_rotated=2, qucs_visible="", S0_x1=990, S0_y1=250 *) GND #() \*  ( n_990_250 );
     (* qucs_mirrored=0, qucs_rotated=0, qucs_visible="111100000", S0_x1=20, S0_y1=350 *) \.SP  #(.Type(log),.Start(1MHz),.Stop(100MHz),.Points(1001),.Noise(no),.NoiseIP(1),.NoiseOP(2),.saveCVs(no),.saveAll(no)) SP1 (  );
-    (* qucs_mirrored=0, qucs_rotated=0, qucs_visible="10", S0_x1=200, S0_y1=370 *) Eqn #(.y(1),.Export(yes)) Eqn1 (  );
+    (* qucs_mirrored=0, qucs_rotated=0, qucs_visible="11", S0_x1=200, S0_y1=370 *) Eqn #(.y(1),.Export(yes)) Eqn1 (  );
     (* qucs_mirrored=0, qucs_rotated=0, qucs_visible="000000000", S0_x1=600, S0_y1=350 *) \.DC  #(.Temp(26.85),.reltol(0.001),.abstol(1 pA),.vntol(1 uV),.saveOPs(no),.MaxIter(150),.saveAll(no),.convHelper(none),.Solver(CroutLU)) DC1 (  );
     (* S0_x1=440, S0_y1=90, S0_x2=440, S0_y2=140 *) net #() net1 ( n_440_90, n_440_140 );
     (* S0_x1=580, S0_y1=90, S0_x2=580, S0_y2=140 *) net #() net2 ( n_580_90, n_580_140 );
@@ -108,3 +108,5 @@
     (* S0_x1=860, S0_y1=130, S0_x2=860, S0_y2=150 *) net #() net34 ( n_860_130, n_860_150 );
     (* S0_x=350, S0_y=340, qucs_type="Text", S0_text="Butterworth low-pass filter\n10MHz cutoff, PI-type,\nimpedance matching 100 Ohm", qucs_font_color="#000000", qucs_font_size=12, qucs_font_angle=0 *) S__text #() S0_text1();
 endmodule
+Warning: Too many visibility flags in component Eqn
+Warning: Too many visibility flags in component Eqn

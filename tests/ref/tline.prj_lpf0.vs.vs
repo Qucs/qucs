@@ -82,7 +82,7 @@
     (* qucs_mirrored=0, qucs_rotated=3, qucs_visible="1100", S0_x1=740, S0_y1=320, S0_x2=740, S0_y2=380 *) TLIN #(.Z(38.05 Ohm),.L(74.95 mm),.Alpha(0 dB),.Temp(26.85)) Line6 ( n_740_320, n_740_380 );
     (* qucs_mirrored=0, qucs_rotated=1, qucs_visible="11000", S0_x1=550, S0_y1=90, S0_x2=550, S0_y2=150 *) Pac #(.Num(3),.Z(50 Ohm),.P(0 dBm),.f(1 MHz),.Temp(26.85)) P3 ( n_550_90, n_550_150 );
     (* qucs_mirrored=0, qucs_rotated=1, qucs_visible="11000", S0_x1=930, S0_y1=90, S0_x2=930, S0_y2=150 *) Pac #(.Num(4),.Z(50 Ohm),.P(0 dBm),.f(1 MHz),.Temp(26.85)) P4 ( n_930_90, n_930_150 );
-    (* qucs_mirrored=0, qucs_rotated=0, qucs_visible="10", S0_x1=300, S0_y1=380 *) Eqn #(.y(1),.Export(yes)) Eqn1 (  );
+    (* qucs_mirrored=0, qucs_rotated=0, qucs_visible="11", S0_x1=300, S0_y1=380 *) Eqn #(.y(1),.Export(yes)) Eqn1 (  );
     (* qucs_mirrored=0, qucs_rotated=3, qucs_visible="1100", S0_x1=750, S0_y1=30, S0_x2=750, S0_y2=90, S0_x3=730, S0_y3=90, S0_x4=730, S0_y4=30 *) TLIN4P #(.Z(65.7 Ohm),.L(74.95 mm),.Alpha(0 dB),.Temp(26.85)) Line1 ( n_750_30, n_750_90, n_730_90, n_730_30 );
     (* qucs_mirrored=0, qucs_rotated=2, qucs_visible="1100", S0_x1=860, S0_y1=170, S0_x2=800, S0_y2=170, S0_x3=800, S0_y3=150, S0_x4=860, S0_y4=150 *) TLIN4P #(.Z(76.1 Ohm),.L(74.95 mm),.Alpha(0 dB),.Temp(26.85)) Line3 ( n_860_170, n_800_170, n_800_150, n_860_150 );
     (* qucs_mirrored=0, qucs_rotated=2, qucs_visible="1100", S0_x1=680, S0_y1=170, S0_x2=620, S0_y2=170, S0_x3=620, S0_y3=150, S0_x4=680, S0_y4=150 *) TLIN4P #(.Z(76.1 Ohm),.L(74.95 mm),.Alpha(0 dB),.Temp(26.85)) Line2 ( n_680_170, n_620_170, n_620_150, n_680_150 );
@@ -118,3 +118,5 @@
     (* S0_x1=690, S0_y1=90, S0_x2=690, S0_y2=150 *) net #() net30 ( n_690_90, n_690_150 );
     (* S0_x1=680, S0_y1=150, S0_x2=690, S0_y2=150 *) net #() net31 ( n_680_150, n_690_150 );
 endmodule
+Warning: Too many visibility flags in component Eqn
+Warning: Too many visibility flags in component Eqn

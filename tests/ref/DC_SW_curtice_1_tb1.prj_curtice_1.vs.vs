@@ -38,16 +38,16 @@
     (* qucs_mirrored=0, qucs_rotated=0, qucs_visible="10", S0_x1=170, S0_y1=410, S0_x2=230, S0_y2=410 *) L #(.L(LS),.I()) Ls ( n_170_410, n_230_410 );
     (* qucs_mirrored=0, qucs_rotated=0, qucs_Num=1, qucs_Type="analog", qucs_visible="10", S0_x1=90, S0_y1=410 *) Port #() Source ( n_90_410 );
     (* qucs_mirrored=0, qucs_rotated=0, qucs_visible="100000", S0_x1=210, S0_y1=320, S0_x2=270, S0_y2=320 *) R #(.R(RIN),.Temp(26.85),.Tc1(0.0),.Tc2(0.0),.Tnom(26.85)) Rin ( n_210_320, n_270_320 );
-    (* qucs_mirrored=1, qucs_rotated=2, qucs_visible="0010", S0_x1=340, S0_y1=180, S0_x2=280, S0_y2=180 *) EDD #(.Type(explicit),.Branches(1),.I1(0),.Q1(CGD*V1)) D2 ( n_340_180, n_280_180 );
+    (* qucs_mirrored=1, qucs_rotated=2, qucs_visible="0011", S0_x1=340, S0_y1=180, S0_x2=280, S0_y2=180 *) EDD #(.Type(explicit),.Branches(1),.I1(0),.Q1(CGD*V1)) D2 ( n_340_180, n_280_180 );
     (* qucs_mirrored=1, qucs_rotated=0, qucs_Num=3, qucs_Type="analog", qucs_visible="10", S0_x1=90, S0_y1=180 *) Port #() Drain ( n_90_180 );
     (* qucs_mirrored=1, qucs_rotated=0, qucs_visible="100000", S0_x1=190, S0_y1=180, S0_x2=250, S0_y2=180 *) R #(.R(RD),.Temp(26.85),.Tc1(0.0),.Tc2(0.0),.Tnom(26.85)) Rd ( n_190_180, n_250_180 );
     (* qucs_mirrored=0, qucs_rotated=0, qucs_visible="10", S0_x1=110, S0_y1=180, S0_x2=170, S0_y2=180 *) L #(.L(LD),.I()) Ld ( n_110_180, n_170_180 );
     (* qucs_mirrored=0, qucs_rotated=1, qucs_visible="100000", S0_x1=360, S0_y1=160, S0_x2=360, S0_y2=100 *) R #(.R(RG),.Temp(26.85),.Tc1(0.0),.Tc2(0.0),.Tnom(26.85)) Rg ( n_360_160, n_360_100 );
     (* qucs_mirrored=0, qucs_rotated=1, qucs_visible="10", S0_x1=360, S0_y1=90, S0_x2=360, S0_y2=30 *) L #(.L(LG),.I()) Lg ( n_360_90, n_360_30 );
     (* qucs_mirrored=0, qucs_rotated=3, qucs_Num=2, qucs_Type="analog", qucs_visible="10", S0_x1=360, S0_y1=30 *) Port #() Gate ( n_360_30 );
-    (* qucs_mirrored=0, qucs_rotated=0, qucs_visible="10", S0_x1=490, S0_y1=20 *) Eqn #(.y(1),.Export(yes)) Eqn1 (  );
-    (* qucs_mirrored=0, qucs_rotated=0, qucs_visible="10", S0_x1=490, S0_y1=240 *) Eqn #(.y(1),.Export(yes)) Eqn2 (  );
-    (* qucs_mirrored=0, qucs_rotated=3, qucs_visible="0010", S0_x1=390, S0_y1=240, S0_x2=390, S0_y2=300 *) EDD #(.Type(explicit),.Branches(4),.I1(V1<-VBR+50*Vt ? -IsT*(1+exp(-(VBR+V1)/Vt)) + GMIN*V1 : 0),.Q1(0)) D1 ( n_390_240, n_390_300 );
+    (* qucs_mirrored=0, qucs_rotated=0, qucs_visible="11", S0_x1=490, S0_y1=20 *) Eqn #(.y(1),.Export(yes)) Eqn1 (  );
+    (* qucs_mirrored=0, qucs_rotated=0, qucs_visible="11", S0_x1=490, S0_y1=240 *) Eqn #(.y(1),.Export(yes)) Eqn2 (  );
+    (* qucs_mirrored=0, qucs_rotated=3, qucs_visible="0011", S0_x1=390, S0_y1=240, S0_x2=390, S0_y2=300 *) EDD #(.Type(explicit),.Branches(4),.I1(V1<-VBR+50*Vt ? -IsT*(1+exp(-(VBR+V1)/Vt)) + GMIN*V1 : 0),.Q1(0)) D1 ( n_390_240, n_390_300 );
     (* S0_x1=270, S0_y1=300, S0_x2=270, S0_y2=320 *) net #() net1 ( n_270_300, n_270_320 );
     (* S0_x1=390, S0_y1=300, S0_x2=390, S0_y2=320 *) net #() net2 ( n_390_300, n_390_320 );
     (* S0_x1=270, S0_y1=320, S0_x2=330, S0_y2=320 *) net #() net3 ( n_270_320, n_330_320 );
@@ -75,3 +75,9 @@
     (* S0_x1=360, S0_y1=90, S0_x2=360, S0_y2=100 *) net #() net25 ( n_360_90, n_360_100 );
     (* S0_x=700, S0_y=30, qucs_type="Text", S0_text="Author: Mike Brinson", qucs_font_color="#000000", qucs_font_size=13, qucs_font_angle=0 *) S__text #() S0_text1();
 endmodule
+Warning: Too many visibility flags in component Eqn
+Warning: Too many visibility flags in component Eqn
+Warning: Too many visibility flags in component D
+Warning: Too many visibility flags in component Eqn
+Warning: Too many visibility flags in component Eqn
+Warning: Too many visibility flags in component D

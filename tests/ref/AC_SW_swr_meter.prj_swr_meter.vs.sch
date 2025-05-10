@@ -30,7 +30,7 @@
   <R Load 1 620 190 0 0 0 1 "R_load" 1 "26.85" 0 "0.0" 0 "0.0" 0 "26.85" 0 "european" 0>
   <Tr Tr1 1 350 150 0 0 0 1 "25" 1>
   <.AC AC1 1 70 280 0 0 0 0 "lin" 1 "1 GHz" 1 "2 GHz" 1 "2" 1 "no" 0>
-  <Eqn Eqn1 1 570 320 0 0 0 0 "y=1" 1 "yes" 0>
+  <Eqn Eqn1 1 570 320 0 0 0 0 "y=1" 1 "yes" 1>
   <.SW SW1 1 70 410 0 0 0 0 "AC1" 1 "lin" 1 "R1" 1 "R_load" 1 "2 Ohm" 1 "100" 1>
 </Components>
 <Wires>

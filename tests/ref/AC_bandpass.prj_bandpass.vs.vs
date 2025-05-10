@@ -48,8 +48,8 @@
     (* qucs_mirrored=0, qucs_rotated=0, qucs_visible="100000", S0_x1=490, S0_y1=150, S0_x2=550, S0_y2=150 *) R #(.R(10 kOhm),.Temp(26.85),.Tc1(0.0),.Tc2(0.0),.Tnom(26.85)) R5 ( n_490_150, n_550_150 );
     (* qucs_mirrored=0, qucs_rotated=0, qucs_visible="11110", S0_x1=150, S0_y1=370 *) \.AC  #(.Type(log),.Start(10 Hz),.Stop(1 MHz),.Points(1000),.Noise(no)) AC1 (  );
     (* qucs_mirrored=0, qucs_rotated=0, qucs_visible="", S0_x1=100, S0_y1=310 *) GND #() \*  ( n_100_310 );
-    (* qucs_mirrored=0, qucs_rotated=1, qucs_visible="1000", S0_x1=100, S0_y1=230, S0_x2=100, S0_y2=290 *) Vac #(.U(1 V),.f(1 kHz),.Phase(0),.Theta(0)) V1 ( n_100_230, n_100_290 );
-    (* qucs_mirrored=0, qucs_rotated=0, qucs_visible="10", S0_x1=460, S0_y1=380 *) Eqn #(.y(1),.Export(yes)) Eqn1 (  );
+    (* qucs_mirrored=0, qucs_rotated=1, qucs_visible="1100", S0_x1=100, S0_y1=230, S0_x2=100, S0_y2=290 *) Vac #(.U(1 V),.f(1 kHz),.Phase(0),.Theta(0)) V1 ( n_100_230, n_100_290 );
+    (* qucs_mirrored=0, qucs_rotated=0, qucs_visible="11", S0_x1=460, S0_y1=380 *) Eqn #(.y(1),.Export(yes)) Eqn1 (  );
     (* qucs_mirrored=0, qucs_rotated=0, qucs_visible="100000", S0_x1=310, S0_y1=70, S0_x2=370, S0_y2=70 *) R #(.R(10 kOhm),.Temp(26.85),.Tc1(0.0),.Tc2(0.0),.Tnom(26.85)) R1 ( n_310_70, n_370_70 );
     (* qucs_mirrored=0, qucs_rotated=0, qucs_visible="100000", S0_x1=590, S0_y1=70, S0_x2=650, S0_y2=70 *) R #(.R(10 kOhm),.Temp(26.85),.Tc1(0.0),.Tc2(0.0),.Tnom(26.85)) R4 ( n_590_70, n_650_70 );
     (* qucs_mirrored=0, qucs_rotated=1, qucs_visible="100", S0_x1=570, S0_y1=310, S0_x2=570, S0_y2=250 *) C #(.C(0.1 uF),.V()) C2 ( n_570_310, n_570_250 );
@@ -84,3 +84,5 @@
     (* S0_x1=100, S0_y1=210, S0_x2=100, S0_y2=230 *) net #() net27 ( n_100_210, n_100_230 );
     (* S0_x1=570, S0_y1=210, S0_x2=570, S0_y2=250 *) net #() net28 ( n_570_210, n_570_250 );
 endmodule
+Warning: Too many visibility flags in component Eqn
+Warning: Too many visibility flags in component Eqn

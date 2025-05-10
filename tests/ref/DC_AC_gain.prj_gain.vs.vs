@@ -33,7 +33,7 @@
     (* qucs_mirrored=0, qucs_rotated=1, qucs_visible="1", S0_x1=210, S0_y1=340, S0_x2=210, S0_y2=400 *) Vdc #(.U(-2.5 V)) V6 ( n_210_340, n_210_400 );
     (* qucs_mirrored=0, qucs_rotated=0, qucs_visible="11110", S0_x1=440, S0_y1=170 *) \.AC  #(.Type(log),.Start(1),.Stop(10 MHz),.Points(200),.Noise(no)) AC1 (  );
     (* qucs_mirrored=0, qucs_rotated=0, qucs_visible="000000000", S0_x1=440, S0_y1=100 *) \.DC  #(.Temp(26.85),.reltol(0.001),.abstol(1 pA),.vntol(1 uV),.saveOPs(no),.MaxIter(150),.saveAll(no),.convHelper(none),.Solver(CroutLU)) DC1 (  );
-    (* qucs_mirrored=0, qucs_rotated=0, qucs_visible="10", S0_x1=360, S0_y1=370 *) Eqn #(.y(1),.Export(yes)) Eqn1 (  );
+    (* qucs_mirrored=0, qucs_rotated=0, qucs_visible="11", S0_x1=360, S0_y1=370 *) Eqn #(.y(1),.Export(yes)) Eqn1 (  );
     (* qucs_mirrored=0, qucs_rotated=2, qucs_visible="100000", S0_x1=160, S0_y1=310, S0_x2=100, S0_y2=310 *) R #(.R(1.7k),.Temp(26.85),.Tc1(0.0),.Tc2(0.0),.Tnom(26.85)) R3 ( n_160_310, n_100_310 );
     (* S0_x1=260, S0_y1=220, S0_x2=290, S0_y2=220 *) net #() net1 ( n_260_220, n_290_220 );
     (* S0_x1=40, S0_y1=260, S0_x2=40, S0_y2=270 *) net #() net2 ( n_40_260, n_40_270 );
@@ -48,3 +48,5 @@
     (* S0_x1=210, S0_y1=80, S0_x2=210, S0_y2=170 *) net #() net11 ( n_210_80, n_210_170 );
     (* S0_x1=210, S0_y1=270, S0_x2=210, S0_y2=340 *) net #() net12 ( n_210_270, n_210_340 );
 endmodule
+Warning: Too many visibility flags in component Eqn
+Warning: Too many visibility flags in component Eqn

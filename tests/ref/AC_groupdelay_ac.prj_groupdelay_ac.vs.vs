@@ -30,7 +30,7 @@
     (* qucs_mirrored=0, qucs_rotated=0, qucs_visible="", S0_x1=550, S0_y1=250 *) GND #() \*  ( n_550_250 );
     (* qucs_mirrored=0, qucs_rotated=0, qucs_visible="100000", S0_x1=450, S0_y1=140, S0_x2=510, S0_y2=140 *) R #(.R(Z0),.Temp(26.85),.Tc1(0.0),.Tc2(0.0),.Tnom(26.85)) R2 ( n_450_140, n_510_140 );
     (* qucs_mirrored=0, qucs_rotated=0, qucs_visible="11110", S0_x1=50, S0_y1=330 *) \.AC  #(.Type(log),.Start(1 MHz),.Stop(200 MHz),.Points(458),.Noise(no)) AC1 (  );
-    (* qucs_mirrored=0, qucs_rotated=0, qucs_visible="10", S0_x1=270, S0_y1=340 *) Eqn #(.y(1),.Export(yes)) Eqn1 (  );
+    (* qucs_mirrored=0, qucs_rotated=0, qucs_visible="11", S0_x1=270, S0_y1=340 *) Eqn #(.y(1),.Export(yes)) Eqn1 (  );
     (* qucs_mirrored=0, qucs_rotated=0, qucs_visible="100000", S0_x1=120, S0_y1=140, S0_x2=180, S0_y2=140 *) R #(.R(Z0),.Temp(26.85),.Tc1(0.0),.Tc2(0.0),.Tnom(26.85)) R1 ( n_120_140, n_180_140 );
     (* S0_x1=240, S0_y1=140, S0_x2=240, S0_y2=190 *) net #() net1 ( n_240_140, n_240_190 );
     (* S0_x1=380, S0_y1=140, S0_x2=380, S0_y2=190 *) net #() net2 ( n_380_140, n_380_190 );
@@ -47,3 +47,5 @@
     (* S0_x=470, S0_y=310, qucs_type="Text", S0_text="3rd order\nButterworth low-pass filter\n68MHz cutoff, PI-type,\nimpedance matching 60 Ohm", qucs_font_color="#000000", qucs_font_size=12, qucs_font_angle=0 *) S__text #() S0_text1();
     (* S0_x=60, S0_y=50, qucs_type="Text", S0_text="group delay using AC simulation", qucs_font_color="#000000", qucs_font_size=14, qucs_font_angle=0 *) S__text #() S0_text2();
 endmodule
+Warning: Too many visibility flags in component Eqn
+Warning: Too many visibility flags in component Eqn

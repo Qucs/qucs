@@ -57,7 +57,7 @@
     (* qucs_mirrored=0, qucs_rotated=1, qucs_visible="11000", S0_x1=270, S0_y1=790, S0_x2=270, S0_y2=850 *) Pac #(.Num(1),.Z(50 Ohm),.P(0 dBm),.f(10 GHz),.Temp(26.85)) P1 ( n_270_790, n_270_850 );
     (* qucs_mirrored=0, qucs_rotated=0, qucs_visible="", S0_x1=270, S0_y1=850 *) GND #() \*  ( n_270_850 );
     (* qucs_mirrored=0, qucs_rotated=0, qucs_visible="111111", S0_x1=340, S0_y1=1030 *) SUBST #(.er(2.56),.h(0.76 mm),.t(18 um),.tand(3e-3),.rho(0.022e-6),.D(100)) Subst1 (  );
-    (* qucs_mirrored=0, qucs_rotated=0, qucs_visible="10", S0_x1=470, S0_y1=1130 *) Eqn #(.y(1),.Export(yes)) Eqn1 (  );
+    (* qucs_mirrored=0, qucs_rotated=0, qucs_visible="11", S0_x1=470, S0_y1=1130 *) Eqn #(.y(1),.Export(yes)) Eqn1 (  );
     (* qucs_mirrored=1, qucs_rotated=2, qucs_visible="11000", S0_x1=340, S0_y1=870 *) MOPEN #(.Subst(Subst1),.W(384 um),.MSModel(Hammerstad),.MSDispModel(Kirschning),.Model(Kirschning)) MS11 ( n_340_870 );
     (* qucs_mirrored=1, qucs_rotated=2, qucs_visible="11000", S0_x1=520, S0_y1=930 *) MOPEN #(.Subst(Subst1),.W(1.08 mm),.MSModel(Hammerstad),.MSDispModel(Kirschning),.Model(Kirschning)) MS12 ( n_520_930 );
     (* qucs_mirrored=1, qucs_rotated=2, qucs_visible="11000", S0_x1=1020, S0_y1=1110 *) MOPEN #(.Subst(Subst1),.W(384 um),.MSModel(Hammerstad),.MSDispModel(Kirschning),.Model(Kirschning)) MS15 ( n_1020_1110 );
@@ -87,3 +87,5 @@
     (* S0_x1=950, S0_y1=950, S0_x2=950, S0_y2=990 *) net #() net19 ( n_950_950, n_950_990 );
     (* S0_x=720, S0_y=1170, qucs_type="Text", S0_text="10GHz band pass filter\nCreated by Toyoyuki ISHIKAWA", qucs_font_color="#0000ff", qucs_font_size=16, qucs_font_angle=0 *) S__text #() S0_text1();
 endmodule
+Warning: Too many visibility flags in component Eqn
+Warning: Too many visibility flags in component Eqn

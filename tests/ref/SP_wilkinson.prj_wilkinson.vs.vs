@@ -29,7 +29,7 @@
     (* qucs_mirrored=0, qucs_rotated=0, qucs_visible="", S0_x1=410, S0_y1=100 *) GND #() \*  ( n_410_100 );
     (* qucs_mirrored=0, qucs_rotated=1, qucs_visible="100000", S0_x1=300, S0_y1=120, S0_x2=300, S0_y2=60 *) R #(.R(100 Ohm),.Temp(26.85),.Tc1(0.0),.Tc2(0.0),.Tnom(26.85)) R1 ( n_300_120, n_300_60 );
     (* qucs_mirrored=0, qucs_rotated=0, qucs_visible="111100000", S0_x1=-10, S0_y1=210 *) \.SP  #(.Type(lin),.Start(0.1 MHz),.Stop(2 GHz),.Points(100),.Noise(no),.NoiseIP(1),.NoiseOP(2),.saveCVs(no),.saveAll(no)) SP1 (  );
-    (* qucs_mirrored=0, qucs_rotated=0, qucs_visible="10", S0_x1=140, S0_y1=230 *) Eqn #(.y(1),.Export(yes)) Eqn1 (  );
+    (* qucs_mirrored=0, qucs_rotated=0, qucs_visible="11", S0_x1=140, S0_y1=230 *) Eqn #(.y(1),.Export(yes)) Eqn1 (  );
     (* S0_x1=180, S0_y1=40, S0_x2=200, S0_y2=40 *) net #() net1 ( n_180_40, n_200_40 );
     (* S0_x1=180, S0_y1=40, S0_x2=180, S0_y2=80 *) net #() net2 ( n_180_40, n_180_80 );
     (* S0_x1=180, S0_y1=140, S0_x2=200, S0_y2=140 *) net #() net3 ( n_180_140, n_200_140 );
@@ -44,3 +44,5 @@
     (* S0_x1=300, S0_y1=40, S0_x2=300, S0_y2=60 *) net #() net12 ( n_300_40, n_300_60 );
     (* S0_x=270, S0_y=240, qucs_type="Text", S0_text="ideal Wilkinson divider:\n- power into port 1 is split equally to port 2 and 3\n- port 2 and 3 are decoupled\n- if port 2 and 3 are terminated equally, no power\n  is consumed by R1\n- a wider bandwidth can be achieved by using\n  more than one Line2/Line3/R1 section", qucs_font_color="#000000", qucs_font_size=12, qucs_font_angle=0 *) S__text #() S0_text1();
 endmodule
+Warning: Too many visibility flags in component Eqn
+Warning: Too many visibility flags in component Eqn

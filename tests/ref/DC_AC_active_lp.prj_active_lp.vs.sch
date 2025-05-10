@@ -37,7 +37,7 @@
   <GND * 5 610 270 0 0 0 0>
   <C C3 1 580 60 0 0 0 0 "256n" 1 "" 0 "neutral" 0>
   <.AC AC1 1 460 290 0 0 0 0 "log" 1 "1 Hz" 1 "10 kHz" 1 "201" 1 "no" 0>
-  <Eqn Eqn1 1 300 330 0 0 0 0 "y=1" 1 "yes" 0>
+  <Eqn Eqn1 1 300 330 0 0 0 0 "y=1" 1 "yes" 1>
   <.DC DC1 1 100 360 0 0 0 0 "26.85" 0 "0.001" 0 "1 pA" 0 "1 uV" 0 "no" 0 "150" 0 "no" 0 "none" 0 "CroutLU" 0>
 </Components>
 <Wires>

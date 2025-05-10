@@ -38,13 +38,13 @@
     (* qucs_mirrored=0, qucs_rotated=0, qucs_visible="", S0_x1=290, S0_y1=350 *) GND #() \*  ( n_290_350 );
     (* qucs_mirrored=0, qucs_rotated=0, qucs_visible="", S0_x1=390, S0_y1=250 *) GND #() \*  ( n_390_250 );
     (* qucs_mirrored=0, qucs_rotated=1, qucs_visible="100000", S0_x1=160, S0_y1=260, S0_x2=160, S0_y2=200 *) R #(.R(9.1k),.Temp(26.85),.Tc1(0.0),.Tc2(0.0),.Tnom(26.85)) R1 ( n_160_260, n_160_200 );
-    (* qucs_mirrored=0, qucs_rotated=1, qucs_visible="111100", S0_x1=290, S0_y1=290, S0_x2=290, S0_y2=350 *) Vpulse #(.U1(5 V),.U2(0 V),.T1(0.3ms),.T2(0.35 ms),.Tr(5 ns),.Tf(5 ns)) V2 ( n_290_290, n_290_350 );
-    (* qucs_mirrored=0, qucs_rotated=1, qucs_visible="111100", S0_x1=410, S0_y1=470, S0_x2=410, S0_y2=530 *) Vpulse #(.U1(5 V),.U2(0 V),.T1(0.1ms),.T2(0.15 ms),.Tr(1 ns),.Tf(5 ns)) V3 ( n_410_470, n_410_530 );
+    (* qucs_mirrored=0, qucs_rotated=1, qucs_visible="111111", S0_x1=290, S0_y1=290, S0_x2=290, S0_y2=350 *) Vpulse #(.U1(5 V),.U2(0 V),.T1(0.3ms),.T2(0.35 ms),.Tr(5 ns),.Tf(5 ns)) V2 ( n_290_290, n_290_350 );
+    (* qucs_mirrored=0, qucs_rotated=1, qucs_visible="111111", S0_x1=410, S0_y1=470, S0_x2=410, S0_y2=530 *) Vpulse #(.U1(5 V),.U2(0 V),.T1(0.1ms),.T2(0.15 ms),.Tr(1 ns),.Tf(5 ns)) V3 ( n_410_470, n_410_530 );
     (* qucs_mirrored=0, qucs_rotated=0, qucs_visible="", S0_x1=410, S0_y1=540 *) GND #() \*  ( n_410_540 );
     (* qucs_mirrored=0, qucs_rotated=1, qucs_visible="1", S0_x1=300, S0_y1=160, S0_x2=300, S0_y2=220 *) Vdc #(.U(5 V)) V1 ( n_300_160, n_300_220 );
-    (* qucs_mirrored=0, qucs_rotated=1, qucs_visible="100", S0_x1=590, S0_y1=430, S0_x2=590, S0_y2=370 *) C #(.C(0.01uF),.V(0V)) C2 ( n_590_430, n_590_370 );
-    (* qucs_mirrored=0, qucs_rotated=1, qucs_visible="100", S0_x1=160, S0_y1=360, S0_x2=160, S0_y2=300 *) C #(.C(0.01u),.V(0V)) C1 ( n_160_360, n_160_300 );
-    (* qucs_mirrored=0, qucs_rotated=0, qucs_visible="11100000000000000000", S0_x1=790, S0_y1=150 *) \.TR  #(.Type(lin),.Start(0),.Stop(0.6 ms),.Points(201),.IntegrationMethod(Gear),.Order(6),.InitialStep(1 ns),.MinStep(1e-16),.MaxIter(150),.reltol(0.001),.abstol(1 pA),.vntol(1 uV),.Temp(26.85),.LTEreltol(1e-3),.LTEabstol(1e-6),.LTEfactor(1),.Solver(CroutLU),.relaxTSR(no),.initialDC(yes),.MaxStep(0)) TR1 (  );
+    (* qucs_mirrored=0, qucs_rotated=1, qucs_visible="110", S0_x1=590, S0_y1=430, S0_x2=590, S0_y2=370 *) C #(.C(0.01uF),.V(0V)) C2 ( n_590_430, n_590_370 );
+    (* qucs_mirrored=0, qucs_rotated=1, qucs_visible="110", S0_x1=160, S0_y1=360, S0_x2=160, S0_y2=300 *) C #(.C(0.01u),.V(0V)) C1 ( n_160_360, n_160_300 );
+    (* qucs_mirrored=0, qucs_rotated=0, qucs_visible="11111100000000000000", S0_x1=790, S0_y1=150 *) \.TR  #(.Type(lin),.Start(0),.Stop(0.6 ms),.Points(201),.IntegrationMethod(Gear),.Order(6),.InitialStep(1 ns),.MinStep(1e-16),.MaxIter(150),.reltol(0.001),.abstol(1 pA),.vntol(1 uV),.Temp(26.85),.LTEreltol(1e-3),.LTEabstol(1e-6),.LTEfactor(1),.Solver(CroutLU),.relaxTSR(no),.initialDC(yes),.MaxStep(0)) TR1 (  );
     (* S0_x1=550, S0_y1=370, S0_x2=590, S0_y2=370 *) net #() net1 ( n_550_370, n_590_370 );
     (* S0_x1=160, S0_y1=160, S0_x2=160, S0_y2=200 *) net #() net2 ( n_160_160, n_160_200 );
     (* S0_x1=160, S0_y1=160, S0_x2=300, S0_y2=160 *) net #() net3 ( n_160_160, n_300_160 );

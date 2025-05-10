@@ -31,7 +31,7 @@
     (* qucs_mirrored=0, qucs_rotated=1, qucs_visible="11000", S0_x1=70, S0_y1=90, S0_x2=70, S0_y2=150 *) Pac #(.Num(1),.Z(50 Ohm),.P(0 dBm),.f(1 GHz),.Temp(26.85)) P1 ( n_70_90, n_70_150 );
     (* qucs_mirrored=0, qucs_rotated=1, qucs_visible="11000", S0_x1=510, S0_y1=90, S0_x2=510, S0_y2=150 *) Pac #(.Num(2),.Z(50 Ohm),.P(0 dBm),.f(1 GHz),.Temp(26.85)) P2 ( n_510_90, n_510_150 );
     (* qucs_mirrored=0, qucs_rotated=0, qucs_visible="111100000", S0_x1=110, S0_y1=270 *) \.SP  #(.Type(lin),.Start(1 MHz),.Stop(150 MHz),.Points(300),.Noise(no),.NoiseIP(1),.NoiseOP(2),.saveCVs(no),.saveAll(no)) SP1 (  );
-    (* qucs_mirrored=0, qucs_rotated=0, qucs_visible="10", S0_x1=220, S0_y1=290 *) Eqn #(.y(1),.Export(yes)) Eqn1 (  );
+    (* qucs_mirrored=0, qucs_rotated=0, qucs_visible="11", S0_x1=220, S0_y1=290 *) Eqn #(.y(1),.Export(yes)) Eqn1 (  );
     (* S0_x1=70, S0_y1=70, S0_x2=70, S0_y2=90 *) net #() net1 ( n_70_70, n_70_90 );
     (* S0_x1=70, S0_y1=70, S0_x2=190, S0_y2=70 *) net #() net2 ( n_70_70, n_190_70 );
     (* S0_x1=190, S0_y1=70, S0_x2=210, S0_y2=70 *) net #() net3 ( n_190_70, n_210_70 );
@@ -45,3 +45,5 @@
     (* S0_x1=390, S0_y1=70, S0_x2=510, S0_y2=70 *) net #() net11 ( n_390_70, n_510_70 );
     (* S0_x=310, S0_y=250, qucs_type="Text", S0_text="5th Order Low Pass Chebyshev Type 1 Filter \nEnd of pass band:  100MHz ", qucs_font_color="#000000", qucs_font_size=18, qucs_font_angle=0 *) S__text #() S0_text1();
 endmodule
+Warning: Too many visibility flags in component Eqn
+Warning: Too many visibility flags in component Eqn

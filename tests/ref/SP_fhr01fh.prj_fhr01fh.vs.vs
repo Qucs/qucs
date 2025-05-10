@@ -65,13 +65,13 @@
     (* qucs_mirrored=0, qucs_rotated=1, qucs_visible="100", S0_x1=100, S0_y1=390, S0_x2=100, S0_y2=330 *) C #(.C(150 fF),.V()) C5 ( n_100_390, n_100_330 );
     (* qucs_mirrored=0, qucs_rotated=1, qucs_visible="100", S0_x1=0, S0_y1=390, S0_x2=0, S0_y2=330 *) C #(.C(110 fF),.V()) C4 ( n_0_390, n_0_330 );
     (* qucs_mirrored=0, qucs_rotated=0, qucs_visible="10", S0_x1=20, S0_y1=70, S0_x2=80, S0_y2=70 *) L #(.L(360 pH),.I()) L1 ( n_20_70, n_80_70 );
-    (* qucs_mirrored=0, qucs_rotated=0, qucs_visible="10", S0_x1=270, S0_y1=130, S0_x2=330, S0_y2=130, S0_x3=330, S0_y3=190, S0_x4=270, S0_y4=190 *) VCCS #(.G(57 mS),.T(3 ps)) SRC1 ( n_270_130, n_330_130, n_330_190, n_270_190 );
+    (* qucs_mirrored=0, qucs_rotated=0, qucs_visible="11", S0_x1=270, S0_y1=130, S0_x2=330, S0_y2=130, S0_x3=330, S0_y3=190, S0_x4=270, S0_y4=190 *) VCCS #(.G(57 mS),.T(3 ps)) SRC1 ( n_270_130, n_330_130, n_330_190, n_270_190 );
     (* qucs_mirrored=0, qucs_rotated=0, qucs_visible="", S0_x1=290, S0_y1=440 *) GND #() \*  ( n_290_440 );
-    (* qucs_mirrored=0, qucs_rotated=1, qucs_visible="100000", S0_x1=350, S0_y1=190, S0_x2=350, S0_y2=130 *) R #(.R(400),.Temp(5240),.Tc1(0.0),.Tc2(0.0),.Tnom(26.85)) R2 ( n_350_190, n_350_130 );
-    (* qucs_mirrored=0, qucs_rotated=0, qucs_visible="111100000", S0_x1=130, S0_y1=470 *) \.SP  #(.Type(lin),.Start(1 GHz),.Stop(23 GHz),.Points(150),.Noise(yes),.NoiseIP(1),.NoiseOP(2),.saveCVs(no),.saveAll(no)) SP1 (  );
+    (* qucs_mirrored=0, qucs_rotated=1, qucs_visible="110000", S0_x1=350, S0_y1=190, S0_x2=350, S0_y2=130 *) R #(.R(400),.Temp(5240),.Tc1(0.0),.Tc2(0.0),.Tnom(26.85)) R2 ( n_350_190, n_350_130 );
+    (* qucs_mirrored=0, qucs_rotated=0, qucs_visible="111111100", S0_x1=130, S0_y1=470 *) \.SP  #(.Type(lin),.Start(1 GHz),.Stop(23 GHz),.Points(150),.Noise(yes),.NoiseIP(1),.NoiseOP(2),.saveCVs(no),.saveAll(no)) SP1 (  );
     (* qucs_mirrored=1, qucs_rotated=2, qucs_visible="11000", S0_x1=-10, S0_y1=440, S0_x2=50, S0_y2=440 *) Pac #(.Num(1),.Z(50 Ohm),.P(0 dBm),.f(1 GHz),.Temp(26.85)) P1 ( n_m10_440, n_50_440 );
     (* qucs_mirrored=1, qucs_rotated=0, qucs_visible="11000", S0_x1=680, S0_y1=440, S0_x2=620, S0_y2=440 *) Pac #(.Num(2),.Z(50 Ohm),.P(0 dBm),.f(1 GHz),.Temp(26.85)) P2 ( n_680_440, n_620_440 );
-    (* qucs_mirrored=0, qucs_rotated=0, qucs_visible="10", S0_x1=610, S0_y1=530 *) Eqn #(.y(1),.Export(yes)) Eqn1 (  );
+    (* qucs_mirrored=0, qucs_rotated=0, qucs_visible="11", S0_x1=610, S0_y1=530 *) Eqn #(.y(1),.Export(yes)) Eqn1 (  );
     (* S0_x1=190, S0_y1=130, S0_x2=270, S0_y2=130 *) net #() net1 ( n_190_130, n_270_130 );
     (* S0_x1=190, S0_y1=190, S0_x2=270, S0_y2=190 *) net #() net2 ( n_190_190, n_270_190 );
     (* S0_x1=190, S0_y1=250, S0_x2=290, S0_y2=250 *) net #() net3 ( n_190_250, n_290_250 );
@@ -120,3 +120,5 @@
     (* S0_x=640, S0_y=110, qucs_type="Text", S0_text="drain ", qucs_font_color="#ff0000", qucs_font_size=14, qucs_font_angle=90 *) S__text #() S0_text4();
     (* S0_x=210, S0_y=480, qucs_type="Text", S0_text="small-signal model of Fujitsu HEMT FHR01FH (2V, 10mA) \ntaken from:  \nPospieszalski, \"Modeling of Noise Parameters of MESFET's and \nMODFET's and their frequency and temperature dependence\", \nIEEE Trans. Microwave Theory and Techniques, Sept. 1989 ", qucs_font_color="#000000", qucs_font_size=12, qucs_font_angle=0 *) S__text #() S0_text5();
 endmodule
+Warning: Too many visibility flags in component Eqn
+Warning: Too many visibility flags in component Eqn

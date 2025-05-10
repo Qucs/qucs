@@ -28,11 +28,11 @@
     (* qucs_mirrored=0, qucs_rotated=1, qucs_visible="100000", S0_x1=50, S0_y1=210, S0_x2=50, S0_y2=150 *) R #(.R(1k),.Temp(26.85),.Tc1(0.0),.Tc2(0.0),.Tnom(26.85)) R1 ( n_50_210, n_50_150 );
     (* qucs_mirrored=0, qucs_rotated=0, qucs_visible="", S0_x1=50, S0_y1=250 *) GND #() \*  ( n_50_250 );
     (* qucs_mirrored=0, qucs_rotated=0, qucs_visible="", S0_x1=430, S0_y1=250 *) GND #() \*  ( n_430_250 );
-    (* qucs_mirrored=0, qucs_rotated=1, qucs_visible="1000", S0_x1=430, S0_y1=150, S0_x2=430, S0_y2=210 *) Vac #(.U(Vamp),.f(Vfreq),.Phase(0),.Theta(0)) V1 ( n_430_150, n_430_210 );
-    (* qucs_mirrored=0, qucs_rotated=0, qucs_visible="11100000000000000000000000000", S0_x1=170, S0_y1=110, S0_x2=230, S0_y2=110 *) Diode #(.Is(1e-15 A),.N(1),.Cj0(10 fF),.M(0.5),.Vj(0.7 V),.Fc(0.5),.Cp(0.0 fF),.Isr(0.0),.Nr(2.0),.Rs(0.0 Ohm),.Tt(0.0 ps),.Ikf(0),.Kf(0.0),.Af(1.0),.Ffe(1.0),.Bv(0),.Ibv(1 mA),.Temp(26.85),.Xti(3.0),.Eg(1.11),.Tbv(0.0),.Trs(0.0),.Ttt1(0.0),.Ttt2(0.0),.Tm1(0.0),.Tm2(0.0),.Tnom(26.85),.Area(1.0),.Symbol(normal)) D1 ( n_170_110, n_230_110 );
-    (* qucs_mirrored=0, qucs_rotated=0, qucs_visible="11100000000000000000000000000", S0_x1=170, S0_y1=250, S0_x2=230, S0_y2=250 *) Diode #(.Is(1e-15 A),.N(1),.Cj0(10 fF),.M(0.5),.Vj(0.7 V),.Fc(0.5),.Cp(0.0 fF),.Isr(0.0),.Nr(2.0),.Rs(0.0 Ohm),.Tt(0.0 ps),.Ikf(0),.Kf(0.0),.Af(1.0),.Ffe(1.0),.Bv(0),.Ibv(1 mA),.Temp(26.85),.Xti(3.0),.Eg(1.11),.Tbv(0.0),.Trs(0.0),.Ttt1(0.0),.Ttt2(0.0),.Tm1(0.0),.Tm2(0.0),.Tnom(26.85),.Area(1.0),.Symbol(normal)) D2 ( n_170_250, n_230_250 );
-    (* qucs_mirrored=0, qucs_rotated=0, qucs_visible="10", S0_x1=80, S0_y1=350 *) Eqn #(.y(1),.Export(yes)) Eqn1 (  );
-    (* qucs_mirrored=0, qucs_rotated=0, qucs_visible="11100000000000000000", S0_x1=200, S0_y1=340 *) \.TR  #(.Type(lin),.Start(0),.Stop(Tmax),.Points(201),.IntegrationMethod(Trapezoidal),.Order(2),.InitialStep(1 ns),.MinStep(1e-16),.MaxIter(150),.reltol(0.001),.abstol(1 pA),.vntol(1 uV),.Temp(26.85),.LTEreltol(1e-3),.LTEabstol(1e-6),.LTEfactor(1),.Solver(CroutLU),.relaxTSR(no),.initialDC(yes),.MaxStep(0)) TR1 (  );
+    (* qucs_mirrored=0, qucs_rotated=1, qucs_visible="1100", S0_x1=430, S0_y1=150, S0_x2=430, S0_y2=210 *) Vac #(.U(Vamp),.f(Vfreq),.Phase(0),.Theta(0)) V1 ( n_430_150, n_430_210 );
+    (* qucs_mirrored=0, qucs_rotated=0, qucs_visible="00000000000000000000000000000", S0_x1=170, S0_y1=110, S0_x2=230, S0_y2=110 *) Diode #(.Is(1e-15 A),.N(1),.Cj0(10 fF),.M(0.5),.Vj(0.7 V),.Fc(0.5),.Cp(0.0 fF),.Isr(0.0),.Nr(2.0),.Rs(0.0 Ohm),.Tt(0.0 ps),.Ikf(0),.Kf(0.0),.Af(1.0),.Ffe(1.0),.Bv(0),.Ibv(1 mA),.Temp(26.85),.Xti(3.0),.Eg(1.11),.Tbv(0.0),.Trs(0.0),.Ttt1(0.0),.Ttt2(0.0),.Tm1(0.0),.Tm2(0.0),.Tnom(26.85),.Area(1.0),.Symbol(normal)) D1 ( n_170_110, n_230_110 );
+    (* qucs_mirrored=0, qucs_rotated=0, qucs_visible="00000000000000000000000000000", S0_x1=170, S0_y1=250, S0_x2=230, S0_y2=250 *) Diode #(.Is(1e-15 A),.N(1),.Cj0(10 fF),.M(0.5),.Vj(0.7 V),.Fc(0.5),.Cp(0.0 fF),.Isr(0.0),.Nr(2.0),.Rs(0.0 Ohm),.Tt(0.0 ps),.Ikf(0),.Kf(0.0),.Af(1.0),.Ffe(1.0),.Bv(0),.Ibv(1 mA),.Temp(26.85),.Xti(3.0),.Eg(1.11),.Tbv(0.0),.Trs(0.0),.Ttt1(0.0),.Ttt2(0.0),.Tm1(0.0),.Tm2(0.0),.Tnom(26.85),.Area(1.0),.Symbol(normal)) D2 ( n_170_250, n_230_250 );
+    (* qucs_mirrored=0, qucs_rotated=0, qucs_visible="11", S0_x1=80, S0_y1=350 *) Eqn #(.y(1),.Export(yes)) Eqn1 (  );
+    (* qucs_mirrored=0, qucs_rotated=0, qucs_visible="11110000000000000000", S0_x1=200, S0_y1=340 *) \.TR  #(.Type(lin),.Start(0),.Stop(Tmax),.Points(201),.IntegrationMethod(Trapezoidal),.Order(2),.InitialStep(1 ns),.MinStep(1e-16),.MaxIter(150),.reltol(0.001),.abstol(1 pA),.vntol(1 uV),.Temp(26.85),.LTEreltol(1e-3),.LTEabstol(1e-6),.LTEfactor(1),.Solver(CroutLU),.relaxTSR(no),.initialDC(yes),.MaxStep(0)) TR1 (  );
     (* S0_x1=230, S0_y1=110, S0_x2=290, S0_y2=110 *) net #() net1 ( n_230_110, n_290_110 );
     (* S0_x1=230, S0_y1=250, S0_x2=290, S0_y2=250 *) net #() net2 ( n_230_250, n_290_250 );
     (* S0_x1=130, S0_y1=250, S0_x2=170, S0_y2=250 *) net #() net3 ( n_130_250, n_170_250 );
@@ -54,3 +54,5 @@
     (* S0_x1=430, S0_y1=210, S0_x2=430, S0_y2=250 *) net #() net19 ( n_430_210, n_430_250 );
     (* S0_x=50, S0_y=30, qucs_type="Text", S0_text="Full-wave rectifier using a transformer and 2 diodes.", qucs_font_color="#000000", qucs_font_size=16, qucs_font_angle=0 *) S__text #() S0_text1();
 endmodule
+Warning: Too many visibility flags in component Eqn
+Warning: Too many visibility flags in component Eqn

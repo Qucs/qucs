@@ -107,6 +107,7 @@ public:
   virtual void set_qucs_x1(int x) {_qucs_x1=x;}
   virtual void set_qucs_y1(int y) {_qucs_y1=y;}
   virtual void apply_qucs_values();
+  virtual Schematic* scope() const {return containingSchematic;}
 
   // to hold track of the component appearance for saving and copying
   bool mirroredX;   // is it mirrored about X axis or not

@@ -26,7 +26,7 @@
     (* qucs_mirrored=0, qucs_rotated=0, qucs_visible="111111", S0_x1=390, S0_y1=180 *) SUBST #(.er(9.8),.h(0.635 mm),.t(17.5 um),.tand(0.0001),.rho(2.43902e-08),.D(1.5e-07)) SubstTC1 (  );
     (* qucs_mirrored=0, qucs_rotated=0, qucs_visible="111100000", S0_x1=80, S0_y1=250 *) \.SP  #(.Type(lin),.Start(0.2 GHz),.Stop(4.2 GHz),.Points(101),.Noise(no),.NoiseIP(1),.NoiseOP(2),.saveCVs(no),.saveAll(no)) SPTC1 (  );
     (* qucs_mirrored=0, qucs_rotated=0, qucs_visible="1111000", S0_x1=140, S0_y1=40, S0_x2=200, S0_y2=40, S0_x3=200, S0_y3=100, S0_x4=140, S0_y4=100 *) MCOUPLED #(.Subst(SubstTC1),.W(0.518 mm),.L(14.94 mm),.S(0.185 mm),.Model(Kirschning),.DispModel(Kirschning),.Temp(26.85)) MSTC1 ( n_140_40, n_200_40, n_200_100, n_140_100 );
-    (* qucs_mirrored=0, qucs_rotated=0, qucs_visible="10", S0_x1=250, S0_y1=300 *) Eqn #(.y(1),.Export(yes)) Eqn1 (  );
+    (* qucs_mirrored=0, qucs_rotated=0, qucs_visible="11", S0_x1=250, S0_y1=300 *) Eqn #(.y(1),.Export(yes)) Eqn1 (  );
     (* S0_x1=80, S0_y1=40, S0_x2=140, S0_y2=40 *) net #() net1 ( n_80_40, n_140_40 );
     (* S0_x1=80, S0_y1=40, S0_x2=80, S0_y2=60 *) net #() net2 ( n_80_40, n_80_60 );
     (* S0_x1=120, S0_y1=100, S0_x2=120, S0_y2=130 *) net #() net3 ( n_120_100, n_120_130 );
@@ -36,3 +36,5 @@
     (* S0_x1=260, S0_y1=100, S0_x2=260, S0_y2=150 *) net #() net7 ( n_260_100, n_260_150 );
     (* S0_x1=200, S0_y1=100, S0_x2=260, S0_y2=100 *) net #() net8 ( n_200_100, n_260_100 );
 endmodule
+Warning: Too many visibility flags in component Eqn
+Warning: Too many visibility flags in component Eqn

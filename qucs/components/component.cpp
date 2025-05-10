@@ -852,6 +852,10 @@ void Component::set_attribute(std::string name, std::string value)
   if(name == "qucs_rotated"){
     set_qucs_rotated(std::stoi(value));
   }
+  else
+  if(name == "qucs_visible"){ untested();
+    _qucs_p_visibility = value;
+  }
 }
 
 void Component::apply_qucs_values()
@@ -871,13 +875,21 @@ void Component::apply_qucs_values()
     cx = _qucs_x1;
     cy = _qucs_y1;
   }
-  /* BUG: Tests fail as long as Verilog Schematics are not updated
-  int i=0;
-  for (auto pp=Props.begin(); pp!=Props.end(); pp++, i++) { untested();
-    assert(i<(int)_qucs_p_visibility.size());
-    pp->display=(_qucs_p_visibility[i]=='1');
+  auto pp=Props.begin();
+  for(char& c : _qucs_p_visibility) { untested();
+    if(pp==Props.end()) {
+      scope()->warn(0,"Too many visibility flags in component "+Name.toStdString());
+      break;
+    } else if(c=='1') {
+      pp->display=true;
+    } else if(c=='0') {
+      pp->display=false;
+    } else {
+      scope()->warn(0,"Invalid visibility flag '"+std::to_string(c)+"' in component "+Name.toStdString());
+      break;
+    }
+    pp++;
   }
-  */
 }
 
 // -------------------------------------------------------

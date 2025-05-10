@@ -69,7 +69,7 @@
     (* qucs_mirrored=0, qucs_rotated=0, qucs_visible="10", S0_x1=330, S0_y1=80, S0_x2=390, S0_y2=80 *) L #(.L(470nH),.I()) L3 ( n_330_80, n_390_80 );
     (* qucs_mirrored=0, qucs_rotated=0, qucs_visible="", S0_x1=40, S0_y1=190 *) GND #() \*  ( n_40_190 );
     (* qucs_mirrored=0, qucs_rotated=0, qucs_visible="111100000", S0_x1=170, S0_y1=370 *) \.SP  #(.Type(log),.Start(1MHz),.Stop(100MHz),.Points(1001),.Noise(no),.NoiseIP(1),.NoiseOP(2),.saveCVs(no),.saveAll(no)) SP1 (  );
-    (* qucs_mirrored=0, qucs_rotated=0, qucs_visible="10", S0_x1=360, S0_y1=380 *) Eqn #(.y(1),.Export(yes)) Eqn1 (  );
+    (* qucs_mirrored=0, qucs_rotated=0, qucs_visible="11", S0_x1=360, S0_y1=380 *) Eqn #(.y(1),.Export(yes)) Eqn1 (  );
     (* qucs_mirrored=0, qucs_rotated=1, qucs_visible="11000", S0_x1=960, S0_y1=100, S0_x2=960, S0_y2=160 *) Pac #(.Num(2),.Z(100 Ohm),.P(0 dBm),.f(1 GHz),.Temp(26.85)) P2 ( n_960_100, n_960_160 );
     (* qucs_mirrored=1, qucs_rotated=2, qucs_visible="", S0_x1=960, S0_y1=200 *) GND #() \*  ( n_960_200 );
     (* qucs_mirrored=0, qucs_rotated=0, qucs_visible="10", S0_x1=330, S0_y1=250, S0_x2=390, S0_y2=250 *) L #(.L(470nH),.I()) L4 ( n_330_250, n_390_250 );
@@ -130,3 +130,5 @@
     (* S0_x1=940, S0_y1=290, S0_x2=940, S0_y2=310 *) net #() net44 ( n_940_290, n_940_310 );
     (* S0_x=500, S0_y=380, qucs_type="Text", S0_text="Butterworth low-pass filter\n10MHz cutoff, PI-type,\nimpedance matching 100 Ohm", qucs_font_color="#000000", qucs_font_size=12, qucs_font_angle=0 *) S__text #() S0_text1();
 endmodule
+Warning: Too many visibility flags in component Eqn
+Warning: Too many visibility flags in component Eqn

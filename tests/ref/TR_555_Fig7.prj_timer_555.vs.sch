@@ -24,17 +24,17 @@
   <.PortSym 40 300 6 0>
 </Symbol>
 <Components>
-  <Port P_GND 1 820 300 0 0 1 2 "1" 1 "analog" 0>
-  <Port P_OUTPUT 1 820 230 0 0 0 2 "3" 1 "analog" 0>
+  <Port P_GND 1 820 300 0 0 1 2 "1" 0 "analog" 0>
+  <Port P_OUTPUT 1 820 230 0 0 0 2 "3" 0 "analog" 0>
   <R R1 1 220 100 0 0 0 1 "5k" 1 "26.85" 0 "0.0" 0 "0.0" 0 "26.85" 0 "european" 0>
-  <Port P_RESET 1 150 40 0 0 0 0 "4" 1 "analog" 0>
+  <Port P_RESET 1 150 40 0 0 0 0 "4" 0 "analog" 0>
   <R R2 1 220 250 0 0 0 1 "5k" 1 "26.85" 0 "0.0" 0 "0.0" 0 "26.85" 0 "european" 0>
   <R R3 1 220 400 0 0 0 1 "5k" 1 "26.85" 0 "0.0" 0 "0.0" 0 "26.85" 0 "european" 0>
-  <Port P_CONTROL 1 150 200 0 0 0 0 "5" 1 "analog" 0>
-  <Port P_DISCHARGE 1 820 360 0 0 1 2 "7" 1 "analog" 0>
-  <Port P_VCC 1 220 30 0 0 0 3 "8" 1 "analog" 0>
-  <Port P_TRIGGER 1 140 355 0 0 0 0 "2" 1 "analog" 0>
-  <Port P_THRESH 1 120 140 0 0 0 0 "6" 1 "analog" 0>
+  <Port P_CONTROL 1 150 200 0 0 0 0 "5" 0 "analog" 0>
+  <Port P_DISCHARGE 1 820 360 0 0 1 2 "7" 0 "analog" 0>
+  <Port P_VCC 1 220 30 0 0 0 3 "8" 0 "analog" 0>
+  <Port P_TRIGGER 1 140 355 0 0 0 0 "2" 0 "analog" 0>
+  <Port P_THRESH 1 120 140 0 0 0 0 "6" 0 "analog" 0>
 </Components>
 <Wires>
   <690 260 690 300 "" 0 0 0 "">
