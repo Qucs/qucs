@@ -143,6 +143,7 @@ EXTRA_DIST += \
 	$(QUCSATOR_TESTS)
 
 CLEANFILES += \
+	${LIST_CLEANFILES} \
 	*.sch.net \
 	*.out *core
 
