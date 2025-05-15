@@ -633,7 +633,7 @@ int main(int argc, char *argv[])
       return 0;
     }
     else {
-      if(!QString(argv[i]).endsWith(".sch") && !QString(argv[i]).endsWith(".sch")) {
+      if(!QString(argv[i]).endsWith(".sch") && !QString(argv[i]).endsWith(".vs")) {
         fprintf(stderr, "Error: Unknown option: %s\n", argv[i]);
         return -1;
       }

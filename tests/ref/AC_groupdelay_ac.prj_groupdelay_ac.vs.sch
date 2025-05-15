@@ -27,7 +27,7 @@
   <GND * 5 550 250 0 0 0 0>
   <R R2 1 480 140 0 0 0 0 "Z0" 1 "26.85" 0 "0.0" 0 "0.0" 0 "26.85" 0 "european" 0>
   <.AC AC1 1 50 330 0 0 0 0 "log" 1 "1 MHz" 1 "200 MHz" 1 "458" 1 "no" 0>
-  <Eqn Eqn1 1 270 340 0 0 0 0 "y=1" 1 "yes" 0>
+  <Eqn Eqn1 1 270 340 0 0 0 0 "y=1" 1 "yes" 1>
   <R R1 1 150 140 0 0 0 0 "Z0" 1 "26.85" 0 "0.0" 0 "0.0" 0 "26.85" 0 "european" 0>
 </Components>
 <Wires>
@@ -47,4 +47,6 @@
 <Diagrams>
 </Diagrams>
 <Paintings>
+  <Text 470 310 12 #000000 0 "3rd order\nButterworth low-pass filter\n68MHz cutoff, PI-type,\nimpedance matching 60 Ohm">
+  <Text 60 50 14 #000000 0 "group delay using AC simulation">
 </Paintings>

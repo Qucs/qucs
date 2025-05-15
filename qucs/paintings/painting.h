@@ -30,6 +30,9 @@ public:
   virtual void getCenter(int&, int &) {};
   virtual bool getSelected(float, float, float) { return false; };
 
+  virtual void set_attribute(std::string name, std::string value);
+  virtual std::string attr_get()const;
+
   virtual Painting* newOne();
   virtual bool load(const QString&) { return true; };
   virtual QString save();
@@ -50,8 +53,8 @@ public:
 
   QString toPenString (int);
   QString toBrushString (int);
-  QString Name; // name of painting, e.g. for saving
-  int  State;   // state for different mouse operations
+  QString Name{""}; // name of painting, e.g. for saving
+  int  State{0};   // state for different mouse operations
 };
 
 #endif

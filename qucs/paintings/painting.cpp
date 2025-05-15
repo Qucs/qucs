@@ -15,6 +15,7 @@
  *                                                                         *
  ***************************************************************************/
 #include "painting.h"
+#include "trace.h"
 
 Painting::Painting()
 {
@@ -23,7 +24,7 @@ Painting::Painting()
 }
 
 Painting* Painting::newOne()
-{
+{ untested();
   return new Painting();
 }
 
@@ -34,21 +35,21 @@ void Painting::Bounding(int& _x1, int& _y1, int& _x2, int& _y2)
 }
 
 QString Painting::save()
-{
+{ untested();
   return QString();
 }
 
 QString Painting::saveCpp()
-{
+{ untested();
   return QString();
 }
 
 QString Painting::saveJSON()
-{
+{ untested();
   return QString();
 }
 
-QString Painting::toPenString (int pen) {
+QString Painting::toPenString (int pen) { untested();
   switch (pen) {
   case Qt::NoPen: return "Qt::NoPen";
   case Qt::SolidLine: return "Qt::SolidLine";
@@ -61,7 +62,7 @@ QString Painting::toPenString (int pen) {
   return "Qt::NoPen";
 }
 
-QString Painting::toBrushString (int brush) {
+QString Painting::toBrushString (int brush) { untested();
   switch (brush) {
   case Qt::NoBrush: return "Qt::NoBrush";
   case Qt::SolidPattern: return "Qt::SolidPattern";
@@ -81,4 +82,26 @@ QString Painting::toBrushString (int brush) {
   case Qt::TexturePattern : return "Qt::CustomPattern ";
   }
   return "Qt::NoBrush";
+}
+
+std::string Painting::attr_get()const
+{
+  return "qucs_w="+std::to_string(x2)+", "+"qucs_h="+std::to_string(y2);
+}
+
+void Painting::set_attribute(std::string name, std::string value)
+{
+  if(name=="S0_x") {
+    cx = std::stoi(value);
+  }
+  else if(name=="S0_y") {
+    cy = std::stoi(value);
+  }
+  else if(name=="qucs_w") { untested();
+    x2 = std::stoi(value);
+  }
+  else if(name=="qucs_h") { untested();
+    y2 = std::stoi(value);
+  }
+  else {}
 }

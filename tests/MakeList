@@ -124,3 +124,7 @@ PRJ_TESTS_TODO = \
 	SP_Sparam_diagrams.prj \
 	SP_sparam.prj \
 	TR_TTL_NAND_spice.prj
+
+LIST_CLEANFILES = \
+	roundtrip_vs.diff \
+	roundtrip_sch.diff

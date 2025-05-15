@@ -36,6 +36,8 @@ public:
   void  appendConnection(const std::shared_ptr<Element> &);
   int refcount() { return _conn.size(); }
 
+  std::string label()const;
+
   std::list<std::weak_ptr<Element> > const& connections() const {return _conn;}
   std::list<std::weak_ptr<Element> > const& connections() {return _conn;}
 

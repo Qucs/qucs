@@ -20,7 +20,7 @@
 </Symbol>
 <Components>
   <C C3 1 190 140 0 0 0 1 "234 fF" 1 "" 0 "neutral" 0>
-  <VCCS SRC1 1 300 140 0 0 0 0 "0.069 S" 1 "1.69 ps" 0>
+  <VCCS SRC1 1 300 140 0 0 0 0 "0.069 S" 1 "1.69 ps" 1>
   <C C4 1 100 140 0 0 0 1 "5 fF" 1 "" 0 "neutral" 0>
   <C C1 1 230 50 0 0 0 0 "39 fF" 1 "" 0 "neutral" 0>
   <C C2 1 530 150 0 0 0 1 "31 fF" 1 "" 0 "neutral" 0>
@@ -36,7 +36,7 @@
   <R R5 1 260 260 0 0 0 1 "2.4 Ohm" 1 "16.85" 0 "0.0" 0 "0.0" 0 "26.85" 0 "european" 0>
   <L L3 1 260 320 0 0 0 1 "6.4 pH" 1 "" 0>
   <Port P3 1 260 350 0 0 0 1 "3" 1 "analog" 0>
-  <R R3 1 360 140 0 0 0 1 "312" 1 "6000" 0 "0.0" 0 "0.0" 0 "26.85" 0 "european" 0>
+  <R R3 1 360 140 0 0 0 1 "312" 1 "6000" 1 "0.0" 0 "0.0" 0 "26.85" 0 "european" 0>
 </Components>
 <Wires>
   <190 50 190 110 "" 0 0 0 "">
@@ -68,4 +68,5 @@
 <Diagrams>
 </Diagrams>
 <Paintings>
+  <Text 340 300 12 #000000 0 "small-signal equivalent circuit of\na microwave FET\nThe temperature of all resistors is set to 16.85�C\n(290K) which is the IEEE standard temperature for\nnoise figure measurement. This means their noise\nis thermal noise. An exception is R3 whose\nelectron gas is highly overheated (diffusion noise).">
 </Paintings>

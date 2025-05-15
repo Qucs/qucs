@@ -26,7 +26,7 @@
   <.SP SP1 1 110 290 0 0 0 0 "log" 1 "1MHz" 1 "200MHz" 1 "458" 1 "no" 0 "1" 0 "2" 0 "no" 0 "no" 0>
   <Pac P2 1 500 190 0 0 0 1 "2" 1 "60 Ohm" 1 "0 dBm" 0 "1 GHz" 0 "26.85" 0>
   <GND * 5 500 220 0 0 0 0>
-  <Eqn Eqn1 1 310 300 0 0 0 0 "y=1" 1 "yes" 0>
+  <Eqn Eqn1 1 310 300 0 0 0 0 "y=1" 1 "yes" 1>
 </Components>
 <Wires>
   <220 100 220 150 "" 0 0 0 "">
@@ -41,4 +41,6 @@
 <Diagrams>
 </Diagrams>
 <Paintings>
+  <Text 560 270 12 #000000 0 "3rd order\nButterworth low-pass filter\n68MHz cutoff, PI-type,\nimpedance matching 60 Ohm">
+  <Text 110 30 14 #000000 0 "group delay using S-parameter simulation">
 </Paintings>

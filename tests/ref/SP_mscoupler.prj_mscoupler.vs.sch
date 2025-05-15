@@ -27,7 +27,7 @@
   <SUBST SubstTC1 1 390 180 0 0 0 0 "9.8" 1 "0.635 mm" 1 "17.5 um" 1 "0.0001" 1 "2.43902e-08" 1 "1.5e-07" 1>
   <.SP SPTC1 1 80 250 0 0 0 0 "lin" 1 "0.2 GHz" 1 "4.2 GHz" 1 "101" 1 "no" 0 "1" 0 "2" 0 "no" 0 "no" 0>
   <MCOUPLED MSTC1 1 170 70 0 0 0 0 "SubstTC1" 1 "0.518 mm" 1 "14.94 mm" 1 "0.185 mm" 1 "Kirschning" 0 "Kirschning" 0 "26.85" 0>
-  <Eqn Eqn1 1 250 300 0 0 0 0 "y=1" 1 "yes" 0>
+  <Eqn Eqn1 1 250 300 0 0 0 0 "y=1" 1 "yes" 1>
 </Components>
 <Wires>
   <80 40 140 40 "" 0 0 0 "">

@@ -1,0 +1,91 @@
+--
+-- TODO
+-- 
+-- This is free software; you can redistribute it and/or modify
+-- it under the terms of the GNU General Public License as published by
+-- the Free Software Foundation; either version 2, or (at your option)
+-- any later version.
+-- 
+-- This software is distributed in the hope that it will be useful,
+-- but WITHOUT ANY WARRANTY; without even the implied warranty of
+-- MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+-- GNU General Public License for more details.
+-- 
+-- You should have received a copy of the GNU General Public License
+-- along with this package; see the file COPYING.  If not, write to
+-- the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
+-- Boston, MA 02110-1301, USA.  
+--
+
+This file lists all the things we would like to add in the future.
+Bugs are not listed here; for a list of all known bugs (fixed and
+unfixed) have a look at the file BUGS.
+
+(completed tasks are indented one tab)
+
+- different color/thickness of wires in order to visualize
+  different types of signals
+- busses for digital designs (instead of wires only)
+	- keeping input/output type of VHDL subcircuits based on VHDL files
+- real library creation using VHDL (precompiled objects as well as
+  libraries)
+- eye-diagram implementation
+- editing long property lines (multi-line inputs), e.g. for EDD device
+- what about S-parameter file references in library elements?
+- Verilog-HDL editor based on VHDL editor
+- allow mirroring, placement of component arrays and alike while
+  inserting/pasting a new components
+	- handle subcircuits in library components as well as other file
+	  references correctly
+- simulation messages are sometimes swallowed by the output parser due
+  to the concept how the progress bar is extracted, fix this
+- check if -fno-rtti can be used
+- in order to abort the qucsdigi script use tryTerminate, then kill
+	- add an export to csv file feature as context menu item when
+	  clicking on graphs in diagrams
+	- add an easy to use volt-meter (for differential voltages)
+	- implementation of 3d cartesian diagram
+	- node/branch annotation of simulation results
+	- filter design tool
+	- implement coplanar line synthesis/analysis in transmission
+	  line tool
+	- smith chart design tool for impedance and noise matching
+	- attenuator design tool
+- topology check (open ports) for schematics
+	- implement user-defined subcircuit paintings
+	- make tabdiagram 'scrollable' (for long value lists)
+- allow tabdiagram to display variables with different dependencies
+	- shutdown external programs on application exit
+	- implement list parameter sweeps
+- allow components to be painted in a certain order (implement drawing
+  depth)
+- improve wiring algorithm
+	- don't change into project directory or any other directory
+	- microwave line calculation program
+	- filter synthesis program
+- import filters for different data formats (ADS, touchstone, etc.)
+	- s-parameter simulator program
+	- DC analysis
+	- internet representation
+- creation of documentation, introductions and help texts
+- translation of internal help texts shipped with Qucs
+- paint logos and other drawings
+	- modify/create configure scripts
+	- load/save/print schematics
+	- partial polar/smith chart
+- compatibility code and testing on other platforms as GNU/Linux
+	- components: correlated noise sources, symbolically defined
+	  devices
+	- optimization dialog box
+- snap mode for wire painting
+	- edit component parameters directly in schematic
+- equations for diagram input line
+- 3D clipping
+- legend for diagrams
+- syntax highlighting for VHDL printing
+- tune simulation parameters
+- simulation of tolerances (Monte Carlo)
+	- aligning functions: center horizontal/vertically
+- property file for projects (revision, last opened, ...)
+- all coordinates as float variables
+- PCB layout documents

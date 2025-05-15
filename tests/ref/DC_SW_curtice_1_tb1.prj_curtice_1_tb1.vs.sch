@@ -39,4 +39,5 @@
 <Diagrams>
 </Diagrams>
 <Paintings>
+  <Text 590 80 13 #000000 0 "Author: Mike Brinson">
 </Paintings>

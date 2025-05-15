@@ -46,4 +46,5 @@
 <Diagrams>
 </Diagrams>
 <Paintings>
+  <Text 180 30 16 #000000 0 "Just a simple example:\nNo current flows through the middle branch,\nif the bridge is matched.">
 </Paintings>

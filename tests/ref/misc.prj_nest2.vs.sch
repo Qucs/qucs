@@ -20,9 +20,9 @@
 <Components>
   <Port P2 1 400 180 0 0 0 2 "2" 1 "analog" 0>
   <Port P1 1 180 180 0 0 1 0 "1" 1 "analog" 0>
-  <R R1 1 290 260 0 0 0 0 "0 Ohm" 1 "26.85" 0 "0.0" 0 "0.0" 0 "26.85" 0 "european" 0>
+  <R R1 1 290 260 0 0 0 0 "0 Ohm" 0 "26.85" 0 "0.0" 0 "0.0" 0 "26.85" 0 "european" 0>
   <GND * 5 380 360 0 0 0 0>
-  <C C1 1 380 280 0 0 0 1 "1 pF" 1 "" 0 "neutral" 0>
+  <C C1 1 380 280 0 0 0 1 "1 pF" 0 "" 0 "neutral" 0>
 </Components>
 <Wires>
   <240 260 260 260 "" 0 0 0 "">
@@ -38,4 +38,6 @@
 <Diagrams>
 </Diagrams>
 <Paintings>
+  <Text 190 60 14 #ff5500 0 "simple subcircuit which just\nshorts the two ports">
+  <Text 140 430 12 #ff5500 0 "C1 is used just to have a\ncomponent in the subcircuit netlist\n(does not change the simulation/netlisting results)">
 </Paintings>

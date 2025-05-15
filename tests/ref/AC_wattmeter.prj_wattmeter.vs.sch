@@ -53,4 +53,5 @@
 <Diagrams>
 </Diagrams>
 <Paintings>
+  <Text 232 -21 12 #000000 0 "Wattmeter in AC, the component always\nacts as both voltmeter and ammeter.\nWith the collected values, it then calculates the\npower triangle and corresponding power factor.">
 </Paintings>

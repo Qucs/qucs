@@ -532,3 +532,35 @@ bool Arrow::Dialog()
   delete d;
   return changed;
 }
+
+// -----------------------------------------------------------------------
+std::string Arrow::attr_get()const
+{ untested();
+  std::string ret;
+  ret+="qucs_pen_color=\""+Pen.color().name().toStdString()+"\"";
+  ret+=", ";
+  ret+="qucs_pen_width="+std::to_string(Pen.width());
+  ret+=", ";
+  ret+="qucs_pen_style="+std::to_string(Pen.style());
+  ret+=", ";
+  ret+=Painting::attr_get();
+  return ret;
+}
+
+void Arrow::set_attribute(std::string name, std::string value)
+{ untested();
+  if(name=="qucs_pen_color") {
+    QColor co;
+    co.setNamedColor(QString::fromStdString(value));
+    Pen.setColor(co);
+  }
+  else if(name=="qucs_pen_width") {
+    Pen.setWidth(std::stoi(value));
+  }
+  else if(name=="qucs_pen_style") {
+    Pen.setStyle((Qt::PenStyle)(std::stoi(value)));
+  } else {
+    Painting::set_attribute(name,value);
+  }
+  calcArrowHead();
+}

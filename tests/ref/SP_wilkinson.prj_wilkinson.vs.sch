@@ -27,7 +27,7 @@
   <GND * 5 410 100 0 0 0 0>
   <R R1 1 300 90 0 0 0 1 "100 Ohm" 1 "26.85" 0 "0.0" 0 "0.0" 0 "26.85" 0 "european" 0>
   <.SP SP1 1 -10 210 0 0 0 0 "lin" 1 "0.1 MHz" 1 "2 GHz" 1 "100" 1 "no" 0 "1" 0 "2" 0 "no" 0 "no" 0>
-  <Eqn Eqn1 1 140 230 0 0 0 0 "y=1" 1 "yes" 0>
+  <Eqn Eqn1 1 140 230 0 0 0 0 "y=1" 1 "yes" 1>
 </Components>
 <Wires>
   <180 40 200 40 "" 0 0 0 "">
@@ -46,4 +46,5 @@
 <Diagrams>
 </Diagrams>
 <Paintings>
+  <Text 270 240 12 #000000 0 "ideal Wilkinson divider:\n- power into port 1 is split equally to port 2 and 3\n- port 2 and 3 are decoupled\n- if port 2 and 3 are terminated equally, no power\n  is consumed by R1\n- a wider bandwidth can be achieved by using\n  more than one Line2/Line3/R1 section">
 </Paintings>

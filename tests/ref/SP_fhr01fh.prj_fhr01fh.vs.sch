@@ -31,13 +31,13 @@
   <C C5 1 100 360 0 0 0 1 "150 fF" 1 "" 0 "neutral" 0>
   <C C4 1 0 360 0 0 0 1 "110 fF" 1 "" 0 "neutral" 0>
   <L L1 1 50 70 0 0 0 0 "360 pH" 1 "" 0>
-  <VCCS SRC1 1 300 160 0 0 0 0 "57 mS" 1 "3 ps" 0>
+  <VCCS SRC1 1 300 160 0 0 0 0 "57 mS" 1 "3 ps" 1>
   <GND * 5 290 440 0 0 0 0>
-  <R R2 1 350 160 0 0 0 1 "400" 1 "5240" 0 "0.0" 0 "0.0" 0 "26.85" 0 "european" 0>
-  <.SP SP1 1 130 470 0 0 0 0 "lin" 1 "1 GHz" 1 "23 GHz" 1 "150" 1 "yes" 0 "1" 0 "2" 0 "no" 0 "no" 0>
+  <R R2 1 350 160 0 0 0 1 "400" 1 "5240" 1 "0.0" 0 "0.0" 0 "26.85" 0 "european" 0>
+  <.SP SP1 1 130 470 0 0 0 0 "lin" 1 "1 GHz" 1 "23 GHz" 1 "150" 1 "yes" 1 "1" 1 "2" 1 "no" 0 "no" 0>
   <Pac P1 1 20 440 0 0 1 2 "1" 1 "50 Ohm" 1 "0 dBm" 0 "1 GHz" 0 "26.85" 0>
   <Pac P2 1 650 440 0 0 1 0 "2" 1 "50 Ohm" 1 "0 dBm" 0 "1 GHz" 0 "26.85" 0>
-  <Eqn Eqn1 1 610 530 0 0 0 0 "y=1" 1 "yes" 0>
+  <Eqn Eqn1 1 610 530 0 0 0 0 "y=1" 1 "yes" 1>
 </Components>
 <Wires>
   <190 130 270 130 "" 0 0 0 "">
@@ -85,4 +85,10 @@
 <Diagrams>
 </Diagrams>
 <Paintings>
+  <Rectangle 120 40 400 270 #000000 1 1 #c0c0c0 1 0>
+  <Text 430 290 14 #000000 0 "intrinsic FET  ">
+  <Text 410 370 14 #ff0000 0 "source ">
+  <Text -20 110 14 #ff0000 90 "gate ">
+  <Text 640 110 14 #ff0000 90 "drain ">
+  <Text 210 480 12 #000000 0 "small-signal model of Fujitsu HEMT FHR01FH (2V, 10mA) \ntaken from:  \nPospieszalski, "Modeling of Noise Parameters of MESFET's and \nMODFET's and their frequency and temperature dependence", \nIEEE Trans. Microwave Theory and Techniques, Sept. 1989 ">
 </Paintings>

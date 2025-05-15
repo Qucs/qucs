@@ -92,7 +92,7 @@ qucs::Property &Component::prop(int n)
 }
 
 const qucs::Property &Component::prop(int n) const
-{ untested();
+{
   auto p = Props.begin();
   while (n-- > 0 && p != Props.end())
     ++p;
@@ -110,7 +110,7 @@ qucs::Port &Component::port(int n)
 }
 
 const qucs::Port &Component::port(int n) const
-{ untested();
+{
   auto p = Ports.begin();
   while (n-- > 0 && p != Ports.end())
     ++p;
@@ -781,7 +781,47 @@ QString Component::get_VHDL_Code(int NumPorts)
 
 void Component::set_port_by_index(int num, std::string const& ext_name)
 {
-  incomplete();
+  if(_portvalues.size()<size_t(num+1)) {
+    _portvalues.resize(num+1);
+  }
+  _portvalues[num]=ext_name;
+}
+
+void Component::check_node_positions(Schematic* schematic)
+{
+  assert(schematic);
+  int i=0;
+  std::string msg="";
+  for(auto p=Ports.begin();p!=Ports.end();p++) {
+    int chx = cx+p->x;
+    int chy = cy+p->y;
+    try {
+      if(i<(int)_portvalues.size()) {
+        if(schematic->nodename_at(chx,chy) != _portvalues[i]) {
+          msg = Name.toStdString();
+          msg+=", Port "+std::to_string(i);
+          msg+=" at ("+std::to_string(chx)+","+std::to_string(chy)+"):";
+          msg+=" not connected to "+_portvalues[i]+"\n";
+          schematic->warn(0,msg);
+        }else{
+	}
+      } else { untested();
+        msg="No node assignment for port "+std::to_string(i);
+        msg+=" of component "+Name.toStdString();
+        msg+=" at position ("+std::to_string(chx)+","+std::to_string(chy)+")";
+        msg+="\n";
+        schematic->warn(0,msg);
+      }
+    } catch (const std::out_of_range& e) { untested();
+      msg="Port "+std::to_string(i);
+      msg+=" of component "+Name.toStdString();
+      msg+=" not found at ("+std::to_string(chx)+","+std::to_string(chy)+")\n";
+      msg+="Exception:"+std::string(e.what());
+      msg+="\n";
+      schematic->warn(0,msg);
+    }
+    i++;
+  }
 }
 
 // Attributes
@@ -812,6 +852,10 @@ void Component::set_attribute(std::string name, std::string value)
   if(name == "qucs_rotated"){
     set_qucs_rotated(std::stoi(value));
   }
+  else
+  if(name == "qucs_visible"){ untested();
+    _qucs_p_visibility = value;
+  }
 }
 
 void Component::apply_qucs_values()
@@ -831,6 +875,21 @@ void Component::apply_qucs_values()
     cx = _qucs_x1;
     cy = _qucs_y1;
   }
+  auto pp=Props.begin();
+  for(char& c : _qucs_p_visibility) { untested();
+    if(pp==Props.end()) {
+      scope()->warn(0,"Too many visibility flags in component "+Name.toStdString());
+      break;
+    } else if(c=='1') {
+      pp->display=true;
+    } else if(c=='0') {
+      pp->display=false;
+    } else {
+      scope()->warn(0,"Invalid visibility flag '"+std::to_string(c)+"' in component "+Name.toStdString());
+      break;
+    }
+    pp++;
+  }
 }
 
 // -------------------------------------------------------
@@ -845,6 +904,15 @@ bool Component::param_is_printable(int) const
 {
   // incomplete(); // props(i)->is_attribute?
   return true;
+}
+
+bool Component::param_is_visible(int i) const
+{ untested();
+  assert(i<int(Props.size()));
+  auto it = Props.begin();
+  // BUG: Missing random access
+  std::advance(it, i);
+  return it->display;
 }
 
 std::string Component::param_name(int i) const
@@ -867,6 +935,8 @@ std::string Component::param_value(int i) const
 
 void Component::set_param_by_index(int i, std::string const& Value)
 { untested();
+  (void)i;
+  (void)Value;
   incomplete();
 //  auto it = Props.begin();
 //  std::advance(it, i);
@@ -1872,7 +1942,7 @@ std::shared_ptr<Component> getComponentFromName(QString& Line, Schematic* p)
   Line = Line.trimmed();
   if(Line.at(0) != '<') { untested();
     QMessageBox::critical(0, QObject::tr("Error"),
-			QObject::tr("Format Error:\nWrong line start!"));
+			QObject::tr("Format Error:\nWrong line start"));
     return 0;
   }
 
@@ -1884,7 +1954,7 @@ std::shared_ptr<Component> getComponentFromName(QString& Line, Schematic* p)
     /// \todo enable user to load partial schematic, skip unknown components
       if (QucsMain!=0) { untested();
           QMessageBox* msg = new QMessageBox(QMessageBox::Warning,QObject::tr("Warning"),
-                                             QObject::tr("Format Error:\nUnknown component!\n"
+                                             QObject::tr("Format Error:\nUnknown component\n"
                                                          "%1\n\n"
                                                          "Do you want to load schematic anyway?\n"
                                                          "Unknown components will be replaced \n"
@@ -1911,7 +1981,7 @@ std::shared_ptr<Component> getComponentFromName(QString& Line, Schematic* p)
   if(!p){
   }else if(!p->loadComponent(Line, c)) { untested();
     QMessageBox::critical(0, QObject::tr("Error"),
-	QObject::tr("Format Error:\nWrong 'component' line format!"));
+	QObject::tr("Format Error:\nWrong 'component' line format"));
     return 0;
   }
 

@@ -63,3 +63,6 @@ stamp-h2
 # ignore Verilog from tests
 tests/*.prj/*.sch.new.v
 tests/*.prj/*.sch.new.net
+
+# ignore temporary logfile if copied over
+tests/ref/*.log

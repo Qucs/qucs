@@ -30,7 +30,7 @@
   <R Load 1 620 190 0 0 0 1 "R_load" 1 "26.85" 0 "0.0" 0 "0.0" 0 "26.85" 0 "european" 0>
   <Tr Tr1 1 350 150 0 0 0 1 "25" 1>
   <.AC AC1 1 70 280 0 0 0 0 "lin" 1 "1 GHz" 1 "2 GHz" 1 "2" 1 "no" 0>
-  <Eqn Eqn1 1 570 320 0 0 0 0 "y=1" 1 "yes" 0>
+  <Eqn Eqn1 1 570 320 0 0 0 0 "y=1" 1 "yes" 1>
   <.SW SW1 1 70 410 0 0 0 0 "AC1" 1 "lin" 1 "R1" 1 "R_load" 1 "2 Ohm" 1 "100" 1>
 </Components>
 <Wires>
@@ -52,4 +52,9 @@
 <Diagrams>
 </Diagrams>
 <Paintings>
+  <Rectangle 100 60 130 200 #000000 1 1 #c0c0c0 1 0>
+  <Rectangle 580 90 130 190 #000000 1 1 #c0c0c0 1 0>
+  <Text 590 260 12 #000000 0 "load (e.g. antenna)">
+  <Text 160 240 12 #000000 0 "generator">
+  <Text 220 420 12 #000000 0 "This is a VSWR meter often used to measure if the antenna\nis matched. It is connected between generator and load.\nIt creates a voltage proportional to the forward voltage and\none proportional to the reflected voltage. The equations\non this page calculates the reflection coefficient using\nthe definition and using the voltages. As can be seen they\nequal each other. The mismatch created by the VSWR meter\nis very low.">
 </Paintings>

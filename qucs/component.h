@@ -34,6 +34,7 @@ class QTextStream; // BUG
 
 class Component : public Element {
   std::string _attr;
+  std::vector<std::string> _portvalues;
 
 public: // BUG.
   std::list<qucs::Port>   Ports;
@@ -70,6 +71,7 @@ public:
 
 public: // attributes
   std::string attr_get()const override;
+
   virtual void attr_add(std::string s) {_attr += ", " + s;}
   virtual void set_attribute(std::string name, std::string value);
   virtual void set_label(std::string const& name);
@@ -77,6 +79,7 @@ public: // attributes
 public: // parameter access
   virtual int param_count() const;
   virtual bool param_is_printable(int i) const;
+  virtual bool param_is_visible(int i) const;
   virtual std::string param_name(int i) const;
   virtual std::string param_value(int i) const;
   virtual void set_param_by_index(int i, std::string const& Value);
@@ -88,13 +91,14 @@ public: // ports
   virtual std::string port_value(int)const{incomplete(); return "???";}
   virtual void set_port_by_name(std::string const&, std::string const&);
   virtual void set_port_by_index(int num, std::string const& ext_name);
+  void check_node_positions(Schematic *schematic);
 
 public:
-  virtual std::string dev_type()const {
+  std::string dev_type()const override {
 	  // incomplete();
 	  return obsolete_model_hack().toStdString();
   }
-  virtual void set_dev_type(std::string const& type);
+  void set_dev_type(std::string const& type) override;
 
 public:
   virtual void set_qucs_text_position(int x, int y) {_tx=x;_ty=y;}
@@ -103,6 +107,7 @@ public:
   virtual void set_qucs_x1(int x) {_qucs_x1=x;}
   virtual void set_qucs_y1(int y) {_qucs_y1=y;}
   virtual void apply_qucs_values();
+  virtual Schematic* scope() const {return containingSchematic;}
 
   // to hold track of the component appearance for saving and copying
   bool mirroredX;   // is it mirrored about X axis or not
@@ -131,6 +136,7 @@ private:
   int _qucs_x1{0}, _qucs_y1{0}; // position of port 1 after transform
   bool _qucs_mirrored{false}; // value from XML document
   int _qucs_rotated{0}; // value from XML document
+  std::string _qucs_p_visibility; // store visibility flags of properties in schematic
 public:
   int tx()const {return _tx;}
   int ty()const {return _ty;}

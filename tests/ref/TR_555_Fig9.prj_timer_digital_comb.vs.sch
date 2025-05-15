@@ -21,15 +21,15 @@
   <.PortSym 40 180 1 0>
 </Symbol>
 <Components>
-  <Port P_trig 1 280 340 0 0 0 0 "3" 1 "analog" 0>
-  <Port P_tresh 1 115 270 0 0 0 0 "2" 1 "analog" 0>
+  <Port P_trig 1 280 340 0 0 0 0 "3" 0 "analog" 0>
+  <Port P_tresh 1 115 270 0 0 0 0 "2" 0 "analog" 0>
   <GND * 5 610 250 0 0 0 0>
-  <Port P_Q 1 630 120 0 0 0 2 "4" 1 "analog" 0>
+  <Port P_Q 1 630 120 0 0 0 2 "4" 0 "analog" 0>
   <GND * 5 580 390 0 0 0 0>
   <Inv Y5 1 715 190 0 0 0 0 "1 V" 0 "0" 0 "10" 0 "DIN40900" 0>
-  <Port P_QB 1 835 190 0 0 0 2 "5" 1 "analog" 0>
+  <Port P_QB 1 835 190 0 0 0 2 "5" 0 "analog" 0>
   <GND * 5 830 270 0 0 0 0>
-  <Port P_reset 1 65 170 0 0 0 0 "1" 1 "analog" 0>
+  <Port P_reset 1 65 170 0 0 0 0 "1" 0 "analog" 0>
   <GND * 5 410 260 0 0 0 0>
   <GND * 5 190 240 0 0 0 0>
   <R R1 1 160 170 0 0 0 0 "1k" 1 "26.85" 0 "0.0" 0 "0.0" 0 "26.85" 0 "european" 0>

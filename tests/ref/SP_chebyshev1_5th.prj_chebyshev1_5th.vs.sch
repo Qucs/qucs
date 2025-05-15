@@ -29,7 +29,7 @@
   <Pac P1 1 70 120 0 0 0 1 "1" 1 "50 Ohm" 1 "0 dBm" 0 "1 GHz" 0 "26.85" 0>
   <Pac P2 1 510 120 0 0 0 1 "2" 1 "50 Ohm" 1 "0 dBm" 0 "1 GHz" 0 "26.85" 0>
   <.SP SP1 1 110 270 0 0 0 0 "lin" 1 "1 MHz" 1 "150 MHz" 1 "300" 1 "no" 0 "1" 0 "2" 0 "no" 0 "no" 0>
-  <Eqn Eqn1 1 220 290 0 0 0 0 "y=1" 1 "yes" 0>
+  <Eqn Eqn1 1 220 290 0 0 0 0 "y=1" 1 "yes" 1>
 </Components>
 <Wires>
   <70 70 70 90 "" 0 0 0 "">
@@ -47,4 +47,5 @@
 <Diagrams>
 </Diagrams>
 <Paintings>
+  <Text 310 250 18 #000000 0 "5th Order Low Pass Chebyshev Type 1 Filter \nEnd of pass band:  100MHz ">
 </Paintings>

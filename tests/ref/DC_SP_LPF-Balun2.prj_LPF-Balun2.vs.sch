@@ -35,7 +35,7 @@
   <Pac P2 1 990 180 0 0 0 1 "2" 1 "100 Ohm" 1 "0 dBm" 0 "1 GHz" 0 "26.85" 0>
   <GND * 5 990 250 0 0 1 2>
   <.SP SP1 1 20 350 0 0 0 0 "log" 1 "1MHz" 1 "100MHz" 1 "1001" 1 "no" 0 "1" 0 "2" 0 "no" 0 "no" 0>
-  <Eqn Eqn1 1 200 370 0 0 0 0 "y=1" 1 "yes" 0>
+  <Eqn Eqn1 1 200 370 0 0 0 0 "y=1" 1 "yes" 1>
   <.DC DC1 1 600 350 0 0 0 0 "26.85" 0 "0.001" 0 "1 pA" 0 "1 uV" 0 "no" 0 "150" 0 "no" 0 "none" 0 "CroutLU" 0>
 </Components>
 <Wires>
@@ -77,4 +77,5 @@
 <Diagrams>
 </Diagrams>
 <Paintings>
+  <Text 350 340 12 #000000 0 "Butterworth low-pass filter\n10MHz cutoff, PI-type,\nimpedance matching 100 Ohm">
 </Paintings>

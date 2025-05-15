@@ -47,4 +47,5 @@
 <Diagrams>
 </Diagrams>
 <Paintings>
+  <Text 400 40 12 #0000ff 0 "Schematic shows a Lambda/4 stub that\nis often used to bias active elements.\nPort 1 to 2 is a short, Port 1 and 3 is\ndecoupled. The bandwidth increases\nwith decreasing line width of "Stub".">
 </Paintings>

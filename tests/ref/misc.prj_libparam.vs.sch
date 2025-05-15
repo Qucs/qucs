@@ -19,7 +19,7 @@
   <Vdc V1 1 140 250 0 0 0 1 "1 V" 1>
   <GND * 5 140 320 0 0 0 0>
   <R R1 1 340 250 0 0 1 3 "50 Ohm" 1 "26.85" 0 "0.0" 0 "0.0" 0 "26.85" 0 "european" 0>
-  <Lib IB1 1 220 200 0 0 0 0 "Ideal" 1 "Notch2" 1>
+  <Lib IB1 1 220 200 0 0 0 0 "Ideal" 0 "Notch2" 0>
   <.DC DC1 1 140 380 0 0 0 0 "26.85" 0 "0.001" 0 "1 pA" 0 "1 uV" 0 "no" 0 "150" 0 "no" 0 "none" 0 "CroutLU" 0>
 </Components>
 <Wires>
@@ -35,4 +35,5 @@
 <Diagrams>
 </Diagrams>
 <Paintings>
+  <Text 140 40 14 #ff5500 0 "- if the subcircuit is a plain short (i.e. just a net connecting the two nodes)\nthe simulation result is wrong\n- if the subcircuit shorts the two nodes via a 0 ohm resistor, results are correct">
 </Paintings>
