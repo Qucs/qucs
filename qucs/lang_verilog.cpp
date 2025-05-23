@@ -417,6 +417,11 @@ void set_attribute(T* x, std::string name, std::string value)
   }
 }
 
+void set_attribute(Painting* x, std::string name, std::string value)
+{
+  x->set_attribute(name, value);
+}
+
 template <class T>
 void parse_attributes(CS& cmd, T* x)
 {
@@ -429,7 +434,6 @@ void parse_attributes(CS& cmd, T* x)
       set_attribute(x, name, value);
     }
   }
-  x->apply_qucs_values();
 }
 
 // BUG. need extra function, Wire is not a Component.
@@ -599,26 +603,13 @@ void parse_instance(CS& cmd, T* x)
   assert(x);
   cmd.reset();
   parse_attributes(cmd, x);
+  x->apply_qucs_values();
   parse_type(cmd, x);
   parse_args_instance(cmd, x);
   parse_label(cmd, x);
   parse_ports(cmd, x, false/*allow dups*/);
   cmd >> ';';
   cmd.check(0, "what's this?");
-}
-
-void parse_painting(CS& cmd, Painting* p)
-{ untested();
-  assert(p);
-  incomplete();
-  cmd.reset();
-  while (cmd >> "(*") {
-    while(cmd.ns_more() && !(cmd >> ",") && !(cmd >> "*)")) {
-      std::string name, value;
-      cmd >> name >> "=" >> value;
-      p->set_attribute(name, value);
-    }
-  }
 }
 
 class inspect_attributes {
@@ -701,7 +692,8 @@ bool readVerilog(CS &cmd, Schematic*s)
 	s->pushBack(std::dynamic_pointer_cast<Component>(inst)); // (yikes)
       }else if(dynamic_cast<Painting*>(inst.get())) { untested();
         auto pe = std::dynamic_pointer_cast<Painting>(inst);
-        parse_painting(cmd, pe.get());
+        cmd.reset();
+        parse_attributes(cmd, pe.get());
         s->pushBack(pe);
       }else{
 	incomplete();
