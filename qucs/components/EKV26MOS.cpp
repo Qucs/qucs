@@ -162,7 +162,7 @@ EKV26MOS::EKV26MOS()
     QObject::tr ("simulation temperature")));
 
   createSymbol ();
-  set_qucs_text_position(x2+4, y1+4);
+  set_qucs_text_position(x2()+4, y1()+4);
   Model = "EKV26MOS";
   Name  = "M";
 }
@@ -265,8 +265,8 @@ void EKV26MOS::createSymbol()
   Ports.push_back(qucs::Port(  0, 30)); // source
   Ports.push_back(qucs::Port( 20,  0)); // bulk
 
-  x1 = -30; y1 = -30;
-  x2 =  20; y2 =  30;
+  set_x1(-30); set_y1(-30);
+  set_x2(20); set_y2(30);
 }
 
 QString EKV26MOS::netlist()

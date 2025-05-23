@@ -21,7 +21,7 @@ Element::Element()
 {
   Type = isDummyElement;
   isSelected = false;
-  cx = cy = x1 = y1 = x2 = y2 = 0;
+  _cx = _cy = _x1 = _y1 = _x2 = _y2 = 0;
 }
 
 Element::~Element()

@@ -31,7 +31,7 @@ mux8to1::mux8to1()
     +" ("+QObject::tr ("s")+")"));
  
   createSymbol ();
-  set_qucs_text_position(x1+19, y2+4);
+  set_qucs_text_position(x1()+19, y2()+4);
   Model = "mux8to1";
   Name  = "Y";
 }
@@ -113,8 +113,10 @@ void mux8to1::createSymbol()
   Ports.push_back(qucs::Port(-50,180));  // D7
   Ports.push_back(qucs::Port( 50, 60));  // Y
 
-  x1 = -50; y1 = -84;
-  x2 =  50; y2 =  194;
+  set_x1(-50);
+  set_y1(-84);
+  set_x2(50);
+  set_y2(194);
 }
 
 QString mux8to1::vhdlCode( int )

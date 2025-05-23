@@ -38,10 +38,12 @@ Equation::Equation()
   Texts.push_back(qucs::Text(-xb+4,  -yb-3, QObject::tr("Equation"),
 			QColor(0,0,0), 12.0));
 
-  x1 = -xb-3;  y1 = -yb-5;
-  x2 =  xb+9; y2 =  yb+3;
+  set_x1(-xb-3);
+  set_y1(-yb-5);
+  set_x2(xb+9);
+  set_y2(yb+3);
 
-  set_qucs_text_position(x1+4, y2+4);
+  set_qucs_text_position(x1()+4, y2()+4);
   Model = "Eqn"; // BUG: don't use
   Name  = "Eqn"; // BUG: don't use
 

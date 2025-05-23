@@ -70,7 +70,7 @@ nigbt::nigbt()
     +" ("+QObject::tr ("Celsius")+")"));
 
   createSymbol ();
-  set_qucs_text_position(x2+4, y1+4);
+  set_qucs_text_position(x2()+4, y1()+4);
   Model = "nigbt";
   Name  = "T";
 }
@@ -115,6 +115,8 @@ void nigbt::createSymbol()
   Ports.push_back(qucs::Port(  0, 30)); // emitter
 
   // relative boundings
-  x1 = -30; y1 = -30;
-  x2 =   4; y2 =  30;
+  set_x1(-30);
+  set_y1(-30);
+  set_x2(4);
+  set_y2(30);
 }

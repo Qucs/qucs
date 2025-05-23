@@ -146,7 +146,7 @@ void SweepDialog::slotNewValue(int)
   for(auto node_it = NodeList.begin(); node_it != NodeList.end(); node_it++) {
     qDebug() << "SweepDialog::slotNewValue:(*node_it)->Name:" << (*node_it)->Name;
     (*node_it)->Name = misc::num2str(*((*value_it)+Index));
-    (*node_it)->Name += ((*node_it)->x1 & 0x10)? "A" : "V";
+    (*node_it)->Name += ((*node_it)->x1() & 0x10)? "A" : "V";
     value_it++;
   }
 
@@ -178,7 +178,7 @@ Graph* SweepDialog::setBiasPoints()
   for(auto pn = Doc->Nodes->begin(); pn != Doc->Nodes->end(); ++pn) {
     if(pn->Name.isEmpty()) continue;
 
-    pn->x1 = 0;
+    pn->set_x1(0);
     if(pn->refcount() < 2) {
       pn->Name = "";  // no text at open nodes
       continue;
@@ -188,7 +188,7 @@ Graph* SweepDialog::setBiasPoints()
       for(auto i = pn->connections().begin(); i != pn->connections().end(); ++i) {
         std::shared_ptr<Element> pe(*i);
         if(pe->Type == isWire) {
-          if( std::dynamic_pointer_cast<Wire>(pe)->isHorizontal() )  pn->x1 |= 2;
+          if( std::dynamic_pointer_cast<Wire>(pe)->isHorizontal() )  pn->set_x1(pn->x1() | 2);
         }
         else {
           if( std::dynamic_pointer_cast<Component>(pe)->obsolete_model_hack() == "GND" ) { // BUG
@@ -196,7 +196,7 @@ Graph* SweepDialog::setBiasPoints()
             break;
           }
 
-          if(pn->cx < pe->cx)  pn->x1 |= 1;  // to the right is no room
+          if(pn->cx() < pe->cx())  pn->set_x1(pn->x1() | 1);  // to the right is no room
           hasNoComp = false;
         }
       }
@@ -238,7 +238,7 @@ Graph* SweepDialog::setBiasPoints()
       if(!pn->Name.isEmpty())   // preserve node voltage ?
         pn = pc->port(1).getConnection();
 
-      pn->x1 = 0x10;   // mark current
+      pn->set_x1(0x10);   // mark current
       pg->Var = pc->name() + ".I";
       pg->lastLoaded = QDateTime(); // Note 1 at the start of this function
       if(pg->loadDatFile(DataSet) == 2) {
@@ -253,10 +253,10 @@ Graph* SweepDialog::setBiasPoints()
       for(auto i = pn->connections().begin(); i != pn->connections().end(); ++i) {
         std::shared_ptr<Element> pe(*i);
         if(pe->Type == isWire) {
-          if( std::dynamic_pointer_cast<Wire>(pe)->isHorizontal() )  pn->x1 |= 2;
+          if( std::dynamic_pointer_cast<Wire>(pe)->isHorizontal() )  pn->set_x1(pn->x1() | 2);
         }
         else {
-          if(pn->cx < pe->cx)  pn->x1 |= 1;  // to the right is no room
+          if(pn->cx() < pe->cx())  pn->set_x1(pn->x1() | 1);  // to the right is no room
         }
       }
     }

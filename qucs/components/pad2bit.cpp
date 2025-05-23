@@ -20,7 +20,7 @@ pad2bit::pad2bit()
     QObject::tr ("pad output value")));
 
   createSymbol ();
-  set_qucs_text_position(x1+4, y2+4);
+  set_qucs_text_position(x1()+4, y2()+4);
   Model = "pad2bit";
   Name  = "Y";
 }
@@ -57,8 +57,10 @@ void pad2bit::createSymbol()
   Ports.push_back(qucs::Port(40,-10));  // B
   Ports.push_back(qucs::Port(40,-30));  // A
 
-  x1 = -64; y1 = -54;
-  x2 =  40; y2 =  14;
+  set_x1(-64);
+  set_y1(-54);
+  set_x2(40);
+  set_y2(14);
 }
 
 QString pad2bit::vhdlCode( int )

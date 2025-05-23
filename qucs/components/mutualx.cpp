@@ -223,10 +223,12 @@ void MutualX::createSymbol()
   int x = -10 * (Num-1);
   Texts.push_back(qucs::Text(x-9,-22,"1"));
 
-  x1 = x-6;  y1 = -30;
-  x2 = 10-x; y2 =  30;
+  set_x1(x-6);
+  set_y1(-30);
+  set_x2(10-x);
+  set_y2(30);
 
-  set_qucs_text_position(x2+4, y1+4);
+  set_qucs_text_position(x2()+4, y1()+4);
 
   x -= 6;
   for(int i=0; i<Num; i++) {

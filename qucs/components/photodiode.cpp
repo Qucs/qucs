@@ -75,7 +75,7 @@ photodiode::photodiode()
     QObject::tr("simulation temperature")));
 
   createSymbol ();
-  set_qucs_text_position(x2+4, y1+4);
+  set_qucs_text_position(x2()+4, y1()+4);
   Model = "photodiode";
   Name  = "PD";
 }
@@ -111,6 +111,8 @@ void photodiode::createSymbol()
   Ports.push_back(qucs::Port(-30, 0));
   Ports.push_back(qucs::Port( 0, 30));
 
-  x1 = -30; y1 = -20;
-  x2 =  30; y2 =  30;
+  set_x1(-30);
+  set_y1(-20);
+  set_x2(30);
+  set_y2(30);
 }

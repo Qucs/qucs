@@ -24,7 +24,7 @@ MOSFET::MOSFET()
   // properties obtained from "Basic_MOSFET" in mosfet_sub.cpp
   Description = QObject::tr("MOS field-effect transistor");
   createSymbol();
-  set_qucs_text_position(x2+4, y1+4);
+  set_qucs_text_position(x2()+4, y1()+4);
   Model = "_MOSFET";
 }
 
@@ -113,8 +113,10 @@ void MOSFET::createSymbol()
   Ports.push_back(qucs::Port(  0,-30));
   Ports.push_back(qucs::Port(  0, 30));
 
-  x1 = -30; y1 = -30;
-  x2 =   4; y2 =  30;
+  set_x1(-30);
+  set_y1(-30);
+  set_x2(4);
+  set_y2(30);
 }
 
 // -------------------------------------------------------

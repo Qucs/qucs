@@ -56,10 +56,10 @@ Marker::Marker(Graph *pg_, int branchNo, int cx_, int cy_) :
   Type = isMarker;
   isSelected = transparent = false;
 
-  cx =  cx_;
-  cy = -cy_;
-  fCX = float(cx);
-  fCY = float(cy);
+  set_cx(cx_);
+  set_cy(-cy_);
+  fCX = float(cx());
+  fCY = float(cy());
 
   //Default setting for displaying extra parameters. The markers will show the impedance data if the chart is type "Smith".
   //In the case of having an admittance chart, admittance will be display. 
@@ -79,8 +79,8 @@ Marker::Marker(Graph *pg_, int branchNo, int cx_, int cy_) :
     createText();
   }
 
-  x1 =  cx + 60;
-  y1 = -cy - 60;
+  set_x1(cx() + 60);
+  set_y1(-cy() - 60);
 
 }
 
@@ -90,7 +90,7 @@ Marker::~Marker()
 
 // ---------------------------------------------------------------------
 /*!
- * compute VarPos from branch number n and click position (cx, cy)
+ * compute VarPos from branch number n and click position (cx(), cy())
  * this is done by recreating branch samples and comparing against click
  *
  * FIXME: should use ScrPoints instead. do not call calcCoordinate from here!
@@ -145,8 +145,8 @@ void Marker::initText(int n)
 	pz += 2*(pD->count-1);
       }
       
-      x = int(fCX+0.5) - cx;
-      y = int(fCY+0.5) - cy;
+      x = int(fCX+0.5) - cx();
+      y = int(fCY+0.5) - cy();
       d = x*x + y*y;
       if(d < dmin) {
 	dmin = d;
@@ -212,7 +212,7 @@ void Marker::fix()
 // ---------------------------------------------------------------------
 /*!
  * (should)
- * create marker label Text the screen position cx and cy from VarPos.
+ * create marker label Text the screen position cx() and cy() from VarPos.
  * does a lot of fancy stuff to be sorted out.
  */
 void Marker::createText()
@@ -296,8 +296,8 @@ void Marker::createText()
 
   diag()->finishMarkerCoordinates(fCX, fCY);
 
-  cx = int(fCX+0.5);
-  cy = int(fCY+0.5);
+  set_cx(int(fCX+0.5));
+  set_cy(int(fCY+0.5));
   getTextSize();
 }
 
@@ -307,8 +307,8 @@ void Marker::makeInvalid()
   fCX = fCY = -1e3; // invalid coordinates
   assert(diag());
   diag()->finishMarkerCoordinates(fCX, fCY); // leave to diagram
-  cx = int(fCX+0.5);
-  cy = int(fCY+0.5);
+  set_cx(int(fCX+0.5));
+  set_cy(int(fCY+0.5));
 
   Text = QObject::tr("invalid");
   getTextSize();
@@ -320,8 +320,8 @@ void Marker::getTextSize()
   // get size of text using the screen-compatible metric
   QFontMetrics metrics(QucsSettings.font, 0);
   QSize r = metrics.size(0, Text);
-  x2 = r.width()+5;
-  y2 = r.height()+5;
+  set_x2(r.width()+5);
+  set_y2(r.height()+5);
 }
 
 // ---------------------------------------------------------------------
@@ -423,33 +423,33 @@ void Marker::paint(ViewPainter *p, int x0, int y0)
 
   int x2_, y2_;
   p->Painter->setPen(QPen(Qt::black,1));
-  x2_ = p->drawText(Text, x0+x1+3, y0+y1+3, &y2_);
+  x2_ = p->drawText(Text, x0+x1()+3, y0+y1()+3, &y2_);
   x2_ += int(6.0*p->Scale);
   y2_ += int(6.0*p->Scale);
   if(!transparent) {
-    p->eraseRect(x0+x1, y0+y1, x2_, y2_);
-    p->drawText(Text, x0+x1+3, y0+y1+3);
+    p->eraseRect(x0+x1(), y0+y1(), x2_, y2_);
+    p->drawText(Text, x0+x1()+3, y0+y1()+3);
   }
 
   // restore painter state
   p->Painter->restore();
 
   p->Painter->setPen(QPen(Qt::darkMagenta,0));
-  p->drawRectD(x0+x1, y0+y1, x2_, y2_);
+  p->drawRectD(x0+x1(), y0+y1(), x2_, y2_);
 
-  x2 = int(float(x2_) / p->Scale);
-  y2 = int(float(y2_) / p->Scale);
+  set_x2(int(float(x2_) / p->Scale));
+  set_y2(int(float(y2_) / p->Scale));
 
   int x1_, y1_;
-  p->map(x0+x1, y0+y1, x1_, y1_);
+  p->map(x0+x1(), y0+y1(), x1_, y1_);
   // which corner of rectangle should be connected to line ?
-  if(cx < x1+(x2>>1)) {
-    if(-cy >= y1+(y2>>1))
+  if(cx() < x1()+(x2()>>1)) {
+    if(-cy() >= y1()+(y2()>>1))
       y1_ += y2_ - 1;
   }
   else {
     x1_ += x2_ - 1;
-    if(-cy >= y1+(y2>>1))
+    if(-cy() >= y1()+(y2()>>1))
       y1_ += y2_ - 1;
   }
   float fx2, fy2;
@@ -459,7 +459,7 @@ void Marker::paint(ViewPainter *p, int x0, int y0)
 
   if(isSelected) {
     p->Painter->setPen(QPen(Qt::darkGray,3));
-    p->drawRoundRect(x0+x1-3, y0+y1-3, x2+6, y2+6);
+    p->drawRoundRect(x0+x1()-3, y0+y1()-3, x2()+6, y2()+6);
   }
 }
 
@@ -467,22 +467,22 @@ void Marker::paint(ViewPainter *p, int x0, int y0)
 void Marker::paintScheme(QPainter *p)
 {
   assert(diag());
-  int x0 = diag()->cx;
-  int y0 = diag()->cy;
-  p->drawRect(x0+x1, y0+y1, x2, y2);
+  int x0 = diag()->cx();
+  int y0 = diag()->cy();
+  p->drawRect(x0+x1(), y0+y1(), x2(), y2());
 
   // which corner of rectangle should be connected to line ?
-  if(cx < x1+(x2>>1)) {
-    if(-cy < y1+(y2>>1))
-      p->drawLine(x0+cx, y0-cy, x0+x1, y0+y1);
+  if(cx() < x1()+(x2()>>1)) {
+    if(-cy() < y1()+(y2()>>1))
+      p->drawLine(x0+cx(), y0-cy(), x0+x1(), y0+y1());
     else
-      p->drawLine(x0+cx, y0-cy, x0+x1, y0+y1+y2-1);
+      p->drawLine(x0+cx(), y0-cy(), x0+x1(), y0+y1()+y2()-1);
   }
   else {
-    if(-cy < y1+(y2>>1))
-      p->drawLine(x0+cx, y0-cy, x0+x1+x2-1, y0+y1);
+    if(-cy() < y1()+(y2()>>1))
+      p->drawLine(x0+cx(), y0-cy(), x0+x1()+x2()-1, y0+y1());
     else
-      p->drawLine(x0+cx, y0-cy, x0+x1+x2-1, y0+y1+y2-1);
+      p->drawLine(x0+cx(), y0-cy(), x0+x1()+x2()-1, y0+y1()+y2()-1);
   }
 }
 
@@ -490,10 +490,12 @@ void Marker::paintScheme(QPainter *p)
 void Marker::setCenter(int x, int y, bool relative)
 {
   if(relative) {
-    x1 += x;  y1 += y;
+    set_x1(x1() + x);
+    set_y1(y1() + y);
   }
   else {
-    x1 = x;  y1 = y;
+    set_x1(x);
+    set_y1(y);
   }
 }
 
@@ -501,16 +503,16 @@ void Marker::setCenter(int x, int y, bool relative)
 void Marker::Bounding(int& _x1, int& _y1, int& _x2, int& _y2)
 {
   if(diag()) {
-    _x1 = diag()->cx + x1;
-    _y1 = diag()->cy + y1;
-    _x2 = diag()->cx + x1+x2;
-    _y2 = diag()->cy + y1+y2;
+    _x1 = diag()->cx() + x1();
+    _y1 = diag()->cy() + y1();
+    _x2 = diag()->cx() + x1()+x2();
+    _y2 = diag()->cy() + y1()+y2();
   }
   else {
-    _x1 = x1;
-    _y1 = y1+y2;
-    _x2 = x1+x2;
-    _y2 = y1;
+    _x1 = x1();
+    _y1 = y1()+y2();
+    _x2 = x1()+x2();
+    _y2 = y1();
   }
 }
 
@@ -525,7 +527,7 @@ QString Marker::save()
   s.replace(s.length()-1,1,' ');
   //s.at(s.length()-1) = (const QChar&)' ';
 
-  s += QString::number(x1) +" "+ QString::number(y1) +" "
+  s += QString::number(x1()) +" "+ QString::number(y1()) +" "
       +QString::number(Precision) +" "+ QString::number(numMode);
   if(transparent)  s += " 1";
   else  s += " 0";
@@ -568,11 +570,11 @@ bool Marker::load(const QString& _s)
   } while(j >= 0);
 
   n  = s.section(' ',2,2);    // x1
-  x1 = n.toInt(&ok);
+  set_x1(n.toInt(&ok));
   if(!ok) return false;
 
   n  = s.section(' ',3,3);    // y1
-  y1 = n.toInt(&ok);
+  set_y1(n.toInt(&ok));
   if(!ok) return false;
 
   n  = s.section(' ',4,4);      // Precision
@@ -604,7 +606,7 @@ bool Marker::load(const QString& _s)
 // to diagram cx/cy.
 bool Marker::getSelected(int x_, int y_)
 {
-  if(x_ >= x1) if(x_ <= x1+x2) if(y_ >= y1) if(y_ <= y1+y2)
+  if(x_ >= x1()) if(x_ <= x1()+x2()) if(y_ >= y1()) if(y_ <= y1()+y2())
     return true;
 
   return false;
@@ -642,10 +644,12 @@ const Diagram* Marker::diag() const
 // ------------------------------------------------------------------------
 Marker* Marker::sameNewOne(Graph *pGraph_)
 {
-  Marker *pm = new Marker(pGraph_, 0, cx ,cy);
+  Marker *pm = new Marker(pGraph_, 0, cx() ,cy());
 
-  pm->x1 = x1;  pm->y1 = y1;
-  pm->x2 = x2;  pm->y2 = y2;
+  pm->set_x1(x1());
+  pm->set_y1(y1());
+  pm->set_x2(x2());
+  pm->set_y2(y2());
 
   pm->VarPos = VarPos;
 

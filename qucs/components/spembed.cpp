@@ -184,10 +184,12 @@ void SPEmbed::createSymbol()
   Texts.push_back(qucs::Text( 4, h,"Ref"));
   Ports.push_back(qucs::Port( 0,h+15));    // 'Ref' port
 
-  x1 = -30; y1 = -h-2;
-  x2 =  30; y2 =  h+15;
+  set_x1(-30);
+  set_y1(-h-2);
+  set_x2(30);
+  set_y2(h+15);
   // compute component name text position - normal size font
   QFontMetrics  metrics(QucsSettings.font, 0);   // use the screen-compatible metric
-  set_qucs_text_position(x1+4,
-  y1 - 2*metrics.lineSpacing() - 4); // what?
+  set_qucs_text_position(x1()+4,
+  y1() - 2*metrics.lineSpacing() - 4); // what?
 }

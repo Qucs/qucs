@@ -35,15 +35,15 @@
 PSDiagram::PSDiagram(int _cx, int _cy, bool _polarUp)
 			: Diagram(_cx, _cy)
 {
-  x1 = 10;       // position of label text
-  y1 = y3 = 2;
-  x2 = 200;      // initial size of diagram
-  x3 = 207;
-  y2 = 200;
+  set_x1(10);       // position of label text
+  set_y1(2);
+  set_x2(200);      // initial size of diagram
+  x3=207;
+  set_y2(200);
   if(_polarUp)  Name = "PS";  // polar diagram upper half ?
   else  Name = "SP";
 
-  Arcs.push_back(qucs::Arc(0, y2, x2, y2, 0, 16*360, QPen(Qt::black,0)));
+  Arcs.push_back(qucs::Arc(0, y2(), x2(), y2(), 0, 16*360, QPen(Qt::black,0)));
 //  calcDiagram();
 }
 
@@ -57,14 +57,14 @@ void PSDiagram::calcCoordinate(const double*, const double* yD, const double*,
 {
   double yr = yD[0];
   double yi = yD[1];
-  *px = float((yr/pa->up + 1.0)*double(x2)/2.0);
-  *py = float((yi/pa->up + 1.0)*double(y2)/2.0);
+  *px = float((yr/pa->up + 1.0)*double(x2())/2.0);
+  *py = float((yi/pa->up + 1.0)*double(y2())/2.0);
 
   if(std::isfinite(*px))
     if(std::isfinite(*py))
       return;
 
-  *px = *py = float(cx) / 2.0;
+  *px = *py = float(cx()) / 2.0;
 }
 
 // --------------------------------------------------------------
@@ -101,7 +101,7 @@ int PSDiagram::calcDiagram()
   Texts.clear();
   Arcs.clear();
 
-  x3 = x2 + 7;
+  x3 = x2() + 7;
   if(Name == "PS") {   // if polar not in upper half -> mirror
     createSmithChart(&yAxis, 5);
     createPolarDiagram(&zAxis, 1);
@@ -112,7 +112,7 @@ int PSDiagram::calcDiagram()
   }
 
   // x line
-  Lines.push_back(qucs::Line(0, y2>>1, x2, y2>>1, GridPen));
+  Lines.push_back(qucs::Line(0, y2()>>1, x2(), y2()>>1, GridPen));
   return 3;
 }
 

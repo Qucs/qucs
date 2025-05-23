@@ -39,7 +39,7 @@ Switch::Switch()
 		QObject::tr("Resistance transition shape")+" [abrupt, linear, spline]"));
 
   createSymbol();
-  set_qucs_text_position(x1+4, y2+4);
+  set_qucs_text_position(x1()+4, y2()+4);
   Model = "Switch";
   Name  = "S";
 }
@@ -86,11 +86,11 @@ void Switch::createSymbol()
 {
   if(Props.front().Value != "on") {
     Lines.push_back(qucs::Line(-15,  0, 15,-15,QPen(Qt::darkBlue,2)));
-    y1 = -17;
+    set_y1(-17);
   }
   else {
     Lines.push_back(qucs::Line(-15,  0, 16,-5,QPen(Qt::darkBlue,2)));
-    y1 = -7;
+    set_y1(-7);
   }
 
   Lines.push_back(qucs::Line(-30,  0,-15,  0,QPen(Qt::darkBlue,2)));
@@ -102,6 +102,7 @@ void Switch::createSymbol()
   Ports.push_back(qucs::Port(-30,  0));
   Ports.push_back(qucs::Port( 30,  0));
 
-  x1 = -30;
-  x2 =  30; y2 =   7;
+  set_x1(-30);
+  set_x2(30);
+  set_y2(7);
 }

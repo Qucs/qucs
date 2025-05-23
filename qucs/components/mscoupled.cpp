@@ -45,10 +45,12 @@ MScoupled::MScoupled()
   Ports.push_back(qucs::Port( 30, 30));
   Ports.push_back(qucs::Port(-30, 30));
 
-  x1 = -30; y1 =-33;
-  x2 =  30; y2 = 33;
+  set_x1(-30);
+  set_y1(-33);
+  set_x2(30);
+  set_y2(33);
 
-  set_qucs_text_position(x2+4, y1+4);
+  set_qucs_text_position(x2()+4, y1()+4);
   Model = "MCOUPLED";
   Name  = "MS";
 

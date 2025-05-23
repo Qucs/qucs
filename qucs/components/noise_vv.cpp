@@ -49,10 +49,12 @@ Noise_vv::Noise_vv()
   Ports.push_back(qucs::Port( 30, 30));
   Ports.push_back(qucs::Port(-30, 30));
 
-  x1 = -44; y1 = -30;
-  x2 =  44; y2 =  30;
+  set_x1(-44);
+  set_y1(-30);
+  set_x2(44);
+  set_y2(30);
 
-  set_qucs_text_position(x1+4, y2+4);
+  set_qucs_text_position(x1()+4, y2()+4);
   Model = "VVnoise";
   Name  = "SRC";
 

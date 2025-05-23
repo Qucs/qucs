@@ -85,7 +85,7 @@ vacomponent::vacomponent(QString filename)
   Name  = getString(vadata, "SymName");
 
   /// TODO adjust location of text
-  set_qucs_text_position(x1+100, y2+20);
+  set_qucs_text_position(x1()+100, y2()+20);
 }
 
 /*!
@@ -284,10 +284,10 @@ void vacomponent::createSymbol(QString filename)
   }
 
   // bounding box, painted gray if component selected
-  x1 = getDouble(vadata, "x1");
-  y1 = getDouble(vadata, "y1");
-  x2 = getDouble(vadata, "x2");
-  y2 = getDouble(vadata, "y2");
+  set_x1(getDouble(vadata, "x1"));
+  set_y1(getDouble(vadata, "y1"));
+  set_x2(getDouble(vadata, "x2"));
+  set_y2(getDouble(vadata, "y2"));
 }
 
 

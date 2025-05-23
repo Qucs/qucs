@@ -31,7 +31,7 @@ comp_1bit::comp_1bit()
     +" ("+QObject::tr ("s")+")"));
  
   createSymbol ();
-  set_qucs_text_position(x1 + 19, y2 + 4);
+  set_qucs_text_position(x1() + 19, y2() + 4);
   Model = "comp_1bit";
   Name  = "Y";
 }
@@ -80,8 +80,10 @@ void comp_1bit::createSymbol()
   Ports.push_back(qucs::Port( 50,  0));  // G
   Ports.push_back(qucs::Port( 50,-20));  // E
 
-  x1 = -50; y1 = -64;
-  x2 =  50; y2 =  34;
+  set_x1(-50);
+  set_y1(-64);
+  set_x2(50);
+  set_y2(34);
 }
 
 QString comp_1bit::vhdlCode( int )

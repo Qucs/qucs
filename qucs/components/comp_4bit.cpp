@@ -31,7 +31,7 @@ comp_4bit::comp_4bit()
     +" ("+QObject::tr ("s")+")"));
 
   createSymbol ();
-  set_qucs_text_position(x1+19, y2+4);
+  set_qucs_text_position(x1()+19, y2()+4);
   Model = "comp_4bit";
   Name  = "Y";
 }
@@ -102,8 +102,10 @@ void comp_4bit::createSymbol()
   Ports.push_back(qucs::Port( 60, 10));  // G
   Ports.push_back(qucs::Port( 60,-10));  // E
 
-  x1 = -60; y1 = -94;
-  x2 =  60; y2 =  104;
+  set_x1(-60);
+  set_y1(-94);
+  set_x2(60);
+  set_y2(104);
 }
 
 QString comp_4bit::vhdlCode( int )

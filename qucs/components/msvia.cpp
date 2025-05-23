@@ -33,8 +33,10 @@ MSvia::MSvia()
 
   Ports.push_back(qucs::Port(-20,  0));
 
-  x1 = -20; y1 = -7;
-  x2 =  14; y2 = 30;
+  set_x1(-20);
+  set_y1(-7);
+  set_x2(14);
+  set_y2(30);
 
   set_qucs_text_position(20, 0);
   Model = "MVIA";

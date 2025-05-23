@@ -37,9 +37,12 @@ Arrow::Arrow()
   Name = "Arrow ";
   isSelected = false;
   Pen = QPen(QColor());
-  cx = cy = 0;
-  x1 = x2 = 0;
-  y1 = y2 = 0;
+  set_cx(0);
+  set_cy(0);
+  set_x1(0);
+  set_x2(0);
+  set_y1(0);
+  set_y2(0);
 
   Height = 20.0;
   Width  =  8.0;
@@ -59,48 +62,48 @@ void Arrow::paint(ViewPainter *p)
   int x1_, y1_, x2_, y2_, x3_, y3_;
   if(isSelected) {
     p->Painter->setPen(QPen(Qt::darkGray,Pen.width()+5));
-    p->drawLine(cx, cy, cx+x2, cy+y2);
-    p->drawLine(cx+x2, cy+y2, cx+xp1, cy+yp1);
-    p->drawLine(cx+x2, cy+y2, cx+xp2, cy+yp2);
+    p->drawLine(cx(), cy(), cx()+x2(), cy()+y2());
+    p->drawLine(cx()+x2(), cy()+y2(), cx()+xp1, cy()+yp1);
+    p->drawLine(cx()+x2(), cy()+y2(), cx()+xp2, cy()+yp2);
     if(Style == 0) {   // arrow head with two lines ?
       p->Painter->setPen(QPen(Qt::white, Pen.width(), Pen.style()));
-      p->drawLine(cx, cy, cx+x2, cy+y2);
+      p->drawLine(cx(), cy(), cx()+x2(), cy()+y2());
       p->Painter->setPen(QPen(Qt::white, Pen.width(), Qt::SolidLine));
-      p->drawLine(cx+x2, cy+y2, cx+xp1, cy+yp1);
-      p->drawLine(cx+x2, cy+y2, cx+xp2, cy+yp2);
+      p->drawLine(cx()+x2(), cy()+y2(), cx()+xp1, cy()+yp1);
+      p->drawLine(cx()+x2(), cy()+y2(), cx()+xp2, cy()+yp2);
     }
     else {   // filled arrow head
-      p->drawLine(cx+xp1, cy+yp1, cx+xp2, cy+yp2);
+      p->drawLine(cx()+xp1, cy()+yp1, cx()+xp2, cy()+yp2);
       p->Painter->setPen(QPen(Qt::white, Pen.width(), Pen.style()));
-      p->drawLine(cx, cy, cx+x2, cy+y2);
+      p->drawLine(cx(), cy(), cx()+x2(), cy()+y2());
 
       p->Painter->setPen(QPen(Qt::white, Pen.width(), Qt::SolidLine));
       p->Painter->setBrush(Qt::white);
-      p->map(cx+xp1, cy+yp1, x1_, y1_);
-      p->map(cx+x2, cy+y2, x2_, y2_);
-      p->map(cx+xp2, cy+yp2, x3_, y3_);
+      p->map(cx()+xp1, cy()+yp1, x1_, y1_);
+      p->map(cx()+x2(), cy()+y2(), x2_, y2_);
+      p->map(cx()+xp2, cy()+yp2, x3_, y3_);
       Points.setPoints(3, x1_, y1_, x2_, y2_, x3_, y3_);
       p->Painter->drawConvexPolygon(Points);
       p->Painter->setBrush(Qt::NoBrush); // no filling for next paintings
     }
 
     p->Painter->setPen(QPen(Qt::darkRed,2));
-    p->drawResizeRect(cx, cy);  // markers for changing the size
-    p->drawResizeRect(cx+x2, cy+y2);
+    p->drawResizeRect(cx(), cy());  // markers for changing the size
+    p->drawResizeRect(cx()+x2(), cy()+y2());
     return;
   }
   p->Painter->setPen(Pen);
-  p->drawLine(cx, cy, cx+x2, cy+y2);
+  p->drawLine(cx(), cy(), cx()+x2(), cy()+y2());
   p->Painter->setPen(QPen(Pen.color(), Pen.width(), Qt::SolidLine));
   if(Style == 0) {   // arrow head with two lines ?
-    p->drawLine(cx+x2, cy+y2, cx+xp1, cy+yp1);
-    p->drawLine(cx+x2, cy+y2, cx+xp2, cy+yp2);
+    p->drawLine(cx()+x2(), cy()+y2(), cx()+xp1, cy()+yp1);
+    p->drawLine(cx()+x2(), cy()+y2(), cx()+xp2, cy()+yp2);
   }
   else {   // filled arrow head
     p->Painter->setBrush(Pen.color());
-    p->map(cx+xp1, cy+yp1, x1_, y1_);
-    p->map(cx+x2, cy+y2, x2_, y2_);
-    p->map(cx+xp2, cy+yp2, x3_, y3_);
+    p->map(cx()+xp1, cy()+yp1, x1_, y1_);
+    p->map(cx()+x2(), cy()+y2(), x2_, y2_);
+    p->map(cx()+xp2, cy()+yp2, x3_, y3_);
     Points.setPoints(3, x1_, y1_, x2_, y2_, x3_, y3_);
     p->Painter->drawConvexPolygon(Points);
     p->Painter->setBrush(Qt::NoBrush); // no filling for next paintings
@@ -110,24 +113,24 @@ void Arrow::paint(ViewPainter *p)
 // --------------------------------------------------------------------------
 void Arrow::paintScheme(Schematic *p)
 {
-  p->PostPaintEvent(_Line, cx, cy, cx+x2, cy+y2,0,0,false);
-  p->PostPaintEvent(_Line, cx+x2, cy+y2, cx+xp1, cy+yp1,0,0,false);
-  p->PostPaintEvent(_Line, cx+x2, cy+y2, cx+xp2, cy+yp2,0,0,false);
+  p->PostPaintEvent(_Line, cx(), cy(), cx()+x2(), cy()+y2(),0,0,false);
+  p->PostPaintEvent(_Line, cx()+x2(), cy()+y2(), cx()+xp1, cy()+yp1,0,0,false);
+  p->PostPaintEvent(_Line, cx()+x2(), cy()+y2(), cx()+xp2, cy()+yp2,0,0,false);
 }
 
 // --------------------------------------------------------------------------
 void Arrow::getCenter(int& x, int &y)
 {
-  x = cx+(x2>>1);
-  y = cy+(y2>>1);
+  x = cx()+(x2()>>1);
+  y = cy()+(y2()>>1);
 }
 
 // --------------------------------------------------------------------------
 // Sets the center of the painting to x/y.
 void Arrow::setCenter(int x, int y, bool relative)
 {
-  if(relative) { cx += x;  cy += y; }
-  else { cx = x-(x2>>1);  cy = y-(y2>>1); }
+  if(relative) { set_cx(cx() + x);  set_cy(cy() + y); }
+  else { set_cx(x-(x2()>>1));  set_cy(y-(y2()>>1)); }
 }
 
 // --------------------------------------------------------------------------
@@ -153,19 +156,19 @@ bool Arrow::load(const QString& s)
 
   QString n;
   n  = s.section(' ',1,1);    // cx
-  cx = n.toInt(&ok);
+  set_cx(n.toInt(&ok));
   if(!ok) return false;
 
   n  = s.section(' ',2,2);    // cy
-  cy = n.toInt(&ok);
+  set_cy(n.toInt(&ok));
   if(!ok) return false;
 
   n  = s.section(' ',3,3);    // x2
-  x2 = n.toInt(&ok);
+  set_x2(n.toInt(&ok));
   if(!ok) return false;
 
   n  = s.section(' ',4,4);    // y2
-  y2 = n.toInt(&ok);
+  set_y2(n.toInt(&ok));
   if(!ok) return false;
 
   n  = s.section(' ',5,5);    // height
@@ -205,8 +208,8 @@ bool Arrow::load(const QString& s)
 // --------------------------------------------------------------------------
 QString Arrow::save()
 {
-  QString s = Name+QString::number(cx)+" "+QString::number(cy)+" ";
-  s += QString::number(x2)+" "+QString::number(y2)+" ";
+  QString s = Name+QString::number(cx())+" "+QString::number(cy())+" ";
+  s += QString::number(x2())+" "+QString::number(y2())+" ";
   s += QString::number(int(Height))+" "+QString::number(int(Width))+" ";
   s += Pen.color().name()+" "+QString::number(Pen.width())+" ";
   s += QString::number(Pen.style()) + " " + QString::number(Style);
@@ -219,7 +222,7 @@ QString Arrow::saveCpp()
   // arrow not allowed in symbols, thus we use line here
   QString s =
     QString ("new Line (%1, %2, %3, %4, QPen (QColor (\"%5\"), %6, %7))").
-    arg(cx+x1).arg(cy+y1).arg(cx+x2).arg(cy+y2).
+    arg(cx()+x1()).arg(cy()+y1()).arg(cx()+x2()).arg(cy()+y2()).
     arg(Pen.color().name()).arg(Pen.width()).arg(toPenString(Pen.style()));
   s = "Lines.append (" + s + ");";
   return s;
@@ -232,7 +235,7 @@ QString Arrow::saveJSON()
     QString("{\"type\" : \"arrow\", "
        "\"x1\" : %1, \"y1\" : %2, \"x2\" : %3, \"y2\" : %4, "
        "\"color\" : \"%5\", \"thick\" : %6, \"style\" : \"%7\"},").
-       arg(cx+x1).arg(cy+y1).arg(cx+x2).arg(cy+y2).
+       arg(cx()+x1()).arg(cy()+y1()).arg(cx()+x2()).arg(cy()+y2()).
        arg(Pen.color().name()).arg(Pen.width()).arg(toPenString(Pen.style()));
   return s;
 }
@@ -241,14 +244,14 @@ QString Arrow::saveJSON()
 // Checks if the resize area was clicked.
 bool Arrow::resizeTouched(float fX, float fY, float len)
 {
-  float fCX = float(cx),fCY = float(cy);
+  float fCX = float(cx()),fCY = float(cy());
   if(fX < fCX+len) if(fX > fCX-len) if(fY < fCY+len) if(fY > fCY-len) {
     State = 1;
     return true;
   }
 
-  fCX += float(x2);
-  fCY += float(y2);
+  fCX += float(x2());
+  fCY += float(y2());
   if(fX < fCX+len) if(fX > fCX-len) if(fY < fCY+len) if(fY > fCY-len) {
     State = 2;
     return true;
@@ -263,8 +266,8 @@ bool Arrow::resizeTouched(float fX, float fY, float len)
 void Arrow::MouseResizeMoving(int x, int y, Schematic *p)
 {
   paintScheme(p);  // erase old painting
-  if(State == 1) { x2 += cx-x; y2 += cy-y; cx = x; cy = y; } // moving shaft
-  else { x2 = x-cx;  y2 = y-cy; }  // moving head
+  if(State == 1) { set_x2(x2() + cx()-x); set_y2(y2() + cy()-y); set_cx(x); set_cy(y); } // moving shaft
+  else { set_x2(x-cx()); set_y2(y-cy()); }  // moving head
 
   calcArrowHead();
   paintScheme(p);  // paint new painting
@@ -273,15 +276,15 @@ void Arrow::MouseResizeMoving(int x, int y, Schematic *p)
 // --------------------------------------------------------------------------
 void Arrow::calcArrowHead()
 {
-  double phi  = atan2(double(y2), double(x2));
+  double phi  = atan2(double(y2()), double(x2()));
 
   double w = beta+phi;
-  xp1 = x2-int(Length*cos(w));
-  yp1 = y2-int(Length*sin(w));
+  xp1 = x2()-int(Length*cos(w));
+  yp1 = y2()-int(Length*sin(w));
 
   w = phi-beta;
-  xp2 = x2-int(Length*cos(w));
-  yp2 = y2-int(Length*sin(w));
+  xp2 = x2()-int(Length*cos(w));
+  yp2 = y2()-int(Length*sin(w));
 }
 
 // --------------------------------------------------------------------------
@@ -297,25 +300,25 @@ void Arrow::MouseMoving(
       paintScheme(paintScale);  // erase old painting
     }
     State++;
-    x2 = gx-cx;
-    y2 = gy-cy;
+    set_x2(gx-cx());
+    set_y2(gy-cy());
     calcArrowHead();
     paintScheme(paintScale);  // paint new painting
   }
-  else { cx = gx; cy = gy; }
+  else { set_cx(gx); set_cy(gy); }
 
 
 // FIXME #warning  p->setPen(Qt::SolidLine);
   if(drawn) {
-    p->PostPaintEvent(_Line, x1+25, y1, x1+13, y1+12,0,0,true);  // erase old cursor symbol
-    p->PostPaintEvent(_Line, x1+18, y1+2, x1+25, y1,0,0,true);
-    p->PostPaintEvent(_Line, x1+23, y1+7, x1+25, y1,0,0,true);
+    p->PostPaintEvent(_Line, x1()+25, y1(), x1()+13, y1()+12,0,0,true);  // erase old cursor symbol
+    p->PostPaintEvent(_Line, x1()+18, y1()+2, x1()+25, y1(),0,0,true);
+    p->PostPaintEvent(_Line, x1()+23, y1()+7, x1()+25, y1(),0,0,true);
   }
-  x1 = x;
-  y1 = y;
-  p->PostPaintEvent(_Line, x1+25, y1, x1+13, y1+12,0,0,true);  // paint new cursor symbol
-  p->PostPaintEvent(_Line, x1+18, y1+2, x1+25, y1,0,0,true);
-  p->PostPaintEvent(_Line, x1+23, y1+7, x1+25, y1,0,0,true);
+  set_x1(x);
+  set_y1(y);
+  p->PostPaintEvent(_Line, x1()+25, y1(), x1()+13, y1()+12,0,0,true);  // paint new cursor symbol
+  p->PostPaintEvent(_Line, x1()+18, y1()+2, x1()+25, y1(),0,0,true);
+  p->PostPaintEvent(_Line, x1()+23, y1()+7, x1()+25, y1(),0,0,true);
 }
 
 // --------------------------------------------------------------------------
@@ -323,7 +326,8 @@ bool Arrow::MousePressing()
 {
   State++;
   if(State > 2) {
-    x1 = y1 = 0;
+    set_x1(0);
+    set_y1(0);
     State = 0;
 
     calcArrowHead();
@@ -339,38 +343,38 @@ bool Arrow::getSelected(float fX, float fY, float w)
 {
   float A, xn, yn;
   // first check if coordinates match the arrow body
-  fX -= float(cx);
-  fY -= float(cy);
+  fX -= float(cx());
+  fY -= float(cy());
 
   if(fX < -w) {
-    if(fX < float(x2)-w)  // is point between x coordinates ?
+    if(fX < float(x2())-w)  // is point between x coordinates ?
       goto Head1;
   }
   else {
     if(fX > w)
-      if(fX > float(x2)+w)
+      if(fX > float(x2())+w)
         goto Head1;
   }
 
   if(fY < -w) {
-    if(fY < float(y2)-w)   // is point between y coordinates ?
+    if(fY < float(y2())-w)   // is point between y coordinates ?
       goto Head1;
   }
   else {
     if(fY > w)
-      if(fY > float(y2)+w)
+      if(fY > float(y2())+w)
         goto Head1;
   }
 
-  A  = float(x2)*fY - fX*float(y2); // calculate the rectangle area spanned
+  A  = float(x2())*fY - fX*float(y2()); // calculate the rectangle area spanned
   A *= A;               // avoid the need for square root
 
-  if(A <= w*w*float(x2*x2 + y2*y2))
+  if(A <= w*w*float(x2()*x2() + y2()*y2()))
     return true;     // x/y lies on the graph line
 
 Head1:    // check if coordinates match the first arrow head line
-  xn = float(xp1-x2);  fX -= float(x2);
-  yn = float(yp1-y2);  fY -= float(y2);
+  xn = float(xp1-x2());  fX -= float(x2());
+  yn = float(yp1-y2());  fY -= float(y2());
 
   if(fX < -w) {
     if(fX < xn-w)    // is point between x coordinates ?
@@ -398,8 +402,8 @@ Head1:    // check if coordinates match the first arrow head line
     return true;     // x/y lies on the arrow head
 
 Head2:    // check if coordinates match the second arrow head line
-  xn = float(xp2-x2);
-  yn = float(yp2-y2);
+  xn = float(xp2-x2());
+  yn = float(yp2-y2());
 
   if(fX < -w) {
     if(fX < xn-w)   // is point between x coordinates ?
@@ -431,23 +435,23 @@ Head2:    // check if coordinates match the second arrow head line
 // --------------------------------------------------------------------------
 void Arrow::Bounding(int& _x1, int& _y1, int& _x2, int& _y2)
 {
-  if(x2 < 0) { _x1 = cx+x2; _x2 = cx; }
-  else { _x1 = cx; _x2 = cx+x2; }
+  if(x2() < 0) { _x1 = cx()+x2(); _x2 = cx(); }
+  else { _x1 = cx(); _x2 = cx()+x2(); }
 
-  if(y2 < 0) { _y1 = cy+y2; _y2 = cy; }
-  else { _y1 = cy; _y2 = cy+y2; }
+  if(y2() < 0) { _y1 = cy()+y2(); _y2 = cy(); }
+  else { _y1 = cy(); _y2 = cy()+y2(); }
 }
 
 // --------------------------------------------------------------------------
 // Rotates around the center.
 void Arrow::rotate()
 {
-  cx += (x2>>1) - (y2>>1);
-  cy += (x2>>1) + (y2>>1);
+  set_cx(cx() + (x2()>>1) - (y2()>>1));
+  set_cy(cy() + (x2()>>1) + (y2()>>1));
 
-  int tmp = x2;
-  x2  =  y2;
-  y2  = -tmp;
+  int tmp = x2();
+  set_x2(y2());
+  set_y2(-tmp);
 
   tmp =  xp1;
   xp1 =  yp1;
@@ -464,8 +468,8 @@ void Arrow::mirrorX()
 {
   yp1 = -yp1;
   yp2 = -yp2;
-  cy +=  y2;   // change cy after the other changes !
-  y2  = -y2;
+  set_cy(cy() + y2());   // change cy after the other changes !
+  set_y2(-y2());
 }
 
 // --------------------------------------------------------------------------
@@ -474,8 +478,8 @@ void Arrow::mirrorY()
 {
   xp1 = -xp1;
   xp2 = -xp2;
-  cx +=  x2;   // change cx after the other changes !
-  x2  = -x2;
+  set_cx(cx() + x2());   // change cx after the other changes !
+  set_x2(-x2());
 }
 
 // --------------------------------------------------------------------------

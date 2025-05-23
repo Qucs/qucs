@@ -23,7 +23,7 @@ Logical_NOR::Logical_NOR()
   Model = "NOR";
 
   createSymbol();
-  set_qucs_text_position(x1+4, y2+4);
+  set_qucs_text_position(x1()+4, y2()+4);
 }
 
 Logical_NOR::~Logical_NOR()

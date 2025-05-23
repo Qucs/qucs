@@ -24,9 +24,10 @@ ID_Text::ID_Text(int cx_, int cy_)
 {
   Name = ".ID ";
   isSelected = false;
-  cx = cx_;
-  cy = cy_;
-  x2 = y2 = 20;
+  set_cx(cx_);
+  set_cy(cy_);
+  set_x2(20);
+  set_y2(20);
 
   Prefix = "SUB";
 }
@@ -40,54 +41,54 @@ void ID_Text::paint(ViewPainter *p)
 {
   int x, y;
   p->Painter->setPen(QPen(Qt::black,1));
-  p->map(cx, cy, x, y);
+  p->map(cx(), cy(), x, y);
 
   QRect r;
   p->Painter->drawText(QRect(x, y, 0, 0), Qt::TextDontClip, Prefix, &r);
-  x2 = r.width();
-  y2 = p->LineSpacing;
+  set_x2(r.width());
+  set_y2(p->LineSpacing);
 
-  p->Painter->drawText(QRect(x, y+y2, 0, 0), Qt::TextDontClip, "File=name", &r);
-  if(x2 < r.width())  x2 = r.width();
-  y2 += p->LineSpacing;
+  p->Painter->drawText(QRect(x, y+y2(), 0, 0), Qt::TextDontClip, "File=name", &r);
+  if(x2() < r.width())  set_x2(r.width());
+  set_y2(y2() + p->LineSpacing);
 
   QList<SubParameter *>::const_iterator it;
   for(it = Parameter.constBegin(); it != Parameter.constEnd(); it++) {
     if((*it)->display) {
-      p->Painter->drawText(QRect(x, y+y2, 0, 0), Qt::TextDontClip, (*it)->Name, &r);
-      if(x2 < r.width())  x2 = r.width();
-      y2 += p->LineSpacing;
+      p->Painter->drawText(QRect(x, y+y2(), 0, 0), Qt::TextDontClip, (*it)->Name, &r);
+      if(x2() < r.width())  set_x2(r.width());
+      set_y2(y2() + p->LineSpacing);
     }
   }
 
   if(isSelected) {
     p->Painter->setPen(QPen(Qt::darkGray,3));
-    p->Painter->drawRoundedRect(QRect(x-4, y-4, x2+8, y2+8), 25, 25, Qt::RelativeSize);
+    p->Painter->drawRoundedRect(QRect(x-4, y-4, x2()+8, y2()+8), 25, 25, Qt::RelativeSize);
   }
 
-  x2 = int(float(x2) / p->Scale);
-  y2 = int(float(y2) / p->Scale);
+  set_x2(int(float(x2()) / p->Scale));
+  set_y2(int(float(y2()) / p->Scale));
 }
 
 // --------------------------------------------------------------------------
 void ID_Text::paintScheme(Schematic *p)
 {
-  p->PostPaintEvent(_Rect, cx, cy, x2, y2);
+  p->PostPaintEvent(_Rect, cx(), cy(), x2(), y2());
 }
 
 // --------------------------------------------------------------------------
 void ID_Text::getCenter(int& x, int &y)
 {
-  x = cx+(x2>>1);
-  y = cy+(y2>>1);
+  x = cx()+(x2()>>1);
+  y = cy()+(y2()>>1);
 }
 
 // --------------------------------------------------------------------------
 // Sets the center of the painting to x/y.
 void ID_Text::setCenter(int x, int y, bool relative)
 {
-  if(relative) { cx += x;  cy += y; }
-  else { cx = x-(x2>>1);  cy = y-(y2>>1); }
+  if(relative) { set_cx(cx() + x); set_cy(cy() + y); }
+  else { set_cx(x-(x2()>>1)); set_cy(y-(y2()>>1)); }
 }
 
 // --------------------------------------------------------------------------
@@ -97,11 +98,11 @@ bool ID_Text::load(const QString& s)
 
   QString n;
   n  = s.section(' ',1,1);    // cx
-  cx = n.toInt(&ok);
+  set_cx(n.toInt(&ok));
   if(!ok) return false;
 
   n  = s.section(' ',2,2);    // cy
-  cy = n.toInt(&ok);
+  set_cy(n.toInt(&ok));
   if(!ok) return false;
 
   Prefix = s.section(' ',3,3);    // Prefix
@@ -127,7 +128,7 @@ bool ID_Text::load(const QString& s)
 // --------------------------------------------------------------------------
 QString ID_Text::save()
 {
-  QString s = Name+QString::number(cx)+" "+QString::number(cy)+" ";
+  QString s = Name+QString::number(cx())+" "+QString::number(cy())+" ";
   s += Prefix;
 
   QList<SubParameter *>::const_iterator it;
@@ -144,13 +145,13 @@ QString ID_Text::saveCpp()
 {
   QString s =
     QString ("tx = %1; ty = %2;").
-    arg(cx).arg(cy);
+    arg(cx()).arg(cy());
   return s;
 }
 
 QString ID_Text::saveJSON()
 {
-  QString s =  QString ("\"tx\" : %1,\n  \"ty\" : %2,").arg(cx).arg(cy);
+  QString s =  QString ("\"tx\" : %1,\n  \"ty\" : %2,").arg(cx()).arg(cy());
   return s;
 }
 
@@ -158,10 +159,10 @@ QString ID_Text::saveJSON()
 // Checks if the coordinates x/y point to the painting.
 bool ID_Text::getSelected(float fX, float fY, float)
 {
-  if(int(fX) < cx)  return false;
-  if(int(fY) < cy)  return false;
-  if(int(fX) > cx+x2)  return false;
-  if(int(fY) > cy+y2)  return false;
+  if(int(fX) < cx())  return false;
+  if(int(fY) < cy())  return false;
+  if(int(fX) > cx()+x2())  return false;
+  if(int(fY) > cy()+y2())  return false;
 
   return true;
 }
