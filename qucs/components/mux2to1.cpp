@@ -31,7 +31,7 @@ mux2to1::mux2to1()
     +" ("+QObject::tr ("s")+")"));
  
   createSymbol ();
-  set_qucs_text_position(x1+19, y2+4);
+  set_qucs_text_position(x1()+19, y2()+4);
   Model = "mux2to1";
   Name  = "Y";
 }
@@ -91,8 +91,10 @@ void mux2to1::createSymbol()
   Ports.push_back(qucs::Port(-50, 40));  // D1
   Ports.push_back(qucs::Port( 50, 0 ));  // Y
 
-  x1 = -50; y1 = -64;
-  x2 =  50; y2 =  54;
+  set_x1(-50);
+  set_y1(-64);
+  set_x2(50);
+  set_y2(54);
 }
 
 QString mux2to1::vhdlCode( int )

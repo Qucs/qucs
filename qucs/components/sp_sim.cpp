@@ -34,10 +34,12 @@ SP_Sim::SP_Sim()
   if (b != -1)
     Texts.push_back(qucs::Text(0, 0, s.mid(b+1), Qt::darkBlue, QucsSettings.largeFontSize));
 
-  x1 = -10; y1 = -9;
-  x2 = x1+121; y2 = y1+59;
+  set_x1(-10);
+  set_y1(-9);
+  set_x2(x1()+121);
+  set_y2(y1()+59);
 
-  set_qucs_text_position(0, y2+1);
+  set_qucs_text_position(0, y2()+1);
   Model = ".SP";
   Name  = "SP";
 

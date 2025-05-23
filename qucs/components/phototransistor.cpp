@@ -91,7 +91,7 @@ phototransistor::phototransistor()
     QObject::tr ("simulation temperature")));
 
   createSymbol ();
-  set_qucs_text_position(x2+4, y1+24);
+  set_qucs_text_position(x2()+4, y1()+24);
   Model = "phototransistor";
   Name  = "PT";
 }
@@ -152,6 +152,8 @@ void phototransistor::createSymbol()
   Ports.push_back(qucs::Port(-50,-50)); // Power
   Ports.push_back(qucs::Port(-50,-30)); // Wavelength
 
-  x1 = -50; y1 = -60;
-  x2 =  20; y2 =  30;
+  set_x1(-50);
+  set_y1(-60);
+  set_x2(20);
+  set_y2(30);
 }

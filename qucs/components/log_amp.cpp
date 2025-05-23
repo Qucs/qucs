@@ -64,7 +64,7 @@ log_amp::log_amp()
     QObject::tr ("simulation temperature")));
 
   createSymbol ();
-  set_qucs_text_position(x2+4, y1+4);
+  set_qucs_text_position(x2()+4, y1()+4);
   Model = "log_amp";
   Name  = "LA";
 }
@@ -106,6 +106,8 @@ void log_amp::createSymbol()
   Ports.push_back(qucs::Port(-30, 20));
   Ports.push_back(qucs::Port( 40,  0));
 
-  x1 = -30; y1 = -38;
-  x2 =  40; y2 =  38;
+  set_x1(-30);
+  set_y1(-38);
+  set_x2(40);
+  set_y2(38);
 }

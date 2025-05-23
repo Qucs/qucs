@@ -48,10 +48,12 @@ RLCG::RLCG()
   Ports.push_back(qucs::Port(-30, 0));
   Ports.push_back(qucs::Port( 30, 0));
 
-  x1 = -30; y1 = -fHeight;
-  x2 =  30; y2 = 16;
+  set_x1(-30);
+  set_y1(-fHeight);
+  set_x2(30);
+  set_y2(16);
 
-  set_qucs_text_position(x1+4, y2+4);
+  set_qucs_text_position(x1()+4, y2()+4);
   Model = "RLCG";
   Name  = "Line";
 

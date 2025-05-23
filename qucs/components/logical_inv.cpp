@@ -38,7 +38,7 @@ Logical_Inv::Logical_Inv()
 		QObject::tr("schematic symbol")+" [old, DIN40900]"));
 
   createSymbol();
-  set_qucs_text_position(x1+4, y2+4);
+  set_qucs_text_position(x1()+4, y2()+4);
   Model = "Inv";
   Name  = "Y";
 }
@@ -127,8 +127,8 @@ void Logical_Inv::createSymbol()
   Ports.push_back(qucs::Port( 30, 0));
   Ports.push_back(qucs::Port(-30, 0));
 
-  x1 = -30; y1 = -23;
-  x2 =  30; y2 =  23;
+  set_x1(-30); set_y1(-23);
+  set_x2(30); set_y2(23);
 }
 
 // -------------------------------------------------------

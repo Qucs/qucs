@@ -39,19 +39,20 @@
 
 Rect3DDiagram::Rect3DDiagram(int _cx, int _cy) : Diagram(_cx, _cy)
 {
-  x1 = 10;     // position of label text
-  y1 = y3 = 7;
-  x2 = 200;    // initial size of diagram
-  y2 = 200;
+  set_x1(10);     // position of label text
+  set_y1(7);
+  set_x2(200);    // initial size of diagram
+  set_y2(200);
+  y3 = 7;
   x3 = 207;    // with some distance for right axes text
 
   Mem = pMem = 0;  // auxiliary buffer for hidden lines
 
   Name = "Rect3D"; // BUG
   // symbolic diagram painting
-  Lines.push_back(qucs::Line(0, 0, cx,  0, QPen(Qt::black,0)));
-  Lines.push_back(qucs::Line(0, 0,  0, cy, QPen(Qt::black,0)));
-  Lines.push_back(qucs::Line(0, 0, cx/2, cy/2, QPen(Qt::black,0)));
+  Lines.push_back(qucs::Line(0, 0, cx(),  0, QPen(Qt::black,0)));
+  Lines.push_back(qucs::Line(0, 0,  0, cy(), QPen(Qt::black,0)));
+  Lines.push_back(qucs::Line(0, 0, cx()/2, cy()/2, QPen(Qt::black,0)));
 }
 
 Rect3DDiagram::~Rect3DDiagram()
@@ -122,8 +123,8 @@ int Rect3DDiagram::calcCross(int *Xses, int *Yses)
     if(z2D < ZMIN_2D) { ZMIN_2D = z2D; Center = z; }
   }
 
-  scaleX = double(x2) / (XMAX_2D - XMIN_2D); // scaling 3D -> 2D transformation
-  scaleY = double(y2) / (YMAX_2D - YMIN_2D);
+  scaleX = double(x2()) / (XMAX_2D - XMIN_2D); // scaling 3D -> 2D transformation
+  scaleY = double(y2()) / (YMAX_2D - YMIN_2D);
   xorig  = -XMIN_2D * scaleX;   // position of origin
   yorig  = -YMIN_2D * scaleY;
 
@@ -247,7 +248,7 @@ bool Rect3DDiagram::isHidden(int x, int y, tBound *Bounds, char *zBuffer)
   if( (Bounds+x)->min > y )  (Bounds+x)->min = y;
 
   // diagram area already used ?
-  return ( *(zBuffer + (y>>3) + x * ((y2+7)>>3)) & (1 << (y & 7)) ) != 0;
+  return ( *(zBuffer + (y>>3) + x * ((y2()+7)>>3)) & (1 << (y & 7)) ) != 0;
 }
 
 // --------------------------------------------------------------
@@ -543,7 +544,7 @@ void Rect3DDiagram::removeHiddenLines(char *zBuffer, tBound *Bounds)
     for(int No = g->countY/dy * (dx-1)*(dy-1); No>0; No--) {
 
       // reset the polygon bounding buffer
-      for(i=x2; i>=0; i--) {
+      for(i=x2(); i>=0; i--) {
         (Bounds+i)->max = INT_MIN;
         (Bounds+i)->min = INT_MAX;
       }
@@ -562,9 +563,9 @@ void Rect3DDiagram::removeHiddenLines(char *zBuffer, tBound *Bounds)
       calcLine(p, MemEnd, Bounds, zBuffer);
 
       // mark the area of the polygon (stored in "*Bounds") as used
-      for(i=x2-1; i>=0; i--)  // all x coordinates
+      for(i=x2()-1; i>=0; i--)  // all x coordinates
         if( (Bounds+i)->max > INT_MIN) {
-          pc = zBuffer + i * ((y2+7)>>3);
+          pc = zBuffer + i * ((y2()+7)>>3);
           for(j=(Bounds+i)->min; j<=(Bounds+i)->max; j++) // all y coordinates
             *(pc + (j>>3)) |= (1 << (j & 7));
         }
@@ -632,30 +633,30 @@ void Rect3DDiagram::calcLimits()
 
   if(xAxis.autoScale) {// check before, to preserve limit exchange (max < min)
     if(xAxis.log) {
-      calcAxisLogScale(&xAxis, i, a, b, c, x2);
+      calcAxisLogScale(&xAxis, i, a, b, c, x2());
       xAxis.step = 1.0;
     }
-    else  calcAxisScale(&xAxis, a, b, c, xAxis.step, double(x2));
+    else  calcAxisScale(&xAxis, a, b, c, xAxis.step, double(x2()));
     xAxis.limit_min = xAxis.low;
     xAxis.limit_max = xAxis.up;
   }
 
   if(yAxis.autoScale) {// check before, to preserve limit exchange (max < min)
     if(yAxis.log) {
-      calcAxisLogScale(&yAxis, i, a, b, c, y2);
+      calcAxisLogScale(&yAxis, i, a, b, c, y2());
       yAxis.step = 1.0;
     }
-    else  calcAxisScale(&yAxis, a, b, c, yAxis.step, double(y2));
+    else  calcAxisScale(&yAxis, a, b, c, yAxis.step, double(y2()));
     yAxis.limit_min = yAxis.low;
     yAxis.limit_max = yAxis.up;
   }
 
   if(zAxis.autoScale) {// check before, to preserve limit exchange (max < min)
     if(zAxis.log) {
-      calcAxisLogScale(&zAxis, i, a, b, c, y2);
+      calcAxisLogScale(&zAxis, i, a, b, c, y2());
       zAxis.step = 1.0;
     }
-    else  calcAxisScale(&zAxis, a, b, c, zAxis.step, double(y2));
+    else  calcAxisScale(&zAxis, a, b, c, zAxis.step, double(y2()));
     zAxis.limit_min = zAxis.low;
     zAxis.limit_max = zAxis.up;
   }
@@ -831,7 +832,7 @@ int Rect3DDiagram::calcDiagram()
   // get size of text using the screen-compatible metric
   QFontMetrics metrics(QucsSettings.font, 0);
 
-  x3 = x2 + 7;
+  x3 = x2() + 7;
   int z, z2, o, w;
 
   char *zBuffer=0;   // hidden line algorithm
@@ -858,27 +859,27 @@ int Rect3DDiagram::calcDiagram()
       if(xAxis.max*xAxis.min <= 0.0)  goto Frame;  // invalid
     }
     else  if(xAxis.limit_min*xAxis.limit_max <= 0.0)  goto Frame;  // invalid
-    calcAxisLogScale(&xAxis, z, zD, zDstep, corr, x2);
+    calcAxisLogScale(&xAxis, z, zD, zDstep, corr, x2());
   }
-  else  calcAxisScale(&xAxis, GridNum, zD, zDstep, GridStep, double(x2));
+  else  calcAxisScale(&xAxis, GridNum, zD, zDstep, GridStep, double(x2()));
     
   if(yAxis.log) {
     if(yAxis.autoScale) {
       if(yAxis.max*yAxis.min <= 0.0)  goto Frame;  // invalid
     }
     else  if(yAxis.limit_min*yAxis.limit_max <= 0.0)  goto Frame;  // invalid
-    calcAxisLogScale(&yAxis, z, zD, zDstep, corr, x2);
+    calcAxisLogScale(&yAxis, z, zD, zDstep, corr, x2());
   }
-  else  calcAxisScale(&yAxis, GridNum, zD, zDstep, GridStep, double(x2));
+  else  calcAxisScale(&yAxis, GridNum, zD, zDstep, GridStep, double(x2()));
 
   if(zAxis.log) {
     if(zAxis.autoScale) {
       if(zAxis.max*zAxis.min <= 0.0)  goto Frame;  // invalid
     }
     else  if(zAxis.limit_min*zAxis.limit_max <= 0.0)  goto Frame;  // invalid
-    calcAxisLogScale(&zAxis, z, zD, zDstep, corr, x2);
+    calcAxisLogScale(&zAxis, z, zD, zDstep, corr, x2());
   }
-  else  calcAxisScale(&zAxis, GridNum, zD, zDstep, GridStep, double(x2));
+  else  calcAxisScale(&zAxis, GridNum, zD, zDstep, GridStep, double(x2()));
 
 
   // ===  calculate transformation coefficients from rotation angles ===
@@ -925,14 +926,14 @@ int Rect3DDiagram::calcDiagram()
 
 
   if(hideLines) {
-    w = (x2+1) * (y2/8 + 1);
+    w = (x2()+1) * (y2()/8 + 1);
     // To store the pixel coordinates that are already used (hidden).
     // Use one bit per pixel.
     zBuffer = (char*)malloc(w);
     memset(zBuffer, 0, w);
 
     // To store the boundings of the current polygon.
-    Bounds = (tBound*)malloc((x2+1) * sizeof(tBound));
+    Bounds = (tBound*)malloc((x2()+1) * sizeof(tBound));
   }
 
   // hide invisible parts of graphs
@@ -964,10 +965,10 @@ int Rect3DDiagram::calcDiagram()
 
 
 Frame:   // jump here if error occurred (e.g. impossible log boundings)
-  Lines.push_back(qucs::Line(0,  y2, x2, y2, QPen(Qt::black,0)));
-  Lines.push_back(qucs::Line(x2, y2, x2,  0, QPen(Qt::black,0)));
-  Lines.push_back(qucs::Line(0,   0, x2,  0, QPen(Qt::black,0)));
-  Lines.push_back(qucs::Line(0,  y2,  0,  0, QPen(Qt::black,0)));
+  Lines.push_back(qucs::Line(0,  y2(), x2(), y2(), QPen(Qt::black,0)));
+  Lines.push_back(qucs::Line(x2(), y2(), x2(),  0, QPen(Qt::black,0)));
+  Lines.push_back(qucs::Line(0,   0, x2(),  0, QPen(Qt::black,0)));
+  Lines.push_back(qucs::Line(0,  y2(),  0,  0, QPen(Qt::black,0)));
   return 0;
 }
 

@@ -22,7 +22,7 @@ DLS_nto1::DLS_nto1()
     +" ("+QObject::tr ("s")+")"));
 
   createSymbol ();
-  set_qucs_text_position(x1+14, y2+4);
+  set_qucs_text_position(x1()+14, y2()+4);
   Model = "DLS_nto1";
   Name  = "Y";
 }
@@ -65,7 +65,6 @@ void DLS_nto1::createSymbol()
   Ports.push_back(qucs::Port(-40, 0));  // Lin
   Ports.push_back(qucs::Port( 40, 0));  // Lout
 
-
-  x1 = -40; y1 = -34;
-  x2 =  40; y2 =  34;
+  set_x1(-40); set_y1(-34);
+  set_x2(40); set_y2(34);
 }

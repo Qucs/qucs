@@ -23,7 +23,7 @@ Logical_OR::Logical_OR()
   Model = "OR";
 
   createSymbol();
-  set_qucs_text_position(x1+4, y2+4);
+  set_qucs_text_position(x1()+4, y2()+4);
 }
 
 Logical_OR::~Logical_OR()

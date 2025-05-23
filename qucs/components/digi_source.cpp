@@ -39,10 +39,12 @@ Digi_Source::Digi_Source()
 
   Ports.push_back(qucs::Port(  0,  0));
 
-  x1 = -39; y1 = -14;
-  x2 =   0; y2 =  14;
+  set_x1(-39);
+  set_y1(-14);
+  set_x2(0);
+  set_y2(14);
 
-  set_qucs_text_position(x1+4, y2+2);
+  set_qucs_text_position(x1()+4, y2()+2);
   Model = "DigiSource";
   Name  = "S";
 

@@ -35,10 +35,10 @@ Diac::Diac()
   Ports.push_back(qucs::Port(  0,-30));
   Ports.push_back(qucs::Port(  0, 30));
 
-  x1 = -20; y1 = -30;
-  x2 =  20; y2 =  30;
+  set_x1(-20); set_y1(-30);
+  set_x2(20); set_y2(30);
 
-  set_qucs_text_position(x2+4, y1+4);
+  set_qucs_text_position(x2()+4, y1()+4);
   Model = "Diac";
   Name  = "D";
 

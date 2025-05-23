@@ -214,9 +214,11 @@ void Verilog_File::createSymbol()
     i++;
   }
 
-  x1 = -30; y1 = -h-2;
-  x2 =  30; y2 =  h+2;
-  set_qucs_text_position(x1+4, y2+4);
+  set_x1(-30);
+  set_y1(-h-2);
+  set_x2(30);
+  set_y2(h+2);
+  set_qucs_text_position(x1()+4, y2()+4);
 }
 
 // -------------------------------------------------------

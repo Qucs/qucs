@@ -33,7 +33,7 @@ dff_SR::dff_SR()
     +" ("+QObject::tr ("s")+")"));
 
   createSymbol ();
-  set_qucs_text_position(x1+4, y2+4);
+  set_qucs_text_position(x1()+4, y2()+4);
   Model = "dff_SR";
   Name  = "Y";
 }
@@ -91,8 +91,10 @@ void dff_SR::createSymbol()
   Ports.push_back(qucs::Port( 50, 20));  // QB
   Ports.push_back(qucs::Port( 50,-20));  // Q
 
-  x1 = -50; y1 = -60;
-  x2 =  50; y2 =  60;
+  set_x1(-50);
+  set_y1(-60);
+  set_x2(50);
+  set_y2(60);
 }
 
 QString dff_SR::vhdlCode( int )

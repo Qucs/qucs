@@ -229,8 +229,8 @@ int Schematic::saveSymbolCpp (void)
       PortSymbol *ps = static_cast<PortSymbol *>(pp.operator->());
       if (ps->numberStr.toInt() > maxNum)
         maxNum = ps->numberStr.toInt();
-      x1 = ps->cx;
-      y1 = ps->cy;
+      x1 = ps->cx();
+      y1 = ps->cy();
       if (x1 < xmin) xmin = x1;
       if (x1 > xmax) xmax = x1;
       if (y1 < ymin) ymin = y1;
@@ -309,8 +309,8 @@ int Schematic::saveSymbolJSON()
       PortSymbol *ps = static_cast<PortSymbol *>(pp.operator->());
       if (ps->numberStr.toInt() > maxNum)
         maxNum = ps->numberStr.toInt();
-      x1 = ps->cx;
-      y1 = ps->cy;
+      x1 = ps->cx();
+      y1 = ps->cy();
       if (x1 < xmin) xmin = x1;
       if (x1 > xmax) xmax = x1;
       if (y1 < ymin) ymin = y1;
@@ -439,12 +439,12 @@ void Schematic::simpleInsertComponent(const std::shared_ptr<Component> &c)
   for (auto pp = c->Ports.begin(); pp != c->Ports.end(); ++pp) {
     std::shared_ptr<Node> pn;
     pn.reset();
-    x = pp->x+c->cx;
-    y = pp->y+c->cy;
+    x = pp->x+c->cx();
+    y = pp->y+c->cy();
     // check if new node lies upon existing node
     for(auto pni = DocNodes.begin(); pni != DocNodes.end(); ++pni) {
       std::shared_ptr<Node> pnc = pni.ref();
-      if(pnc->cx == x) if(pnc->cy == y) {
+      if(pnc->cx() == x) if(pnc->cy() == y) {
         if (!pnc->DType.isEmpty()) {
           pp->Type = pnc->DType;
         }
@@ -507,15 +507,15 @@ void Schematic::simpleInsertWire(const std::shared_ptr<Wire> &pw)
   auto pn = DocNodes.begin();
   // check if first wire node lies upon existing node
   for( ; pn != DocNodes.end(); ++pn)
-    if(pn->cx == pw->x1) if(pn->cy == pw->y1) break;
+    if(pn->cx() == pw->x1()) if(pn->cy() == pw->y1()) break;
 
   if(pn == DocNodes.end()) {   // create new node, if no existing one lies at this position
-    DocNodes.push_back(new Node(pw->x1, pw->y1));
+    DocNodes.push_back(new Node(pw->x1(), pw->y1()));
     pn = DocNodes.end();
     --pn;
   }
 
-  if(pw->x1 == pw->x2) if(pw->y1 == pw->y2) {
+  if(pw->x1() == pw->x2()) if(pw->y1() == pw->y2()) {
     pn->Label = pw->Label;   // wire with length zero are just node labels
     if (pn->Label) {
       pn->Label->Type = isNodeLabel;
@@ -528,10 +528,10 @@ void Schematic::simpleInsertWire(const std::shared_ptr<Wire> &pw)
 
   // check if second wire node lies upon existing node
   for(pn = DocNodes.begin(); pn != DocNodes.end(); ++pn)
-    if(pn->cx == pw->x2) if(pn->cy == pw->y2) break;
+    if(pn->cx() == pw->x2()) if(pn->cy() == pw->y2()) break;
 
   if(pn == DocNodes.end()) {   // create new node, if no existing one lies at this position
-    DocNodes.push_back(new Node(pw->x2, pw->y2));
+    DocNodes.push_back(new Node(pw->x2(), pw->y2()));
     pn = DocNodes.end();
     --pn;
   }
@@ -560,7 +560,7 @@ bool Schematic::loadWires(QTextStream *stream, SharedObjectList<Element> *List)
       return false;
     }
     if(List) {
-      if(w->x1 == w->x2) if(w->y1 == w->y2) if(w->Label) {
+      if(w->x1() == w->x2()) if(w->y1() == w->y2()) if(w->Label) {
 	w->Label->Type = isMovingLabel;
 	List->append(w->Label);
 	continue;
@@ -707,7 +707,7 @@ bool Schematic::loadPaintings(QTextStream *stream, SharedObjectList<Element> &Li
 std::string Schematic::nodename_at(const int x, const int y)
 {
   for(auto n=DocNodes.begin();n!=DocNodes.end();n++) {
-    if((n->cx==x)&&(n->cy==y)) {
+    if((n->cx()==x)&&(n->cy()==y)) {
       return n->label();
     }
   }

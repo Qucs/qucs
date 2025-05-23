@@ -77,10 +77,12 @@ wProbe::wProbe()
   Lines.push_back(qucs::Line(  4,  0, -4, -3,QPen(Qt::darkBlue,2)));
   Lines.push_back(qucs::Line(  4,  0, -4,  4,QPen(Qt::darkBlue,2)));
 
-  x1 = -24; y1 = -35;
-  x2 =  24; y2 =  20;
+  set_x1(-24);
+  set_y1(-35);
+  set_x2(24);
+  set_y2(20);
 
-  set_qucs_text_position(x2+4, y1+4);
+  set_qucs_text_position(x2()+4, y1()+4);
   Model = "WProbe";
   Name  = "Pr";
 }

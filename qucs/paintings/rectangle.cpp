@@ -32,9 +32,12 @@ Rectangle::Rectangle(bool _filled)
   Pen = QPen(QColor());
   Brush = QBrush(Qt::lightGray);
   filled = _filled;
-  cx = cy = 0;
-  x1 = x2 = 0;
-  y1 = y2 = 0;
+  set_cx(0);
+  set_cy(0);
+  set_x1(0);
+  set_x2(0);
+  set_y1(0);
+  set_y2(0);
 }
 
 Rectangle::~Rectangle()
@@ -47,43 +50,43 @@ void Rectangle::paint(ViewPainter *p)
   if(isSelected) {
     p->Painter->setPen(QPen(Qt::darkGray,Pen.width()+5));
     if(filled)  p->Painter->setBrush(Brush);
-    p->drawRect(cx, cy, x2, y2);
+    p->drawRect(cx(), cy(), x2(), y2());
     p->Painter->setPen(QPen(Qt::white, Pen.width(), Pen.style()));
     p->Painter->setBrush(Qt::NoBrush);
-    p->drawRect(cx, cy, x2, y2);
+    p->drawRect(cx(), cy(), x2(), y2());
 
     p->Painter->setPen(QPen(Qt::darkRed,2));
-    p->drawResizeRect(cx, cy+y2);  // markers for changing the size
-    p->drawResizeRect(cx, cy);
-    p->drawResizeRect(cx+x2, cy+y2);
-    p->drawResizeRect(cx+x2, cy);
+    p->drawResizeRect(cx(), cy()+y2());  // markers for changing the size
+    p->drawResizeRect(cx(), cy());
+    p->drawResizeRect(cx()+x2(), cy()+y2());
+    p->drawResizeRect(cx()+x2(), cy());
     return;
   }
   p->Painter->setPen(Pen);
   if(filled)  p->Painter->setBrush(Brush);
-  p->drawRect(cx, cy, x2, y2);
+  p->drawRect(cx(), cy(), x2(), y2());
   p->Painter->setBrush(Qt::NoBrush); // no filling for the next paintings
 }
 
 // --------------------------------------------------------------------------
 void Rectangle::paintScheme(Schematic *p)
 {
-  p->PostPaintEvent(_Rect, cx, cy, x2, y2);
+  p->PostPaintEvent(_Rect, cx(), cy(), x2(), y2());
 }
 
 // --------------------------------------------------------------------------
 void Rectangle::getCenter(int& x, int &y)
 {
-  x = cx+(x2>>1);
-  y = cy+(y2>>1);
+  x = cx()+(x2()>>1);
+  y = cy()+(y2()>>1);
 }
 
 // --------------------------------------------------------------------------
 // Sets the center of the painting to x/y.
 void Rectangle::setCenter(int x, int y, bool relative)
 {
-  if(relative) { cx += x;  cy += y; }
-  else { cx = x-(x2>>1);  cy = y-(y2>>1); }
+  if(relative) { set_cx(cx() + x); set_cy(cy() + y); }
+  else { set_cx(x-(x2()>>1)); set_cy(y-(y2()>>1)); }
 }
 
 // --------------------------------------------------------------------------
@@ -119,19 +122,19 @@ bool Rectangle::load(const QString& s)
 
   QString n;
   n  = s.section(' ',1,1);    // cx
-  cx = n.toInt(&ok);
+  set_cx(n.toInt(&ok));
   if(!ok) return false;
 
   n  = s.section(' ',2,2);    // cy
-  cy = n.toInt(&ok);
+  set_cy(n.toInt(&ok));
   if(!ok) return false;
 
   n  = s.section(' ',3,3);    // x2
-  x2 = n.toInt(&ok);
+  set_x2(n.toInt(&ok));
   if(!ok) return false;
 
   n  = s.section(' ',4,4);    // y2
-  y2 = n.toInt(&ok);
+  set_y2(n.toInt(&ok));
   if(!ok) return false;
 
   n  = s.section(' ',5,5);    // color
@@ -169,8 +172,8 @@ bool Rectangle::load(const QString& s)
 QString Rectangle::save()
 {
   QString s = Name +
-	QString::number(cx) + " " + QString::number(cy) + " " +
-	QString::number(x2) + " " + QString::number(y2) + " " +
+	QString::number(cx()) + " " + QString::number(cy()) + " " +
+	QString::number(x2()) + " " + QString::number(y2()) + " " +
 	Pen.color().name() + " " + QString::number(Pen.width()) + " " +
 	QString::number(Pen.style()) + " " +
 	Brush.color().name() + " " + QString::number(Brush.style());
@@ -188,7 +191,7 @@ QString Rectangle::saveCpp()
   QString s =
     QString ("new Area (%1, %2, %3, %4, "
 	     "QPen (QColor (\"%5\"), %6, %7)%8)").
-    arg(cx).arg(cy).arg(x2).arg(y2).
+    arg(cx()).arg(cy()).arg(x2()).arg(y2()).
     arg(Pen.color().name()).arg(Pen.width()).arg(toPenString(Pen.style())).
     arg(b);
   s = "Rects.append (" + s + ");";
@@ -205,7 +208,7 @@ QString Rectangle::saveJSON()
     QString("{\"type\" : \"rectangle\", "
       "\"x\" : %1, \"y\" : %2, \"w\" : %3, \"h\" : %4, "
       "\"color\" : \"%5\", \"thick\" : %6, \"style\" : \"%7\", %8},").
-      arg(cx).arg(cy).arg(x2).arg(y2).
+      arg(cx()).arg(cy()).arg(x2()).arg(y2()).
       arg(Pen.color().name()).arg(Pen.width()).arg(toPenString(Pen.style())).
       arg(b);
   return s;
@@ -215,8 +218,8 @@ QString Rectangle::saveJSON()
 // Checks if the resize area was clicked.
 bool Rectangle::resizeTouched(float fX, float fY, float len)
 {
-  float fCX = float(cx), fCY = float(cy);
-  float fX2 = float(cx+x2), fY2 = float(cy+y2);
+  float fCX = float(cx()), fCY = float(cy());
+  float fX2 = float(cx()+x2()), fY2 = float(cy()+y2());
 
   State = -1;
   if(fX < fCX-len) return false;
@@ -239,17 +242,17 @@ void Rectangle::MouseResizeMoving(int x, int y, Schematic *p)
 {
   paintScheme(p);  // erase old painting
   switch(State) {
-    case 0: x2 = x-cx; y2 = y-cy; // lower right corner
+    case 0: set_x2(x-cx()); set_y2(y-cy()); // lower right corner
 	    break;
-    case 1: x2 -= x-cx; cx = x; y2 = y-cy; // lower left corner
+    case 1: set_x2(x-cx()); set_y2(y-cy()); // lower left corner
 	    break;
-    case 2: x2 = x-cx; y2 -= y-cy; cy = y; // upper right corner
+    case 2: set_x2(x-cx()); set_y2(y-cy()); // upper right corner
 	    break;
-    case 3: x2 -= x-cx; cx = x; y2 -= y-cy; cy = y; // upper left corner
+    case 3: set_x2(x-cx()); set_y2(y-cy()); // upper left corner
 	    break;
   }
-  if(x2 < 0) { State ^= 1; x2 *= -1; cx -= x2; }
-  if(y2 < 0) { State ^= 2; y2 *= -1; cy -= y2; }
+  if(x2() < 0) { State ^= 1; set_x2(x2() * -1); set_cx(cx() - x2()); }
+  if(y2() < 0) { State ^= 2; set_y2(y2() * -1); set_cy(cy() - y2()); }
 
   paintScheme(p);  // paint new painting
 }
@@ -263,31 +266,31 @@ void Rectangle::MouseMoving(
 {
   if(State > 0) {
     if(State > 1)
-      paintScale->PostPaintEvent(_Rect,x1, y1, x2-x1, y2-y1);  // erase old painting
+      paintScale->PostPaintEvent(_Rect,x1(), y1(), x2()-x1(), y2()-y1());  // erase old painting
     State++;
-    x2 = gx;
-    y2 = gy;
-    paintScale->PostPaintEvent(_Rect,x1, y1, x2-x1, y2-y1);  // paint new rectangle
+    set_x2(gx);
+    set_y2(gy);
+    paintScale->PostPaintEvent(_Rect,x1(), y1(), x2()-x1(), y2()-y1());  // paint new rectangle
   }
-  else { x2 = gx; y2 = gy; }
+  else { set_x2(gx); set_y2(gy); }
 
 
   // FIXME #warning p->setPen(Qt::SolidLine);
   if(drawn) {
-    p->PostPaintEvent(_Rect, cx+13, cy, 18, 12,0,0,true);  // erase old cursor symbol
+    p->PostPaintEvent(_Rect, cx()+13, cy(), 18, 12,0,0,true);  // erase old cursor symbol
     if(filled) {   // hatched ?
-      p->PostPaintEvent(_Line, cx+14, cy+6, cx+19, cy+1,0,0,true);
-      p->PostPaintEvent(_Line, cx+26, cy+1, cx+17, cy+10,0,0,true);
-      p->PostPaintEvent(_Line, cx+29, cy+5, cx+24, cy+10,0,0,true);
+      p->PostPaintEvent(_Line, cx()+14, cy()+6, cx()+19, cy()+1,0,0,true);
+      p->PostPaintEvent(_Line, cx()+26, cy()+1, cx()+17, cy()+10,0,0,true);
+      p->PostPaintEvent(_Line, cx()+29, cy()+5, cx()+24, cy()+10,0,0,true);
     }
   }
-  cx = x;
-  cy = y;
-  p->PostPaintEvent(_Rect,cx+13, cy, 18, 12,0,0,true);  // paint new cursor symbol
+  set_cx(x);
+  set_cy(y);
+  p->PostPaintEvent(_Rect,cx()+13, cy(), 18, 12,0,0,true);  // paint new cursor symbol
   if(filled) {   // hatched ?
-    p->PostPaintEvent(_Line, cx+14, cy+6, cx+19, cy+1,0,0,true);
-    p->PostPaintEvent(_Line, cx+26, cy+1, cx+17, cy+10,0,0,true);
-    p->PostPaintEvent(_Line, cx+29, cy+5, cx+24, cy+10,0,0,true);
+    p->PostPaintEvent(_Line, cx()+14, cy()+6, cx()+19, cy()+1,0,0,true);
+    p->PostPaintEvent(_Line, cx()+26, cy()+1, cx()+17, cy()+10,0,0,true);
+    p->PostPaintEvent(_Line, cx()+29, cy()+5, cx()+24, cy()+10,0,0,true);
   }
 }
 
@@ -296,15 +299,16 @@ bool Rectangle::MousePressing()
 {
   State++;
   if(State == 1) {
-    x1 = x2;
-    y1 = y2;    // first corner is determined
+    set_x1(x2());
+    set_y1(y2());    // first corner is determined
   }
   else {
-    if(x1 < x2) { cx = x1; x2 = x2-x1; } // cx/cy to upper left corner
-    else { cx = x2; x2 = x1-x2; }
-    if(y1 < y2) { cy = y1; y2 = y2-y1; }
-    else { cy = y2; y2 = y1-y2; }
-    x1 = y1 = 0;
+    if(x1() < x2()) { set_cx(x1()); set_x2(x2()-x1()); } // cx/cy to upper left corner
+    else { set_cx(x2()); set_x2(x1()-x2()); }
+    if(y1() < y2()) { set_cy(y1()); set_y2(y2()-y1()); }
+    else { set_cy(y2()); set_y2(y1()-y2()); }
+    set_x1(0);
+    set_y1(0);
     State = 0;
     return true;    // rectangle is ready
   }
@@ -316,16 +320,16 @@ bool Rectangle::MousePressing()
 bool Rectangle::getSelected(float fX, float fY, float w)
 {
   if(filled) {
-    if(int(fX) > cx+x2) return false;   // coordinates outside the rectangle ?
-    if(int(fY) > cy+y2) return false;
-    if(int(fX) < cx) return false;
-    if(int(fY) < cy) return false;
+    if(int(fX) > cx()+x2()) return false;   // coordinates outside the rectangle ?
+    if(int(fY) > cy()+y2()) return false;
+    if(int(fX) < cx()) return false;
+    if(int(fY) < cy()) return false;
   }
   else {
-    fX -= float(cx);
-    fY -= float(cy);
-    float fX2 = float(x2);
-    float fY2 = float(y2);
+    fX -= float(cx());
+    fY -= float(cy());
+    float fX2 = float(x2());
+    float fY2 = float(y2());
 
     if(fX > fX2+w) return false;   // coordinates outside the rectangle ?
     if(fY > fY2+w) return false;
@@ -344,11 +348,11 @@ bool Rectangle::getSelected(float fX, float fY, float w)
 // Rotates around the center.
 void Rectangle::rotate()
 {
-  cy += (y2-x2) >> 1;
-  cx += (x2-y2) >> 1;
-  int tmp = x2;
-  x2 = y2;
-  y2 = tmp;
+  set_cy(cy() + ((y2()-x2()) >> 1));
+  set_cx(cx() + ((x2()-y2()) >> 1));
+  int tmp = x2();
+  set_x2(y2());
+  set_y2(tmp);
 }
 
 // --------------------------------------------------------------------------

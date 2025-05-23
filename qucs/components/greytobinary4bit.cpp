@@ -31,7 +31,7 @@ greytobinary4bit::greytobinary4bit()
     +" ("+QObject::tr ("s")+")"));
 
   createSymbol ();
-  set_qucs_text_position(x1+19, y2+4);
+  set_qucs_text_position(x1()+19, y2()+4);
   Model = "greytobinary4bit";
   Name  = "Y";
 }
@@ -94,8 +94,10 @@ void greytobinary4bit::createSymbol()
   Ports.push_back(qucs::Port( 50,-10));  // B1
   Ports.push_back(qucs::Port( 50,-30));  // B0
 
-  x1 = -50; y1 = -64;
-  x2 =  50; y2 =  44;
+  set_x1(-50);
+  set_y1(-64);
+  set_x2(50);
+  set_y2(44);
 }
 
 QString greytobinary4bit::vhdlCode( int )

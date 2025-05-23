@@ -38,10 +38,12 @@ OpAmp::OpAmp()
   Ports.push_back(qucs::Port(-30,-20));
   Ports.push_back(qucs::Port( 40,  0));
 
-  x1 = -30; y1 = -38;
-  x2 =  30; y2 =  38;
+  set_x1(-30);
+  set_y1(-38);
+  set_x2(30);
+  set_y2(38);
 
-  set_qucs_text_position(x1+4, y2+4);
+  set_qucs_text_position(x1()+4, y2()+4);
   Model = "OpAmp";
   Name  = "OP";
 

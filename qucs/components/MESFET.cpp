@@ -151,7 +151,7 @@ MESFET::MESFET()
     QObject::tr("simulation temperature")));
 
   createSymbol ();
-  set_qucs_text_position(x2+4, y1+4);
+  set_qucs_text_position(x2()+4, y1()+4);
   Model = "MESFET";
   Name  = "T";
 }
@@ -189,6 +189,8 @@ void MESFET::createSymbol()
   Ports.push_back(qucs::Port(-30,  0));
   Ports.push_back(qucs::Port(  0, 30));
 
-  x1 = -30; y1 = -30;
-  x2 =   4; y2 =  30;
+  set_x1(-30);
+  set_y1(-30);
+  set_x2(4);
+  set_y2(30);
 }

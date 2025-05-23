@@ -30,10 +30,11 @@
 
 TruthDiagram::TruthDiagram(int _cx, int _cy) : TabDiagram(_cx, _cy)
 {
-  x1 = 0;    // no extension to select area
-  y1 = 0;
-  x2 = x3 = 150;  // initial size of diagram
-  y2 = 200;
+  set_x1(0);    // no extension to select area
+  set_y1(0);
+  set_x2(150);  // initial size of diagram
+  set_y2(200);
+  x3 = 150;
   Name = "Truth";
   xAxis.limit_min = 0.0;  // scroll bar position (needs to be saved in file)
 
@@ -52,27 +53,27 @@ int TruthDiagram::calcDiagram()
   Texts.clear();
   Arcs.clear();
 
-  x1 = 0;  // no scroll bar
-  x3 = x2;
+  set_x1(0);  // no scroll bar
+  x3 = x2();
   // get size of text using the screen-compatible metric
   QFontMetrics metrics(QucsSettings.font, 0);
   int tHeight = metrics.lineSpacing();
   QString Str;
   int colWidth=0, x=6, y;
 
-  if(y2 < (41 + MIN_SCROLLBAR_SIZE))
-    y2 = 41 + MIN_SCROLLBAR_SIZE;
+  if(y2() < (41 + MIN_SCROLLBAR_SIZE))
+    set_y2(41 + MIN_SCROLLBAR_SIZE);
 
-  if(y2 < (tHeight + 8))
-    y2 = tHeight + 8;
-  y = y2 - tHeight - 6;
+  if(y2() < (tHeight + 8))
+    set_y2(tHeight + 8);
+  y = y2() - tHeight - 6;
 
   // outer frame
-  Lines.push_back(qucs::Line(0, y2, x2, y2, QPen(Qt::black,0)));
-  Lines.push_back(qucs::Line(0, y2, 0, 0, QPen(Qt::black,0)));
-  Lines.push_back(qucs::Line(x2, y2, x2, 0, QPen(Qt::black,0)));
-  Lines.push_back(qucs::Line(0, 0, x2, 0, QPen(Qt::black,0)));
-  Lines.push_back(qucs::Line(0, y+2, x2, y+2, QPen(Qt::black,2)));
+  Lines.push_back(qucs::Line(0, y2(), x2(), y2(), QPen(Qt::black,0)));
+  Lines.push_back(qucs::Line(0, y2(), 0, 0, QPen(Qt::black,0)));
+  Lines.push_back(qucs::Line(x2(), y2(), x2(), 0, QPen(Qt::black,0)));
+  Lines.push_back(qucs::Line(0, 0, x2(), 0, QPen(Qt::black,0)));
+  Lines.push_back(qucs::Line(0, y+2, x2(), y+2, QPen(Qt::black,2)));
 
   if(xAxis.limit_min < 0.0)
     xAxis.limit_min = 0.0;
@@ -82,9 +83,9 @@ int TruthDiagram::calcDiagram()
   auto ig = Graphs.begin();
   if (ig == Graphs.end()) {  // no variables specified in diagram ?
     Str = QObject::tr("no variables");
-    colWidth = checkColumnWidth(Str, metrics, colWidth, x, y2);
+    colWidth = checkColumnWidth(Str, metrics, colWidth, x, y2());
     if(colWidth >= 0)
-      Texts.push_back(qucs::Text(x-4, y2-2, Str)); // independent variable
+      Texts.push_back(qucs::Text(x-4, y2()-2, Str)); // independent variable
     return 0;
   }
 
@@ -112,7 +113,7 @@ int TruthDiagram::calcDiagram()
     }
 
     colWidth = 0;
-    Texts.push_back(qucs::Text(x-4, y2-2, Str)); // independent variable
+    Texts.push_back(qucs::Text(x-4, y2()-2, Str)); // independent variable
     if(NumAll != 0) {
       z = metrics.horizontalAdvance("1");
       colWidth = metrics.horizontalAdvance("0");
@@ -120,12 +121,12 @@ int TruthDiagram::calcDiagram()
       colWidth += 2;
       counting = int(log(double(NumAll)) / log(2.0) + 0.9999); // number of bits
       
-      if((x+colWidth*counting) >= x2) {    // enough space for text ?
-	checkColumnWidth("0", metrics, 0, x2, y);
+      if((x+colWidth*counting) >= x2()) {    // enough space for text ?
+	checkColumnWidth("0", metrics, 0, x2(), y);
 	goto funcEnd;
       }
       
-      y = y2-tHeight-5;
+      y = y2()-tHeight-5;
       startWriting = x;
       for(z=int(xAxis.limit_min + 0.5); z<NumAll; z++) {
 	if(y < tHeight) break;  // no room for more rows ?
@@ -140,7 +141,7 @@ int TruthDiagram::calcDiagram()
       }
       x = startWriting + 15;
     }
-    Lines.push_back(qucs::Line(x-8, y2, x-8, 0, QPen(Qt::black,2)));
+    Lines.push_back(qucs::Line(x-8, y2(), x-8, 0, QPen(Qt::black,2)));
   }  // of "if no data in graphs"
   
 
@@ -149,12 +150,12 @@ int TruthDiagram::calcDiagram()
   // ................................................
   // all dependent variables
   for (auto g = Graphs.begin(); g != Graphs.end(); ++g) {
-    y = y2-tHeight-5;
+    y = y2()-tHeight-5;
 
     Str = g->Var;
-    colWidth = checkColumnWidth(Str, metrics, 0, x, y2);
+    colWidth = checkColumnWidth(Str, metrics, 0, x, y2());
     if(colWidth < 0)  goto funcEnd;
-    Texts.push_back(qucs::Text(x, y2-2, Str));  // dependent variable
+    Texts.push_back(qucs::Text(x, y2()-2, Str));  // dependent variable
 
 
     startWriting = int(xAxis.limit_min + 0.5);  // when to reach visible area
@@ -183,8 +184,8 @@ int TruthDiagram::calcDiagram()
           counting = strlen((char*)py);    // count number of "bits"
 
           digitWidth = metrics.horizontalAdvance("X") + 2;
-          if((x+digitWidth*counting) >= x2) {    // enough space for "bit vector" ?
-            checkColumnWidth("0", metrics, 0, x2, y);
+          if((x+digitWidth*counting) >= x2()) {    // enough space for "bit vector" ?
+            checkColumnWidth("0", metrics, 0, x2(), y);
             goto funcEnd;
           }
 
@@ -227,12 +228,12 @@ int TruthDiagram::calcDiagram()
     x += colWidth+15;
     auto gn = g;
     if(++gn != Graphs.end())   // do not paint last line
-      Lines.push_back(qucs::Line(x-8, y2, x-8, 0, QPen(Qt::black,0)));
+      Lines.push_back(qucs::Line(x-8, y2(), x-8, 0, QPen(Qt::black,0)));
   }
 
 funcEnd:
   if(invisibleCount > 0) {  // could all numbers be written ?
-    x1 = 18;   // extend the select area to the left
+    set_x1(18);   // extend the select area to the left
 
     zAxis.limit_max = double(NumAll);  // number of data (rows) 
 
@@ -241,10 +242,10 @@ funcEnd:
     NumLeft = NumAll - NumLeft - y;
 
     // position of scroll bar in pixel
-    yAxis.numGraphs = (y2 - 39) * y / NumAll;
+    yAxis.numGraphs = (y2() - 39) * y / NumAll;
 
     // height of scroll bar
-    zAxis.numGraphs = (y2 - 39) * NumLeft / NumAll;
+    zAxis.numGraphs = (y2() - 39) * NumLeft / NumAll;
     if(zAxis.numGraphs < MIN_SCROLLBAR_SIZE) {
       yAxis.numGraphs -= (MIN_SCROLLBAR_SIZE - zAxis.numGraphs + 1)
                          * y / NumAll;

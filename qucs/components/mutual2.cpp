@@ -71,10 +71,12 @@ Mutual2::Mutual2()
   Ports.push_back(qucs::Port(-30, 10));
   Ports.push_back(qucs::Port(-30,-10));
 
-  x1 = -33; y1 = -74;
-  x2 =  33; y2 =  74;
+  set_x1(-33);
+  set_y1(-74);
+  set_x2(33);
+  set_y2(74);
 
-  set_qucs_text_position(x1+4, y2+4);
+  set_qucs_text_position(x1()+4, y2()+4);
   Model = "MUT2";
   Name  = "Tr";
 

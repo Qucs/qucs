@@ -140,10 +140,12 @@ void RFedd2P::createSymbol()
   y += 60;
   i++;
 
-  x1 = -30; y1 = -h-2;
-  x2 =  30; y2 =  h+2;
+  set_x1(-30);
+  set_y1(-h-2);
+  set_x2(30);
+  set_y2(h+2);
   // compute component name text position - normal size font
   QFontMetrics  metrics(QucsSettings.font, 0);   // use the screen-compatible metric
-  set_qucs_text_position(x1+4,
-  y1 - metrics.lineSpacing() - 4); // yikes.
+  set_qucs_text_position(x1()+4,
+  y1() - metrics.lineSpacing() - 4); // yikes.
 }

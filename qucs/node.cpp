@@ -28,8 +28,8 @@ Node::Node(int _x, int _y)
   State = 0;
   DType = "";
 
-  cx = _x;
-  cy = _y;
+  set_cx(_x);
+  set_cy(_y);
 }
 
 Node::~Node()
@@ -49,10 +49,10 @@ void Node::paint(ViewPainter *p)
 {
   switch(refcount()) {
     case 1:  if(Label)
-               p->fillRect(cx-2, cy-2, 4, 4, Qt::darkBlue); // open but labeled
+               p->fillRect(cx()-2, cy()-2, 4, 4, Qt::darkBlue); // open but labeled
              else {
                p->Painter->setPen(QPen(Qt::red,1));  // node is open
-               p->drawEllipse(cx-4, cy-4, 8, 8);
+               p->drawEllipse(cx()-4, cy()-4, 8, 8);
              }
              return;
     case 2:  if(is_wire(connections().front())){
@@ -62,11 +62,11 @@ void Node::paint(ViewPainter *p)
 					}
 				 }else{
 				 }
-             p->fillRect(cx-2, cy-2, 4, 4, Qt::darkBlue);
+             p->fillRect(cx()-2, cy()-2, 4, 4, Qt::darkBlue);
              break;
     default: p->Painter->setBrush(Qt::darkBlue);  // more than 2 connections
 	     p->Painter->setPen(QPen(Qt::darkBlue,1));
-	     p->drawEllipse(cx-3, cy-3, 6, 6);
+	     p->drawEllipse(cx()-3, cy()-3, 6, 6);
 	     p->Painter->setBrush(Qt::NoBrush);
              break;
   }
@@ -75,7 +75,7 @@ void Node::paint(ViewPainter *p)
 // ----------------------------------------------------------------
 bool Node::getSelected(int x_, int y_)
 {
-  if(cx-5 <= x_) if(cx+5 >= x_) if(cy-5 <= y_) if(cy+5 >= y_)
+  if(cx()-5 <= x_) if(cx()+5 >= x_) if(cy()-5 <= y_) if(cy()+5 >= y_)
     return true;
 
   return false;
@@ -89,7 +89,7 @@ void Node::setName(const QString& Name_, const QString& Value_, int x_, int y_)
     return;
   }
 
-  if(!Label) Label.reset(new WireLabel(Name_, cx, cy, x_, y_, isNodeLabel));
+  if(!Label) Label.reset(new WireLabel(Name_, cx(), cy(), x_, y_, isNodeLabel));
   else Label->setName(Name_);
   Label->pOwner = this;
   Label->initValue = Value_;
@@ -117,9 +117,9 @@ Node::appendConnection(const std::shared_ptr<Element> &e)
 std::string Node::label()const
 {
   return "n_"
-    +std::string((cx<0)?"m"+std::to_string(-cx):std::to_string(cx))
+    +std::string((cx()<0)?"m"+std::to_string(-cx()):std::to_string(cx()))
     +"_"
-    +std::string((cy<0)?"m"+std::to_string(-cy):std::to_string(cy));
+    +std::string((cy()<0)?"m"+std::to_string(-cy()):std::to_string(cy()));
 }
 
 // ----------------------------------------------------------------

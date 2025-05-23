@@ -30,8 +30,8 @@ Painting* Painting::newOne()
 
 void Painting::Bounding(int& _x1, int& _y1, int& _x2, int& _y2)
 {
-  _x1 = cx;     _y1 = cy;
-  _x2 = cx+x2;  _y2 = cy+y2;
+  _x1 = cx();     _y1 = cy();
+  _x2 = cx()+x2();  _y2 = cy()+y2();
 }
 
 QString Painting::save()
@@ -86,22 +86,22 @@ QString Painting::toBrushString (int brush) { untested();
 
 std::string Painting::attr_get()const
 {
-  return "qucs_w="+std::to_string(x2)+", "+"qucs_h="+std::to_string(y2);
+  return "qucs_w="+std::to_string(x2())+", "+"qucs_h="+std::to_string(y2());
 }
 
 void Painting::set_attribute(std::string name, std::string value)
 {
   if(name=="S0_x") {
-    cx = std::stoi(value);
+    set_cx(std::stoi(value));
   }
   else if(name=="S0_y") {
-    cy = std::stoi(value);
+    set_cy(std::stoi(value));
   }
   else if(name=="qucs_w") { untested();
-    x2 = std::stoi(value);
+    set_x2(std::stoi(value));
   }
   else if(name=="qucs_h") { untested();
-    y2 = std::stoi(value);
+    set_y2(std::stoi(value));
   }
   else {}
 }
