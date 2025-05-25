@@ -1,6 +1,6 @@
 <Qucs Schematic 0.0.21-dev>
 <Properties>
-  <View=0,0,800,800,1,0,0>
+  <View=0,30,800,606,1,0,0>
   <Grid=10,10,1>
   <DataSet=elliptic_5th.dat>
   <DataDisplay=elliptic_5th.dpl>

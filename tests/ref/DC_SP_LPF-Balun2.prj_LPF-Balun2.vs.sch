@@ -1,6 +1,6 @@
 <Qucs Schematic 0.0.21-dev>
 <Properties>
-  <View=0,0,800,800,1,0,0>
+  <View=-74,-4,1084,644,1,0,0>
   <Grid=10,10,1>
   <DataSet=LPF-Balun2.dat>
   <DataDisplay=LPF-Balun2.dpl>

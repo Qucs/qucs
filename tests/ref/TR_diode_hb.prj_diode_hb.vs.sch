@@ -1,10 +1,10 @@
 <Qucs Schematic 0.0.21-dev>
 <Properties>
-  <View=0,0,800,800,1,0,0>
+  <View=0,0,860,660,1,0,0>
   <Grid=10,10,1>
   <DataSet=diode_hb.dat>
   <DataDisplay=diode_hb.dpl>
-  <OpenDisplay=1>
+  <OpenDisplay=0>
   <Script=diode_hb.m>
   <RunScript=0>
   <showFrame=0>

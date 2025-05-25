@@ -1,6 +1,6 @@
 <Qucs Schematic 0.0.21-dev>
 <Properties>
-  <View=0,0,800,800,1,0,0>
+  <View=0,0,883,800,1,0,0>
   <Grid=10,10,1>
   <DataSet=selective_amp.dat>
   <DataDisplay=selective_amp.dpl>

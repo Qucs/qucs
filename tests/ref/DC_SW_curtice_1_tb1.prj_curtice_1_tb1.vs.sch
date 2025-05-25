@@ -1,10 +1,10 @@
 <Qucs Schematic 0.0.21-dev>
 <Properties>
-  <View=0,0,800,800,1,0,0>
+  <View=-10,-14,1075,849,0.9631,0,0>
   <Grid=10,10,1>
   <DataSet=curtice_1_tb1.dat>
   <DataDisplay=curtice_1_tb1.dpl>
-  <OpenDisplay=1>
+  <OpenDisplay=0>
   <Script=curtice_1_tb1.m>
   <RunScript=0>
   <showFrame=0>

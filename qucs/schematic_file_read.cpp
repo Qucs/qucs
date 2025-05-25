@@ -75,3 +75,67 @@ bool Schematic::readLegacy(QFile &file) {
   file.close();
   return true;
 }
+
+void Schematic::set_attribute(std::string name, std::string value)
+{ untested();
+  if("qucs_ViewX1"==name) {
+    ViewX1=std::stoi(value);
+  } else if ("qucs_ViewY1"==name) {
+    ViewY1=std::stoi(value);
+  } else if ("qucs_ViewX2"==name) {
+    ViewX2=std::stoi(value);
+  } else if ("qucs_ViewY2"==name) {
+    ViewY2=std::stoi(value);
+  } else if ("qucs_Scale"==name) {
+    Scale=std::stof(value);
+  } else if ("qucs_tmpViewX1"==name) {
+    tmpViewX1=std::stoi(value);
+  } else if ("qucs_tmpViewY1"==name) {
+    tmpViewY1=std::stoi(value);
+  } else if ("qucs_GridX"==name) {
+    GridX=std::stoi(value);
+  } else if ("qucs_GridY"==name) {
+    GridY=std::stoi(value);
+  } else if ("qucs_GridOn"==name) {
+    if(std::stoi(value)==0) {
+      GridOn=false;
+    } else if(std::stoi(value)==1) {
+      GridOn=true;
+    } else {
+      warn(0,"Wrong flag for grid switch");
+    }
+  } else if ("qucs_DataSet"==name) {
+    DataSet=QString::fromStdString(value);
+  } else if ("qucs_DataDisplay"==name) {
+    DataDisplay=QString::fromStdString(value);
+  } else if ("qucs_SimOpenDpl"==name) {
+    if(std::stoi(value)==0) {
+      SimOpenDpl=false;
+    } else if(std::stoi(value)==1) {
+      SimOpenDpl=true;
+    } else {
+      warn(0,"Wrong flag for sim open switch");
+    }
+  } else if ("qucs_Script"==name) {
+    Script=QString::fromStdString(value);
+  } else if ("qucs_SimRunScript"==name) {
+    if(std::stoi(value)==0) {
+      SimRunScript=false;
+    } else if(std::stoi(value)==1) {
+      SimRunScript=true;
+    } else {
+      warn(0,"Wrong flag for run script switch");
+    }
+  } else if ("qucs_showFrame"==name) {
+    showFrame=std::stoi(value);
+  } else if ("qucs_FrameText0"==name) {
+    Frame_Text0=QString::fromStdString(value);
+  } else if ("qucs_FrameText1"==name) {
+    Frame_Text1=QString::fromStdString(value);
+  } else if ("qucs_FrameText2"==name) {
+    Frame_Text2=QString::fromStdString(value);
+  } else if ("qucs_FrameText3"==name) {
+    Frame_Text3=QString::fromStdString(value);
+  } else {
+  }
+}

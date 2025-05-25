@@ -1,6 +1,6 @@
 <Qucs Schematic 0.0.21-dev>
 <Properties>
-  <View=0,0,800,800,1,0,0>
+  <View=126,-30,792,425,1,0,0>
   <Grid=10,10,1>
   <DataSet=single_balanced.dat>
   <DataDisplay=single_balanced.dpl>
@@ -8,9 +8,9 @@
   <Script=single_balanced.m>
   <RunScript=0>
   <showFrame=0>
-  <FrameText0=Title>
-  <FrameText1=Drawn By:>
-  <FrameText2=Date:>
+  <FrameText0=Titel>
+  <FrameText1=Gezeichnet von:>
+  <FrameText2=Datum:>
   <FrameText3=Revision:>
 </Properties>
 <Symbol>

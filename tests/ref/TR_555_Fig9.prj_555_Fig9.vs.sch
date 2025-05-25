@@ -1,10 +1,10 @@
 <Qucs Schematic 0.0.21-dev>
 <Properties>
-  <View=0,0,800,800,1,0,0>
+  <View=107,-1,1158,805,0.949919,0,0>
   <Grid=10,10,1>
   <DataSet=555_Fig9.dat>
   <DataDisplay=555_Fig9.dpl>
-  <OpenDisplay=1>
+  <OpenDisplay=0>
   <Script=555_Fig9.m>
   <RunScript=0>
   <showFrame=0>

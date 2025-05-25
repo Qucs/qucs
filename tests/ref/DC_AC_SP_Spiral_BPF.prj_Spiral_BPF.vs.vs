@@ -1,4 +1,4 @@
-(* qucs_ViewX1=0, qucs_ViewY1=0, qucs_ViewX2=800, qucs_ViewY2=800, qucs_Scale=1, qucs_tmpViewX1=-200, qucs_tmpViewY1=-200, qucs_GridX=10, qucs_GridY=10, qucs_GridOn=1, qucs_DataSet="Spiral_BPF.dat", qucs_DataDisplay="Spiral_BPF.dpl", qucs_SimOpenDpl=1, qucs_Script="Spiral_BPF.m", qucs_SimRunScript=0, qucs_showFrame=0, qucs_FrameText0="Title", qucs_FrameText1="Drawn By:", qucs_FrameText2="Date:", qucs_FrameText3="Revision:" *) module Spiral_BPF();
+(* qucs_ViewX1=-24, qucs_ViewY1=-54, qucs_ViewX2=864, qucs_ViewY2=790, qucs_Scale=1.00128, qucs_tmpViewX1=0, qucs_tmpViewY1=60, qucs_GridX=10, qucs_GridY=10, qucs_GridOn=1, qucs_DataSet="Spiral_BPF.dat", qucs_DataDisplay="Spiral_BPF.dpl", qucs_SimOpenDpl=1, qucs_Script="Spiral_BPF.m", qucs_SimRunScript=0, qucs_showFrame=0, qucs_FrameText0="Title", qucs_FrameText1="Drawn By:", qucs_FrameText2="Date:", qucs_FrameText3="Revision:" *) module Spiral_BPF();
     wire n_180_370;
     wire n_180_310;
     wire n_260_200;

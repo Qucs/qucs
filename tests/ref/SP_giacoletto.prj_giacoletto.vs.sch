@@ -1,6 +1,6 @@
 <Qucs Schematic 0.0.21-dev>
 <Properties>
-  <View=0,0,800,800,1,0,0>
+  <View=6,-33,783,422,1,0,0>
   <Grid=10,10,1>
   <DataSet=giacoletto.dat>
   <DataDisplay=giacoletto.dpl>

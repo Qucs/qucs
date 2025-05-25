@@ -1,6 +1,6 @@
 <Qucs Schematic 0.0.21-dev>
 <Properties>
-  <View=0,0,800,800,1,0,0>
+  <View=0,0,980,800,1,0,0>
   <Grid=10,10,1>
   <DataSet=sawtooth-2.dat>
   <DataDisplay=sawtooth-2.dpl>
@@ -8,9 +8,9 @@
   <Script=sawtooth-2.m>
   <RunScript=0>
   <showFrame=0>
-  <FrameText0=Title>
-  <FrameText1=Drawn By:>
-  <FrameText2=Date:>
+  <FrameText0=Titel>
+  <FrameText1=Gezeichnet von:>
+  <FrameText2=Datum:>
   <FrameText3=Revision:>
 </Properties>
 <Symbol>

@@ -1,4 +1,4 @@
-(* qucs_ViewX1=0, qucs_ViewY1=0, qucs_ViewX2=800, qucs_ViewY2=800, qucs_Scale=1, qucs_tmpViewX1=-200, qucs_tmpViewY1=-200, qucs_GridX=10, qucs_GridY=10, qucs_GridOn=1, qucs_DataSet="555_Fig7.dat", qucs_DataDisplay="555_Fig7.dpl", qucs_SimOpenDpl=1, qucs_Script="555_Fig7.m", qucs_SimRunScript=0, qucs_showFrame=0, qucs_FrameText0="Title", qucs_FrameText1="Drawn By:", qucs_FrameText2="Date:", qucs_FrameText3="Revision:" *) module 555_Fig7();
+(* qucs_ViewX1=107, qucs_ViewY1=101, qucs_ViewX2=1037, qucs_ViewY2=654, qucs_Scale=1.04194, qucs_tmpViewX1=0, qucs_tmpViewY1=0, qucs_GridX=10, qucs_GridY=10, qucs_GridOn=1, qucs_DataSet="555_Fig7.dat", qucs_DataDisplay="555_Fig7.dpl", qucs_SimOpenDpl=0, qucs_Script="555_Fig7.m", qucs_SimRunScript=0, qucs_showFrame=0, qucs_FrameText0="Title", qucs_FrameText1="Drawn By:", qucs_FrameText2="Date:", qucs_FrameText3="Revision:" *) module 555_Fig7();
     wire n_590_430;
     wire n_160_360;
     wire n_300_220;

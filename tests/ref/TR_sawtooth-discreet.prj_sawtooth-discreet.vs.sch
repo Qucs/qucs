@@ -1,10 +1,10 @@
 <Qucs Schematic 0.0.21-dev>
 <Properties>
-  <View=0,0,800,800,1,0,0>
+  <View=-4,-29,786,547,1.15104,0,0>
   <Grid=10,10,1>
   <DataSet=sawtooth-discreet.dat>
   <DataDisplay=sawtooth-discreet.dpl>
-  <OpenDisplay=1>
+  <OpenDisplay=0>
   <Script=sawtooth-discreet.m>
   <RunScript=0>
   <showFrame=0>

@@ -1,9 +1,9 @@
 <Qucs Schematic 0.0.21-dev>
 <Properties>
-  <View=0,0,800,800,1,0,0>
+  <View=216,678,1288,1281,0.722015,0,0>
   <Grid=10,10,1>
-  <DataSet=bpf_10Ghz.dat>
-  <DataDisplay=bpf_10Ghz.dpl>
+  <DataSet=bpf_10GHz.dat>
+  <DataDisplay=bpf_10GHz.dpl>
   <OpenDisplay=1>
   <Script=bpf_10Ghz.m>
   <RunScript=0>

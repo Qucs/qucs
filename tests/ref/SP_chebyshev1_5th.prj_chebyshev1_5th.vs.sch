@@ -2,8 +2,8 @@
 <Properties>
   <View=0,0,800,800,1,0,0>
   <Grid=10,10,1>
-  <DataSet=chebyshev1_5th.dat>
-  <DataDisplay=chebyshev1_5th.dpl>
+  <DataSet=Chebyshev1_5th.dat>
+  <DataDisplay=Chebyshev1_5th.dpl>
   <OpenDisplay=1>
   <Script=chebyshev1_5th.m>
   <RunScript=0>

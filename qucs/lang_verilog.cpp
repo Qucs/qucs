@@ -422,6 +422,11 @@ void set_attribute(Painting* x, std::string name, std::string value)
   x->set_attribute(name, value);
 }
 
+void set_attribute(Schematic* x, std::string name, std::string value)
+{
+  x->set_attribute(name, value);
+}
+
 template <class T>
 void parse_attributes(CS& cmd, T* x)
 {
@@ -430,7 +435,12 @@ void parse_attributes(CS& cmd, T* x)
   while (cmd >> "(*") {
     while(cmd.ns_more() && !(cmd >> ",") && !(cmd >> "*)")) {
       std::string name, value;
-      cmd >> name >> "=" >> value;
+      cmd >> name;
+      if(cmd >> "="){
+        cmd >> value;
+      }else{
+        value = "1";
+      }
       set_attribute(x, name, value);
     }
   }
@@ -662,7 +672,8 @@ bool readVerilog(CS &cmd, Schematic*s)
     inspect_attributes attr(cmd);
     trace1("inspected", cmd.tail());
     if(cmd>>"module") { untested();
-      //ignore for now;
+      cmd.reset();
+      parse_attributes(cmd, s);
     }else if(cmd>>"endmodule"){
       //ignore for now;
     }else{

@@ -1,10 +1,10 @@
 <Qucs Schematic 0.0.21-dev>
 <Properties>
-  <View=0,0,800,800,1,0,0>
+  <View=0,0,847,800,1,0,0>
   <Grid=10,10,1>
   <DataSet=Puls3b.dat>
   <DataDisplay=Puls3b.dpl>
-  <OpenDisplay=1>
+  <OpenDisplay=0>
   <Script=Puls3b.m>
   <RunScript=0>
   <showFrame=0>

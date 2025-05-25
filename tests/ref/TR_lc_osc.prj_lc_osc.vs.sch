@@ -1,6 +1,6 @@
 <Qucs Schematic 0.0.21-dev>
 <Properties>
-  <View=0,0,800,800,1,0,0>
+  <View=-92,0,955,800,1,0,0>
   <Grid=10,10,1>
   <DataSet=lc_osc.dat>
   <DataDisplay=lc_osc.dpl>
@@ -8,9 +8,9 @@
   <Script=lc_osc.m>
   <RunScript=0>
   <showFrame=0>
-  <FrameText0=Title>
-  <FrameText1=Drawn By:>
-  <FrameText2=Date:>
+  <FrameText0=Titel>
+  <FrameText1=Gezeichnet von:>
+  <FrameText2=Datum:>
   <FrameText3=Revision:>
 </Properties>
 <Symbol>

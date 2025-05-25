@@ -1,4 +1,4 @@
-(* qucs_ViewX1=0, qucs_ViewY1=0, qucs_ViewX2=800, qucs_ViewY2=800, qucs_Scale=1, qucs_tmpViewX1=-200, qucs_tmpViewY1=-200, qucs_GridX=10, qucs_GridY=10, qucs_GridOn=1, qucs_DataSet="combinat.dat", qucs_DataDisplay="combinat.dpl", qucs_SimOpenDpl=1, qucs_Script="combinat.m", qucs_SimRunScript=0, qucs_showFrame=0, qucs_FrameText0="Title", qucs_FrameText1="Drawn By:", qucs_FrameText2="Date:", qucs_FrameText3="Revision:" *) module combinat();
+(* qucs_ViewX1=-126, qucs_ViewY1=-29, qucs_ViewX2=2734, qucs_ViewY2=2005, qucs_Scale=1.87145, qucs_tmpViewX1=0, qucs_tmpViewY1=0, qucs_GridX=10, qucs_GridY=10, qucs_GridOn=1, qucs_DataSet="logic1.dat", qucs_DataDisplay="logic1.dpl", qucs_SimOpenDpl=1, qucs_Script="logic1.m", qucs_SimRunScript=0, qucs_showFrame=0, qucs_FrameText0="Title", qucs_FrameText1="Drawn By:", qucs_FrameText2="Date:", qucs_FrameText3="Revision:" *) module combinat();
     wire n_380_330;
     wire n_400_330;
     wire n_890_130;

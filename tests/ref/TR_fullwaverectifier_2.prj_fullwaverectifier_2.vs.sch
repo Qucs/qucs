@@ -1,10 +1,10 @@
 <Qucs Schematic 0.0.21-dev>
 <Properties>
-  <View=0,0,800,800,1,0,0>
+  <View=0,20,800,780,1,0,0>
   <Grid=10,10,1>
   <DataSet=fullwaverectifier_2.dat>
   <DataDisplay=fullwaverectifier_2.dpl>
-  <OpenDisplay=1>
+  <OpenDisplay=0>
   <Script=fullwaverectifier_2.m>
   <RunScript=0>
   <showFrame=0>

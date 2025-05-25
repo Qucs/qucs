@@ -1,6 +1,6 @@
 <Qucs Schematic 0.0.21-dev>
 <Properties>
-  <View=0,0,800,800,1,0,0>
+  <View=0,10,647,437,0.995316,0,0>
   <Grid=10,10,1>
   <DataSet=colpitts_base.dat>
   <DataDisplay=colpitts_base.dpl>

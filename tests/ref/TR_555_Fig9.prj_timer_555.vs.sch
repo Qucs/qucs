@@ -1,9 +1,9 @@
 <Qucs Schematic 0.0.21-dev>
 <Properties>
-  <View=0,0,800,800,1,0,0>
-  <Grid=10,10,1>
-  <DataSet=timer_555.dat>
-  <DataDisplay=timer_555.dpl>
+  <View=53,-37,964,547,1.19539,0,0>
+  <Grid=5,5,0>
+  <DataSet=timmer_555.dat>
+  <DataDisplay=timmer_555.dpl>
   <OpenDisplay=1>
   <Script=timer_555.m>
   <RunScript=0>

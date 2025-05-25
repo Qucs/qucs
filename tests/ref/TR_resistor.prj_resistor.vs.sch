@@ -4,8 +4,8 @@
   <Grid=10,10,1>
   <DataSet=resistor.dat>
   <DataDisplay=resistor.dpl>
-  <OpenDisplay=1>
-  <Script=resistor.m>
+  <OpenDisplay=0>
+  <Script=TR_resistor.m>
   <RunScript=0>
   <showFrame=0>
   <FrameText0=Title>

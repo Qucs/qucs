@@ -1,11 +1,11 @@
 <Qucs Schematic 0.0.21-dev>
 <Properties>
-  <View=0,0,800,800,1,0,0>
+  <View=-126,-29,2734,2005,1.87145,0,0>
   <Grid=10,10,1>
-  <DataSet=combinat.dat>
-  <DataDisplay=combinat.dpl>
+  <DataSet=logic1.dat>
+  <DataDisplay=logic1.dpl>
   <OpenDisplay=1>
-  <Script=combinat.m>
+  <Script=logic1.m>
   <RunScript=0>
   <showFrame=0>
   <FrameText0=Title>

@@ -191,6 +191,10 @@ public:
   /*! \brief Set reference to file (schematic) */
   void setFileInfo(QString FileName) { FileInfo = QFileInfo(FileName); }
 
+
+public: // attributes
+  virtual void set_attribute(std::string name, std::string value);
+
 signals:
   void signalCursorPosChanged(int, int);
   void signalUndoState(bool);

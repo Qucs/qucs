@@ -1,6 +1,6 @@
 <Qucs Schematic 0.0.21-dev>
 <Properties>
-  <View=0,0,800,800,1,0,0>
+  <View=-34,-74,1000,729,0.977584,0,0>
   <Grid=10,10,1>
   <DataSet=HF_BPF.dat>
   <DataDisplay=HF_BPF.dpl>
