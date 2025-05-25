@@ -1,10 +1,10 @@
 <Qucs Schematic 0.0.21-dev>
 <Properties>
-  <View=0,0,800,800,1,0,0>
+  <View=0,1,1074,800,1,0,0>
   <Grid=10,10,1>
   <DataSet=bandpass.dat>
   <DataDisplay=bandpass.dpl>
-  <OpenDisplay=1>
+  <OpenDisplay=0>
   <Script=bandpass.m>
   <RunScript=0>
   <showFrame=0>

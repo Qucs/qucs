@@ -23,7 +23,7 @@ Logical_NAND::Logical_NAND()
   Model = "NAND";
 
   createSymbol();
-  set_qucs_text_position(x1+4, y2+4);
+  set_qucs_text_position(x1()+4, y2()+4);
 }
 
 Logical_NAND::~Logical_NAND()

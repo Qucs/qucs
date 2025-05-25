@@ -201,10 +201,10 @@ void dump_attributes(outputStream& stream, T const* x)
         if(pp->getConnection()) {
           stream << sep
             << "S0_x" << port_idx
-            << "=" << pp->getConnection()->cx
+            << "=" << pp->getConnection()->cx()
             << ", "
             << "S0_y" << port_idx
-            << "="<< pp->getConnection()->cy;
+            << "="<< pp->getConnection()->cy();
           sep = ", ";
           port_idx++;
         }
@@ -212,15 +212,15 @@ void dump_attributes(outputStream& stream, T const* x)
     } else {
       stream << QString("S0_x%1=%2, S0_y%1=%3")
         .arg(1)
-        .arg(c->cx)
-        .arg(c->cy);
+        .arg(c->cx())
+        .arg(c->cy());
     }
   } else if(w) {
     stream << QString("S0_x1=%1, S0_y1=%2, S0_x2=%3, S0_y2=%4")
-      .arg(w->ports(0)->cx)
-      .arg(w->ports(0)->cy)
-      .arg(w->ports(1)->cx)
-      .arg(w->ports(1)->cy);
+      .arg(w->ports(0)->cx())
+      .arg(w->ports(0)->cy())
+      .arg(w->ports(1)->cx())
+      .arg(w->ports(1)->cy());
   } else {
     // what?
   }
@@ -284,10 +284,10 @@ static void dumpPainting(outputStream& stream, Element const* p)
   stream << "    "
          << "(* "
          << "S0_x="
-         << p->cx
+         << p->cx()
          << ", "
          << "S0_y="
-         << p->cy
+         << p->cy()
          << ", "
          << "qucs_type=\""+p->dev_type()+"\"";
   if(p->attr_get()!="") {
@@ -417,6 +417,16 @@ void set_attribute(T* x, std::string name, std::string value)
   }
 }
 
+void set_attribute(Painting* x, std::string name, std::string value)
+{
+  x->set_attribute(name, value);
+}
+
+void set_attribute(Schematic* x, std::string name, std::string value)
+{
+  x->set_attribute(name, value);
+}
+
 template <class T>
 void parse_attributes(CS& cmd, T* x)
 {
@@ -425,11 +435,15 @@ void parse_attributes(CS& cmd, T* x)
   while (cmd >> "(*") {
     while(cmd.ns_more() && !(cmd >> ",") && !(cmd >> "*)")) {
       std::string name, value;
-      cmd >> name >> "=" >> value;
+      cmd >> name;
+      if(cmd >> "="){
+        cmd >> value;
+      }else{
+        value = "1";
+      }
       set_attribute(x, name, value);
     }
   }
-  x->apply_qucs_values();
 }
 
 // BUG. need extra function, Wire is not a Component.
@@ -599,26 +613,13 @@ void parse_instance(CS& cmd, T* x)
   assert(x);
   cmd.reset();
   parse_attributes(cmd, x);
+  x->apply_qucs_values();
   parse_type(cmd, x);
   parse_args_instance(cmd, x);
   parse_label(cmd, x);
   parse_ports(cmd, x, false/*allow dups*/);
   cmd >> ';';
   cmd.check(0, "what's this?");
-}
-
-void parse_painting(CS& cmd, Painting* p)
-{ untested();
-  assert(p);
-  incomplete();
-  cmd.reset();
-  while (cmd >> "(*") {
-    while(cmd.ns_more() && !(cmd >> ",") && !(cmd >> "*)")) {
-      std::string name, value;
-      cmd >> name >> "=" >> value;
-      p->set_attribute(name, value);
-    }
-  }
 }
 
 class inspect_attributes {
@@ -671,7 +672,8 @@ bool readVerilog(CS &cmd, Schematic*s)
     inspect_attributes attr(cmd);
     trace1("inspected", cmd.tail());
     if(cmd>>"module") { untested();
-      //ignore for now;
+      cmd.reset();
+      parse_attributes(cmd, s);
     }else if(cmd>>"endmodule"){
       //ignore for now;
     }else{
@@ -701,7 +703,8 @@ bool readVerilog(CS &cmd, Schematic*s)
 	s->pushBack(std::dynamic_pointer_cast<Component>(inst)); // (yikes)
       }else if(dynamic_cast<Painting*>(inst.get())) { untested();
         auto pe = std::dynamic_pointer_cast<Painting>(inst);
-        parse_painting(cmd, pe.get());
+        cmd.reset();
+        parse_attributes(cmd, pe.get());
         s->pushBack(pe);
       }else{
 	incomplete();

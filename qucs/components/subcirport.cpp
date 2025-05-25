@@ -33,7 +33,7 @@ SubCirPort::SubCirPort()
 		+" [analog, in, out, inout]"));
 
   createSymbol();
-  set_qucs_text_position(x1+4, y2+4);
+  set_qucs_text_position(x1()+4, y2()+4);
   Model = "Port";
   Name  = "P";
 }
@@ -55,8 +55,10 @@ void SubCirPort::set_attribute(std::string name, std::string value)
 // ---------------------------------------------------------------------
 void SubCirPort::createSymbol()
 {
-  x1 = -27; y1 = -8;
-  x2 =   0; y2 =  8;
+  set_x1(-27);
+  set_y1(-8);
+  set_x2(0);
+  set_y2(8);
 
   if(prop(1).Value.at(0) == 'a') {
     Arcs.push_back(qucs::Arc(-25, -6, 12, 12,  0, 16*360,QPen(Qt::darkBlue,2)));
@@ -80,7 +82,7 @@ void SubCirPort::createSymbol()
         Lines.push_back(qucs::Line(-25, -5,-25,  5,QPen(Qt::darkGreen,2)));
       }
       else {
-        x1 = -30;
+        set_x1(-30);
         Lines.push_back(qucs::Line(-18, -5,-14, -5,QPen(Qt::darkGreen,2)));
         Lines.push_back(qucs::Line(-18,  5,-14,  5,QPen(Qt::darkGreen,2)));
         Lines.push_back(qucs::Line(-23, -5,-28,  0,QPen(Qt::red,2)));

@@ -31,10 +31,11 @@
 
 TimingDiagram::TimingDiagram(int _cx, int _cy) : TabDiagram(_cx, _cy)
 {
-  x1 = 0;    // no extension to select area
-  y1 = 0;
-  x2 = x3 = 300;  // initial size of diagram
-  y2 = 200;
+  set_x1(0);    // no extension to select area
+  set_y1(0);
+  set_x2(300);  // initial size of diagram
+  set_y2(200);
+  x3 = 300;
   Name = "Time";
   xAxis.limit_min = 0.0;  // scroll bar position (needs to be saved in file)
 
@@ -56,48 +57,48 @@ void TimingDiagram::paintDiagram(ViewPainter *p)
   // paint all lines
   for(auto pl = Lines.begin(); pl != Lines.end(); ++pl) {
     p->Painter->setPen(pl->style);
-    p->drawLine(cx+pl->x1, cy-pl->y1, cx+pl->x2, cy-pl->y2);
+    p->drawLine(cx()+pl->x1, cy()-pl->y1, cx()+pl->x2, cy()-pl->y2);
   }
 
   p->Painter->setPen(Qt::black);
   // write whole text
   for(auto pt = Texts.begin(); pt != Texts.end(); ++pt)
-    p->drawText(pt->s, cx+pt->x, cy-pt->y);
+    p->drawText(pt->s, cx()+pt->x, cy()-pt->y);
 
 
-  if(y1 > 0) {  // paint scroll bar ?
+  if(y1() > 0) {  // paint scroll bar ?
     int   x, y, dx, dy;
     QPolygon Points;
     // draw scroll bar
-    p->fillRect(cx+yAxis.numGraphs, cy+2, zAxis.numGraphs, 14, QColor(192, 192, 192));
+    p->fillRect(cx()+yAxis.numGraphs, cy()+2, zAxis.numGraphs, 14, QColor(192, 192, 192));
 
-    int bx = cx+yAxis.numGraphs+zAxis.numGraphs;
+    int bx = cx()+yAxis.numGraphs+zAxis.numGraphs;
     // draw frame for scroll bar
     p->Painter->setPen(QPen(Qt::black,0));
-    p->drawLine(cx+xAxis.numGraphs, cy, cx+xAxis.numGraphs, cy+17);
-    p->drawLine(cx+xAxis.numGraphs+17, cy, cx+xAxis.numGraphs+17, cy+17);
-    p->drawLine(cx+xAxis.numGraphs, cy+17, cx+x2, cy+17);
-    p->drawLine(cx+x2, cy, cx+x2, cy+17);
-    p->drawLine(cx+x2-17, cy, cx+x2-17, cy+17);
+    p->drawLine(cx()+xAxis.numGraphs, cy(), cx()+xAxis.numGraphs, cy()+17);
+    p->drawLine(cx()+xAxis.numGraphs+17, cy(), cx()+xAxis.numGraphs+17, cy()+17);
+    p->drawLine(cx()+xAxis.numGraphs, cy()+17, cx()+x2(), cy()+17);
+    p->drawLine(cx()+x2(), cy(), cx()+x2(), cy()+17);
+    p->drawLine(cx()+x2()-17, cy(), cx()+x2()-17, cy()+17);
 
     // draw the arrows above and below the scroll bar
     p->Painter->setBrush(QColor(192, 192, 192));
     p->Painter->setPen(QColor(152, 152, 152));
-    p->drawLine(cx+yAxis.numGraphs, cy+15, bx, cy+15);
-    p->drawLine(bx, cy+2, bx, cy+15);
+    p->drawLine(cx()+yAxis.numGraphs, cy()+15, bx, cy()+15);
+    p->drawLine(bx, cy()+2, bx, cy()+15);
 
-    p->map(cx+xAxis.numGraphs+3,  cy+3, x, y);
-    p->map(cx+xAxis.numGraphs+14, cy+14, dx, dy);
+    p->map(cx()+xAxis.numGraphs+3,  cy()+3, x, y);
+    p->map(cx()+xAxis.numGraphs+14, cy()+14, dx, dy);
     Points.setPoints(3, x, (y+dy)>>1, dx, y, dx, dy);
     p->Painter->drawConvexPolygon(Points);
     p->Painter->setPen(QColor(224, 224, 224));
     p->Painter->drawLine(x, (y+dy)>>1, dx, y);
-    p->drawLine(cx+yAxis.numGraphs, cy+2, bx, cy+2);
-    p->drawLine(cx+yAxis.numGraphs, cy+2, cx+yAxis.numGraphs, cy+15);
+    p->drawLine(cx()+yAxis.numGraphs, cy()+2, bx, cy()+2);
+    p->drawLine(cx()+yAxis.numGraphs, cy()+2, cx()+yAxis.numGraphs, cy()+15);
 
     p->Painter->setPen(QColor(152, 152, 152));
     dx -= x;
-    p->map(cx+x2-3,  cy+3, x, y);
+    p->map(cx()+x2()-3,  cy()+3, x, y);
     Points.setPoints(3, x, (y+dy)>>1, x-dx, y, x-dx, dy);
     p->Painter->drawConvexPolygon(Points);
     p->Painter->setPen(QColor(208, 208, 208));
@@ -111,12 +112,12 @@ void TimingDiagram::paintDiagram(ViewPainter *p)
 
   if(isSelected) {
     p->Painter->setPen(QPen(Qt::darkGray,3));
-    p->drawRect(cx-5, cy-y2-5, x2+10, y2+10);
+    p->drawRect(cx()-5, cy()-y2()-5, x2()+10, y2()+10);
     p->Painter->setPen(QPen(Qt::darkRed,2));
-    p->drawResizeRect(cx, cy-y2);  // markers for changing the size
-    p->drawResizeRect(cx, cy);
-    p->drawResizeRect(cx+x2, cy-y2);
-    p->drawResizeRect(cx+x2, cy);
+    p->drawResizeRect(cx(), cy()-y2());  // markers for changing the size
+    p->drawResizeRect(cx(), cy());
+    p->drawResizeRect(cx()+x2(), cy()-y2());
+    p->drawResizeRect(cx()+x2(), cy());
   }
 }
 
@@ -126,8 +127,8 @@ int TimingDiagram::calcDiagram()
   Lines.clear();
   Texts.clear();
 
-  y1 = 0;  // no scroll bar
-  x3 = x2;
+  set_y1(0);  // no scroll bar
+  x3 = x2();
   // get size of text using the screen-compatible metric
   QFontMetrics metrics(QucsSettings.font, 0);
   int tHeight = metrics.lineSpacing();
@@ -138,16 +139,16 @@ int TimingDiagram::calcDiagram()
   int NumLeft=0;  // how many values could not be written
   int invisibleCount = 0;  // how many values are invisible
   
-  if(y2 < (tHeight + 8))
-    y2 = tHeight + 8;
-  y = y2 - tHeight - 6;
+  if(y2() < (tHeight + 8))
+    set_y2(tHeight + 8);
+  y = y2() - tHeight - 6;
 
   // outer frame
-  Lines.push_back(qucs::Line(0, y2, x2, y2, QPen(Qt::black,0)));
-  Lines.push_back(qucs::Line(0, y2, 0, 0, QPen(Qt::black,0)));
-  Lines.push_back(qucs::Line(x2, y2, x2, 0, QPen(Qt::black,0)));
-  Lines.push_back(qucs::Line(0, 0, x2, 0, QPen(Qt::black,0)));
-  Lines.push_back(qucs::Line(0, y+2, x2, y+2, QPen(Qt::black,0)));
+  Lines.push_back(qucs::Line(0, y2(), x2(), y2(), QPen(Qt::black,0)));
+  Lines.push_back(qucs::Line(0, y2(), 0, 0, QPen(Qt::black,0)));
+  Lines.push_back(qucs::Line(x2(), y2(), x2(), 0, QPen(Qt::black,0)));
+  Lines.push_back(qucs::Line(0, 0, x2(), 0, QPen(Qt::black,0)));
+  Lines.push_back(qucs::Line(0, y+2, x2(), y+2, QPen(Qt::black,0)));
 
   if(xAxis.limit_min < 0.0)
     xAxis.limit_min = 0.0;
@@ -158,9 +159,9 @@ int TimingDiagram::calcDiagram()
   
   if(ig == Graphs.end()) {  // no variables specified in diagram ?
     Str = QObject::tr("no variables");
-    colWidth = checkColumnWidth(Str, metrics, colWidth, x, y2);
+    colWidth = checkColumnWidth(Str, metrics, colWidth, x, y2());
     if(colWidth >= 0)
-      Texts.push_back(qucs::Text(x, y2-2, Str)); // independent variable
+      Texts.push_back(qucs::Text(x, y2()-2, Str)); // independent variable
     return 0;
   }
 
@@ -172,9 +173,9 @@ int TimingDiagram::calcDiagram()
   
   if(ig == Graphs.end()) { // no graph with data found ?
     Str = QObject::tr("no data");
-    colWidth = checkColumnWidth(Str, metrics, colWidth, x, y2);
+    colWidth = checkColumnWidth(Str, metrics, colWidth, x, y2());
     if(colWidth < 0)  return 0;
-    Texts.push_back(qucs::Text(x, y2-2, Str));
+    Texts.push_back(qucs::Text(x, y2()-2, Str));
     return 0;
   }
   firstGraph = ig.operator->();
@@ -205,9 +206,9 @@ if(!firstGraph->isEmpty()) {
   // ................................................
   if(firstGraph->numAxes() > 1) {
     Str = QObject::tr("wrong dependency");
-    colWidth = checkColumnWidth(Str, metrics, colWidth, x, y2);
+    colWidth = checkColumnWidth(Str, metrics, colWidth, x, y2());
     if(colWidth >= 0)
-      Texts.push_back(qucs::Text(x, y2-2, Str)); // independent variable
+      Texts.push_back(qucs::Text(x, y2()-2, Str)); // independent variable
     return 0;
   }
 
@@ -216,9 +217,9 @@ if(!firstGraph->isEmpty()) {
   DataX const *pD = firstGraph->axis(0);
   NumAll = pD->count;
   Str = pD->Var;
-  colWidth = checkColumnWidth(Str, metrics, colWidth, x, y2);
+  colWidth = checkColumnWidth(Str, metrics, colWidth, x, y2());
   if(colWidth < 0)  return 1;
-  Texts.push_back(qucs::Text(x, y2-2, Str));
+  Texts.push_back(qucs::Text(x, y2()-2, Str));
   
 
   y -= 5;
@@ -233,11 +234,11 @@ if(!firstGraph->isEmpty()) {
   }
   x += colWidth + 13;
   xAxis.numGraphs = x -6;
-  Lines.push_back(qucs::Line(x-6, y2, x-6, 0, QPen(Qt::black,0)));
+  Lines.push_back(qucs::Line(x-6, y2(), x-6, 0, QPen(Qt::black,0)));
   xStart = x;
 
 
-  invisibleCount = NumAll - (x2-xAxis.numGraphs)/TimeStepWidth;
+  invisibleCount = NumAll - (x2()-xAxis.numGraphs)/TimeStepWidth;
   if(invisibleCount <= 0)  xAxis.limit_min = 0.0;  // longer than needed
   else {
     NumLeft = invisibleCount - int(xAxis.limit_min + 0.5);
@@ -247,7 +248,7 @@ if(!firstGraph->isEmpty()) {
 
 
   // write independent variable values (usually time)
-  y = y2-tHeight-4;
+  y = y2()-tHeight-4;
   double *px;
   px = pD->Points;
   z = int(xAxis.limit_min + 0.5);
@@ -256,9 +257,9 @@ if(!firstGraph->isEmpty()) {
   for( ; z>0; z--) {
     Str = misc::num2str(*(px++));
     colWidth = metrics.horizontalAdvance(Str);  // width of text
-    if(x+colWidth+2 >= x2)  break;
+    if(x+colWidth+2 >= x2())  break;
 
-    Texts.push_back(qucs::Text( x, y2-2, Str));
+    Texts.push_back(qucs::Text( x, y2()-2, Str));
     Lines.push_back(qucs::Line(x+5, y, x+5, y-3, QPen(Qt::black,0)));
     x += TimeStepWidth;
   }
@@ -271,7 +272,7 @@ if(!firstGraph->isEmpty()) {
   // work on all dependent variables
   QPen Pen;
   int  yLast, yNow;
-  y = y2-tHeight-9;
+  y = y2()-tHeight-9;
   for (auto g = Graphs.begin(); g != Graphs.end(); ++g) {
     if(y < tHeight) {
       // mark lack of space with a small arrow
@@ -318,7 +319,7 @@ if(!firstGraph->isEmpty()) {
       Lines.push_back(qucs::Line(x, y-yNow, x+2, y-1, Pen));
       Lines.push_back(qucs::Line(x+2, y-tHeight+5, x, y-yNow, Pen));
       for( ; z>0; z--) {
-        if(x+TimeStepWidth >= x2) break;
+        if(x+TimeStepWidth >= x2()) break;
         Lines.push_back(qucs::Line(x+2, y-1, x+TimeStepWidth-2, y-1, Pen));
         Lines.push_back(qucs::Line(x+2, y-tHeight+5, x+TimeStepWidth-2, y-tHeight+5, Pen));
 
@@ -376,7 +377,7 @@ if(!firstGraph->isEmpty()) {
 
         if(yLast != yNow)
           Lines.push_back(qucs::Line(x, y-yLast, x, y-yNow, Pen));
-        if(x+TimeStepWidth >= x2) break;
+        if(x+TimeStepWidth >= x2()) break;
         if((*pcx & 254) == '0')
           Lines.push_back(qucs::Line(x, y-yNow, x+TimeStepWidth, y-yNow, Pen));
         else {
@@ -402,7 +403,7 @@ if(!firstGraph->isEmpty()) {
       Lines.push_back(qucs::Line(x, y-yNow, x+2, y-1, Pen));
       Lines.push_back(qucs::Line(x+2, y-tHeight+5, x, y-yNow, Pen));
       for( ; z>0; z--) {
-        if(x+TimeStepWidth >= x2) break;
+        if(x+TimeStepWidth >= x2()) break;
         Lines.push_back(qucs::Line(x+2, y-1, x+TimeStepWidth-2, y-1, Pen));
         Lines.push_back(qucs::Line(x+2, y-tHeight+5, x+TimeStepWidth-2, y-tHeight+5, Pen));
 
@@ -421,15 +422,15 @@ if(!firstGraph->isEmpty()) {
 
 funcEnd:
   if(invisibleCount > 0) {  // could all values be displayed ?
-    x  = x2 - xAxis.numGraphs - 37;
+    x  = x2() - xAxis.numGraphs - 37;
     if(x < MIN_SCROLLBAR_SIZE+2) {  // not enough space for scrollbar ?
-      Lines.push_back(qucs::Line(x2, 0, x2, -17, QPen(Qt::red,0)));
-      Lines.push_back(qucs::Line(xAxis.numGraphs, -17, x2, -17, QPen(Qt::red,0)));
+      Lines.push_back(qucs::Line(x2(), 0, x2(), -17, QPen(Qt::red,0)));
+      Lines.push_back(qucs::Line(xAxis.numGraphs, -17, x2(), -17, QPen(Qt::red,0)));
       Lines.push_back(qucs::Line(xAxis.numGraphs, 0, xAxis.numGraphs, -17, QPen(Qt::red,0)));
       return 1;
     }
 
-    y1 = 18;   // extend the select area to the bottom
+    set_y1(18);   // extend the select area to the bottom
     z  = int(xAxis.limit_min + 0.5);
     if(NumLeft < 0) NumLeft = 0;
     y  = NumAll - NumLeft - z;
@@ -447,7 +448,7 @@ funcEnd:
                          * z / NumAll;
       zAxis.numGraphs = MIN_SCROLLBAR_SIZE;
 
-      x = x2 - 19 - yAxis.numGraphs - zAxis.numGraphs;
+      x = x2() - 19 - yAxis.numGraphs - zAxis.numGraphs;
       if(x < 0)  yAxis.numGraphs += x;
     }
 
@@ -460,11 +461,11 @@ funcEnd:
 // ------------------------------------------------------------
 int TimingDiagram::scroll(int clickPos)
 {
-  if(y1 <= 0) return 0;   // no scroll bar ?
+  if(y1() <= 0) return 0;   // no scroll bar ?
   int tmp = int(xAxis.limit_min + 0.5);
 
-  int x = cx;
-  if(clickPos > (cx+x2-20)) {  // scroll one value to the right ?
+  int x = cx();
+  if(clickPos > (cx()+x2()-20)) {  // scroll one value to the right ?
     xAxis.limit_min++;
   }
   else {
@@ -474,7 +475,7 @@ int TimingDiagram::scroll(int clickPos)
       xAxis.limit_min--;
     }
     else {
-      x = cx + yAxis.numGraphs;
+      x = cx() + yAxis.numGraphs;
       if(clickPos < x)   // scroll bar one page to the left ?
         xAxis.limit_min -= xAxis.limit_max;
       else {
@@ -499,7 +500,7 @@ bool TimingDiagram::scrollTo(int initial, int dx, int)
 {
   int tmp = int(xAxis.limit_min + 0.5);
   xAxis.limit_min  = double(initial);
-  xAxis.limit_min += double(dx) / double(x2-xAxis.numGraphs-39) * zAxis.limit_max;
+  xAxis.limit_min += double(dx) / double(x2()-xAxis.numGraphs-39) * zAxis.limit_max;
   xAxis.limit_min  = floor(xAxis.limit_min + 0.5);
 
   calcDiagram();

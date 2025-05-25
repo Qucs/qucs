@@ -31,7 +31,7 @@ fa1b::fa1b()
     +" ("+QObject::tr ("s")+")"));
  
   createSymbol ();
-  set_qucs_text_position(x1+19, y2+4);
+  set_qucs_text_position(x1()+19, y2()+4);
   Model = "fa1b";
   Name  = "Y";
 }
@@ -80,8 +80,10 @@ void fa1b::createSymbol()
   Ports.push_back(qucs::Port( 50, 10));  // CO
   Ports.push_back(qucs::Port( 50,-10));  // S
 
-  x1 = -50; y1 = -44;
-  x2 =  50; y2 =  54;
+  set_x1(-50);
+  set_y1(-44);
+  set_x2(50);
+  set_y2(54);
 }
 
 QString fa1b::vhdlCode( int )

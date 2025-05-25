@@ -46,7 +46,7 @@ potentiometer::potentiometer()
     QObject::tr ("simulation temperature")));
 
   createSymbol ();
-  set_qucs_text_position(x1+8, y2+4);
+  set_qucs_text_position(x1()+8, y2()+4);
   Model = "potentiometer";
   Name  = "POT";
 }
@@ -102,6 +102,6 @@ void potentiometer::createSymbol()
   Ports.push_back(qucs::Port(  0, -20)); // M
   Ports.push_back(qucs::Port( 40,   0)); // T
 
-  x1 = -40; y1 = -20;
-  x2 =  40; y2 =  15;
+  set_x1(-40); set_y1(-20);
+  set_x2(40); set_y2(15);
 }

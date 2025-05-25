@@ -31,7 +31,7 @@ mux4to1::mux4to1()
     +" ("+QObject::tr ("s")+")"));
  
   createSymbol ();
-  set_qucs_text_position(x1+19, y2+4);
+  set_qucs_text_position(x1()+19, y2()+4);
   Model = "mux4to1";
   Name  = "Y";
 }
@@ -99,8 +99,10 @@ void mux4to1::createSymbol()
   Ports.push_back(qucs::Port(-50, 90));  // D3
   Ports.push_back(qucs::Port( 50, 10));  // Y
 
-  x1 = -50; y1 = -84;
-  x2 =  50; y2 =  104;
+  set_x1(-50);
+  set_y1(-84);
+  set_x2(50);
+  set_y2(104);
 }
 
 QString mux4to1::vhdlCode( int )

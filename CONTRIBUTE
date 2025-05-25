@@ -17,7 +17,7 @@ your contribution under GPLv3-or-later.
 - Synchronise tests/ref with each commit, so they pass, cf. tests/README.
 - Do not change white space. Yes, it's a mess. Diff noise is worse.
 - Do not reformat obsolete code. Mark it obsolete with a comment.
-- When reformatting code, use a separate commit, and provide a convincind reason to apply it.
+- Use separate commits for reformatting, and provide a convincing reason to apply it.
 
 Consider our ROADMAP for long term plans. At the time of writing we are working
 on data exchange. Your contribution to Qucs might as well be an independent

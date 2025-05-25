@@ -1,4 +1,4 @@
-(* qucs_ViewX1=0, qucs_ViewY1=0, qucs_ViewX2=800, qucs_ViewY2=800, qucs_Scale=1, qucs_tmpViewX1=-200, qucs_tmpViewY1=-200, qucs_GridX=10, qucs_GridY=10, qucs_GridOn=1, qucs_DataSet="diode.dat", qucs_DataDisplay="diode.dpl", qucs_SimOpenDpl=1, qucs_Script="diode.m", qucs_SimRunScript=0, qucs_showFrame=0, qucs_FrameText0="Title", qucs_FrameText1="Drawn By:", qucs_FrameText2="Date:", qucs_FrameText3="Revision:" *) module diode();
+(* qucs_ViewX1=0, qucs_ViewY1=0, qucs_ViewX2=977, qucs_ViewY2=800, qucs_Scale=1, qucs_tmpViewX1=0, qucs_tmpViewY1=0, qucs_GridX=10, qucs_GridY=10, qucs_GridOn=1, qucs_DataSet="diode.dat", qucs_DataDisplay="diode.dpl", qucs_SimOpenDpl=0, qucs_Script="diode.m", qucs_SimRunScript=0, qucs_showFrame=0, qucs_FrameText0="Title", qucs_FrameText1="Drawn By:", qucs_FrameText2="Date:", qucs_FrameText3="Revision:" *) module diode();
     wire n_260_280;
     wire n_170_140;
     wire n_170_200;

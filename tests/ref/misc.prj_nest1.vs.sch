@@ -2,10 +2,10 @@
 <Properties>
   <View=0,0,800,800,1,0,0>
   <Grid=10,10,1>
-  <DataSet=nest1.dat>
-  <DataDisplay=nest1.dpl>
+  <DataSet=short_circuit.dat>
+  <DataDisplay=short_circuit.dpl>
   <OpenDisplay=1>
-  <Script=nest1.m>
+  <Script=short_circuit.m>
   <RunScript=0>
   <showFrame=0>
   <FrameText0=Title>

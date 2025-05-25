@@ -66,13 +66,12 @@ public:
 
   // Setter functions for verilog parsing
   // x1, y1, x2, y2 are going to be private in the future
-  virtual void set_qucs_x1(int x) {x1 = x;}
-  virtual void set_qucs_y1(int y) {y1 = y;}
-  virtual void set_qucs_x2(int x) {x2 = x;}
-  virtual void set_qucs_y2(int y) {y2 = y;}
+  virtual void set_qucs_x1(int x) { set_x1(x); }
+  virtual void set_qucs_y1(int y) { set_y1(y); }
+  virtual void set_qucs_x2(int x) { set_x2(x); }
+  virtual void set_qucs_y2(int y) { set_y2(y); }
   virtual void set_attribute(std::string name, std::string value);
   virtual void apply_qucs_values() {}
-
 
   void    rotate();
   QString save();

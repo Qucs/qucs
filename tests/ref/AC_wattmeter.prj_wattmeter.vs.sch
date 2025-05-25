@@ -1,10 +1,10 @@
 <Qucs Schematic 0.0.21-dev>
 <Properties>
-  <View=0,0,800,800,1,0,0>
+  <View=0,-180,1524,908,0.909091,0,0>
   <Grid=10,10,1>
   <DataSet=wattmeter.dat>
   <DataDisplay=wattmeter.dpl>
-  <OpenDisplay=1>
+  <OpenDisplay=0>
   <Script=wattmeter.m>
   <RunScript=0>
   <showFrame=0>

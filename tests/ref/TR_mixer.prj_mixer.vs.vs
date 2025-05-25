@@ -1,4 +1,4 @@
-(* qucs_ViewX1=0, qucs_ViewY1=0, qucs_ViewX2=800, qucs_ViewY2=800, qucs_Scale=1, qucs_tmpViewX1=-200, qucs_tmpViewY1=-200, qucs_GridX=10, qucs_GridY=10, qucs_GridOn=1, qucs_DataSet="mixer.dat", qucs_DataDisplay="mixer.dpl", qucs_SimOpenDpl=1, qucs_Script="mixer.m", qucs_SimRunScript=0, qucs_showFrame=0, qucs_FrameText0="Title", qucs_FrameText1="Drawn By:", qucs_FrameText2="Date:", qucs_FrameText3="Revision:" *) module mixer();
+(* qucs_ViewX1=0, qucs_ViewY1=16, qucs_ViewX2=774, qucs_ViewY2=592, qucs_Scale=1, qucs_tmpViewX1=0, qucs_tmpViewY1=0, qucs_GridX=10, qucs_GridY=10, qucs_GridOn=1, qucs_DataSet="mixer.dat", qucs_DataDisplay="mixer.dpl", qucs_SimOpenDpl=1, qucs_Script="mixer.m", qucs_SimRunScript=0, qucs_showFrame=0, qucs_FrameText0="Title", qucs_FrameText1="Drawn By:", qucs_FrameText2="Date:", qucs_FrameText3="Revision:" *) module mixer();
     wire n_290_100;
     wire n_230_140;
     wire n_230_200;

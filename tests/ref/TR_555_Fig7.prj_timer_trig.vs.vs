@@ -1,4 +1,4 @@
-(* qucs_ViewX1=0, qucs_ViewY1=0, qucs_ViewX2=800, qucs_ViewY2=800, qucs_Scale=1, qucs_tmpViewX1=-200, qucs_tmpViewY1=-200, qucs_GridX=10, qucs_GridY=10, qucs_GridOn=1, qucs_DataSet="timer_trig.dat", qucs_DataDisplay="timer_trig.dpl", qucs_SimOpenDpl=1, qucs_Script="timer_trig.m", qucs_SimRunScript=0, qucs_showFrame=0, qucs_FrameText0="Title", qucs_FrameText1="Drawn By:", qucs_FrameText2="Date:", qucs_FrameText3="Revision:" *) module timer_trig(.Pcomp_vp1(n_140_140), .Pcomp_vn1(n_140_200), .comp_vout1(n_440_165));
+(* qucs_ViewX1=68, qucs_ViewY1=40, qucs_ViewX2=560, qucs_ViewY2=310, qucs_Scale=1.72561, qucs_tmpViewX1=0, qucs_tmpViewY1=0, qucs_GridX=5, qucs_GridY=5, qucs_GridOn=0, qucs_DataSet="timer_trig.dat", qucs_DataDisplay="timer_trig.dpl", qucs_SimOpenDpl=1, qucs_Script="timer_trig.m", qucs_SimRunScript=0, qucs_showFrame=0, qucs_FrameText0="Title", qucs_FrameText1="Drawn By:", qucs_FrameText2="Date:", qucs_FrameText3="Revision:" *) module timer_trig(.Pcomp_vp1(n_140_140), .Pcomp_vn1(n_140_200), .comp_vout1(n_440_165));
     inout n_140_140;
     inout n_140_200;
     inout n_440_165;

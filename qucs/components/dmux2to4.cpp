@@ -31,7 +31,7 @@ dmux2to4::dmux2to4()
     +" ("+QObject::tr ("s")+")"));
 
   createSymbol ();
-  set_qucs_text_position(x1+19, y2+4);
+  set_qucs_text_position(x1()+19, y2()+4);
   Model = "dmux2to4";
   Name  = "Y";
 }
@@ -96,8 +96,10 @@ void dmux2to4::createSymbol()
   Ports.push_back(qucs::Port( 50,-30));  // Y1
   Ports.push_back(qucs::Port( 50,-50));  // Y0
 
-  x1 = -50; y1 = -94;
-  x2 =  50; y2 =  24;
+  set_x1(-50);
+  set_y1(-94);
+  set_x2(50);
+  set_y2(24);
 }
 
 QString dmux2to4::vhdlCode( int )

@@ -1,6 +1,6 @@
 <Qucs Schematic 0.0.21-dev>
 <Properties>
-  <View=0,0,800,800,1,0,0>
+  <View=22,-52,861,656,1.10593,0,0>
   <Grid=10,10,1>
   <DataSet=curtice_1.dat>
   <DataDisplay=curtice_1.dpl>

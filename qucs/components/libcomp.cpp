@@ -123,11 +123,11 @@ void LibComp::createSymbol()
   set_qucs_text_position(INT_MIN, INT_MIN);
   if(loadSymbol() > 0) {
     if(tx() == INT_MIN) { untested();
-	  	 set_qucs_text_position(x1+4, ty());
+		 set_qucs_text_position(x1()+4, ty());
 	 }else{
 	 }
     if(ty() == INT_MIN) { untested();
-		 set_qucs_text_position(tx(), y2+4);
+		 set_qucs_text_position(tx(), y2()+4);
 	 }else{
 	 }
     assert(Props.size()>1);
@@ -138,10 +138,12 @@ void LibComp::createSymbol()
     Lines.push_back(qucs::Line(-15,  15, 15,  15, QPen(Qt::darkBlue,2)));
     Lines.push_back(qucs::Line(-15, -15,-15,  15, QPen(Qt::darkBlue,2)));
 
-    x1 = -18; y1 = -18;
-    x2 =  18; y2 =  18;
+    set_x1(-18);
+    set_y1(-18);
+    set_x2(18);
+    set_y2(18);
 
-	 set_qucs_text_position(x1+4, y2+4);
+	 set_qucs_text_position(x1()+4, y2()+4);
     assert(Props.size()>1);
   }
 
@@ -281,8 +283,10 @@ int LibComp::loadSymbol()
 
 
   z  = 0;
-  x1 = y1 = INT_MAX;
-  x2 = y2 = INT_MIN;
+  set_x1(INT_MAX);
+  set_y1(INT_MAX);
+  set_x2(INT_MIN);
+  set_y2(INT_MIN);
 
   assert(Props.size()>1);
   if(Props.size()==2){
@@ -307,8 +311,10 @@ int LibComp::loadSymbol()
   }
   assert(Props.size()>1);
 
-  x1 -= 4;  x2 += 4;   // enlarge component boundings a little
-  y1 -= 4;  y2 += 4;
+  set_x1(x1() - 4);
+  set_x2(x2() + 4);   // enlarge component boundings a little
+  set_y1(y1() - 4);
+  set_y2(y2() + 4);
   return z;      // return number of ports
 }
 

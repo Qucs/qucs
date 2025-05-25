@@ -8,9 +8,9 @@
   <Script=sawtooth-1.m>
   <RunScript=0>
   <showFrame=0>
-  <FrameText0=Title>
-  <FrameText1=Drawn By:>
-  <FrameText2=Date:>
+  <FrameText0=Titel>
+  <FrameText1=Gezeichnet von:>
+  <FrameText2=Datum:>
   <FrameText3=Revision:>
 </Properties>
 <Symbol>

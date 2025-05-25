@@ -32,10 +32,11 @@
 
 TabDiagram::TabDiagram(int _cx, int _cy) : Diagram(_cx, _cy)
 {
-  x1 = 0;    // no extension to select area
-  y1 = 0;
-  x2 = x3 = 300;  // initial size of diagram
-  y2 = 200;
+  set_x1(0);    // no extension to select area
+  set_y1(0);
+  set_x2(300);  // initial size of diagram
+  set_y2(200);
+  x3 = 300;
   Name = "Tab";
   xAxis.limit_min = 0.0;  // scroll bar position (needs to be saved in file)
 
@@ -57,45 +58,45 @@ void TabDiagram::paintDiagram(ViewPainter *p)
   // paint all lines
   for(auto pl = Lines.begin(); pl != Lines.end(); ++pl) {
     p->Painter->setPen(pl->style);
-    p->drawLine(cx+pl->x1, cy-pl->y1, cx+pl->x2, cy-pl->y2);
+    p->drawLine(cx()+pl->x1, cy()-pl->y1, cx()+pl->x2, cy()-pl->y2);
   }
 
-  if(x1 > 0) {  // paint scroll bar ?
+  if(x1() > 0) {  // paint scroll bar ?
     int   x, y, dx, dy;
     QPolygon Points;
-    y = y2 - 20;
+    y = y2() - 20;
     // draw scroll bar
-    int by = cy-y + yAxis.numGraphs;
-    p->fillRect(cx-14, by+1, 12, zAxis.numGraphs-1, QColor(192, 192, 192));
+    int by = cy()-y + yAxis.numGraphs;
+    p->fillRect(cx()-14, by+1, 12, zAxis.numGraphs-1, QColor(192, 192, 192));
 
     // draw frame for scroll bar
     p->Painter->setPen(QPen(Qt::black,0));
-    p->drawLine(cx-17, cy-y2, cx-17, cy);
-    p->drawLine(cx-17, cy-y2, cx, cy-y2);
-    p->drawLine(cx-17, cy, cx, cy);
+    p->drawLine(cx()-17, cy()-y2(), cx()-17, cy());
+    p->drawLine(cx()-17, cy()-y2(), cx(), cy()-y2());
+    p->drawLine(cx()-17, cy(), cx(), cy());
     y += 2;
-    p->drawLine(cx-17, cy-y, cx, cy-y);
-    y -= y2;
-    p->drawLine(cx-17, cy+y, cx, cy+y);
+    p->drawLine(cx()-17, cy()-y, cx(), cy()-y);
+    y -= y2();
+    p->drawLine(cx()-17, cy()+y, cx(), cy()+y);
 
     // draw the arrows above and below the scroll bar
     p->Painter->setBrush(QColor(192, 192, 192));
     p->Painter->setPen(QColor(152, 152, 152));
-    p->drawLine(cx-2, by, cx-2, by + zAxis.numGraphs);
-    p->drawLine(cx-15, by + zAxis.numGraphs, cx-2, by + zAxis.numGraphs);
+    p->drawLine(cx()-2, by, cx()-2, by + zAxis.numGraphs);
+    p->drawLine(cx()-15, by + zAxis.numGraphs, cx()-2, by + zAxis.numGraphs);
 
-    p->map(cx-14, cy-y2+3, x, y);
-    p->map(cx-3,  cy-y2+14, dx, dy);
+    p->map(cx()-14, cy()-y2()+3, x, y);
+    p->map(cx()-3,  cy()-y2()+14, dx, dy);
     Points.setPoints(3, x, dy, (x+dx)>>1, y, dx, dy);
     p->Painter->drawConvexPolygon(Points);
     p->Painter->setPen(QColor(224, 224, 224));
     p->Painter->drawLine(x, dy, (x+dx)>>1, y);
-    p->drawLine(cx-15, by, cx-2, by);
-    p->drawLine(cx-15, by, cx-15, by + zAxis.numGraphs);
+    p->drawLine(cx()-15, by, cx()-2, by);
+    p->drawLine(cx()-15, by, cx()-15, by + zAxis.numGraphs);
 
     p->Painter->setPen(QColor(152, 152, 152));
     dy -= y;
-    p->map(cx-14,  cy-3, x, y);
+    p->map(cx()-14,  cy()-3, x, y);
     Points.setPoints(3, x, y-dy, (x+dx)>>1, y, dx, y-dy);
     p->Painter->drawConvexPolygon(Points);
     p->Painter->setPen(QColor(208, 208, 208));
@@ -110,17 +111,17 @@ void TabDiagram::paintDiagram(ViewPainter *p)
   p->Painter->setPen(Qt::black);
   // write whole text
   for(auto pt = Texts.begin(); pt != Texts.end(); ++pt)
-    p->drawText(pt->s, cx+pt->x, cy-pt->y);
+    p->drawText(pt->s, cx()+pt->x, cy()-pt->y);
 
 
   if(isSelected) {
     p->Painter->setPen(QPen(Qt::darkGray,3));
-    p->drawRect(cx-5, cy-y2-5, x2+10, y2+10);
+    p->drawRect(cx()-5, cy()-y2()-5, x2()+10, y2()+10);
     p->Painter->setPen(QPen(Qt::darkRed,2));
-    p->drawResizeRect(cx, cy-y2);  // markers for changing the size
-    p->drawResizeRect(cx, cy);
-    p->drawResizeRect(cx+x2, cy-y2);
-    p->drawResizeRect(cx+x2, cy);
+    p->drawResizeRect(cx(), cy()-y2());  // markers for changing the size
+    p->drawResizeRect(cx(), cy());
+    p->drawResizeRect(cx()+x2(), cy()-y2());
+    p->drawResizeRect(cx()+x2(), cy());
   }
 }
 
@@ -132,27 +133,27 @@ int TabDiagram::calcDiagram()
   Texts.clear();
   Arcs.clear();
 
-  x1 = 0;  // no scroll bar
-  x3 = x2;
+  set_x1(0);  // no scroll bar
+  x3 = x2();
   // get size of text using the screen-compatible metric
   QFontMetrics metrics(QucsSettings.font, 0);
   int tHeight = metrics.lineSpacing();
   QString Str;
   int colWidth=0, x=8, y;
 
-  if(y2 < (41 + MIN_SCROLLBAR_SIZE))
-    y2 = 41 + MIN_SCROLLBAR_SIZE;
+  if(y2() < (41 + MIN_SCROLLBAR_SIZE))
+    set_y2(41 + MIN_SCROLLBAR_SIZE);
 
-  if(y2 < (tHeight + 8))
-    y2 = tHeight + 8;
-  y = y2 - tHeight - 6;
+  if(y2() < (tHeight + 8))
+    set_y2(tHeight + 8);
+  y = y2() - tHeight - 6;
 
   // outer frame
-  Lines.push_back(qucs::Line(0, y2, x2, y2, QPen(Qt::black,0)));
-  Lines.push_back(qucs::Line(0, y2, 0, 0, QPen(Qt::black,0)));
-  Lines.push_back(qucs::Line(x2, y2, x2, 0, QPen(Qt::black,0)));
-  Lines.push_back(qucs::Line(0, 0, x2, 0, QPen(Qt::black,0)));
-  Lines.push_back(qucs::Line(0, y+2, x2, y+2, QPen(Qt::black,2)));
+  Lines.push_back(qucs::Line(0, y2(), x2(), y2(), QPen(Qt::black,0)));
+  Lines.push_back(qucs::Line(0, y2(), 0, 0, QPen(Qt::black,0)));
+  Lines.push_back(qucs::Line(x2(), y2(), x2(), 0, QPen(Qt::black,0)));
+  Lines.push_back(qucs::Line(0, 0, x2(), 0, QPen(Qt::black,0)));
+  Lines.push_back(qucs::Line(0, y+2, x2(), y+2, QPen(Qt::black,2)));
 
   if(xAxis.limit_min < 0.0)
     xAxis.limit_min = 0.0;
@@ -163,9 +164,9 @@ int TabDiagram::calcDiagram()
 
   if(ig == Graphs.end()) {  // no variables specified in diagram ?
     Str = QObject::tr("no variables");
-    colWidth = checkColumnWidth(Str, metrics, colWidth, x, y2);
+    colWidth = checkColumnWidth(Str, metrics, colWidth, x, y2());
     if(colWidth >= 0)
-      Texts.push_back(qucs::Text(x-4, y2-2, Str)); // independent variable
+      Texts.push_back(qucs::Text(x-4, y2()-2, Str)); // independent variable
     return 0;
   }
 
@@ -198,13 +199,13 @@ int TabDiagram::calcDiagram()
                 DataX const *pD = ig->axis(--h); // BUG
       colWidth = 0;
       Str = pD->Var;
-      colWidth = checkColumnWidth(Str, metrics, colWidth, x, y2);
+      colWidth = checkColumnWidth(Str, metrics, colWidth, x, y2());
       if(colWidth < 0)  goto funcEnd;
       startWriting = int(xAxis.limit_min + 0.5);  // when to reach visible area
       
-      Texts.push_back(qucs::Text(x-4, y2-2, Str)); // independent variable
+      Texts.push_back(qucs::Text(x-4, y2()-2, Str)); // independent variable
       if(pD->count != 0) {
-	y = y2-tHeight-5;
+	y = y2()-tHeight-5;
 	counting /= pD->count;   // how many rows to be skipped
 	for(int z1=0; z1<lastCount; z1++) {
 	  px = pD->Points;
@@ -224,13 +225,13 @@ int TabDiagram::calcDiagram()
 	    px++;
 	  }
           if(pD == ig->axis(0))   // only paint one time
-	    if(y >= tHeight) if(y < y2-tHeight-5)
-              Lines.push_back(qucs::Line(0, y+1, x2, y+1, QPen(Qt::black,0)));
+	    if(y >= tHeight) if(y < y2()-tHeight-5)
+              Lines.push_back(qucs::Line(0, y+1, x2(), y+1, QPen(Qt::black,0)));
 	}
 	lastCount *= pD->count;
       }
       x += colWidth+15;
-      Lines.push_back(qucs::Line(x-8, y2, x-8, 0, QPen(Qt::black,0)));
+      Lines.push_back(qucs::Line(x-8, y2(), x-8, 0, QPen(Qt::black,0)));
     }
     Lines.back().style = QPen(Qt::black,2);
   }  // of "if no data in graphs"
@@ -241,13 +242,13 @@ int TabDiagram::calcDiagram()
   // ................................................
   // all dependent variables
   for(auto g = Graphs.begin(); g != Graphs.end(); ++g) {
-    y = y2-tHeight-5;
+    y = y2()-tHeight-5;
     colWidth = 0;
 
     Str = g->Var;
-    colWidth = checkColumnWidth(Str, metrics, colWidth, x, y2);
+    colWidth = checkColumnWidth(Str, metrics, colWidth, x, y2());
     if(colWidth < 0)  goto funcEnd;
-    Texts.push_back(qucs::Text(x, y2-2, Str));  // dependent variable
+    Texts.push_back(qucs::Text(x, y2()-2, Str));  // dependent variable
 
 
     startWriting = int(xAxis.limit_min + 0.5); // when to reach visible area
@@ -319,12 +320,12 @@ int TabDiagram::calcDiagram()
     x += colWidth+15;
     auto gn = g;
     if(++gn != Graphs.end())   // do not paint last line
-      Lines.push_back(qucs::Line(x-8, y2, x-8, 0, QPen(Qt::black,0)));
+      Lines.push_back(qucs::Line(x-8, y2(), x-8, 0, QPen(Qt::black,0)));
   }
 
 funcEnd:
   if(invisibleCount > 0) {  // could all numbers be written ?
-    x1 = 18;   // extend the select area to the left
+    set_x1(18);   // extend the select area to the left
 
     zAxis.limit_max = double(NumAll);  // number of data (rows) 
 
@@ -333,10 +334,10 @@ funcEnd:
     NumLeft = NumAll - NumLeft - y;
 
     // position of scroll bar in pixel
-    yAxis.numGraphs = (y2 - 39) * y / NumAll;
+    yAxis.numGraphs = (y2() - 39) * y / NumAll;
 
     // height of scroll bar
-    zAxis.numGraphs = (y2 - 39) * NumLeft / NumAll;
+    zAxis.numGraphs = (y2() - 39) * NumLeft / NumAll;
     if(zAxis.numGraphs < MIN_SCROLLBAR_SIZE) {
       yAxis.numGraphs -= (MIN_SCROLLBAR_SIZE - zAxis.numGraphs + 1)
                          * y / NumAll;
@@ -352,15 +353,15 @@ funcEnd:
 // ------------------------------------------------------------
 int TabDiagram::scroll(int clickPos)
 {
-  if(x1 <= 0) return 0;   // no scroll bar ?
+  if(x1() <= 0) return 0;   // no scroll bar ?
   int tmp = int(xAxis.limit_min + 0.5);
 
-  int y = cy;
-  if(clickPos > (cy-20)) {  // scroll one line down ?
+  int y = cy();
+  if(clickPos > (cy()-20)) {  // scroll one line down ?
     xAxis.limit_min++;
   }
   else {
-    y -= y2 - 20;
+    y -= y2() - 20;
     if(clickPos < y) {  // scroll bar one line up ?
       if(xAxis.limit_min <= 0.0)  return 0;
       xAxis.limit_min--;
@@ -391,7 +392,7 @@ bool TabDiagram::scrollTo(int initial, int, int dy)
 {
   int tmp = int(xAxis.limit_min + 0.5);
   xAxis.limit_min  = double(initial);
-  xAxis.limit_min += double(dy) / double(y2 - 39) * zAxis.limit_max;
+  xAxis.limit_min += double(dy) / double(y2() - 39) * zAxis.limit_max;
   xAxis.limit_min  = floor(xAxis.limit_min + 0.5);
 
   calcDiagram();

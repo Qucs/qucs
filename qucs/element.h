@@ -152,6 +152,8 @@ namespace qucs {
   *
   */
 class Element {
+  // center and relative boundings
+  int  _cx{0}, _cy{0}, _x1{0}, _y1{0}, _x2{0}, _y2{0};
 public:
   Element();
   virtual ~Element();
@@ -163,7 +165,24 @@ public:
 
   bool isSelected;
   int  Type;    // whether it is Component, Wire, ...
-  int  cx{0}, cy{0}, x1{0}, y1{0}, x2{0}, y2{0};  // center and relative boundings
+
+protected:
+public: // BUG: called in marker.cpp and dumpPainting etc.
+  int cx() const {return _cx;}
+  int cy() const {return _cy;}
+  int x1() const {return _x1;}
+  int y1() const {return _y1;}
+  int x2() const {return _x2;}
+  int y2() const {return _y2;}
+
+protected:
+public: // BUG: used in various places, needs work
+  void set_cx(int i) {_cx=i;}
+  void set_cy(int i) {_cy=i;}
+  void set_x1(int i) {_x1=i;}
+  void set_y1(int i) {_y1=i;}
+  void set_x2(int i) {_x2=i;}
+  void set_y2(int i) {_y2=i;}
 
 public:
   virtual std::string dev_type()const {return "";}

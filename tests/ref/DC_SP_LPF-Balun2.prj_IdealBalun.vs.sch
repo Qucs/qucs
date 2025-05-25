@@ -4,7 +4,7 @@
   <Grid=10,10,1>
   <DataSet=IdealBalun.dat>
   <DataDisplay=IdealBalun.dpl>
-  <OpenDisplay=1>
+  <OpenDisplay=0>
   <Script=IdealBalun.m>
   <RunScript=0>
   <showFrame=0>

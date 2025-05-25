@@ -31,7 +31,7 @@ hpribin4bit::hpribin4bit()
     +" ("+QObject::tr ("s")+")"));
 
   createSymbol ();
-  set_qucs_text_position(x1+19, y2+4);
+  set_qucs_text_position(x1()+19, y2()+4);
   Model = "hpribin4bit";
   Name  = "Y";
 }
@@ -87,8 +87,10 @@ void hpribin4bit::createSymbol()
   Ports.push_back(qucs::Port( 60, 10));  // Y
   Ports.push_back(qucs::Port( 60,-10));  // X
 
-  x1 = -60; y1 = -54;
-  x2 =  60; y2 =  64;
+  set_x1(-60);
+  set_y1(-54);
+  set_x2(60);
+  set_y2(64);
 }
 
 QString hpribin4bit::vhdlCode( int )

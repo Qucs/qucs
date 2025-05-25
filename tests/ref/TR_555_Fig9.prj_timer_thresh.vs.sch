@@ -1,7 +1,7 @@
 <Qucs Schematic 0.0.21-dev>
 <Properties>
-  <View=0,0,800,800,1,0,0>
-  <Grid=10,10,1>
+  <View=-7,-10,480,300,1.74333,0,0>
+  <Grid=5,5,0>
   <DataSet=timer_thresh.dat>
   <DataDisplay=timer_thresh.dpl>
   <OpenDisplay=1>

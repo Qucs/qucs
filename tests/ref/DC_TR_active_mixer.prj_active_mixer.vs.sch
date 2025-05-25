@@ -1,6 +1,6 @@
 <Qucs Schematic 0.0.21-dev>
 <Properties>
-  <View=0,0,800,800,1,0,0>
+  <View=-17,0,817,800,1,0,0>
   <Grid=10,10,1>
   <DataSet=active_mixer.dat>
   <DataDisplay=active_mixer.dpl>

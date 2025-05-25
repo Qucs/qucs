@@ -31,7 +31,7 @@ comp_2bit::comp_2bit()
     +" ("+QObject::tr ("s")+")"));
  
   createSymbol ();
-  set_qucs_text_position(x1+19, y2+4);
+  set_qucs_text_position(x1()+19, y2()+4);
   Model = "comp_2bit";
   Name  = "Y";
 }
@@ -90,8 +90,10 @@ void comp_2bit::createSymbol()
   Ports.push_back(qucs::Port( 60, 10));  // G
   Ports.push_back(qucs::Port( 60,-10));  // E
 
-  x1 = -60; y1 = -54;
-  x2 =  60; y2 =  64;
+  set_x1(-60);
+  set_y1(-54);
+  set_x2(60);
+  set_y2(64);
 }
 
 QString comp_2bit::vhdlCode( int )

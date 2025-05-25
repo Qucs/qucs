@@ -1,6 +1,6 @@
 <Qucs Schematic 0.0.21-dev>
 <Properties>
-  <View=0,0,800,800,1,0,0>
+  <View=-32,-20,580,480,1,0,0>
   <Grid=10,10,1>
   <DataSet=diff1.dat>
   <DataDisplay=diff1.dpl>

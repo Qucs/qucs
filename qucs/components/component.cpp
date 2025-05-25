@@ -55,8 +55,8 @@ Component::Component()
   isActive = COMP_IS_ACTIVE;
   showName = true;
 
-  cx = 0;
-  cy = 0;
+  set_cx(0);
+  set_cy(0);
   set_qucs_text_position(0, 0);
 
   containingSchematic = NULL;
@@ -71,10 +71,10 @@ Component* Component::newOne()
 // -------------------------------------------------------
 void Component::Bounding(int& _x1, int& _y1, int& _x2, int& _y2)
 { untested();
-  _x1 = x1+cx;
-  _y1 = y1+cy;
-  _x2 = x2+cx;
-  _y2 = y2+cy;
+  _x1 = x1()+cx();
+  _y1 = y1()+cy();
+  _x2 = x2()+cx();
+  _y2 = y2()+cy();
 }
 
 // -------------------------------------------------------
@@ -147,42 +147,42 @@ int Component::textSize(int& _dx, int& _dy)
 // Boundings including the component text.
 void Component::entireBounds(int& _x1, int& _y1, int& _x2, int& _y2, float Corr)
 {
-  _x1 = x1+cx;
-  _y1 = y1+cy;
-  _x2 = x2+cx;
-  _y2 = y2+cy;
+  _x1 = x1()+cx();
+  _y1 = y1()+cy();
+  _x2 = x2()+cx();
+  _y2 = y2()+cy();
 
   // text boundings
-  if(tx() < x1) _x1 = tx()+cx;
-  if(ty() < y1) _y1 = ty()+cy;
+  if(tx() < x1()) _x1 = tx()+cx();
+  if(ty() < y1()) _y1 = ty()+cy();
 
   int dx, dy, ny;
   ny = textSize(dx, dy);
   dy = int(float(ny) / Corr);  // correction for unproportional font scaling
 
-  if((tx()+dx) > x2) _x2 = tx()+dx+cx;
-  if((ty()+dy) > y2) _y2 = ty()+dy+cy;
+  if((tx()+dx) > x2()) _x2 = tx()+dx+cx();
+  if((ty()+dy) > y2()) _y2 = ty()+dy+cy();
 }
 
 // -------------------------------------------------------
 void Component::setCenter(int x, int y, bool relative)
 { untested();
-  if(relative) { untested(); cx += x;  cy += y; }
-  else { untested(); cx = x;  cy = y; }
+  if(relative) { untested(); set_cx(cx() + x);  set_cy(cy() + y); }
+  else { untested(); set_cx(x);  set_cy(y); }
 }
 
 // -------------------------------------------------------
 void Component::getCenter(int& x, int& y)
 { untested();
-  x = cx;
-  y = cy;
+  x = cx();
+  y = cy();
 }
 
 // -------------------------------------------------------
 int Component::getTextSelected(int x_, int y_, float Corr)
 { untested();
-  x_ -= cx;
-  y_ -= cy;
+  x_ -= cx();
+  y_ -= cy();
   if(x_ < tx()) return -1;
   if(y_ < ty()) return -1;
 
@@ -216,9 +216,9 @@ int Component::getTextSelected(int x_, int y_, float Corr)
 // -------------------------------------------------------
 bool Component::getSelected(int x_, int y_)
 { untested();
-  x_ -= cx;
-  y_ -= cy;
-  if(x_ >= x1) if(x_ <= x2) if(y_ >= y1) if(y_ <= y2)
+  x_ -= cx();
+  y_ -= cy();
+  if(x_ >= x1()) if(x_ <= x2()) if(y_ >= y1()) if(y_ <= y2())
     return true;
 
   return false;
@@ -234,7 +234,7 @@ void LegacyComponent::paint(ViewPainter *p)
     newFont.setPointSizeF(p->Scale * Texts.front().Size);
     newFont.setWeight(QFont::DemiBold);
     p->Painter->setFont(newFont);
-    p->map(cx, cy, x, y);
+    p->map(cx(), cy(), x, y);
 
     p->Painter->setPen(QPen(Qt::darkBlue,2));
     a = b = 0;
@@ -247,18 +247,18 @@ void LegacyComponent::paint(ViewPainter *p)
     }
     xb = a + int(12.0*p->Scale);
     yb = b + int(10.0*p->Scale);
-    x2 = x1+25 + int(float(a) / p->Scale);
-    y2 = y1+23 + int(float(b) / p->Scale);
-    if(ty() < y2+1) { untested();
-      if(ty() > y1-r.height()){ untested();
-	set_qucs_text_position(tx(), y2 + 1);
+    set_x2(x1()+25 + int(float(a) / p->Scale));
+    set_y2(y1()+23 + int(float(b) / p->Scale));
+    if(ty() < y2()+1) { untested();
+      if(ty() > y1()-r.height()){ untested();
+	set_qucs_text_position(tx(), y2() + 1);
       }else{ untested();
       }
     }else{ untested();
     }
 
-    p->map(cx-1, cy, x, y);
-    p->map(cx-6, cy-5, a, b);
+    p->map(cx()-1, cy(), x, y);
+    p->map(cx()-6, cy()-5, a, b);
     p->Painter->drawRect(a, b, xb, yb);
     p->Painter->drawLine(x,      y+yb, a,      b+yb);
     p->Painter->drawLine(x+xb-1, y+yb, x,      y+yb);
@@ -271,27 +271,27 @@ void LegacyComponent::paint(ViewPainter *p)
     // paint all lines
     for(auto p1 = Lines.begin(); p1 != Lines.end(); ++p1) { untested();
       p->Painter->setPen(p1->style);
-      p->drawLine(cx+p1->x1, cy+p1->y1, cx+p1->x2, cy+p1->y2);
+      p->drawLine(cx()+p1->x1, cy()+p1->y1, cx()+p1->x2, cy()+p1->y2);
     }
 
     // paint all arcs
     for(auto p3 = Arcs.begin(); p3 != Arcs.end(); ++p3) { untested();
       p->Painter->setPen(p3->style);
-      p->drawArc(cx+p3->x, cy+p3->y, p3->w, p3->h, p3->angle, p3->arclen);
+      p->drawArc(cx()+p3->x, cy()+p3->y, p3->w, p3->h, p3->angle, p3->arclen);
     }
 
     // paint all rectangles
     for(auto pa = Rects.begin(); pa != Rects.end(); ++pa) { untested();
       p->Painter->setPen(pa->Pen);
       p->Painter->setBrush(pa->Brush);
-      p->drawRect(cx+pa->x, cy+pa->y, pa->w, pa->h);
+      p->drawRect(cx()+pa->x, cy()+pa->y, pa->w, pa->h);
     }
 
     // paint all ellipses
     for(auto pa = Ellips.begin(); pa != Ellips.end(); ++pa) { untested();
       p->Painter->setPen(pa->Pen);
       p->Painter->setBrush(pa->Brush);
-      p->drawEllipse(cx+pa->x, cy+pa->y, pa->w, pa->h);
+      p->drawEllipse(cx()+pa->x, cy()+pa->y, pa->w, pa->h);
     }
     p->Painter->setBrush(Qt::NoBrush);
 
@@ -304,8 +304,8 @@ void LegacyComponent::paint(ViewPainter *p)
     for(auto pt = Texts.begin(); pt != Texts.end(); ++pt) { untested();
       p->Painter->setWorldTransform(
           QTransform(pt->mCos, -pt->mSin, pt->mSin, pt->mCos,
-                     p->DX + float(cx+pt->x) * p->Scale,
-                     p->DY + float(cy+pt->y) * p->Scale));
+                     p->DX + float(cx()+pt->x) * p->Scale,
+                     p->DY + float(cy()+pt->y) * p->Scale));
       newFont.setPointSizeF(p->Scale * pt->Size);
       newFont.setOverline(pt->over);
       newFont.setUnderline(pt->under);
@@ -328,7 +328,7 @@ void LegacyComponent::paint(ViewPainter *p)
   p->Painter->setFont(f);
 
   p->Painter->setPen(QPen(Qt::black,1));
-  p->map(cx+tx(), cy+ty(), x, y);
+  p->map(cx()+tx(), cy()+ty(), x, y);
   if(showName) { untested();
     p->Painter->drawText(x, y, 0, 0, Qt::TextDontClip, Name);
     y += p->LineSpacing;
@@ -345,15 +345,15 @@ void LegacyComponent::paint(ViewPainter *p)
   else if(isActive & COMP_IS_SHORTEN)
     p->Painter->setPen(QPen(Qt::darkGreen,0));
   if(isActive != COMP_IS_ACTIVE) { untested();
-    p->drawRect(cx+x1, cy+y1, x2-x1+1, y2-y1+1);
-    p->drawLine(cx+x1, cy+y1, cx+x2, cy+y2);
-    p->drawLine(cx+x1, cy+y2, cx+x2, cy+y1);
+    p->drawRect(cx()+x1(), cy()+y1(), x2()-x1()+1, y2()-y1()+1);
+    p->drawLine(cx()+x1(), cy()+y1(), cx()+x2(), cy()+y2());
+    p->drawLine(cx()+x1(), cy()+y2(), cx()+x2(), cy()+y1());
   }
 
   // draw component bounding box
   if(isSelected) { untested();
     p->Painter->setPen(QPen(Qt::darkGray,3));
-    p->drawRoundRect(cx+x1, cy+y1, x2-x1, y2-y1);
+    p->drawRoundRect(cx()+x1(), cy()+y1(), x2()-x1(), y2()-y1());
   }
 }
 
@@ -383,44 +383,44 @@ void LegacyComponent::paintScheme(Schematic *p)
     }
     xb = a + int(12.0*Scale);
     yb = b + int(10.0*Scale);
-    x2 = x1+25 + int(float(a) / Scale);
-    y2 = y1+23 + int(float(b) / Scale);
-    if(ty() < y2+1) { untested();
-     if(ty() > y1-r.height()) { untested();
-       set_qucs_text_position(tx(), y2 + 1);
+    set_x2(x1()+25 + int(float(a) / Scale));
+    set_y2(y1()+23 + int(float(b) / Scale));
+    if(ty() < y2()+1) { untested();
+     if(ty() > y1()-r.height()) { untested();
+       set_qucs_text_position(tx(), y2() + 1);
       }else{ untested();
       }
     }else{ untested();
     }
 
-    p->PostPaintEvent(_Rect,cx-6, cy-5, xb, yb);
-    p->PostPaintEvent(_Line,cx-1, cy+yb, cx-6, cy+yb-5);
-    p->PostPaintEvent(_Line,cx+xb-2, cy+yb, cx-1, cy+yb);
-    p->PostPaintEvent(_Line,cx+xb-2, cy+yb, cx+xb-6, cy+yb-5);
-    p->PostPaintEvent(_Line,cx+xb-2, cy+yb, cx+xb-2, cy);
-    p->PostPaintEvent(_Line,cx+xb-2, cy, cx+xb-6, cy-5);
+    p->PostPaintEvent(_Rect,cx()-6, cy()-5, xb, yb);
+    p->PostPaintEvent(_Line,cx()-1, cy()+yb, cx()-6, cy()+yb-5);
+    p->PostPaintEvent(_Line,cx()+xb-2, cy()+yb, cx()-1, cy()+yb);
+    p->PostPaintEvent(_Line,cx()+xb-2, cy()+yb, cx()+xb-6, cy()+yb-5);
+    p->PostPaintEvent(_Line,cx()+xb-2, cy()+yb, cx()+xb-2, cy());
+    p->PostPaintEvent(_Line,cx()+xb-2, cy(), cx()+xb-6, cy()-5);
     return;
   }
 
   // paint all lines
   for (auto p1 = Lines.begin(); p1 != Lines.end(); ++p1)
-    p->PostPaintEvent(_Line,cx+p1->x1, cy+p1->y1, cx+p1->x2, cy+p1->y2);
+    p->PostPaintEvent(_Line,cx()+p1->x1, cy()+p1->y1, cx()+p1->x2, cy()+p1->y2);
 
   // paint all ports
   for (auto p2 = Ports.begin(); p2 != Ports.end(); ++p2)
-    if(p2->avail) p->PostPaintEvent(_Ellipse,cx+p2->x-4, cy+p2->y-4, 8, 8);
+    if(p2->avail) p->PostPaintEvent(_Ellipse,cx()+p2->x-4, cy()+p2->y-4, 8, 8);
 
   // paint all arcs
   for (auto p3 = Arcs.begin(); p3 != Arcs.end(); ++p3)
-    p->PostPaintEvent(_Arc,cx+p3->x, cy+p3->y, p3->w, p3->h, p3->angle, p3->arclen);
+    p->PostPaintEvent(_Arc,cx()+p3->x, cy()+p3->y, p3->w, p3->h, p3->angle, p3->arclen);
 
   // paint all rectangles
   for (auto pa = Rects.begin(); pa != Rects.end(); ++pa)
-    p->PostPaintEvent(_Rect,cx+pa->x, cy+pa->y, pa->w, pa->h);
+    p->PostPaintEvent(_Rect,cx()+pa->x, cy()+pa->y, pa->w, pa->h);
 
   // paint all ellipses
   for (auto pa = Ellips.begin(); pa != Ellips.end(); ++pa)
-    p->PostPaintEvent(_Ellipse,cx+pa->x, cy+pa->y, pa->w, pa->h);
+    p->PostPaintEvent(_Ellipse,cx()+pa->x, cy()+pa->y, pa->w, pa->h);
 }
 
 // -------------------------------------------------------
@@ -506,9 +506,11 @@ void LegacyComponent::rotate()
     pt->mCos = ftmp;
   }
 
-  tmp = -x1;   // rotate boundings
-  x1  = y1; y1 = -x2;
-  x2  = y2; y2 = tmp;
+  tmp = -x1();   // rotate boundings
+  set_x1(y1());
+  set_y1(-x2());
+  set_x2(y2());
+  set_y2(tmp);
 
   tmp = -tx();    // rotate text position
   set_qucs_text_position(ty(), -tx());
@@ -526,13 +528,13 @@ void LegacyComponent::rotate()
       if(tmp > dx) dx = tmp;
       dy += metrics.lineSpacing();
     }
-  if(tx() > x2){
+  if(tx() > x2()){
     // rotate text position
-    set_qucs_text_position(tx(), y1-ty()+y2);
-  } else if(ty() < y1){
+    set_qucs_text_position(tx(), y1()-ty()+y2());
+  } else if(ty() < y1()){
     set_qucs_text_position(tx(), ty() - dy);
-  }else if(tx() < x1) {
-    set_qucs_text_position(tx() + dy - dx, y1-ty()+y2);
+  }else if(tx() < x1()) {
+    set_qucs_text_position(tx() + dy - dx, y1()-ty()+y2());
   }else{
     set_qucs_text_position(tx(), ty() - dx);
   }
@@ -586,8 +588,9 @@ void LegacyComponent::mirrorX()
     pt->y = -pt->y - int(pt->mCos)*s.height() + int(pt->mSin)*s.width();
   }
 
-  int tmp = y1;
-  y1  = -y2; y2 = -tmp;   // mirror boundings
+  int tmp = y1();
+  set_y1(-y2());
+  set_y2(-tmp);   // mirror boundings
   // use the screen-compatible metric
   QFontMetrics  metrics(QucsSettings.font, 0);   // get size of text
   int dy = 0;
@@ -595,11 +598,11 @@ void LegacyComponent::mirrorX()
     dy = metrics.lineSpacing();   // for "Name"
   for(auto pp = Props.begin(); pp != Props.end(); ++pp)
     if(pp->display)  dy += metrics.lineSpacing();
-  if((tx() > x1) && (tx() < x2)) {
+  if((tx() > x1()) && (tx() < x2())) {
     // mirror text position
     set_qucs_text_position(tx(), -ty()-dy);
   }else{
-    set_qucs_text_position(tx(), y1+ty()+y2);
+    set_qucs_text_position(tx(), y1()+ty()+y2());
   }
 
   mirroredX = !mirroredX;    // keep track of what's done
@@ -651,8 +654,9 @@ void LegacyComponent::mirrorY()
     pt->x = -pt->x - int(pt->mSin)*s.height() - int(pt->mCos)*s.width();
   }
 
-  tmp = x1;
-  x1  = -x2; x2 = -tmp;   // mirror boundings
+  tmp = x1();
+  set_x1(-x2());
+  set_x2(-tmp);   // mirror boundings
   // use the screen-compatible metric
   QFontMetrics  metrics(QucsSettings.font, 0);   // get size of text
   int dx = 0;
@@ -664,11 +668,11 @@ void LegacyComponent::mirrorY()
       tmp = metrics.horizontalAdvance(pp->Name+"="+pp->Value);
       if(tmp > dx)  dx = tmp;
     }
-  if((ty() > y1) && (ty() < y2)){
+  if((ty() > y1()) && (ty() < y2())){
     // mirror text position
     set_qucs_text_position(-tx()-dx, ty());
   }else{
-    set_qucs_text_position(x1+tx()+x2, ty());
+    set_qucs_text_position(x1()+tx()+x2(), ty());
   }
 
   mirroredX = !mirroredX;   // keep track of what's done
@@ -793,8 +797,8 @@ void Component::check_node_positions(Schematic* schematic)
   int i=0;
   std::string msg="";
   for(auto p=Ports.begin();p!=Ports.end();p++) {
-    int chx = cx+p->x;
-    int chy = cy+p->y;
+    int chx = cx()+p->x;
+    int chy = cy()+p->y;
     try {
       if(i<(int)_portvalues.size()) {
         if(schematic->nodename_at(chx,chy) != _portvalues[i]) {
@@ -869,11 +873,11 @@ void Component::apply_qucs_values()
     rotate();
   }
   if(Ports.size()) {
-    cx = _qucs_x1 - Ports.begin()->x;
-    cy = _qucs_y1 - Ports.begin()->y;
+    set_cx(_qucs_x1 - Ports.begin()->x);
+    set_cy(_qucs_y1 - Ports.begin()->y);
   } else {
-    cx = _qucs_x1;
-    cy = _qucs_y1;
+    set_cx(_qucs_x1);
+    set_cy(_qucs_y1);
   }
   auto pp=Props.begin();
   for(char& c : _qucs_p_visibility) { untested();
@@ -1011,7 +1015,7 @@ void Schematic::saveComponent(QTextStream& s, Component /*const*/ * c) const
   }
   i |= c->isActive;
   s << QString::number(i);
-  s << " "+QString::number(c->cx)+" "+QString::number(c->cy);
+  s << " "+QString::number(c->cx())+" "+QString::number(c->cy());
   s << " "+QString::number(c->tx())+" "+QString::number(c->ty());
   s << " ";
   if(c->mirroredX){
@@ -1072,11 +1076,11 @@ bool Schematic::loadComponent(const QString& _s, const std::shared_ptr<Component
   }
 
   n  = s.section(' ',3,3);    // cx
-  c->cx = n.toInt(&ok);
+  c->set_cx(n.toInt(&ok));
   if(!ok) return false;
 
   n  = s.section(' ',4,4);    // cy
-  c->cy = n.toInt(&ok);
+  c->set_cy(n.toInt(&ok));
   if(!ok) return false;
 
   n  = s.section(' ',5,5);    // tx
@@ -1271,10 +1275,10 @@ int LegacyComponent::analyseLine(const QString& Row, int numProps)
     po->y = i2;
     po->avail = true;
 
-    if(i1 < x1)  x1 = i1;  // keep track of component boundings
-    if(i1 > x2)  x2 = i1;
-    if(i2 < y1)  y1 = i2;
-    if(i2 > y2)  y2 = i2;
+    if(i1 < x1())  set_x1(i1);  // keep track of component boundings
+    if(i1 > x2())  set_x2(i1);
+    if(i2 < y1())  set_y1(i2);
+    if(i2 > y2())  set_y2(i2);
     return 0;   // do not count Ports
   }
   else if(s == "Line") {
@@ -1284,14 +1288,14 @@ int LegacyComponent::analyseLine(const QString& Row, int numProps)
     i4 += i2;
     Lines.push_back(qucs::Line(i1, i2, i3, i4, Pen));
 
-    if(i1 < x1)  x1 = i1;  // keep track of component boundings
-    if(i1 > x2)  x2 = i1;
-    if(i2 < y1)  y1 = i2;
-    if(i2 > y2)  y2 = i2;
-    if(i3 < x1)  x1 = i3;
-    if(i3 > x2)  x2 = i3;
-    if(i4 < y1)  y1 = i4;
-    if(i4 > y2)  y2 = i4;
+    if(i1 < x1())  set_x1(i1);  // keep track of component boundings
+    if(i1 > x2())  set_x2(i1);
+    if(i2 < y1())  set_y1(i2);
+    if(i2 > y2())  set_y2(i2);
+    if(i3 < x1())  set_x1(i3);
+    if(i3 > x2())  set_x2(i3);
+    if(i4 < y1())  set_y1(i4);
+    if(i4 > y2())  set_y2(i4);
     return 1;
   }
   else if(s == "EArc") {
@@ -1300,10 +1304,10 @@ int LegacyComponent::analyseLine(const QString& Row, int numProps)
     if(!getPen(Row, Pen, 7))  return -1;
     Arcs.push_back(qucs::Arc(i1, i2, i3, i4, i5, i6, Pen));
 
-    if(i1 < x1)  x1 = i1;  // keep track of component boundings
-    if(i1+i3 > x2)  x2 = i1+i3;
-    if(i2 < y1)  y1 = i2;
-    if(i2+i4 > y2)  y2 = i2+i4;
+    if(i1 < x1())  set_x1(i1);  // keep track of component boundings
+    if(i1+i3 > x2())  set_x2(i1+i3);
+    if(i2 < y1())  set_y1(i2);
+    if(i2+i4 > y2())  set_y2(i2+i4);
     return 1;
   }
   else if(s == ".ID") {
@@ -1360,14 +1364,14 @@ int LegacyComponent::analyseLine(const QString& Row, int numProps)
 
     i3 += i1;
     i4 += i2;
-    if(i1 < x1)  x1 = i1;  // keep track of component boundings
-    if(i1 > x2)  x2 = i1;
-    if(i3 < x1)  x1 = i3;
-    if(i3 > x2)  x2 = i3;
-    if(i2 < y1)  y1 = i2;
-    if(i2 > y2)  y2 = i2;
-    if(i4 < y1)  y1 = i4;
-    if(i4 > y2)  y2 = i4;
+    if(i1 < x1())  set_x1(i1);  // keep track of component boundings
+    if(i1 > x2())  set_x2(i1);
+    if(i3 < x1())  set_x1(i3);
+    if(i3 > x2())  set_x2(i3);
+    if(i2 < y1())  set_y1(i2);
+    if(i2 > y2())  set_y2(i2);
+    if(i4 < y1())  set_y1(i4);
+    if(i4 > y2())  set_y2(i4);
 
     Lines.push_back(qucs::Line(i1, i2, i3, i4, Pen));   // base line
 
@@ -1375,19 +1379,19 @@ int LegacyComponent::analyseLine(const QString& Row, int numProps)
     i5 = i3-int(Length*cos(w));
     i6 = i4-int(Length*sin(w));
     Lines.push_back(qucs::Line(i3, i4, i5, i6, Pen)); // arrow head
-    if(i5 < x1)  x1 = i5;  // keep track of component boundings
-    if(i5 > x2)  x2 = i5;
-    if(i6 < y1)  y1 = i6;
-    if(i6 > y2)  y2 = i6;
+    if(i5 < x1())  set_x1(i5);  // keep track of component boundings
+    if(i5 > x2())  set_x2(i5);
+    if(i6 < y1())  set_y1(i6);
+    if(i6 > y2())  set_y2(i6);
 
     w = phi-beta;
     i5 = i3-int(Length*cos(w));
     i6 = i4-int(Length*sin(w));
     Lines.push_back(qucs::Line(i3, i4, i5, i6, Pen));
-    if(i5 < x1)  x1 = i5;  // keep track of component boundings
-    if(i5 > x2)  x2 = i5;
-    if(i6 < y1)  y1 = i6;
-    if(i6 > y2)  y2 = i6;
+    if(i5 < x1())  set_x1(i5);  // keep track of component boundings
+    if(i5 > x2())  set_x2(i5);
+    if(i6 < y1())  set_y1(i6);
+    if(i6 > y2())  set_y2(i6);
 
     return 1;
   }
@@ -1397,14 +1401,14 @@ int LegacyComponent::analyseLine(const QString& Row, int numProps)
     if(!getBrush(Row, Brush, 8))  return -1;
     Ellips.push_back(qucs::Area(i1, i2, i3, i4, Pen, Brush));
 
-    if(i1 < x1)  x1 = i1;  // keep track of component boundings
-    if(i1 > x2)  x2 = i1;
-    if(i2 < y1)  y1 = i2;
-    if(i2 > y2)  y2 = i2;
-    if(i1+i3 < x1)  x1 = i1+i3;
-    if(i1+i3 > x2)  x2 = i1+i3;
-    if(i2+i4 < y1)  y1 = i2+i4;
-    if(i2+i4 > y2)  y2 = i2+i4;
+    if(i1 < x1())  set_x1(i1);  // keep track of component boundings
+    if(i1 > x2())  set_x2(i1);
+    if(i2 < y1())  set_y1(i2);
+    if(i2 > y2())  set_y2(i2);
+    if(i1+i3 < x1())  set_x1(i1+i3);
+    if(i1+i3 > x2())  set_x2(i1+i3);
+    if(i2+i4 < y1())  set_y1(i2+i4);
+    if(i2+i4 > y2())  set_y2(i2+i4);
     return 1;
   }
   else if(s == "Rectangle") {
@@ -1413,14 +1417,14 @@ int LegacyComponent::analyseLine(const QString& Row, int numProps)
     if(!getBrush(Row, Brush, 8))  return -1;
     Rects.push_back(qucs::Area(i1, i2, i3, i4, Pen, Brush));
 
-    if(i1 < x1)  x1 = i1;  // keep track of component boundings
-    if(i1 > x2)  x2 = i1;
-    if(i2 < y1)  y1 = i2;
-    if(i2 > y2)  y2 = i2;
-    if(i1+i3 < x1)  x1 = i1+i3;
-    if(i1+i3 > x2)  x2 = i1+i3;
-    if(i2+i4 < y1)  y1 = i2+i4;
-    if(i2+i4 > y2)  y2 = i2+i4;
+    if(i1 < x1())  set_x1(i1);  // keep track of component boundings
+    if(i1 > x2())  set_x2(i1);
+    if(i2 < y1())  set_y1(i2);
+    if(i2 > y2())  set_y2(i2);
+    if(i1+i3 < x1())  set_x1(i1+i3);
+    if(i1+i3 > x2())  set_x2(i1+i3);
+    if(i2+i4 < y1())  set_y1(i2+i4);
+    if(i2+i4 > y2())  set_y2(i2+i4);
     return 1;
   }
   else if(s == "Text") {  // must be last in order to reuse "s" *********
@@ -1446,15 +1450,15 @@ int LegacyComponent::analyseLine(const QString& Row, int numProps)
     i4 = i2 + int(float(r.width())  * -Texts.back().mSin)
             + int(float(r.height()) * Texts.back().mCos);
 
-    if(i1 < x1)  x1 = i1;  // keep track of component boundings
-    if(i2 < y1)  y1 = i2;
-    if(i1 > x2)  x2 = i1;
-    if(i2 > y2)  y2 = i2;
+    if(i1 < x1())  set_x1(i1);  // keep track of component boundings
+    if(i2 < y1())  set_y1(i2);
+    if(i1 > x2())  set_x2(i1);
+    if(i2 > y2())  set_y2(i2);
 
-    if(i3 < x1)  x1 = i3;
-    if(i4 < y1)  y1 = i4;
-    if(i3 > x2)  x2 = i3;
-    if(i4 > y2)  y2 = i4;
+    if(i3 < x1())  set_x1(i3);
+    if(i4 < y1())  set_y1(i4);
+    if(i3 > x2())  set_x2(i3);
+    if(i4 > y2())  set_y2(i4);
     return 1;
   }
 
@@ -1571,10 +1575,10 @@ void LegacyComponent::copyComponent(const Component &c)
 { untested();
   Component::copyComponent(c);
   Type = c.Type;
-  x1 = c.x1;
-  y1 = c.y1;
-  x2 = c.x2;
-  y2 = c.y2;
+  set_x1(c.x1());
+  set_y1(c.y1());
+  set_x2(c.x2());
+  set_y2(c.y2());
 
   isActive = c.isActive;
   rotated  = c.rotated;
@@ -1631,8 +1635,8 @@ void MultiViewComponent::recreate(Schematic *Doc)
             if(pl)
             { untested();
               LabelCache.push_back(pl);
-              pl->cx = pp->x + holder->cx;
-              pl->cy = pp->y + holder->cy;
+              pl->set_cx(pp->x + holder->cx());
+              pl->set_cy(pp->y + holder->cy());
             }
             Doc->Nodes->erase(pcc);
           }
@@ -1846,10 +1850,12 @@ void GateComponent::createSymbol()
   Props.front().Value = QString::number(Num);
 
   int xl, xr, y = 10*Num, z;
-  x1 = -30; y1 = -y-3;
-  x2 =  30; y2 =  y+3;
+  set_x1(-30);
+  set_y1(-y-3);
+  set_x2(30);
+  set_y2(y+3);
 
-  set_qucs_text_position(x1+4, y2+4);
+  set_qucs_text_position(x1()+4, y2()+4);
 
   z = 0;
   if(Model.at(0) == 'N')  z = 1;

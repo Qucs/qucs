@@ -1,6 +1,6 @@
 <Qucs Schematic 0.0.21-dev>
 <Properties>
-  <View=0,0,800,800,1,0,0>
+  <View=-54,-10,655,448,1,0,0>
   <Grid=10,10,1>
   <DataSet=wilkinson.dat>
   <DataDisplay=wilkinson.dpl>

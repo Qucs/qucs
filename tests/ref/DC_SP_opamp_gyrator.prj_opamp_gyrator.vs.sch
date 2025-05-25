@@ -1,10 +1,10 @@
 <Qucs Schematic 0.0.21-dev>
 <Properties>
-  <View=0,0,800,800,1,0,0>
+  <View=0,0,1000,800,1,0,0>
   <Grid=10,10,1>
   <DataSet=opamp_gyrator.dat>
   <DataDisplay=opamp_gyrator.dpl>
-  <OpenDisplay=1>
+  <OpenDisplay=0>
   <Script=opamp_gyrator.m>
   <RunScript=0>
   <showFrame=0>

@@ -114,11 +114,11 @@ void Subcircuit::createSymbol()
   set_qucs_text_position(INT_MIN, INT_MIN); // what?
   if(loadSymbol(FileName) > 0) {  // try to load subcircuit symbol
     if(tx() == INT_MIN){
-		set_qucs_text_position(x1+4, ty());
+		set_qucs_text_position(x1()+4, ty());
 	 }else{
 	 }
     if(ty() == INT_MIN){
-		set_qucs_text_position(tx(), y2+4);
+		set_qucs_text_position(tx(), y2()+4);
 	 }else{
 	 }
     // remove unused ports
@@ -164,9 +164,11 @@ void Subcircuit::remakeSymbol(int No)
     y += 60;
   }
 
-  x1 = -30; y1 = -h-2;
-  x2 =  30; y2 =  h+2;
-  set_qucs_text_position(x1+4, y2+4);
+  set_x1(-30);
+  set_y1(-h-2);
+  set_x2(30);
+  set_y2(h+2);
+  set_qucs_text_position(x1()+4, y2()+4);
 }
 
 // ---------------------------------------------------------------------
@@ -209,17 +211,19 @@ int Subcircuit::loadSymbol(const QString& DocName)
     if(Line == "<Symbol>") break;
   }
 
-  x1 = y1 = INT_MAX;
-  x2 = y2 = INT_MIN;
+  set_x1(INT_MAX);
+  set_y1(INT_MAX);
+  set_x2(INT_MIN);
+  set_y2(INT_MIN);
 
   int z=0, Result;
   while(!stream.atEnd()) {
     Line = stream.readLine();
     if(Line == "</Symbol>") {
-      x1 -= 4;   // enlarge component boundings a little
-      x2 += 4;
-      y1 -= 4;
-      y2 += 4;
+      set_x1(x1() - 4);   // enlarge component boundings a little
+      set_x2(x2() + 4);
+      set_y1(y1() - 4);
+      set_y2(y2() + 4);
       return z;      // return number of ports
     }
 

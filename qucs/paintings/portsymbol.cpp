@@ -25,8 +25,8 @@ PortSymbol::PortSymbol(int cx_, int cy_, const QString& numberStr_,
 {
   Name = ".PortSym ";
   isSelected = false;
-  cx = cx_;
-  cy = cy_;
+  set_cx(cx_);
+  set_cy(cy_);
 
   Angel = 0;
   nameStr = nameStr_;
@@ -34,10 +34,10 @@ PortSymbol::PortSymbol(int cx_, int cy_, const QString& numberStr_,
   // get size of text using the screen-compatible metric
   QFontMetrics metrics(QucsSettings.font, 0);
   QSize r = metrics.size(0, nameStr);
-  x1 = -r.width() - 8;
-  y1 = -((r.height() + 8) >> 1);
-  x2 = 8 - x1;
-  y2 = r.height() + 8;
+  set_x1(-r.width() - 8);
+  set_y1(-((r.height() + 8) >> 1));
+  set_x2(8 - x1());
+  set_y2(r.height() + 8);
 }
 
 PortSymbol::~PortSymbol()
@@ -51,37 +51,37 @@ void PortSymbol::paint(ViewPainter *p)
   p->Painter->save();
 
   p->Painter->setPen(QPen(Qt::red,1));  // like open node
-  p->drawEllipse(cx-4, cy-4, 8, 8);
+  p->drawEllipse(cx()-4, cy()-4, 8, 8);
 
   QSize r = p->Painter->fontMetrics().size(0, nameStr);
   int Unit = int(8.0 * p->Scale);
-  x1 = -r.width() - Unit;
-  y1 = -((r.height() + Unit) >> 1);
-  x2 = Unit - x1;
-  y2 = r.height() + Unit;
+  set_x1(-r.width() - Unit);
+  set_y1(-((r.height() + Unit) >> 1));
+  set_x2(Unit - x1());
+  set_y2(r.height() + Unit);
 
-  QTransform Mat(1.0, 0.0, 0.0, 1.0, p->DX + float(cx) * p->Scale,
-                                     p->DY + float(cy) * p->Scale);
+  QTransform Mat(1.0, 0.0, 0.0, 1.0, p->DX + float(cx()) * p->Scale,
+                                     p->DY + float(cy()) * p->Scale);
   p->Painter->setWorldTransform(Mat);
 
   int tmp, tx, ty;
-  tx = x1 + (Unit >> 1);
-  ty = y1 + (Unit >> 1);
+  tx = x1() + (Unit >> 1);
+  ty = y1() + (Unit >> 1);
   switch(Angel) {
     case 90:
-      x1 = y1;
-      y1 = -Unit;
-      tmp = x2;  x2 = y2;  y2 = tmp;
+      set_x1(y1());
+      set_y1(-Unit);
+      tmp = x2();  set_x2(y2());  set_y2(tmp);
       p->Painter->rotate(-90.0); // automatically enables transformation
       break;
     case 180:
-      x1 = -Unit;
+      set_x1(-Unit);
       tx = Unit >> 1;
       break;
     case 270:
       tx = Unit >> 1;
-      tmp = x1;  x1 = y1;  y1 = tmp;
-      tmp = x2;  x2 = y2;  y2 = tmp;
+      tmp = x1();  set_x1(y1());  set_y1(tmp);
+      tmp = x2();  set_x2(y2());  set_y2(tmp);
       p->Painter->rotate(-90.0); // automatically enables transformation
       break;
   }
@@ -93,40 +93,40 @@ void PortSymbol::paint(ViewPainter *p)
   // restore painter state
   p->Painter->restore();
 
-  x1 = int(float(x1) / p->Scale);
-  x2 = int(float(x2) / p->Scale);
-  y1 = int(float(y1) / p->Scale);
-  y2 = int(float(y2) / p->Scale);
+  set_x1(int(float(x1()) / p->Scale));
+  set_x2(int(float(x2()) / p->Scale));
+  set_y1(int(float(y1()) / p->Scale));
+  set_y2(int(float(y2()) / p->Scale));
 
   p->Painter->setPen(Qt::lightGray);
-  p->drawRect(cx+x1, cy+y1, x2, y2);
+  p->drawRect(cx()+x1(), cy()+y1(), x2(), y2());
 
   if(isSelected) {
     p->Painter->setPen(QPen(Qt::darkGray,3));
-    p->drawRoundRect(cx+x1-4, cy+y1-4, x2+8, y2+8);
+    p->drawRoundRect(cx()+x1()-4, cy()+y1()-4, x2()+8, y2()+8);
   }
 }
 
 // --------------------------------------------------------------------------
 void PortSymbol::paintScheme(Schematic *p)
 {
-  p->PostPaintEvent(_Ellipse, cx-4, cy-4, 8, 8);
-  p->PostPaintEvent(_Rect, cx+x1, cy+y1, x2, y2);
+  p->PostPaintEvent(_Ellipse, cx()-4, cy()-4, 8, 8);
+  p->PostPaintEvent(_Rect, cx()+x1(), cy()+y1(), x2(), y2());
 }
 
 // --------------------------------------------------------------------------
 void PortSymbol::getCenter(int& x, int &y)
 {
-  x = cx;
-  y = cy;
+  x = cx();
+  y = cy();
 }
 
 // --------------------------------------------------------------------------
 // Sets the center of the painting to x/y.
 void PortSymbol::setCenter(int x, int y, bool relative)
 {
-  if(relative) { cx += x;  cy += y; }
-  else { cx = x;  cy = y; }
+  if(relative) { set_cx(cx() + x); set_cy(cy() + y); }
+  else { set_cx(x); set_cy(y); }
 }
 
 // --------------------------------------------------------------------------
@@ -136,11 +136,11 @@ bool PortSymbol::load(const QString& s)
 
   QString n;
   n  = s.section(' ',1,1);    // cx
-  cx = n.toInt(&ok);
+  set_cx(n.toInt(&ok));
   if(!ok) return false;
 
   n  = s.section(' ',2,2);    // cy
-  cy = n.toInt(&ok);
+  set_cy(n.toInt(&ok));
   if(!ok) return false;
 
   numberStr  = s.section(' ',3,3);    // number
@@ -157,7 +157,7 @@ bool PortSymbol::load(const QString& s)
 // --------------------------------------------------------------------------
 QString PortSymbol::save()
 {
-  QString s = Name+QString::number(cx)+" "+QString::number(cy)+" ";
+  QString s = Name+QString::number(cx())+" "+QString::number(cy())+" ";
   s += numberStr+" "+QString::number(Angel);
   return s;
 }
@@ -167,7 +167,7 @@ QString PortSymbol::saveCpp()
 {
   QString s =
     QString ("new Port (%1, %2)").
-    arg(cx).arg(cy);
+    arg(cx()).arg(cy());
   s = "Ports.append (" + s + "); /* " + nameStr + " */";
   return s;
 }
@@ -175,7 +175,7 @@ QString PortSymbol::saveCpp()
 QString PortSymbol::saveJSON()
 {
   QString s = QString ("{\"type\" : \"portsymbol\", "
-                       "\"x\" : %1, \"y\" : %2},").arg(cx).arg(cy);
+                       "\"x\" : %1, \"y\" : %2},").arg(cx()).arg(cy());
   return s;
 }
 
@@ -183,10 +183,10 @@ QString PortSymbol::saveJSON()
 // Checks if the coordinates x/y point to the painting.
 bool PortSymbol::getSelected(float fX, float fY, float)
 {
-  if(int(fX) < cx+x1)  return false;
-  if(int(fY) < cy+y1)  return false;
-  if(int(fX) > cx+x1+x2)  return false;
-  if(int(fY) > cy+y1+y2)  return false;
+  if(int(fX) < cx()+x1())  return false;
+  if(int(fY) < cy()+y1())  return false;
+  if(int(fX) > cx()+x1()+x2())  return false;
+  if(int(fY) > cy()+y1()+y2())  return false;
 
   return true;
 }
@@ -194,8 +194,8 @@ bool PortSymbol::getSelected(float fX, float fY, float)
 // --------------------------------------------------------------------------
 void PortSymbol::Bounding(int& _x1, int& _y1, int& _x2, int& _y2)
 {
-  _x1 = cx+x1;     _y1 = cy+y1;
-  _x2 = cx+x1+x2;  _y2 = cy+y1+y2;
+  _x1 = cx()+x1();     _y1 = cy()+y1();
+  _x2 = cx()+x1()+x2();  _y2 = cy()+y1()+y2();
 }
 
 // --------------------------------------------------------------------------

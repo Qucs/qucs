@@ -424,9 +424,9 @@ void Schematic::paintEvent(QPaintEvent * /*event*/)
     int x, y, z;
     for(auto pn = Nodes->begin(); pn != Nodes->end(); ++pn) {
       if(pn->Name.isEmpty()) continue;
-      x = pn->cx;
-      y = pn->cy + 4;
-      z = pn->x1;
+      x = pn->cx();
+      y = pn->cy() + 4;
+      z = pn->x1();
       if(z & 1) x -= Painter.Painter->fontMetrics().horizontalAdvance (pn->Name);
       if(!(z & 2)) {
         y -= (Painter.LineSpacing>>1) + 4;
@@ -758,9 +758,9 @@ void Schematic::paintSchToViewpainter(ViewPainter *p, bool printAll, bool toImag
       int x, y, z;
       for(auto pn = Nodes->begin(); pn != Nodes->end(); ++pn) {
         if(pn->Name.isEmpty()) continue;
-        x = pn->cx;
-        y = pn->cy + 4;
-        z = pn->x1;
+        x = pn->cx();
+        y = pn->cy() + 4;
+        z = pn->x1();
         if(z & 1) x -= p->Painter->fontMetrics().horizontalAdvance(pn->Name);
         if(!(z & 2)) {
           y -= (p->LineSpacing>>1) + 4;
@@ -1088,10 +1088,10 @@ void Schematic::sizeOfAll(int& xmin, int& ymin, int& xmax, int& ymax)
 
   // find boundings of all wires
   for(auto pw = Wires->begin(); pw != Wires->end(); ++pw) {
-    if(pw->x1 < xmin) xmin = pw->x1;
-    if(pw->x2 > xmax) xmax = pw->x2;
-    if(pw->y1 < ymin) ymin = pw->y1;
-    if(pw->y2 > ymax) ymax = pw->y2;
+    if(pw->x1() < xmin) xmin = pw->x1();
+    if(pw->x2() > xmax) xmax = pw->x2();
+    if(pw->y1() < ymin) ymin = pw->y1();
+    if(pw->y2() > ymax) ymax = pw->y2();
 
     auto pl = pw->Label;
     if(pl) {     // check position of wire label
@@ -1171,7 +1171,7 @@ bool Schematic::rotateElements()
         {
           auto pc = std::dynamic_pointer_cast<Component>(pe.ref());
           pc->rotate();   //rotate component !before! rotating its center
-          pc->setCenter(pc->cy - y1 + x1, x1 - pc->cx + y1);
+          pc->setCenter(pc->cy() - y1 + x1, x1 - pc->cx() + y1);
           insertRawComponent(pc);
         }
         break;
@@ -1179,17 +1179,17 @@ bool Schematic::rotateElements()
       case isWire:
         {
           auto pw = std::dynamic_pointer_cast<Wire>(pe.ref());
-          x2 = pw->x1;
-          pw->x1 = pw->y1 - y1 + x1;
-          pw->y1 = x1 - x2 + y1;
-          x2 = pw->x2;
-          pw->x2 = pw->y2 - y1 + x1;
-          pw->y2 = x1 - x2 + y1;
+          x2 = pw->x1();
+          pw->set_x1(pw->y1() - y1 + x1);
+          pw->set_y1(x1 - x2 + y1);
+          x2 = pw->x2();
+          pw->set_x2(pw->y2() - y1 + x1);
+          pw->set_y2(x1 - x2 + y1);
           auto pl = pw->Label;
           if(pl) {
-            x2 = pl->cx;
-            pl->cx = pl->cy - y1 + x1;
-            pl->cy = x1 - x2 + y1;
+            x2 = pl->cx();
+            pl->set_cx(pl->cy() - y1 + x1);
+            pl->set_cy(x1 - x2 + y1);
             if(pl->Type == isHWireLabel)
               pl->Type = isVWireLabel;
             else pl->Type = isHWireLabel;
@@ -1202,22 +1202,22 @@ bool Schematic::rotateElements()
       case isVWireLabel:
         {
           auto pl = std::dynamic_pointer_cast<WireLabel>(pe.ref());
-          x2 = pl->x1;
-          pl->x1 = pl->y1 - y1 + x1;
-          pl->y1 = x1 - x2 + y1;
+          x2 = pl->x1();
+          pl->set_x1(pl->y1() - y1 + x1);
+          pl->set_y1(x1 - x2 + y1);
         }
 	break;
       case isNodeLabel:
         {
           auto pl = std::dynamic_pointer_cast<WireLabel>(pe.ref());
           if(pl->pOwner == 0) {
-            x2 = pl->x1;
-            pl->x1 = pl->y1 - y1 + x1;
-            pl->y1 = x1 - x2 + y1;
+            x2 = pl->x1();
+            pl->set_x1(pl->y1() - y1 + x1);
+            pl->set_y1(x1 - x2 + y1);
           }
-          x2 = pl->cx;
-          pl->cx = pl->cy - y1 + x1;
-          pl->cy = x1 - x2 + y1;
+          x2 = pl->cx();
+          pl->set_cx(pl->cy() - y1 + x1);
+          pl->set_cy(x1 - x2 + y1);
           insertNodeLabel(pl);
         }
         break;
@@ -1266,17 +1266,17 @@ bool Schematic::mirrorXComponents()
         {
           auto pc = std::dynamic_pointer_cast<Component>(pe.ref());
           pc->mirrorX();   // mirror component !before! mirroring its center
-          pc->setCenter(pc->cx, y1 - pc->cy);
+          pc->setCenter(pc->cx(), y1 - pc->cy());
           insertRawComponent(pc);
         }
 	break;
       case isWire:
         {
           auto pw = std::dynamic_pointer_cast<Wire>(pe.ref());
-          pw->y1 = y1 - pw->y1;
-          pw->y2 = y1 - pw->y2;
+          pw->set_y1(y1 - pw->y1());
+          pw->set_y2(y1 - pw->y2());
           auto pl = pw->Label;
-          if(pl)  pl->cy = y1 - pl->cy;
+          if(pl)  pl->set_cy(y1 - pl->cy());
           insertWire(pw);
         }
         break;
@@ -1284,15 +1284,15 @@ bool Schematic::mirrorXComponents()
       case isVWireLabel:
         {
           auto pl = std::dynamic_pointer_cast<WireLabel>(pe.ref());
-          pl->y1 = y1 - pl->y1;
+          pl->set_y1(y1 - pl->y1());
         }
 	break;
       case isNodeLabel:
         {
           auto pl = std::dynamic_pointer_cast<WireLabel>(pe.ref());
           if(pl->pOwner == 0)
-            pl->y1 = y1 - pl->y1;
-          pl->cy = y1 - pl->cy;
+            pl->set_y1(y1 - pl->y1());
+          pl->set_cy(y1 - pl->cy());
           insertNodeLabel(pl);
         }
 	break;
@@ -1335,17 +1335,17 @@ bool Schematic::mirrorYComponents()
         {
           auto pc = std::dynamic_pointer_cast<Component>(pe.ref());
           pc->mirrorY();   // mirror component !before! mirroring its center
-          pc->setCenter(x1 - pc->cx, pc->cy);
+          pc->setCenter(x1 - pc->cx(), pc->cy());
           insertRawComponent(pc);
         }
         break;
       case isWire:
         {
           auto pw = std::dynamic_pointer_cast<Wire>(pe.ref());
-          pw->x1 = x1 - pw->x1;
-          pw->x2 = x1 - pw->x2;
+          pw->set_x1(x1 - pw->x1());
+          pw->set_x2(x1 - pw->x2());
           auto pl = pw->Label;
-          if(pl)  pl->cx = x1 - pl->cx;
+          if(pl)  pl->set_cx(x1 - pl->cx());
           insertWire(pw);
         }
         break;
@@ -1353,15 +1353,15 @@ bool Schematic::mirrorYComponents()
       case isVWireLabel:
         {
           auto pl = std::dynamic_pointer_cast<WireLabel>(pe.ref());
-          pl->x1 = x1 - pl->x1;
+          pl->set_x1(x1 - pl->x1());
         }
         break;
       case isNodeLabel:
         {
           auto pl = std::dynamic_pointer_cast<WireLabel>(pe.ref());
           if(pl->pOwner == 0)
-            pl->x1 = x1 - pl->x1;
-          pl->cx = x1 - pl->cx;
+            pl->set_x1(x1 - pl->x1());
+          pl->set_cx(x1 - pl->cx());
           insertNodeLabel(pl);
         }
         break;
@@ -1855,23 +1855,27 @@ bool Schematic::elementsOnGrid()
           }
       }
 
-      x = pc->cx;
-      y = pc->cy;
+      x = pc->cx();
+      y = pc->cy();
       ComponentList::holder compHolder = pc.ref();
       deleteComp(pc);
       pc = pcNext;
       --pc;
-      setOnGrid(compHolder->cx, compHolder->cy);
+      int tmpcx = compHolder->cx();
+      int tmpcy = compHolder->cy();
+      setOnGrid(tmpcx, tmpcy);
+      compHolder->set_cx(tmpcx);
+      compHolder->set_cy(tmpcy);
       insertRawComponent(compHolder);
       compHolder->isSelected = false;
       count = true;
 
-      x -= pc->cx;
-      y -= pc->cy;    // re-insert node labels and correct position
+      x -= pc->cx();
+      y -= pc->cy();    // re-insert node labels and correct position
       for(auto l = LabelCache.begin(); l != LabelCache.end(); ++l) {
         auto pl = l.ref();
-        pl->cx -= x;
-        pl->cy -= y;
+        pl->set_cx(pl->cx() - x);
+        pl->set_cy(pl->cy() - y);
         insertNodeLabel(pl);
       }
       LabelCache.clear();
@@ -1903,17 +1907,34 @@ bool Schematic::elementsOnGrid()
 
       WireList::holder wireHolder = pw.ref();
       deleteWire(pw);
-      setOnGrid(wireHolder->x1, wireHolder->y1);
-      setOnGrid(wireHolder->x2, wireHolder->y2);
+      int tmpx1 = wireHolder->x1();
+      int tmpy1 = wireHolder->y1();
+      int tmpx2 = wireHolder->x2();
+      int tmpy2 = wireHolder->y2();
+      setOnGrid(tmpx1, tmpy1);
+      setOnGrid(tmpx2, tmpy2);
+      wireHolder->set_x1(tmpx1);
+      wireHolder->set_y1(tmpy1);
+      wireHolder->set_x2(tmpx2);
+      wireHolder->set_y2(tmpy2);
 
       insertWire(wireHolder);
       wireHolder->isSelected = false;
       count = true;
-      if(pl)
-        setOnGrid(pl->cx, pl->cy);
+      if(pl) {
+        int tmpcx = pl->cx();
+        int tmpcy = pl->cy();
+        setOnGrid(tmpcx, tmpcy);
+        pl->set_cx(tmpcx);
+        pl->set_cy(tmpcy);
+      }
 
       if(pLabel) {
-        setOnGrid(pLabel->cx, pLabel->cy);
+        int tmpcx = pLabel->cx();
+        int tmpcy = pLabel->cy();
+        setOnGrid(tmpcx, tmpcy);
+        pLabel->set_cx(tmpcx);
+        pLabel->set_cy(tmpcy);
         insertNodeLabel(pLabel);
       }
     }
@@ -1921,7 +1942,11 @@ bool Schematic::elementsOnGrid()
     if(pl) {
       pw->Label = pl;
       if(pl->isSelected) {
-        setOnGrid(pl->x1, pl->y1);
+        int tmpcx = pl->cx();
+        int tmpcy = pl->cy();
+        setOnGrid(tmpcx, tmpcy);
+        pl->set_cx(tmpcx);
+        pl->set_cy(tmpcy);
         pl->isSelected = false;
         count = true;
       }
@@ -1932,7 +1957,11 @@ bool Schematic::elementsOnGrid()
   for(auto pn = Nodes->begin(); pn != Nodes->end(); ++pn)
     if(pn->Label)
       if(pn->Label->isSelected) {
-        setOnGrid(pn->Label->x1, pn->Label->y1);
+        int tmpcx = pn->Label->cx();
+        int tmpcy = pn->Label->cy();
+        setOnGrid(tmpcx, tmpcy);
+        pn->Label->set_cx(tmpcx);
+        pn->Label->set_cy(tmpcy);
         pn->Label->isSelected = false;
         count = true;
       }
@@ -1941,7 +1970,11 @@ bool Schematic::elementsOnGrid()
   for(auto pd = Diagrams->end(); pd != Diagrams->begin(); ) {
     --pd;
     if(pd->isSelected) {
-      setOnGrid(pd->cx, pd->cy);
+      int tmpcx = pd->cx();
+      int tmpcy = pd->cy();
+      setOnGrid(tmpcx, tmpcy);
+      pd->set_cx(tmpcx);
+      pd->set_cy(tmpcy);
       pd->isSelected = false;
       count = true;
     }
@@ -1950,11 +1983,11 @@ bool Schematic::elementsOnGrid()
       // test markers of diagram
       for(auto pm = pg->Markers.begin(); pm != pg->Markers.end(); ++pm)
         if(pm->isSelected) {
-	  x = pm->x1 + pd->cx;
-	  y = pm->y1 + pd->cy;
+	  x = pm->x1() + pd->cx();
+	  y = pm->y1() + pd->cy();
 	  setOnGrid(x, y);
-	  pm->x1 = x - pd->cx;
-	  pm->y1 = y - pd->cy;
+	  pm->set_x1(x - pd->cx());
+	  pm->set_y1(y - pd->cy());
 	  pm->isSelected = false;
 	  count = true;
         }
@@ -1964,7 +1997,11 @@ bool Schematic::elementsOnGrid()
   for(auto pa = Paintings->end(); pa != Paintings->begin(); ) {
     --pa;
     if(pa->isSelected) {
-      setOnGrid(pa->cx, pa->cy);
+      int tmpcx = pa->cx();
+      int tmpcy = pa->cy();
+      setOnGrid(tmpcx, tmpcy);
+      pa->set_cx(tmpcx);
+      pa->set_cy(tmpcy);
       pa->isSelected = false;
       count = true;
     }

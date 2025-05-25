@@ -34,14 +34,14 @@
 
 PolarDiagram::PolarDiagram(int _cx, int _cy) : Diagram(_cx, _cy)
 {
-  x1 = 10;     // position of label text
-  y1 = 2;
-  x2 = 200;    // initial size of diagram
-  y2 = 200;
+  set_x1(10);     // position of label text
+  set_y1(2);
+  set_x2(200);    // initial size of diagram
+  set_y2(200);
   x3 = 207;    // with some distance for right axes text
   Name = "Polar";
 
-  Arcs.push_back(qucs::Arc(0, y2, x2, y2, 0, 16*360, QPen(Qt::black,0)));
+  Arcs.push_back(qucs::Arc(0, y2(), x2(), y2(), 0, 16*360, QPen(Qt::black,0)));
 //  calcDiagram();
 }
 
@@ -55,14 +55,14 @@ void PolarDiagram::calcCoordinate(const double*, const double* yD, const double*
 {
   double yr = yD[0];
   double yi = yD[1];
-  *px = float((yr/yAxis.up + 1.0)*double(x2)/2.0);
-  *py = float((yi/yAxis.up + 1.0)*double(y2)/2.0);
+  *px = float((yr/yAxis.up + 1.0)*double(x2())/2.0);
+  *py = float((yi/yAxis.up + 1.0)*double(y2())/2.0);
 
   if(std::isfinite(*px))
     if(std::isfinite(*py))
       return;
 
-  *px = *py = float(cx) / 2.0;
+  *px = *py = float(cx()) / 2.0;
 }
 
 // --------------------------------------------------------------
@@ -82,9 +82,9 @@ int PolarDiagram::calcDiagram()
   Arcs.clear();
 
   // x line
-  Lines.push_back(qucs::Line(0, y2>>1, x2, y2>>1, GridPen));
+  Lines.push_back(qucs::Line(0, y2()>>1, x2(), y2()>>1, GridPen));
 
-  x3 = x2 + 7;
+  x3 = x2() + 7;
   createPolarDiagram(&yAxis);
   return 3;
 }

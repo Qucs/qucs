@@ -1,10 +1,10 @@
 <Qucs Schematic 0.0.21-dev>
 <Properties>
-  <View=0,0,800,800,1,0,0>
+  <View=86,0,820,483,1.23842,0,0>
   <Grid=10,10,1>
   <DataSet=test_circuit.dat>
   <DataDisplay=test_circuit.dpl>
-  <OpenDisplay=1>
+  <OpenDisplay=0>
   <Script=test_circuit.m>
   <RunScript=0>
   <showFrame=0>

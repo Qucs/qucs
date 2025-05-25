@@ -1,4 +1,4 @@
-(* qucs_ViewX1=0, qucs_ViewY1=0, qucs_ViewX2=800, qucs_ViewY2=800, qucs_Scale=1, qucs_tmpViewX1=-200, qucs_tmpViewY1=-200, qucs_GridX=10, qucs_GridY=10, qucs_GridOn=1, qucs_DataSet="wattmeter.dat", qucs_DataDisplay="wattmeter.dpl", qucs_SimOpenDpl=1, qucs_Script="wattmeter.m", qucs_SimRunScript=0, qucs_showFrame=0, qucs_FrameText0="Title", qucs_FrameText1="Drawn By:", qucs_FrameText2="Date:", qucs_FrameText3="Revision:" *) module wattmeter();
+(* qucs_ViewX1=0, qucs_ViewY1=-180, qucs_ViewX2=1524, qucs_ViewY2=908, qucs_Scale=0.909091, qucs_tmpViewX1=0, qucs_tmpViewY1=57, qucs_GridX=10, qucs_GridY=10, qucs_GridOn=1, qucs_DataSet="wattmeter.dat", qucs_DataDisplay="wattmeter.dpl", qucs_SimOpenDpl=0, qucs_Script="wattmeter.m", qucs_SimRunScript=0, qucs_showFrame=0, qucs_FrameText0="Title", qucs_FrameText1="Drawn By:", qucs_FrameText2="Date:", qucs_FrameText3="Revision:" *) module wattmeter();
     wire n_56_247;
     wire n_56_307;
     wire n_56_437;

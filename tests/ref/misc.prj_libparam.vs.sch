@@ -2,10 +2,10 @@
 <Properties>
   <View=0,0,800,800,1,0,0>
   <Grid=10,10,1>
-  <DataSet=libparam.dat>
-  <DataDisplay=libparam.dpl>
-  <OpenDisplay=1>
-  <Script=libparam.m>
+  <DataSet=test_circuit.dat>
+  <DataDisplay=test_circuit.dpl>
+  <OpenDisplay=0>
+  <Script=test_circuit.m>
   <RunScript=0>
   <showFrame=0>
   <FrameText0=Title>

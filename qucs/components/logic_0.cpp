@@ -28,7 +28,7 @@ logic_0::logic_0()
     +" ("+QObject::tr ("V")+")"));
 
   createSymbol ();
-  set_qucs_text_position(x1+4, y2+4);
+  set_qucs_text_position(x1()+4, y2()+4);
   Model = "logic_0";
   Name  = "S";
 }
@@ -63,8 +63,10 @@ void logic_0::createSymbol()
 
   Ports.push_back(qucs::Port(  0,  0)); // L0
 
-  x1 = -39; y1 = -14;
-  x2 = 0;   y2 =  14;
+  set_x1(-39);
+  set_y1(-14);
+  set_x2(0);
+  set_y2(14);
 }
 
 QString logic_0::vhdlCode( int )

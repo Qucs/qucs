@@ -1,4 +1,4 @@
-(* qucs_ViewX1=0, qucs_ViewY1=0, qucs_ViewX2=800, qucs_ViewY2=800, qucs_Scale=1, qucs_tmpViewX1=-200, qucs_tmpViewY1=-200, qucs_GridX=10, qucs_GridY=10, qucs_GridOn=1, qucs_DataSet="singleOPV.dat", qucs_DataDisplay="singleOPV.dpl", qucs_SimOpenDpl=1, qucs_Script="singleOPV.m", qucs_SimRunScript=0, qucs_showFrame=0, qucs_FrameText0="Title", qucs_FrameText1="Drawn By:", qucs_FrameText2="Date:", qucs_FrameText3="Revision:" *) module singleOPV(.P3(n_50_60), .P4(n_50_400), .P6(n_540_230), .P1(n_50_230), .P2(n_50_170));
+(* qucs_ViewX1=-67, qucs_ViewY1=12, qucs_ViewX2=623, qucs_ViewY2=540, qucs_Scale=1, qucs_tmpViewX1=0, qucs_tmpViewY1=0, qucs_GridX=10, qucs_GridY=10, qucs_GridOn=1, qucs_DataSet="singleOPV.dat", qucs_DataDisplay="singleOPV.dpl", qucs_SimOpenDpl=1, qucs_Script="singleOPV.m", qucs_SimRunScript=0, qucs_showFrame=0, qucs_FrameText0="Title", qucs_FrameText1="Drawn By:", qucs_FrameText2="Date:", qucs_FrameText3="Revision:" *) module singleOPV(.P3(n_50_60), .P4(n_50_400), .P6(n_540_230), .P1(n_50_230), .P2(n_50_170));
     inout n_50_60;
     inout n_50_400;
     inout n_540_230;
