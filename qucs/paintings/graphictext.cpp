@@ -379,7 +379,7 @@ std::string GraphicText::attr_get()const
   ret+="S0_text=\"";
   ret+=QString(Text).replace("\n","\\n").replace("\"","\\\"").toStdString();// Otherwise the text will be overwritten";
   ret+="\"";
-{ untested();
+{
   ret+=", ";
   ret+="qucs_font_color=\""+Color.name().toStdString()+"\"";
   ret+=", ";
@@ -391,7 +391,7 @@ std::string GraphicText::attr_get()const
 }
 
 void GraphicText::set_attribute(std::string name, std::string value)
-{ untested();
+{
   if(name=="S0_text" && value.size()) {
     Text=QString::fromStdString(value).replace("\\n","\n").replace("\\\"","\"");
   } else if(name=="qucs_font_color") {

@@ -97,10 +97,10 @@ void Painting::set_attribute(std::string name, std::string value)
   else if(name=="S0_y") {
     set_cy(std::stoi(value));
   }
-  else if(name=="qucs_w") { untested();
+  else if(name=="qucs_w") {
     set_x2(std::stoi(value));
   }
-  else if(name=="qucs_h") { untested();
+  else if(name=="qucs_h") {
     set_y2(std::stoi(value));
   }
   else {}

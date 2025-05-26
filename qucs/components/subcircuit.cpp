@@ -55,7 +55,7 @@ Component* Subcircuit::newOne()
 
 // -------------------------------------------------------
 std::string Subcircuit::dev_type() const
-{ untested();
+{
   assert(Props.size());
   QString f = misc::properFileName(Props.front().Value);
   return misc::properName(f).toStdString();

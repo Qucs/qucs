@@ -19,7 +19,7 @@
 #if TRACE_FUNCTION_CALLS
 #define trace_method_calls() qInfo()<<__FILE__ <<":"<<__func__
 #else
-#define trace_method_calls() {}
+#define trace_method_calls() { untested();}
 #endif
 
 struct outputStream{
@@ -76,7 +76,7 @@ static void print_args(outputStream& o, Component const* x)
   o << " #(";
   if(x) {
     QString sep = "";
-    //for (int ii = x->param_count() - 1; ii >= 0; --ii) {
+    //for (int ii = x->param_count() - 1; ii >= 0; --ii) { untested();
     for (int ii = 0; ii < x->param_count(); ++ii) {
       if (x->param_is_printable(ii)) {
         o << sep;
@@ -98,7 +98,7 @@ void dump_identifier(outputStream& o, S const& name)
 
   if(isalpha(name[0])){
   }else if(name[0] == '$'){ untested();
-  }else if(name[0] == '_'){ untested();
+  }else if(name[0] == '_'){
   }else{
     plain = false;
   }
@@ -116,7 +116,7 @@ void dump_identifier(outputStream& o, S const& name)
   }else{
     o << '\\';
     for(size_t i=0; i<name.size(); ++i){
-      if(name[i] == '\\'){
+      if(name[i] == '\\'){ untested();
   o << '\\';
       }else{
       }
@@ -139,7 +139,7 @@ static std::string parse_identifier(CS& cmd, std::string const& term)
   cmd.skipbl();
   std::string id;
 
-  if(cmd.is_digit()) {
+  if(cmd.is_digit()) { untested();
     cmd.warn(bDANGER, "invalid identifier");
   }else{
   }
@@ -147,8 +147,8 @@ static std::string parse_identifier(CS& cmd, std::string const& term)
   bool esc = cmd.skip1('\\');
 
   while(esc && cmd.more()) {
-    if(cmd.skip1('\\')){
-      if(cmd.skip1('\\')){
+    if(cmd.skip1('\\')){ untested();
+      if(cmd.skip1('\\')){ untested();
   id += "\\";
       }else{ untested();
   cmd.warn(bDANGER, "invalid escaped char");
@@ -159,7 +159,7 @@ static std::string parse_identifier(CS& cmd, std::string const& term)
 
     if(cmd.skip1(" \t\f")){
       break;
-    }else{
+    }else{ untested();
     }
   }
 
@@ -188,7 +188,7 @@ void dump_attributes(outputStream& stream, T const* x)
   }else{
   }
   if(c) {
-    { untested();
+    {
       stream << "qucs_visible=\"";
       for (int ii = 0; ii < c->param_count(); ++ii) {
         stream << c->param_is_visible(ii);
@@ -221,7 +221,7 @@ void dump_attributes(outputStream& stream, T const* x)
       .arg(w->ports(0)->cy())
       .arg(w->ports(1)->cx())
       .arg(w->ports(1)->cy());
-  } else {
+  } else { untested();
     // what?
   }
   stream << QString(" *) ");
@@ -255,7 +255,7 @@ static void dumpDeclaration(outputStream& stream, Element const* e)
   }else if(w){
     // BUG. Wire is not a Component.
     stream << wirelabel(w);
-  }else{
+  }else{ untested();
     unreachable();
   }
   stream << " ( ";
@@ -270,7 +270,7 @@ static void dumpDeclaration(outputStream& stream, Element const* e)
     stream << w->ports(0)->label();
     stream << ", ";
     stream << w->ports(1)->label();
-  } else{
+  } else{ untested();
     unreachable();
   }
   stream << " );\n";
@@ -279,7 +279,7 @@ static void dumpDeclaration(outputStream& stream, Element const* e)
 static void dumpPainting(outputStream& stream, Element const* p)
 {
   static int text_counter=1;
-  { untested();
+  {
   static int graphics_counter=1;
   stream << "    "
          << "(* "
@@ -292,7 +292,7 @@ static void dumpPainting(outputStream& stream, Element const* p)
          << "qucs_type=\""+p->dev_type()+"\"";
   if(p->attr_get()!="") {
     stream << ", " << p->attr_get();
-  } else {}
+  } else { untested();}
   stream << " *)";
   if(p->dev_type()=="Text") {
     stream << " S__text #()"
@@ -335,7 +335,7 @@ int Schematic::saveVerilogDocument(QFile *file)
   QTextStream Qs(file);
   outputStream stream(Qs);
   QString module_name = QFileInfo(DocName).baseName();
-  if(DocName.contains(".prj_")) {
+  if(DocName.contains(".prj_")) { untested();
     module_name = DocName.split(".prj_").at(1);
     module_name.replace(".sch","");
     module_name.replace(".vs","");
@@ -395,8 +395,8 @@ int Schematic::saveVerilogDocument(QFile *file)
 }
 
 void skip_attributes(CS& cmd)
-{
-  while (cmd >> "(*") {
+{ untested();
+  while (cmd >> "(*") { untested();
     cmd.skipto1('*') && (cmd >> "*)");
   }
 }
@@ -429,16 +429,16 @@ void set_attribute(Schematic* x, std::string name, std::string value)
 
 template <class T>
 void parse_attributes(CS& cmd, T* x)
-{
+{ untested();
   assert(x);
   incomplete();
-  while (cmd >> "(*") {
-    while(cmd.ns_more() && !(cmd >> ",") && !(cmd >> "*)")) {
+  while (cmd >> "(*") { untested();
+    while(cmd.ns_more() && !(cmd >> ",") && !(cmd >> "*)")) { untested();
       std::string name, value;
       cmd >> name;
-      if(cmd >> "="){
+      if(cmd >> "="){ untested();
         cmd >> value;
-      }else{
+      }else{ untested();
         value = "1";
       }
       set_attribute(x, name, value);
@@ -448,14 +448,14 @@ void parse_attributes(CS& cmd, T* x)
 
 // BUG. need extra function, Wire is not a Component.
 void parse_type(CS& cmd, Wire* x)
-{
+{ untested();
   incomplete();
   (void)cmd;
   (void)x;
 }
 
 void parse_type(CS& cmd, Component* x)
-{
+{ untested();
   assert(x);
   //incomplete();
   std::string new_type;
@@ -549,13 +549,13 @@ void parse_ports(CS& cmd, Component* x, bool all_new)
           std::string value;
           cmd >> value;
           x->set_port_by_index(index, value);
-          if (all_new) {
+          if (all_new) { untested();
             //    if (x->node_is_grounded(index)) { untested();
             //      cmd.warn(bDANGER, here, "node 0 not allowed here");
             //    }else
             //if (x->subckt() && int(x->subckt()->nodes()->size()) != index+1) { untested();
             //  cmd.warn(bDANGER, here, "duplicate port name, skipping");
-            //}else{
+            //}else{ untested();
               ++index;
             //}
           }else{
@@ -622,9 +622,9 @@ class inspect_attributes {
   std::string _type;
   std::vector<std::pair<std::string,std::string>> _attr;
 public:
-  explicit inspect_attributes(CS& cmd) { untested();
-    while (cmd >> "(*") { untested();
-      while(cmd.ns_more() && !(cmd >> ",") && !(cmd >> "*)")) { untested();
+  explicit inspect_attributes(CS& cmd) {
+    while (cmd >> "(*") {
+      while(cmd.ns_more() && !(cmd >> ",") && !(cmd >> "*)")) {
 	std::string name, value;
 	cmd >> name;
         if(cmd >> "="){
@@ -634,9 +634,9 @@ public:
 	}
   _attr.push_back(std::make_pair(name,value));
 	trace2("inspect", name, value);
-	if(name=="qucs_type") { untested();
+	if(name=="qucs_type") {
 	  _type = value;
-	}else{ untested();
+	}else{
 	}
       }
     }
@@ -655,7 +655,7 @@ std::shared_ptr<Element> clone_instance(std::string const& type)
 {
   QString qtype = QString::fromStdString(type);
   std::shared_ptr<Component> x = Module::getComponent(qtype); // BUG. need proper dispatcher.
-  { untested();
+  {
   if(x) {
     return x;
   } else {
@@ -666,7 +666,7 @@ std::shared_ptr<Element> clone_instance(std::string const& type)
 }
 
 bool readVerilog(CS &cmd, Schematic*s)
-{ untested();
+{
   trace0("readVerilog0");
   assert(s);
   // todo: catch ExceptionEOF.
@@ -674,7 +674,7 @@ bool readVerilog(CS &cmd, Schematic*s)
     cmd.read_line();
     inspect_attributes attr(cmd);
     trace1("inspected", cmd.tail());
-    if(cmd>>"module") { untested();
+    if(cmd>>"module") {
       attr.export_attrs(s);
       cmd >> ';';
     }else if(cmd>>"endmodule"){
@@ -697,7 +697,7 @@ bool readVerilog(CS &cmd, Schematic*s)
           attr.export_attrs(w);
           parse_instance(cmd, w);
           s->pushBack(w);
-        }else{
+        }else{ untested();
 		  }
       }else if(auto x = dynamic_cast<Component*>(inst.get())) {
 	trace3("readVerilog, gotComponent", type, x->tx(), x->ty());
@@ -709,7 +709,7 @@ bool readVerilog(CS &cmd, Schematic*s)
 	// setting text position to 0,0 for now.
 	x->set_qucs_text_position(0, 0);
 	s->pushBack(std::dynamic_pointer_cast<Component>(inst)); // (yikes)
-      }else if(dynamic_cast<Painting*>(inst.get())) { untested();
+      }else if(dynamic_cast<Painting*>(inst.get())) {
         auto pe = std::dynamic_pointer_cast<Painting>(inst);
         attr.export_attrs(pe.get());
         cmd >> ';';

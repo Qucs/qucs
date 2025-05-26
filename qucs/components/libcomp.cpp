@@ -72,7 +72,7 @@ std::string LibComp::param_name(int i) const
 		return "Lib"; // BUG, it's a file name
 	}else if(i==1){
 		return "Comp"; // BUG, isn't this the type?
-	}else{ untested();
+	}else{
 		return Component::param_name(i);
 	}
 }
@@ -102,14 +102,14 @@ Component* LibComp::newOne()
 
 // ---------------------------------------------------------------------
 std::string LibComp::dev_type() const
-{ untested();
+{
 	assert((Props.size() > 1));
 	return prop(1).Value.toStdString();
 }
 
 // ---------------------------------------------------------------------
 void LibComp::set_dev_type(std::string const& t)
-{ untested();
+{
 	assert((Props.size() > 1));
 	prop(1).Value = QString::fromStdString(t);
 }

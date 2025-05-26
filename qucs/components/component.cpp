@@ -857,7 +857,7 @@ void Component::set_attribute(std::string name, std::string value)
     set_qucs_rotated(std::stoi(value));
   }
   else
-  if(name == "qucs_visible"){ untested();
+  if(name == "qucs_visible"){
     _qucs_p_visibility = value;
   }
 }
@@ -880,7 +880,7 @@ void Component::apply_qucs_values()
     set_cy(_qucs_y1);
   }
   auto pp=Props.begin();
-  for(char& c : _qucs_p_visibility) { untested();
+  for(char& c : _qucs_p_visibility) {
     if(pp==Props.end()) {
       scope()->warn(0,"Too many visibility flags in component "+Name.toStdString());
       break;
@@ -911,7 +911,7 @@ bool Component::param_is_printable(int) const
 }
 
 bool Component::param_is_visible(int i) const
-{ untested();
+{
   assert(i<int(Props.size()));
   auto it = Props.begin();
   // BUG: Missing random access

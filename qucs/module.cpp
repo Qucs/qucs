@@ -82,8 +82,8 @@ std::shared_ptr<Painting> Module::getPainting(QString Name)
   else if(Name == ".PortSym") {untested(); p = new PortSymbol(); }
   else if(Name == ".ID") {untested(); p = new ID_Text(); }
   else if(Name == "Text") { p = new GraphicText(); }
-  else if(Name == "Rectangle") {untested(); p = new Rectangle(); }
-  else if(Name == "Arrow") {untested(); p = new Arrow(); }
+  else if(Name == "Rectangle") { p = new Rectangle(); }
+  else if(Name == "Arrow") { p = new Arrow(); }
   else if(Name == "Ellipse") {untested(); p = new Ellipse(); }
   else {}
   return std::shared_ptr<Painting>(p);

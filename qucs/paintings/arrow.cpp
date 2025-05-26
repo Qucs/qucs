@@ -539,7 +539,7 @@ bool Arrow::Dialog()
 
 // -----------------------------------------------------------------------
 std::string Arrow::attr_get()const
-{ untested();
+{
   std::string ret;
   ret+="qucs_pen_color=\""+Pen.color().name().toStdString()+"\"";
   ret+=", ";
@@ -552,7 +552,7 @@ std::string Arrow::attr_get()const
 }
 
 void Arrow::set_attribute(std::string name, std::string value)
-{ untested();
+{
   if(name=="qucs_pen_color") {
     QColor co;
     co.setNamedColor(QString::fromStdString(value));

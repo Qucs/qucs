@@ -77,7 +77,7 @@ bool Schematic::readLegacy(QFile &file) {
 }
 
 void Schematic::set_attribute(std::string name, std::string value)
-{ untested();
+{
   if("qucs_ViewX1"==name) {
     ViewX1=std::stoi(value);
   } else if ("qucs_ViewY1"==name) {
