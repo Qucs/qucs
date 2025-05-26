@@ -611,10 +611,6 @@ template <class T>
 void parse_instance(CS& cmd, T* x)
 {
   assert(x);
-  cmd.reset();
-  parse_attributes(cmd, x);
-  x->apply_qucs_values();
-  parse_type(cmd, x);
   parse_args_instance(cmd, x);
   parse_label(cmd, x);
   parse_ports(cmd, x, false/*allow dups*/);
@@ -624,6 +620,7 @@ void parse_instance(CS& cmd, T* x)
 
 class inspect_attributes {
   std::string _type;
+  std::vector<std::pair<std::string,std::string>> _attr;
 public:
   explicit inspect_attributes(CS& cmd) { untested();
     while (cmd >> "(*") { untested();
@@ -635,6 +632,7 @@ public:
 	}else{
 	  value = "1";
 	}
+  _attr.push_back(std::make_pair(name,value));
 	trace2("inspect", name, value);
 	if(name=="qucs_type") { untested();
 	  _type = value;
@@ -643,7 +641,12 @@ public:
       }
     }
   }
-
+  template<class T>
+  void export_attrs(T* x)const {
+    for(auto p: _attr) {
+      set_attribute(x, p.first, p.second);
+    }
+  }
   std::string type()const {return _type;}
   bool has_type()const {return _type.size();}
 };
@@ -672,30 +675,35 @@ bool readVerilog(CS &cmd, Schematic*s)
     inspect_attributes attr(cmd);
     trace1("inspected", cmd.tail());
     if(cmd>>"module") { untested();
-      cmd.reset();
-      parse_attributes(cmd, s);
+      attr.export_attrs(s);
+      cmd >> ';';
     }else if(cmd>>"endmodule"){
       //ignore for now;
     }else{
       std::string type;
       type = parse_identifier(cmd, ",=(){};");
+      std::shared_ptr<Element> inst;
       if(attr.has_type()){
-	type = attr.type();
+        inst = clone_instance(attr.type());
       }else{
+        inst = clone_instance(type);
       }
-      std::shared_ptr<Element> inst = clone_instance(type);
 
       if(type=="wire") {
 	 // BUG: Not a component
       }else if(type=="net") {
         Wire* w = new Wire(0,0,0,0, (Node*)4,(Node*)4);
         if(w) {
+          attr.export_attrs(w);
           parse_instance(cmd, w);
           s->pushBack(w);
         }else{
 		  }
       }else if(auto x = dynamic_cast<Component*>(inst.get())) {
 	trace3("readVerilog, gotComponent", type, x->tx(), x->ty());
+  attr.export_attrs(x);
+  x->apply_qucs_values();
+  x->set_dev_type(type);
 	/*x = */ parse_instance(cmd, x);
 	// BUG: Gives inconsisten values when generating refs
 	// setting text position to 0,0 for now.
@@ -703,8 +711,8 @@ bool readVerilog(CS &cmd, Schematic*s)
 	s->pushBack(std::dynamic_pointer_cast<Component>(inst)); // (yikes)
       }else if(dynamic_cast<Painting*>(inst.get())) { untested();
         auto pe = std::dynamic_pointer_cast<Painting>(inst);
-        cmd.reset();
-        parse_attributes(cmd, pe.get());
+        attr.export_attrs(pe.get());
+        cmd >> ';';
         s->pushBack(pe);
       }else{
 	incomplete();
