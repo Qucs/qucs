@@ -427,42 +427,6 @@ void set_attribute(Schematic* x, std::string name, std::string value)
   x->set_attribute(name, value);
 }
 
-template <class T>
-void parse_attributes(CS& cmd, T* x)
-{ untested();
-  assert(x);
-  incomplete();
-  while (cmd >> "(*") { untested();
-    while(cmd.ns_more() && !(cmd >> ",") && !(cmd >> "*)")) { untested();
-      std::string name, value;
-      cmd >> name;
-      if(cmd >> "="){ untested();
-        cmd >> value;
-      }else{ untested();
-        value = "1";
-      }
-      set_attribute(x, name, value);
-    }
-  }
-}
-
-// BUG. need extra function, Wire is not a Component.
-void parse_type(CS& cmd, Wire* x)
-{ untested();
-  incomplete();
-  (void)cmd;
-  (void)x;
-}
-
-void parse_type(CS& cmd, Component* x)
-{ untested();
-  assert(x);
-  //incomplete();
-  std::string new_type;
-  new_type = parse_identifier(cmd, ",=(){};");
-  x->set_dev_type(new_type);
-}
-
 // BUG. need extra function, Wire is not a Component.
 void parse_args_instance(CS& cmd, Wire* x)
 {
