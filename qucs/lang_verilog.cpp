@@ -665,9 +665,9 @@ bool readVerilog(CS &cmd, Schematic*s)
 		  }
       }else if(auto x = dynamic_cast<Component*>(inst.get())) {
 	trace3("readVerilog, gotComponent", type, x->tx(), x->ty());
-  attr.export_attrs(x);
-  x->apply_qucs_values();
-  x->set_dev_type(type);
+	attr.export_attrs(x);
+	x->apply_qucs_values();
+	x->set_dev_type(type);
 	/*x = */ parse_instance(cmd, x);
 	// BUG: Gives inconsisten values when generating refs
 	// setting text position to 0,0 for now.
