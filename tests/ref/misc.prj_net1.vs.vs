@@ -1,0 +1,20 @@
+(* qucs_ViewX1=-262, qucs_ViewY1=-63, qucs_ViewX2=3139, qucs_ViewY2=1690, qucs_Scale=2.10981, qucs_tmpViewX1=0, qucs_tmpViewY1=0, qucs_GridX=10, qucs_GridY=10, qucs_GridOn=1, qucs_DataSet="short_circuit.dat", qucs_DataDisplay="short_circuit.dpl", qucs_SimOpenDpl=1, qucs_Script="short_circuit.m", qucs_SimRunScript=0, qucs_showFrame=0, qucs_FrameText0="Title", qucs_FrameText1="Drawn By:", qucs_FrameText2="Date:", qucs_FrameText3="Revision:" *) module net1();
+    wire n_70_170;
+    wire n_130_170;
+    wire n_320_170;
+    wire n_380_170;
+    wire n_0_170;
+    wire n_320_30;
+    wire n_260_30;
+    wire n_130_200;
+    wire n_180_200;
+    (* qucs_mirrored=0, qucs_rotated=0, qucs_visible="100000", S0_x1=70, S0_y1=170, S0_x2=130, S0_y2=170 *) R #(.R(50 Ohm),.Temp(26.85),.Tc1(0.0),.Tc2(0.0),.Tnom(26.85)) R1 ( n_70_170, n_130_170 );
+    (* qucs_mirrored=0, qucs_rotated=0, qucs_visible="100000", S0_x1=320, S0_y1=170, S0_x2=380, S0_y2=170 *) R #(.R(50 Ohm),.Temp(26.85),.Tc1(0.0),.Tc2(0.0),.Tnom(26.85)) R2 ( n_320_170, n_380_170 );
+    (* qucs_mirrored=0, qucs_rotated=0, qucs_visible="", S0_x1=380, S0_y1=170 *) GND #() \*  ( n_380_170 );
+    (* qucs_mirrored=0, qucs_rotated=0, qucs_visible="", S0_x1=0, S0_y1=170 *) GND #() \*  ( n_0_170 );
+    (* S0_x1=320, S0_y1=30, S0_x2=320, S0_y2=170 *) net #() net1 ( n_320_30, n_320_170 );
+    (* S0_x1=260, S0_y1=30, S0_x2=320, S0_y2=30 *) net #() net2 ( n_260_30, n_320_30 );
+    (* S0_x1=130, S0_y1=170, S0_x2=130, S0_y2=200 *) net #() net3 ( n_130_170, n_130_200 );
+    (* S0_x1=130, S0_y1=200, S0_x2=180, S0_y2=200 *) net #() net4 ( n_130_200, n_180_200 );
+    (* S0_x1=0, S0_y1=170, S0_x2=70, S0_y2=170 *) net #() net5 ( n_0_170, n_70_170 );
+endmodule
