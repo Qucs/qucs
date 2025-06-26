@@ -445,9 +445,12 @@ void set_attribute(Schematic* x, std::string name, std::string value)
 // BUG. need extra function, Wire is not a Component.
 void parse_args_instance(CS& cmd, Wire* x)
 {
-  (void)x;
   (void)cmd;
   incomplete();
+  { untested();
+    cmd >> "#(";
+    cmd >> ')';
+  }
 }
 
 void parse_args_instance(CS& cmd, Component* x)
@@ -490,9 +493,15 @@ void parse_args_instance(CS& cmd, Component* x)
 
 // BUG. see above
 void parse_label(CS &cmd, Wire* x)
-{
-  (void)x;
-  (void)cmd;
+{  untested();
+  assert(x);
+  std::string my_name;
+  my_name = parse_identifier(cmd, ",=(){};");
+  if (my_name!="") {
+    qDebug() << "Getting label" << QString::fromStdString(my_name);
+    x->set_label(my_name);
+  }else{
+  }
 }
 
 void parse_label(CS &cmd, Component* x)

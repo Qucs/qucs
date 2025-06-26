@@ -62,13 +62,13 @@
     (* S0_x1=20, S0_y1=200, S0_x2=40, S0_y2=200 *) net #() net11 ( n_20_200, n_40_200 );
     (* S0_x1=20, S0_y1=300, S0_x2=20, S0_y2=330 *) net #() net12 ( n_20_300, n_20_330 );
     (* S0_x1=190, S0_y1=140, S0_x2=270, S0_y2=140 *) net #() net13 ( n_190_140, n_270_140 );
-    (* S0_x1=190, S0_y1=140, S0_x2=190, S0_y2=170 *) net #() net14 ( n_190_140, n_190_170 );
-    (* S0_x1=120, S0_y1=80, S0_x2=190, S0_y2=80 *) net #() net15 ( n_120_80, n_190_80 );
-    (* S0_x1=120, S0_y1=80, S0_x2=120, S0_y2=120 *) net #() net16 ( n_120_80, n_120_120 );
-    (* S0_x1=190, S0_y1=80, S0_x2=270, S0_y2=80 *) net #() net17 ( n_190_80, n_270_80 );
-    (* S0_x1=270, S0_y1=80, S0_x2=350, S0_y2=80 *) net #() net18 ( n_270_80, n_350_80 );
-    (* S0_x1=270, S0_y1=140, S0_x2=350, S0_y2=140 *) net #() net19 ( n_270_140, n_350_140 );
-    (* S0_x1=420, S0_y1=80, S0_x2=420, S0_y2=170 *) net #() net20 ( n_420_80, n_420_170 );
-    (* S0_x1=350, S0_y1=80, S0_x2=420, S0_y2=80 *) net #() net21 ( n_350_80, n_420_80 );
+    (* S0_x1=190, S0_y1=140, S0_x2=190, S0_y2=170, qucs_label_cx=190, qucs_label_cy=158, qucs_label_x1=260, qucs_label_y1=180 *) net #() Output ( n_190_140, n_190_170 );
+    (* S0_x1=120, S0_y1=80, S0_x2=190, S0_y2=80 *) net #() net14 ( n_120_80, n_190_80 );
+    (* S0_x1=120, S0_y1=80, S0_x2=120, S0_y2=120 *) net #() net15 ( n_120_80, n_120_120 );
+    (* S0_x1=190, S0_y1=80, S0_x2=270, S0_y2=80 *) net #() net16 ( n_190_80, n_270_80 );
+    (* S0_x1=270, S0_y1=80, S0_x2=350, S0_y2=80 *) net #() net17 ( n_270_80, n_350_80 );
+    (* S0_x1=270, S0_y1=140, S0_x2=350, S0_y2=140 *) net #() net18 ( n_270_140, n_350_140 );
+    (* S0_x1=420, S0_y1=80, S0_x2=420, S0_y2=170 *) net #() net19 ( n_420_80, n_420_170 );
+    (* S0_x1=350, S0_y1=80, S0_x2=420, S0_y2=80 *) net #() net20 ( n_350_80, n_420_80 );
     (* S0_x=440, S0_y=60, qucs_type="Text", S0_text="Classical design of selective voltage amplifier:\n- common-emitter circuit\n- bias control with voltage divider R1, R2\n- bias stabilisation with negative current\n  feedback R3\n- use C2 to prevent R3 from decreasing gain\n- filtering with high Q resonance C1/L1/R4 load", qucs_font_color="#000000", qucs_font_size=12, qucs_font_angle=0 *) S__text #() S0_text1();
 endmodule

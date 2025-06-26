@@ -72,11 +72,21 @@ public:
   virtual void set_qucs_y2(int y) { set_y2(y); }
   virtual void set_attribute(std::string name, std::string value);
   virtual void apply_qucs_values() {}
+  virtual void set_label(std::string label);
 
   void    rotate();
   QString save();
   bool    load(const QString&);
   bool    isHorizontal();
+
+  virtual void set_qucs_label_x1(int x) { _qucs_has_label=true;_qucs_label_x1=x; }
+  virtual void set_qucs_label_y1(int y) { _qucs_has_label=true;_qucs_label_y1=y; }
+  virtual void set_qucs_label_cx(int x) { _qucs_has_label=true;_qucs_label_cx=x; }
+  virtual void set_qucs_label_cy(int y) { _qucs_has_label=true;_qucs_label_cy=y; }
+private:
+  int _qucs_label_x1{0},_qucs_label_y1{0};
+  int _qucs_label_cx{0},_qucs_label_cy{0};
+  bool _qucs_has_label{false};
 };
 
 #endif

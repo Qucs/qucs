@@ -222,6 +222,34 @@ void Wire::set_attribute(std::string name, std::string value)
   if(name == "S0_y2"){
     set_qucs_y2(std::stoi(value));
   }
+  else
+  if(name == "qucs_label_cx"){ untested();
+    set_qucs_label_cx(std::stoi(value));
+  }
+  else
+  if(name == "qucs_label_cy"){ untested();
+    set_qucs_label_cy(std::stoi(value));
+  }
+  else
+  if(name == "qucs_label_x1"){ untested();
+    set_qucs_label_x1(std::stoi(value));
+  }
+  else
+  if(name == "qucs_label_y1"){ untested();
+    set_qucs_label_y1(std::stoi(value));
+  }
+  else {}
+}
+
+void Wire::set_label(std::string label)
+{ untested();
+  if(_qucs_has_label) {
+    if(isHorizontal()) {
+      Label.reset(new WireLabel(QString::fromStdString(label), _qucs_label_cx, _qucs_label_cy, _qucs_label_x1, _qucs_label_y1, isHWireLabel));
+    } else {
+      Label.reset(new WireLabel(QString::fromStdString(label), _qucs_label_cx, _qucs_label_cy, _qucs_label_x1, _qucs_label_y1, isVWireLabel));
+    }
+  } else {}
 }
 
 // ----------------------------------------------------------------
