@@ -45,7 +45,7 @@
     (* S0_x1=60, S0_y1=140, S0_x2=60, S0_y2=200 *) net #() net10 ( n_60_140, n_60_200 );
     (* S0_x1=300, S0_y1=50, S0_x2=410, S0_y2=50 *) net #() net11 ( n_300_50, n_410_50 );
     (* S0_x1=300, S0_y1=50, S0_x2=300, S0_y2=60 *) net #() net12 ( n_300_50, n_300_60 );
-    (* S0_x1=410, S0_y1=50, S0_x2=410, S0_y2=160 *) net #() Output ( n_410_50, n_410_160 );
+    (* S0_x1=410, S0_y1=50, S0_x2=410, S0_y2=160, qucs_label_cx=410, qucs_label_cy=80, qucs_label_x1=450, qucs_label_y1=50 *) net #() Output ( n_410_50, n_410_160 );
     (* S0_x1=180, S0_y1=50, S0_x2=300, S0_y2=50 *) net #() net13 ( n_180_50, n_300_50 );
     (* S0_x1=180, S0_y1=50, S0_x2=180, S0_y2=60 *) net #() net14 ( n_180_50, n_180_60 );
     (* S0_x=280, S0_y=270, qucs_type="Text", S0_text="active bandpass filter", qucs_font_color="#000000", qucs_font_size=14, qucs_font_angle=0 *) S__text #() S0_text1();
