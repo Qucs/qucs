@@ -40,14 +40,14 @@
     (* qucs_mirrored=0, qucs_rotated=1, qucs_visible="100000", S0_x1=640, S0_y1=220, S0_x2=640, S0_y2=160 *) R #(.R(10),.Temp(26.85),.Tc1(0.0),.Tc2(0.0),.Tnom(26.85)) R1 ( n_640_220, n_640_160 );
     (* qucs_mirrored=0, qucs_rotated=0, qucs_visible="110", S0_x1=360, S0_y1=290 *) Eqn #(.Tmax(Bperiod*20),.Tstep(Bperiod/1000),.Export(yes)) Eqn2 (  );
     (* qucs_mirrored=0, qucs_rotated=0, qucs_visible="111110", S0_x1=520, S0_y1=510 *) Eqn #(.Bfreq(40k),.Bperiod(1/Bfreq),.Bduty(30),.Ton(Bperiod*Bduty/100),.Toff(Bperiod-Ton),.Export(yes)) Eqn1 (  );
-    (* S0_x1=330, S0_y1=140, S0_x2=380, S0_y2=140 *) net #() dio ( n_330_140, n_380_140 );
+    (* S0_x1=330, S0_y1=140, S0_x2=380, S0_y2=140, qucs_label_cx=345, qucs_label_cy=140, qucs_label_x1=360, qucs_label_y1=110 *) net #() dio ( n_330_140, n_380_140 );
     (* S0_x1=330, S0_y1=140, S0_x2=330, S0_y2=160 *) net #() net1 ( n_330_140, n_330_160 );
     (* S0_x1=230, S0_y1=140, S0_x2=330, S0_y2=140 *) net #() net2 ( n_230_140, n_330_140 );
     (* S0_x1=230, S0_y1=200, S0_x2=270, S0_y2=200 *) net #() net3 ( n_230_200, n_270_200 );
     (* S0_x1=130, S0_y1=200, S0_x2=170, S0_y2=200 *) net #() net4 ( n_130_200, n_170_200 );
     (* S0_x1=270, S0_y1=200, S0_x2=270, S0_y2=360 *) net #() net5 ( n_270_200, n_270_360 );
     (* S0_x1=130, S0_y1=360, S0_x2=270, S0_y2=360 *) net #() net6 ( n_130_360, n_270_360 );
-    (* S0_x1=130, S0_y1=200, S0_x2=130, S0_y2=260 *) net #() ctrl ( n_130_200, n_130_260 );
+    (* S0_x1=130, S0_y1=200, S0_x2=130, S0_y2=260, qucs_label_cx=130, qucs_label_cy=236, qucs_label_x1=80, qucs_label_y1=250 *) net #() ctrl ( n_130_200, n_130_260 );
     (* S0_x1=130, S0_y1=320, S0_x2=130, S0_y2=360 *) net #() net7 ( n_130_320, n_130_360 );
     (* S0_x1=50, S0_y1=140, S0_x2=170, S0_y2=140 *) net #() net8 ( n_50_140, n_170_140 );
     (* S0_x1=50, S0_y1=140, S0_x2=50, S0_y2=160 *) net #() net9 ( n_50_140, n_50_160 );
@@ -55,7 +55,7 @@
     (* S0_x1=330, S0_y1=220, S0_x2=330, S0_y2=240 *) net #() net11 ( n_330_220, n_330_240 );
     (* S0_x1=640, S0_y1=140, S0_x2=640, S0_y2=160 *) net #() net12 ( n_640_140, n_640_160 );
     (* S0_x1=640, S0_y1=220, S0_x2=640, S0_y2=240 *) net #() net13 ( n_640_220, n_640_240 );
-    (* S0_x1=540, S0_y1=140, S0_x2=640, S0_y2=140 *) net #() out ( n_540_140, n_640_140 );
+    (* S0_x1=540, S0_y1=140, S0_x2=640, S0_y2=140, qucs_label_cx=602, qucs_label_cy=140, qucs_label_x1=620, qucs_label_y1=110 *) net #() out ( n_540_140, n_640_140 );
     (* S0_x1=540, S0_y1=140, S0_x2=540, S0_y2=160 *) net #() net14 ( n_540_140, n_540_160 );
     (* S0_x1=540, S0_y1=240, S0_x2=640, S0_y2=240 *) net #() net15 ( n_540_240, n_640_240 );
     (* S0_x1=540, S0_y1=220, S0_x2=540, S0_y2=240 *) net #() net16 ( n_540_220, n_540_240 );

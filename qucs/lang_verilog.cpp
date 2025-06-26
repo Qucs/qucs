@@ -221,6 +221,21 @@ void dump_attributes(outputStream& stream, T const* x)
       .arg(w->ports(0)->cy())
       .arg(w->ports(1)->cx())
       .arg(w->ports(1)->cy());
+    if(w->Label) { untested();
+      stream << ", "
+             << "qucs_label_cx="
+             << w->Label->cx()
+             << ", "
+             << "qucs_label_cy="
+             << w->Label->cy()
+             << ", "
+             << "qucs_label_x1="
+             << w->Label->x1()
+             << ", "
+             << "qucs_label_y1="
+             << w->Label->y1();
+    } else {  untested();
+    }
   } else { untested();
     // what?
   }
