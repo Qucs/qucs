@@ -77,8 +77,8 @@
     (* S0_x1=470, S0_y1=30, S0_x2=650, S0_y2=30 *) net #() net4 ( n_470_30, n_650_30 );
     (* S0_x1=650, S0_y1=30, S0_x2=650, S0_y2=60 *) net #() net5 ( n_650_30, n_650_60 );
     (* S0_x1=170, S0_y1=30, S0_x2=470, S0_y2=30 *) net #() net6 ( n_170_30, n_470_30 );
-    (* S0_x1=220, S0_y1=120, S0_x2=340, S0_y2=120, qucs_label_cx=306, qucs_label_cy=120, qucs_label_x1=320, qucs_label_y1=50 *) net #() input ( n_220_120, n_340_120 );
-    (* S0_x1=400, S0_y1=120, S0_x2=470, S0_y2=120, qucs_label_cx=410, qucs_label_cy=120, qucs_label_x1=420, qucs_label_y1=50 *) net #() output ( n_400_120, n_470_120 );
+    (* S0_x1=220, S0_y1=120, S0_x2=340, S0_y2=120, qucs_label_cx=306, qucs_label_cy=120, qucs_label_x1=320, qucs_label_y1=50 *) net #() input ( n_220_120, n_340_120, input );
+    (* S0_x1=400, S0_y1=120, S0_x2=470, S0_y2=120, qucs_label_cx=410, qucs_label_cy=120, qucs_label_x1=420, qucs_label_y1=50 *) net #() output ( n_400_120, n_470_120, output );
     (* S0_x1=50, S0_y1=400, S0_x2=160, S0_y2=400 *) net #() net7 ( n_50_400, n_160_400 );
     (* S0_x1=470, S0_y1=430, S0_x2=470, S0_y2=460 *) net #() net8 ( n_470_430, n_470_460 );
     (* S0_x1=470, S0_y1=350, S0_x2=470, S0_y2=360 *) net #() net9 ( n_470_350, n_470_360 );

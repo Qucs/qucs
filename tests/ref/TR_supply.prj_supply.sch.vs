@@ -36,7 +36,7 @@
     (* qucs_mirrored=0, qucs_rotated=1, qucs_visible="100", S0_x1=410, S0_y1=250, S0_x2=410, S0_y2=190 *) C #(.C(1000 uF),.V()) C1 ( n_410_250, n_410_190 );
     (* S0_x1=570, S0_y1=170, S0_x2=570, S0_y2=190 *) net #() net1 ( n_570_170, n_570_190 );
     (* S0_x1=340, S0_y1=170, S0_x2=410, S0_y2=170 *) net #() net2 ( n_340_170, n_410_170 );
-    (* S0_x1=410, S0_y1=170, S0_x2=570, S0_y2=170, qucs_label_cx=527, qucs_label_cy=170, qucs_label_x1=560, qucs_label_y1=130 *) net #() dc_voltage ( n_410_170, n_570_170 );
+    (* S0_x1=410, S0_y1=170, S0_x2=570, S0_y2=170, qucs_label_cx=527, qucs_label_cy=170, qucs_label_x1=560, qucs_label_y1=130 *) net #() dc_voltage ( n_410_170, n_570_170, dc_voltage );
     (* S0_x1=410, S0_y1=170, S0_x2=410, S0_y2=190 *) net #() net3 ( n_410_170, n_410_190 );
     (* S0_x1=260, S0_y1=230, S0_x2=280, S0_y2=230 *) net #() net4 ( n_260_230, n_280_230 );
     (* S0_x1=200, S0_y1=280, S0_x2=340, S0_y2=280 *) net #() net5 ( n_200_280, n_340_280 );

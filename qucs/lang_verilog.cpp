@@ -98,7 +98,7 @@ void dump_identifier(outputStream& o, S const& name)
 
   if(isalpha(name[0])){
   }else if(name[0] == '$'){ untested();
-  }else if(name[0] == '_'){
+  }else if(name[0] == '_'){ untested();
   }else{
     plain = false;
   }
@@ -135,37 +135,37 @@ void dump_identifier(outputStream& o, S const& name)
 // "\\\xyz " -> "\xyz"  -- remove additional escapes
 // "\foo\bar"           -- incomplete
 static std::string parse_identifier(CS& cmd, std::string const& term)
-{
+{ untested();
   cmd.skipbl();
   std::string id;
 
   if(cmd.is_digit()) { untested();
     cmd.warn(bDANGER, "invalid identifier");
-  }else{
+  }else{ untested();
   }
 
   bool esc = cmd.skip1('\\');
 
-  while(esc && cmd.more()) {
+  while(esc && cmd.more()) { untested();
     if(cmd.skip1('\\')){ untested();
       if(cmd.skip1('\\')){ untested();
   id += "\\";
       }else{ untested();
   cmd.warn(bDANGER, "invalid escaped char");
       }
-    }else{
+    }else{ untested();
     }
     id += cmd.get_to(" \t\f\\");
 
-    if(cmd.skip1(" \t\f")){
+    if(cmd.skip1(" \t\f")){ untested();
       break;
     }else{ untested();
     }
   }
 
-  if(!esc) {
+  if(!esc) { untested();
     id = cmd.ctos(term, "", "");
-  }else{
+  }else{ untested();
   }
 
   trace1("identifier", id);
@@ -285,9 +285,13 @@ static void dumpComponent(outputStream& stream, Element const* e)
     }
   } else if(w) {
     // BUG. Wire is not a Component.
-    stream << w->ports(0)->label();
-    stream << ", ";
-    stream << w->ports(1)->label();
+    sep = ", ";
+    stream << w->ports(0)->label() << sep << w->ports(1)->label();
+    for (int i=2;i<w->net_nodes();i++) {
+      // TODO stream << sep << c->port(i).getConnection()->label();
+      stream << sep;
+      dump_identifier(stream, w->name());
+    }
   } else{ untested();
     unreachable();
   }
@@ -295,9 +299,9 @@ static void dumpComponent(outputStream& stream, Element const* e)
 }
 
 static void dumpPainting(outputStream& stream, Element const* p)
-{
+{ untested();
   static int text_counter=1;
-  {
+  { untested();
   static int graphics_counter=1;
   stream << "    "
          << "(* "
@@ -308,16 +312,16 @@ static void dumpPainting(outputStream& stream, Element const* p)
          << p->cy()
          << ", "
          << "qucs_type=\""+p->dev_type()+"\"";
-  if(p->attr_get()!="") {
+  if(p->attr_get()!="") { untested();
     stream << ", " << p->attr_get();
   } else { untested();}
   stream << " *)";
-  if(p->dev_type()=="Text") {
+  if(p->dev_type()=="Text") { untested();
     stream << " S__text #()"
            << " S0_text"
            << text_counter;
     text_counter++;
-  } else {
+  } else { untested();
     stream << " S__graphics #()"
            << " S0_graphics"
            << graphics_counter;
@@ -335,7 +339,7 @@ int Schematic::saveVerilogDocument(QFile *file)
 
   for (auto it = DocComps.begin(); it != DocComps.end(); ++it) {
     QPoint p;
-    if(it->obsolete_model_hack() == "Port") {
+    if(it->obsolete_model_hack() == "Port") { untested();
       ioPorts.push_back("."+it->name().toStdString()+"("+it->port(0).getConnection()->label()+")");
       ioPortNets.push_back(it->port(0).getConnection()->label());
     }
@@ -359,14 +363,14 @@ int Schematic::saveVerilogDocument(QFile *file)
 
   stream << "module " << module_name << "(";
   std::string sep;
-  for(auto ip=ioPorts.begin();ip!=ioPorts.end();ip++) {
+  for(auto ip=ioPorts.begin();ip!=ioPorts.end();ip++) { untested();
     stream << sep << *ip;
     sep=", ";
   }
   stream << ");\n";
 
   // io defines
-  for (auto it = ioPortNets.begin(); it != ioPortNets.end(); ++it) {
+  for (auto it = ioPortNets.begin(); it != ioPortNets.end(); ++it) { untested();
     stream << "    ";
     stream << "inout " << *it << ";\n";
   }
@@ -390,7 +394,7 @@ int Schematic::saveVerilogDocument(QFile *file)
     dumpComponent(stream, &*it);
   }
 
-  for (auto pt = DocPaints.begin(); pt != DocPaints.end(); ++pt) {
+  for (auto pt = DocPaints.begin(); pt != DocPaints.end(); ++pt) { untested();
     dumpPainting(stream, &*pt);
   }
 
@@ -413,60 +417,60 @@ void skip_attributes(CS& cmd)
 
 template <class T>
 void set_attribute(T* x, std::string name, std::string value)
-{
+{ untested();
   assert(x);
-  if(name == "S0_x1"){
+  if(name == "S0_x1"){ untested();
     x->set_qucs_x1(std::stoi(value));
   }
   else
-  if(name == "S0_y1"){
+  if(name == "S0_y1"){ untested();
     x->set_qucs_y1(std::stoi(value));
   }
-  else {
+  else { untested();
     x->set_attribute(name, value);
   }
 }
 
 void set_attribute(Painting* x, std::string name, std::string value)
-{
+{ untested();
   x->set_attribute(name, value);
 }
 
 void set_attribute(Schematic* x, std::string name, std::string value)
-{
+{ untested();
   x->set_attribute(name, value);
 }
 
 // BUG. need extra function, Wire is not a Component.
 void parse_args_instance(CS& cmd, Wire* x)
-{
+{ untested();
   (void)cmd;
   incomplete();
-  {
+  { untested();
     cmd >> "#(";
     cmd >> ')';
   }
 }
 
 void parse_args_instance(CS& cmd, Component* x)
-{
+{ untested();
   assert(x);
-  if (cmd >> "#(") {
-    if (cmd.match1('.')) {
+  if (cmd >> "#(") { untested();
+    if (cmd.match1('.')) { untested();
       // by name
-      while (cmd >> '.') {
+      while (cmd >> '.') { untested();
         size_t here = cmd.cursor();
         std::string name  = cmd.ctos("(", "", "");
         std::string value = cmd.ctos(",)", "(", ")");
         cmd >> ',';
-        try{
+        try{ untested();
           //trace2("pai", name, value);
           x->set_param_by_name(name, value);
         }catch (qucs::ExceptionNoMatch&) {untested();
           cmd.warn(0, here, x->name().toStdString() + ": bad parameter " + name + " ignored");
         }
       }
-    }else{
+    }else{ untested();
       // by order
       int index = 1;
       while (cmd.is_alnum() || cmd.match1("+-.")) { untested();
@@ -492,19 +496,19 @@ void parse_label(CS &cmd, Wire* x)
   assert(x);
   std::string my_name;
   my_name = parse_identifier(cmd, ",=(){};");
-  if (my_name!="") {
+  if (my_name!="") { untested();
     qDebug() << "Getting label" << QString::fromStdString(my_name);
     x->set_label(my_name);
-  }else{
+  }else{ untested();
   }
 }
 
 void parse_label(CS &cmd, Component* x)
-{
+{ untested();
   assert(x);
   std::string my_name;
   my_name = parse_identifier(cmd, ",=(){};");
-  if (my_name!="") {
+  if (my_name!="") { untested();
     x->set_label(my_name);
   }else{ untested();
     //x->set_label(x->id_letter() + std::string("_unnamed")); //BUG// not unique
@@ -514,21 +518,21 @@ void parse_label(CS &cmd, Component* x)
 }
 
 void parse_ports(CS& cmd, Wire* x, bool /*all_new*/)
-{
+{ untested();
   (void)x;
   (void)cmd;
 }
 
 void parse_ports(CS& cmd, Component* x, bool all_new)
-{
+{ untested();
   assert(x);
-  if (cmd >> '(') {
-    if (cmd.is_alnum()) {
+  if (cmd >> '(') { untested();
+    if (cmd.is_alnum()) { untested();
       // by order
       int index = 0;
-      while (cmd.is_alnum()) {
+      while (cmd.is_alnum()) { untested();
         size_t here = cmd.cursor();
-        try{
+        try{ untested();
           std::string value;
           cmd >> value;
           x->set_port_by_index(index, value);
@@ -541,7 +545,7 @@ void parse_ports(CS& cmd, Component* x, bool all_new)
             //}else{ untested();
               ++index;
             //}
-          }else{
+          }else{ untested();
             ++index;
           }
         }catch (qucs::Exception_Too_Many& e) { untested();
@@ -555,7 +559,7 @@ void parse_ports(CS& cmd, Component* x, bool all_new)
 //				}
 //			}else{ untested();
 //			}
-    }else{
+    }else{ untested();
       // by name
       while (cmd >> '.') { untested();
         size_t here = cmd.cursor();
@@ -592,7 +596,7 @@ void parse_ports(CS& cmd, Component* x, bool all_new)
 
 template <class T>
 void parse_instance(CS& cmd, T* x)
-{
+{ untested();
   assert(x);
   parse_args_instance(cmd, x);
   parse_label(cmd, x);
@@ -605,43 +609,43 @@ class inspect_attributes {
   std::string _type;
   std::vector<std::pair<std::string,std::string>> _attr;
 public:
-  explicit inspect_attributes(CS& cmd) {
-    while (cmd >> "(*") {
-      while(cmd.ns_more() && !(cmd >> ",") && !(cmd >> "*)")) {
+  explicit inspect_attributes(CS& cmd) { untested();
+    while (cmd >> "(*") { untested();
+      while(cmd.ns_more() && !(cmd >> ",") && !(cmd >> "*)")) { untested();
 	std::string name, value;
 	cmd >> name;
-        if(cmd >> "="){
+        if(cmd >> "="){ untested();
 	  cmd >> value;
-	}else{
+	}else{ untested();
 	  value = "1";
 	}
   _attr.push_back(std::make_pair(name,value));
 	trace2("inspect", name, value);
-	if(name=="qucs_type") {
+	if(name=="qucs_type") { untested();
 	  _type = value;
-	}else{
+	}else{ untested();
 	}
       }
     }
   }
   template<class T>
-  void export_attrs(T* x)const {
-    for(auto p: _attr) {
+  void export_attrs(T* x)const { untested();
+    for(auto p: _attr) { untested();
       set_attribute(x, p.first, p.second);
     }
   }
-  std::string type()const {return _type;}
-  bool has_type()const {return _type.size();}
+  std::string type()const { untested();return _type;}
+  bool has_type()const { untested();return _type.size();}
 };
 
 std::shared_ptr<Element> clone_instance(std::string const& type)
-{
+{ untested();
   QString qtype = QString::fromStdString(type);
   std::shared_ptr<Component> x = Module::getComponent(qtype); // BUG. need proper dispatcher.
-  {
-  if(x) {
+  { untested();
+  if(x) { untested();
     return x;
-  } else {
+  } else { untested();
     std::shared_ptr<Painting> p = Module::getPainting(qtype);
     return p;
   }
@@ -649,41 +653,41 @@ std::shared_ptr<Element> clone_instance(std::string const& type)
 }
 
 bool readVerilog(CS &cmd, Schematic*s)
-{
+{ untested();
   trace0("readVerilog0");
   assert(s);
   // todo: catch ExceptionEOF.
-  while(!cmd.atEnd()) {
+  while(!cmd.atEnd()) { untested();
     cmd.read_line();
     inspect_attributes attr(cmd);
     trace1("inspected", cmd.tail());
-    if(cmd>>"module") {
+    if(cmd>>"module") { untested();
       attr.export_attrs(s);
       cmd >> ';';
-    }else if(cmd>>"endmodule"){
+    }else if(cmd>>"endmodule"){ untested();
       //ignore for now;
-    }else{
+    }else{ untested();
       std::string type;
       type = parse_identifier(cmd, ",=(){};");
       std::shared_ptr<Element> inst;
-      if(attr.has_type()){
+      if(attr.has_type()){ untested();
         inst = clone_instance(attr.type());
-      }else{
+      }else{ untested();
         inst = clone_instance(type);
       }
 
-      if(type=="wire") {
+      if(type=="wire") { untested();
 	// incomplete. net decl.
-      }else if(type=="net") {
+      }else if(type=="net") { untested();
 	// BUG: Not a component
         Wire* w = new Wire(0,0,0,0, (Node*)4,(Node*)4);
-        if(w) {
+        if(w) { untested();
           attr.export_attrs(w);
           parse_instance(cmd, w);
           s->pushBack(w);
         }else{ untested();
 		  }
-      }else if(auto x = dynamic_cast<Component*>(inst.get())) {
+      }else if(auto x = dynamic_cast<Component*>(inst.get())) { untested();
 	trace3("readVerilog, gotComponent", type, x->tx(), x->ty());
 	attr.export_attrs(x);
 	x->apply_qucs_values();
@@ -693,19 +697,19 @@ bool readVerilog(CS &cmd, Schematic*s)
 	// setting text position to 0,0 for now.
 	x->set_qucs_text_position(0, 0);
 	s->pushBack(std::dynamic_pointer_cast<Component>(inst)); // (yikes)
-      }else if(dynamic_cast<Painting*>(inst.get())) {
+      }else if(dynamic_cast<Painting*>(inst.get())) { untested();
         auto pe = std::dynamic_pointer_cast<Painting>(inst);
         attr.export_attrs(pe.get());
         cmd >> ';';
         s->pushBack(pe);
-      }else{
+      }else{ untested();
 	incomplete();
       }
     }
     trace2("readVerilog3", cmd.fullstring(), cmd.atEnd());
   }
-  if(!s->_dry_run) {
-    for(auto cp=s->DocComps.begin(); cp!=s->DocComps.end(); cp++) {
+  if(!s->_dry_run) { untested();
+    for(auto cp=s->DocComps.begin(); cp!=s->DocComps.end(); cp++) { untested();
       cp->check_node_positions(s);
     }
   }

@@ -35,7 +35,15 @@ public:
   Wire(int _x1=0, int _y1=0, int _x2=0, int _y2=0, Node *n1=0, Node *n2=0);
  ~Wire();
 
-  int net_nodes()const {return 2;}
+  std::string name()const {
+	  if(Label){
+		  return Label->Name.toStdString();
+	  }else{
+		  // BUG: label can be empty.
+		  return "";
+	  }
+  }
+  int net_nodes()const;
  // BUG. Port&
   Node*& ports(int i){
 	  assert(i<net_nodes());

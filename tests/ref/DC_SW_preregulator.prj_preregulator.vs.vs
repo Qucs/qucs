@@ -25,9 +25,9 @@
     (* qucs_mirrored=0, qucs_rotated=0, qucs_visible="000000000", S0_x1=490, S0_y1=90 *) \.DC  #(.Temp(26.85),.reltol(0.001),.abstol(1 pA),.vntol(1 uV),.saveOPs(no),.MaxIter(150),.saveAll(no),.convHelper(none),.Solver(CroutLU)) DC1 (  );
     (* qucs_mirrored=0, qucs_rotated=0, qucs_visible="111111", S0_x1=490, S0_y1=170 *) \.SW  #(.Sim(DC1),.Type(lin),.Param(R1),.Start(VBAT),.Stop(4),.Points(101)) SW1 (  );
     (* qucs_mirrored=1, qucs_rotated=3, qucs_visible="00000000000000011000000000000", S0_x1=260, S0_y1=170, S0_x2=260, S0_y2=230 *) Diode #(.Is(1e-15 A),.N(1),.Cj0(10 fF),.M(0.5),.Vj(0.7 V),.Fc(0.5),.Cp(0.0 fF),.Isr(0.0),.Nr(2.0),.Rs(0.0 Ohm),.Tt(0.0 ps),.Ikf(0),.Kf(0.0),.Af(1.0),.Ffe(1.0),.Bv(5.9V),.Ibv(1 mA),.Temp(26.85),.Xti(3.0),.Eg(1.11),.Tbv(0.0),.Trs(0.0),.Ttt1(0.0),.Ttt2(0.0),.Tm1(0.0),.Tm2(0.0),.Tnom(26.85),.Area(1.0),.Symbol(Zener)) D1 ( n_260_170, n_260_230 );
-    (* S0_x1=110, S0_y1=100, S0_x2=230, S0_y2=100, qucs_label_cx=126, qucs_label_cy=100, qucs_label_x1=100, qucs_label_y1=60 *) net #() in ( n_110_100, n_230_100 );
+    (* S0_x1=110, S0_y1=100, S0_x2=230, S0_y2=100, qucs_label_cx=126, qucs_label_cy=100, qucs_label_x1=100, qucs_label_y1=60 *) net #() in ( n_110_100, n_230_100, in );
     (* S0_x1=360, S0_y1=100, S0_x2=360, S0_y2=170 *) net #() net1 ( n_360_100, n_360_170 );
-    (* S0_x1=290, S0_y1=100, S0_x2=360, S0_y2=100, qucs_label_cx=338, qucs_label_cy=100, qucs_label_x1=360, qucs_label_y1=60 *) net #() out ( n_290_100, n_360_100 );
+    (* S0_x1=290, S0_y1=100, S0_x2=360, S0_y2=100, qucs_label_cx=338, qucs_label_cy=100, qucs_label_x1=360, qucs_label_y1=60 *) net #() out ( n_290_100, n_360_100, out );
     (* S0_x1=110, S0_y1=230, S0_x2=110, S0_y2=250 *) net #() net2 ( n_110_230, n_110_250 );
     (* S0_x1=360, S0_y1=230, S0_x2=360, S0_y2=250 *) net #() net3 ( n_360_230, n_360_250 );
     (* S0_x1=260, S0_y1=230, S0_x2=260, S0_y2=250 *) net #() net4 ( n_260_230, n_260_250 );
