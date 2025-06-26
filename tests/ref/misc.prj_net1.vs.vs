@@ -12,9 +12,9 @@
     (* qucs_mirrored=0, qucs_rotated=0, qucs_visible="100000", S0_x1=320, S0_y1=170, S0_x2=380, S0_y2=170 *) R #(.R(50 Ohm),.Temp(26.85),.Tc1(0.0),.Tc2(0.0),.Tnom(26.85)) R2 ( n_320_170, n_380_170 );
     (* qucs_mirrored=0, qucs_rotated=0, qucs_visible="", S0_x1=380, S0_y1=170 *) GND #() \*  ( n_380_170 );
     (* qucs_mirrored=0, qucs_rotated=0, qucs_visible="", S0_x1=0, S0_y1=170 *) GND #() \*  ( n_0_170 );
-    (* S0_x1=320, S0_y1=30, S0_x2=320, S0_y2=170 *) net #() net1 ( n_320_30, n_320_170 );
-    (* S0_x1=260, S0_y1=30, S0_x2=320, S0_y2=30 *) net #() net2 ( n_260_30, n_320_30 );
-    (* S0_x1=130, S0_y1=170, S0_x2=130, S0_y2=200 *) net #() net3 ( n_130_170, n_130_200 );
-    (* S0_x1=130, S0_y1=200, S0_x2=180, S0_y2=200 *) net #() net4 ( n_130_200, n_180_200 );
-    (* S0_x1=0, S0_y1=170, S0_x2=70, S0_y2=170 *) net #() net5 ( n_0_170, n_70_170 );
+    (* S0_x1=320, S0_y1=30, S0_x2=320, S0_y2=170, qucs_label_cx=320, qucs_label_cy=68, qucs_label_x1=350, qucs_label_y1=40 *) net #() AAAA ( n_320_30, n_320_170 );
+    (* S0_x1=260, S0_y1=30, S0_x2=320, S0_y2=30 *) net #() net1 ( n_260_30, n_320_30 );
+    (* S0_x1=130, S0_y1=170, S0_x2=130, S0_y2=200 *) net #() net2 ( n_130_170, n_130_200 );
+    (* S0_x1=130, S0_y1=200, S0_x2=180, S0_y2=200, qucs_label_cx=156, qucs_label_cy=200, qucs_label_x1=90, qucs_label_y1=50 *) net #() AAAA ( n_130_200, n_180_200 );
+    (* S0_x1=0, S0_y1=170, S0_x2=70, S0_y2=170 *) net #() net3 ( n_0_170, n_70_170 );
 endmodule
