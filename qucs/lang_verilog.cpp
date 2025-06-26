@@ -678,8 +678,9 @@ bool readVerilog(CS &cmd, Schematic*s)
       }
 
       if(type=="wire") {
-	 // BUG: Not a component
+	// incomplete. net decl.
       }else if(type=="net") {
+	// BUG: Not a component
         Wire* w = new Wire(0,0,0,0, (Node*)4,(Node*)4);
         if(w) {
           attr.export_attrs(w);
