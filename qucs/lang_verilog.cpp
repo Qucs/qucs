@@ -221,7 +221,7 @@ void dump_attributes(outputStream& stream, T const* x)
       .arg(w->ports(0)->cy())
       .arg(w->ports(1)->cx())
       .arg(w->ports(1)->cy());
-    if(w->Label) { untested();
+    if(w->Label) {
       stream << ", "
              << "qucs_label_cx="
              << w->Label->cx()
@@ -254,8 +254,11 @@ static std::string wirelabel(Wire const* w)
   return name;
 }
 
-static void dumpDeclaration(outputStream& stream, Element const* e)
+static void dumpComponent(outputStream& stream, Element const* e)
 {
+  assert(e);
+  stream << "    ";
+  dump_attributes(stream, e);
   auto c = dynamic_cast<Component const*>(e);
   auto w = dynamic_cast<Wire const*>(e);
   if(c){
@@ -324,14 +327,6 @@ static void dumpPainting(outputStream& stream, Element const* p)
   }
 }
 
-void Schematic::dumpVerilogComponent(outputStream& stream, Element const* e) const
-{
-  assert(e);
-  stream << "    ";
-  dump_attributes(stream, e);
-  dumpDeclaration(stream, e);
-}
-
 int Schematic::saveVerilogDocument(QFile *file)
 {
   trace_method_calls();
@@ -386,13 +381,13 @@ int Schematic::saveVerilogDocument(QFile *file)
 
   // sub components
   for (auto it = DocComps.begin(); it != DocComps.end(); ++it) {
-    dumpVerilogComponent(stream, &*it);
+    dumpComponent(stream, &*it);
   }
 
   // net connections (connecting the nodes)
   for (auto it = DocWires.begin(); it != DocWires.end(); ++it) {
     // BUG: Wire is not a Component. (why?)
-    dumpVerilogComponent(stream, &*it);
+    dumpComponent(stream, &*it);
   }
 
   for (auto pt = DocPaints.begin(); pt != DocPaints.end(); ++pt) {
@@ -447,7 +442,7 @@ void parse_args_instance(CS& cmd, Wire* x)
 {
   (void)cmd;
   incomplete();
-  { untested();
+  {
     cmd >> "#(";
     cmd >> ')';
   }

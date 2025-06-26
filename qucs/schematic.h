@@ -327,7 +327,6 @@ public:
   void warn(int mask, std::string msg);
 
 private: /// BUG // move to Verilog class, create if needed.
-  void dumpVerilogComponent(outputStream& stream, Element const* c) const;
   void dumpVerilogWire(outputStream& stream, Wire const* w) const;
   void dumpVerilogQucsPreamble(outputStream& stream) const;
   int  saveVerilogDocument(QFile *file);
