@@ -196,20 +196,21 @@ void dump_attributes(outputStream& stream, T const* x)
       stream << "\", ";
     }
     if(c->net_nodes()) {
-      int port_idx = 1;
-      for (auto pp = c->Ports.begin(); pp != c->Ports.end(); ++pp) {
-        if(pp->getConnection()) {
-          stream << sep
-            << "S0_x" << port_idx
-            << "=" << pp->getConnection()->cx()
-            << ", "
-            << "S0_y" << port_idx
-            << "="<< pp->getConnection()->cy();
-          sep = ", ";
-          port_idx++;
-        }
+      for (auto i=0; i<c->net_nodes();++i) {
+	int port_idx = i+1;
+	auto& pp = c->port(i);
+	if(pp.getConnection()) {
+	  stream << sep
+	    << "S0_x" << port_idx
+	    << "=" << pp.getConnection()->cx()
+	    << ", "
+	    << "S0_y" << port_idx
+	    << "="<< pp.getConnection()->cy();
+	  sep = ", ";
+	}else{ untested();
+	}
       }
-    } else {
+    }else{
       stream << "S0_x=" << c->cx() << ", S0_y=" << c->cy();
     }
   } else if(w) {

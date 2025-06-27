@@ -36,7 +36,7 @@ class Component : public Element {
   std::string _attr;
   std::vector<std::string> _portvalues;
 
-public: // BUG.
+public: // BUG. !
   std::list<qucs::Port>   Ports;
   std::list<qucs::Property>   Props;
 public: // BUG
