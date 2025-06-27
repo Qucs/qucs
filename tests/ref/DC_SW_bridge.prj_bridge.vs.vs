@@ -25,11 +25,11 @@
     (* qucs_mirrored=0, qucs_rotated=0, qucs_visible="", S0_x1=180, S0_y1=300 *) GND #() \*  ( n_180_300 );
     (* qucs_mirrored=0, qucs_rotated=1, qucs_visible="100000", S0_x1=280, S0_y1=160, S0_x2=280, S0_y2=100 *) R #(.R(Rbranch),.Temp(26.85),.Tc1(0.0),.Tc2(0.0),.Tnom(26.85)) R1 ( n_280_160, n_280_100 );
     (* qucs_mirrored=0, qucs_rotated=1, qucs_visible="100000", S0_x1=280, S0_y1=300, S0_x2=280, S0_y2=240 *) R #(.R(Rbranch),.Temp(26.85),.Tc1(0.0),.Tc2(0.0),.Tnom(26.85)) R4 ( n_280_300, n_280_240 );
-    (* qucs_mirrored=0, qucs_rotated=0, qucs_visible="000000000", S0_x1=180, S0_y1=360 *) \.DC  #(.Temp(26.85),.reltol(0.001),.abstol(1 pA),.vntol(1 uV),.saveOPs(no),.MaxIter(150),.saveAll(no),.convHelper(none),.Solver(CroutLU)) DC1 (  );
+    (* qucs_mirrored=0, qucs_rotated=0, qucs_visible="000000000", S0_x=180, S0_y=360 *) \.DC  #(.Temp(26.85),.reltol(0.001),.abstol(1 pA),.vntol(1 uV),.saveOPs(no),.MaxIter(150),.saveAll(no),.convHelper(none),.Solver(CroutLU)) DC1 (  );
     (* qucs_mirrored=0, qucs_rotated=0, qucs_visible="100000", S0_x1=370, S0_y1=200, S0_x2=430, S0_y2=200 *) R #(.R(500 Ohm),.Temp(26.85),.Tc1(0.0),.Tc2(0.0),.Tnom(26.85)) R3 ( n_370_200, n_430_200 );
-    (* qucs_mirrored=0, qucs_rotated=0, qucs_visible="111111", S0_x1=300, S0_y1=370 *) \.SW  #(.Sim(DC1),.Type(lin),.Param(R1),.Start(Rmeasure),.Stop(10 Ohm),.Points(100)) SW1 (  );
-    (* qucs_mirrored=0, qucs_rotated=0, qucs_visible="111111", S0_x1=410, S0_y1=370 *) \.SW  #(.Sim(SW1),.Type(lin),.Param(R1),.Start(Rbranch),.Stop(200 Ohm),.Points(4)) SW2 (  );
-    (* qucs_mirrored=0, qucs_rotated=0, qucs_visible="10", S0_x1=500, S0_y1=360 *) Eqn #(.y(1),.Export(yes)) Eqn1 (  );
+    (* qucs_mirrored=0, qucs_rotated=0, qucs_visible="111111", S0_x=300, S0_y=370 *) \.SW  #(.Sim(DC1),.Type(lin),.Param(R1),.Start(Rmeasure),.Stop(10 Ohm),.Points(100)) SW1 (  );
+    (* qucs_mirrored=0, qucs_rotated=0, qucs_visible="111111", S0_x=410, S0_y=370 *) \.SW  #(.Sim(SW1),.Type(lin),.Param(R1),.Start(Rbranch),.Stop(200 Ohm),.Points(4)) SW2 (  );
+    (* qucs_mirrored=0, qucs_rotated=0, qucs_visible="10", S0_x=500, S0_y=360 *) Eqn #(.y(1),.Export(yes)) Eqn1 (  );
     (* S0_x1=280, S0_y1=100, S0_x2=460, S0_y2=100 *) net #() net1 ( n_280_100, n_460_100 );
     (* S0_x1=280, S0_y1=160, S0_x2=280, S0_y2=200 *) net #() net2 ( n_280_160, n_280_200 );
     (* S0_x1=460, S0_y1=160, S0_x2=460, S0_y2=200 *) net #() net3 ( n_460_160, n_460_200 );

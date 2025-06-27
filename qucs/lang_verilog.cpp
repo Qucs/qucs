@@ -210,10 +210,7 @@ void dump_attributes(outputStream& stream, T const* x)
         }
       }
     } else {
-      stream << QString("S0_x%1=%2, S0_y%1=%3")
-        .arg(1)
-        .arg(c->cx())
-        .arg(c->cy());
+      stream << "S0_x=" << c->cx() << ", S0_y=" << c->cy();
     }
   } else if(w) {
     stream << QString("S0_x1=%1, S0_y1=%2, S0_x2=%3, S0_y2=%4")

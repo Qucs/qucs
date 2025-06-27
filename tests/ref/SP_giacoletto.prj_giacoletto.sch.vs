@@ -51,7 +51,7 @@
     (* qucs_mirrored=0, qucs_rotated=0, qucs_visible="100", S0_x1=280, S0_y1=60, S0_x2=340, S0_y2=60 *) C #(.C(0.65 pF),.V()) C3 ( n_280_60, n_340_60 );
     (* qucs_mirrored=0, qucs_rotated=1, qucs_visible="11000", S0_x1=60, S0_y1=160, S0_x2=60, S0_y2=220 *) Pac #(.Num(1),.Z(50 Ohm),.P(0 dBm),.f(1 GHz),.Temp(26.85)) P2 ( n_60_160, n_60_220 );
     (* qucs_mirrored=0, qucs_rotated=1, qucs_visible="11000", S0_x1=680, S0_y1=160, S0_x2=680, S0_y2=220 *) Pac #(.Num(2),.Z(50 Ohm),.P(0 dBm),.f(1 GHz),.Temp(26.85)) P1 ( n_680_160, n_680_220 );
-    (* qucs_mirrored=0, qucs_rotated=0, qucs_visible="111100000", S0_x1=160, S0_y1=300 *) \.SP  #(.Type(lin),.Start(100 MHz),.Stop(1.1 GHz),.Points(110),.Noise(no),.NoiseIP(1),.NoiseOP(2),.saveCVs(no),.saveAll(no)) SP1 (  );
+    (* qucs_mirrored=0, qucs_rotated=0, qucs_visible="111100000", S0_x=160, S0_y=300 *) \.SP  #(.Type(lin),.Start(100 MHz),.Stop(1.1 GHz),.Points(110),.Noise(no),.NoiseIP(1),.NoiseOP(2),.saveCVs(no),.saveAll(no)) SP1 (  );
     (* S0_x1=260, S0_y1=140, S0_x2=360, S0_y2=140 *) net #() net1 ( n_260_140, n_360_140 );
     (* S0_x1=260, S0_y1=140, S0_x2=260, S0_y2=160 *) net #() net2 ( n_260_140, n_260_160 );
     (* S0_x1=360, S0_y1=140, S0_x2=360, S0_y2=160 *) net #() net3 ( n_360_140, n_360_160 );

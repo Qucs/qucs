@@ -29,9 +29,9 @@
     (* qucs_mirrored=0, qucs_rotated=0, qucs_visible="11", S0_x1=140, S0_y1=150, S0_x2=200, S0_y2=150 *) L #(.L(47uH),.I(0)) L1 ( n_140_150, n_200_150 );
     (* qucs_mirrored=0, qucs_rotated=1, qucs_visible="1", S0_x1=70, S0_y1=170, S0_x2=70, S0_y2=230 *) Vdc #(.U(12V)) V2 ( n_70_170, n_70_230 );
     (* qucs_mirrored=0, qucs_rotated=0, qucs_visible="", S0_x1=70, S0_y1=250 *) GND #() \*  ( n_70_250 );
-    (* qucs_mirrored=0, qucs_rotated=0, qucs_visible="11", S0_x1=400, S0_y1=300 *) Eqn #(.y(1),.Export(yes)) Eqn1 (  );
-    (* qucs_mirrored=0, qucs_rotated=0, qucs_visible="11110001000000000001", S0_x1=540, S0_y1=290 *) \.TR  #(.Type(lin),.Start(0),.Stop(Tmax),.Points(201),.IntegrationMethod(Trapezoidal),.Order(2),.InitialStep(1 ns),.MinStep(Tstep),.MaxIter(150),.reltol(0.001),.abstol(1 pA),.vntol(1 uV),.Temp(26.85),.LTEreltol(1e-3),.LTEabstol(1e-6),.LTEfactor(1),.Solver(CroutLU),.relaxTSR(no),.initialDC(yes),.MaxStep(Tstep)) TR1 (  );
-    (* qucs_mirrored=0, qucs_rotated=0, qucs_visible="11", S0_x1=580, S0_y1=520 *) Eqn #(.y(1),.Export(yes)) Eqn2 (  );
+    (* qucs_mirrored=0, qucs_rotated=0, qucs_visible="11", S0_x=400, S0_y=300 *) Eqn #(.y(1),.Export(yes)) Eqn1 (  );
+    (* qucs_mirrored=0, qucs_rotated=0, qucs_visible="11110001000000000001", S0_x=540, S0_y=290 *) \.TR  #(.Type(lin),.Start(0),.Stop(Tmax),.Points(201),.IntegrationMethod(Trapezoidal),.Order(2),.InitialStep(1 ns),.MinStep(Tstep),.MaxIter(150),.reltol(0.001),.abstol(1 pA),.vntol(1 uV),.Temp(26.85),.LTEreltol(1e-3),.LTEabstol(1e-6),.LTEfactor(1),.Solver(CroutLU),.relaxTSR(no),.initialDC(yes),.MaxStep(Tstep)) TR1 (  );
+    (* qucs_mirrored=0, qucs_rotated=0, qucs_visible="11", S0_x=580, S0_y=520 *) Eqn #(.y(1),.Export(yes)) Eqn2 (  );
     (* qucs_mirrored=0, qucs_rotated=0, qucs_visible="00000", S0_x1=320, S0_y1=170, S0_x2=380, S0_y2=170, S0_x3=380, S0_y3=230, S0_x4=320, S0_y4=230 *) Relais #(.Vt(0.5 V),.Vh(0.1 V),.Ron(1),.Roff(1e12),.Temp(26.85)) S1 ( n_320_170, n_380_170, n_380_230, n_320_230 );
     (* qucs_mirrored=0, qucs_rotated=1, qucs_visible="111000", S0_x1=220, S0_y1=270, S0_x2=220, S0_y2=330 *) Vrect #(.U(1V),.TH(Ton),.TL(Toff),.Tr(1 ns),.Tf(1 ns),.Td(0 ns)) V1 ( n_220_270, n_220_330 );
     (* qucs_mirrored=0, qucs_rotated=0, qucs_visible="", S0_x1=220, S0_y1=370 *) GND #() \*  ( n_220_370 );

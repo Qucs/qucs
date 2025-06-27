@@ -14,10 +14,10 @@
     wire n_80_120;
     (* qucs_mirrored=0, qucs_rotated=1, qucs_visible="1", S0_x1=80, S0_y1=130, S0_x2=80, S0_y2=190 *) Vdc #(.U(Vgs)) V2 ( n_80_130, n_80_190 );
     (* qucs_mirrored=0, qucs_rotated=0, qucs_visible="", S0_x1=80, S0_y1=190 *) GND #() \*  ( n_80_190 );
-    (* qucs_mirrored=0, qucs_rotated=0, qucs_visible="000000000", S0_x1=40, S0_y1=250 *) \.DC  #(.Temp(26.85),.reltol(0.001),.abstol(1 pA),.vntol(1 uV),.saveOPs(no),.MaxIter(150),.saveAll(no),.convHelper(none),.Solver(CroutLU)) DC1 (  );
-    (* qucs_mirrored=0, qucs_rotated=0, qucs_visible="10", S0_x1=70, S0_y1=390 *) Eqn #(.Id(-V1.I),.Export(yes)) Eqn1 (  );
-    (* qucs_mirrored=0, qucs_rotated=0, qucs_visible="111111", S0_x1=380, S0_y1=220 *) \.SW  #(.Sim(DC1),.Type(lin),.Start(Vds),.Stop(-10),.Points(10),.Points(41)) SW1 (  );
-    (* qucs_mirrored=0, qucs_rotated=0, qucs_visible="111111", S0_x1=540, S0_y1=220 *) \.SW  #(.Sim(SW1),.Type(lin),.Start(Vgs),.Stop(-5),.Points(0),.Points(6)) SW2 (  );
+    (* qucs_mirrored=0, qucs_rotated=0, qucs_visible="000000000", S0_x=40, S0_y=250 *) \.DC  #(.Temp(26.85),.reltol(0.001),.abstol(1 pA),.vntol(1 uV),.saveOPs(no),.MaxIter(150),.saveAll(no),.convHelper(none),.Solver(CroutLU)) DC1 (  );
+    (* qucs_mirrored=0, qucs_rotated=0, qucs_visible="10", S0_x=70, S0_y=390 *) Eqn #(.Id(-V1.I),.Export(yes)) Eqn1 (  );
+    (* qucs_mirrored=0, qucs_rotated=0, qucs_visible="111111", S0_x=380, S0_y=220 *) \.SW  #(.Sim(DC1),.Type(lin),.Start(Vds),.Stop(-10),.Points(10),.Points(41)) SW1 (  );
+    (* qucs_mirrored=0, qucs_rotated=0, qucs_visible="111111", S0_x=540, S0_y=220 *) \.SW  #(.Sim(SW1),.Type(lin),.Start(Vgs),.Stop(-5),.Points(0),.Points(6)) SW2 (  );
     (* qucs_mirrored=0, qucs_rotated=0, qucs_visible="", S0_x1=380, S0_y1=160 *) GND #() \*  ( n_380_160 );
     (* qucs_mirrored=0, qucs_rotated=1, qucs_visible="1", S0_x1=380, S0_y1=90, S0_x2=380, S0_y2=150 *) Vdc #(.U(Vds)) V1 ( n_380_90, n_380_150 );
     (* qucs_mirrored=0, qucs_rotated=0, qucs_visible="", S0_x1=210, S0_y1=160 *) GND #() \*  ( n_210_160 );

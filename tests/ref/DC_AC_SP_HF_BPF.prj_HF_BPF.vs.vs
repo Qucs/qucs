@@ -34,11 +34,11 @@
     (* qucs_mirrored=0, qucs_rotated=0, qucs_visible="11110", S0_x1=380, S0_y1=90, S0_x2=440, S0_y2=90 *) CAPQ #(.C(68 pF),.Q(Qc),.f(f0),.Mode(Linear),.Temp(26.85)) CAPQ1 ( n_380_90, n_440_90 );
     (* qucs_mirrored=0, qucs_rotated=1, qucs_visible="11110", S0_x1=270, S0_y1=200, S0_x2=270, S0_y2=140 *) CAPQ #(.C(560 pF),.Q(Qc),.f(f0),.Mode(Linear),.Temp(26.85)) CAPQ2 ( n_270_200, n_270_140 );
     (* qucs_mirrored=0, qucs_rotated=0, qucs_visible="", S0_x1=310, S0_y1=220 *) GND #() \*  ( n_310_220 );
-    (* qucs_mirrored=0, qucs_rotated=0, qucs_visible="000000000", S0_x1=20, S0_y1=310 *) \.DC  #(.Temp(26.85),.reltol(0.001),.abstol(1 pA),.vntol(1 uV),.saveOPs(no),.MaxIter(150),.saveAll(no),.convHelper(none),.Solver(CroutLU)) DC1 (  );
-    (* qucs_mirrored=0, qucs_rotated=0, qucs_visible="11", S0_x1=450, S0_y1=320 *) Eqn #(.y(1),.Export(yes)) Eqn2 (  );
-    (* qucs_mirrored=0, qucs_rotated=0, qucs_visible="11", S0_x1=450, S0_y1=440 *) Eqn #(.y(1),.Export(yes)) Eqn1 (  );
-    (* qucs_mirrored=0, qucs_rotated=0, qucs_visible="111110000", S0_x1=230, S0_y1=310 *) \.SP  #(.Type(log),.Start(1.2 MHz),.Stop(170 MHz),.Points(433),.Noise(yes),.NoiseIP(1),.NoiseOP(2),.saveCVs(no),.saveAll(no)) SP1 (  );
-    (* qucs_mirrored=0, qucs_rotated=0, qucs_visible="11111", S0_x1=20, S0_y1=410 *) \.AC  #(.Type(log),.Start(1.2 MHz),.Stop(170 MHz),.Points(218),.Noise(yes)) AC1 (  );
+    (* qucs_mirrored=0, qucs_rotated=0, qucs_visible="000000000", S0_x=20, S0_y=310 *) \.DC  #(.Temp(26.85),.reltol(0.001),.abstol(1 pA),.vntol(1 uV),.saveOPs(no),.MaxIter(150),.saveAll(no),.convHelper(none),.Solver(CroutLU)) DC1 (  );
+    (* qucs_mirrored=0, qucs_rotated=0, qucs_visible="11", S0_x=450, S0_y=320 *) Eqn #(.y(1),.Export(yes)) Eqn2 (  );
+    (* qucs_mirrored=0, qucs_rotated=0, qucs_visible="11", S0_x=450, S0_y=440 *) Eqn #(.y(1),.Export(yes)) Eqn1 (  );
+    (* qucs_mirrored=0, qucs_rotated=0, qucs_visible="111110000", S0_x=230, S0_y=310 *) \.SP  #(.Type(log),.Start(1.2 MHz),.Stop(170 MHz),.Points(433),.Noise(yes),.NoiseIP(1),.NoiseOP(2),.saveCVs(no),.saveAll(no)) SP1 (  );
+    (* qucs_mirrored=0, qucs_rotated=0, qucs_visible="11111", S0_x=20, S0_y=410 *) \.AC  #(.Type(log),.Start(1.2 MHz),.Stop(170 MHz),.Points(218),.Noise(yes)) AC1 (  );
     (* qucs_mirrored=0, qucs_rotated=0, qucs_visible="", S0_x1=100, S0_y1=220 *) GND #() \*  ( n_100_220 );
     (* qucs_mirrored=1, qucs_rotated=1, qucs_visible="11001", S0_x1=100, S0_y1=120, S0_x2=100, S0_y2=180 *) Pac #(.Num(1),.Z(50 Ohm),.P(0 dBm),.f(1 GHz),.Temp(-273.15)) P2 ( n_100_120, n_100_180 );
     (* qucs_mirrored=0, qucs_rotated=0, qucs_visible="", S0_x1=630, S0_y1=290 *) GND #() \*  ( n_630_290 );

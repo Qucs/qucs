@@ -37,9 +37,9 @@
     (* qucs_mirrored=1, qucs_rotated=3, qucs_visible="1", S0_x1=320, S0_y1=240, S0_x2=320, S0_y2=300, S0_x3=380, S0_y3=300, S0_x4=380, S0_y4=240 *) Tr #(.T(25)) Tr2 ( n_320_240, n_320_300, n_380_300, n_380_240 );
     (* qucs_mirrored=0, qucs_rotated=1, qucs_visible="100000", S0_x1=620, S0_y1=220, S0_x2=620, S0_y2=160 *) R #(.R(R_load),.Temp(26.85),.Tc1(0.0),.Tc2(0.0),.Tnom(26.85)) Load ( n_620_220, n_620_160 );
     (* qucs_mirrored=0, qucs_rotated=1, qucs_visible="1", S0_x1=320, S0_y1=180, S0_x2=320, S0_y2=120, S0_x3=380, S0_y3=120, S0_x4=380, S0_y4=180 *) Tr #(.T(25)) Tr1 ( n_320_180, n_320_120, n_380_120, n_380_180 );
-    (* qucs_mirrored=0, qucs_rotated=0, qucs_visible="11110", S0_x1=70, S0_y1=280 *) \.AC  #(.Type(lin),.Start(1 GHz),.Stop(2 GHz),.Points(2),.Noise(no)) AC1 (  );
-    (* qucs_mirrored=0, qucs_rotated=0, qucs_visible="11", S0_x1=570, S0_y1=320 *) Eqn #(.y(1),.Export(yes)) Eqn1 (  );
-    (* qucs_mirrored=0, qucs_rotated=0, qucs_visible="111111", S0_x1=70, S0_y1=410 *) \.SW  #(.Sim(AC1),.Type(lin),.Param(R1),.Start(R_load),.Stop(2 Ohm),.Points(100)) SW1 (  );
+    (* qucs_mirrored=0, qucs_rotated=0, qucs_visible="11110", S0_x=70, S0_y=280 *) \.AC  #(.Type(lin),.Start(1 GHz),.Stop(2 GHz),.Points(2),.Noise(no)) AC1 (  );
+    (* qucs_mirrored=0, qucs_rotated=0, qucs_visible="11", S0_x=570, S0_y=320 *) Eqn #(.y(1),.Export(yes)) Eqn1 (  );
+    (* qucs_mirrored=0, qucs_rotated=0, qucs_visible="111111", S0_x=70, S0_y=410 *) \.SW  #(.Sim(AC1),.Type(lin),.Param(R1),.Start(R_load),.Stop(2 Ohm),.Points(100)) SW1 (  );
     (* S0_x1=300, S0_y1=180, S0_x2=300, S0_y2=300 *) net #() net1 ( n_300_180, n_300_300 );
     (* S0_x1=300, S0_y1=180, S0_x2=320, S0_y2=180 *) net #() net2 ( n_300_180, n_320_180 );
     (* S0_x1=300, S0_y1=300, S0_x2=320, S0_y2=300 *) net #() net3 ( n_300_300, n_320_300 );

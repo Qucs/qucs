@@ -26,9 +26,9 @@
     (* qucs_mirrored=0, qucs_rotated=0, qucs_visible="100000", S0_x1=130, S0_y1=320, S0_x2=190, S0_y2=320 *) R #(.R(100),.Temp(26.85),.Tc1(0.0),.Tc2(0.0),.Tnom(26.85)) R1 ( n_130_320, n_190_320 );
     (* qucs_mirrored=0, qucs_rotated=0, qucs_visible="100000", S0_x1=280, S0_y1=320, S0_x2=340, S0_y2=320 *) R #(.R(100),.Temp(26.85),.Tc1(0.0),.Tc2(0.0),.Tnom(26.85)) R2 ( n_280_320, n_340_320 );
     (* qucs_mirrored=0, qucs_rotated=1, qucs_visible="100000", S0_x1=370, S0_y1=400, S0_x2=370, S0_y2=340 *) R #(.R(100k),.Temp(26.85),.Tc1(0.0),.Tc2(0.0),.Tnom(26.85)) R3 ( n_370_400, n_370_340 );
-    (* qucs_mirrored=0, qucs_rotated=0, qucs_visible="111110", S0_x1=100, S0_y1=70 *) \.HB  #(.f(1 GHz),.n(8),.iabstol(1 pA),.vabstol(1 uV),.reltol(0.001),.MaxIter(150)) HB1 (  );
-    (* qucs_mirrored=0, qucs_rotated=0, qucs_visible="10", S0_x1=130, S0_y1=490 *) Eqn #(.Spectrum(Time2Freq(Node3.Vt, time)),.Export(yes)) Eqn1 (  );
-    (* qucs_mirrored=0, qucs_rotated=0, qucs_visible="11110000000000000000", S0_x1=370, S0_y1=70 *) \.TR  #(.Type(lin),.Start(0),.Stop(4 ns),.Points(256),.IntegrationMethod(Trapezoidal),.Order(2),.InitialStep(1 ns),.MinStep(1e-16),.MaxIter(150),.reltol(0.001),.abstol(1 pA),.vntol(1 uV),.Temp(26.85),.LTEreltol(1e-3),.LTEabstol(1e-6),.LTEfactor(1),.Solver(CroutLU),.relaxTSR(no),.initialDC(yes),.MaxStep(0)) TR1 (  );
+    (* qucs_mirrored=0, qucs_rotated=0, qucs_visible="111110", S0_x=100, S0_y=70 *) \.HB  #(.f(1 GHz),.n(8),.iabstol(1 pA),.vabstol(1 uV),.reltol(0.001),.MaxIter(150)) HB1 (  );
+    (* qucs_mirrored=0, qucs_rotated=0, qucs_visible="10", S0_x=130, S0_y=490 *) Eqn #(.Spectrum(Time2Freq(Node3.Vt, time)),.Export(yes)) Eqn1 (  );
+    (* qucs_mirrored=0, qucs_rotated=0, qucs_visible="11110000000000000000", S0_x=370, S0_y=70 *) \.TR  #(.Type(lin),.Start(0),.Stop(4 ns),.Points(256),.IntegrationMethod(Trapezoidal),.Order(2),.InitialStep(1 ns),.MinStep(1e-16),.MaxIter(150),.reltol(0.001),.abstol(1 pA),.vntol(1 uV),.Temp(26.85),.LTEreltol(1e-3),.LTEabstol(1e-6),.LTEfactor(1),.Solver(CroutLU),.relaxTSR(no),.initialDC(yes),.MaxStep(0)) TR1 (  );
     (* S0_x1=100, S0_y1=400, S0_x2=100, S0_y2=410 *) net #() net1 ( n_100_400, n_100_410 );
     (* S0_x1=100, S0_y1=410, S0_x2=210, S0_y2=410 *) net #() net2 ( n_100_410, n_210_410 );
     (* S0_x1=100, S0_y1=320, S0_x2=130, S0_y2=320, qucs_label_cx=107, qucs_label_cy=320, qucs_label_x1=130, qucs_label_y1=270 *) net #() Node1 ( n_100_320, n_130_320, Node1 );

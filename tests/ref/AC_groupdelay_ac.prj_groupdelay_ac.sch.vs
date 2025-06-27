@@ -29,8 +29,8 @@
     (* qucs_mirrored=0, qucs_rotated=1, qucs_visible="1000", S0_x1=550, S0_y1=170, S0_x2=550, S0_y2=230 *) Vac #(.U(0 V),.f(1 GHz),.Phase(0),.Theta(0)) V2 ( n_550_170, n_550_230 );
     (* qucs_mirrored=0, qucs_rotated=0, qucs_visible="", S0_x1=550, S0_y1=250 *) GND #() \*  ( n_550_250 );
     (* qucs_mirrored=0, qucs_rotated=0, qucs_visible="100000", S0_x1=450, S0_y1=140, S0_x2=510, S0_y2=140 *) R #(.R(Z0),.Temp(26.85),.Tc1(0.0),.Tc2(0.0),.Tnom(26.85)) R2 ( n_450_140, n_510_140 );
-    (* qucs_mirrored=0, qucs_rotated=0, qucs_visible="11110", S0_x1=50, S0_y1=330 *) \.AC  #(.Type(log),.Start(1 MHz),.Stop(200 MHz),.Points(458),.Noise(no)) AC1 (  );
-    (* qucs_mirrored=0, qucs_rotated=0, qucs_visible="1111111110", S0_x1=270, S0_y1=340 *) Eqn #(.dBS21_3rd(dB(S21)),.S21(b2/a1),.S11(b1/a1),.a1((P1.v+Z0*-V1.i)/(2*sqrt(Z0))),.Z0(60),.b1((P1.v-Z0*-V1.i)/(2*sqrt(Z0))),.b2((P2.v-Z0*-V2.i)/(2*sqrt(Z0))),.gain_phase(unwrap(angle(S21))),.group_delay(-diff(gain_phase,2*pi*acfrequency)),.Export(yes)) Eqn1 (  );
+    (* qucs_mirrored=0, qucs_rotated=0, qucs_visible="11110", S0_x=50, S0_y=330 *) \.AC  #(.Type(log),.Start(1 MHz),.Stop(200 MHz),.Points(458),.Noise(no)) AC1 (  );
+    (* qucs_mirrored=0, qucs_rotated=0, qucs_visible="1111111110", S0_x=270, S0_y=340 *) Eqn #(.dBS21_3rd(dB(S21)),.S21(b2/a1),.S11(b1/a1),.a1((P1.v+Z0*-V1.i)/(2*sqrt(Z0))),.Z0(60),.b1((P1.v-Z0*-V1.i)/(2*sqrt(Z0))),.b2((P2.v-Z0*-V2.i)/(2*sqrt(Z0))),.gain_phase(unwrap(angle(S21))),.group_delay(-diff(gain_phase,2*pi*acfrequency)),.Export(yes)) Eqn1 (  );
     (* qucs_mirrored=0, qucs_rotated=0, qucs_visible="100000", S0_x1=120, S0_y1=140, S0_x2=180, S0_y2=140 *) R #(.R(Z0),.Temp(26.85),.Tc1(0.0),.Tc2(0.0),.Tnom(26.85)) R1 ( n_120_140, n_180_140 );
     (* S0_x1=240, S0_y1=140, S0_x2=240, S0_y2=190 *) net #() net1 ( n_240_140, n_240_190 );
     (* S0_x1=380, S0_y1=140, S0_x2=380, S0_y2=190 *) net #() net2 ( n_380_140, n_380_190 );

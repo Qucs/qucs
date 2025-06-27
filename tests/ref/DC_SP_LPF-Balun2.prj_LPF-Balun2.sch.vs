@@ -79,9 +79,9 @@
     (* qucs_mirrored=0, qucs_rotated=0, qucs_visible="", S0_x1=930, S0_y1=170 *) GND #() \*  ( n_930_170 );
     (* qucs_mirrored=0, qucs_rotated=1, qucs_visible="11000", S0_x1=990, S0_y1=150, S0_x2=990, S0_y2=210 *) Pac #(.Num(2),.Z(100 Ohm),.P(0 dBm),.f(1 GHz),.Temp(26.85)) P2 ( n_990_150, n_990_210 );
     (* qucs_mirrored=1, qucs_rotated=2, qucs_visible="", S0_x1=990, S0_y1=250 *) GND #() \*  ( n_990_250 );
-    (* qucs_mirrored=0, qucs_rotated=0, qucs_visible="111100000", S0_x1=20, S0_y1=350 *) \.SP  #(.Type(log),.Start(1MHz),.Stop(100MHz),.Points(1001),.Noise(no),.NoiseIP(1),.NoiseOP(2),.saveCVs(no),.saveAll(no)) SP1 (  );
-    (* qucs_mirrored=0, qucs_rotated=0, qucs_visible="110", S0_x1=200, S0_y1=370 *) Eqn #(.dBS21(dB(S[2,1])),.dBS11(dB(S[1,1])),.Export(yes)) Eqn1 (  );
-    (* qucs_mirrored=0, qucs_rotated=0, qucs_visible="000000000", S0_x1=600, S0_y1=350 *) \.DC  #(.Temp(26.85),.reltol(0.001),.abstol(1 pA),.vntol(1 uV),.saveOPs(no),.MaxIter(150),.saveAll(no),.convHelper(none),.Solver(CroutLU)) DC1 (  );
+    (* qucs_mirrored=0, qucs_rotated=0, qucs_visible="111100000", S0_x=20, S0_y=350 *) \.SP  #(.Type(log),.Start(1MHz),.Stop(100MHz),.Points(1001),.Noise(no),.NoiseIP(1),.NoiseOP(2),.saveCVs(no),.saveAll(no)) SP1 (  );
+    (* qucs_mirrored=0, qucs_rotated=0, qucs_visible="110", S0_x=200, S0_y=370 *) Eqn #(.dBS21(dB(S[2,1])),.dBS11(dB(S[1,1])),.Export(yes)) Eqn1 (  );
+    (* qucs_mirrored=0, qucs_rotated=0, qucs_visible="000000000", S0_x=600, S0_y=350 *) \.DC  #(.Temp(26.85),.reltol(0.001),.abstol(1 pA),.vntol(1 uV),.saveOPs(no),.MaxIter(150),.saveAll(no),.convHelper(none),.Solver(CroutLU)) DC1 (  );
     (* S0_x1=440, S0_y1=90, S0_x2=440, S0_y2=140 *) net #() net1 ( n_440_90, n_440_140 );
     (* S0_x1=580, S0_y1=90, S0_x2=580, S0_y2=140 *) net #() net2 ( n_580_90, n_580_140 );
     (* S0_x1=440, S0_y1=90, S0_x2=480, S0_y2=90 *) net #() net3 ( n_440_90, n_480_90 );
