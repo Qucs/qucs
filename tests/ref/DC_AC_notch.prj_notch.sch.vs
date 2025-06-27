@@ -68,7 +68,7 @@
     (* S0_x1=340, S0_y1=260, S0_x2=350, S0_y2=260 *) net #() net15 ( n_340_260, n_350_260 );
     (* S0_x1=340, S0_y1=200, S0_x2=340, S0_y2=260 *) net #() net16 ( n_340_200, n_340_260 );
     (* S0_x1=340, S0_y1=200, S0_x2=360, S0_y2=200 *) net #() net17 ( n_340_200, n_360_200 );
-    (* S0_x1=340, S0_y1=120, S0_x2=500, S0_y2=120, qucs_label_cx=415, qucs_label_cy=120, qucs_label_x1=450, qucs_label_y1=90 *) net #() Out ( n_340_120, n_500_120, Out );
+    (* S0_x1=340, S0_y1=120, S0_x2=500, S0_y2=120, S0_qucs_x=450, S0_qucs_y=90, S0_qucs_delta=75 *) net #() Out ( n_340_120, n_500_120, Out );
     (* S0_x1=500, S0_y1=120, S0_x2=500, S0_y2=140 *) net #() net18 ( n_500_120, n_500_140 );
     (* S0_x1=160, S0_y1=280, S0_x2=180, S0_y2=280 *) net #() net19 ( n_160_280, n_180_280 );
     (* S0_x1=160, S0_y1=280, S0_x2=160, S0_y2=320 *) net #() net20 ( n_160_280, n_160_320 );
@@ -78,7 +78,7 @@
     (* S0_x1=340, S0_y1=300, S0_x2=340, S0_y2=320 *) net #() net24 ( n_340_300, n_340_320 );
     (* S0_x1=500, S0_y1=280, S0_x2=500, S0_y2=320 *) net #() net25 ( n_500_280, n_500_320 );
     (* S0_x1=40, S0_y1=120, S0_x2=40, S0_y2=190 *) net #() net26 ( n_40_120, n_40_190 );
-    (* S0_x1=40, S0_y1=120, S0_x2=280, S0_y2=120, qucs_label_cx=58, qucs_label_cy=120, qucs_label_x1=90, qucs_label_y1=90 *) net #() In ( n_40_120, n_280_120, In );
+    (* S0_x1=40, S0_y1=120, S0_x2=280, S0_y2=120, S0_qucs_x=90, S0_qucs_y=90, S0_qucs_delta=18 *) net #() In ( n_40_120, n_280_120, In );
     (* S0_x=320, S0_y=350, qucs_type="Text", S0_text="50Hz notch filter:\nbuilt by use of extremly high Q gyrator,\nOpAmps fake a 10.1Henry+0.5mOhm coil\nthat forms resonance circuit with C2", qucs_font_color="#000000", qucs_font_size=12, qucs_font_angle=0 *) S__text #() S0_text1();
     (* S0_x=320, S0_y=420, qucs_type="Text", S0_text="OpAmp gyrator fakes:\ninductance = C1*R1*R2*R4/R3\nresistance = 0.5*R2*R4/R3/OpAmpGain", qucs_font_color="#000000", qucs_font_size=12, qucs_font_angle=0 *) S__text #() S0_text2();
 endmodule

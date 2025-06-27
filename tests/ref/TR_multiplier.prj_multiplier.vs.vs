@@ -49,10 +49,10 @@
     (* S0_x1=500, S0_y1=140, S0_x2=560, S0_y2=140 *) net #() net10 ( n_500_140, n_560_140 );
     (* S0_x1=380, S0_y1=240, S0_x2=500, S0_y2=240 *) net #() net11 ( n_380_240, n_500_240 );
     (* S0_x1=380, S0_y1=140, S0_x2=440, S0_y2=140 *) net #() net12 ( n_380_140, n_440_140 );
-    (* S0_x1=560, S0_y1=240, S0_x2=640, S0_y2=240, qucs_label_cx=621, qucs_label_cy=240, qucs_label_x1=640, qucs_label_y1=190 *) net #() Output ( n_560_240, n_640_240, Output );
-    (* S0_x1=100, S0_y1=140, S0_x2=100, S0_y2=180 *) net #() net13 ( n_100_140, n_100_180 );
-    (* S0_x1=100, S0_y1=240, S0_x2=320, S0_y2=240 *) net #() net14 ( n_100_240, n_320_240 );
-    (* S0_x1=160, S0_y1=140, S0_x2=260, S0_y2=140, qucs_label_cx=176, qucs_label_cy=140, qucs_label_x1=200, qucs_label_y1=90 *) net #() Input ( n_160_140, n_260_140, Input );
+    (* S0_x1=560, S0_y1=240, S0_x2=640, S0_y2=240 *) net #() net13 ( n_560_240, n_640_240 );
+    (* S0_x1=100, S0_y1=140, S0_x2=100, S0_y2=180 *) net #() net14 ( n_100_140, n_100_180 );
+    (* S0_x1=100, S0_y1=240, S0_x2=320, S0_y2=240 *) net #() net15 ( n_100_240, n_320_240 );
+    (* S0_x1=160, S0_y1=140, S0_x2=260, S0_y2=140 *) net #() net16 ( n_160_140, n_260_140 );
     (* S0_x=250, S0_y=80, qucs_type="Rectangle", qucs_w=170, qucs_h=220 *) S__graphics #() S0_graphics1();
     (* S0_x=430, S0_y=80, qucs_type="Rectangle", qucs_w=170, qucs_h=220 *) S__graphics #() S0_graphics2();
     (* S0_x=70, S0_y=80, qucs_type="Rectangle", qucs_w=100, qucs_h=210 *) S__graphics #() S0_graphics3();

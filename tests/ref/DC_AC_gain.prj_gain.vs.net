@@ -1,11 +1,11 @@
 # Qucs
 
 Vac:V4 _net0 gnd U="1 uV" f="2 kHz" Phase="0" Theta="0"
-R:R2 Output _net1 R="50k" Temp="26.85" Tc1="0.0" Tc2="0.0" Tnom="26.85"
-R:R1 gnd Output R="100k" Temp="26.85" Tc1="0.0" Tc2="0.0" Tnom="26.85"
-Vdc:V3 _net2 gnd U="2.5 V"
-Vdc:V6 _net3 gnd U="-2.5 V"
+R:R2 _net1 _net2 R="50k" Temp="26.85" Tc1="0.0" Tc2="0.0" Tnom="26.85"
+R:R1 gnd _net1 R="100k" Temp="26.85" Tc1="0.0" Tc2="0.0" Tnom="26.85"
+Vdc:V3 _net3 gnd U="2.5 V"
+Vdc:V6 _net4 gnd U="-2.5 V"
 .AC:AC1 Type="log" Start="1" Stop="10 MHz" Points="200" Noise="no"
 .DC:DC1 Temp="26.85" reltol="0.001" abstol="1 pA" vntol="1 uV" saveOPs="no" MaxIter="150" saveAll="no" convHelper="none" Solver="CroutLU"
 Eqn:Eqn1 y="1" Export="yes"
-R:R3 _net1 gnd R="1.7k" Temp="26.85" Tc1="0.0" Tc2="0.0" Tnom="26.85"
+R:R3 _net2 gnd R="1.7k" Temp="26.85" Tc1="0.0" Tc2="0.0" Tnom="26.85"

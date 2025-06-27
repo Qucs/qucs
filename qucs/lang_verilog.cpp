@@ -220,18 +220,9 @@ void dump_attributes(outputStream& stream, T const* x)
       .arg(w->ports(1)->cx())
       .arg(w->ports(1)->cy());
     if(w->Label) {
-      stream << ", "
-             << "qucs_label_cx="
-             << w->Label->cx()
-             << ", "
-             << "qucs_label_cy="
-             << w->Label->cy()
-             << ", "
-             << "qucs_label_x1="
-             << w->Label->x1()
-             << ", "
-             << "qucs_label_y1="
-             << w->Label->y1();
+      stream << ", S0_qucs_x=" << w->Label->x1()
+             << ", S0_qucs_y=" << w->Label->y1()
+             << ", S0_qucs_delta=" << w->delta();
     } else {  untested();
     }
   } else { untested();
@@ -440,7 +431,7 @@ void set_attribute(Schematic* x, std::string name, std::string value)
 }
 
 // BUG. need extra function, Wire is not a Component.
-void parse_args_instance(CS& cmd, Wire* x)
+void parse_args_instance(CS& cmd, Wire* )
 { untested();
   (void)cmd;
   incomplete();
@@ -617,7 +608,7 @@ public:
 	}else{ untested();
 	  value = "1";
 	}
-  _attr.push_back(std::make_pair(name,value));
+	_attr.push_back(std::make_pair(name,value));
 	trace2("inspect", name, value);
 	if(name=="qucs_type") { untested();
 	  _type = value;

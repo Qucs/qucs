@@ -19,8 +19,8 @@
     (* S0_x1=140, S0_y1=300, S0_x2=340, S0_y2=300 *) net #() net3 ( n_140_300, n_340_300 );
     (* S0_x1=340, S0_y1=280, S0_x2=340, S0_y2=300 *) net #() net4 ( n_340_280, n_340_300 );
     (* S0_x1=140, S0_y1=200, S0_x2=140, S0_y2=220 *) net #() net5 ( n_140_200, n_140_220 );
-    (* S0_x1=140, S0_y1=200, S0_x2=220, S0_y2=200, qucs_label_cx=173, qucs_label_cy=200, qucs_label_x1=210, qucs_label_y1=170 *) net #() in ( n_140_200, n_220_200, in );
-    (* S0_x1=340, S0_y1=200, S0_x2=340, S0_y2=220 *) net #() net6 ( n_340_200, n_340_220 );
-    (* S0_x1=280, S0_y1=200, S0_x2=340, S0_y2=200 *) net #() net7 ( n_280_200, n_340_200 );
+    (* S0_x1=140, S0_y1=200, S0_x2=220, S0_y2=200 *) net #() net6 ( n_140_200, n_220_200 );
+    (* S0_x1=340, S0_y1=200, S0_x2=340, S0_y2=220 *) net #() net7 ( n_340_200, n_340_220 );
+    (* S0_x1=280, S0_y1=200, S0_x2=340, S0_y2=200 *) net #() net8 ( n_280_200, n_340_200 );
     (* S0_x=140, S0_y=40, qucs_type="Text", S0_text="- if the subcircuit is a plain short (i.e. just a net connecting the two nodes)\nthe simulation result is wrong\n- if the subcircuit shorts the two nodes via a 0 ohm resistor, results are correct", qucs_font_color="#ff5500", qucs_font_size=14, qucs_font_angle=0 *) S__text #() S0_text1();
 endmodule

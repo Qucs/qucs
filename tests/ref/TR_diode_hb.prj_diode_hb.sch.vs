@@ -31,9 +31,9 @@
     (* qucs_mirrored=0, qucs_rotated=0, qucs_visible="11110000000000000000", S0_x=370, S0_y=70 *) \.TR  #(.Type(lin),.Start(0),.Stop(4 ns),.Points(256),.IntegrationMethod(Trapezoidal),.Order(2),.InitialStep(1 ns),.MinStep(1e-16),.MaxIter(150),.reltol(0.001),.abstol(1 pA),.vntol(1 uV),.Temp(26.85),.LTEreltol(1e-3),.LTEabstol(1e-6),.LTEfactor(1),.Solver(CroutLU),.relaxTSR(no),.initialDC(yes),.MaxStep(0)) TR1 (  );
     (* S0_x1=100, S0_y1=400, S0_x2=100, S0_y2=410 *) net #() net1 ( n_100_400, n_100_410 );
     (* S0_x1=100, S0_y1=410, S0_x2=210, S0_y2=410 *) net #() net2 ( n_100_410, n_210_410 );
-    (* S0_x1=100, S0_y1=320, S0_x2=130, S0_y2=320, qucs_label_cx=107, qucs_label_cy=320, qucs_label_x1=130, qucs_label_y1=270 *) net #() Node1 ( n_100_320, n_130_320, Node1 );
+    (* S0_x1=100, S0_y1=320, S0_x2=130, S0_y2=320, S0_qucs_x=130, S0_qucs_y=270, S0_qucs_delta=7 *) net #() Node1 ( n_100_320, n_130_320, Node1 );
     (* S0_x1=100, S0_y1=320, S0_x2=100, S0_y2=340 *) net #() net3 ( n_100_320, n_100_340 );
-    (* S0_x1=190, S0_y1=320, S0_x2=210, S0_y2=320, qucs_label_cx=208, qucs_label_cy=320, qucs_label_x1=240, qucs_label_y1=270 *) net #() Node2 ( n_190_320, n_210_320, Node2 );
+    (* S0_x1=190, S0_y1=320, S0_x2=210, S0_y2=320, S0_qucs_x=240, S0_qucs_y=270, S0_qucs_delta=18 *) net #() Node2 ( n_190_320, n_210_320, Node2 );
     (* S0_x1=210, S0_y1=400, S0_x2=210, S0_y2=410 *) net #() net4 ( n_210_400, n_210_410 );
     (* S0_x1=210, S0_y1=320, S0_x2=210, S0_y2=340 *) net #() net5 ( n_210_320, n_210_340 );
     (* S0_x1=210, S0_y1=320, S0_x2=280, S0_y2=320 *) net #() net6 ( n_210_320, n_280_320 );
@@ -43,6 +43,6 @@
     (* S0_x1=370, S0_y1=400, S0_x2=370, S0_y2=410 *) net #() net10 ( n_370_400, n_370_410 );
     (* S0_x1=340, S0_y1=320, S0_x2=370, S0_y2=320 *) net #() net11 ( n_340_320, n_370_320 );
     (* S0_x1=370, S0_y1=320, S0_x2=370, S0_y2=340 *) net #() net12 ( n_370_320, n_370_340 );
-    (* S0_x1=370, S0_y1=320, S0_x2=470, S0_y2=320, qucs_label_cx=395, qucs_label_cy=320, qucs_label_x1=420, qucs_label_y1=280 *) net #() Node3 ( n_370_320, n_470_320, Node3 );
+    (* S0_x1=370, S0_y1=320, S0_x2=470, S0_y2=320, S0_qucs_x=420, S0_qucs_y=280, S0_qucs_delta=25 *) net #() Node3 ( n_370_320, n_470_320, Node3 );
     (* S0_x1=370, S0_y1=410, S0_x2=470, S0_y2=410 *) net #() net13 ( n_370_410, n_470_410 );
 endmodule

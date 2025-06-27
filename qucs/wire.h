@@ -31,6 +31,10 @@ class Wire : public Conductor {
   //  TODO: would like to turn this into a weak pointer, but the pointer value
   //  is sometimes used as flag set while moving the full wire.
   mutable Node      *_port0{nullptr}, *_port1{nullptr};
+private: // label coords
+  int _qucs_nx{0}, _qucs_ny{0};
+  int _qucs_delta{0};
+  bool _qucs_has_label{false};
 public:
   Wire(int _x1=0, int _y1=0, int _x2=0, int _y2=0, Node *n1=0, Node *n2=0);
  ~Wire();
@@ -72,29 +76,24 @@ public:
   bool getSelected(int, int);
   void setName(const QString&, const QString&, int delta_=0, int x_=0, int y_=0);
 
-  // Setter functions for verilog parsing
   // x1, y1, x2, y2 are going to be private in the future
-  virtual void set_qucs_x1(int x) { set_x1(x); }
-  virtual void set_qucs_y1(int y) { set_y1(y); }
-  virtual void set_qucs_x2(int x) { set_x2(x); }
-  virtual void set_qucs_y2(int y) { set_y2(y); }
-  virtual void set_attribute(std::string name, std::string value);
-  virtual void apply_qucs_values() {}
-  virtual void set_label(std::string label);
+  void set_qucs_x1(int x) { set_x1(x); }
+  void set_qucs_y1(int y) { set_y1(y); }
+  void set_qucs_x2(int x) { set_x2(x); }
+  void set_qucs_y2(int y) { set_y2(y); }
+  void set_attribute(std::string name, std::string value);
+  void apply_qucs_values() {}
+  void set_label(std::string label);
+
+  int delta()const{
+	  assert(Label);
+	  return Label->cx()-x1() + Label->cy()-y1();
+  }
 
   void    rotate();
   QString save();
   bool    load(const QString&);
   bool    isHorizontal();
-
-  virtual void set_qucs_label_x1(int x) { _qucs_has_label=true;_qucs_label_x1=x; }
-  virtual void set_qucs_label_y1(int y) { _qucs_has_label=true;_qucs_label_y1=y; }
-  virtual void set_qucs_label_cx(int x) { _qucs_has_label=true;_qucs_label_cx=x; }
-  virtual void set_qucs_label_cy(int y) { _qucs_has_label=true;_qucs_label_cy=y; }
-private:
-  int _qucs_label_x1{0},_qucs_label_y1{0};
-  int _qucs_label_cx{0},_qucs_label_cy{0};
-  bool _qucs_has_label{false};
 };
 
 #endif

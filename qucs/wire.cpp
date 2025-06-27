@@ -161,7 +161,7 @@ QString Wire::save()
   if(Label) {
           s += " \""+Label->Name+"\" ";
           s += QString::number(Label->x1())+" "+QString::number(Label->y1())+" ";
-          s += QString::number(Label->cx()-x1() + Label->cy()-y1());
+          s += QString::number(delta());
           s += " \""+Label->initValue+"\">";
   }
   else { s += " \"\" 0 0 0 \"\">"; }
@@ -216,38 +216,31 @@ bool Wire::load(const QString& _s)
 void Wire::set_attribute(std::string name, std::string value)
 {
   if(name == "S0_x2"){
+	  // BUG. belongs to node
     set_qucs_x2(std::stoi(value));
-  }
-  else
-  if(name == "S0_y2"){
+  }else if(name == "S0_y2"){
+	  // BUG. belongs to node
     set_qucs_y2(std::stoi(value));
+  }else if(name == "S0_qucs_nx"){ // BUG: strip S0 in parser.
+    _qucs_nx = std::stoi(value);
+  }else if(name == "S0_qucs_ny"){ // BUG: strip S0 in parser.
+    _qucs_ny = std::stoi(value);
+  }else if(name == "S0_qucs_delta"){ // BUG: strip S0 in parser.
+    _qucs_delta = (std::stoi(value));
+    _qucs_has_label = true;
+  }else{
   }
-  else
-  if(name == "qucs_label_cx"){
-    set_qucs_label_cx(std::stoi(value));
-  }
-  else
-  if(name == "qucs_label_cy"){
-    set_qucs_label_cy(std::stoi(value));
-  }
-  else
-  if(name == "qucs_label_x1"){
-    set_qucs_label_x1(std::stoi(value));
-  }
-  else
-  if(name == "qucs_label_y1"){
-    set_qucs_label_y1(std::stoi(value));
-  }
-  else {}
 }
 
+// BUG: why not (re-)use set_name, 677270ef69 ...??
 void Wire::set_label(std::string label)
 {
+	auto Name_ = QString::fromStdString(label);
   if(_qucs_has_label) {
     if(isHorizontal()) {
-      Label.reset(new WireLabel(QString::fromStdString(label), _qucs_label_cx, _qucs_label_cy, _qucs_label_x1, _qucs_label_y1, isHWireLabel));
+      Label.reset(new WireLabel(Name_, x2()+_qucs_delta, y1(), _qucs_nx, _qucs_ny, isHWireLabel));
     } else {
-      Label.reset(new WireLabel(QString::fromStdString(label), _qucs_label_cx, _qucs_label_cy, _qucs_label_x1, _qucs_label_y1, isVWireLabel));
+      Label.reset(new WireLabel(Name_, x1(), y1()+_qucs_delta, _qucs_nx, _qucs_ny, isVWireLabel));
     }
   } else {}
 }

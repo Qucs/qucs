@@ -88,12 +88,12 @@
     (* S0_x1=600, S0_y1=170, S0_x2=610, S0_y2=170 *) net #() net21 ( n_600_170, n_610_170 );
     (* S0_x1=610, S0_y1=170, S0_x2=620, S0_y2=170 *) net #() net22 ( n_610_170, n_620_170 );
     (* S0_x1=610, S0_y1=170, S0_x2=610, S0_y2=210 *) net #() net23 ( n_610_170, n_610_210 );
-    (* S0_x1=610, S0_y1=60, S0_x2=690, S0_y2=60, qucs_label_cx=638, qucs_label_cy=60, qucs_label_x1=650, qucs_label_y1=30 *) net #() Output ( n_610_60, n_690_60, Output );
-    (* S0_x1=690, S0_y1=60, S0_x2=690, S0_y2=150 *) net #() net24 ( n_690_60, n_690_150 );
-    (* S0_x1=540, S0_y1=60, S0_x2=540, S0_y2=170 *) net #() net25 ( n_540_60, n_540_170 );
-    (* S0_x1=540, S0_y1=60, S0_x2=550, S0_y2=60 *) net #() net26 ( n_540_60, n_550_60 );
-    (* S0_x1=610, S0_y1=60, S0_x2=610, S0_y2=130 *) net #() net27 ( n_610_60, n_610_130 );
-    (* S0_x1=610, S0_y1=130, S0_x2=620, S0_y2=130 *) net #() net28 ( n_610_130, n_620_130 );
+    (* S0_x1=610, S0_y1=60, S0_x2=690, S0_y2=60 *) net #() net24 ( n_610_60, n_690_60 );
+    (* S0_x1=690, S0_y1=60, S0_x2=690, S0_y2=150 *) net #() net25 ( n_690_60, n_690_150 );
+    (* S0_x1=540, S0_y1=60, S0_x2=540, S0_y2=170 *) net #() net26 ( n_540_60, n_540_170 );
+    (* S0_x1=540, S0_y1=60, S0_x2=550, S0_y2=60 *) net #() net27 ( n_540_60, n_550_60 );
+    (* S0_x1=610, S0_y1=60, S0_x2=610, S0_y2=130 *) net #() net28 ( n_610_60, n_610_130 );
+    (* S0_x1=610, S0_y1=130, S0_x2=620, S0_y2=130 *) net #() net29 ( n_610_130, n_620_130 );
     (* S0_x=220, S0_y=410, qucs_type="Text", S0_text="6th order Chebyshev I low-pass filter\n1kHz band stop frequency, 1dB ripple", qucs_font_color="#000000", qucs_font_size=12, qucs_font_angle=0 *) S__text #() S0_text1();
 endmodule
 Warning: Too many visibility flags in component Eqn

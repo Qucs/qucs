@@ -50,8 +50,8 @@
     (* S0_x1=300, S0_y1=220, S0_x2=360, S0_y2=220 *) net #() net1 ( n_300_220, n_360_220 );
     (* S0_x1=300, S0_y1=200, S0_x2=300, S0_y2=220 *) net #() net2 ( n_300_200, n_300_220 );
     (* S0_x1=420, S0_y1=200, S0_x2=420, S0_y2=220 *) net #() net3 ( n_420_200, n_420_220 );
-    (* S0_x1=300, S0_y1=100, S0_x2=300, S0_y2=140, qucs_label_cx=300, qucs_label_cy=121, qucs_label_x1=330, qucs_label_y1=90 *) net #() pos ( n_300_100, n_300_140, pos );
-    (* S0_x1=420, S0_y1=100, S0_x2=420, S0_y2=140, qucs_label_cx=420, qucs_label_cy=122, qucs_label_x1=450, qucs_label_y1=90 *) net #() neg ( n_420_100, n_420_140, neg );
+    (* S0_x1=300, S0_y1=100, S0_x2=300, S0_y2=140, S0_qucs_x=330, S0_qucs_y=90, S0_qucs_delta=21 *) net #() pos ( n_300_100, n_300_140, pos );
+    (* S0_x1=420, S0_y1=100, S0_x2=420, S0_y2=140, S0_qucs_x=450, S0_qucs_y=90, S0_qucs_delta=22 *) net #() neg ( n_420_100, n_420_140, neg );
     (* S0_x1=300, S0_y1=20, S0_x2=420, S0_y2=20 *) net #() net4 ( n_300_20, n_420_20 );
     (* S0_x1=420, S0_y1=20, S0_x2=420, S0_y2=40 *) net #() net5 ( n_420_20, n_420_40 );
     (* S0_x1=300, S0_y1=20, S0_x2=300, S0_y2=40 *) net #() net6 ( n_300_20, n_300_40 );

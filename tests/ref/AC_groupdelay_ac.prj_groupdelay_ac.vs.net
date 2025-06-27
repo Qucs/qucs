@@ -1,11 +1,11 @@
 # Qucs
 
-C:C1 gnd P1 C="39.01pF" V=""
-L:L1 P1 P2 L="280.9nH" I=""
-C:C2 gnd P2 C="39.01pF" V=""
-Vac:V1 _net0 gnd U="1 V" f="1 GHz" Phase="0" Theta="0"
-Vac:V2 _net1 gnd U="0 V" f="1 GHz" Phase="0" Theta="0"
-R:R2 P2 _net1 R="Z0" Temp="26.85" Tc1="0.0" Tc2="0.0" Tnom="26.85"
+C:C1 gnd _net0 C="39.01pF" V=""
+L:L1 _net0 _net1 L="280.9nH" I=""
+C:C2 gnd _net1 C="39.01pF" V=""
+Vac:V1 _net2 gnd U="1 V" f="1 GHz" Phase="0" Theta="0"
+Vac:V2 _net3 gnd U="0 V" f="1 GHz" Phase="0" Theta="0"
+R:R2 _net1 _net3 R="Z0" Temp="26.85" Tc1="0.0" Tc2="0.0" Tnom="26.85"
 .AC:AC1 Type="log" Start="1 MHz" Stop="200 MHz" Points="458" Noise="no"
 Eqn:Eqn1 y="1" Export="yes"
-R:R1 _net0 P1 R="Z0" Temp="26.85" Tc1="0.0" Tc2="0.0" Tnom="26.85"
+R:R1 _net2 _net0 R="Z0" Temp="26.85" Tc1="0.0" Tc2="0.0" Tnom="26.85"

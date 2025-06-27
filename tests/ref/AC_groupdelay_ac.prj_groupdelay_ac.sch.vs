@@ -37,11 +37,11 @@
     (* S0_x1=240, S0_y1=140, S0_x2=280, S0_y2=140 *) net #() net3 ( n_240_140, n_280_140 );
     (* S0_x1=340, S0_y1=140, S0_x2=380, S0_y2=140 *) net #() net4 ( n_340_140, n_380_140 );
     (* S0_x1=60, S0_y1=230, S0_x2=60, S0_y2=250 *) net #() net5 ( n_60_230, n_60_250 );
-    (* S0_x1=380, S0_y1=140, S0_x2=450, S0_y2=140, qucs_label_cx=411, qucs_label_cy=140, qucs_label_x1=430, qucs_label_y1=100 *) net #() P2 ( n_380_140, n_450_140, P2 );
+    (* S0_x1=380, S0_y1=140, S0_x2=450, S0_y2=140, S0_qucs_x=430, S0_qucs_y=100, S0_qucs_delta=31 *) net #() P2 ( n_380_140, n_450_140, P2 );
     (* S0_x1=510, S0_y1=140, S0_x2=550, S0_y2=140 *) net #() net6 ( n_510_140, n_550_140 );
     (* S0_x1=550, S0_y1=140, S0_x2=550, S0_y2=170 *) net #() net7 ( n_550_140, n_550_170 );
     (* S0_x1=550, S0_y1=230, S0_x2=550, S0_y2=250 *) net #() net8 ( n_550_230, n_550_250 );
-    (* S0_x1=180, S0_y1=140, S0_x2=240, S0_y2=140, qucs_label_cx=208, qucs_label_cy=140, qucs_label_x1=230, qucs_label_y1=100 *) net #() P1 ( n_180_140, n_240_140, P1 );
+    (* S0_x1=180, S0_y1=140, S0_x2=240, S0_y2=140, S0_qucs_x=230, S0_qucs_y=100, S0_qucs_delta=28 *) net #() P1 ( n_180_140, n_240_140, P1 );
     (* S0_x1=60, S0_y1=140, S0_x2=60, S0_y2=170 *) net #() net9 ( n_60_140, n_60_170 );
     (* S0_x1=60, S0_y1=140, S0_x2=120, S0_y2=140 *) net #() net10 ( n_60_140, n_120_140 );
     (* S0_x=470, S0_y=310, qucs_type="Text", S0_text="3rd order\nButterworth low-pass filter\n68MHz cutoff, PI-type,\nimpedance matching 60 Ohm", qucs_font_color="#000000", qucs_font_size=12, qucs_font_angle=0 *) S__text #() S0_text1();
