@@ -3,7 +3,7 @@
     <name>QApplication</name>
     <message>
         <source>Executable &apos;%1&apos; requires Qt %2, found Qt %3.</source>
-        <translation>Çalıştırılabilir kütük &apos;%1&apos;, Qt %2&apos; ye ihtiyaç duyarken varolan Qt %3.</translation>
+        <translation>Çalıştırılabilir Dosya &apos;%1&apos;, Qt %2 sürümünü gerektirirken, mevcut Qt %3.</translation>
     </message>
     <message>
         <source>Incompatible Qt Library Error</source>
@@ -46,11 +46,11 @@
     </message>
     <message>
         <source>&amp;Custom colors</source>
-        <translation>Ki&amp;şisel renkler</translation>
+        <translation>&amp;Özel renkler</translation>
     </message>
     <message>
         <source>&amp;Define Custom Colors &gt;&gt;</source>
-        <translation>Kişisel &amp;Renk Tanımla &gt;&gt;</translation>
+        <translation>Özel &amp;Renk Tanımla &gt;&gt;</translation>
     </message>
     <message>
         <source>OK</source>
@@ -62,7 +62,7 @@
     </message>
     <message>
         <source>&amp;Add to Custom Colors</source>
-        <translation>&amp;Kişisel Renklere Ekle</translation>
+        <translation>&amp;Özel Renklere Ekle</translation>
     </message>
     <message>
         <source>Select color</source>
@@ -80,7 +80,7 @@
     <name>QErrorMessage</name>
     <message>
         <source>Debug Message:</source>
-        <translation>Hata Ayıklama Açıklaması:</translation>
+        <translation>Hata Ayıklama Mesajı:</translation>
     </message>
     <message>
         <source>Warning:</source>
@@ -92,22 +92,21 @@
     </message>
     <message>
         <source>&amp;Show this message again</source>
-        <translation>&amp;Bu açıklamayı tekrar göster</translation>
+        <translation>&amp;Bu mesajı tekrar göster</translation>
     </message>
     <message>
         <source>&amp;OK</source>
         <translation>&amp;Tamam</translation>
     </message>
 </context>
-<context>
-    <name>QFileDialog</name>
-    <message>
-        <source>Copy or Move a File</source>
-        <translation>Kütük Taşı veya Çoğalt</translation>
-    </message>
-    <message>
-        <source>Read: %1</source>
-        <translation>Oku: %1</translation>
+    <context>
+        <name>QFileDialog</name>
+        <message>
+            <source>Copy or Move a File</source>
+            <translation>Dosyayı Kopyala veya Taşı</translation>
+        </message>
+        <message>
+            <source>Read: %1</source>        <translation>Oku: %1</translation>
     </message>
     <message>
         <source>Write: %1</source>
@@ -119,7 +118,7 @@
     </message>
     <message>
         <source>All Files (*)</source>
-        <translation>Tüm Kütükler (*)</translation>
+        <translation>Tüm Dosyalar (*)</translation>
     </message>
     <message>
         <source>Name</source>
@@ -131,7 +130,7 @@
     </message>
     <message>
         <source>Type</source>
-        <translation>Çeşit</translation>
+        <translation>Tür</translation>
     </message>
     <message>
         <source>Date</source>
@@ -151,11 +150,11 @@
     </message>
     <message>
         <source>File &amp;name:</source>
-        <translation>Kütük &amp;ismi:</translation>
+        <translation>Dosya &amp;ismi:</translation>
     </message>
     <message>
         <source>File &amp;type:</source>
-        <translation>Kütük &amp;çeşidi:</translation>
+        <translation>Dosya &amp;türü:</translation>
     </message>
     <message>
         <source>Back</source>
@@ -163,27 +162,27 @@
     </message>
     <message>
         <source>One directory up</source>
-        <translation>Bir üst dizin</translation>
+        <translation>Bir üst klasör</translation>
     </message>
     <message>
         <source>Create New Folder</source>
-        <translation>Yeni Dizin Oluştur</translation>
+        <translation>Yeni Klasör Oluştur</translation>
     </message>
     <message>
         <source>List View</source>
-        <translation>Dizelge Görünüm</translation>
+        <translation>Liste Görünümü</translation>
     </message>
     <message>
         <source>Detail View</source>
-        <translation>Ayrıntılı Görünüm</translation>
+        <translation>Ayrıntılı Görünümü</translation>
     </message>
     <message>
         <source>Preview File Info</source>
-        <translation>Kütük Bilgisi Önizleme</translation>
+        <translation>Dosya Bilgisi Önizlemesi</translation>
     </message>
     <message>
         <source>Preview File Contents</source>
-        <translation>Kütük İçeriği Önizleme</translation>
+        <translation>Dosya İçeriği Önizlemesi</translation>
     </message>
     <message>
         <source>Read-write</source>
@@ -203,7 +202,7 @@
     </message>
     <message>
         <source>Symlink to File</source>
-        <translation>Kütüğe Simgesel Bağlantı</translation>
+        <translation>Dosyaya Simgesel Bağlantı</translation>
     </message>
     <message>
         <source>Symlink to Directory</source>
@@ -215,7 +214,7 @@
     </message>
     <message>
         <source>File</source>
-        <translation>Kütük</translation>
+        <translation>Dosya</translation>
     </message>
     <message>
         <source>Dir</source>
@@ -267,7 +266,7 @@
     </message>
     <message>
         <source>&amp;Unsorted</source>
-        <translation>&amp;Sırasız</translation>
+        <translation>&amp;Sıralanmamış</translation>
     </message>
     <message>
         <source>Sort</source>
@@ -275,11 +274,11 @@
     </message>
     <message>
         <source>Show &amp;hidden files</source>
-        <translation>Saklı &amp;Kütükleri Göster</translation>
+        <translation>&amp;Gizli Dosyaları Göster</translation>
     </message>
     <message>
         <source>the file</source>
-        <translation>kütük</translation>
+        <translation>dosya</translation>
     </message>
     <message>
         <source>the directory</source>
@@ -307,15 +306,15 @@
     </message>
     <message>
         <source>New Folder 1</source>
-        <translation>Yeni Dizin 1</translation>
+        <translation>Yeni Klasör 1</translation>
     </message>
     <message>
         <source>New Folder</source>
-        <translation>Yeni Dizin</translation>
+        <translation>Yeni Klasör</translation>
     </message>
     <message>
         <source>New Folder %1</source>
-        <translation>Yeni Dizin %1</translation>
+        <translation>Yeni Klasör %1</translation>
     </message>
     <message>
         <source>Find Directory</source>
@@ -342,8 +341,8 @@
 File not found.
 Check path and filename.</source>
         <translation>%1
-Kütük bulunamadı.
-Yolu ve kütük adını denetleyin.</translation>
+Dosya bulunamadı.
+Yolu ve dosya adını denetleyin.</translation>
     </message>
 </context>
 <context>
@@ -358,7 +357,7 @@ Yolu ve kütük adını denetleyin.</translation>
     </message>
     <message>
         <source>Cyrillic</source>
-        <translation>Kiril (eski islav)</translation>
+        <translation>Kiril</translation>
     </message>
     <message>
         <source>Armenian</source>
@@ -370,11 +369,11 @@ Yolu ve kütük adını denetleyin.</translation>
     </message>
     <message>
         <source>Runic</source>
-        <translation>Runik (kalın ve koyu yazı)</translation>
+        <translation>Runik</translation>
     </message>
     <message>
         <source>Ogham</source>
-        <translation>Ogham (düz çizgilerden olusan yazı)</translation>
+        <translation>Ogham</translation>
     </message>
     <message>
         <source>Hebrew</source>
@@ -406,27 +405,27 @@ Yolu ve kütük adını denetleyin.</translation>
     </message>
     <message>
         <source>Gujarati</source>
-        <translation>Gujarati (bir hindu yazısı)</translation>
+        <translation>Gujarati</translation>
     </message>
     <message>
         <source>Oriya</source>
-        <translation>Oriya (bir hindu yazısı)</translation>
+        <translation>Oriya</translation>
     </message>
     <message>
         <source>Tamil</source>
-        <translation>Tamil (bir hindu yazısı)</translation>
+        <translation>Tamil</translation>
     </message>
     <message>
         <source>Telugu</source>
-        <translation>Telugu (bir hindu yazısı)</translation>
+        <translation>Telugu</translation>
     </message>
     <message>
         <source>Kannada</source>
-        <translation>Kannada (bir hindu yazısı)</translation>
+        <translation>Kannada</translation>
     </message>
     <message>
         <source>Malayalam</source>
-        <translation>Malayalam (bir hindu yazısı)</translation>
+        <translation>Malayalam</translation>
     </message>
     <message>
         <source>Sinhala</source>
@@ -506,11 +505,11 @@ Yolu ve kütük adını denetleyin.</translation>
     </message>
     <message>
         <source>Mathematical Operators</source>
-        <translation>Matematiksel İşlemciler</translation>
+        <translation>Matematiksel Operatörler</translation>
     </message>
     <message>
         <source>Technical Symbols</source>
-        <translation>Yöntembilimsel Simgeler</translation>
+        <translation>Teknik Simgeler</translation>
     </message>
     <message>
         <source>Geometric Symbols</source>
@@ -518,7 +517,7 @@ Yolu ve kütük adını denetleyin.</translation>
     </message>
     <message>
         <source>Miscellaneous Symbols</source>
-        <translation>Sınıflandırılmamış Simgeler</translation>
+        <translation>Çeşitli Simgeler</translation>
     </message>
     <message>
         <source>Enclosed and Square</source>
@@ -537,11 +536,11 @@ Yolu ve kütük adını denetleyin.</translation>
     <name>QFontDialog</name>
     <message>
         <source>&amp;Font</source>
-        <translation>&amp;Harf</translation>
+        <translation>&amp;Yazı Tipi</translation>
     </message>
     <message>
         <source>Font st&amp;yle</source>
-        <translation>Harf &amp;biçimi</translation>
+        <translation>Yazı Tipi &amp;Stili</translation>
     </message>
     <message>
         <source>&amp;Size</source>
@@ -549,7 +548,7 @@ Yolu ve kütük adını denetleyin.</translation>
     </message>
     <message>
         <source>Effects</source>
-        <translation>Etkiler</translation>
+        <translation>Efektler</translation>
     </message>
     <message>
         <source>Stri&amp;keout</source>
@@ -569,7 +568,7 @@ Yolu ve kütük adını denetleyin.</translation>
     </message>
     <message>
         <source>Scr&amp;ipt</source>
-        <translation>Be&amp;tik</translation>
+        <translation>Yazı &amp;Tipi</translation>
     </message>
     <message>
         <source>OK</source>
@@ -589,7 +588,7 @@ Yolu ve kütük adını denetleyin.</translation>
     </message>
     <message>
         <source>Select Font</source>
-        <translation>Harf Biçimi Seç</translation>
+        <translation>Yazı Tipi Seç</translation>
     </message>
 </context>
 <context>
@@ -623,7 +622,7 @@ Yolu ve kütük adını denetleyin.</translation>
     </message>
     <message>
         <source>&amp;Abort</source>
-        <translation>&amp;Görevi Bitirmeden İptal</translation>
+        <translation>&amp;İptal Et</translation>
     </message>
     <message>
         <source>&amp;Retry</source>
@@ -635,7 +634,7 @@ Yolu ve kütük adını denetleyin.</translation>
     </message>
     <message>
         <source>&lt;h3&gt;About Qt&lt;/h3&gt;&lt;p&gt;This program uses Qt version %1.&lt;/p&gt;&lt;p&gt;Qt is a C++ toolkit for multiplatform GUI &amp;amp; application development.&lt;/p&gt;&lt;p&gt;Qt provides single-source portability across MS&amp;nbsp;Windows, Mac&amp;nbsp;OS&amp;nbsp;X, Linux, and all major commercial Unix variants.&lt;br&gt;Qt is also available for embedded devices.&lt;/p&gt;&lt;p&gt;Qt is a Trolltech product. See &lt;tt&gt;http://www.trolltech.com/qt/&lt;/tt&gt; for more information.&lt;/p&gt;</source>
-        <translation>&lt;h3&gt;Qt Hakkında&lt;/h3&gt;&lt;p&gt;Bu yazılım, Qt sürümü %1&apos; kullanır.&lt;/p&gt;&lt;p&gt;Qt bir C++ kütüphanesidir ve pek çok farklı sistemde kullanıcı arayüzü (KA) geliştirmek için kullanılır.&lt;/p&gt;&lt;p&gt;Qt &apos;tekil kaynak metni taşınabilirliği&apos; getirir ve MS&amp;nbsp;Windows, Mac&amp;nbsp;OS&amp;nbsp;X, Linux, ve tüm büyük Unix çeşitleri için kullanılabilir.&lt;br&gt;Qt aynı zamanda gömülü sistemler için de kullanılabilir.&lt;/p&gt;&lt;p&gt;Qt bir Trolltech ürünüdür. Daha fazlabilgi için &lt;tt&gt;http://www.trolltech.com/qt/&lt;/tt&gt; sayfasını görün.&lt;/p&gt;</translation>
+        <translation>&lt;h3&gt;Qt Hakkında&lt;/h3&gt;&lt;p&gt;Bu yazılım, Qt sürümü %1 kullanır.&lt;/p&gt;&lt;p&gt;Qt bir C++ kütüphanesidir ve pek çok farklı sistemde grafik kullanıcı arayüzü (GUI) geliştirmek için kullanılır.&lt;/p&gt;&lt;p&gt;Qt &apos;tek kaynak kod taşınabilirliği&apos; getirir ve MS&amp;nbsp;Windows, Mac&amp;nbsp;OS&amp;nbsp;X, Linux, ve tüm büyük Unix çeşitleri için kullanılabilir.&lt;br&gt;Qt aynı zamanda gömülü sistemler için de kullanılabilir.&lt;/p&gt;&lt;p&gt;Qt bir Trolltech ürünüdür. Daha fazla bilgi için &lt;tt&gt;http://www.trolltech.com/qt/&lt;/tt&gt; sayfasını görün.&lt;/p&gt;</translation>
     </message>
 </context>
 <context>
@@ -646,7 +645,7 @@ Yolu ve kütük adını denetleyin.</translation>
     </message>
     <message>
         <source>Aliases: %1</source>
-        <translation>Yerine Geçen İsimler: %1</translation>
+        <translation>Takma Adlar: %1</translation>
     </message>
     <message>
         <source>unknown</source>
@@ -678,11 +677,11 @@ Yolu ve kütük adını denetleyin.</translation>
     </message>
     <message>
         <source>Print destination</source>
-        <translation>Karşı yazıcı</translation>
+        <translation>Yazdırma hedefi</translation>
     </message>
     <message>
         <source>Print to printer:</source>
-        <translation>Şu yazıcıya gönder:</translation>
+        <translation>Şu yazıcıya yazdır:</translation>
     </message>
     <message>
         <source>Printer</source>
@@ -690,7 +689,7 @@ Yolu ve kütük adını denetleyin.</translation>
     </message>
     <message>
         <source>Host</source>
-        <translation>Ev Sahibi Bilgisayar</translation>
+        <translation>Ana Bilgisayar</translation>
     </message>
     <message>
         <source>Comment</source>
@@ -698,7 +697,7 @@ Yolu ve kütük adını denetleyin.</translation>
     </message>
     <message>
         <source>Print to file:</source>
-        <translation>Kütüğe yazdır:</translation>
+        <translation>Dosyaya yazdır:</translation>
     </message>
     <message>
         <source>Browse...</source>
@@ -734,7 +733,7 @@ Yolu ve kütük adını denetleyin.</translation>
     </message>
     <message>
         <source>Number of copies:</source>
-        <translation>Çoğaltım sayısı:</translation>
+        <translation>Kopya sayısı:</translation>
     </message>
     <message>
         <source>Paper format</source>
@@ -842,11 +841,11 @@ Yolu ve kütük adını denetleyin.</translation>
     </message>
     <message>
         <source>Executive (7.5x10 inches, 191x254 mm)</source>
-        <translation>idari (7.5x10 inç, 191x254 mm)</translation>
+        <translation>İdari (7.5x10 inç, 191x254 mm)</translation>
     </message>
     <message>
         <source>Folio (210 x 330 mm)</source>
-        <translation>Katlı Kagıt (210 x 330 mm)</translation>
+        <translation>Folyo (210 x 330 mm)</translation>
     </message>
     <message>
         <source>Ledger (432 x 279 mm)</source>
@@ -874,7 +873,7 @@ Yolu ve kütük adını denetleyin.</translation>
     </message>
     <message>
         <source>PostScript Files (*.ps);;All Files (*)</source>
-        <translation>PostScript Kütükleri (*.ps);;Tüm Kütükler (*)</translation>
+        <translation>PostScript Dosyaları (*.ps);;Tüm Dosyalar (*)</translation>
     </message>
 </context>
 <context>
