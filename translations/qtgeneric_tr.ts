@@ -733,7 +733,7 @@ Yolu ve dosya adını denetleyin.</translation>
         <translation>Son sayfayı ilk yazdır</translation>
     </message>
     <message>
-        <source>Numr of copies:</source>
+        <source>Number of copies:</source>
         <translation>Kopya sayısı:</translation>
     </message>
     <message>
