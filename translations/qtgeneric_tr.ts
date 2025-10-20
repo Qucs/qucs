@@ -99,14 +99,15 @@
         <translation>&amp;Tamam</translation>
     </message>
 </context>
-    <context>
-        <name>QFileDialog</name>
-        <message>
-            <source>Copy or Move a File</source>
-            <translation>Dosyayı Kopyala veya Taşı</translation>
-        </message>
-        <message>
-            <source>Read: %1</source>        <translation>Oku: %1</translation>
+<context>
+    <name>QFileDialog</name>
+    <message>
+        <source>Copy or Move a File</source>
+        <translation>Dosyayı Kopyala veya Taşı</translation>
+    </message>
+    <message>
+        <source>Read: %1</source>
+        <translation>Oku: %1</translation>
     </message>
     <message>
         <source>Write: %1</source>
@@ -174,31 +175,31 @@
     </message>
     <message>
         <source>Detail View</source>
-        <translation>Ayrıntılı Görünümü</translation>
+        <translation>Ayrıntılı Görünüm</translation>
     </message>
     <message>
         <source>Preview File Info</source>
-        <translation>Dosya Bilgisi Önizlemesi</translation>
+        <translation>Dosya Bilgisi Önizle</translation>
     </message>
     <message>
         <source>Preview File Contents</source>
-        <translation>Dosya İçeriği Önizlemesi</translation>
+        <translation>Dosya İçeriği Önizle</translation>
     </message>
     <message>
         <source>Read-write</source>
-        <translation>Oku-yaz</translation>
+        <translation>Okuma-Yazma</translation>
     </message>
     <message>
         <source>Read-only</source>
-        <translation>Sadece-oku</translation>
+        <translation>Sadece-Okuma</translation>
     </message>
     <message>
         <source>Write-only</source>
-        <translation>Sadece-yaz</translation>
+        <translation>Sadece-Yazma</translation>
     </message>
     <message>
         <source>Inaccessible</source>
-        <translation>Ulaşılamaz</translation>
+        <translation>Erişilemez</translation>
     </message>
     <message>
         <source>Symlink to File</source>
@@ -568,7 +569,7 @@ Yolu ve dosya adını denetleyin.</translation>
     </message>
     <message>
         <source>Scr&amp;ipt</source>
-        <translation>Yazı &amp;Tipi</translation>
+        <translation>Scr&amp;ipt</translation>
     </message>
     <message>
         <source>OK</source>
@@ -732,7 +733,7 @@ Yolu ve dosya adını denetleyin.</translation>
         <translation>Son sayfayı ilk yazdır</translation>
     </message>
     <message>
-        <source>Number of copies:</source>
+        <source>Numr of copies:</source>
         <translation>Kopya sayısı:</translation>
     </message>
     <message>
