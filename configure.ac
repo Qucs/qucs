@@ -685,9 +685,9 @@ AS_IF([test $QT_MAJOR_VERSION -ge 5],
     ;;
 esac
 
-dnl Check for language support.
-AC_PATH_PROGS(LRELEASE, lrelease-qt4 lrelease, :, [$QT_DIR/bin:$PATH])
-AC_PATH_PROGS(LUPDATE, lupdate-qt4 lupdate, :, [$QT_DIR/bin:$PATH])
+dnl Check for language support. BUG: align with $qt_name
+AC_PATH_PROGS(LRELEASE, lrelease-qt4 lrelease-qt5 lrelease, :, [$QT_DIR/bin:$PATH])
+AC_PATH_PROGS(LUPDATE, lupdate-qt4 lupdate-qt5 lupdate, :, [$QT_DIR/bin:$PATH])
 
 dnl Check for MOC/UIC/RCC support.
 AC_PATH_PROGS(MOC, $MOC_ moc, :, [$QT_BINPATH:$PATH:/])
