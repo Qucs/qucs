@@ -1623,6 +1623,8 @@ void Schematic::newMovingWires(SharedObjectList<Element> &p, Node *pn, int pos)
         if(pn->State & 16)  // node was already worked on
             break;
 
+        if(!pn->connections().size()) return;
+
         pe = pn->connections().front().lock();
         if(!pe)  return;
 
