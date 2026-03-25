@@ -37,7 +37,9 @@
  */
 void qucsMessageOutput(QtMsgType type, const QMessageLogContext &, const QString &str)
 {
-  const char *msg = str.toUtf8().data();
+  const QByteArray utf8_msg = str.toUtf8();
+  const char* msg = utf8_msg.data();
+
   switch (type) {
   case QtInfoMsg:
     fprintf(stderr,"Info %s\n", msg);
